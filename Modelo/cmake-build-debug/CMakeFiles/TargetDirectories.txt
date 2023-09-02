@@ -1,0 +1,3 @@
+/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/CMakeFiles/Modelo.dir
+/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/CMakeFiles/rebuild_cache.dir

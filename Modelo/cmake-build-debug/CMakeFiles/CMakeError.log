@@ -1,0 +1,23 @@
+Performing C++ SOURCE FILE Test SDL2PP_WITH_EXPERIMENTAL_OPTIONAL failed with the following output:
+Change Dir: /home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-OvFRa8
+
+Run Build Command(s):/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/ninja/linux/x64/ninja cmTC_96484 && [1/2] Building CXX object CMakeFiles/cmTC_96484.dir/src.cxx.o
+[31mFAILED: [0mCMakeFiles/cmTC_96484.dir/src.cxx.o 
+/usr/bin/c++ -DSDL2PP_WITH_EXPERIMENTAL_OPTIONAL  -std=c++11 -o CMakeFiles/cmTC_96484.dir/src.cxx.o -c /home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-OvFRa8/src.cxx
+/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-OvFRa8/src.cxx: In function ‘int main()’:
+/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-OvFRa8/src.cxx:2:19: error: ‘std::experimental’ has not been declared
+    2 | int main() { std::experimental::optional<int> o; return !o; }
+      |                   ^~~~~~~~~~~~
+/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-OvFRa8/src.cxx:2:42: error: expected primary-expression before ‘int’
+    2 | int main() { std::experimental::optional<int> o; return !o; }
+      |                                          ^~~
+/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-OvFRa8/src.cxx:2:58: error: ‘o’ was not declared in this scope
+    2 | int main() { std::experimental::optional<int> o; return !o; }
+      |                                                          ^
+ninja: build stopped: subcommand failed.
+
+
+Source file was:
+#include <experimental/optional>
+int main() { std::experimental::optional<int> o; return !o; }
+
