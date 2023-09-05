@@ -1,9 +1,7 @@
 #include <iostream>
 
-#include <SDL2/SDL.h>
-
-
-#include <stdio.h>
+// #include <SDL2pp/SDL2pp.hh> para el SDL2pp
+// using namespace SDL2pp;
 
 int main(int argc, char* argv[]) {
 

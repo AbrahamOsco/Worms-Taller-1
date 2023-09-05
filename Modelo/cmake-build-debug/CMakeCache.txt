@@ -156,6 +156,21 @@ CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 //Value Computed by CMake
 CMAKE_PROJECT_NAME:STATIC=Modelo
 
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION:STATIC=0.17.0
+
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION_MAJOR:STATIC=0
+
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION_MINOR:STATIC=17
+
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION_PATCH:STATIC=0
+
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION_TWEAK:STATIC=
+
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
 
@@ -328,13 +343,13 @@ Z_VCPKG_CL:FILEPATH=Z_VCPKG_CL-NOTFOUND
 _VCPKG_INSTALLED_DIR:PATH=/home/abraham/.clion-vcpkg/vcpkg/installed
 
 //Value Computed by CMake
-libSDL2pp_BINARY_DIR:STATIC=/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/libs/libSDL2pp
+libSDL2pp_BINARY_DIR:STATIC=/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/SDL2pp
 
 //Value Computed by CMake
 libSDL2pp_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
-libSDL2pp_SOURCE_DIR:STATIC=/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/libs/libSDL2pp
+libSDL2pp_SOURCE_DIR:STATIC=/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/SDL2pp
 
 
 ########################
@@ -443,7 +458,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

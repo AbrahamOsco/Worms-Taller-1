@@ -12,6 +12,7 @@
   <component name="CMakeRunConfigurationManager">
     <generated>
       <config projectName="Modelo" targetName="Modelo" />
+      <config projectName="Modelo" targetName="SDL2pp" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -21,13 +22,155 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1f54688-79f8-4fa3-93e0-af864ce1e159" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-d1b4b981add72769c7fc.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-09-05T15-19-52-0218.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-Modelo-Debug-58f64628dec0829f80a2.json" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/.github/workflows/ci.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/CHANGES.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/COPYING.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/Doxyfile.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/AudioDevice.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/AudioDevice.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/AudioLock.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/AudioSpec.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/AudioSpec.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Chunk.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Chunk.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Color.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Color.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Config.hh.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/ContainerRWops.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Exception.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Exception.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Font.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Font.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Mixer.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Mixer.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Music.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Music.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Optional.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Point.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Point.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/RWops.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/RWops.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Rect.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Rect.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Renderer.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Renderer.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/SDL.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/SDL.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/SDL2pp.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/SDLImage.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/SDLImage.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/SDLMixer.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/SDLMixer.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/SDLTTF.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/SDLTTF.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/StreamRWops.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Surface.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Surface.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/SurfaceLock.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Texture.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Texture.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/TextureLock.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Wav.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Wav.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Window.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/SDL2pp/Window.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/cmake/FindSDL2_image.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/cmake/FindSDL2_mixer.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/cmake/FindSDL2_ttf.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/cmake/SDL2ppConfig.cmake.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/examples/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/examples/audio_sine.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/examples/audio_wav.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/examples/fill.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/examples/image.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/examples/lines.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/examples/mixer.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/examples/mixer_effects.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/examples/mixer_music.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/examples/mixer_music_sine.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/examples/rendertarget.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/examples/sprites.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/examples/ttf.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/exttests/cmake/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/sdl2pp.pc.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/testdata/Bitstream-Vera-COPYRIGHT.TXT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/testdata/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/testdata/Vera.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/testdata/crate.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/testdata/test.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/testdata/test.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/testdata/test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/testdata/test.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/header_test.cc.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/live_audiodevice.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/live_mixer.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/live_rendering.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/live_window.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/movetest.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/test_color.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/test_color_constexpr.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/test_error.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/test_font.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/test_optional.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/test_pointrect.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/test_pointrect_constexpr.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/test_rwops.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/test_surface.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/test_wav.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDL2pp/tests/testing.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/directory-SDL2pp-Debug-79ff47583e7781300fac.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-SDL2pp-Debug-9933d53466a65cc500c9.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/SDL2pp/Config.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/SDL2pp/Export.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/cmake_install.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/libSDL2pp.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/libSDL2pp.so.8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/SDL2pp/libSDL2pp.so.8.3.0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/M484SpaceSoldier.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/M484SpaceSoldier.png.COPYRIGHT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/Vera.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/Vera.ttf.COPYRIGHT" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-be965bc11ddebd4becb4.json" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-755c813e147284df4a68.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-770ca57447393452e3f5.json" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-6d9faaeb0937b251f56b.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-05b5351db244d9534ad6.json" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-1ace4fa71c774c37541f.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-09-05T15-27-32-0304.json" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-09-05T15-29-30-0915.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-Modelo-Debug-09a3c9e953c747e212a7.json" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-Modelo-Debug-7d1b603e0073ba0b788e.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Modelo.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Modelo.dir/main.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Modelo" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Modelo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,30 +197,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/assets&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/assets" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/assets" />
       <recent name="$PROJECT_DIR$/cmake" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="CMake Application.Modelo">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
@@ -88,6 +231,15 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SDL2pp" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Modelo" TARGET_NAME="SDL2pp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.Modelo" />
+      <item itemvalue="CMake Application.SDL2pp" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

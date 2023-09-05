@@ -1,3 +1,6 @@
 /home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/CMakeFiles/Modelo.dir
 /home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/CMakeFiles/edit_cache.dir
 /home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/SDL2pp/CMakeFiles/SDL2pp.dir
+/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/SDL2pp/CMakeFiles/edit_cache.dir
+/home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug/SDL2pp/CMakeFiles/rebuild_cache.dir
