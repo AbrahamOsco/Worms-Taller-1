@@ -1,10 +1,6 @@
 # ninja log v5
-1	749	1693616755773041662	CMakeFiles/Modelo.dir/src/Graphics/TextManager.cpp.o	127c9fd8ad158409
-1	688	1693618022674622501	CMakeFiles/Modelo.dir/main.cpp.o	dae017fd672b0c8c
-1	609	1693618244664816357	CMakeFiles/Modelo.dir/src/core/Engine.cpp.o	5d1ad089da7f14
-8	115	1693685886771882762	build.ninja	87a66aaf9e524be2
-609	854	1693618244904818950	Modelo	e887d1ac45a6e5aa
-1	819	1693685891508060047	CMakeFiles/Modelo.dir/src/core/Engine.cpp.o	5d1ad089da7f14
-0	820	1693685891508060047	CMakeFiles/Modelo.dir/main.cpp.o	dae017fd672b0c8c
 0	837	1693685891528060795	CMakeFiles/Modelo.dir/src/Graphics/TextManager.cpp.o	127c9fd8ad158409
+0	820	1693685891508060047	CMakeFiles/Modelo.dir/main.cpp.o	dae017fd672b0c8c
+1	819	1693685891508060047	CMakeFiles/Modelo.dir/src/core/Engine.cpp.o	5d1ad089da7f14
+8	115	1693927192179582598	build.ninja	87a66aaf9e524be2
 837	1286	1693685891972077396	Modelo	e887d1ac45a6e5aa
