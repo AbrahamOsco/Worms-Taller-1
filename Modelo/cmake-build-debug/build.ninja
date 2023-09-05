@@ -56,19 +56,19 @@ build CMakeFiles/Modelo.dir/main.cpp.o: CXX_COMPILER__Modelo_Debug /home/abraham
   OBJECT_DIR = CMakeFiles/Modelo.dir
   OBJECT_FILE_DIR = CMakeFiles/Modelo.dir
 
-build CMakeFiles/Modelo.dir/src/core/Engine.cpp.o: CXX_COMPILER__Modelo_Debug /home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/src/core/Engine.cpp || cmake_object_order_depends_target_Modelo
-  DEP_FILE = CMakeFiles/Modelo.dir/src/core/Engine.cpp.o.d
+build CMakeFiles/Modelo.dir/src/Vista/core/Engine.cpp.o: CXX_COMPILER__Modelo_Debug /home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/src/Vista/core/Engine.cpp || cmake_object_order_depends_target_Modelo
+  DEP_FILE = CMakeFiles/Modelo.dir/src/Vista/core/Engine.cpp.o.d
   FLAGS = -std=c++11 -g -fdiagnostics-color=always
   INCLUDES = -isystem /home/abraham/.clion-vcpkg/vcpkg/installed/x64-linux/include -isystem /home/abraham/.clion-vcpkg/vcpkg/installed/x64-linux/include/SDL2
   OBJECT_DIR = CMakeFiles/Modelo.dir
-  OBJECT_FILE_DIR = CMakeFiles/Modelo.dir/src/core
+  OBJECT_FILE_DIR = CMakeFiles/Modelo.dir/src/Vista/core
 
-build CMakeFiles/Modelo.dir/src/Graphics/TextManager.cpp.o: CXX_COMPILER__Modelo_Debug /home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/src/Graphics/TextManager.cpp || cmake_object_order_depends_target_Modelo
-  DEP_FILE = CMakeFiles/Modelo.dir/src/Graphics/TextManager.cpp.o.d
+build CMakeFiles/Modelo.dir/src/Vista/Graphics/TextManager.cpp.o: CXX_COMPILER__Modelo_Debug /home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/src/Vista/Graphics/TextManager.cpp || cmake_object_order_depends_target_Modelo
+  DEP_FILE = CMakeFiles/Modelo.dir/src/Vista/Graphics/TextManager.cpp.o.d
   FLAGS = -std=c++11 -g -fdiagnostics-color=always
   INCLUDES = -isystem /home/abraham/.clion-vcpkg/vcpkg/installed/x64-linux/include -isystem /home/abraham/.clion-vcpkg/vcpkg/installed/x64-linux/include/SDL2
   OBJECT_DIR = CMakeFiles/Modelo.dir
-  OBJECT_FILE_DIR = CMakeFiles/Modelo.dir/src/Graphics
+  OBJECT_FILE_DIR = CMakeFiles/Modelo.dir/src/Vista/Graphics
 
 
 # =============================================================================
@@ -78,7 +78,7 @@ build CMakeFiles/Modelo.dir/src/Graphics/TextManager.cpp.o: CXX_COMPILER__Modelo
 #############################################
 # Link the executable Modelo
 
-build Modelo: CXX_EXECUTABLE_LINKER__Modelo_Debug CMakeFiles/Modelo.dir/main.cpp.o CMakeFiles/Modelo.dir/src/core/Engine.cpp.o CMakeFiles/Modelo.dir/src/Graphics/TextManager.cpp.o | /home/abraham/.clion-vcpkg/vcpkg/installed/x64-linux/debug/lib/libSDL2maind.a /home/abraham/.clion-vcpkg/vcpkg/installed/x64-linux/debug/lib/libSDL2d.a
+build Modelo: CXX_EXECUTABLE_LINKER__Modelo_Debug CMakeFiles/Modelo.dir/main.cpp.o CMakeFiles/Modelo.dir/src/Vista/core/Engine.cpp.o CMakeFiles/Modelo.dir/src/Vista/Graphics/TextManager.cpp.o | /home/abraham/.clion-vcpkg/vcpkg/installed/x64-linux/debug/lib/libSDL2maind.a /home/abraham/.clion-vcpkg/vcpkg/installed/x64-linux/debug/lib/libSDL2d.a
   FLAGS = -std=c++11 -g
   LINK_LIBRARIES = /home/abraham/.clion-vcpkg/vcpkg/installed/x64-linux/debug/lib/libSDL2maind.a  /home/abraham/.clion-vcpkg/vcpkg/installed/x64-linux/debug/lib/libSDL2d.a  -lSDL2_image  -lm  -pthread
   OBJECT_DIR = CMakeFiles/Modelo.dir

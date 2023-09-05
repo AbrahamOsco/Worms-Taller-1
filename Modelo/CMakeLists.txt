@@ -1,17 +1,18 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.20t)
 project(Modelo)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+# set up SDL2pp library
+set(SDL2PP_WITH_IMAGE YES)
+set(SDL2PP_WITH_TTF YES)
+add_subdirectory(SDL2pp)
+
+# add compilation flags
 set(CMAKE_CXX_STANDARD 17)
+add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/data")
+include_directories(${SDL2PP_INCLUDE_DIRS})
 
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
+# define targets
+add_executable(Modelo main.cpp)
+target_link_libraries(Modelo PUBLIC SDL2pp)
 
-include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
-
-
-add_executable(Modelo main.cpp src/Vista/core/Engine.cpp src/Vista/core/Engine.h src/Vista/Graphics/TextManager.cpp src/Vista/Graphics/TextManager.h)
-
-target_link_libraries(Modelo ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} -lSDL2_image)
-# con -lSDL2_imagen enlazamos todas las depedencias de la libreria SDL2_IMAGE_LIBRARIES y no solo esa libreria.
 
