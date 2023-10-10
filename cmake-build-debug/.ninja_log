@@ -1,0 +1,10 @@
+# ninja log v5
+1	952	1696965711115756994	CMakeFiles/Worms-Taller-1.dir/Server/main.cpp.o	6cfcb296974c5a21
+0	18	1696965873346236922	build.ninja	27270ce808b39f9b
+28	316	1696962200555225253	CMakeFiles/Worms-Taller-1.dir/Server/src/Modelo/Posicion.cpp.o	aaa49f4272a9e73c
+21	320	1696962200559225277	CMakeFiles/Worms-Taller-1.dir/Server/src/Modelo/Gusano.cpp.o	6619f5a4f636c99d
+952	1040	1696965711203758339	Worms-Taller-1	d39af22cc3e2710f
+4	94	1696965909809587030	CMakeFiles/Worms-Taller-1.dir/Server/src/Modelo/Posicion.cpp.o	8491aa92d8781dee
+3	97	1696965909813586892	CMakeFiles/Worms-Taller-1.dir/Server/src/Modelo/Gusano.cpp.o	4aa032a98231680d
+2	1168	1696965910885550090	CMakeFiles/Worms-Taller-1.dir/Server/main.cpp.o	8d1a9f4ad535790d
+1168	1257	1696965910973547072	Worms-Taller-1	d39af22cc3e2710f

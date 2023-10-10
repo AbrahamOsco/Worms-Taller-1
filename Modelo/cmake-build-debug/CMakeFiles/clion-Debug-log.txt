@@ -1,7 +1,0 @@
-/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/ninja/linux/x64/ninja -DCMAKE_TOOLCHAIN_FILE=/home/abraham/.clion-vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake -G Ninja -S /home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo -B /home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug
--- Found SDL2_image: /home/abraham/.clion-vcpkg/vcpkg/installed/x64-linux/lib/libSDL2_image.a
--- Found SDL2_ttf: /usr/lib/x86_64-linux-gnu/libSDL2_ttf.so
--- SDL2_mixer support disabled
--- Configuring done
--- Generating done
--- Build files have been written to: /home/abraham/Escritorio/Taller/Worms-Taller-1/Modelo/cmake-build-debug

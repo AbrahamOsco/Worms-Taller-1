@@ -1,0 +1,3 @@
+/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/Worms-Taller-1.dir
+/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
