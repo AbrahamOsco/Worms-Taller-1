@@ -12,7 +12,7 @@ Juego worms
         despues de add_executable: target_link_libraries(NombreDelProyecto PRIVATE box2d::box2d)
 
 ### Instalar SDL del ruso: 
-    1. Pendiente
-    
+    sudo apt-get install libjpeg-dev libpng-dev libfreetype-dev libopusfile-dev libflac-dev libxmp-dev libfluidsynth-dev libwavpack-dev cmake libmodplug-dev libsdl2-dev
+        
 
 

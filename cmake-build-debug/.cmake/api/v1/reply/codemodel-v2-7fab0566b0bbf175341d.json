@@ -6,6 +6,10 @@
 			[
 				{
 					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
@@ -13,6 +17,21 @@
 					},
 					"projectIndex" : 0,
 					"source" : ".",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "Client/SDL2pp",
+					"jsonFile" : "directory-Client.SDL2pp-Debug-ce4bb3afeb4fb749d4f4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "Client/SDL2pp",
 					"targetIndexes" : 
 					[
 						0
@@ -23,11 +42,27 @@
 			"projects" : 
 			[
 				{
+					"childIndexes" : 
+					[
+						1
+					],
 					"directoryIndexes" : 
 					[
 						0
 					],
 					"name" : "Worms-Taller-1",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "libSDL2pp",
+					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
 						0
@@ -37,9 +72,16 @@
 			"targets" : 
 			[
 				{
+					"directoryIndex" : 1,
+					"id" : "SDL2pp::@48365626584821f002c0",
+					"jsonFile" : "target-SDL2pp-Debug-adb77265128f794d7f4e.json",
+					"name" : "SDL2pp",
+					"projectIndex" : 1
+				},
+				{
 					"directoryIndex" : 0,
 					"id" : "Worms-Taller-1::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Worms-Taller-1-Debug-bbe8601e325fa3d6363b.json",
+					"jsonFile" : "target-Worms-Taller-1-Debug-d7af39a4798518d3fea6.json",
 					"name" : "Worms-Taller-1",
 					"projectIndex" : 0
 				}

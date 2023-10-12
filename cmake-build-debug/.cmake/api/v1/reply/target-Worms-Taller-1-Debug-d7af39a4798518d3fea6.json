@@ -11,11 +11,13 @@
 		"commands" : 
 		[
 			"add_executable",
-			"target_link_libraries"
+			"target_link_libraries",
+			"add_definitions"
 		],
 		"files" : 
 		[
-			"CMakeLists.txt"
+			"CMakeLists.txt",
+			"Client/SDL2pp/CMakeLists.txt"
 		],
 		"nodes" : 
 		[
@@ -25,11 +27,26 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 8,
+				"line" : 17,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
+				"file" : 0,
+				"line" : 23,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 189,
+				"parent" : 3
+			},
+			{
+				"command" : 2,
 				"file" : 0,
 				"line" : 14,
 				"parent" : 0
@@ -50,6 +67,31 @@
 				{
 					"backtrace" : 2,
 					"define" : "B2_SHARED"
+				},
+				{
+					"backtrace" : 5,
+					"define" : "DATA_PATH=\"/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/data\""
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 2,
+					"path" : "/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/SDL2pp"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Client/SDL2pp"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/SDL2"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/local/include/SDL2"
 				}
 			],
 			"language" : "CXX",
@@ -69,6 +111,13 @@
 			]
 		}
 	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "SDL2pp::@48365626584821f002c0"
+		}
+	],
 	"id" : "Worms-Taller-1::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
@@ -83,8 +132,37 @@
 				"role" : "flags"
 			},
 			{
+				"fragment" : "-Wl,-rpath,/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Client/SDL2pp:/usr/local/lib",
+				"role" : "libraries"
+			},
+			{
 				"backtrace" : 2,
 				"fragment" : "/usr/lib/x86_64-linux-gnu/libbox2d.so.2.4.1",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "Client/SDL2pp/libSDL2pp.so.8.3.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libSDL2main.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "/usr/local/lib/libSDL2_image.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "/usr/local/lib/libSDL2_ttf.so",
 				"role" : "libraries"
 			}
 		],

@@ -425,3 +425,41 @@ Parsed CXX implicit link information from above output:
   implicit fwks: []
 
 
+Performing C++ SOURCE FILE Test COMPILER_HAS_HIDDEN_VISIBILITY succeeded with the following output:
+Change Dir: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-PlAyhM
+
+Run Build Command(s):/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/ninja/linux/x64/ninja cmTC_422e6 && [1/2] Building CXX object CMakeFiles/cmTC_422e6.dir/src.cxx.o
+[2/2] Linking CXX executable cmTC_422e6
+
+
+Source file was:
+int main() { return 0; }
+
+Performing C++ SOURCE FILE Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY succeeded with the following output:
+Change Dir: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-DuTDoJ
+
+Run Build Command(s):/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/ninja/linux/x64/ninja cmTC_dce20 && [1/2] Building CXX object CMakeFiles/cmTC_dce20.dir/src.cxx.o
+[2/2] Linking CXX executable cmTC_dce20
+
+
+Source file was:
+int main() { return 0; }
+
+Performing C++ SOURCE FILE Test COMPILER_HAS_DEPRECATED_ATTR succeeded with the following output:
+Change Dir: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-Vm2y2H
+
+Run Build Command(s):/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/ninja/linux/x64/ninja cmTC_4b9ed && [1/2] Building CXX object CMakeFiles/cmTC_4b9ed.dir/src.cxx.o
+/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-Vm2y2H/src.cxx: In function ‘int main()’:
+/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-Vm2y2H/src.cxx:2:33: warning: ‘int somefunc()’ is deprecated [-Wdeprecated-declarations]
+    2 |     int main() { return somefunc();}
+      |                         ~~~~~~~~^~
+/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-Vm2y2H/src.cxx:1:37: note: declared here
+    1 | __attribute__((__deprecated__)) int somefunc() { return 0; }
+      |                                     ^~~~~~~~
+[2/2] Linking CXX executable cmTC_4b9ed
+
+
+Source file was:
+__attribute__((__deprecated__)) int somefunc() { return 0; }
+    int main() { return somefunc();}
+

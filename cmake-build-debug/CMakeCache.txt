@@ -150,6 +150,21 @@ CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 //Value Computed by CMake
 CMAKE_PROJECT_NAME:STATIC=Worms-Taller-1
 
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION:STATIC=0.17.0
+
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION_MAJOR:STATIC=0
+
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION_MINOR:STATIC=17
+
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION_PATCH:STATIC=0
+
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION_TWEAK:STATIC=
+
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
 
@@ -212,6 +227,21 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//The directory containing a CMake configuration file for SDL2.
+SDL2_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/SDL2
+
+//Path to a file.
+SDL2_IMAGE_INCLUDE_DIR:PATH=/usr/local/include/SDL2
+
+//Path to a library.
+SDL2_IMAGE_LIBRARY:FILEPATH=/usr/local/lib/libSDL2_image.so
+
+//Path to a file.
+SDL2_TTF_INCLUDE_DIR:PATH=/usr/local/include/SDL2
+
+//Path to a library.
+SDL2_TTF_LIBRARY:FILEPATH=/usr/local/lib/libSDL2_ttf.so
+
 //Value Computed by CMake
 Worms-Taller-1_BINARY_DIR:STATIC=/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug
 
@@ -223,6 +253,15 @@ Worms-Taller-1_SOURCE_DIR:STATIC=/home/abraham/Escritorio/Taller/TPS-Taller-2023
 
 //The directory containing a CMake configuration file for box2d.
 box2d_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/box2d
+
+//Value Computed by CMake
+libSDL2pp_BINARY_DIR:STATIC=/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Client/SDL2pp
+
+//Value Computed by CMake
+libSDL2pp_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+libSDL2pp_SOURCE_DIR:STATIC=/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/SDL2pp
 
 
 ########################
@@ -325,7 +364,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -368,6 +407,14 @@ CMAKE_STRIP-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Compiler support for a deprecated attribute
+COMPILER_HAS_DEPRECATED:INTERNAL=1
+//Test COMPILER_HAS_DEPRECATED_ATTR
+COMPILER_HAS_DEPRECATED_ATTR:INTERNAL=1
+//Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY
+COMPILER_HAS_HIDDEN_INLINE_VISIBILITY:INTERNAL=1
+//Test COMPILER_HAS_HIDDEN_VISIBILITY
+COMPILER_HAS_HIDDEN_VISIBILITY:INTERNAL=1
 //linker supports push/pop state
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
 

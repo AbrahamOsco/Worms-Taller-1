@@ -1,0 +1,81 @@
+name: CI
+on: [ push, pull_request ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:rolling
+    strategy:
+      matrix:
+        include:
+          - { cxx: g++,     features: "coverage" }
+          - { cxx: clang++, features: "nooptlibs" }
+          - { cxx: clang++, features: "static" }
+    name: ${{ matrix.cxx }} ${{ matrix.features }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          apt-get update -qq
+          apt-get install -yqq --no-install-recommends build-essential clang cmake libsdl2-dev cppcheck doxygen graphviz xvfb curl
+          if [ ${{ !contains(matrix.features, 'nooptlibs') }} = true ]; then
+            apt-get install -qq --no-install-recommends libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
+          fi
+          if [ ${{ contains(matrix.features, 'coverage') }} = true ]; then
+            apt-get install -qq --no-install-recommends python3-pip git
+            pip install --user pyyaml cpp-coveralls
+          fi
+
+      - name: Set up environment
+        run: |
+          curl --insecure https://raw.githubusercontent.com/AMDmi3/github_env/c8cc83d/github_env.py > e; chmod 755 e
+          ./e 'CXX=${{ matrix.cxx }}'
+          ./e 'CXXFLAGS=-Wall -Wextra -pedantic' # XXX: Add -Werror
+          ./e 'SDL_AUDIODRIVER=disk'
+          ./e 'SDL_VIDEODRIVER=x11'
+          ./e 'DISPLAY=:99.0'
+          ./e --if ${{ matrix.xxx == 'clang++' }} 'CXXFLAGS+=-Wno-self-assign-overloaded'  # explicit self-assignment tests
+          ./e --if ${{ contains(matrix.features, 'coverage') }} 'CXXFLAGS+=--coverage' 'LDFLAGS+=--coverage'
+          ./e --if ${{ contains(matrix.features, 'nooptlibs') }} 'CMAKE_ARGS+=-DSDL2PP_WITH_IMAGE=NO -DSDL2PP_WITH_MIXER=NO -DSDL2PP_WITH_TTF=NO'
+          ./e --if ${{ contains(matrix.features, 'static') }} 'CMAKE_ARGS+=-DSDL2PP_STATIC=YES'
+
+      - name: Set up environment for live tests
+        run: |
+          /sbin/start-stop-daemon --start --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 800x600x24 -ac +extension GLX
+
+      - name: Configure
+        run: cmake . -DCMAKE_VERBOSE_MAKEFILE=yes -DCMAKE_INSTALL_PREFIX=/usr ${CMAKE_ARGS}
+      - name: Build
+        run: cmake --build .
+      - name: Run tests
+        run: ctest -V
+      - name: Install
+        run: cmake --install .
+
+      - name: Run cppcheck
+        # `style' gives false positive in cppcheck 1.61 which comes with trusty
+        run: cppcheck -I . --enable=performance,portability,information,missingInclude,style --error-exitcode=2 SDL2pp || true
+
+      - name: Doxygen check
+        run: |
+          make doxygen
+          if git ls-files --others --exclude-standard | grep ''; then echo 'FATAL: incomplete .gitignore'; false; fi
+
+      - name: Testing client code with pkg-config detection
+        run: |
+          cd $GITHUB_WORKSPACE/exttests/pkg-config
+          make
+      - name: Testing client code with CMake detection
+        run: |
+          cd $GITHUB_WORKSPACE/exttests/cmake
+          cmake .
+          cmake --build .
+
+      - name: Upload coverage
+        if: ${{ contains(matrix.features, 'coverage') }}
+        uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true
