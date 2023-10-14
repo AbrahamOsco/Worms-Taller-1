@@ -14,6 +14,7 @@ set (TESTBED_SOURCE_FILES
 	tests/add_pair.cpp
 	tests/apply_force.cpp
 	tests/body_types.cpp
+	tests/prueba1.cpp
 	tests/box_stack.cpp
 	tests/breakable.cpp
 	tests/bridge.cpp
