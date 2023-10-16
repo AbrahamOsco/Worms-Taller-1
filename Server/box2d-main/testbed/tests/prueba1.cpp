@@ -4,7 +4,8 @@
 #include <box2d/b2_body.h>
 #include "math.h"
 #include <iostream>
-
+#include <map>
+#include <vector>
 #define MITAD_TAMANIO_GUSANO 1.0f
 
 enum ESTADO_MOV { MOVER_IZQUIERDA, MOVER_DERECHA, STOP };
@@ -13,13 +14,13 @@ enum DIR_MOVE { IZQUIERDA, DERECHA};
 enum JUMP_TYPE {SALTO_ADELANTE, SALTO_ATRAS};
 
 class GameObject{
-private:
+protected:
     ENTITY tipoEntidad;
 
 public:
     GameObject(ENTITY unaEntidad) : tipoEntidad(unaEntidad) {}
 
-    virtual ENTITY getTypeEntity() {
+    ENTITY getTypeEntity() const {
         return tipoEntidad;
     }
     virtual ~GameObject() = default;
@@ -29,6 +30,8 @@ class Beam : public GameObject {
 private:
     b2Body* body;
 public:
+    Beam() : GameObject(ENTITY::VIGA),  body(NULL) {}
+
     Beam(b2World* world, b2Vec2 coordWorld, b2Vec2 dimensions, float angulo) : GameObject(ENTITY::VIGA)  {
         b2BodyDef defViga;
         defViga.type = b2_staticBody;
@@ -52,13 +55,13 @@ public:
     ~Beam() = default;
 };
 
-class Worm : GameObject {
+class Worm : public GameObject {
 private:
     b2Body* body;
     size_t idPlayer;
-    bool hayContacto;
+    size_t numberContacts;
 public:
-    Worm(b2World* world, float positionYOrig, size_t idPlayer) : GameObject(ENTITY::GUSANO), idPlayer(idPlayer), hayContacto(false) {
+    Worm(b2World* world, float positionYOrig, size_t idPlayer) : GameObject(ENTITY::GUSANO), idPlayer(idPlayer), numberContacts(0) {
         b2BodyDef defGusano;
         defGusano.type = b2_dynamicBody;
         defGusano.position.Set(0.0f, positionYOrig);
@@ -115,14 +118,14 @@ public:
     }
 
     void startContact(){
-        hayContacto = true;
+        numberContacts++;
     }
     void endContact(){
-        hayContacto = false;
+        numberContacts--;
     }
 
     void render(){
-        if(hayContacto){
+        if(numberContacts > 0 ){
             std::cout << "Hay contacnto  jejeje\n";
         } else {
             std::cout << "No hay contacto aun\n";
@@ -132,68 +135,73 @@ public:
     ~Worm() = default;
 
 };
-/*
-        if(gameObject->getTypeEntity() == ENTITY::GUSANO){
-            std::cout << "Entre aca ENTTITY-1\n";
-            Worm* unWorm = (Worm*) gameObject;
-            unWorm->startContact();
-        } else if (otroGameObject->getTypeEntity() == ENTITY::GUSANO){
-            std::cout << "Entre aca ENTTITY-2\n";
-            Worm* unWorm = (Worm*) otroGameObject;
-            unWorm->startContact();
-        }
- */
+
 class MyContactListener : public b2ContactListener{
 
     void BeginContact(b2Contact* contact) override{
-        GameObject* gameObject = (GameObject*) contact->GetFixtureA()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
-        std::cout << "Luego del primer casteo\n";
-        GameObject* otroGameObject = (GameObject*) contact->GetFixtureB()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
-        std::cout << "Luego del segundo casteo\n";
+        GameObject* gameObject = (GameObject*) contact->GetFixtureA()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
+        GameObject* otroGamObj = (GameObject*) contact->GetFixtureB()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
+        std::cout << "gameObject: " << gameObject->getTypeEntity() << " otroGamObj : " << otroGamObj->getTypeEntity() << "\n";
         if(gameObject->getTypeEntity() == ENTITY::GUSANO){
-            std::cout << "Entre aca ENTTITY-1\n";
+            Worm* unGusano = (Worm*) gameObject;
+            unGusano->startContact();
+        } else if (otroGamObj->getTypeEntity() == ENTITY::GUSANO){
+            Worm* unGusano = (Worm*) otroGamObj;
+            unGusano->startContact();
 
-        } else if (otroGameObject->getTypeEntity() == ENTITY::GUSANO){
-            std::cout << "Entre aca ENTTITY-2\n";
         }
     }
 
-    void EndContact(b2Contact* contact) {
-        GameObject* gameObject = (GameObject*)contact->GetFixtureA()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
-        GameObject* otroGameObject = (GameObject*)contact->GetFixtureB()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
+    void EndContact(b2Contact* contact) override {
+        GameObject* gameObject = (GameObject*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
+        GameObject* otroGamObj = (GameObject*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
+        std::cout << "gameObject : ." << gameObject->getTypeEntity() << "otroGamObj : " << otroGamObj->getTypeEntity() << "\n";
         if(gameObject->getTypeEntity() == ENTITY::GUSANO){
             std::cout << "Entre aca ENTTITY-1 END-CONTACT \n";
-
-        } else if (otroGameObject->getTypeEntity() == ENTITY::GUSANO){
+            Worm* unGusano = (Worm*) gameObject;
+            unGusano->endContact();
+        } else if (otroGamObj->getTypeEntity() == ENTITY::GUSANO){
             std::cout << "Entre aca ENTTITY-2 ENC CONTACT \n";
+            Worm* unGusano = (Worm*) otroGamObj;
+            unGusano->endContact();
         }
     }
 };
-MyContactListener myContactListener;
+/*
+        Beam* vigaUna = new Beam(m_world, b2Vec2(tamanio/2, 0.0f), b2Vec2(tamanio/2, 0.4f), 0 );
+        Beam* vigaDos = new Beam(m_world, b2Vec2(0, tamanio/2), b2Vec2(tamanio/2, 0.4f), 90 );
+        Beam* vigaTres = new Beam(m_world, b2Vec2(tamanio, tamanio/2), b2Vec2(tamanio/2, 0.4f), 90);
+        Beam* vigaCuatro = new Beam(m_world, b2Vec2(tamanio/2, tamanio), b2Vec2(tamanio/2, 0.4f), 0);
+        vigas.push_back(vigaUna);
+        vigas.push_back(vigaDos);
+        vigas.push_back(vigaTres);
+        vigas.push_back(vigaCuatro);
+ */
 
 class Prueba1 : public Test{
-
 public:
     float maxAlturaY;
     float maxRangoX;
     bool estaEnContacto;
     Worm unGusano;
-    Prueba1() : unGusano(m_world, 3.450f, 1) {
+    std::vector<Beam*> vigas;
+    MyContactListener myContactListener;
+    Prueba1() : unGusano(m_world, 3.450f, 1){
+
+        Beam* vigaUna = new Beam(m_world, b2Vec2(tamanio/2, 0.0f), b2Vec2(tamanio/2, 0.4f), 0 );
+        Beam* vigaDos = new Beam(m_world, b2Vec2(0, tamanio/2), b2Vec2(tamanio/2, 0.4f), 90 );
+        Beam* vigaTres = new Beam(m_world, b2Vec2(tamanio, tamanio/2), b2Vec2(tamanio/2, 0.4f), 90);
+        Beam* vigaCuatro = new Beam(m_world, b2Vec2(tamanio/2, tamanio), b2Vec2(tamanio/2, 0.4f), 0);
+        vigas.push_back(vigaUna);
+        vigas.push_back(vigaDos);
+        vigas.push_back(vigaTres);
+        vigas.push_back(vigaCuatro);
+
         maxAlturaY = 0.0f;
         maxRangoX = 0.0f;
         estaEnContacto = false;
         float tamanio = 30.0f;
         m_world->SetContactListener(&myContactListener);
-        Beam beam1(m_world, b2Vec2(tamanio/2, 0.0f), b2Vec2(tamanio/2, 0.4f), 0 );
-        Beam beam2(m_world, b2Vec2(0, tamanio/2), b2Vec2(tamanio/2, 0.4f), 90 );
-        Beam beam3(m_world, b2Vec2(tamanio, tamanio/2), b2Vec2(tamanio/2, 0.4f), 90);
-        Beam beam4(m_world, b2Vec2(tamanio/2, tamanio), b2Vec2(tamanio/2, 0.4f), 0);
-    }
-    void startContact(){
-        estaEnContacto = true;
-    }
-    void endContact(){
-        estaEnContacto = false;
     }
 
     void Keyboard(int key) override{
@@ -221,6 +229,7 @@ public:
         std::string posicionGusano = "X: " + std::to_string(posicion.x)  + " Y: " + std::to_string(posicion.y) + "  Masa: " + std::to_string( unGusano.getWorm()->GetMass() ) + "\n";
         std::string estadisticas = posicionGusano + "MaxAltura Y: " +  std::to_string(maxAlturaY) + "  Max DistX: " + std::to_string(maxRangoX) + "\n";
         g_debugDraw.DrawString(5, m_textLine, estadisticas.data());
+        unGusano.render();
     }
 
     static Test* Create(){
