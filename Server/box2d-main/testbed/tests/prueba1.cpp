@@ -236,6 +236,13 @@ public:
         return new Prueba1;
     }
 
+    ~Prueba1() {
+        // Liberar la memoria asignada a los objetos Beam
+        for (auto& viga : vigas) {
+            delete viga;
+        }
+    }
+
 };
 
 static int testIndex = RegisterTest("Examples", "Prueba 1", Prueba1::Create);
