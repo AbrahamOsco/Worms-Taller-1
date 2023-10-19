@@ -187,11 +187,12 @@ public:
     std::vector<Beam*> vigas;
     MyContactListener myContactListener;
     Prueba1() : unGusano(m_world, 3.450f, 1){
-
+        float tamanio = 30.0f;
         Beam* vigaUna = new Beam(m_world, b2Vec2(tamanio/2, 0.0f), b2Vec2(tamanio/2, 0.4f), 0 );
         Beam* vigaDos = new Beam(m_world, b2Vec2(0, tamanio/2), b2Vec2(tamanio/2, 0.4f), 90 );
         Beam* vigaTres = new Beam(m_world, b2Vec2(tamanio, tamanio/2), b2Vec2(tamanio/2, 0.4f), 90);
         Beam* vigaCuatro = new Beam(m_world, b2Vec2(tamanio/2, tamanio), b2Vec2(tamanio/2, 0.4f), 0);
+        b2Vec2(-5.0f, 5.0f), b2Vec2(3.0f, 0.4f), 45, m_world
         vigas.push_back(vigaUna);
         vigas.push_back(vigaDos);
         vigas.push_back(vigaTres);
@@ -200,7 +201,6 @@ public:
         maxAlturaY = 0.0f;
         maxRangoX = 0.0f;
         estaEnContacto = false;
-        float tamanio = 30.0f;
         m_world->SetContactListener(&myContactListener);
     }
 
