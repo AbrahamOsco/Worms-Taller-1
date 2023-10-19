@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+58ed3f6d42df1b8d8379d9f46369df28 ui_login.h
+d9f211619b7a291edb5df77d19f9fbda ui_mainmenu.h

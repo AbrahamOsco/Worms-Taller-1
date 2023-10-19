@@ -1,0 +1,3 @@
+/home/nicolasgirardi/Documentos/Taller/TP Grupal/Worms-Taller-1/Client/ui/build/CMakeFiles/test.dir
+/home/nicolasgirardi/Documentos/Taller/TP Grupal/Worms-Taller-1/Client/ui/build/CMakeFiles/edit_cache.dir
+/home/nicolasgirardi/Documentos/Taller/TP Grupal/Worms-Taller-1/Client/ui/build/CMakeFiles/rebuild_cache.dir
