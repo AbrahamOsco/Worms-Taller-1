@@ -192,7 +192,6 @@ public:
         Beam* vigaDos = new Beam(m_world, b2Vec2(0, tamanio/2), b2Vec2(tamanio/2, 0.4f), 90 );
         Beam* vigaTres = new Beam(m_world, b2Vec2(tamanio, tamanio/2), b2Vec2(tamanio/2, 0.4f), 90);
         Beam* vigaCuatro = new Beam(m_world, b2Vec2(tamanio/2, tamanio), b2Vec2(tamanio/2, 0.4f), 0);
-        b2Vec2(-5.0f, 5.0f), b2Vec2(3.0f, 0.4f), 45, m_world
         vigas.push_back(vigaUna);
         vigas.push_back(vigaDos);
         vigas.push_back(vigaTres);
