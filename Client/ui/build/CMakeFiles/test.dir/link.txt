@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/test.dir/src/login.cpp.o CMakeFiles/test.dir/src/main.cpp.o CMakeFiles/test.dir/src/mainmenu.cpp.o -o test  /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.3 /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.3 /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.3 
