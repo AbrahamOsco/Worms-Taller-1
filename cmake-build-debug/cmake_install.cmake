@@ -1,4 +1,4 @@
-# Install script for directory: /home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1
+# Install script for directory: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -29,7 +29,7 @@ endif()
 
 # Install shared libraries without execute permission?
 if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
-  set(CMAKE_INSTALL_SO_NO_EXE "0")
+  set(CMAKE_INSTALL_SO_NO_EXE "1")
 endif()
 
 # Is this installation the result of a crosscompile?
@@ -44,17 +44,17 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Client/SDL2pp/cmake_install.cmake")
+  include("/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Client/SDL2pp/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Server/box2d-main/cmake_install.cmake")
+  include("/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Server/box2d-main/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Client/ui/cmake_install.cmake")
+  include("/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Client/ui/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -65,5 +65,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

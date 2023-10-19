@@ -1,4 +1,4 @@
-# Install script for directory: /home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/Server/box2d-main
+# Install script for directory: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/box2d-main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -29,7 +29,7 @@ endif()
 
 # Install shared libraries without execute permission?
 if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
-  set(CMAKE_INSTALL_SO_NO_EXE "0")
+  set(CMAKE_INSTALL_SO_NO_EXE "1")
 endif()
 
 # Is this installation the result of a crosscompile?
@@ -43,17 +43,17 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/Server/box2d-main/include/box2d")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/box2d-main/include/box2d")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Server/box2d-main/src/cmake_install.cmake")
-  include("/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Server/box2d-main/extern/glad/cmake_install.cmake")
-  include("/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Server/box2d-main/extern/glfw/cmake_install.cmake")
-  include("/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Server/box2d-main/extern/imgui/cmake_install.cmake")
-  include("/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Server/box2d-main/extern/sajson/cmake_install.cmake")
-  include("/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Server/box2d-main/testbed/cmake_install.cmake")
+  include("/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Server/box2d-main/src/cmake_install.cmake")
+  include("/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Server/box2d-main/extern/glad/cmake_install.cmake")
+  include("/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Server/box2d-main/extern/glfw/cmake_install.cmake")
+  include("/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Server/box2d-main/extern/imgui/cmake_install.cmake")
+  include("/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Server/box2d-main/extern/sajson/cmake_install.cmake")
+  include("/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Server/box2d-main/testbed/cmake_install.cmake")
 
 endif()
 
