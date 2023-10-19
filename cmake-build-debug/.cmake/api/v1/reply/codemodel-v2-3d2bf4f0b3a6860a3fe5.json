@@ -1,0 +1,282 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "Client/SDL2pp",
+					"jsonFile" : "directory-Client.SDL2pp-Debug-ce4bb3afeb4fb749d4f4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "Client/SDL2pp",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "Server/box2d-main",
+					"childIndexes" : 
+					[
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-Server.box2d-main-Debug-c25aea4c2d67998ff4cb.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "Server/box2d-main"
+				},
+				{
+					"build" : "Server/box2d-main/src",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-Server.box2d-main.src-Debug-49249b5f82d0fe9ca52b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "Server/box2d-main/src",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "Server/box2d-main/extern/glad",
+					"jsonFile" : "directory-Server.box2d-main.extern.glad-Debug-9e0a71738c6062443b2b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "Server/box2d-main/extern/glad",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "Server/box2d-main/extern/glfw",
+					"jsonFile" : "directory-Server.box2d-main.extern.glfw-Debug-989132d59f85d6ae7c93.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "Server/box2d-main/extern/glfw",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "Server/box2d-main/extern/imgui",
+					"jsonFile" : "directory-Server.box2d-main.extern.imgui-Debug-03d1a13bb99e5bd3ef65.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "Server/box2d-main/extern/imgui",
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"build" : "Server/box2d-main/extern/sajson",
+					"jsonFile" : "directory-Server.box2d-main.extern.sajson-Debug-93f749eb02b3c6f53893.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "Server/box2d-main/extern/sajson",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "Server/box2d-main/testbed",
+					"jsonFile" : "directory-Server.box2d-main.testbed-Debug-d5d037651d21c2860183.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "Server/box2d-main/testbed",
+					"targetIndexes" : 
+					[
+						7
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Worms-Taller-1",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "libSDL2pp",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"name" : "box2d",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5,
+						6,
+						7
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL2pp::@48365626584821f002c0",
+					"jsonFile" : "target-SDL2pp-Debug-adb77265128f794d7f4e.json",
+					"name" : "SDL2pp",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Worms-Taller-1::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Worms-Taller-1-Debug-3cd8dd776306001338b1.json",
+					"name" : "Worms-Taller-1",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "box2d::@6c059db395d11dd796e2",
+					"jsonFile" : "target-box2d-Debug-68d91322e643c8bf44eb.json",
+					"name" : "box2d",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "glad::@cc0e1b5b307258fc1987",
+					"jsonFile" : "target-glad-Debug-22d2f1a1c0610b4c6278.json",
+					"name" : "glad",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "glfw::@9741979f8644f8e172b9",
+					"jsonFile" : "target-glfw-Debug-ff390266d84929f9bf95.json",
+					"name" : "glfw",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "imgui::@0677a310e95bd1aed749",
+					"jsonFile" : "target-imgui-Debug-78965ff68f3f2c4e1134.json",
+					"name" : "imgui",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "sajson::@0d519826222a809ebc97",
+					"jsonFile" : "target-sajson-Debug-2b20572d1fc165944652.json",
+					"name" : "sajson",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "testbed::@210126e0d34c3b377bc0",
+					"jsonFile" : "target-testbed-Debug-83732cc83aa070679d98.json",
+					"name" : "testbed",
+					"projectIndex" : 2
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug",
+		"source" : "/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

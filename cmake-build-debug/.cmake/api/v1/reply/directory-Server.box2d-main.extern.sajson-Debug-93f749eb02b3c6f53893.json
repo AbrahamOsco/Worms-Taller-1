@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "Server/box2d-main/extern/sajson",
+		"source" : "Server/box2d-main/extern/sajson"
+	}
+}

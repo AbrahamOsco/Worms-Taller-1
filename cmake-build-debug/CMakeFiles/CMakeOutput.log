@@ -463,3 +463,80 @@ Source file was:
 __attribute__((__deprecated__)) int somefunc() { return 0; }
     int main() { return somefunc();}
 
+Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD succeeded with the following output:
+Change Dir: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-Q8ZfuF
+
+Run Build Command(s):/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/ninja/linux/x64/ninja cmTC_5e52e && [1/2] Building C object CMakeFiles/cmTC_5e52e.dir/src.c.o
+[2/2] Linking C executable cmTC_5e52e
+
+
+Source file was:
+#include <pthread.h>
+
+static void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_cancel(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+
+
+Determining if the function XOpenDisplay exists in the /usr/lib/x86_64-linux-gnu/libX11.so;/usr/lib/x86_64-linux-gnu/libXext.so passed with the following output:
+Change Dir: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-EJtCbX
+
+Run Build Command(s):/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/ninja/linux/x64/ninja cmTC_a1062 && [1/2] Building C object CMakeFiles/cmTC_a1062.dir/CheckFunctionExists.c.o
+[2/2] Linking C executable cmTC_a1062
+
+
+
+Determining if the function gethostbyname exists passed with the following output:
+Change Dir: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-BeUpdt
+
+Run Build Command(s):/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/ninja/linux/x64/ninja cmTC_a2ccf && [1/2] Building C object CMakeFiles/cmTC_a2ccf.dir/CheckFunctionExists.c.o
+[2/2] Linking C executable cmTC_a2ccf
+
+
+
+Determining if the function connect exists passed with the following output:
+Change Dir: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-4fgGn6
+
+Run Build Command(s):/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/ninja/linux/x64/ninja cmTC_852e8 && [1/2] Building C object CMakeFiles/cmTC_852e8.dir/CheckFunctionExists.c.o
+[2/2] Linking C executable cmTC_852e8
+
+
+
+Determining if the function remove exists passed with the following output:
+Change Dir: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LVC4V7
+
+Run Build Command(s):/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/ninja/linux/x64/ninja cmTC_30d0d && [1/2] Building C object CMakeFiles/cmTC_30d0d.dir/CheckFunctionExists.c.o
+[2/2] Linking C executable cmTC_30d0d
+
+
+
+Determining if the function shmat exists passed with the following output:
+Change Dir: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-VMuT99
+
+Run Build Command(s):/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/ninja/linux/x64/ninja cmTC_2b1ce && [1/2] Building C object CMakeFiles/cmTC_2b1ce.dir/CheckFunctionExists.c.o
+[2/2] Linking C executable cmTC_2b1ce
+
+
+
+Determining if the function IceConnectionNumber exists in the ICE passed with the following output:
+Change Dir: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-aqdA89
+
+Run Build Command(s):/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/ninja/linux/x64/ninja cmTC_df6c7 && [1/2] Building C object CMakeFiles/cmTC_df6c7.dir/CheckFunctionExists.c.o
+[2/2] Linking C executable cmTC_df6c7
+
+
+

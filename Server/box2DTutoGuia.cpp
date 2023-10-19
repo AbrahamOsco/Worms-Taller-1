@@ -446,12 +446,15 @@ void tutoBox2DParte7(){
     // los moustros y los jugadores.
     /*
     playerFixtureDef.filter.categoryBits = 0x0002;
-    monsterFixtureDef.filter.categoryBits = 0x0004;
     playerFixtureDef.filter.maskBits = 0x0004;
+
+     monsterFixtureDef.filter.categoryBits = 0x0004;
     monsterFixtureDef.filter.maskBits = 0x0002;
+
     uint16 catA = fixtureA.filter.categoryBits;
     uint16 maskA = fixtureA.filter.maskBits;
-    uint16 catB = fixtureB.filter.categoryBits;
+
+     uint16 catB = fixtureB.filter.categoryBits;
     uint16 maskB = fixtureB.filter.maskBits;
     if ((catA & maskB) != 0 && (catB & maskA) != 0){
         // fixtures can collide

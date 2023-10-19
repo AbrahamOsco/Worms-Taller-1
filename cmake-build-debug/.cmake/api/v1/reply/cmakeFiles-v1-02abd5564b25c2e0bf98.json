@@ -217,6 +217,102 @@
 			"isCMake" : true,
 			"isExternal" : true,
 			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/exportheader.cmake.in"
+		},
+		{
+			"path" : "Server/box2d-main/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/GNUInstallDirs.cmake"
+		},
+		{
+			"path" : "Server/box2d-main/src/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/CMakePackageConfigHelpers.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/WriteBasicConfigVersionFile.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/BasicConfigVersion-SameMajorVersion.cmake.in"
+		},
+		{
+			"path" : "Server/box2d-main/extern/glad/CMakeLists.txt"
+		},
+		{
+			"path" : "Server/box2d-main/extern/glfw/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/CheckIncludeFile.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/CheckCSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/FindX11.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/CheckFunctionExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/share/cmake-3.25/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"path" : "Server/box2d-main/extern/imgui/CMakeLists.txt"
+		},
+		{
+			"path" : "Server/box2d-main/extern/sajson/CMakeLists.txt"
+		},
+		{
+			"path" : "Server/box2d-main/testbed/CMakeLists.txt"
 		}
 	],
 	"kind" : "cmakeFiles",

@@ -9,7 +9,7 @@
 #include "Posicion.h"
 enum Direccion { IZQUIERDA = 0, DERECHA = 1 };
 
-class Gusano {
+class Worm {
 private:
     float velocidad;
     float alturaSalto;
@@ -18,7 +18,7 @@ private:
 
 
 public:
-    Gusano(const Posicion& unaPos, const float& unaVelocidad, const float& unaAltura, const float& unHp);
+    Worm(const Posicion& unaPos, const float& unaVelocidad, const float& unaAltura, const float& unHp);
     void moverse(const Direccion& unaDireccion);
 
 };

@@ -6,6 +6,7 @@ project(Worms-Taller-1)
 set(SDL2PP_WITH_IMAGE YES)
 set(SDL2PP_WITH_TTF YES)
 add_subdirectory(./Client/SDL2pp)
+add_subdirectory(Server/box2d-main)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -21,4 +22,3 @@ add_executable(Worms-Taller-1 Server/main.cpp
         Server/src/Modelo/Posicion.cpp )
 
 target_link_libraries(Worms-Taller-1 PRIVATE box2d::box2d PUBLIC SDL2pp )
-
