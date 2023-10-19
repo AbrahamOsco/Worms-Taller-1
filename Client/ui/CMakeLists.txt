@@ -17,6 +17,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 # No, no los genera con la carpeta como prefijo.
 qt5_wrap_ui(UIS_HEADERS
         ui/login.ui
+        ui/mainmenu.ui
 )
 
 # Agrego la carpeta con los headers autogenerados a los includes
@@ -28,6 +29,7 @@ message("Headers generados: ${UIS_HEADERS}")
 add_executable(test
   src/login.cpp
   src/main.cpp
+  src/mainmenu.cpp
   ${UIS_HEADERS})
 
 # Use the Widgets module from Qt 5.

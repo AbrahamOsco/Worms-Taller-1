@@ -1,11 +1,11 @@
 #include "login.h"
 // Cargo el archivo generado por uic, leer el CMakelist.txt para mas info
 #include "ui_login.h"
+#include <unistd.h>
+#include "mainmenu.h"
 
 Login::Login(QWidget *parent) : QWidget(parent) {
-    // Instancio la configuracion generada por el designer y uic
     Ui::Login login;
-    // Configuro este widget para use esa configuracion
     login.setupUi(this);
     connectEvents();
 }
@@ -28,11 +28,18 @@ void Login::updateLogin() {
     const char* portChar = portArray.constData();
     QString update = QString("Conectandose al servidor %1 \n puerto %2...").arg(server,port);
     labelOut->setText(update);
+    sleep(5);
+    this->close();
 }
-
+void Login::exit(){
+    this->close();
+}
 void Login::connectEvents() {
     // Conecto el evento del boton
-    QPushButton* buttonGreet = findChild<QPushButton*>("buttonLogin");
-    QObject::connect(buttonGreet, &QPushButton::clicked,
+    QPushButton* buttonConnect = findChild<QPushButton*>("buttonLogin");
+    QObject::connect(buttonConnect, &QPushButton::clicked,
                      this, &Login::updateLogin);
+    QPushButton* buttonSalir = findChild<QPushButton*>("buttonExit");
+    QObject::connect(buttonSalir, &QPushButton::clicked,
+                     this, &Login::exit);
 }

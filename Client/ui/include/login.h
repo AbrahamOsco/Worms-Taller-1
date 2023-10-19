@@ -9,5 +9,6 @@ public:
 private:
     void updateLogin();
     void connectEvents();
+    void exit();
 };
 #endif 
