@@ -60,3 +60,10 @@
 /home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Server/box2d-main/testbed/CMakeFiles/install.dir
 /home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Server/box2d-main/testbed/CMakeFiles/install/local.dir
 /home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Server/box2d-main/testbed/CMakeFiles/install/strip.dir
+/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Client/ui/CMakeFiles/test.dir
+/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Client/ui/CMakeFiles/edit_cache.dir
+/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Client/ui/CMakeFiles/rebuild_cache.dir
+/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Client/ui/CMakeFiles/list_install_components.dir
+/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Client/ui/CMakeFiles/install.dir
+/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Client/ui/CMakeFiles/install/local.dir
+/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Client/ui/CMakeFiles/install/strip.dir

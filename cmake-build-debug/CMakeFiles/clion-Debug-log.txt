@@ -2,6 +2,9 @@
 -- Found SDL2_image: /usr/lib64/libSDL2_image.so
 -- Found SDL2_ttf: /usr/lib64/libSDL2_ttf.so
 -- SDL2_mixer support disabled
--- Configuring done (0.1s)
+[INFO] La raiz del proyecto es /home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/Client/ui
+Agregando '/home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Client/ui' como directorio de includes
+Headers generados: /home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug/Client/ui/ui_login.h
+-- Configuring done (0.2s)
 -- Generating done (0.1s)
 -- Build files have been written to: /home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug

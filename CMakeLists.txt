@@ -7,6 +7,7 @@ set(SDL2PP_WITH_IMAGE YES)
 set(SDL2PP_WITH_TTF YES)
 add_subdirectory(./Client/SDL2pp)
 add_subdirectory(Server/box2d-main)
+add_subdirectory(Client/ui)
 
 set(CMAKE_CXX_STANDARD 17)
 
