@@ -136,19 +136,42 @@ public:
 
 };
 
+
+void wormCollidesWithBeam(GameObject* worm, GameObject* beam){
+    std::cout << "Worm colisionar con el beam\n";
+    Worm* unWorm = (Worm*) (worm);
+    Beam* unaBeam = (Beam*) (beam);
+    unWorm->startContact();
+}
+
+void beamCollideWithWorm(GameObject* beam, GameObject* worm){
+    wormCollidesWithBeam(worm, beam);
+}
+
+
 class MyContactListener : public b2ContactListener{
+private:
+    typedef void (*HitFunctionPtr)(GameObject*, GameObject*);
+    std::map<std::pair<ENTITY, ENTITY>, HitFunctionPtr> collisionsMap;
+
+public:
+    MyContactListener(b2World* world){
+        world->SetContactListener(this);
+        collisionsMap[std::make_pair(ENTITY::GUSANO, ENTITY::VIGA) ] =  &wormCollidesWithBeam;
+        collisionsMap[std::make_pair(ENTITY::VIGA, ENTITY::GUSANO) ] =  &beamCollideWithWorm;
+        std::cout << "ENTITY::GUSANO " << ENTITY::GUSANO << "ENTITY::VIGA " << ENTITY::VIGA << "\n";
+    }
 
     void BeginContact(b2Contact* contact) override{
         GameObject* gameObject = (GameObject*) contact->GetFixtureA()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
-        GameObject* otroGamObj = (GameObject*) contact->GetFixtureB()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
-        std::cout << "gameObject: " << gameObject->getTypeEntity() << " otroGamObj : " << otroGamObj->getTypeEntity() << "\n";
-        if(gameObject->getTypeEntity() == ENTITY::GUSANO){
-            Worm* unGusano = (Worm*) gameObject;
-            unGusano->startContact();
-        } else if (otroGamObj->getTypeEntity() == ENTITY::GUSANO){
-            Worm* unGusano = (Worm*) otroGamObj;
-            unGusano->startContact();
-
+        GameObject* otroGameObject = (GameObject*) contact->GetFixtureB()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
+        auto iteratorElement =  collisionsMap.find( std::make_pair(gameObject->getTypeEntity(), otroGameObject->getTypeEntity())); // nos retorna un iterador
+        if(iteratorElement != collisionsMap.end() ){
+            std::cout << "iteratorElement != collisionsMap.end()\n";
+            auto hitFunction = iteratorElement->second;
+            if(hitFunction){
+                hitFunction(gameObject, otroGameObject);
+            }
         }
     }
 
@@ -186,7 +209,7 @@ public:
     Worm unGusano;
     std::vector<Beam*> vigas;
     MyContactListener myContactListener;
-    Prueba1() : unGusano(m_world, 3.450f, 1){
+    Prueba1() : unGusano(m_world, 3.450f, 1), myContactListener(m_world){
         float tamanio = 30.0f;
         Beam* vigaUna = new Beam(m_world, b2Vec2(tamanio/2, 0.0f), b2Vec2(tamanio/2, 0.4f), 0 );
         Beam* vigaDos = new Beam(m_world, b2Vec2(0, tamanio/2), b2Vec2(tamanio/2, 0.4f), 90 );
