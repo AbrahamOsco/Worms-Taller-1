@@ -1,7 +1,7 @@
-/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/abraham/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.9161.40/bin/ninja/linux/x64/ninja -G Ninja -S /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1 -B /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug
--- Found SDL2_image: /usr/local/lib/libSDL2_image.so
--- Found SDL2_ttf: /usr/local/lib/libSDL2_ttf.so
+/home/riclui/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1 -B /home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug
+-- Found SDL2_image: /usr/lib64/libSDL2_image.so
+-- Found SDL2_ttf: /usr/lib64/libSDL2_ttf.so
 -- SDL2_mixer support disabled
--- Configuring done
--- Generating done
--- Build files have been written to: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/cmake-build-debug

@@ -1,4 +1,4 @@
-# Install script for directory: /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/box2d-main/extern/glfw
+# Install script for directory: /home/riclui/Documentos/fiuba/taller-de-programacion-I/Worms-Taller-1/Server/box2d-main/extern/glfw
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -29,7 +29,7 @@ endif()
 
 # Install shared libraries without execute permission?
 if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
-  set(CMAKE_INSTALL_SO_NO_EXE "1")
+  set(CMAKE_INSTALL_SO_NO_EXE "0")
 endif()
 
 # Is this installation the result of a crosscompile?
