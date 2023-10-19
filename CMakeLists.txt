@@ -20,6 +20,6 @@ add_executable(Worms-Taller-1 Server/main.cpp
         Server/src/Modelo/Gusano.h
         Server/src/Modelo/Gusano.cpp
         Server/src/Modelo/Posicion.h
-        Server/src/Modelo/Posicion.cpp )
+        Server/src/Modelo/Posicion.cpp Server/src/Control/Server.h Server/src/Control/Server.cpp Server/src/Control/server_main.cpp)
 
 target_link_libraries(Worms-Taller-1 box2d SDL2pp)
