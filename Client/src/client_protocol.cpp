@@ -1,11 +1,11 @@
 #include "client_protocol.h"
 
-ClientProtocol::ClientProtocol(Socket&& skt) :
-        Protocol(std::move(skt)) {}
+ClientProtocol::ClientProtocol(Socket& skt) :
+        Protocol(skt) {}
 
 MapDTO ClientProtocol::recvMap() {
-    uint8_t opType = recvANumberByte();
-    if (opType != DTO::OpType::MAP) {
+    auto opType = static_cast<OpType>(recvANumberByte());
+    if (opType != OpType::MAP) {
         // no se si conviene exception o return mapa vacio.
     }
 
@@ -22,13 +22,13 @@ MapDTO ClientProtocol::recvMap() {
 }
 
 BeamDTO ClientProtocol::recvBeam() {
-    uint8_t opType = recvANumberByte();
-    if (opType != DTO::OpType::BEAM) {
+    auto opType = static_cast<OpType>(recvANumberByte());
+    if (opType != OpType::BEAM) {
         // no se si conviene exception o return beam vacio.
     }
 
     int beamTypeInt = recvANumberByte();
-    auto beamType = static_cast<BeamDTO::BeamType>(beamTypeInt);
+    auto beamType = static_cast<BeamType>(beamTypeInt);
 
     int xCoord = recvNum2Bytes();
 
@@ -41,8 +41,8 @@ BeamDTO ClientProtocol::recvBeam() {
 }
 
 WormDTO ClientProtocol::recvWorm() {
-    uint8_t opType = recvANumberByte();
-    if (opType != DTO::OpType::WORM) {
+    auto opType = static_cast<OpType>(recvANumberByte());
+    if (opType != OpType::WORM) {
         // no se si conviene exception o return worm vacio.
     }
 
@@ -53,3 +53,5 @@ WormDTO ClientProtocol::recvWorm() {
     WormDTO worm(xCoord, yCoord);
     return worm;
 }
+
+ClientProtocol::~ClientProtocol() = default;

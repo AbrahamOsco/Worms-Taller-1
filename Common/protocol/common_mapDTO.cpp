@@ -1,10 +1,6 @@
 #include "common_mapDTO.h"
 
-MapDTO::MapDTO(const std::vector<BeamDTO> &beams) : opType(MAP), beams(beams) {}
-
-int MapDTO::getOpType() {
-    return opType;
-}
+MapDTO::MapDTO(const std::vector<BeamDTO> &beams) : DTO(MAP), beams(beams) {}
 
 unsigned int MapDTO::getNumBeams() {
     return beams.size();
@@ -13,3 +9,5 @@ unsigned int MapDTO::getNumBeams() {
 std::vector<BeamDTO> &MapDTO::getBeams() {
     return beams;
 }
+
+MapDTO::~MapDTO() = default;

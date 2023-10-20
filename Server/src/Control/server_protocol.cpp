@@ -1,13 +1,11 @@
 #include "server_protocol.h"
 
-#include <iostream>
-
-ServerProtocol::ServerProtocol(Socket&& skt) :
-        Protocol(std::move(skt)){}
+ServerProtocol::ServerProtocol(Socket& skt) :
+        Protocol(skt){}
 
 void ServerProtocol::sendMap(MapDTO& aMap) {
 
-    int op = aMap.getOpType();
+    OpType op = aMap.getOpType();
     Protocol::sendANumberByte(op);
 
     uint16_t numBeams = aMap.getNumBeams();
@@ -20,10 +18,10 @@ void ServerProtocol::sendMap(MapDTO& aMap) {
 }
 
 void ServerProtocol::sendBeam(BeamDTO& aBeam) {
-    uint8_t op = aBeam.getOpType();
+    OpType op = aBeam.getOpType();
     Protocol::sendANumberByte(op);
 
-    uint8_t beamType = aBeam.getBeamType();
+    BeamType beamType = aBeam.getBeamType();
     Protocol::sendANumberByte(beamType);
 
     int xCoord = aBeam.getX();
@@ -37,7 +35,7 @@ void ServerProtocol::sendBeam(BeamDTO& aBeam) {
 }
 
 void ServerProtocol::sendWorm(WormDTO& aWorm) {
-    uint8_t op = aWorm.getOpType();
+    OpType op = aWorm.getOpType();
     Protocol::sendANumberByte(op);
 
     int xCoord = aWorm.getX();
@@ -46,3 +44,5 @@ void ServerProtocol::sendWorm(WormDTO& aWorm) {
     int yCoord = aWorm.getY();
     Protocol::sendNum2Bytes(yCoord);
 }
+
+ServerProtocol::~ServerProtocol() = default;

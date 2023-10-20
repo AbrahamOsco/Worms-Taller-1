@@ -11,7 +11,7 @@
 
 class Protocol {
 protected:
-    Socket skt;
+    Socket& skt;
     bool wasClosed;
 
     void sendString(const std::string& aString);
@@ -22,7 +22,8 @@ protected:
     uint16_t recvNum2Bytes();
 
 public:
-    explicit Protocol(Socket&& skt);
+    explicit Protocol(Socket& skt);
+    virtual ~Protocol();
 };
 
 

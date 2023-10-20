@@ -1,6 +1,6 @@
 #include "common_protocol.h"
 
-Protocol::Protocol(Socket&& skt) : skt(std::move(skt)), wasClosed(false) {}
+Protocol::Protocol(Socket& skt) : skt(skt), wasClosed(false) {}
 
 void Protocol::sendString(const std::string& aString) {
     size_t s = 0;
@@ -65,3 +65,5 @@ uint16_t Protocol::recvNum2Bytes() {
     unNumero = ntohs(unNumero);
     return unNumero;
 }
+
+Protocol::~Protocol() {}

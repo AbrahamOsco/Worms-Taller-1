@@ -3,28 +3,25 @@
 
 #include "common_DTO.h"
 
-class BeamDTO : public DTO {
-public:
-    enum BeamType {
-        LONG = 0,
-        SHORT = 1
-    };
+enum BeamType {
+    LONG = 0,
+    SHORT = 1
+};
 
-private:
-    DTO::OpType opType;
+class BeamDTO : public DTO {
     int x;
     int y;
     int angle;
-    BeamDTO::BeamType type;
+    BeamType type;
 
 public:
-    BeamDTO(int x, int y, int angle, BeamDTO::BeamType type);
+    BeamDTO(int x, int y, int angle, BeamType type);
 
-    int getOpType() override;
-    int getBeamType();
+    BeamType getBeamType();
     int getX() const;
     int getY() const;
     int getAngle() const;
+    ~BeamDTO() override;
 };
 
 

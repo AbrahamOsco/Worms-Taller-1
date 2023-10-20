@@ -7,14 +7,14 @@
 
 class MapDTO : public DTO {
     //size x, size y?
-    DTO::OpType opType;
     std::vector<BeamDTO> beams;
+
 public:
     explicit MapDTO(const std::vector<BeamDTO>& beams);
 
-    int getOpType() override;
     unsigned int getNumBeams();
     std::vector<BeamDTO>& getBeams();
+    ~MapDTO() override;
 };
 
 

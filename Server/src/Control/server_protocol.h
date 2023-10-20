@@ -6,12 +6,12 @@
 class ServerProtocol : public Protocol {
 
 public:
-    explicit ServerProtocol(Socket&& skt);
+    explicit ServerProtocol(Socket& skt);
 
     void sendMap(MapDTO& aMap);
     void sendWorm(WormDTO& aWorm);
     void sendBeam(BeamDTO& aBeam);
-
+    ~ServerProtocol();
 };
 
 

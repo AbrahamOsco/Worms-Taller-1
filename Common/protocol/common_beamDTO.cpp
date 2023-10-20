@@ -1,13 +1,10 @@
 #include "common_beamDTO.h"
 
-BeamDTO::BeamDTO(int x, int y, int angle, BeamDTO::BeamType type) :
-    opType(BEAM), x(x), y(y), angle(angle), type(type) {}
+BeamDTO::BeamDTO(int x, int y, int angle, BeamType type) :
+        DTO(BEAM), x(x), y(y), angle(angle), type(type) {}
 
-int BeamDTO::getOpType() {
-    return opType;
-}
 
-int BeamDTO::getBeamType() {
+BeamType BeamDTO::getBeamType() {
     return type;
 }
 
@@ -22,3 +19,5 @@ int BeamDTO::getY() const {
 int BeamDTO::getAngle() const {
     return angle;
 }
+
+BeamDTO::~BeamDTO() = default;

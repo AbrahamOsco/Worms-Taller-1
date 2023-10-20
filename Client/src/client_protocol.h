@@ -6,11 +6,12 @@
 class ClientProtocol : public Protocol {
 
 public:
-    explicit ClientProtocol(Socket&& skt);
+    explicit ClientProtocol(Socket& skt);
 
     MapDTO recvMap();
     BeamDTO recvBeam();
     WormDTO recvWorm();
+    ~ClientProtocol();
 };
 
 
