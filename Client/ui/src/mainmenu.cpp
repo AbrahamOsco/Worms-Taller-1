@@ -7,12 +7,23 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent) {
     connectEvents();
 }
 
-void MainMenu::exit() {
+void MainMenu::crearPartida() {
+    crear.show();
+}
+void MainMenu::salir(){
     this->close();
 }
-
+void MainMenu::buscarPartida(){
+    this->close();
+}
 void MainMenu::connectEvents() {
     QPushButton* buttonSalir = findChild<QPushButton*>("buttonSalir");
     QObject::connect(buttonSalir, &QPushButton::clicked,
-                     this, &MainMenu::exit);
+                     this, &MainMenu::salir);
+    QPushButton* buttonCrear = findChild<QPushButton*>("buttonCrear");
+    QObject::connect(buttonCrear, &QPushButton::clicked,
+                     this, &MainMenu::crearPartida);
+    QPushButton* buttonBuscar = findChild<QPushButton*>("buttonBuscar");
+    QObject::connect(buttonBuscar, &QPushButton::clicked,
+                     this, &MainMenu::buscarPartida);                           
 }
