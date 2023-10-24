@@ -9,8 +9,5 @@ int main(int argc, char *argv[]) {
     Login login;
     login.show();
     // Arranca el loop de la UI
-    int i = app.exec();
-    MainMenu mainmenu;
-    mainmenu.show();
     return app.exec();
 }

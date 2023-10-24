@@ -28,8 +28,9 @@ void Login::updateLogin() {
     const char* portChar = portArray.constData();
     QString update = QString("Conectandose al servidor %1 \n puerto %2...").arg(server,port);
     labelOut->setText(update);
-    sleep(5);
-    this->close();
+    sleep(1);
+    hide();
+    mainmenu.show();
 }
 void Login::exit(){
     this->close();
