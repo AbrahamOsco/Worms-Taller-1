@@ -881,7 +881,7 @@ CODE
       This is the preferred solution for developer productivity. 
       In particular, the "micro-synergy-client" repository (https://github.com/symless/micro-synergy-client) has simple
       and portable source code (uSynergy.c/.h) for a small embeddable client that you can use on any platform to connect 
-      to your host computer, based on the Synergy 1.x protocol. Make sure you download the Synergy 1 server on your computer.
+      to your host computer, based on the Synergy 1.x Protocol. Make sure you download the Synergy 1 server on your computer.
       Console SDK also sometimes provide equivalent tooling or wrapper for Synergy-like protocols.
     - You may also use a third party solution such as Remote ImGui (https://github.com/JordiRos/remoteimgui) which sends 
       the vertices to render over the local network, allowing you to use Dear ImGui even on a screen-less machine.

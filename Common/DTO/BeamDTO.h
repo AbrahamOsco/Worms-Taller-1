@@ -17,7 +17,7 @@ class BeamDTO : public DTO {
 public:
     BeamDTO(int x, int y, int angle, BeamType type);
 
-    BeamType getBeamType();
+    BeamType getBeamType() const;
     int getX() const;
     int getY() const;
     int getAngle() const;

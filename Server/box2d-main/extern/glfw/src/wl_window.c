@@ -539,7 +539,7 @@ static GLFWbool createShellSurface(_GLFWwindow* window)
     if (!_glfw.wl.shell)
     {
         _glfwInputError(GLFW_PLATFORM_ERROR,
-                        "Wayland: wl_shell protocol not available");
+                        "Wayland: wl_shell Protocol not available");
         return GLFW_FALSE;
     }
 

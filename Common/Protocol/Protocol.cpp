@@ -38,7 +38,7 @@ uint8_t Protocol::recvANumberByte() {
     size_t s = 0;
     s += skt.recvall(&operacion, sizeof(operacion), &wasClosed);
     if (s != sizeof(operacion)) {
-        //return CIERRA_CONEXION; ????
+        return CLOSED_CONNECTION;
     }
     return operacion;
 }

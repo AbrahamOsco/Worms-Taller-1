@@ -4,7 +4,7 @@ BeamDTO::BeamDTO(int x, int y, int angle, BeamType type) :
         DTO(BEAM), x(x), y(y), angle(angle), type(type) {}
 
 
-BeamType BeamDTO::getBeamType() {
+BeamType BeamDTO::getBeamType() const {
     return type;
 }
 

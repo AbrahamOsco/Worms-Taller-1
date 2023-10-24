@@ -421,7 +421,7 @@ static void detectEWMH(void)
     unsigned long atomCount;
 
     // Now we need to check the _NET_SUPPORTED property of the root window
-    // It should be a list of supported WM protocol and state atoms
+    // It should be a list of supported WM Protocol and state atoms
     atomCount = _glfwGetWindowPropertyX11(_glfw.x11.root,
                                           wmSupported,
                                           XA_ATOM,

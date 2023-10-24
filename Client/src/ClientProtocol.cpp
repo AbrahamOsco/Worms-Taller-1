@@ -1,4 +1,4 @@
-#include "client_protocol.h"
+#include "ClientProtocol.h"
 
 ClientProtocol::ClientProtocol(Socket& skt) :
         Protocol(skt) {}

@@ -8,7 +8,7 @@
 #include <cstddef>
 #include <atomic>
 
-#include "../../Common/Socket.h"
+#include "../../../Common/Socket/Socket.h"
 #include "../../Common/Thread/Thread.h"
 
 class ClientThread : public Thread {

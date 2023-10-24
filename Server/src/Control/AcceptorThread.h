@@ -8,7 +8,7 @@
 #include <cstddef>
 #include <list>
 
-#include "../../Common/Socket.h"
+#include "../../../Common/Socket/Socket.h"
 #include "../../Common/Thread/Thread.h"
 #include "ClientThread.h"
 

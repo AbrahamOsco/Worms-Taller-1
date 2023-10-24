@@ -16,10 +16,36 @@ set(CMAKE_CXX_STANDARD 17)
 add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/Client/data")
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
-add_executable(Worms-Taller-1 Server/main.cpp
-        Server/src/Modelo/Gusano.h
-        Server/src/Modelo/Gusano.cpp
-        Server/src/Modelo/Posicion.h
-        Server/src/Modelo/Posicion.cpp Server/src/Control/Server.h Server/src/Control/Server.cpp Server/src/Control/ServerMain.cpp Server/src/Control/ServerProtocol.cpp Common/Thread/Thread.h Common/Thread/Thread.cpp Server/src/Control/AcceptorThread.h Server/src/Control/AcceptorThread.cpp Server/src/Control/ClientThread.h Server/src/Control/ClientThread.cpp Server/src/Control/ReceiverThread.h Server/src/Control/ReceiverThread.cpp Server/src/Control/SenderThread.h Server/src/Control/SenderThread.cpp)
+# Para el main mas externo: Server/main.cpp
+add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
+
+        #Server
+        Server/src/Control/Server.h Server/src/Control/Server.cpp
+        Server/src/Control/ServerProtocol.h Server/src/Control/ServerProtocol.cpp
+        Server/src/Control/AcceptorThread.h Server/src/Control/AcceptorThread.cpp
+        Server/src/Control/ClientThread.h Server/src/Control/ClientThread.cpp
+        Server/src/Control/ReceiverThread.h Server/src/Control/ReceiverThread.cpp
+        Server/src/Control/SenderThread.h Server/src/Control/SenderThread.cpp
+
+        #¢ommon
+        Common/Thread/Thread.h Common/Thread/Thread.cpp
+        Common/Queue/Queue.h
+
+        #Socket
+        Common/Socket/LibError.h Common/Socket/LibError.cpp
+        Common/Socket/ResolveError.h Common/Socket/ResolveError.cpp
+        Common/Socket/Resolver.h Common/Socket/Resolver.cpp
+        Common/Socket/Socket.h Common/Socket/Socket.cpp
+
+        #Protocol
+        Common/Protocol/Protocol.h Common/Protocol/Protocol.cpp
+
+        #DTOs
+        Common/DTO/BeamDTO.h Common/DTO/BeamDTO.cpp
+        Common/DTO/DTO.h Common/DTO/DTO.cpp
+        Common/DTO/LobbyAnswerDTO.h Common/DTO/LobbyAnswerDTO.cpp
+        Common/DTO/WormDTO.h Common/DTO/WormDTO.cpp
+        Common/DTO/MapDTO.h     Common/DTO/MapDTO.cpp)
+
 
 target_link_libraries(Worms-Taller-1 box2d SDL2pp)

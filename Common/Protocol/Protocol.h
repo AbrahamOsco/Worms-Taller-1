@@ -1,15 +1,15 @@
 #ifndef WORMS_TALLER_1_PROTOCOL_H
 #define WORMS_TALLER_1_PROTOCOL_H
 
-#include "../Socket.h"
+#include "../Socket/Socket.h"
 
-#include "MapDTO.h"
-#include "BeamDTO.h"
-#include "WormDTO.h"
+#include "../DTO/MapDTO.h"
+#include "../DTO/BeamDTO.h"
+#include "../DTO/WormDTO.h"
 #include <vector>
 #include <stdexcept>
 #include <netdb.h>
-
+#define CLOSED_CONNECTION 0
 
 class Protocol {
 protected:

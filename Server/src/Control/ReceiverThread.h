@@ -6,7 +6,7 @@
 #define WORMS_TALLER_1_RECEIVERTHREAD_H
 
 #include <atomic>
-#include "../../Common/Socket.h"
+#include "../../../Common/Socket/Socket.h"
 #include "../../Common/Thread/Thread.h"
 
 class ReceiverThread : public Thread {

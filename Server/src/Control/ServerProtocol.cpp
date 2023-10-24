@@ -3,46 +3,64 @@
 ServerProtocol::ServerProtocol(Socket& skt) :
         Protocol(skt){}
 
-void ServerProtocol::sendMap(MapDTO& aMap) {
+void ServerProtocol::sendMap(const MapDTO &aMap) {
 
-    OpType op = aMap.getOpType();
-    Protocol::sendANumberByte(op);
+    OpType op = aMap.getOperationType();
+    sendANumberByte(op);
 
     uint16_t numBeams = aMap.getNumBeams();
-    Protocol::sendNum2Bytes(numBeams);
+    sendNum2Bytes(numBeams);
 
-    std::vector<BeamDTO>& beams = aMap.getBeams();
-    for (auto & beam : beams) {
+    std::vector<BeamDTO> beams = aMap.getBeams();
+    for (auto beam : beams) {
         sendBeam(beam);
     }
 }
 
-void ServerProtocol::sendBeam(BeamDTO& aBeam) {
-    OpType op = aBeam.getOpType();
-    Protocol::sendANumberByte(op);
+void ServerProtocol::sendBeam(const BeamDTO &aBeam) {
+    OpType op = aBeam.getOperationType();
+    sendANumberByte(op);
 
     BeamType beamType = aBeam.getBeamType();
-    Protocol::sendANumberByte(beamType);
+    sendANumberByte(beamType);
 
     int xCoord = aBeam.getX();
-    Protocol::sendNum2Bytes(xCoord);
+    sendNum2Bytes(xCoord);
 
     int yCoord = aBeam.getY();
-    Protocol::sendNum2Bytes(yCoord);
+    sendNum2Bytes(yCoord);
 
     int angle = aBeam.getAngle();
-    Protocol::sendNum2Bytes(angle);
+    sendNum2Bytes(angle);
 }
 
-void ServerProtocol::sendWorm(WormDTO& aWorm) {
-    OpType op = aWorm.getOpType();
-    Protocol::sendANumberByte(op);
+void ServerProtocol::sendWorm(const WormDTO &aWorm) {
+    OpType op = aWorm.getOperationType();
+    sendANumberByte(op);
 
     int xCoord = aWorm.getX();
-    Protocol::sendNum2Bytes(xCoord);
+    sendNum2Bytes(xCoord);
 
     int yCoord = aWorm.getY();
-    Protocol::sendNum2Bytes(yCoord);
+    sendNum2Bytes(yCoord);
+}
+
+LobbyAnswerDTO ServerProtocol::recvLobbyAnswer() {
+    LobbyAnswerDTO aLobbyAnswer;
+    int operationType = static_cast<int>(recvANumberByte());
+    if(operationType == CLOSED_CONNECTION){
+        return aLobbyAnswer; // cliente cerro la conexion;
+    }
+    std::string gameName = recvString();
+    aLobbyAnswer.setGameName(gameName);
+    if (operationType == OpType::CREATE_GAME){
+        aLobbyAnswer.setOperationType(OpType::CREATE_GAME);
+        std::string nameScenario = recvString();
+        aLobbyAnswer.setSelectScenario(nameScenario);
+    } else if ( operationType == OpType::JOIN_GAME){
+        aLobbyAnswer.setOperationType(OpType::JOIN_GAME);
+    }
+    return aLobbyAnswer;
 }
 
 ServerProtocol::~ServerProtocol() = default;

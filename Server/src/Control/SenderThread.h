@@ -6,7 +6,7 @@
 #define WORMS_TALLER_1_SENDERTHREAD_H
 
 #include <atomic>
-#include "../../Common/Socket.h"
+#include "../../../Common/Socket/Socket.h"
 #include "../../Common/Thread/Thread.h"
 
 class SenderThread : public Thread {

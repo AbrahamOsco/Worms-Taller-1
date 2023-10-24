@@ -12,8 +12,10 @@ class MapDTO : public DTO {
 public:
     explicit MapDTO(const std::vector<BeamDTO>& beams);
 
-    unsigned int getNumBeams();
-    std::vector<BeamDTO>& getBeams();
+    unsigned int getNumBeams() const;
+
+    std::vector<BeamDTO> getBeams() const;
+
     ~MapDTO() override;
 };
 

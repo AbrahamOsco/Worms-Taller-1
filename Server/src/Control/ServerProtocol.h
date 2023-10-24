@@ -1,19 +1,22 @@
 #ifndef WORMS_TALLER_1_SERVERPROTOCOL_H
 #define WORMS_TALLER_1_SERVERPROTOCOL_H
 
-#include "../../Common/protocol/Protocol.h"
-#include "../../Common/Socket.h"
+#include "../../Common/Protocol/Protocol.h"
+#include "../../../Common/Socket/Socket.h"
+#include "../../../Common/DTO/LobbyAnswerDTO.h"
 
 class ServerProtocol : public Protocol {
 
 public:
     explicit ServerProtocol(Socket& skt);
 
-    void sendMap(MapDTO& aMap);
+    void sendMap(const MapDTO &aMap);
 
-    void sendWorm(WormDTO& aWorm);
+    void sendWorm(const WormDTO &aWorm);
 
-    void sendBeam(BeamDTO& aBeam);
+    void sendBeam(const BeamDTO &aBeam);
+
+    LobbyAnswerDTO recvLobbyAnswer();
 
     ~ServerProtocol();
 

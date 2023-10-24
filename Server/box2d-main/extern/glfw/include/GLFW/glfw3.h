@@ -2174,7 +2174,7 @@ GLFWAPI const GLFWvidmode* glfwGetVideoMode(GLFWmonitor* monitor);
  *  @errors Possible errors include @ref GLFW_NOT_INITIALIZED, @ref
  *  GLFW_INVALID_VALUE and @ref GLFW_PLATFORM_ERROR.
  *
- *  @remark @wayland Gamma handling is a priviledged protocol, this function
+ *  @remark @wayland Gamma handling is a priviledged Protocol, this function
  *  will thus never be implemented and emits @ref GLFW_PLATFORM_ERROR.
  *
  *  @thread_safety This function must only be called from the main thread.
@@ -2198,7 +2198,7 @@ GLFWAPI void glfwSetGamma(GLFWmonitor* monitor, float gamma);
  *  @errors Possible errors include @ref GLFW_NOT_INITIALIZED and @ref
  *  GLFW_PLATFORM_ERROR.
  *
- *  @remark @wayland Gamma handling is a priviledged protocol, this function
+ *  @remark @wayland Gamma handling is a priviledged Protocol, this function
  *  will thus never be implemented and emits @ref GLFW_PLATFORM_ERROR while
  *  returning `NULL`.
  *
@@ -2242,7 +2242,7 @@ GLFWAPI const GLFWgammaramp* glfwGetGammaRamp(GLFWmonitor* monitor);
  *
  *  @remark @win32 The gamma ramp size must be 256.
  *
- *  @remark @wayland Gamma handling is a priviledged protocol, this function
+ *  @remark @wayland Gamma handling is a priviledged Protocol, this function
  *  will thus never be implemented and emits @ref GLFW_PLATFORM_ERROR.
  *
  *  @pointer_lifetime The specified gamma ramp is copied before this function
@@ -2481,13 +2481,13 @@ GLFWAPI void glfwWindowHintString(int hint, const char* value);
  *  @remark @wayland The window frame is currently very simple, only allowing
  *  window resize or move.  A compositor can still emit close, maximize or
  *  fullscreen events, using for example a keybind mechanism.  Additionally,
- *  the wp_viewporter protocol is required for this feature, otherwise the
+ *  the wp_viewporter Protocol is required for this feature, otherwise the
  *  window will not be decorated.
  *
  *  @remark @wayland A full screen window will not attempt to change the mode,
  *  no matter what the requested size or refresh rate.
  *
- *  @remark @wayland Screensaver inhibition requires the idle-inhibit protocol
+ *  @remark @wayland Screensaver inhibition requires the idle-inhibit Protocol
  *  to be implemented in the user's compositor.
  *
  *  @thread_safety This function must only be called from the main thread.
@@ -2630,7 +2630,7 @@ GLFWAPI void glfwSetWindowTitle(GLFWwindow* window, const char* title);
  *  [Bundle Programming Guide](https://developer.apple.com/library/mac/documentation/CoreFoundation/Conceptual/CFBundles/)
  *  in the Mac Developer Library.
  *
- *  @remark @wayland There is no existing protocol to change an icon, the
+ *  @remark @wayland There is no existing Protocol to change an icon, the
  *  window will thus inherit the one defined in the application's desktop file.
  *  This function always emits @ref GLFW_PLATFORM_ERROR.
  *
@@ -3037,7 +3037,7 @@ GLFWAPI void glfwSetWindowOpacity(GLFWwindow* window, float opacity);
  *
  *  @remark @wayland There is no concept of iconification in wl_shell, this
  *  function will emit @ref GLFW_PLATFORM_ERROR when using this deprecated
- *  protocol.
+ *  Protocol.
  *
  *  @thread_safety This function must only be called from the main thread.
  *
@@ -3571,8 +3571,8 @@ GLFWAPI GLFWwindowfocusfun glfwSetWindowFocusCallback(GLFWwindow* window, GLFWwi
  *
  *  @errors Possible errors include @ref GLFW_NOT_INITIALIZED.
  *
- *  @remark @wayland The wl_shell protocol has no concept of iconification,
- *  this callback will never be called when using this deprecated protocol.
+ *  @remark @wayland The wl_shell Protocol has no concept of iconification,
+ *  this callback will never be called when using this deprecated Protocol.
  *
  *  @thread_safety This function must only be called from the main thread.
  *
