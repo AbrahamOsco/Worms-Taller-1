@@ -17,7 +17,7 @@
 #undef _GNU_SOURCE
 #undef GNU_SOURCE
 
-#include "common_liberror.h"
+#include "LibError.h"
 
 #include <cstdarg>
 #include <cstdio>

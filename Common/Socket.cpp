@@ -1,4 +1,4 @@
-#include "common_socket.h"
+#include "Socket.h"
 
 #include <iostream>
 #include <stdexcept>
@@ -13,8 +13,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "common_liberror.h"
-#include "common_resolver.h"
+#include "LibError.h"
+#include "Resolver.h"
 
 Socket::Socket(const char* hostname, const char* servname) {
     Resolver resolver(hostname, resolverServiceNames(hostname, servname).c_str(), false);

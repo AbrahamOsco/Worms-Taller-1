@@ -6,15 +6,17 @@
 #define WORMS_TALLER_1_SERVER_H
 
 
-#include "../../../Common/common_socket.h"
+#include "../../Common/Socket.h"
 
 class Server {
 private:
-    Socket aceptador;
+    Socket sktAcceptor;
 public:
     Server(const char *serviceName);
 
     int run();
+
+    int runSingleThread();
 };
 
 

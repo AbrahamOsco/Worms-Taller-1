@@ -1,4 +1,4 @@
-#include "common_wormDTO.h"
+#include "WormDTO.h"
 
 WormDTO::WormDTO(int x, int y) : DTO(WORM), x(x), y(y) {}
 

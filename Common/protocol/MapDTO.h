@@ -1,8 +1,8 @@
 #ifndef WORMS_TALLER_1_SERVER_MAPDTO_H
 #define WORMS_TALLER_1_SERVER_MAPDTO_H
 
-#include "common_DTO.h"
-#include "common_beamDTO.h"
+#include "DTO.h"
+#include "BeamDTO.h"
 #include <vector>
 
 class MapDTO : public DTO {

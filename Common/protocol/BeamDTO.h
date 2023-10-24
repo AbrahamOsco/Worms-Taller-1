@@ -1,7 +1,7 @@
 #ifndef PROTOCOLO_SERVER_BEAMDTO_H
 #define PROTOCOLO_SERVER_BEAMDTO_H
 
-#include "common_DTO.h"
+#include "DTO.h"
 
 enum BeamType {
     LONG = 0,

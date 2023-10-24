@@ -1,4 +1,4 @@
-#include "common_beamDTO.h"
+#include "BeamDTO.h"
 
 BeamDTO::BeamDTO(int x, int y, int angle, BeamType type) :
         DTO(BEAM), x(x), y(y), angle(angle), type(type) {}

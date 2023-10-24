@@ -1,4 +1,4 @@
-#include "common_protocol.h"
+#include "Protocol.h"
 
 Protocol::Protocol(Socket& skt) : skt(skt), wasClosed(false) {}
 
@@ -67,3 +67,7 @@ uint16_t Protocol::recvNum2Bytes() {
 }
 
 Protocol::~Protocol() {}
+
+bool Protocol::isAvailable() const {
+    return !wasClosed;
+}

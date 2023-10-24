@@ -1,4 +1,4 @@
-#include "common_mapDTO.h"
+#include "MapDTO.h"
 
 MapDTO::MapDTO(const std::vector<BeamDTO> &beams) : DTO(MAP), beams(beams) {}
 

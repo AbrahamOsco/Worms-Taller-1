@@ -81,9 +81,57 @@ build CMakeFiles/Worms-Taller-1.dir/Server/src/Control/Server.cpp.o: CXX_COMPILE
   OBJECT_DIR = CMakeFiles/Worms-Taller-1.dir
   OBJECT_FILE_DIR = CMakeFiles/Worms-Taller-1.dir/Server/src/Control
 
-build CMakeFiles/Worms-Taller-1.dir/Server/src/Control/server_main.cpp.o: CXX_COMPILER__Worms-Taller-1_Debug /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/src/Control/server_main.cpp || cmake_object_order_depends_target_Worms-Taller-1
+build CMakeFiles/Worms-Taller-1.dir/Server/src/Control/ServerMain.cpp.o: CXX_COMPILER__Worms-Taller-1_Debug /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/src/Control/ServerMain.cpp || cmake_object_order_depends_target_Worms-Taller-1
   DEFINES = -DDATA_PATH=\"/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/data\"
-  DEP_FILE = CMakeFiles/Worms-Taller-1.dir/Server/src/Control/server_main.cpp.o.d
+  DEP_FILE = CMakeFiles/Worms-Taller-1.dir/Server/src/Control/ServerMain.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/box2d-main/src/../include -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/SDL2pp -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Client/SDL2pp -isystem /usr/include/SDL2 -isystem /usr/local/include/SDL2
+  OBJECT_DIR = CMakeFiles/Worms-Taller-1.dir
+  OBJECT_FILE_DIR = CMakeFiles/Worms-Taller-1.dir/Server/src/Control
+
+build CMakeFiles/Worms-Taller-1.dir/Server/src/Control/ServerProtocol.cpp.o: CXX_COMPILER__Worms-Taller-1_Debug /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/src/Control/ServerProtocol.cpp || cmake_object_order_depends_target_Worms-Taller-1
+  DEFINES = -DDATA_PATH=\"/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/data\"
+  DEP_FILE = CMakeFiles/Worms-Taller-1.dir/Server/src/Control/ServerProtocol.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/box2d-main/src/../include -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/SDL2pp -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Client/SDL2pp -isystem /usr/include/SDL2 -isystem /usr/local/include/SDL2
+  OBJECT_DIR = CMakeFiles/Worms-Taller-1.dir
+  OBJECT_FILE_DIR = CMakeFiles/Worms-Taller-1.dir/Server/src/Control
+
+build CMakeFiles/Worms-Taller-1.dir/Common/Thread/Thread.cpp.o: CXX_COMPILER__Worms-Taller-1_Debug /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Common/Thread/Thread.cpp || cmake_object_order_depends_target_Worms-Taller-1
+  DEFINES = -DDATA_PATH=\"/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/data\"
+  DEP_FILE = CMakeFiles/Worms-Taller-1.dir/Common/Thread/Thread.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/box2d-main/src/../include -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/SDL2pp -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Client/SDL2pp -isystem /usr/include/SDL2 -isystem /usr/local/include/SDL2
+  OBJECT_DIR = CMakeFiles/Worms-Taller-1.dir
+  OBJECT_FILE_DIR = CMakeFiles/Worms-Taller-1.dir/Common/Thread
+
+build CMakeFiles/Worms-Taller-1.dir/Server/src/Control/AcceptorThread.cpp.o: CXX_COMPILER__Worms-Taller-1_Debug /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/src/Control/AcceptorThread.cpp || cmake_object_order_depends_target_Worms-Taller-1
+  DEFINES = -DDATA_PATH=\"/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/data\"
+  DEP_FILE = CMakeFiles/Worms-Taller-1.dir/Server/src/Control/AcceptorThread.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/box2d-main/src/../include -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/SDL2pp -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Client/SDL2pp -isystem /usr/include/SDL2 -isystem /usr/local/include/SDL2
+  OBJECT_DIR = CMakeFiles/Worms-Taller-1.dir
+  OBJECT_FILE_DIR = CMakeFiles/Worms-Taller-1.dir/Server/src/Control
+
+build CMakeFiles/Worms-Taller-1.dir/Server/src/Control/ClientThread.cpp.o: CXX_COMPILER__Worms-Taller-1_Debug /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/src/Control/ClientThread.cpp || cmake_object_order_depends_target_Worms-Taller-1
+  DEFINES = -DDATA_PATH=\"/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/data\"
+  DEP_FILE = CMakeFiles/Worms-Taller-1.dir/Server/src/Control/ClientThread.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/box2d-main/src/../include -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/SDL2pp -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Client/SDL2pp -isystem /usr/include/SDL2 -isystem /usr/local/include/SDL2
+  OBJECT_DIR = CMakeFiles/Worms-Taller-1.dir
+  OBJECT_FILE_DIR = CMakeFiles/Worms-Taller-1.dir/Server/src/Control
+
+build CMakeFiles/Worms-Taller-1.dir/Server/src/Control/ReceiverThread.cpp.o: CXX_COMPILER__Worms-Taller-1_Debug /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/src/Control/ReceiverThread.cpp || cmake_object_order_depends_target_Worms-Taller-1
+  DEFINES = -DDATA_PATH=\"/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/data\"
+  DEP_FILE = CMakeFiles/Worms-Taller-1.dir/Server/src/Control/ReceiverThread.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/box2d-main/src/../include -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/SDL2pp -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Client/SDL2pp -isystem /usr/include/SDL2 -isystem /usr/local/include/SDL2
+  OBJECT_DIR = CMakeFiles/Worms-Taller-1.dir
+  OBJECT_FILE_DIR = CMakeFiles/Worms-Taller-1.dir/Server/src/Control
+
+build CMakeFiles/Worms-Taller-1.dir/Server/src/Control/SenderThread.cpp.o: CXX_COMPILER__Worms-Taller-1_Debug /home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/src/Control/SenderThread.cpp || cmake_object_order_depends_target_Worms-Taller-1
+  DEFINES = -DDATA_PATH=\"/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/data\"
+  DEP_FILE = CMakeFiles/Worms-Taller-1.dir/Server/src/Control/SenderThread.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always
   INCLUDES = -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Server/box2d-main/src/../include -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Client/SDL2pp -I/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Client/SDL2pp -isystem /usr/include/SDL2 -isystem /usr/local/include/SDL2
   OBJECT_DIR = CMakeFiles/Worms-Taller-1.dir
@@ -97,7 +145,7 @@ build CMakeFiles/Worms-Taller-1.dir/Server/src/Control/server_main.cpp.o: CXX_CO
 #############################################
 # Link the executable Worms-Taller-1
 
-build Worms-Taller-1: CXX_EXECUTABLE_LINKER__Worms-Taller-1_Debug CMakeFiles/Worms-Taller-1.dir/Server/main.cpp.o CMakeFiles/Worms-Taller-1.dir/Server/src/Modelo/Gusano.cpp.o CMakeFiles/Worms-Taller-1.dir/Server/src/Modelo/Posicion.cpp.o CMakeFiles/Worms-Taller-1.dir/Server/src/Control/Server.cpp.o CMakeFiles/Worms-Taller-1.dir/Server/src/Control/server_main.cpp.o | Server/box2d-main/bin/libbox2d.a Client/SDL2pp/libSDL2pp.so.8.3.0 /usr/lib/x86_64-linux-gnu/libSDL2.so /usr/lib/x86_64-linux-gnu/libSDL2main.a /usr/local/lib/libSDL2_image.so /usr/local/lib/libSDL2_ttf.so || Client/SDL2pp/libSDL2pp.so Server/box2d-main/bin/libbox2d.a Client/SDL2pp/libSDL2pp.so
+build Worms-Taller-1: CXX_EXECUTABLE_LINKER__Worms-Taller-1_Debug CMakeFiles/Worms-Taller-1.dir/Server/main.cpp.o CMakeFiles/Worms-Taller-1.dir/Server/src/Modelo/Gusano.cpp.o CMakeFiles/Worms-Taller-1.dir/Server/src/Modelo/Posicion.cpp.o CMakeFiles/Worms-Taller-1.dir/Server/src/Control/Server.cpp.o CMakeFiles/Worms-Taller-1.dir/Server/src/Control/ServerMain.cpp.o CMakeFiles/Worms-Taller-1.dir/Server/src/Control/ServerProtocol.cpp.o CMakeFiles/Worms-Taller-1.dir/Common/Thread/Thread.cpp.o CMakeFiles/Worms-Taller-1.dir/Server/src/Control/AcceptorThread.cpp.o CMakeFiles/Worms-Taller-1.dir/Server/src/Control/ClientThread.cpp.o CMakeFiles/Worms-Taller-1.dir/Server/src/Control/ReceiverThread.cpp.o CMakeFiles/Worms-Taller-1.dir/Server/src/Control/SenderThread.cpp.o | Server/box2d-main/bin/libbox2d.a Client/SDL2pp/libSDL2pp.so.8.3.0 /usr/lib/x86_64-linux-gnu/libSDL2.so /usr/lib/x86_64-linux-gnu/libSDL2main.a /usr/local/lib/libSDL2_image.so /usr/local/lib/libSDL2_ttf.so || Client/SDL2pp/libSDL2pp.so Server/box2d-main/bin/libbox2d.a Client/SDL2pp/libSDL2pp.so
   FLAGS = -g
   LINK_LIBRARIES = -Wl,-rpath,/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/cmake-build-debug/Client/SDL2pp:/usr/local/lib  Server/box2d-main/bin/libbox2d.a  Client/SDL2pp/libSDL2pp.so.8.3.0  /usr/lib/x86_64-linux-gnu/libSDL2.so  /usr/lib/x86_64-linux-gnu/libSDL2main.a  /usr/local/lib/libSDL2_image.so  /usr/local/lib/libSDL2_ttf.so
   OBJECT_DIR = CMakeFiles/Worms-Taller-1.dir

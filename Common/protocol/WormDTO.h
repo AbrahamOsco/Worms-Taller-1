@@ -1,7 +1,7 @@
 #ifndef PROTOCOLO_COMMON_WORMDTO_H
 #define PROTOCOLO_COMMON_WORMDTO_H
 
-#include "common_DTO.h"
+#include "DTO.h"
 
 class WormDTO : public DTO {
     int x;
