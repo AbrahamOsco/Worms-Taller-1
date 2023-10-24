@@ -5,7 +5,7 @@ project(Worms-Taller-1)
 # set up SDL2DelRuso library
 set(SDL2PP_WITH_IMAGE YES)
 set(SDL2PP_WITH_TTF YES)
-add_subdirectory(./Client/SDL2pp)
+add_subdirectory(Client/libs/SDL2pp)
 add_subdirectory(Server/box2d-main)
 add_subdirectory(Client/ui)
 
