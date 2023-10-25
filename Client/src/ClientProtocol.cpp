@@ -4,8 +4,8 @@ ClientProtocol::ClientProtocol(Socket& skt) :
         Protocol(skt) {}
 
 MapDTO ClientProtocol::recvMap() {
-    auto opType = static_cast<OpType>(recvANumberByte());
-    if (opType != OpType::MAP) {
+    auto opType = static_cast<OperationType>(recvANumberByte());
+    if (opType != OperationType::MAP) {
         // no se si conviene exception o return mapa vacio.
     }
 
@@ -22,8 +22,8 @@ MapDTO ClientProtocol::recvMap() {
 }
 
 BeamDTO ClientProtocol::recvBeam() {
-    auto opType = static_cast<OpType>(recvANumberByte());
-    if (opType != OpType::BEAM) {
+    auto opType = static_cast<OperationType>(recvANumberByte());
+    if (opType != OperationType::BEAM) {
         // no se si conviene exception o return beam vacio.
     }
 
@@ -41,8 +41,8 @@ BeamDTO ClientProtocol::recvBeam() {
 }
 
 WormDTO ClientProtocol::recvWorm() {
-    auto opType = static_cast<OpType>(recvANumberByte());
-    if (opType != OpType::WORM) {
+    auto opType = static_cast<OperationType>(recvANumberByte());
+    if (opType != OperationType::WORM) {
         // no se si conviene exception o return worm vacio.
     }
 

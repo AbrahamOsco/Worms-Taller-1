@@ -597,7 +597,7 @@ void b2Distance(b2DistanceOutput* output,
 
 // GJK-raycast
 // Algorithm by Gino van den Bergen.
-// "Smooth Mesh Contacts with GJK" in Game Physics Pearls. 2010
+// "Smooth Mesh Contacts with GJK" in GameRoom Physics Pearls. 2010
 bool b2ShapeCast(b2ShapeCastOutput * output, const b2ShapeCastInput * input)
 {
     output->iterations = 0;

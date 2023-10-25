@@ -4,12 +4,12 @@
 
 #include "DTO.h"
 
-DTO::DTO(OpType opType) : opType(opType) {}
+DTO::DTO(OperationType opType) : opType(opType) {}
 
-OpType DTO::getOperationType() const {
+OperationType DTO::getOperationType() const {
     return opType;
 }
 
-void DTO::setOperationType(const OpType &anOpType) {
+void DTO::setOperationType(const OperationType &anOpType) {
     this->opType = anOpType;
 }

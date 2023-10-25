@@ -5,7 +5,7 @@ ServerProtocol::ServerProtocol(Socket& skt) :
 
 void ServerProtocol::sendMap(const MapDTO &aMap) {
 
-    OpType op = aMap.getOperationType();
+    OperationType op = aMap.getOperationType();
     sendANumberByte(op);
 
     uint16_t numBeams = aMap.getNumBeams();
@@ -18,7 +18,7 @@ void ServerProtocol::sendMap(const MapDTO &aMap) {
 }
 
 void ServerProtocol::sendBeam(const BeamDTO &aBeam) {
-    OpType op = aBeam.getOperationType();
+    OperationType op = aBeam.getOperationType();
     sendANumberByte(op);
 
     BeamType beamType = aBeam.getBeamType();
@@ -35,7 +35,7 @@ void ServerProtocol::sendBeam(const BeamDTO &aBeam) {
 }
 
 void ServerProtocol::sendWorm(const WormDTO &aWorm) {
-    OpType op = aWorm.getOperationType();
+    OperationType op = aWorm.getOperationType();
     sendANumberByte(op);
 
     int xCoord = aWorm.getX();
@@ -53,12 +53,12 @@ LobbyAnswerDTO ServerProtocol::recvLobbyAnswer() {
     }
     std::string gameName = recvString();
     aLobbyAnswer.setGameName(gameName);
-    if (operationType == OpType::CREATE_GAME){
-        aLobbyAnswer.setOperationType(OpType::CREATE_GAME);
+    if (operationType == OperationType::CREATE_GAME){
+        aLobbyAnswer.setOperationType(OperationType::CREATE_GAME);
         std::string nameScenario = recvString();
         aLobbyAnswer.setSelectScenario(nameScenario);
-    } else if ( operationType == OpType::JOIN_GAME){
-        aLobbyAnswer.setOperationType(OpType::JOIN_GAME);
+    } else if (operationType == OperationType::JOIN_GAME){
+        aLobbyAnswer.setOperationType(OperationType::JOIN_GAME);
     }
     return aLobbyAnswer;
 }

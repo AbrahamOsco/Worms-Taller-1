@@ -10,19 +10,19 @@
 
 #include "../../../Common/Socket/Socket.h"
 #include "../../Common/Thread/Thread.h"
+#include "ProtectedGameRooms.h"
 
 class ClientThread : public Thread {
 private:
     Socket sktPeer;                             // cppcheck-suppress unusedStructMember
     std::atomic<bool> keepTalking;           // cppcheck-suppress unusedStructMember
     std::atomic<bool> isAlive;               // cppcheck-suppress unusedStructMember
-    //MapQueuesProtected& mapQueuesProtected;  // cppcheck-suppress unusedStructMember
     size_t idThread;                         // cppcheck-suppress unusedStructMember
-
+    ProtectedGameRooms &gameRooms;
+    //MapQueuesProtected& mapQueuesProtected;  // cppcheck-suppress unusedStructMember
 public:
     //  Constructor
-    ClientThread(Socket sktPeer, size_t unIdThr);
-
+    ClientThread(Socket socket, size_t i, ProtectedGameRooms &gameRooms);
     //  Pre: -.
     //  Post: Retorna true si el thread cliente deja de estar conectado false en caso opuesto.
     bool isDead() const;
