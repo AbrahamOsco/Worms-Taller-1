@@ -1,2 +1,4 @@
 .idea
 cmake-build-debug/
+cmake-build-debug/.ninja_log
+cmake-build-debug/Testing/Temporary/LastTest.log
