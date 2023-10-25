@@ -9,7 +9,7 @@
 #include <atomic>
 
 #include "../../../Common/Socket/Socket.h"
-#include "../../Common/Thread/Thread.h"
+#include "../../../Common/Thread/Thread.h"
 #include "ProtectedGameRooms.h"
 
 class ClientThread : public Thread {

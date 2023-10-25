@@ -7,7 +7,7 @@
 #include "SenderThread.h"
 #include "ServerProtocol.h"
 
-#include "../../Common/DTO/LobbyAnswerDTO.h"
+#include "../../../Common/DTO/LobbyAnswerDTO.h"
 
 
 ClientThread::ClientThread(Socket sktPeer, size_t unIdThr, ProtectedGameRooms &gameRooms) : sktPeer(std::move(sktPeer)), idThread(unIdThr), gameRooms(gameRooms) {
