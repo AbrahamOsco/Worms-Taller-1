@@ -16,6 +16,23 @@ set(CMAKE_CXX_STANDARD 17)
 add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/Client/data")
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
+add_executable(worms-client Client/src/main.cpp
+        Client/src/core/Engine.cpp
+        Client/src/core/Engine.h
+        Client/src/graphics/TextureManager.cpp
+        Client/src/graphics/TextureManager.h
+        Client/src/timer/Timer.cpp
+        Client/src/timer/Timer.h
+        Client/src/gameObject/GameObject.cpp
+        Client/src/gameObject/GameObject.h
+        Client/src/gameObject/IObject.h
+        Client/src/loaderParams/LoaderParams.cpp
+        Client/src/loaderParams/LoaderParams.h
+        Client/src/gameObject/player/Player.cpp
+        Client/src/gameObject/player/Player.h
+        Client/src/animation/Animation.cpp
+        Client/src/animation/Animation.h)
+
 # Para el main mas externo: Server/main.cpp
 add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
 
@@ -47,5 +64,6 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Common/DTO/WormDTO.h Common/DTO/WormDTO.cpp
         Common/DTO/MapDTO.h     Common/DTO/MapDTO.cpp)
 
+target_link_libraries(worms-client PUBLIC SDL2pp)
 
 target_link_libraries(Worms-Taller-1 box2d SDL2pp)
