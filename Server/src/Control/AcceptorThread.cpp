@@ -6,13 +6,13 @@
 #include "AcceptorThread.h"
 
 
-AcceptorThread::AcceptorThread(Socket &sktAccept) : sktAccept(sktAccept) {}
+AcceptorThread::AcceptorThread(Socket &sktAccept) : sktAccept(sktAccept), keepAcepting(true) {}
 
 
 void AcceptorThread::run() {
     try {
         size_t idActual = 0;
-        while (true) {
+        while (keepAcepting) {
             addNewClient(idActual);
             cleanDeadClients();
         }
@@ -28,7 +28,7 @@ void AcceptorThread::run() {
 void AcceptorThread::addNewClient(size_t& idActual) {
     size_t nuevoId = idActual;
     Socket sktPeer = sktAccept.accept();
-    ClientThread* thrCliente = new ClientThread(std::move(sktPeer), nuevoId);
+    ClientThread* thrCliente = new ClientThread(std::move(sktPeer), nuevoId, gameRooms);
     thrCliente->start();
     clientes.push_back(thrCliente);
 
@@ -60,4 +60,10 @@ void AcceptorThread::killAllClients() {
     clientes.clear();
 }
 
+
 AcceptorThread::~AcceptorThread() {}
+
+void AcceptorThread::stop() {
+    keepAcepting = false;
+    sktAccept.totalClosure();
+}

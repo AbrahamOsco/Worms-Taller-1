@@ -4,6 +4,7 @@
 #include "DTO.h"
 #include "BeamDTO.h"
 #include <vector>
+#include "../../Common/DTO/DTO.h"
 
 class MapDTO : public DTO {
     //size x, size y?

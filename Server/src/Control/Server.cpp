@@ -9,13 +9,15 @@
 
 #define EXIT_KEY 'q'
 
+
 Server::Server(const char *serviceName) : sktAcceptor(Socket(serviceName)) {}
 
 int Server::run() {
     AcceptorThread acceptorThread(sktAcceptor);
     acceptorThread.start();
     while (std::cin.get() != EXIT_KEY) {}
-    sktAcceptor.totalClosure();
+    acceptorThread.stop();
+    //sktAcceptor.totalClosure();
     acceptorThread.join();
     return 0;
 }

@@ -11,11 +11,14 @@
 #include "../../../Common/Socket/Socket.h"
 #include "../../Common/Thread/Thread.h"
 #include "ClientThread.h"
+#include "ProtectedGameRooms.h"
 
 class AcceptorThread : public Thread {
 private:
     Socket& sktAccept;                      // cppcheck-suppress unusedStructMember
     std::list<ClientThread*> clientes;      // cppcheck-suppress unusedStructMember
+    ProtectedGameRooms gameRooms;
+    std::atomic<bool> keepAcepting;
     //MapQueuesProtected mapQueuesProtected;  // cppcheck-suppress unusedStructMember
 
     //  Pre: -
@@ -44,6 +47,8 @@ public:
 
     //  Destructor
     ~AcceptorThread();
+
+    void stop();
 };
 
 
