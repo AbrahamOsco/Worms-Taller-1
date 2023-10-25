@@ -7,7 +7,7 @@
 
 #include <atomic>
 #include "../../../Common/Socket/Socket.h"
-#include "../../Common/Thread/Thread.h"
+#include "../../../Common/Thread/Thread.h"
 
 class SenderThread : public Thread {
 private:

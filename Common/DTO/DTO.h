@@ -1,7 +1,7 @@
 #ifndef PROTOCOLO_COMMON_DTO_H
 #define PROTOCOLO_COMMON_DTO_H
 
-enum OpType {
+enum OperationType {
     INITIAL_STATE = 250,
     MAP = 1,
     WORM = 2,
@@ -12,13 +12,13 @@ enum OpType {
 
 class DTO {
 protected:
-    OpType opType;
+    OperationType opType;
 public:
-    explicit DTO(OpType opType);
+    explicit DTO(OperationType opType);
 
-    OpType getOperationType() const;
+    OperationType getOperationType() const;
 
-    void setOperationType(const OpType& anOpType);
+    void setOperationType(const OperationType& anOpType);
 
     virtual ~DTO() = default;
 };

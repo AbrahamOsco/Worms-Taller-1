@@ -1,7 +1,7 @@
 #ifndef WORMS_TALLER_1_SERVERPROTOCOL_H
 #define WORMS_TALLER_1_SERVERPROTOCOL_H
 
-#include "../../Common/Protocol/Protocol.h"
+#include "../../../Common/Protocol/Protocol.h"
 #include "../../../Common/Socket/Socket.h"
 #include "../../../Common/DTO/LobbyAnswerDTO.h"
 
