@@ -7,6 +7,7 @@
 
 #include <mutex>
 #include "GameRoom.h"
+#include "ClientThread.h"
 
 class ProtectedGameRooms {
 
