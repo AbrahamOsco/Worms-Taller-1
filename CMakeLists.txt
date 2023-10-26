@@ -13,7 +13,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 # find_package(box2d CONFIG REQUIRED)
 # definitiones for SDL2DelRuso
-add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/Client/data")
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
 add_executable(worms-client Client/src/main.cpp

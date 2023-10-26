@@ -40,12 +40,13 @@ void Engine::events() {
 }
 
 void Engine::init() {
-    std::string path = DATA_PATH "/wwalk.png";
-    std::string id = "soldier";
-    m_textureManager.load(path, id, m_pRenderer);
+    std::string path2 = "../Client/assets/wglnce1.png";
+    std::string id2 = "worm";
+    m_textureManager.load(path2, id2, m_pRenderer);
 
-    LoaderParams params(0, 0, 60, 60, id);
-    m_gameObjects.push_back(std::make_unique<Player>(params));
+    //LoaderParams params1(0, 0, 60, 60, id1);
+    LoaderParams params2(0, 0, 60, 60, id2);
+    m_gameObjects.push_back(std::make_unique<Player>(params2));
 }
 
 bool Engine::running() const {
