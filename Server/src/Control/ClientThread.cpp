@@ -5,7 +5,7 @@
 #include "ClientThread.h"
 #include "ReceiverThread.h"
 #include "SenderThread.h"
-#include "ServerProtocol.h"
+#include "../Protocol/ServerProtocol.h"
 
 #include "../../../Common/DTO/LobbyAnswerDTO.h"
 

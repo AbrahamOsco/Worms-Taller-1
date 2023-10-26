@@ -10,7 +10,7 @@
 #include "../../../Common/Socket/Socket.h"
 #include "../../../Common/Thread/Thread.h"
 #include "GamesProtected.h"
-#include "ServerProtocol.h"
+#include "../Protocol/ServerProtocol.h"
 
 class ClientLogin : public Thread{
 private:

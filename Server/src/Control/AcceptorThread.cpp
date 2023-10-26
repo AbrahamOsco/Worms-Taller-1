@@ -12,9 +12,8 @@ AcceptorThread::AcceptorThread(Socket &sktAccept, GamesProtected &aGames) : sktA
 
 void AcceptorThread::run() {
     try {
-        size_t idActual = 0;
         while (keepAcepting) {
-            addNewClient(idActual);
+            addNewClient();
             cleanDeadClients();
         }
     } catch (const std::exception& e) {
@@ -26,8 +25,7 @@ void AcceptorThread::run() {
 
 
 
-void AcceptorThread::addNewClient(size_t& idActual) {
-    size_t nuevoId = idActual;
+void AcceptorThread::addNewClient() {
     Socket sktPeer = sktAccept.accept();
     ClientLogin* aClientLogin = new ClientLogin(std::move(sktPeer), games);
     clientsLogin.emplace_back(aClientLogin);

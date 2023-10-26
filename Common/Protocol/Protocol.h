@@ -12,6 +12,7 @@
 #define CLOSED_CONNECTION 0
 
 class Protocol {
+
 protected:
     Socket& skt;
     bool wasClosed;

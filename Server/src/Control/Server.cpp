@@ -3,7 +3,7 @@
 //
 #include <iostream>
 #include "Server.h"
-#include "ServerProtocol.h"
+#include "../Protocol/ServerProtocol.h"
 
 #include "AcceptorThread.h"
 

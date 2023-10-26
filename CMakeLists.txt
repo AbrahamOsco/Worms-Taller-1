@@ -33,14 +33,14 @@ add_executable(worms-client Client/src/main.cpp
         Client/src/gameObject/player/Player.cpp
         Client/src/gameObject/player/Player.h
         Client/src/animation/Animation.cpp
-        Client/src/animation/Animation.h)
+        Client/src/animation/Animation.h Common/DTO/ResponseInitialStateDTO.h Common/DTO/ResponseInitialStateDTO.cpp Common/DTO/RoomDTO.h Common/DTO/RoomDTO.cpp Common/DTO/ResolverInitialDTO.h Common/DTO/ResolverInitialDTO.cpp)
 
 # Para el main mas externo: Server/main.cpp
 add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
 
         #Server
         Server/src/Control/Server.h Server/src/Control/Server.cpp
-        Server/src/Control/ServerProtocol.h Server/src/Control/ServerProtocol.cpp
+        Server/src/Protocol/ServerProtocol.h Server/src/Protocol/ServerProtocol.cpp
         Server/src/Control/AcceptorThread.h Server/src/Control/AcceptorThread.cpp
         Server/src/Control/ClientThread.h Server/src/Control/ClientThread.cpp
         Server/src/Control/ReceiverThread.h Server/src/Control/ReceiverThread.cpp
@@ -65,11 +65,11 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Common/DTO/LobbyAnswerDTO.h Common/DTO/LobbyAnswerDTO.cpp
         Common/DTO/WormDTO.h Common/DTO/WormDTO.cpp
         Common/DTO/MapDTO.h     Common/DTO/MapDTO.cpp
-        Client/src/ClientProtocol.cpp
+        Client/src/Protocol/ClientProtocol.cpp
         Server/src/Control/GameRoom.h Server/src/Control/GameRoom.cpp
         Server/src/Control/ProtectedGameRooms.h Server/src/Control/ProtectedGameRooms.cpp
 
-        Server/src/Control/GamesProtected.h Server/src/Control/GamesProtected.cpp Server/src/Control/Engine.h Server/src/Control/Engine.cpp Server/src/Control/ClientLogin.h Server/src/Control/ClientLogin.cpp Common/DTO/InitialStateDTO.h Common/DTO/InitialStateDTO.cpp Common/DTO/ResponseCreateGameDTO.h Common/DTO/ResponseCreateGameDTO.cpp)
+        Server/src/Control/GamesProtected.h Server/src/Control/GamesProtected.cpp Server/src/Control/Engine.h Server/src/Control/Engine.cpp Server/src/Control/ClientLogin.h Server/src/Control/ClientLogin.cpp Common/DTO/InitialStateDTO.h Common/DTO/InitialStateDTO.cpp)
 
 target_link_libraries(worms-client PUBLIC SDL2pp yaml-cpp)
 

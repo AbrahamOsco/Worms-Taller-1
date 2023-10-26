@@ -22,9 +22,6 @@ private:
     std::atomic<bool> keepAcepting;
     GamesProtected& games;
 
-    //ProtectedGameRooms games;
-    //MapQueuesProtected mapQueuesProtected;  // cppcheck-suppress unusedStructMember
-
     //  Pre: -
     //  Post: Limpia los clientes que se desconectaron del servidor y libera  sus recursos
     //  respectivos.
@@ -36,7 +33,7 @@ private:
 
     //  Pre: recibe el idActual del cliente
     //  Post: Agrega un nuevo cliente y le asigna su respectivo idCliente.
-    void addNewClient(size_t& idActual);
+    void addNewClient();
 
 public:
     //  Constructor
