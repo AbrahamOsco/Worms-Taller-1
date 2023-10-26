@@ -3,6 +3,14 @@
 ClientProtocol::ClientProtocol(Socket& skt) :
         Protocol(skt) {}
 
+// ---------------Comunicacion inicial metodos
+
+
+
+
+
+//---- Comunicacion inicial fin de metodos
+
 MapDTO ClientProtocol::recvMap() {
     auto opType = static_cast<OperationType>(recvANumberByte());
     if (opType != OperationType::MAP) {

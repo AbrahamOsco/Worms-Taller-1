@@ -67,7 +67,7 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Server/src/Control/GameRoom.h Server/src/Control/GameRoom.cpp
         Server/src/Control/ProtectedGameRooms.h Server/src/Control/ProtectedGameRooms.cpp
 
-        )
+        Server/src/Control/GamesProtected.h Server/src/Control/GamesProtected.cpp Server/src/Control/Engine.h Server/src/Control/Engine.cpp Server/src/Control/ClientLogin.h Server/src/Control/ClientLogin.cpp Common/DTO/InitialStateDTO.h Common/DTO/InitialStateDTO.cpp Common/DTO/ResponseCreateGameDTO.h Common/DTO/ResponseCreateGameDTO.cpp)
 
 target_link_libraries(worms-client PUBLIC SDL2pp)
 

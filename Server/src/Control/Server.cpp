@@ -7,26 +7,21 @@
 
 #include "AcceptorThread.h"
 
-#define EXIT_KEY 'q'
+#define EXIT_KEY "q"
 
 
 Server::Server(const char *serviceName) : sktAcceptor(Socket(serviceName)) {}
 
 int Server::run() {
-    AcceptorThread acceptorThread(sktAcceptor);
+    AcceptorThread acceptorThread(sktAcceptor, games);
     acceptorThread.start();
-    while (std::cin.get() != EXIT_KEY) {}
+    std::string input ;
+    while ( input != EXIT_KEY) {
+        std::cin >> input;
+    }
+
     acceptorThread.stop();
-    //sktAcceptor.totalClosure();
     acceptorThread.join();
     return 0;
 }
 
-int Server::runSingleThread(){
-    Socket peer = sktAcceptor.accept();
-    ServerProtocol serverProtocol(sktAcceptor);
-    while(serverProtocol.isAvailable()){
-
-    }
-    return 0;
-}

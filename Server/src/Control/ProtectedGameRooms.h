@@ -18,11 +18,11 @@ private:
 public:
     ProtectedGameRooms();
 
-    void addGameRoomAndPlayer(const std::string &nameGameRoom, const std::string &nameScenario, const size_t &numberPlayerReq,
-                              ClientThread *clientThread);
+    int addGameRoomAndPlayer(const std::string &nameGameRoom, const std::string &nameScenario, const size_t &numberPlayerReq,
+                             ClientThread *clientThread);
 
 
-    void addPlayer(const std::string& nameGameRoom, ClientThread* clientThread);
+    int addPlayer(const std::string& nameGameRoom, ClientThread* clientThread);
 
 
 };

@@ -16,7 +16,7 @@ private:
     std::string nameScenario;
     size_t numberPlayerReq;
     size_t currentPlayers;
-    std::map<size_t, ClientThread*> playersInHall;
+    std::map<size_t, ClientThread*> playersInRoom;
 
 public:
     explicit GameRoom(const std::string& nameGameRoom, const std::string& nameScenario, const size_t& numberPlayerReq);
