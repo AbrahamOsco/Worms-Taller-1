@@ -12,13 +12,17 @@
 #include "../../../Common/Thread/Thread.h"
 #include "ClientThread.h"
 #include "ProtectedGameRooms.h"
+#include "GamesProtected.h"
+#include "ClientLogin.h"
 
 class AcceptorThread : public Thread {
 private:
     Socket& sktAccept;                      // cppcheck-suppress unusedStructMember
-    std::list<ClientThread*> clientes;      // cppcheck-suppress unusedStructMember
-    ProtectedGameRooms gameRooms;
+    std::list<ClientLogin*> clientsLogin;      // cppcheck-suppress unusedStructMember
     std::atomic<bool> keepAcepting;
+    GamesProtected& games;
+
+    //ProtectedGameRooms games;
     //MapQueuesProtected mapQueuesProtected;  // cppcheck-suppress unusedStructMember
 
     //  Pre: -
@@ -36,8 +40,8 @@ private:
 
 public:
     //  Constructor
-    //  Recibe el socket por referencia
-    explicit AcceptorThread(Socket& sktAccept);
+    //  Recibe el socket por referencia y el gameProtected
+    explicit AcceptorThread(Socket &sktAccept, GamesProtected &aGames);
 
     //  Pre: -
     //  Post: Acepta nuevos clientes, limpia clientes muertos, y si cierra el skt sktAcceptor killea
@@ -49,6 +53,7 @@ public:
     ~AcceptorThread();
 
     void stop();
+
 };
 
 

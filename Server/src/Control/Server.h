@@ -7,16 +7,17 @@
 
 
 #include "../../../Common/Socket/Socket.h"
+#include "GamesProtected.h"
 
 class Server {
 private:
     Socket sktAcceptor;
+    GamesProtected games;
 public:
     Server(const char *serviceName);
 
     int run();
 
-    int runSingleThread();
 };
 
 

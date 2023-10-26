@@ -13,7 +13,7 @@ GameRoom::GameRoom(const std::string &nameGameRoom, const std::string &nameScena
 
 void GameRoom::addPlayer(ClientThread* clientThr) {
     if(currentPlayers < numberPlayerReq ){
-        playersInHall[clientThr->getIdThread()] = clientThr;
+        playersInRoom[clientThr->getIdThread()] = clientThr;
         currentPlayers++;
     }
 }

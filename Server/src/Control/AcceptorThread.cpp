@@ -4,9 +4,10 @@
 
 #include <iostream>
 #include "AcceptorThread.h"
+#include "ClientLogin.h"
 
 
-AcceptorThread::AcceptorThread(Socket &sktAccept) : sktAccept(sktAccept), keepAcepting(true) {}
+AcceptorThread::AcceptorThread(Socket &sktAccept, GamesProtected &aGames) : sktAccept(sktAccept), keepAcepting(true), games(aGames)  {}
 
 
 void AcceptorThread::run() {
@@ -28,9 +29,13 @@ void AcceptorThread::run() {
 void AcceptorThread::addNewClient(size_t& idActual) {
     size_t nuevoId = idActual;
     Socket sktPeer = sktAccept.accept();
-    ClientThread* thrCliente = new ClientThread(std::move(sktPeer), nuevoId, gameRooms);
-    thrCliente->start();
-    clientes.push_back(thrCliente);
+    ClientLogin* aClientLogin = new ClientLogin(std::move(sktPeer), games);
+    clientsLogin.emplace_back(aClientLogin);
+    aClientLogin->start();
+
+    //ClientThread* thrCliente = new ClientThread(std::move(sktPeer), nuevoId, games);
+    //thrCliente->start();
+    //clientes.push_back(thrCliente);
 
     /*
     Queue<AnswerDTO>* unaCola = new Queue<AnswerDTO>;
@@ -41,10 +46,10 @@ void AcceptorThread::addNewClient(size_t& idActual) {
 }
 
 void AcceptorThread::cleanDeadClients() {
-    clientes.remove_if([this](ClientThread* unCliente) {
-        if (unCliente->isDead()) {
-            unCliente->join();
-            delete unCliente;
+    clientsLogin.remove_if([this](ClientLogin* aClientLogin) {
+        if (aClientLogin->isDead()) {
+            aClientLogin->join();
+            delete aClientLogin;
             return true;
         }
         return false;
@@ -52,12 +57,12 @@ void AcceptorThread::cleanDeadClients() {
 }
 
 void AcceptorThread::killAllClients() {
-    for (auto& unCliente: clientes) {
-        unCliente->kill();
+    for (auto& unCliente: clientsLogin) {
+        unCliente->stop();
         unCliente->join();
         delete unCliente;
     }
-    clientes.clear();
+    clientsLogin.clear();
 }
 
 
@@ -67,3 +72,4 @@ void AcceptorThread::stop() {
     keepAcepting = false;
     sktAccept.totalClosure();
 }
+
