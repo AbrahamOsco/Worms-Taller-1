@@ -14,7 +14,7 @@ void MainMenu::salir(){
     this->close();
 }
 void MainMenu::buscarPartida(){
-    this->close();
+    buscar.show();
 }
 void MainMenu::connectEvents() {
     QPushButton* buttonSalir = findChild<QPushButton*>("buttonSalir");

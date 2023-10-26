@@ -19,6 +19,7 @@ qt5_wrap_ui(UIS_HEADERS
         ui/login.ui
         ui/mainmenu.ui
         ui/crearpartida.ui
+        ui/buscarpartida.ui
 )
 
 # Agrego la carpeta con los headers autogenerados a los includes
@@ -32,6 +33,7 @@ add_executable(test
   src/main.cpp
   src/mainmenu.cpp
   src/crearpartida.cpp
+  src/buscarpartida.cpp
   ${UIS_HEADERS})
 
 # Use the Widgets module from Qt 5.
