@@ -1,7 +1,9 @@
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
 
-MainMenu::MainMenu(QWidget *parent) : QWidget(parent) {
+MainMenu::MainMenu(QWidget *parent,char* server,char* port) : 
+                                    QWidget(parent),
+                                    socket(server,port) {
     Ui::MainMenu mainMenu;
     mainMenu.setupUi(this);
     connectEvents();

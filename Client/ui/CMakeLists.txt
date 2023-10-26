@@ -34,6 +34,10 @@ add_executable(test
   src/mainmenu.cpp
   src/crearpartida.cpp
   src/buscarpartida.cpp
+  src/liberror.cpp
+  src/resolver.cpp
+  src/resolvererror.cpp
+  src/socket.cpp
   ${UIS_HEADERS})
 
 # Use the Widgets module from Qt 5.
