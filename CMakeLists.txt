@@ -65,7 +65,7 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Common/DTO/LobbyAnswerDTO.h Common/DTO/LobbyAnswerDTO.cpp
         Common/DTO/WormDTO.h Common/DTO/WormDTO.cpp
         Common/DTO/MapDTO.h     Common/DTO/MapDTO.cpp
-        Client/src/Protocol/ClientProtocol.cpp
+        Client/src/protocol/ClientProtocol.cpp
         Server/src/Control/GameRoom.h Server/src/Control/GameRoom.cpp
         Server/src/Control/ProtectedGameRooms.h Server/src/Control/ProtectedGameRooms.cpp
 
