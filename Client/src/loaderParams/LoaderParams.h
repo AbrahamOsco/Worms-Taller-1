@@ -18,7 +18,7 @@ private:
     SDL_RendererFlip m_flip;
 
 public:
-    LoaderParams(float x, float y, int width, int height, std::string &textureID, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    LoaderParams(float x, float y, int width, int height, const std::string &textureID, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
     float getX() const;
 

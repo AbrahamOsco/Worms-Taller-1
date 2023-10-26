@@ -15,6 +15,9 @@ set(CMAKE_CXX_STANDARD 17)
 # definitiones for SDL2DelRuso
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
+FIND_PACKAGE(yaml-cpp REQUIRED)
+INCLUDE_DIRECTORIES(${YAML_CPP_INCLUDE_DIRS})
+
 add_executable(worms-client Client/src/main.cpp
         Client/src/core/Engine.cpp
         Client/src/core/Engine.h
@@ -68,6 +71,6 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
 
         Server/src/Control/GamesProtected.h Server/src/Control/GamesProtected.cpp Server/src/Control/Engine.h Server/src/Control/Engine.cpp Server/src/Control/ClientLogin.h Server/src/Control/ClientLogin.cpp Common/DTO/InitialStateDTO.h Common/DTO/InitialStateDTO.cpp Common/DTO/ResponseCreateGameDTO.h Common/DTO/ResponseCreateGameDTO.cpp)
 
-target_link_libraries(worms-client PUBLIC SDL2pp)
+target_link_libraries(worms-client PUBLIC SDL2pp yaml-cpp)
 
 target_link_libraries(Worms-Taller-1 box2d SDL2pp)

@@ -4,7 +4,7 @@
 
 #include "TextureManager.h"
 
-void TextureManager::load(std::string& fileName, std::string& id, SDL2pp::Renderer& renderer) {
+void TextureManager::load(const std::string& fileName, std::string& id, SDL2pp::Renderer& renderer) {
     try {
         // Cargar la textura usando SDL2pp
         SDL2pp::Surface surface(fileName);
@@ -18,8 +18,7 @@ void TextureManager::load(std::string& fileName, std::string& id, SDL2pp::Render
     }
 }
 
-void
-TextureManager::draw(std::string& id, int x, int y, int width, int height, SDL2pp::Renderer& renderer, SDL_RendererFlip flip) {
+void TextureManager::draw(const std::string& id, int x, int y, int width, int height, SDL2pp::Renderer& renderer, SDL_RendererFlip flip) {
     // Buscar la textura por su ID
     auto it = m_textureMap.find(id);
     if (it != m_textureMap.end()) {
@@ -37,7 +36,7 @@ TextureManager::draw(std::string& id, int x, int y, int width, int height, SDL2p
     }
 }
 
-void TextureManager::drawFrame(std::string& id, int x, int y, int width, int height, int currentRow, int currentCol,
+void TextureManager::drawFrame(const std::string& id, int x, int y, int width, int height, int currentRow, int currentCol,
                                SDL2pp::Renderer& renderer, SDL_RendererFlip flip) {
     // Buscar la textura por su ID
     auto it = m_textureMap.find(id);
@@ -53,5 +52,26 @@ void TextureManager::drawFrame(std::string& id, int x, int y, int width, int hei
             // Dibujar la textura en el Renderer
             renderer.Copy(*texture, srcRect, destRect, 0.0, SDL2pp::NullOpt, flip);
         }
+    }
+}
+
+void TextureManager::parseTexture(const std::string &yamlFileName, SDL2pp::Renderer &renderer) {
+    try {
+        // Cargar el archivo YAML
+        YAML::Node config = YAML::LoadFile(yamlFileName);
+
+        // Acceder a la sección de texturas
+        const YAML::Node& textures = config["textures"];
+
+        // Iterar sobre las texturas y cargarlas
+        for (const YAML::Node& texture : textures) {
+            std::string name = texture["name"].as<std::string>();
+            std::string source = texture["source"].as<std::string>();
+
+            // Cargar la textura desde el archivo "source"
+            load(source, name, renderer);
+        }
+    } catch (const YAML::Exception& ex) {
+        std::cerr << "Error al analizar el archivo YAML: " << ex.what() << std::endl;
     }
 }

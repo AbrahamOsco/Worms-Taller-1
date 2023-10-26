@@ -6,6 +6,7 @@
 #define WORMS_TALLER_1_TEXTUREMANAGER_H
 
 #include "SDL2pp/SDL2pp.hh"
+#include <yaml-cpp/yaml.h>
 
 #include <map>
 #include <string>
@@ -15,9 +16,10 @@ class TextureManager {
 private:
     std::map<std::string, std::unique_ptr<SDL2pp::Texture>> m_textureMap;
 public:
-    void load(std::string& fileName, std::string& id, SDL2pp::Renderer& renderer);
-    void draw(std::string& id, int x, int y, int width, int height, SDL2pp::Renderer& renderer, SDL_RendererFlip flip);
-    void drawFrame(std::string& id, int x, int y, int width, int height, int currentRow, int currentCol, SDL2pp::Renderer& renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    void parseTexture(const std::string& yamlFileName, SDL2pp::Renderer& renderer);
+    void load(const std::string& fileName, std::string& id, SDL2pp::Renderer& renderer);
+    void draw(const std::string& id, int x, int y, int width, int height, SDL2pp::Renderer& renderer, SDL_RendererFlip flip);
+    void drawFrame(const std::string& id, int x, int y, int width, int height, int currentRow, int currentCol, SDL2pp::Renderer& renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
 };
 
 

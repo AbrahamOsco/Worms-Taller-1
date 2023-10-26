@@ -40,12 +40,8 @@ void Engine::events() {
 }
 
 void Engine::init() {
-    std::string path2 = "../Client/assets/wglnce1.png";
-    std::string id2 = "worm";
-    m_textureManager.load(path2, id2, m_pRenderer);
-
-    //LoaderParams params1(0, 0, 60, 60, id1);
-    LoaderParams params2(0, 0, 60, 60, id2);
+    m_textureManager.parseTexture("../Client/assets/textures.yaml", m_pRenderer);
+    LoaderParams params2(0, 0, 60, 60, "player");
     m_gameObjects.push_back(std::make_unique<Player>(params2));
 }
 
