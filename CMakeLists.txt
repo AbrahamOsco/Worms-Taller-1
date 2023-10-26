@@ -33,7 +33,15 @@ add_executable(worms-client Client/src/main.cpp
         Client/src/gameObject/player/Player.cpp
         Client/src/gameObject/player/Player.h
         Client/src/animation/Animation.cpp
-        Client/src/animation/Animation.h Common/DTO/ResponseInitialStateDTO.h Common/DTO/ResponseInitialStateDTO.cpp Common/DTO/RoomDTO.h Common/DTO/RoomDTO.cpp Common/DTO/ResolverInitialDTO.h Common/DTO/ResolverInitialDTO.cpp)
+        Client/src/animation/Animation.h
+        Common/DTO/DTO.h
+        Common/DTO/DTO.cpp
+        Common/DTO/ResponseInitialStateDTO.h
+        Common/DTO/ResponseInitialStateDTO.cpp
+        Common/DTO/RoomDTO.h
+        Common/DTO/RoomDTO.cpp
+        Common/DTO/ResolverInitialDTO.h
+        Common/DTO/ResolverInitialDTO.cpp)
 
 # Para el main mas externo: Server/main.cpp
 add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
