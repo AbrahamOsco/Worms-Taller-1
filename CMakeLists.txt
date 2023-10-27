@@ -47,7 +47,9 @@ add_executable(worms-client Client/src/main.cpp
         Client/src/gameObject/icons/Icon.cpp
         Client/src/gameObject/icons/Icon.h
         Client/src/gameObject/icons/AirAttackIcon.cpp
-        Client/src/gameObject/icons/AirAttackIcon.h)
+        Client/src/gameObject/icons/AirAttackIcon.h
+        Client/src/gameObject/icons/BananaIcon.cpp
+        Client/src/gameObject/icons/BananaIcon.h)
 
 # Para el main mas externo: Server/main.cpp
 add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp

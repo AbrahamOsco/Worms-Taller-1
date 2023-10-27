@@ -2,11 +2,11 @@
 // Created by riclui on 27/10/23.
 //
 
-#include "AirAttackIcon.h"
+#include "BananaIcon.h"
 
-AirAttackIcon::AirAttackIcon() : Icon(LoaderParams(0, 0, 50, 55, "air_attack_icon")) {}
+BananaIcon::BananaIcon() : Icon(LoaderParams(0, 60, 50, 55, "banana_icon")) {}
 
-void AirAttackIcon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
+void BananaIcon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
     textureManager.draw(m_textureID, m_x, m_y, m_width, m_height, renderer, SDL_FLIP_NONE);
 
     SDL2pp::SDLTTF ttf;
@@ -17,4 +17,6 @@ void AirAttackIcon::draw(SDL2pp::Renderer &renderer, TextureManager &textureMana
     renderer.Copy(ammo_count, SDL2pp::NullOpt, SDL2pp::Rect(m_width + 20, m_y + 30, ammo_count.GetWidth(), ammo_count.GetHeight()));
 }
 
-void AirAttackIcon::update(float dt) {}
+void BananaIcon::update(float dt) {}
+
+

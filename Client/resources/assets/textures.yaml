@@ -26,13 +26,13 @@ textures:
   - name: air_attack_icon
     source: "../Client/resources/assets/weapons_icons/AirAttack.png"
   - name: banana_icon
-    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+    source: "../Client/resources/assets/weapons_icons/Banana.png"
   - name: bat_icon
-    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+    source: "../Client/resources/assets/weapons_icons/Bat.png"
   - name: bazooka_icon
-    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+    source: "../Client/resources/assets/weapons_icons/Bazooka.png"
   - name: dynamite_icon
-    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+    source: "../Client/resources/assets/weapons_icons/Dynamite.png"
   - name: green_grenade_icon
     source: "../Client/resources/assets/weapons_icons/AirAttack.png"
   - name: holy_grenade_icon

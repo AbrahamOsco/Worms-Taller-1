@@ -4,4 +4,6 @@
 
 #include "Icon.h"
 
-Icon::Icon(const LoaderParams &params) : GameObject(params) {}
+Icon::Icon(const LoaderParams &params) : GameObject(params) {
+    m_value = 0;
+}
