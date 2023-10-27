@@ -23,3 +23,5 @@ textures:
     source: "../Client/assets/worms/Bazooka_scope.png"
   - name: mortar
     source: "../Client/assets/worms/Mortar_scope.png"
+  - name: bg
+    source: "../Client/assets/background/bg.jpg"
