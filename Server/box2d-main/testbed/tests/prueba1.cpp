@@ -211,15 +211,22 @@ public:
     MyContactListener myContactListener;
     Prueba1() : unGusano(m_world, 3.450f, 1), myContactListener(m_world){
         float tamanio = 30.0f;
+                                        // paso (Coordx, Coordy) , (mitadLargo, mitadAncho), angulo
         Beam* vigaUna = new Beam(m_world, b2Vec2(tamanio/2, 0.0f), b2Vec2(tamanio/2, 0.4f), 0 );
         Beam* vigaDos = new Beam(m_world, b2Vec2(0, tamanio/2), b2Vec2(tamanio/2, 0.4f), 90 );
         Beam* vigaTres = new Beam(m_world, b2Vec2(tamanio, tamanio/2), b2Vec2(tamanio/2, 0.4f), 90);
         Beam* vigaCuatro = new Beam(m_world, b2Vec2(tamanio/2, tamanio), b2Vec2(tamanio/2, 0.4f), 0);
+        Beam* vigaCinco = new Beam(m_world, b2Vec2(-30.0f, -30.0f), b2Vec2(tamanio/2, 0.4f), 0  );
+        Beam* vigaSeis = new Beam(m_world, b2Vec2(-10.0f, 0.0f), b2Vec2(tamanio/2, 0.4f), 90  );
+        Beam* vigaSiete = new Beam(m_world, b2Vec2(50.0f, -30.0f), b2Vec2(tamanio/2, 0.4f), 0  );
+
         vigas.push_back(vigaUna);
         vigas.push_back(vigaDos);
         vigas.push_back(vigaTres);
         vigas.push_back(vigaCuatro);
-
+        vigas.push_back(vigaCinco);
+        vigas.push_back(vigaSeis);
+        vigas.push_back(vigaSiete);
         maxAlturaY = 0.0f;
         maxRangoX = 0.0f;
         estaEnContacto = false;
