@@ -3,7 +3,8 @@
 
 MainMenu::MainMenu(QWidget *parent,char* server,char* port) : 
                                     QWidget(parent),
-                                    socket(server,port) {
+                                    socket(server,port),
+                                    crear(nullptr,&socket) {
     Ui::MainMenu mainMenu;
     mainMenu.setupUi(this);
     connectEvents();
