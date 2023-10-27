@@ -12,6 +12,8 @@
 
 class Player : public GameObject {
 private:
+    bool m_isRunning;
+
     Animation m_animation;
 
 public:

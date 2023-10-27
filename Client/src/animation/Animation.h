@@ -11,6 +11,7 @@
 
 class Animation {
 private:
+    int m_spriteWidth, m_spriteHeight;
     int m_SpriteFrame;
     int m_AnimSpeed, m_FrameCount;
     std::string m_TextureID;
@@ -19,8 +20,8 @@ private:
 public:
     Animation() {}
     void update();
-    void draw(int x, int y, int spritWidth, int spriteHeight, SDL2pp::Renderer &renderer, TextureManager &textureManager);
-    void setProps(std::string &textureID, int frameCount, int animSpeed, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    void draw(int x, int y, SDL_RendererFlip flip, SDL2pp::Renderer &renderer, TextureManager &textureManager);
+    void setProps(std::string &textureID, int spriteWidth, int spriteHeight, int frameCount, int animSpeed, SDL_RendererFlip flip = SDL_FLIP_NONE);
 };
 
 
