@@ -23,5 +23,25 @@ textures:
     source: "../Client/resources/assets/worms/Bazooka_scope.png"
   - name: mortar
     source: "../Client/resources/assets/worms/Mortar_scope.png"
+  - name: air_attack_icon
+    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+  - name: banana_icon
+    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+  - name: bat_icon
+    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+  - name: bazooka_icon
+    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+  - name: dynamite_icon
+    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+  - name: green_grenade_icon
+    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+  - name: holy_grenade_icon
+    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+  - name: mortar_icon
+    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+  - name: red_grenade_icon
+    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+  - name: teleportation_icon
+    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
   - name: bg
     source: "../Client/resources/assets/background/bg.jpg"

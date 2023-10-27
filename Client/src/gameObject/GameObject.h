@@ -11,7 +11,7 @@
 
 class GameObject : public IObject {
 protected:
-    //Transform m_transform;
+    int m_x, m_y;
     int m_width, m_height;
     std::string m_textureID;
     SDL_RendererFlip m_flip;

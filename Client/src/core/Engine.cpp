@@ -4,6 +4,8 @@
 
 #include "Engine.h"
 #include "../gameObject/player/Player.h"
+#include "../gameObject/icons/Icon.h"
+#include "../gameObject/icons/AirAttackIcon.h"
 
 Engine::Engine() : m_pWindow("SDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1024, 768,
                              SDL_WINDOW_RESIZABLE),
@@ -44,8 +46,11 @@ void Engine::events() {
 
 void Engine::init() {
     m_textureManager.parseTexture("../Client/resources/assets/textures.yaml", m_pRenderer);
-    LoaderParams params2(0, 0, 60, 60, "player");
-    m_gameObjects.push_back(std::make_unique<Player>(params2));
+    //LoaderParams params1(0, 0, 60, 60, "player");
+    //m_gameObjects.push_back(std::make_unique<Player>(params1));
+
+    AirAttackIcon airAttackIcon;
+    m_gameObjects.push_back(std::make_unique<AirAttackIcon>());
 }
 
 bool Engine::running() const {

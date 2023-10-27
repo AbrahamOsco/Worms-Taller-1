@@ -10,7 +10,7 @@ Player::Player(const LoaderParams &params) : GameObject(params) {
 }
 
 void Player::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
-    m_animation.draw(0, 0, m_flip,renderer, textureManager);
+    m_animation.draw(m_x, m_y, m_flip,renderer, textureManager);
 }
 
 void Player::update(float dt) {

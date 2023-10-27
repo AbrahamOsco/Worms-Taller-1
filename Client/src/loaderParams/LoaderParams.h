@@ -10,19 +10,19 @@
 
 class LoaderParams {
 private:
-    float m_x;
-    float m_y;
+    int m_x;
+    int m_y;
     int m_width;
     int m_height;
     std::string m_textureID;
     SDL_RendererFlip m_flip;
 
 public:
-    LoaderParams(float x, float y, int width, int height, const std::string &textureID, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    LoaderParams(int x, int y, int width, int height, const std::string &textureID, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
-    float getX() const;
+    int getX() const;
 
-    float getY() const;
+    int getY() const;
 
     int getWidth() const;
 

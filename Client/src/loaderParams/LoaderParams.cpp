@@ -4,12 +4,12 @@
 
 #include "LoaderParams.h"
 
-LoaderParams::LoaderParams(float x, float y, int width, int height, const std::string &textureID, SDL_RendererFlip flip)
+LoaderParams::LoaderParams(int x, int y, int width, int height, const std::string &textureID, SDL_RendererFlip flip)
 : m_x(x), m_y(y), m_width(width), m_height(height), m_flip(flip),m_textureID(textureID) {}
 
-float LoaderParams::getX() const { return m_x; }
+int LoaderParams::getX() const { return m_x; }
 
-float LoaderParams::getY() const { return m_y; }
+int LoaderParams::getY() const { return m_y; }
 
 int LoaderParams::getWidth() const { return m_width; }
 
