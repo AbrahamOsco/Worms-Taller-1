@@ -19,7 +19,7 @@
      <x>100</x>
      <y>30</y>
      <width>304</width>
-     <height>127</height>
+     <height>135</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -45,6 +45,13 @@
        </widget>
       </item>
      </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="buttonBuscar">
+      <property name="text">
+       <string>Buscar Mapas</string>
+      </property>
+     </widget>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">

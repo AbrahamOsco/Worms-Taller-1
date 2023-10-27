@@ -61,7 +61,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="buttonActualizar">
         <property name="text">
          <string>Actualizar</string>
         </property>

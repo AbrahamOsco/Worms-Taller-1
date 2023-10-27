@@ -2,12 +2,15 @@
 #define CREARPARTIDA_H
 
 #include <QWidget>
+#include "socket.h"
 
 class CrearPartida : public QWidget {
 public:
-    explicit CrearPartida(QWidget *parent = 0);
+    Socket* socket;
+    explicit CrearPartida(QWidget *parent = 0,Socket* skt=0);
 private:
     void crear();
+    void buscar();
     void connectEvents();
 };
 #endif 
