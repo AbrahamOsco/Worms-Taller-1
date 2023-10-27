@@ -14,9 +14,11 @@ Engine::Engine() : m_pWindow("SDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWP
 void Engine::render() {
     m_pRenderer.Clear();
     m_textureManager.draw("bg", 0, 0, 1920, 1080, m_pRenderer,SDL_FLIP_NONE);
+
     for (const auto &m_gameObject: m_gameObjects) {
         m_gameObject->draw(m_pRenderer, m_textureManager);
     }
+
     m_pRenderer.Present();
 }
 
