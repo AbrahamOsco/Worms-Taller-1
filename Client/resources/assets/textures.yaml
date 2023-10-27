@@ -1,0 +1,27 @@
+textures:
+  - name: player
+    source: "../Client/resources/assets/worms/wglnce1.png"
+  - name: walk
+    source: "../Client/resources/assets/worms/walk.png"
+  - name: air_attack
+    source: "../Client/resources/assets/worms/AirAttack_scope.png"
+  - name: dynamite
+    source: "../Client/resources/assets/worms/Dynamite_scope.png"
+  - name: red_grenade
+    source: "../Client/resources/assets/worms/RedGrenade_scope.png"
+  - name: green_grenade
+    source: "../Client/resources/assets/worms/GreenGrenade_scope.png"
+  - name: banana
+    source: "../Client/resources/assets/worms/Banana_scope.png"
+  - name: teleportation
+    source: "../Client/resources/assets/worms/Teleportation_scope.png"
+  - name: bat
+    source: "../Client/resources/assets/worms/Bat_scope.png"
+  - name: holy_grenade
+    source: "../Client/resources/assets/worms/HolyGrenade_scope.png"
+  - name: bazzoka
+    source: "../Client/resources/assets/worms/Bazooka_scope.png"
+  - name: mortar
+    source: "../Client/resources/assets/worms/Mortar_scope.png"
+  - name: bg
+    source: "../Client/resources/assets/background/bg.jpg"

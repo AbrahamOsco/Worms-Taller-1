@@ -41,7 +41,7 @@ void Engine::events() {
 }
 
 void Engine::init() {
-    m_textureManager.parseTexture("../Client/assets/textures.yaml", m_pRenderer);
+    m_textureManager.parseTexture("../Client/resources/assets/textures.yaml", m_pRenderer);
     LoaderParams params2(0, 0, 60, 60, "player");
     m_gameObjects.push_back(std::make_unique<Player>(params2));
 }
