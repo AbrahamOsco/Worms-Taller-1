@@ -11,6 +11,7 @@
 #include <mutex>
 #include "Engine.h"
 #include "../../../Common/Socket/Socket.h"
+#include "../../../Common/DTO/ResponseInitialStateDTO.h"
 
 class GamesProtected {
 private:
@@ -20,7 +21,7 @@ private:
 public:
     GamesProtected();
 
-    int createGameAndJoinPlayer(const std::string& gameName, Socket peerJugador, const size_t& idJugador);
+    int createGameAndJoinPlayer(const ResponseInitialStateDTO &response, Socket &sktPeer, const std::string &playerName);
 
 };
 

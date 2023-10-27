@@ -8,6 +8,9 @@
 #include <string>
 #include <map>
 #include <atomic>
+#include "../../../Common/DTO/ResponseInitialStateDTO.h"
+#include "../../../Common/Socket/Socket.h"
+#include "../Model/Model.h"
 
 /*
 Entidad que sera el motor del juego en el server tendra el loop del box2d para iterar la fisica.
@@ -20,13 +23,17 @@ private:
     size_t numberPlayerReq;
     size_t currentPlayers;
     std::atomic<bool> startedGame;
-
+    Model model;
     //std::map<size_t, ClientThread*> playersInRoom;
     // ACA AGREGAR UN MONITOR DE LOS CLIENTES CONECTADOAS A ESTA PARTIDA.
 
 public:
-    Engine(const std::string& aNameGameRoom, const std::string& aNameScenario, const size_t& aPlayersReq);
 
+    Engine(const ResponseInitialStateDTO &response);
+
+    int addClient(Socket &socket, const std::string &playerName);
+
+    void start();
 };
 
 

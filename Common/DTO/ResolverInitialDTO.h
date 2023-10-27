@@ -22,6 +22,10 @@ public:
 
     ResolverInitialDTO(const OperationType& operationType, const std::vector<std::string>& aScenariosNames);
 
+    ResolverInitialDTO(const OperationType& operationType, const std::vector<RoomDTO>& aGameRooms);
+
+    ResolverInitialDTO(const OperationType& operationType, const size_t& aStatusAnswer);
+
     void setScenarioNames(const std::vector<std::string>& aScenariosNames);
 
     void setStatusAnswer(const size_t& aStatusAnswer);

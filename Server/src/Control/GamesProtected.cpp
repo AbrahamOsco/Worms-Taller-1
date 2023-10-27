@@ -4,7 +4,7 @@
 
 #include "GamesProtected.h"
 #define SUCCESS 1
-#define ERROR 1
+#define ERROR 2
 
 
 GamesProtected::GamesProtected() {
@@ -12,17 +12,17 @@ GamesProtected::GamesProtected() {
 }
 
 
-int GamesProtected::createGameAndJoinPlayer(const std::string &gameName, Socket peerJugador, const size_t &idJugador) {
+int
+GamesProtected::createGameAndJoinPlayer(const ResponseInitialStateDTO &response, Socket &sktPeer, const std::string &playerName) {
     std::unique_lock<std::mutex> lck(mtx);
     int answer = ERROR;
-    if(games.count(gameName) > 0){  // Si el nombre de la partida ya existe devolvemos ERROR
+    if(games.count(response.getGameName()) > 0){  // Si el nombre de la partida ya existe devolvemos ERROR
         return answer;
     }
-    //games[gameName] = new Engine(gameName );
+    games[response.getGameName()] = new Engine(response);
 
-    // Creamos la "partida" (engine).
+    answer = games[response.getGameName()]->addClient(sktPeer, playerName);
 
-
-    return 0;
+    return answer;
 }
 
