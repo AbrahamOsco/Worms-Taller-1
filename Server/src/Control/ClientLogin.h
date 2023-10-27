@@ -23,9 +23,12 @@ public:
 
     void run() override;
 
+
     bool isDead() const;
 
     void stop();
+
+    void execute(const ResponseInitialStateDTO &response, const std::string &playerName);
 };
 
 

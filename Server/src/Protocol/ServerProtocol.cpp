@@ -99,6 +99,15 @@ void ServerProtocol::sendResolverInitialDTO(const ResolverInitialDTO &resolverIn
         for (const auto& aRoomGame : resolverInitial.getGameRooms() ) {
             sendRoom(aRoomGame);
         }
+    } else if ( operationType == RESPONSE_FINAL_JOIN_GAME ){
+        sendANumberByte(RESPONSE_FINAL_JOIN_GAME);
+        sendANumberByte(resolverInitial.getStatusAnswer());
+        if ( resolverInitial.getStatusAnswer() == ERROR ){ // Si es error el tipo de status mandamos todos los rooms disponibles
+            sendANumberByte(resolverInitial.getGameRooms().size());
+            for (const auto& aRoomGame : resolverInitial.getGameRooms() ) {
+                sendRoom(aRoomGame);
+            }
+        }
     }
 
 }

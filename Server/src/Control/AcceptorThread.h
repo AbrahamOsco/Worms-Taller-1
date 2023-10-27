@@ -10,8 +10,6 @@
 
 #include "../../../Common/Socket/Socket.h"
 #include "../../../Common/Thread/Thread.h"
-#include "ClientThread.h"
-#include "ProtectedGameRooms.h"
 #include "GamesProtected.h"
 #include "ClientLogin.h"
 

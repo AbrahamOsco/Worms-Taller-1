@@ -9,6 +9,7 @@
 #include <string>
 #include <map>
 #include <mutex>
+#include <vector>
 #include "Engine.h"
 #include "../../../Common/Socket/Socket.h"
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
@@ -21,8 +22,16 @@ private:
 public:
     GamesProtected();
 
-    int createGameAndJoinPlayer(const ResponseInitialStateDTO &response, Socket &sktPeer, const std::string &playerName);
+    int createGameAndAddPlayer(const ResponseInitialStateDTO &response, Socket &sktPeer, const std::string &playerName);
 
+    int addPlayer(const ResponseInitialStateDTO &response, Socket &sktPeer, const std::string &playerName);
+
+
+    void printRooms();
+
+    std::vector<std::string> getScenarios();
+
+    std::vector<RoomDTO> getAvailableRooms();
 };
 
 

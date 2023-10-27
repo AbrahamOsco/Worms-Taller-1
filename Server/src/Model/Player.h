@@ -13,8 +13,9 @@ private:
     size_t idPlayer;
 public:
 
-    Player();
     Player(const std::string& playerName, const size_t& idPlayer);
+    Player();
+
 };
 
 

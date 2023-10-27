@@ -1,6 +1,8 @@
 #include "ClientProtocol.h"
 
 #include "../../../Common/DTO/InitialStateDTO.h"
+#define SUCCESS 1
+#define ERROR 2
 
 ClientProtocol::ClientProtocol(Socket& skt) :
         Protocol(skt) {}
@@ -80,14 +82,28 @@ ResolverInitialDTO ClientProtocol::recvResolverInitialDTO() {
         resolverInitialDto.setOperationType(RESPONSE_INITIAL_CREATE_GAME);
         resolverInitialDto.setScenarioNames(scenarioNames);
     } else if ( typeOperation == RESPONSE_FINAL_CREATE_GAME ){
+        resolverInitialDto.setOperationType( RESPONSE_FINAL_CREATE_GAME);
         resolverInitialDto.setStatusAnswer( recvANumberByte() );
     } else if (typeOperation == RESPONSE_INITIAL_JOIN_GAME){
+        resolverInitialDto.setOperationType(RESPONSE_INITIAL_JOIN_GAME);
         size_t numberRooms = recvANumberByte();
         std::vector<RoomDTO> gameRooms;
         for( size_t i = 0; i < numberRooms; i++){
             gameRooms.push_back(recvRoom());
         }
         resolverInitialDto.setGameRooms(gameRooms);
+    } else if (typeOperation == RESPONSE_FINAL_JOIN_GAME){
+        resolverInitialDto.setOperationType(RESPONSE_FINAL_JOIN_GAME);
+        resolverInitialDto.setStatusAnswer(recvANumberByte());
+        if(resolverInitialDto.getStatusAnswer() == ERROR ){
+            // si es error recibimos los nuevos rooms disponibles.
+            size_t numberRooms = recvANumberByte();
+            std::vector<RoomDTO> gameRooms;
+            for( size_t i = 0; i < numberRooms; i++){
+                gameRooms.push_back(recvRoom());
+            }
+            resolverInitialDto.setGameRooms(gameRooms);
+        }
     }
     return resolverInitialDto;
 }

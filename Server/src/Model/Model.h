@@ -8,6 +8,7 @@
 #include <cstddef>
 #include "Player.h"
 #include <map>
+#include <string>
 
 class Model {
 private:
