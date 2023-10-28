@@ -125,10 +125,12 @@ ResponseInitialStateDTO ServerProtocol::recvReponseInitialStateDTO() {
     ResponseInitialStateDTO responseInitialStateDto;
     int operationType = recvANumberByte();
     if (operationType == FINAL_CREATE_GAME){
+        responseInitialStateDto.setOperationType(FINAL_CREATE_GAME);
         responseInitialStateDto.setGameName(recvString());
         responseInitialStateDto.setScenarioName(recvString());
         responseInitialStateDto.setPlayerRequired(recvANumberByte());
     } else if (operationType == FINAL_JOIN_GAME) {
+        responseInitialStateDto.setOperationType(FINAL_JOIN_GAME);
         responseInitialStateDto.setGameName(recvString());
     }
     return responseInitialStateDto;

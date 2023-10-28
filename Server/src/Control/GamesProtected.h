@@ -14,6 +14,8 @@
 #include "../../../Common/Socket/Socket.h"
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
 
+// Monitor tiene el recurso Engine(compartido por jugaodres q estan en una misma partida y el mutex.
+
 class GamesProtected {
 private:
     std::map<std::string, Engine*> games;

@@ -32,7 +32,7 @@ void Engine::run() {
 }
 
 void Engine::print() {
-    std::cout << "Scenario: " << nameScenario << "  " << currentPlayers << " / " << numberPlayerReq << "\n";
+    std::cout << "Scenario: " << nameScenario << " |" << currentPlayers << " / " << numberPlayerReq << "\n";
 }
 
 bool Engine::isAvailable() const {

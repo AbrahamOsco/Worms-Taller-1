@@ -2,7 +2,7 @@
 #define PROTOCOLO_COMMON_DTO_H
 
 enum OperationType {
-    INITIAL_STATE = 250,
+    INITIAL_STATE = 250,  // Si imprime 250 es porque no esta inicializado.
     MAP = 1,
     WORM = 2,
     BEAM = 3,
