@@ -62,9 +62,9 @@ void ClientLogin::execute(const ResponseInitialStateDTO &response, const std::st
     } else if ( operationType == FINAL_JOIN_GAME){
         answer = games.addPlayer(response, sktPeer, playerName);
         if (answer == OPERATION_SUCCESS){
-            isRunning = false;
             ResolverInitialDTO responseJoinGame(RESPONSE_FINAL_JOIN_GAME, OPERATION_SUCCESS);
             serverProtocol.sendResolverInitialDTO(responseJoinGame);
+            isRunning = false;
         }
         else if (answer == OPERATION_ERROR){
             ResolverInitialDTO responseJoinGame(RESPONSE_FINAL_JOIN_GAME, OPERATION_ERROR);
