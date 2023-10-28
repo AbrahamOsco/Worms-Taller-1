@@ -8,6 +8,9 @@ InitialStateDTO::InitialStateDTO() : DTO(INITIAL_STATE) {
 
 }
 
+InitialStateDTO::InitialStateDTO(const OperationType &operationType, const std::string &aPlayerName) : DTO(operationType), playerName(aPlayerName) {
+}
+
 void InitialStateDTO::setPlayerName(const std::string &aPlayerName) {
     this->playerName = aPlayerName;
 }
