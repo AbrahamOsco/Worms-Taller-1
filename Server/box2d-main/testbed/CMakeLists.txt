@@ -15,6 +15,7 @@ set (TESTBED_SOURCE_FILES
 	tests/apply_force.cpp
 	tests/body_types.cpp
 	tests/prueba1.cpp
+	tests/prueba2.cpp
 	tests/box_stack.cpp
 	tests/breakable.cpp
 	tests/bridge.cpp
@@ -74,7 +75,7 @@ set (TESTBED_SOURCE_FILES
 
 add_executable(testbed ${TESTBED_SOURCE_FILES})
 target_include_directories(testbed PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(testbed PUBLIC box2d glfw imgui sajson glad)
+target_link_libraries(testbed PUBLIC box2d glfw imgui sajson glad yaml-cpp)
 set_target_properties(testbed PROPERTIES
 	CXX_STANDARD 11
     CXX_STANDARD_REQUIRED YES
