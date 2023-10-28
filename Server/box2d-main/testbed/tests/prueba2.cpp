@@ -106,7 +106,7 @@ public:
     ~EntityWorm() override = default;
 };
 
-class EntityEdges : public Entity {
+    class EntityEdges : public Entity {
     b2World* world;
 public:
     EntityEdges(b2World* world, float height, float width) : Entity(EDGE_ENTITY), world(world) {

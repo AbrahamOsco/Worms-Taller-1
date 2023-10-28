@@ -27,7 +27,7 @@ void AcceptorThread::run() {
 
 void AcceptorThread::addNewClient() {
     Socket sktPeer = sktAccept.accept();
-    std::cout << "[AcceptorThread] : Se conecta un nuevo cliente\n";
+    std::cout << "[AcceptorThread] : Se conecto un nuevo cliente\n";
     ClientLogin* aClientLogin = new ClientLogin(std::move(sktPeer), games);
     clientsLogin.emplace_back(aClientLogin);
     aClientLogin->start();

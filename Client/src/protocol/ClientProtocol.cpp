@@ -116,7 +116,7 @@ RoomDTO ClientProtocol::recvRoom() {
         roomDto.setGameName(recvString());
         roomDto.setScenarioName(recvString());
         roomDto.setPlayerCurent( recvANumberByte() );
-        recvRoom().setPlayerRequired( recvANumberByte());
+        roomDto.setPlayerRequired( recvANumberByte());
     }
     return roomDto;
 }

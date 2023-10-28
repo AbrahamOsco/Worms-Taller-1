@@ -24,7 +24,7 @@ GamesProtected::createGameAndAddPlayer(const ResponseInitialStateDTO &response, 
     }
     games[response.getGameName()] = new Engine(response); // Si el nombre no existe creamos un engine y unimos al jugador.
     answer = games[response.getGameName()]->addClient(sktPeer, playerName);
-    std::cerr << "[GamesProtected]: Se agrego al jugador " + playerName + " con exito a la partida : " + response.getGameName() + "\n";
+    std::cerr << "[GamesProtected]: Se unio: " + playerName + " con exito a la partida : " + response.getGameName() + "\n";
     return answer;
 }
 
@@ -32,7 +32,7 @@ int GamesProtected::addPlayer(const ResponseInitialStateDTO &response, Socket &s
     std::unique_lock<std::mutex> lck(mtx);
     int answer =  games[response.getGameName()]->addClient(sktPeer, playerName);
     if(answer == SUCCESS){
-        std::cerr << "[GamesProtected]: Se agrego al jugador " + playerName + " con exito a la partida : " + response.getGameName() + "\n";
+        std::cerr << "[GamesProtected]: Se unio: " + playerName + " con exito a la partida : " + response.getGameName() + "\n";
     } else {
         std::cerr << "[GamesProtected]: ERROR No se agrego al jugador " + playerName + " a la partida : " + response.getGameName() + "\n";
     }

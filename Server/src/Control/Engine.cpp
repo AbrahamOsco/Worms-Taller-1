@@ -19,6 +19,8 @@ int Engine::addClient(Socket &socket, const std::string &playerName) {
         model.addPlayer(playerName, currentPlayers);
         currentPlayers++;
         if (currentPlayers == numberPlayerReq){
+            std::string estadoPartida = std::to_string(currentPlayers) + "/" + std::to_string(numberPlayerReq)  + " Ha comenzado\n";
+            std::cout << "[Engine]: La partida  " + this->nameGameRoom  + " En el scenario: " + this->nameScenario + " Con : " + estadoPartida;
             this->start();
         }
         answer = SUCCESS;
@@ -27,12 +29,12 @@ int Engine::addClient(Socket &socket, const std::string &playerName) {
 }
 
 void Engine::run() {
-    std::cout << "Lanze el hilo Thread ahroa esta corriendo el juego :D\n";
+    std::cout << "Lanzo el hilo Partida ahora esta corriendo el juego :D\n";
 
 }
 
 void Engine::print() {
-    std::cout << "Scenario: " << nameScenario << " |" << currentPlayers << " / " << numberPlayerReq << "\n";
+    std::cout << "Scenario: " << nameScenario << "|" << currentPlayers << "/" << numberPlayerReq << "\n";
 }
 
 bool Engine::isAvailable() const {

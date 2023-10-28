@@ -77,6 +77,7 @@ InitialStateDTO ServerProtocol::recvInitialStateDTO() {
     } else if (operationType == ROOM_LIST_REQUEST){
         initialStateDto.setOperationType(ROOM_LIST_REQUEST);
     }
+    initialStateDto.setPlayerName(playerName);
     return initialStateDto;
 }
 
