@@ -90,8 +90,7 @@ void ServerProtocol::sendResolverInitialDTO(const ResolverInitialDTO &resolverIn
         for (const auto& aNameScenario : resolverInitial.getScenariosNames() ) {
             sendString(aNameScenario);
         }
-    }
-    else if ( operationType == RESPONSE_FINAL_CREATE_GAME ){    // Enviamos el tipo de operacion y el estado de la  respuesta.
+    } else if ( operationType == RESPONSE_FINAL_CREATE_GAME ){    // Enviamos el tipo de operacion y el estado de la  respuesta.
         sendANumberByte(RESPONSE_FINAL_CREATE_GAME);
         sendANumberByte(resolverInitial.getStatusAnswer());
     } else if ( operationType == RESPONSE_INITIAL_JOIN_GAME ){  //  Enviamso el tipo de operacion, cantida de rooms y data de cada room.

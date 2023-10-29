@@ -47,7 +47,7 @@ add_executable(worms-client Client/src/main.cpp
         Client/src/gameObject/icons/Icon.cpp
         Client/src/gameObject/icons/Icon.h
         Client/src/gameObject/icons/AirAttackIcon.cpp
-        Client/src/gameObject/icons/AirAttackIcon.h)
+        Client/src/gameObject/icons/AirAttackIcon.h )
 
 
 # Para el main mas externo: Server/main.cpp
@@ -92,6 +92,8 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Common/DTO/ResolverInitialDTO.cpp
         Server/src/Model/Model.h Server/src/Model/Model.cpp
         Server/src/Model/Player.h Server/src/Model/Player.cpp
+        Server/src/Control/ClientConnection.cpp Server/src/Control/ClientConnection.h Server/src/Model/Worm.cpp Server/src/Model/Worm.h Server/src/Model/Stage.cpp Server/src/Model/Stage.h Common/DTO/WorldChangesDTO.cpp Common/DTO/WorldChangesDTO.h
+        Server/src/Control/EstablishedConnections.h Server/src/Control/EstablishedConnections.cpp Server/src/Control/Command/Command.cpp Server/src/Control/Command/Command.h
         )
 
 target_link_libraries(worms-client PUBLIC SDL2pp yaml-cpp)
