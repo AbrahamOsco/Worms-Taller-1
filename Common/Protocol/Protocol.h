@@ -3,8 +3,6 @@
 
 #include "../Socket/Socket.h"
 
-#include "../DTO/MapDTO.h"
-#include "../DTO/BeamDTO.h"
 #include "../DTO/WormDTO.h"
 #include <vector>
 #include <stdexcept>

@@ -12,8 +12,6 @@ class ClientProtocol : public Protocol {
 public:
     explicit ClientProtocol(Socket& skt);
 
-    MapDTO recvMap();
-
     void sendInitialStateDTO(const InitialStateDTO& initialStateDto);
 
     void sendResponseInitialStateDTO(const ResponseInitialStateDTO& responseInitial);
@@ -22,9 +20,8 @@ public:
 
     RoomDTO recvRoom();
 
-    BeamDTO recvBeam();
-
     WormDTO recvWorm();
+
 
     ~ClientProtocol();
 

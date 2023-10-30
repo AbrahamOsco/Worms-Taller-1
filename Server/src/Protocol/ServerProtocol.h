@@ -23,11 +23,7 @@ public:
 
     void sendRoom(const RoomDTO &aRoomDTO);
 
-    void sendMap(const MapDTO &aMap);
-
     void sendWorm(const WormDTO &aWorm);
-
-    void sendBeam(const BeamDTO &aBeam);
 
     LobbyAnswerDTO recvLobbyAnswer();
 
