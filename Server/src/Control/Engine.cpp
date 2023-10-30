@@ -4,12 +4,14 @@
 
 #include <iostream>
 #include "Engine.h"
+#include "../Protocol/ServerProtocol.h"
+
 #define SUCCESS 1
 #define ERROR 2
 
 Engine::Engine(const ResponseInitialStateDTO &response) : nameGameRoom( response.getGameName()) , nameScenario(response.getScenarioName()),
                                                           numberPlayerReq(response.getPlayerRequired()), keepTalking(true),
-                                                          commandsQueueNB(UINT_MAX - 1), worldChangesNB(UINT_MAX - 1 ), connections(commandsQueueNB, worldChangesNB) {
+                                                          commandsQueueNB(UINT_MAX - 1), worldChangesNB(UINT_MAX - 1), connections(commandsQueueNB, worldChangesNB) {
 }
 
 // Retorna 1 si agrego con exito al jugador o retorna 2 Si hubo un ERROR.
@@ -31,10 +33,9 @@ int Engine::addClient(Socket &socket, const std::string &playerName) {
 void Engine::run() {
     std::string estadoPartida = std::to_string(currentPlayers) + "/" + std::to_string(numberPlayerReq)  + " Ha comenzado\n";
     std::cout << "[Engine]: La partida  " + this->nameGameRoom  + " En el scenario: " + this->nameScenario + " Con : " + estadoPartida;
-    connections.start(); // Le digo a todos las conexiones de esta partida  "start".
+    connections.start(model.getStageDTO()); // Le digo a todos las conexiones de esta partida  "start". es decir que lanzen los hilos sender y receiv cada conexion.
     connections.pushUpdate();  //pusheamos actualizaciones
     while(keepTalking){
-
 
     }
     this->connections.stop();

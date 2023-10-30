@@ -9,10 +9,11 @@
 class MainMenu : public QWidget {
 private:
     Socket socket;
+    std::string my_name;
     CrearPartida crear;
     BuscarPartida buscar;
 public:
-    explicit MainMenu(QWidget *parent = 0,char* server=0,char* data = 0);
+    explicit MainMenu(QWidget *parent = 0,char* server=0,char* data = 0,char* name = 0);
 private:
     void crearPartida();
     void buscarPartida();

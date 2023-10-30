@@ -6,13 +6,12 @@
 #include "../../../Common/DTO/InitialStateDTO.h"
 #include "../../../Common/DTO/ResolverInitialDTO.h"
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
+#include "../../../Common/DTO/StageDTO.h"
 
 class ClientProtocol : public Protocol {
 
 public:
     explicit ClientProtocol(Socket& skt);
-
-    MapDTO recvMap();
 
     void sendInitialStateDTO(const InitialStateDTO& initialStateDto);
 
@@ -22,9 +21,12 @@ public:
 
     RoomDTO recvRoom();
 
-    BeamDTO recvBeam();
+    StageDTO recvStageDTO();
+
+    BeamDTO recvBeamDTO();
 
     WormDTO recvWorm();
+
 
     ~ClientProtocol();
 

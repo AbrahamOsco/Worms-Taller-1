@@ -3,9 +3,8 @@
 
 enum OperationType {
     INITIAL_STATE = 250,  // Si imprime 250 es porque no esta inicializado.
-    MAP = 1,
-    WORM = 2,
-    BEAM = 3,
+    START_GAME = 1,
+    STAGE = 2,
     CREATE_GAME = 10,
     JOIN_GAME = 11,
     SCENARIO_LIST_REQUEST = 20,
@@ -16,7 +15,10 @@ enum OperationType {
     ROOM_LIST_REQUEST = 25,
     RESPONSE_INITIAL_JOIN_GAME = 26,
     FINAL_JOIN_GAME = 27,
-    ROOM_GAME = 28
+    ROOM_GAME = 28,
+    WORM = 30, //Unidades, armas, etc.
+    BEAM = 31
+
 };
 
 class DTO {

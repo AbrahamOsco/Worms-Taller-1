@@ -25,6 +25,9 @@
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <widget class="QPushButton" name="buttonCrear">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Crear una nueva partida&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="text">
        <string>Crear una Partida</string>
       </property>
@@ -35,6 +38,9 @@
     </item>
     <item>
      <widget class="QPushButton" name="buttonBuscar">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;buscar una partida a la que unirse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="text">
        <string>Buscar Partida</string>
       </property>
@@ -45,6 +51,9 @@
     </item>
     <item>
      <widget class="QPushButton" name="buttonConfig">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;NIY&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="text">
        <string>Configuración</string>
       </property>
@@ -55,6 +64,9 @@
     </item>
     <item>
      <widget class="QPushButton" name="buttonSalir">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Salir de la aplicacion&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="text">
        <string>Salir</string>
       </property>

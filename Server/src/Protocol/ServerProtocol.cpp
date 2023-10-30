@@ -4,37 +4,6 @@
 ServerProtocol::ServerProtocol(Socket& skt) :
         Protocol(skt){}
 
-void ServerProtocol::sendMap(const MapDTO &aMap) {
-
-    OperationType op = aMap.getOperationType();
-    sendANumberByte(op);
-
-    uint16_t numBeams = aMap.getNumBeams();
-    sendNum2Bytes(numBeams);
-
-    std::vector<BeamDTO> beams = aMap.getBeams();
-    for (auto beam : beams) {
-        sendBeam(beam);
-    }
-}
-
-void ServerProtocol::sendBeam(const BeamDTO &aBeam) {
-    OperationType op = aBeam.getOperationType();
-    sendANumberByte(op);
-
-    BeamType beamType = aBeam.getBeamType();
-    sendANumberByte(beamType);
-
-    int xCoord = aBeam.getX();
-    sendNum2Bytes(xCoord);
-
-    int yCoord = aBeam.getY();
-    sendNum2Bytes(yCoord);
-
-    int angle = aBeam.getAngle();
-    sendNum2Bytes(angle);
-}
-
 void ServerProtocol::sendWorm(const WormDTO &aWorm) {
     OperationType op = aWorm.getOperationType();
     sendANumberByte(op);
@@ -136,5 +105,21 @@ ResponseInitialStateDTO ServerProtocol::recvReponseInitialStateDTO() {
     return responseInitialStateDto;
 }
 
+void ServerProtocol::sendStage(const StageDTO &stageDTO) {
+    sendANumberByte(STAGE);
+    sendANumberByte(stageDTO.getBeams().size());
+    for(BeamDTO aBeamDTO : stageDTO.getBeams()){
+        sendBeam(aBeamDTO);
+    }
+}
 
-ServerProtocol::~ServerProtocol() = default;
+void ServerProtocol::sendBeam(const BeamDTO &beamDTO) {
+    sendANumberByte(BEAM);
+    sendANumberByte(beamDTO.getTypeBeam());
+    sendANumberByte(beamDTO.getXCenter());
+    sendANumberByte(beamDTO.getYCenter());
+    sendANumberByte(beamDTO.getAngle());
+    sendANumberByte(beamDTO.getLenghth());
+    sendANumberByte(beamDTO.getHeight());
+}
+

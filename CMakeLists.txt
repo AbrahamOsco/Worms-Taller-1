@@ -75,11 +75,9 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Common/Protocol/Protocol.h Common/Protocol/Protocol.cpp
 
         #DTOs
-        Common/DTO/BeamDTO.h Common/DTO/BeamDTO.cpp
         Common/DTO/DTO.h Common/DTO/DTO.cpp
         Common/DTO/LobbyAnswerDTO.h Common/DTO/LobbyAnswerDTO.cpp
         Common/DTO/WormDTO.h Common/DTO/WormDTO.cpp
-        Common/DTO/MapDTO.h     Common/DTO/MapDTO.cpp
         Client/src/protocol/ClientProtocol.cpp
 
         Server/src/Control/GamesProtected.h Server/src/Control/GamesProtected.cpp
@@ -97,8 +95,8 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Server/src/Model/Player.h Server/src/Model/Player.cpp
         Server/src/Control/ClientConnection.cpp Server/src/Control/ClientConnection.h Server/src/Model/Worm.cpp Server/src/Model/Worm.h Server/src/Model/Stage.cpp Server/src/Model/Stage.h Common/DTO/WorldChangesDTO.cpp Common/DTO/WorldChangesDTO.h
         Server/src/Control/EstablishedConnections.h Server/src/Control/EstablishedConnections.cpp Server/src/Control/Command/Command.cpp Server/src/Control/Command/Command.h
-        )
+        Common/DTO/StageDTO.cpp Common/DTO/StageDTO.h Server/src/Model/Beam.cpp Server/src/Model/Beam.h Common/DTO/BeamDTO.cpp Common/DTO/BeamDTO.h Server/src/Model/YamlParser.cpp Server/src/Model/YamlParser.h Server/src/Model/GameObject.cpp Server/src/Model/GameObject.h)
 
 target_link_libraries(worms-client PUBLIC SDL2pp yaml-cpp)
 
-target_link_libraries(Worms-Taller-1 box2d SDL2pp)
+target_link_libraries(Worms-Taller-1 box2d SDL2pp yaml-cpp)

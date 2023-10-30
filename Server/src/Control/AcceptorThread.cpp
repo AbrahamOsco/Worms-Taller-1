@@ -23,8 +23,6 @@ void AcceptorThread::run() {
     }
 }
 
-
-
 void AcceptorThread::addNewClient() {
     Socket sktPeer = sktAccept.accept();
     std::cout << "[AcceptorThread] : Se conecto un nuevo cliente\n";
@@ -39,7 +37,6 @@ void AcceptorThread::addNewClient() {
     mapQueuesProtected.addNewQueue(nuevoId, unaCola);
     idActual++;
     */
-
 }
 
 void AcceptorThread::cleanDeadClients() {

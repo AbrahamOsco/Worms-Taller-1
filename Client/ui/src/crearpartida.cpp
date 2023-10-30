@@ -3,47 +3,58 @@
 #include "socket.h"
 #include <iostream>
 #include <vector>
+#include <string>
+#include "lobby.h"
 
-CrearPartida::CrearPartida(QWidget *parent,Socket* skt) : QWidget(parent) {
+CrearPartida::CrearPartida(QWidget *parent,Socket* skt) : 
+                                    QWidget(parent),
+                                    lobby(nullptr,socket){
     socket = skt;
+    my_parent = parent;
     Ui::CrearPartida crear;
     crear.setupUi(this);
     connectEvents();
 }
 
 void CrearPartida::crear() {
+    QLineEdit* inputName = findChild<QLineEdit*>("inputNombre");
+    QComboBox* mapList = findChild<QComboBox*>("listaMapas");
+    QComboBox* numberList = findChild<QComboBox*>("listaCantidad");
+    QString qname = inputName->text();
+    QString qmap = mapList->currentText();
+    QString qnumber = numberList->currentText();
+    std::string name = qname.toStdString();
+    std::string map = qmap.toStdString();
+    std::string snumber = qnumber.toStdString();
+    size_t number = (size_t) std::stoi(snumber,nullptr,0);
+    //Envia nombre, mapa, numero
+    //recibe respuesta
+    //si es exitosa pasa al lobby
     this->hide();
+    lobby.start();
+    lobby.show();
+     //sino muestra que no se pudo crear
 }
-void CrearPartida::buscar(){
-    std::cout << socket << std::endl;
-    uint8_t code = 0;
-    uint8_t quantity = 0;
-    bool closed = false;
-    socket->sendall(&code,1,&closed);
-    socket->recvall(&code,1,&closed);
-    socket->recvall(&quantity,1,&closed);
-    uint8_t lenght = 0;
-    std::vector<char> map;
+void CrearPartida::buscar(std::string& nombre){
+    std::vector<std::string> map;
+    //envia nombre y pedido de mapas
+    //recibe mapas
     QComboBox* maplist = findChild<QComboBox*>("listaMapas");
     maplist->clear();
-    for(uint i = 0;i<quantity;i++){
-        socket->recvall(&lenght,1,&closed);
-        map.resize(lenght+1,0);
-        socket->recvall(map.data(),lenght,&closed);
-        std::cout << "si\n";
-        std::string mapname(map.data());
-        std::cout << "si\n";
-        QString qmap = QString::fromStdString(mapname);
-        std::cout << "si\n";
+    map.push_back("mapa unico");
+    for(uint i = 0;i<map.size();i++){
+        QString qmap = QString::fromStdString(map[i]);
         maplist->addItem(qmap);
-        std::cout << "si\n";
     }
+}
+void CrearPartida::salir(){
+    this->close();
 }
 void CrearPartida::connectEvents() {
     QPushButton* buttonCrear = findChild<QPushButton*>("buttonCrear");
     QObject::connect(buttonCrear, &QPushButton::clicked,
                      this, &CrearPartida::crear);
-    QPushButton* buttonBuscar = findChild<QPushButton*>("buttonBuscar");
-    QObject::connect(buttonBuscar, &QPushButton::clicked,
-                     this, &CrearPartida::buscar);
+    QPushButton* buttonVolver = findChild<QPushButton*>("buttonSalir");
+    QObject::connect(buttonVolver, &QPushButton::clicked,
+                     this, &CrearPartida::salir);
 }

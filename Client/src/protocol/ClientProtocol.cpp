@@ -8,42 +8,6 @@ ClientProtocol::ClientProtocol(Socket& skt) :
         Protocol(skt) {}
 
 
-MapDTO ClientProtocol::recvMap() {
-    auto opType = static_cast<OperationType>(recvANumberByte());
-    if (opType != OperationType::MAP) {
-        // no se si conviene exception o return mapa vacio.
-    }
-
-    uint16_t numBeams = recvNum2Bytes();
-
-    std::vector<BeamDTO> beams;
-    for (int i = 0; i < numBeams; i++) {
-        BeamDTO beam = recvBeam();
-        beams.push_back(beam);
-    }
-
-    MapDTO map(beams);
-    return map;
-}
-
-BeamDTO ClientProtocol::recvBeam() {
-    auto opType = static_cast<OperationType>(recvANumberByte());
-    if (opType != OperationType::BEAM) {
-        // no se si conviene exception o return beam vacio.
-    }
-
-    int beamTypeInt = recvANumberByte();
-    auto beamType = static_cast<BeamType>(beamTypeInt);
-
-    int xCoord = recvNum2Bytes();
-
-    int yCoord = recvNum2Bytes();
-
-    int angle = recvNum2Bytes();
-
-    BeamDTO beam(xCoord, yCoord, angle, beamType);
-    return beam;
-}
 
 WormDTO ClientProtocol::recvWorm() {
     auto opType = static_cast<OperationType>(recvANumberByte());
@@ -133,6 +97,42 @@ void ClientProtocol::sendResponseInitialStateDTO(const ResponseInitialStateDTO &
         sendString(responseInitial.getGameName());
     }
 
+}
+
+StageDTO ClientProtocol::recvStageDTO() {
+    StageDTO stageDto;
+    size_t typeOperation = recvANumberByte();
+    if (typeOperation == STAGE){
+        size_t numberBeams = recvANumberByte();
+        std::vector<BeamDTO> beams;
+        for (size_t i = 0 ; i < numberBeams; i++){
+            beams.push_back(recvBeamDTO());
+        }
+        stageDto.setBeams(beams);
+    }
+    return stageDto;
+}
+
+BeamDTO ClientProtocol::recvBeamDTO() {
+    BeamDTO beamDto;
+    int operationType = recvANumberByte();
+    if ( operationType == BEAM){
+        size_t typeBeam = recvANumberByte();
+        TypeBeam aTypeBeam;
+        if(typeBeam == SHORT_BEAM){
+            aTypeBeam = SHORT_BEAM;
+        } else if (typeBeam == LONG_BEAM){
+            aTypeBeam = LONG_BEAM;
+        }
+        size_t xCenter = recvANumberByte();
+        size_t yCenter = recvANumberByte();
+        size_t angle = recvANumberByte();
+        size_t length = recvANumberByte();
+        size_t height = recvANumberByte();
+        BeamDTO beamRecv(aTypeBeam, xCenter, yCenter, length, height, angle);
+        return beamRecv;
+    }
+    return beamDto;
 }
 
 

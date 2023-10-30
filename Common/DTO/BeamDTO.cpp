@@ -1,23 +1,61 @@
+//
+// Created by abraham on 29/10/23.
+//
+
 #include "BeamDTO.h"
-
-BeamDTO::BeamDTO(int x, int y, int angle, BeamType type) :
-        DTO(BEAM), x(x), y(y), angle(angle), type(type) {}
-
-
-BeamType BeamDTO::getBeamType() const {
-    return type;
+BeamDTO::BeamDTO() : DTO(BEAM), xCenter(0), yCenter(0) {
 }
 
-int BeamDTO::getX() const {
-    return x;
+BeamDTO::BeamDTO(const TypeBeam &aTypeBeam, const size_t &aXcenter, const size_t &aYCenter, const size_t &aLength,
+                 const size_t &aHeight, const size_t &aAngle) : DTO(BEAM), typeBeam(aTypeBeam), xCenter(aXcenter),
+                 yCenter(aYCenter), length(aLength), height(aHeight), angle(aAngle)  {
 }
 
-int BeamDTO::getY() const {
-    return y;
+void BeamDTO::setTypeBeam(const TypeBeam &aTypeBeam) {
+    this->typeBeam = aTypeBeam;
 }
 
-int BeamDTO::getAngle() const {
+void BeamDTO::setxCenter(const size_t &aXcenter) {
+    this->xCenter = aXcenter;
+}
+
+void BeamDTO::setYCenter(const size_t &aYCenter) {
+    this->yCenter = aYCenter;
+}
+
+void BeamDTO::setLength(const size_t &aLength) {
+    this->length = aLength;
+}
+
+void BeamDTO::setHeight(const size_t &aHeight) {
+    this->height =aHeight;
+}
+
+void BeamDTO::setAngle(const size_t &aAngle) {
+    this->angle = aAngle;
+}
+
+size_t BeamDTO::getXCenter() const {
+    return xCenter;
+}
+
+size_t BeamDTO::getYCenter() const {
+    return yCenter;
+}
+
+size_t BeamDTO::getLenghth() const {
+    return length;
+}
+
+size_t BeamDTO::getHeight() const {
+    return height;
+}
+
+size_t BeamDTO::getAngle() const {
     return angle;
 }
 
-BeamDTO::~BeamDTO() = default;
+TypeBeam BeamDTO::getTypeBeam() const {
+    return typeBeam;
+}
+

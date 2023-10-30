@@ -12,6 +12,7 @@
 #include "../../../Common/Queue/Queue.h"
 #include "Command/Command.h"
 #include "../../../Common/DTO/WorldChangesDTO.h"
+#include "../../../Common/DTO/StageDTO.h"
 
 class ClientConnection {
 private:
@@ -30,7 +31,7 @@ public:
 
     void runReceiver();
 
-    void start();
+    void start(const StageDTO &stageDTO);
 
     void stop();
 

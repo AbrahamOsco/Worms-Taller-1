@@ -3,8 +3,6 @@
 
 #include "../Socket/Socket.h"
 
-#include "../DTO/MapDTO.h"
-#include "../DTO/BeamDTO.h"
 #include "../DTO/WormDTO.h"
 #include <vector>
 #include <stdexcept>
@@ -21,16 +19,16 @@ protected:
 
     std::string recvString();
 
-    void sendANumberByte(const unsigned int& aNumber);
-
-    uint8_t recvANumberByte();
-
     void sendNum2Bytes(const unsigned int& aNumber);
 
     uint16_t recvNum2Bytes();
 
 public:
     explicit Protocol(Socket& skt);
+
+    void sendANumberByte(const unsigned int& aNumber);
+
+    uint8_t recvANumberByte();
 
     bool isAvailable() const;
 

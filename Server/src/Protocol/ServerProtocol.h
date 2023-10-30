@@ -7,6 +7,7 @@
 #include "../../../Common/DTO/ResolverInitialDTO.h"
 #include "../../../Common/DTO/InitialStateDTO.h"
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
+#include "../../../Common/DTO/StageDTO.h"
 
 #define ERROR 0
 
@@ -23,15 +24,15 @@ public:
 
     void sendRoom(const RoomDTO &aRoomDTO);
 
-    void sendMap(const MapDTO &aMap);
+    void sendStage(const StageDTO& stageDTO);
+
+    void sendBeam(const BeamDTO& beamDTO);
 
     void sendWorm(const WormDTO &aWorm);
 
-    void sendBeam(const BeamDTO &aBeam);
-
     LobbyAnswerDTO recvLobbyAnswer();
 
-    ~ServerProtocol();
+    ~ServerProtocol() = default;
 
 };
 

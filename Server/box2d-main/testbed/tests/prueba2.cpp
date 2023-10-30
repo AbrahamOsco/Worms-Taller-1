@@ -223,7 +223,7 @@ public:
 
 class StageLoader {
 
-    static std::vector<EntityBeam*> getBeams(const YAML::Node& beamsNode) {
+        static std::vector<EntityBeam*> getBeams(const YAML::Node& beamsNode) {
         std::vector<EntityBeam*> beams;
         for (YAML::const_iterator it = beamsNode.begin(); it != beamsNode.end(); ++it) {
             const YAML::Node& beamNode = *it;

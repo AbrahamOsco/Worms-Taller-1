@@ -1,22 +1,28 @@
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
 
-MainMenu::MainMenu(QWidget *parent,char* server,char* port) : 
+MainMenu::MainMenu(QWidget *parent,char* server,char* port,char* name) : 
                                     QWidget(parent),
                                     socket(server,port),
-                                    crear(nullptr,&socket) {
+                                    my_name(name),
+                                    crear(nullptr,&socket),
+                                    buscar(nullptr,&socket) {
     Ui::MainMenu mainMenu;
     mainMenu.setupUi(this);
     connectEvents();
 }
 
 void MainMenu::crearPartida() {
+    crear.buscar(my_name);
+    this->hide();
     crear.show();
 }
 void MainMenu::salir(){
     this->close();
 }
 void MainMenu::buscarPartida(){
+    buscar.buscar(my_name);
+    this->hide();
     buscar.show();
 }
 void MainMenu::connectEvents() {

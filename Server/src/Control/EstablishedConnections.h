@@ -12,6 +12,7 @@
 #include "ClientConnection.h"
 #include "../../../Common/Queue/Queue.h"
 #include "Command/Command.h"
+#include "../../../Common/DTO/StageDTO.h"
 
 class EstablishedConnections {
 private:
@@ -24,7 +25,7 @@ public:
 
     void addConnection(const size_t &idPlayer, Socket sktPeer);
 
-    void start();
+    void start(const StageDTO &stageDTO);
 
     void stop();
 
