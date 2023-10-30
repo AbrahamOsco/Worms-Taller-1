@@ -38,7 +38,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox"/>
+       <widget class="QComboBox" name="listaPartidas"/>
       </item>
      </layout>
     </item>
@@ -60,29 +60,6 @@
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QPushButton" name="buttonActualizar">
-        <property name="text">
-         <string>Actualizar</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item>
        <widget class="QPushButton" name="buttonMostrar">
         <property name="text">
@@ -109,18 +86,6 @@
      </spacer>
     </item>
     <item>
-     <widget class="QLabel" name="labelNombre">
-      <property name="font">
-       <font>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Nombre</string>
-      </property>
-     </widget>
-    </item>
-    <item>
      <widget class="QLabel" name="labelEscenario">
       <property name="font">
        <font>
@@ -140,7 +105,19 @@
        </font>
       </property>
       <property name="text">
-       <string>Numero de jugadores</string>
+       <string>Jugadores</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="labelCapacidad">
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Capacidad</string>
       </property>
      </widget>
     </item>

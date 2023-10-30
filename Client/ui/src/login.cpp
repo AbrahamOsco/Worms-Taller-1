@@ -13,26 +13,28 @@ Login::Login(QWidget *parent) : QWidget(parent) {
 }
 
 void Login::updateLogin() {
-    /**
-     * findChild es un metodo de qObject que permite buscar un widget hijo
-     * segun su nombre. Si observamos el codigo generado en ui_Greeter
-     * cada uno de los objetos recibe un nombre mediante la funcion
-     * setObjectName(QString nombre)
-     **/
     QLineEdit* inputServer = findChild<QLineEdit*>("inputServer");
     QLineEdit* inputPort = findChild<QLineEdit*>("inputPort");
+    QLineEdit* inputName = findChild<QLineEdit*>("inputName");
     QLabel* labelOut = findChild<QLabel*>("labelConnection");
     QString qserver = inputServer->text();
     QString qport = inputPort->text();
+    QString qname = inputName->text();
     std::string server = qserver.toStdString();
     std::string port = qport.toStdString();
-    try{
-        mainmenu = std::unique_ptr<MainMenu>(new MainMenu(nullptr,server.data(),port.data()));
-        this->hide();
-        mainmenu->show();
-    }
-    catch (const LibError &e){
-        QString update = QString("No fue posible conectarse al: \n Servidor: %1 \n Puerto: %2 \n").arg(qserver,qport);
+    std::string name = qname.toStdString();
+    if(name.size() > 0){
+        try{
+            mainmenu = std::unique_ptr<MainMenu>(new MainMenu(nullptr,server.data(),port.data(),name.data()));
+            this->hide();
+            mainmenu->show();
+        }
+        catch (const LibError &e){
+            QString update = QString("No fue posible conectarse al: \n Servidor: %1 \n Puerto: %2 \n").arg(qserver,qport);
+            labelOut->setText(update);
+        }
+    } else {
+        QString update = QString("Debe ingresar un nombre\n para unirse al servidor\n");
         labelOut->setText(update);
     }
 }

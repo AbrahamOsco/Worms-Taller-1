@@ -3,14 +3,18 @@
 
 #include <QWidget>
 #include "socket.h"
+#include <string>
 
 class CrearPartida : public QWidget {
-public:
+private:
     Socket* socket;
+    QWidget* my_parent;
+public:
     explicit CrearPartida(QWidget *parent = 0,Socket* skt=0);
+    void buscar(std::string& nombre);
 private:
     void crear();
-    void buscar();
     void connectEvents();
+    void salir();
 };
 #endif 
