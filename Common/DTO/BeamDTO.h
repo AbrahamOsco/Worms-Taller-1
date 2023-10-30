@@ -8,7 +8,6 @@
 
 #include <cstddef>
 #include "DTO.h"
-#include "../../Server/src/Model/Beam.h"
 
 enum TypeBeam {
     SHORT_BEAM = 1 , LONG_BEAM = 2

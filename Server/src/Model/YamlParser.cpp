@@ -39,7 +39,7 @@ std::vector<Beam> YamlParser::getBeams(const YAML::Node &beamsNode) {
         auto posX = beamNode["x"].as<float>();
         auto posY = beamNode["y"].as<float>();
 
-        Beam beam = Beam();
+        Beam beam;
         beams.push_back(beam);
     }
     return beams;

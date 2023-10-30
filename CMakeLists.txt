@@ -97,4 +97,4 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
 
 target_link_libraries(worms-client PUBLIC SDL2pp yaml-cpp)
 
-target_link_libraries(Worms-Taller-1 box2d SDL2pp)
+target_link_libraries(Worms-Taller-1 box2d SDL2pp yaml-cpp)
