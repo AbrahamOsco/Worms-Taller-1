@@ -11,50 +11,31 @@ ClientLogin::ClientLogin(Socket socket, GamesProtected &aGames) : sktPeer(std::m
                                                                   serverProtocol(sktPeer) {
 
 }
-
+// Arrancamos el protocolo inicial los primeros bytes del juego :
 void ClientLogin::run() {
     try{
         InitialStateDTO initialState = serverProtocol.recvInitialStateDTO();
         int operationType = initialState.getOperationType();
-        if( operationType == SCENARIO_LIST_REQUEST ){
-            std::vector<std::string > scenariosHard {"VigaMania", "Jaula Maldita", "Vigas 10"};    // scenarios harcodeado los nombre debemos acarlos de un archivo @Anita.
-            ResolverInitialDTO resolverInitialDto(RESPONSE_INITIAL_CREATE_GAME, scenariosHard);
+        if( operationType == SCENARIO_LIST_REQUEST ){        // scenarios harcodeado los nombre debemos acarlos de un archivo @Anita.
+            ResolverInitialDTO resolverInitialDto(RESPONSE_INITIAL_CREATE_GAME, games.getScenarios());
             serverProtocol.sendResolverInitialDTO(resolverInitialDto);
+            std::cerr << "[ClientLogin]:run Se recibio una peticion de crear  una partida -> Se envian los escenarios   ";
         } else if ( operationType == ROOM_LIST_REQUEST ){
-            RoomDTO roomDto("JuegosLocos", "VigaMania", 1, 4);
-            RoomDTO roomDtoDos("Batalla final", "Jaula Maldita", 2, 4);
-            RoomDTO roomDtoTres("Batalla final", "Vigas 10", 2, 5);
-            std::vector<RoomDTO> gameRooms {roomDto, roomDtoDos, roomDtoTres};
-            ResolverInitialDTO resolverInitialDto(RESPONSE_INITIAL_JOIN_GAME, gameRooms);
+            ResolverInitialDTO resolverInitialDto(RESPONSE_INITIAL_JOIN_GAME, games.getAvailableRooms());
             serverProtocol.sendResolverInitialDTO(resolverInitialDto);
+            std::cerr << "[ClientLogin]:run Se recibio una peticion peticion de unirse a alguna partida -> se envia los rooms disponibles   ";
         }
         while( isRunning){
             ResponseInitialStateDTO response = serverProtocol.recvReponseInitialStateDTO();
-            int operationType = response.getOperationType();
-            if( operationType == FINAL_CREATE_GAME){
-                int answer = games.createGameAndJoinPlayer(response, sktPeer, initialState.getPlayerName());
-                //probar pasar el socket por movimiento y si no es asignado verlo en un caso de prueba.
-                if(answer == OPERATION_SUCCESS){
-                    // Me guardo los valores y mando el OK.
-                    ResolverInitialDTO aNewResolverInitial(RESPONSE_FINAL_CREATE_GAME, OPERATION_SUCCESS);
-                    serverProtocol.sendResolverInitialDTO(aNewResolverInitial);
-                    isRunning = false;
-                } else if ( answer == OPERATION_ERROR ) {
-                    ResolverInitialDTO aNewResolverInitial(RESPONSE_FINAL_CREATE_GAME, OPERATION_ERROR);
-                    serverProtocol.sendResolverInitialDTO(aNewResolverInitial);
-                }
-            } else if ( operationType == FINAL_JOIN_GAME){
-                // actualizo al nuevo jugador guardo el peer esta ok.
-                isRunning = false;
-            }
+            execute(response, initialState.getPlayerName());
         }
-
     }catch ( const std::exception& e){
-        std::cerr << "Cerrando el socket todo OK " <<  e.what() ;
+        std::cerr << "[Client Login] Run:  Exception: " <<  e.what() ;
     }
-
     isRunning = false;
 }
+
+
 
 bool ClientLogin::isDead() const {
     return !isRunning;
@@ -64,5 +45,34 @@ void ClientLogin::stop() {
     isRunning = false;
     sktPeer.totalClosure();
 }
+
+void ClientLogin::execute(const ResponseInitialStateDTO &response, const std::string &playerName) {
+    int operationType = response.getOperationType(), answer;
+    std::cerr << "[ClientLogin]:execute Se recibe respuesta del usuario  del tipo Operacion: " + std::to_string(operationType) + "\n";
+    if( operationType == FINAL_CREATE_GAME){
+        answer = games.createGameAndAddPlayer(response, sktPeer, playerName);         //pasamos el skt por referenciia y si salio todo ok sera movido sino no se movera.
+        if(answer == OPERATION_SUCCESS){
+            ResolverInitialDTO aNewResolverInitial(RESPONSE_FINAL_CREATE_GAME, OPERATION_SUCCESS);
+            serverProtocol.sendResolverInitialDTO(aNewResolverInitial);
+            isRunning = false;
+        } else if ( answer == OPERATION_ERROR ) {
+            ResolverInitialDTO aNewResolverInitial(RESPONSE_FINAL_CREATE_GAME, OPERATION_ERROR);
+            serverProtocol.sendResolverInitialDTO(aNewResolverInitial);
+        }
+    } else if ( operationType == FINAL_JOIN_GAME){
+        answer = games.addPlayer(response, sktPeer, playerName);
+        if (answer == OPERATION_SUCCESS){
+            ResolverInitialDTO responseJoinGame(RESPONSE_FINAL_JOIN_GAME, OPERATION_SUCCESS);
+            serverProtocol.sendResolverInitialDTO(responseJoinGame);
+            isRunning = false;
+        }
+        else if (answer == OPERATION_ERROR){
+            ResolverInitialDTO responseJoinGame(RESPONSE_FINAL_JOIN_GAME, OPERATION_ERROR);
+            responseJoinGame.setGameRooms(games.getAvailableRooms());
+            serverProtocol.sendResolverInitialDTO(responseJoinGame);
+        }
+    }
+}
+
 
 

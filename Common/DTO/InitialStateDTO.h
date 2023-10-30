@@ -14,7 +14,10 @@ private:
     std::string playerName;
 
 public:
+
     InitialStateDTO();
+
+    InitialStateDTO(const OperationType &operationType, const std::string &aPlayerName);
 
     void setPlayerName(const std::string& aPlayerName);
 

@@ -47,7 +47,7 @@ void Engine::events() {
 
 void Engine::init() {
     m_textureManager.parseTexture("../Client/resources/assets/textures.yaml", m_pRenderer);
-    LoaderParams params1(0, 0, 60, 60, "player");
+    LoaderParams params1(512, 384, 60, 60, "player");
     m_gameObjects.push_back(std::make_unique<Player>(params1));
     m_buttons.addButton(std::make_unique<Button>("air_attack_icon"));
     m_buttons.addButton(std::make_unique<Button>("banana_icon"));

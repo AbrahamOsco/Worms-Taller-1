@@ -18,6 +18,9 @@ int Server::run() {
     std::string input ;
     while ( input != EXIT_KEY) {
         std::cin >> input;
+        if( input == "p"){
+            games.printRooms();
+        }
     }
 
     acceptorThread.stop();

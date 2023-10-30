@@ -7,7 +7,9 @@
 
 #include <cstddef>
 #include "Player.h"
+#include "Stage.h"
 #include <map>
+#include <string>
 
 class Model {
 private:
@@ -15,6 +17,7 @@ private:
     size_t currentPlayers;
     bool finishedGame;
     std::map<size_t, Player> players;
+    Stage stage;
 
 public:
     Model();

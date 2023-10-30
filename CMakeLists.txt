@@ -58,9 +58,6 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Server/src/Control/Server.h Server/src/Control/Server.cpp
         Server/src/Protocol/ServerProtocol.h Server/src/Protocol/ServerProtocol.cpp
         Server/src/Control/AcceptorThread.h Server/src/Control/AcceptorThread.cpp
-        Server/src/Control/ClientThread.h Server/src/Control/ClientThread.cpp
-        Server/src/Control/ReceiverThread.h Server/src/Control/ReceiverThread.cpp
-        Server/src/Control/SenderThread.h Server/src/Control/SenderThread.cpp
 
         #¢ommon
         Common/Thread/Thread.h Common/Thread/Thread.cpp
@@ -82,10 +79,23 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Common/DTO/WormDTO.h Common/DTO/WormDTO.cpp
         Common/DTO/MapDTO.h     Common/DTO/MapDTO.cpp
         Client/src/protocol/ClientProtocol.cpp
-        Server/src/Control/GameRoom.h Server/src/Control/GameRoom.cpp
-        Server/src/Control/ProtectedGameRooms.h Server/src/Control/ProtectedGameRooms.cpp
 
-        Server/src/Control/GamesProtected.h Server/src/Control/GamesProtected.cpp Server/src/Control/Engine.h Server/src/Control/Engine.cpp Server/src/Control/ClientLogin.h Server/src/Control/ClientLogin.cpp Common/DTO/InitialStateDTO.h Common/DTO/InitialStateDTO.cpp)
+        Server/src/Control/GamesProtected.h Server/src/Control/GamesProtected.cpp
+        Server/src/Control/Engine.h Server/src/Control/Engine.cpp
+        Server/src/Control/ClientLogin.h Server/src/Control/ClientLogin.cpp
+        Common/DTO/InitialStateDTO.h Common/DTO/InitialStateDTO.cpp
+        # Nuevos
+        Common/DTO/ResponseInitialStateDTO.h
+        Common/DTO/ResponseInitialStateDTO.cpp
+        Common/DTO/RoomDTO.h
+        Common/DTO/RoomDTO.cpp
+        Common/DTO/ResolverInitialDTO.h
+        Common/DTO/ResolverInitialDTO.cpp
+        Server/src/Model/Model.h Server/src/Model/Model.cpp
+        Server/src/Model/Player.h Server/src/Model/Player.cpp
+        Server/src/Control/ClientConnection.cpp Server/src/Control/ClientConnection.h Server/src/Model/Worm.cpp Server/src/Model/Worm.h Server/src/Model/Stage.cpp Server/src/Model/Stage.h Common/DTO/WorldChangesDTO.cpp Common/DTO/WorldChangesDTO.h
+        Server/src/Control/EstablishedConnections.h Server/src/Control/EstablishedConnections.cpp Server/src/Control/Command/Command.cpp Server/src/Control/Command/Command.h
+        )
 
 target_link_libraries(worms-client PUBLIC SDL2pp yaml-cpp)
 

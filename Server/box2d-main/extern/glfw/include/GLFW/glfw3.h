@@ -3657,7 +3657,7 @@ GLFWAPI GLFWwindowcontentscalefun glfwSetWindowContentScaleCallback(GLFWwindow* 
 /*! @brief Processes all pending events.
  *
  *  This function processes only those events that are already in the event
- *  queue and then returns immediately.  Processing events will cause the window
+ *  worldChangesNB and then returns immediately.  Processing events will cause the window
  *  and input callbacks associated with those events to be called.
  *
  *  On some platforms, a window move, resize or menu operation will cause event
@@ -3695,8 +3695,8 @@ GLFWAPI void glfwPollEvents(void);
 /*! @brief Waits until events are queued and processes them.
  *
  *  This function puts the calling thread to sleep until at least one event is
- *  available in the event queue.  Once one or more events are available,
- *  it behaves exactly like @ref glfwPollEvents, i.e. the events in the queue
+ *  available in the event worldChangesNB.  Once one or more events are available,
+ *  it behaves exactly like @ref glfwPollEvents, i.e. the events in the worldChangesNB
  *  are processed and the function then returns immediately.  Processing events
  *  will cause the window and input callbacks associated with those events to be
  *  called.
@@ -3744,9 +3744,9 @@ GLFWAPI void glfwWaitEvents(void);
 /*! @brief Waits with timeout until events are queued and processes them.
  *
  *  This function puts the calling thread to sleep until at least one event is
- *  available in the event queue, or until the specified timeout is reached.  If
+ *  available in the event worldChangesNB, or until the specified timeout is reached.  If
  *  one or more events are available, it behaves exactly like @ref
- *  glfwPollEvents, i.e. the events in the queue are processed and the function
+ *  glfwPollEvents, i.e. the events in the worldChangesNB are processed and the function
  *  then returns immediately.  Processing events will cause the window and input
  *  callbacks associated with those events to be called.
  *
@@ -3794,10 +3794,10 @@ GLFWAPI void glfwWaitEvents(void);
  */
 GLFWAPI void glfwWaitEventsTimeout(double timeout);
 
-/*! @brief Posts an empty event to the event queue.
+/*! @brief Posts an empty event to the event worldChangesNB.
  *
  *  This function posts an empty event from the current thread to the event
- *  queue, causing @ref glfwWaitEvents or @ref glfwWaitEventsTimeout to return.
+ *  worldChangesNB, causing @ref glfwWaitEvents or @ref glfwWaitEventsTimeout to return.
  *
  *  If no windows exist, this function returns immediately.  For synchronization
  *  of threads in applications that do not create windows, use your threading
@@ -5313,7 +5313,7 @@ GLFWAPI GLFWglproc glfwGetProcAddress(const char* procname);
  *  For example, on Fermi systems Nvidia will install an ICD that provides no
  *  actual Vulkan support.  Call @ref glfwGetRequiredInstanceExtensions to check
  *  whether the extensions necessary for Vulkan surface creation are available
- *  and @ref glfwGetPhysicalDevicePresentationSupport to check whether a queue
+ *  and @ref glfwGetPhysicalDevicePresentationSupport to check whether a worldChangesNB
  *  family of a physical device supports image presentation.
  *
  *  @return `GLFW_TRUE` if Vulkan is minimally available, or `GLFW_FALSE`
@@ -5421,9 +5421,9 @@ GLFWAPI const char** glfwGetRequiredInstanceExtensions(uint32_t* count);
  */
 GLFWAPI GLFWvkproc glfwGetInstanceProcAddress(VkInstance instance, const char* procname);
 
-/*! @brief Returns whether the specified queue family can present images.
+/*! @brief Returns whether the specified worldChangesNB family can present images.
  *
- *  This function returns whether the specified queue family of the specified
+ *  This function returns whether the specified worldChangesNB family of the specified
  *  physical device supports presentation to the platform GLFW was built for.
  *
  *  If Vulkan or the required window surface creation instance extensions are
@@ -5435,9 +5435,9 @@ GLFWAPI GLFWvkproc glfwGetInstanceProcAddress(VkInstance instance, const char* p
  *  required.
  *
  *  @param[in] instance The instance that the physical device belongs to.
- *  @param[in] device The physical device that the queue family belongs to.
- *  @param[in] queuefamily The index of the queue family to query.
- *  @return `GLFW_TRUE` if the queue family supports presentation, or
+ *  @param[in] device The physical device that the worldChangesNB family belongs to.
+ *  @param[in] queuefamily The index of the worldChangesNB family to query.
+ *  @return `GLFW_TRUE` if the worldChangesNB family supports presentation, or
  *  `GLFW_FALSE` otherwise.
  *
  *  @errors Possible errors include @ref GLFW_NOT_INITIALIZED, @ref
