@@ -23,6 +23,8 @@ private:
     size_t angle;
 public:
 
+    BeamDTO();
+
     BeamDTO(const TypeBeam& aTypeBeam, const size_t& aXcenter, const size_t& aYCenter, const size_t& aLength, const size_t& aHeight, const size_t& aAngle);
 
     void setTypeBeam(const TypeBeam& aTypeBeam);
@@ -37,6 +39,8 @@ public:
 
     void setAngle(const size_t& aAngle);
 
+    TypeBeam getTypeBeam() const;
+
     size_t getXCenter() const;
 
     size_t getYCenter() const;
@@ -46,8 +50,6 @@ public:
     size_t getHeight() const;
 
     size_t getAngle() const;
-
-    TypeBeam getTypeBeam() const;
 
 };
 

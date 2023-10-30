@@ -4,6 +4,7 @@
 
 #include <stdexcept>
 #include "EstablishedConnections.h"
+#include "../../../Common/DTO/StageDTO.h"
 
 EstablishedConnections::EstablishedConnections(Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO *>& aWorldChangesNB)
         : commandQueueNB(aCommandQueueNB), worldChangesNB(aWorldChangesNB) {
@@ -18,9 +19,9 @@ void EstablishedConnections::addConnection(const size_t &idPlayer, Socket sktPee
     clientConnections.emplace(idPlayer, ClientConnection(idPlayer, sktPeer, commandQueueNB, worldChangesNB) );
 }
 
-void EstablishedConnections::start() {
+void EstablishedConnections::start(const StageDTO &stageDTO) {
     for (auto &element : clientConnections) {   // Le digo a todos mis clientConnection start
-        element.second.start();
+        element.second.start(stageDTO);
     }
 }
 

@@ -7,9 +7,7 @@ YamlParser::YamlParser() {
 }
 
 
-Stage YamlParser::getStage(const std::string &aStageName) {
-    // busco el path del archivo
-    // hay que cambiarlo para la implementacion de verdad
+void YamlParser::loadDataStage(const std::string &aStageName, float& height, float& length, std::vector<Beam>& aBeams) {
     char startPathC[PATH_MAX];
     realpath("../../", startPathC);
     std::string startPath(startPathC);
@@ -20,26 +18,27 @@ Stage YamlParser::getStage(const std::string &aStageName) {
 
     YAML::Node node = YAML::LoadFile(fullPath);
 
-    std::vector<Beam> beams = getBeams(node["beams"]);
-
-    size_t height = node["height"].as<float>();
-    size_t length = node["width"].as<float>();
-
-    Stage stage(aStageName,height, length, beams);
-
-    return stage;
+    height = node["height"].as<float>();
+    length = node["width"].as<float>();
+    aBeams = getBeams(node["beams"]);
 }
 
 std::vector<Beam> YamlParser::getBeams(const YAML::Node &beamsNode) {
     std::vector<Beam> beams;
     for (YAML::const_iterator it = beamsNode.begin(); it != beamsNode.end(); ++it) {
         const YAML::Node& beamNode = *it;
-        auto length = beamNode["length"].as<float>();
-        auto angle = beamNode["angle"].as<float>();
-        auto posX = beamNode["x"].as<float>();
-        auto posY = beamNode["y"].as<float>();
-
-        Beam beam;
+        float length = beamNode["length"].as<float>();
+        float angle = beamNode["angle"].as<float>();
+        float xCenter = beamNode["x"].as<float>();
+        float yCenter = beamNode["y"].as<float>();
+        float height = 0.4;
+        TypeBeam typeBeam;
+        if(length == 3.0){
+            typeBeam = TypeBeam::SHORT_BEAM;
+        } else if ( length == 6.0){
+            typeBeam = TypeBeam::LONG_BEAM;
+        }
+        Beam beam(typeBeam, xCenter, yCenter, length, height, angle);
         beams.push_back(beam);
     }
     return beams;

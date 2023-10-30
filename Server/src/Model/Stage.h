@@ -20,9 +20,9 @@ public:
 
     Stage();
 
-    Stage(const std::string& name, const float& height, const float& lenght, const std::vector<Beam>& beams);
+    Stage(const std::string& name);
 
-    StageDTO getStage();
+    StageDTO getStageDTO() const;
 
 };
 

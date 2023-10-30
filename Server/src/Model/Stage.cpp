@@ -3,21 +3,22 @@
 //
 
 #include "Stage.h"
-
+#include "YamlParser.h"
 Stage::Stage() {
 }
 
-
-
-Stage::Stage(const std::string &name, const float &height, const float &lenght, const std::vector<Beam> &beams)
-                                        : name(name), height(height), length(lenght), beams(beams){
+Stage::Stage(const std::string &name) {
+    YamlParser::loadDataStage(name, height, length, beams);
 }
 
-
-
-StageDTO Stage::getStage() {
-    StageDTO stageDto;
-
+StageDTO Stage::getStageDTO() const {
+    std::vector<BeamDTO> beamsDTO;
+    for(Beam aBeam : beams){
+        beamsDTO.push_back(aBeam.getBeamDTO());
+    }
+    StageDTO stageDto(beamsDTO);
     return stageDto;
 }
+
+
 

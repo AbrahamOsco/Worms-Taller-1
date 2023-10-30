@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include "Engine.h"
+#include "../Protocol/ServerProtocol.h"
+
 #define SUCCESS 1
 #define ERROR 2
 
@@ -31,7 +33,7 @@ int Engine::addClient(Socket &socket, const std::string &playerName) {
 void Engine::run() {
     std::string estadoPartida = std::to_string(currentPlayers) + "/" + std::to_string(numberPlayerReq)  + " Ha comenzado\n";
     std::cout << "[Engine]: La partida  " + this->nameGameRoom  + " En el scenario: " + this->nameScenario + " Con : " + estadoPartida;
-    connections.start(); // Le digo a todos las conexiones de esta partida  "start". es decir que lanzen los hilos sender y receiv cada conexion.
+    connections.start(model.getStageDTO()); // Le digo a todos las conexiones de esta partida  "start". es decir que lanzen los hilos sender y receiv cada conexion.
     connections.pushUpdate();  //pusheamos actualizaciones
     while(keepTalking){
 

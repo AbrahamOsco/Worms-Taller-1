@@ -23,6 +23,7 @@ public:
     Model();
     void addPlayer(const std::string &playerName, const size_t &idPlayer);
 
+    StageDTO getStageDTO() const;
 };
 
 

@@ -99,5 +99,41 @@ void ClientProtocol::sendResponseInitialStateDTO(const ResponseInitialStateDTO &
 
 }
 
+StageDTO ClientProtocol::recvStageDTO() {
+    StageDTO stageDto;
+    size_t typeOperation = recvANumberByte();
+    if (typeOperation == STAGE){
+        size_t numberBeams = recvANumberByte();
+        std::vector<BeamDTO> beams;
+        for (size_t i = 0 ; i < numberBeams; i++){
+            beams.push_back(recvBeamDTO());
+        }
+        stageDto.setBeams(beams);
+    }
+    return stageDto;
+}
+
+BeamDTO ClientProtocol::recvBeamDTO() {
+    BeamDTO beamDto;
+    int operationType = recvANumberByte();
+    if ( operationType == BEAM){
+        size_t typeBeam = recvANumberByte();
+        TypeBeam aTypeBeam;
+        if(typeBeam == SHORT_BEAM){
+            aTypeBeam = SHORT_BEAM;
+        } else if (typeBeam == LONG_BEAM){
+            aTypeBeam = LONG_BEAM;
+        }
+        size_t xCenter = recvANumberByte();
+        size_t yCenter = recvANumberByte();
+        size_t angle = recvANumberByte();
+        size_t length = recvANumberByte();
+        size_t height = recvANumberByte();
+        BeamDTO beamRecv(aTypeBeam, xCenter, yCenter, length, height, angle);
+        return beamRecv;
+    }
+    return beamDto;
+}
+
 
 ClientProtocol::~ClientProtocol() = default;

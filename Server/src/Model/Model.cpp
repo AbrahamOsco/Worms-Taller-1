@@ -13,4 +13,8 @@ void Model::addPlayer(const std::string &playerName, const size_t &idPlayer) {
     this->players[idPlayer] = Player(playerName, idPlayer);
 }
 
+StageDTO Model::getStageDTO() const {
+    return stage.getStageDTO();
+}
+
 

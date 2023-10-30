@@ -14,14 +14,13 @@
 
 class YamlParser{
 private:
-
     static std::vector<Beam> getBeams(const YAML::Node& beamsNode);
+
 public:
+
     YamlParser();
 
-    static Stage getStage(const std::string& aStageName);
-
-
+    static void loadDataStage(const std::string &aStageName, float &height, float &length, std::vector<Beam> &aBeams);
 };
 
 

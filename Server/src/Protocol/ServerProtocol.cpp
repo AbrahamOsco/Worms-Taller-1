@@ -105,5 +105,21 @@ ResponseInitialStateDTO ServerProtocol::recvReponseInitialStateDTO() {
     return responseInitialStateDto;
 }
 
+void ServerProtocol::sendStage(const StageDTO &stageDTO) {
+    sendANumberByte(STAGE);
+    sendANumberByte(stageDTO.getBeams().size());
+    for(BeamDTO aBeamDTO : stageDTO.getBeams()){
+        sendBeam(aBeamDTO);
+    }
+}
 
-ServerProtocol::~ServerProtocol() = default;
+void ServerProtocol::sendBeam(const BeamDTO &beamDTO) {
+    sendANumberByte(BEAM);
+    sendANumberByte(beamDTO.getTypeBeam());
+    sendANumberByte(beamDTO.getXCenter());
+    sendANumberByte(beamDTO.getYCenter());
+    sendANumberByte(beamDTO.getAngle());
+    sendANumberByte(beamDTO.getLenghth());
+    sendANumberByte(beamDTO.getHeight());
+}
+

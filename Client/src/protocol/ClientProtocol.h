@@ -6,6 +6,7 @@
 #include "../../../Common/DTO/InitialStateDTO.h"
 #include "../../../Common/DTO/ResolverInitialDTO.h"
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
+#include "../../../Common/DTO/StageDTO.h"
 
 class ClientProtocol : public Protocol {
 
@@ -19,6 +20,10 @@ public:
     ResolverInitialDTO recvResolverInitialDTO();
 
     RoomDTO recvRoom();
+
+    StageDTO recvStageDTO();
+
+    BeamDTO recvBeamDTO();
 
     WormDTO recvWorm();
 

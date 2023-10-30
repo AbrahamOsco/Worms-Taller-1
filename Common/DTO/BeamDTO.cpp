@@ -3,6 +3,8 @@
 //
 
 #include "BeamDTO.h"
+BeamDTO::BeamDTO() : DTO(BEAM), xCenter(0), yCenter(0) {
+}
 
 BeamDTO::BeamDTO(const TypeBeam &aTypeBeam, const size_t &aXcenter, const size_t &aYCenter, const size_t &aLength,
                  const size_t &aHeight, const size_t &aAngle) : DTO(BEAM), typeBeam(aTypeBeam), xCenter(aXcenter),
@@ -56,10 +58,4 @@ size_t BeamDTO::getAngle() const {
 TypeBeam BeamDTO::getTypeBeam() const {
     return typeBeam;
 }
-
-
-
-
-
-
 
