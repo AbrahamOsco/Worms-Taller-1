@@ -7,9 +7,10 @@
 #include "../gameObject/icons/Icon.h"
 #include "../gameObject/icons/AirAttackIcon.h"
 #include "../gameObject/icons/BananaIcon.h"
+#include "../gameObject/icons/BatIcon.h"
 
 Engine::Engine() : m_pWindow("SDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1024, 768,
-                             SDL_WINDOW_RESIZABLE),
+                             0),
                    m_pRenderer(m_pWindow, -1, SDL_RENDERER_ACCELERATED) {
     m_bRunning = true;
 }
@@ -47,10 +48,11 @@ void Engine::events() {
 
 void Engine::init() {
     m_textureManager.parseTexture("../Client/resources/assets/textures.yaml", m_pRenderer);
-    //LoaderParams params1(0, 0, 60, 60, "player");
-    //m_gameObjects.push_back(std::make_unique<Player>(params1));
+    LoaderParams params1(0, 0, 60, 60, "player");
+    m_gameObjects.push_back(std::make_unique<Player>(params1));
     m_gameObjects.push_back(std::make_unique<AirAttackIcon>());
     m_gameObjects.push_back(std::make_unique<BananaIcon>());
+    m_gameObjects.push_back(std::make_unique<BatIcon>());
 }
 
 bool Engine::running() const {
