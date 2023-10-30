@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "socket.h"
 #include <string>
+#include "lobby.h"
 
 struct Partida{
     std::string nombre;
@@ -16,6 +17,7 @@ class BuscarPartida : public QWidget {
 private:
     Socket* skt;
     std::vector<Partida> partidas;
+    Lobby lobby;
 public:
     explicit BuscarPartida(QWidget *parent = 0,Socket* socket = 0);
     void buscar(std::string& nombre);

@@ -6,11 +6,9 @@
 Waiter::Waiter(Socket* socket,Queue<int>* queue){
     skt = socket;
     my_queue = queue;
-    std::cout <<"me construi\n";
 }
 
 void Waiter::run(){
-    std::cout << "arranco\n";
     uint8_t code = 1;
     bool closed = false;
     //skt->recvall(&code,1,&closed);

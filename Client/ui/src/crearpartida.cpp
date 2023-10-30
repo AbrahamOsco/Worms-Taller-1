@@ -30,10 +30,10 @@ void CrearPartida::crear() {
     //Envia nombre, mapa, numero
     //recibe respuesta
     //si es exitosa pasa al lobby
-    //sino muestra que no se pudo crear
     this->hide();
     lobby.start();
     lobby.show();
+     //sino muestra que no se pudo crear
 }
 void CrearPartida::buscar(std::string& nombre){
     std::vector<std::string> map;

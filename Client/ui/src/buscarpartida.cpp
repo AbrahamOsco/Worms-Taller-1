@@ -2,8 +2,11 @@
 #include "ui_buscarpartida.h"
 #include <string>
 #include <iostream>
+#include "lobby.h"
 
-BuscarPartida::BuscarPartida(QWidget *parent,Socket* socket) : QWidget(parent) {
+
+BuscarPartida::BuscarPartida(QWidget *parent,Socket* socket) :  QWidget(parent),
+                                                                lobby(nullptr,socket){
     skt = socket;
     Ui::BuscarPartida buscar;
     buscar.setupUi(this);
@@ -11,7 +14,15 @@ BuscarPartida::BuscarPartida(QWidget *parent,Socket* socket) : QWidget(parent) {
 }
 
 void BuscarPartida::unirse() {
-    //lanza el lobby
+    QComboBox* gameList = findChild<QComboBox*>("listaPartidas");
+    QString qgame = gameList->currentText();
+    std::string game = qgame.toStdString();
+    //aca se envia el comando de unirse
+    //aca recibo la confirmacion de si me uni
+    //si me uni
+    this->hide();
+    lobby.start();
+    lobby.show();
 }
 void BuscarPartida::mostrar() {
     QComboBox* gameList = findChild<QComboBox*>("listaPartidas");
