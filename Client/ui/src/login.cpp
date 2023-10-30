@@ -41,6 +41,11 @@ void Login::updateLogin() {
 void Login::exit(){
     this->close();
 }
+void Login::keyPressEvent(QKeyEvent *event){
+    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter){
+        this->updateLogin();
+    }
+}
 void Login::connectEvents() {
     // Conecto el evento del boton
     QPushButton* buttonConnect = findChild<QPushButton*>("buttonLogin");

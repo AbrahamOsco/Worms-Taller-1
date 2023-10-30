@@ -4,9 +4,11 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "lobby.h"
 
 CrearPartida::CrearPartida(QWidget *parent,Socket* skt) : 
-                                    QWidget(parent){
+                                    QWidget(parent),
+                                    lobby(nullptr,socket){
     socket = skt;
     my_parent = parent;
     Ui::CrearPartida crear;
@@ -20,15 +22,17 @@ void CrearPartida::crear() {
     QComboBox* numberList = findChild<QComboBox*>("listaCantidad");
     QString qname = inputName->text();
     QString qmap = mapList->currentText();
-    QString qnumber = mapList->currentText();
+    QString qnumber = numberList->currentText();
     std::string name = qname.toStdString();
     std::string map = qmap.toStdString();
     std::string snumber = qnumber.toStdString();
-    size_t number = (size_t) std::stoi(snumber);
+    size_t number = (size_t) std::stoi(snumber,nullptr,0);
     //Envia nombre, mapa, numero
     //recibe respuesta
     //si es exitosa pasa al lobby
     //sino muestra que no se pudo crear
+    this->hide();
+    lobby.show();
 }
 void CrearPartida::buscar(std::string& nombre){
     std::vector<std::string> map;
@@ -36,6 +40,7 @@ void CrearPartida::buscar(std::string& nombre){
     //recibe mapas
     QComboBox* maplist = findChild<QComboBox*>("listaMapas");
     maplist->clear();
+    map.push_back("mapa unico");
     for(uint i = 0;i<map.size();i++){
         QString qmap = QString::fromStdString(map[i]);
         maplist->addItem(qmap);

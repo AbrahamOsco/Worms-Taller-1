@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <memory>
 #include "mainmenu.h"
+#include <QKeyEvent>
 
 class Login : public QWidget {
     private:
@@ -14,5 +15,6 @@ private:
     void updateLogin();
     void connectEvents();
     void exit();
+    void keyPressEvent(QKeyEvent *event) override;
 };
 #endif 
