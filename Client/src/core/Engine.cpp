@@ -62,10 +62,10 @@ void Engine::init() {
     m_buttons.addButton(std::make_unique<Button>("teleportation_icon"));
 
     m_gameObjects.push_back(std::make_unique<Beam>(0, 0, ANGLE_0, SHORT_BEAM));
-    m_gameObjects.push_back(std::make_unique<Beam>(60, 60, ANGLE_10, SHORT_BEAM));
+    m_gameObjects.push_back(std::make_unique<Beam>(200, 200, ANGLE_10, SHORT_BEAM));
 
-    m_gameObjects.push_back(std::make_unique<Beam>(80, 80, ANGLE_20, LONG_BEAM));
-    m_gameObjects.push_back(std::make_unique<Beam>(100, 100, ANGLE_30, LONG_BEAM));
+    m_gameObjects.push_back(std::make_unique<Beam>(400, 400, ANGLE_20, LONG_BEAM));
+    m_gameObjects.push_back(std::make_unique<Beam>(600, 600, ANGLE_0, LONG_BEAM));
 }
 
 bool Engine::running() const {
