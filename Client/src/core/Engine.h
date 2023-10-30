@@ -11,6 +11,7 @@
 #include "../timer/Timer.h"
 #include "../gameObject/GameObject.h"
 #include "../loaderParams/LoaderParams.h"
+#include "../buttonManager/buttonManager.h"
 
 class Engine {
 private:
@@ -21,6 +22,7 @@ private:
     Timer m_timer;
 
     std::vector<std::unique_ptr<GameObject>> m_gameObjects;
+    buttonManager m_buttons;
 
 public:
     Engine();

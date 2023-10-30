@@ -44,14 +44,12 @@ add_executable(worms-client Client/src/main.cpp
         Common/DTO/RoomDTO.cpp
         Common/DTO/ResolverInitialDTO.h
         Common/DTO/ResolverInitialDTO.cpp
-        Client/src/gameObject/icons/Icon.cpp
-        Client/src/gameObject/icons/Icon.h
-        Client/src/gameObject/icons/AirAttackIcon.cpp
-        Client/src/gameObject/icons/AirAttackIcon.h
-        Client/src/gameObject/icons/BananaIcon.cpp
-        Client/src/gameObject/icons/BananaIcon.h
-        Client/src/gameObject/icons/BatIcon.cpp
-        Client/src/gameObject/icons/BatIcon.h)
+        Client/src/gameObject/button/Button.cpp
+        Client/src/gameObject/button/Button.h
+        Client/src/buttonManager/buttonManager.cpp
+        Client/src/buttonManager/buttonManager.h
+        Client/src/utils/Constants.h
+)
 
 # Para el main mas externo: Server/main.cpp
 add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp

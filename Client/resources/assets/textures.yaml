@@ -34,14 +34,14 @@ textures:
   - name: dynamite_icon
     source: "../Client/resources/assets/weapons_icons/Dynamite.png"
   - name: green_grenade_icon
-    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+    source: "../Client/resources/assets/weapons_icons/GreenGrenade.png"
   - name: holy_grenade_icon
-    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+    source: "../Client/resources/assets/weapons_icons/HolyGrenade.png"
   - name: mortar_icon
-    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+    source: "../Client/resources/assets/weapons_icons/Mortar.png"
   - name: red_grenade_icon
-    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+    source: "../Client/resources/assets/weapons_icons/RedGrenade.png"
   - name: teleportation_icon
-    source: "../Client/resources/assets/weapons_icons/AirAttack.png"
+    source: "../Client/resources/assets/weapons_icons/Teleportation.png"
   - name: bg
     source: "../Client/resources/assets/background/bg.jpg"

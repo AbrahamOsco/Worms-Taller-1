@@ -4,12 +4,9 @@
 
 #include "Engine.h"
 #include "../gameObject/player/Player.h"
-#include "../gameObject/icons/Icon.h"
-#include "../gameObject/icons/AirAttackIcon.h"
-#include "../gameObject/icons/BananaIcon.h"
-#include "../gameObject/icons/BatIcon.h"
+#include "../utils/Constants.h"
 
-Engine::Engine() : m_pWindow("SDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1024, 768,
+Engine::Engine() : m_pWindow("SDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT,
                              0),
                    m_pRenderer(m_pWindow, -1, SDL_RENDERER_ACCELERATED) {
     m_bRunning = true;
@@ -22,6 +19,8 @@ void Engine::render() {
     for (const auto &m_gameObject: m_gameObjects) {
         m_gameObject->draw(m_pRenderer, m_textureManager);
     }
+
+    m_buttons.draw(m_pRenderer, m_textureManager);
 
     m_pRenderer.Present();
 }
@@ -50,9 +49,16 @@ void Engine::init() {
     m_textureManager.parseTexture("../Client/resources/assets/textures.yaml", m_pRenderer);
     LoaderParams params1(0, 0, 60, 60, "player");
     m_gameObjects.push_back(std::make_unique<Player>(params1));
-    m_gameObjects.push_back(std::make_unique<AirAttackIcon>());
-    m_gameObjects.push_back(std::make_unique<BananaIcon>());
-    m_gameObjects.push_back(std::make_unique<BatIcon>());
+    m_buttons.addButton(std::make_unique<Button>("air_attack_icon"));
+    m_buttons.addButton(std::make_unique<Button>("banana_icon"));
+    m_buttons.addButton(std::make_unique<Button>("bat_icon"));
+    m_buttons.addButton(std::make_unique<Button>("bazooka_icon"));
+    m_buttons.addButton(std::make_unique<Button>("dynamite_icon"));
+    m_buttons.addButton(std::make_unique<Button>("green_grenade_icon"));
+    m_buttons.addButton(std::make_unique<Button>("holy_grenade_icon"));
+    m_buttons.addButton(std::make_unique<Button>("mortar_icon"));
+    m_buttons.addButton(std::make_unique<Button>("red_grenade_icon"));
+    m_buttons.addButton(std::make_unique<Button>("teleportation_icon"));
 }
 
 bool Engine::running() const {
