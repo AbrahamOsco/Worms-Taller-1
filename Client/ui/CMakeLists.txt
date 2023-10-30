@@ -40,6 +40,7 @@ add_executable(test
   src/resolvererror.cpp
   src/socket.cpp
   src/lobby.cpp
+  src/waiter.cpp
   ${UIS_HEADERS})
 
 # Use the Widgets module from Qt 5.

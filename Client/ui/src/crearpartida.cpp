@@ -32,6 +32,7 @@ void CrearPartida::crear() {
     //si es exitosa pasa al lobby
     //sino muestra que no se pudo crear
     this->hide();
+    lobby.start();
     lobby.show();
 }
 void CrearPartida::buscar(std::string& nombre){

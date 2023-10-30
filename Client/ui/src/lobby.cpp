@@ -3,9 +3,14 @@
 #include "ui_lobby.h"
 #include "socket.h"
 #include <QTime>
+#include "Queue.h"
+#include "thread.h"
+#include "waiter.h"
 
 Lobby::Lobby(QWidget *parent,Socket* socket) : QWidget(parent),
-                                                timer(this) {
+                                                timer(this),
+                                                my_queue(200),
+                                                waiter(socket,&my_queue) {
     skt = socket;
     Ui::Lobby lobby;
     lobby.setupUi(this);
@@ -28,15 +33,19 @@ void Lobby::empezar(){
 }
 void Lobby::update(){
     QListWidget* chat = findChild<QListWidget*>("chat");
-    QTime time = QTime::currentTime();
-    QString qchat = time.toString("hh : mm : ss");
-    chat->addItem(qchat);
-    QListWidgetItem *lastItem = chat->item(chat->count() - 1);
-    if (lastItem) {
-        chat->scrollToItem(lastItem);
+    int val;
+    bool result = my_queue.try_pop(val);
+    if(result){
+        chat->addItem("lei algo");
+        QListWidgetItem *lastItem = chat->item(chat->count() - 1);
+        if (lastItem) {
+            chat->scrollToItem(lastItem);
+        }
+        waiter.join();
     }
 }
 void Lobby::start(){
+    waiter.start();
     timer.start(500);
 }
 void Lobby::keyPressEvent(QKeyEvent *event){

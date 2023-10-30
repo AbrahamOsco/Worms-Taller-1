@@ -5,11 +5,16 @@
 #include <QKeyEvent>
 #include "socket.h"
 #include <QTimer>
+#include "Queue.h"
+#include "waiter.h"
 
 class Lobby : public QWidget {
 private:
     Socket* skt;
     QTimer timer;
+    Queue<int> my_queue;
+    Waiter waiter;
+
 public:
     explicit Lobby(QWidget *parent = 0,Socket* socket = 0);
     void start();
