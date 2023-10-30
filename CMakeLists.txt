@@ -49,6 +49,8 @@ add_executable(worms-client Client/src/main.cpp
         Client/src/buttonManager/buttonManager.cpp
         Client/src/buttonManager/buttonManager.h
         Client/src/utils/Constants.h
+        Client/src/gameObject/beam/Beam.cpp
+        Client/src/gameObject/beam/Beam.h
 )
 
 # Para el main mas externo: Server/main.cpp

@@ -43,5 +43,77 @@ textures:
     source: "../Client/resources/assets/weapons_icons/RedGrenade.png"
   - name: teleportation_icon
     source: "../Client/resources/assets/weapons_icons/Teleportation.png"
+  - name: beam_3_0
+    source: "../Client/resources/assets/girder/girder_3_0.png"
+  - name: beam_3_10
+    source: "../Client/resources/assets/girder/girder_3_10.png"
+  - name: beam_3_20
+    source: "../Client/resources/assets/girder/girder_3_20.png"
+  - name: beam_3_30
+    source: "../Client/resources/assets/girder/girder_3_30.png"
+  - name: beam_3_40
+    source: "../Client/resources/assets/girder/girder_3_40.png"
+  - name: beam_3_50
+    source: "../Client/resources/assets/girder/girder_3_50.png"
+  - name: beam_3_60
+    source: "../Client/resources/assets/girder/girder_3_60.png"
+  - name: beam_3_70
+    source: "../Client/resources/assets/girder/girder_3_70.png"
+  - name: beam_3_80
+    source: "../Client/resources/assets/girder/girder_3_80.png"
+  - name: beam_3_90
+    source: "../Client/resources/assets/girder/girder_3_90.png"
+  - name: beam_3_100
+    source: "../Client/resources/assets/girder/girder_3_100.png"
+  - name: beam_3_110
+    source: "../Client/resources/assets/girder/girder_3_110.png"
+  - name: beam_3_120
+    source: "../Client/resources/assets/girder/girder_3_120.png"
+  - name: beam_3_130
+    source: "../Client/resources/assets/girder/girder_3_130.png"
+  - name: beam_3_140
+    source: "../Client/resources/assets/girder/girder_3_140.png"
+  - name: beam_3_150
+    source: "../Client/resources/assets/girder/girder_3_150.png"
+  - name: beam_3_160
+    source: "../Client/resources/assets/girder/girder_3_160.png"
+  - name: beam_3_170
+    source: "../Client/resources/assets/girder/girder_3_170.png"
+  - name: beam_6_0
+    source: "../Client/resources/assets/girder/girder_6_0.png"
+  - name: beam_6_10
+    source: "../Client/resources/assets/girder/girder_6_10.png"
+  - name: beam_6_20
+    source: "../Client/resources/assets/girder/girder_6_20.png"
+  - name: beam_6_30
+    source: "../Client/resources/assets/girder/girder_6_30.png"
+  - name: beam_6_40
+    source: "../Client/resources/assets/girder/girder_6_40.png"
+  - name: beam_6_50
+    source: "../Client/resources/assets/girder/girder_6_50.png"
+  - name: beam_6_60
+    source: "../Client/resources/assets/girder/girder_6_60.png"
+  - name: beam_6_70
+    source: "../Client/resources/assets/girder/girder_6_70.png"
+  - name: beam_6_80
+    source: "../Client/resources/assets/girder/girder_6_80.png"
+  - name: beam_6_90
+    source: "../Client/resources/assets/girder/girder_6_90.png"
+  - name: beam_6_100
+    source: "../Client/resources/assets/girder/girder_6_100.png"
+  - name: beam_6_110
+    source: "../Client/resources/assets/girder/girder_6_110.png"
+  - name: beam_6_120
+    source: "../Client/resources/assets/girder/girder_6_120.png"
+  - name: beam_6_130
+    source: "../Client/resources/assets/girder/girder_6_130.png"
+  - name: beam_6_140
+    source: "../Client/resources/assets/girder/girder_6_140.png"
+  - name: beam_6_150
+    source: "../Client/resources/assets/girder/girder_6_150.png"
+  - name: beam_6_160
+    source: "../Client/resources/assets/girder/girder_6_160.png"
+  - name: beam_6_170
+    source: "../Client/resources/assets/girder/girder_6_170.png"
   - name: bg
     source: "../Client/resources/assets/background/bg.jpg"
