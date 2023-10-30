@@ -38,12 +38,12 @@ void BuscarPartida::buscar(std::string& nombre){
     QComboBox* gameList = findChild<QComboBox*>("listaPartidas");
     gameList->clear();
     Partida partida;
-    partida.nombre = "panchito";
+    partida.nombre = "mi partida";
     partida.mapa = "mapa pequeño";
     partida.jugadores = 1;
     partida.capacidad = 4;
     partidas.push_back(partida);
-    partida.nombre = "paty";
+    partida.nombre = "partida definitiva";
     partida.mapa = "mapa grande";
     partida.jugadores = 2;
     partida.capacidad = 4;
