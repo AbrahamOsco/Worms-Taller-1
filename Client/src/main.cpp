@@ -12,8 +12,11 @@ int main (int argc, char *argv[]) {
     // Arranca el loop de la UI
     app.exec();
 
-    //Game game(skt);
-    //game.loadMap();
-    //game.run();
+    /*const char* ip = "127.0.0.1";
+    const char* port = "8080";
+    Socket skt(ip, port);
+    Game game(skt);
+    game.loadMap();
+    game.run();*/
     return 0;
 }
