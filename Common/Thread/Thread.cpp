@@ -6,18 +6,22 @@
 #include "Thread.h"
 
 void Thread::start() {
-    this->thread = std::thread(&Thread::main, this);
-}
+            _is_alive = true;
+            _keep_running = true;
+            thread = std::thread(&Thread::main, this);
+        }
 
 void Thread::main() {
-    try{
-        run();
-    } catch( const std::exception& e ){
-        std::cerr << e.what() << "\n";
-    } catch ( ... ){
-        std::cerr << "Unknown error in Thread\n";
-    }
-}
+            try {
+                this->run();
+            } catch(const std::exception &err) {
+                std::cerr << "Unexpected exception: " << err.what() << "\n";
+            } catch(...) {
+                std::cerr << "Unexpected exception: <unknown>\n";
+            }
+
+            _is_alive = false;
+        }
 
 void Thread::join() {
     thread.join();

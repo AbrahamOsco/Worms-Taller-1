@@ -7,45 +7,58 @@
 
 #include <thread>
 
-class Thread {
-private:
-    std::thread thread;  // cppcheck-suppress unusedStructMember
+#include <thread>
+#include <iostream>
+#include <atomic>
 
-public:
-    //  Constructor .
-    Thread() = default;
+class Runnable {
+    public:
+        virtual void start() = 0;
+        virtual void join() = 0;
+        virtual void stop() = 0;
+        virtual bool is_alive() const = 0;
 
-    //  Pre: -
-    //  Post: Lanza el thread usando la funcion main.
-    void start();
-
-    //  Pre: -
-    //  Post: Funcion que invoca al metodo abstracto run y con try-catch de ultimo recurso.
-    void main();
-
-    //  Pre: -
-    //  Post: Metodo abstracto cuyas clases hijas deben implementarlo.
-    virtual void run() = 0;
-
-
-    //  Pre: -
-    //  Post: Joinea el thread
-    void join();
-
-    // Destructor, en clases abstractas destructures siempre virtuales.
-    virtual ~Thread() = default;
-
-    //  Eliminamos el constructor por copia, no tiene sentido copiar threads.
-    Thread(const Thread&) = delete;
-
-    //  Eliminamos el operador asigancion ambien para evitar copias de threads.
-    Thread& operator=(const Thread&) = delete;
-
-    // Tambien eliminamos la opcion de mover threads.
-    Thread(Thread&& other) = delete;
-    Thread& operator=(Thread&& other) = delete;
-
+        virtual ~Runnable() {}
 };
 
+class Thread : public Runnable {
+    private:
+        std::thread thread;
+
+    protected:
+        // Subclasses that inherit from Thread will have access to these
+        // flags, mostly to control how Thread::run() will behave
+        std::atomic<bool> _keep_running;
+        std::atomic<bool> _is_alive;
+
+    public:
+        Thread() : _keep_running(true), _is_alive(false) {}
+
+        void start() override; 
+
+        void join() override;
+
+        void main(); 
+
+        // Note: it is up to the subclass to make something meaningful to
+        // really stop the thread. The Thread::run() may be blocked and/or
+        // it may not read _keep_running.
+        void stop() override {
+            _keep_running = false;
+        }
+
+        bool is_alive() const override {
+            return _is_alive;
+        }
+
+        virtual void run() = 0;
+        virtual ~Thread() {}
+
+        Thread(const Thread&) = delete;
+        Thread& operator=(const Thread&) = delete;
+
+        Thread(Thread&& other) = delete;
+        Thread& operator=(Thread&& other) = delete;
+};
 
 #endif //WORMS_TALLER_1_THREAD_H

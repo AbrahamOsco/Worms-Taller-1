@@ -20,6 +20,7 @@ CrearPartida::CrearPartida(QWidget *parent,Socket* skt) :
 }
 
 void CrearPartida::crear() {
+   
     QLineEdit* inputName = findChild<QLineEdit*>("inputNombre");
     QComboBox* mapList = findChild<QComboBox*>("listaMapas");
     QComboBox* numberList = findChild<QComboBox*>("listaCantidad");
@@ -29,20 +30,17 @@ void CrearPartida::crear() {
     size_t playersRequired = std::stoi(qPlayerRequired.toStdString());
     ResponseInitialStateDTO responIniCreateGame(FINAL_CREATE_GAME, qGameName.toStdString(), qScenarioName.toStdString(), playersRequired);
     ClientProtocol clientProtocol(*socket);  // ver si explota es por esto
+    bool closed = false;
     clientProtocol.sendResponseInitialStateDTO(responIniCreateGame);
     ResolverInitialDTO answerServer = clientProtocol.recvResolverInitialDTO();
     if(answerServer.getStatusAnswer() == SUCCESS_STATUS ){
-        this->hide();
         lobby.start();
+        this->hide();
         lobby.show();
     } else if ( answerServer.getStatusAnswer() == ERROR_STATUS ){
         // Mostrar que no se puddo crear y de alguna manera resetear todos los campos y volver a mostrar el stage CrearPartida
         // Como estan cacheado los scenariosName (es un atributo) no hay problema. @Girardi
     }
-    this->hide();
-    lobby.start();
-    lobby.show();
-
 }
 
 void CrearPartida::buscar(const std::vector<std::string> &nameScenarios){

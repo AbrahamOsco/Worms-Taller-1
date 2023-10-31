@@ -5,7 +5,7 @@
 #include <QKeyEvent>
 #include "socket.h"
 #include <QTimer>
-#include "../Common/Queue/Queue.h"
+#include "../../../Common/Queue/Queue.h"
 #include "waiter.h"
 
 class Lobby : public QWidget {
