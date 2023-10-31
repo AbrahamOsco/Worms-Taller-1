@@ -30,9 +30,11 @@ void Lobby::enviar(){
     }
 }
 void Lobby::empezar(){
+    this->hide();
     Game game(*skt);
     game.loadMap();
     game.run();
+    this->close();
 }
 void Lobby::update(){
     QListWidget* chat = findChild<QListWidget*>("chat");
