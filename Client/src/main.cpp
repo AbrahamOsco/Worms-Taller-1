@@ -4,7 +4,9 @@
 int main () {
     const char* ip = "127.0.0.1";
     const char* port = "8080";
-    Game game(ip, port);
+
+    Socket skt(ip, port);
+    Game game(skt);
     game.loadMap();
     game.run();
     return 0;

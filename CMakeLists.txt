@@ -24,7 +24,9 @@ INCLUDE_DIRECTORIES(${YAML_CPP_INCLUDE_DIRS})
 file(GLOB_RECURSE client_src "Client/src/*.cpp" "Client/src/*.h")
 file(GLOB_RECURSE common_src "Common/*.cpp" "Common/*.h")
 
-add_executable(worms-client ${client_src} ${common_src})
+add_executable(worms-client ${client_src} ${common_src}
+        Client/src/thread/SenderThread.cpp
+        Client/src/thread/SenderThread.h)
 
 # Para el main mas externo: Server/main.cpp
 add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp

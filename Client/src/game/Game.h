@@ -12,12 +12,11 @@
 
 class Game {
 private:
-    Socket skt;
-    ClientProtocol protocol;
+    ClientProtocol m_protocol;
 
     std::vector<std::unique_ptr<Beam>> m_beams;
 public:
-    Game(const char* ip, const char* port);
+    Game(Socket& skt);
     void loadMap();
     void run();
 };
