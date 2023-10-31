@@ -1,6 +1,6 @@
 #ifndef WAITER_H
 #define WAITER_H
-#include "Queue.h"
+#include "../Common/Queue/Queue.h"
 #include "thread.h"
 #include "socket.h"
 class Waiter: public Thread{

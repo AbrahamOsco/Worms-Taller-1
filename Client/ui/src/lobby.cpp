@@ -3,7 +3,7 @@
 #include "ui_lobby.h"
 #include "socket.h"
 #include <QTime>
-#include "Queue.h"
+#include "../Common/Queue/Queue.h"
 #include "thread.h"
 #include "waiter.h"
 #include "../../src/game/Game.h"

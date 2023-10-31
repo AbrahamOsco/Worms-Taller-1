@@ -6,6 +6,8 @@
 #include <deque>
 #include <mutex>
 #include <queue>
+#include <exception>
+#include <stdexcept>
 
 struct ClosedQueue: public std::runtime_error {
     ClosedQueue(): std::runtime_error("The Queue is closed") {}
