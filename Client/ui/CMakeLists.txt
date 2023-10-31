@@ -31,15 +31,10 @@ message("Headers generados: ${UIS_HEADERS}")
 
 add_executable(test
   src/login.cpp
-  src/main.cpp
-  src/mainmenu.cpp
+        src/mainmenu.cpp
   src/crearpartida.cpp
   src/buscarpartida.cpp
-  src/liberror.cpp
-  src/resolver.cpp
-  src/resolvererror.cpp
-  src/socket.cpp
-  src/lobby.cpp
+        src/lobby.cpp
   src/waiter.cpp
   ${UIS_HEADERS})
 

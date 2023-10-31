@@ -1,4 +1,0 @@
-mapa chico
-mapa mediano
-mapa grande
-mapa gigante
