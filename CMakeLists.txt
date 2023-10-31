@@ -22,6 +22,7 @@ INCLUDE_DIRECTORIES(${YAML_CPP_INCLUDE_DIRS})
 
 #SETUP DEL QT inicial @Girardi
 set(CMAKE_AUTOMOC ON)
+
 find_package(Qt5Widgets COMPONENTS Widgets REQUIRED)
 include_directories(${PROJECT_SOURCE_DIR}/Client/ui/include)
 
