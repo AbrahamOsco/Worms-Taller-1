@@ -30,7 +30,7 @@ private:
     Model model;
     std::atomic<bool> keepTalking;
     Queue<Command*> commandsQueueNB;  // La queue para popear los comandos recibido por el cliente.
-    Queue<WorldChangesDTO*> worldChangesNB;   // La queue para pushear los update del mundo  para ser enviados al protocolo. Es pateado hasta ClientConnection
+    Queue<WorldChangesDTO*> worldChangesBQ;   // La queue para pushear los update del mundo  para ser enviados al protocolo. Es pateado hasta ClientConnection es bloqueante
     EstablishedConnections connections;
 
     //std::map<size_t, ClientThread*> playersInRoom;

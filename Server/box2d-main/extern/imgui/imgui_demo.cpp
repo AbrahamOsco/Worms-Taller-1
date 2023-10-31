@@ -4103,7 +4103,7 @@ void ShowExampleAppDocuments(bool* p_open)
                 ImGuiTabItemFlags tab_flags = (doc->Dirty ? ImGuiTabItemFlags_UnsavedDocument : 0);
                 bool visible = ImGui::BeginTabItem(doc->Name, &doc->Open, tab_flags);
 
-                // Cancel attempt to close when unsaved add to save worldChangesNB so we can display a popup.
+                // Cancel attempt to close when unsaved add to save worldChangesBQ so we can display a popup.
                 if (!doc->Open && doc->Dirty)
                 {
                     doc->Open = true;
@@ -4122,11 +4122,11 @@ void ShowExampleAppDocuments(bool* p_open)
         }
     }
 
-    // Update closing worldChangesNB
+    // Update closing worldChangesBQ
     static ImVector<MyDocument*> close_queue;
     if (close_queue.empty())
     {
-        // Close worldChangesNB is locked once we started a popup
+        // Close worldChangesBQ is locked once we started a popup
         for (int doc_n = 0; doc_n < app.Documents.Size; doc_n++)
         {
             MyDocument* doc = &app.Documents[doc_n];

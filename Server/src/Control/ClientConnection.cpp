@@ -5,8 +5,8 @@
 #include "ClientConnection.h"
 #include "../Protocol/ServerProtocol.h"
 
-ClientConnection::ClientConnection(const size_t &idPlayer, Socket& aSktPeer, Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO*>& aWorldChangesNB) :
-        idPlayer(idPlayer), sktPeer(std::move(aSktPeer)), commandQueueNB(aCommandQueueNB), worldChangesNB(aWorldChangesNB){
+ClientConnection::ClientConnection(const size_t &idPlayer, Socket& aSktPeer, Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO*>& aWorldChangesBQ) :
+        idPlayer(idPlayer), sktPeer(std::move(aSktPeer)), commandQueueNB(aCommandQueueNB), worldChangesBQ(aWorldChangesBQ){
 
 }
 
@@ -20,11 +20,6 @@ void ClientConnection::start(const StageDTO &stageDTO) {        //Lanzo los thre
     sender = std::thread(&ClientConnection::runSender, this);
 }
 
-
-void ClientConnection::stop() {
-    sktPeer.totalClosure();
-}
-
 void ClientConnection::join() {
     sender.join();
     receiver.join();
@@ -32,16 +27,29 @@ void ClientConnection::join() {
 }
 
 void ClientConnection::runSender() {
-
-
+    try{
+        WorldChangesDTO* aWorldChange = NULL;
+        while((aWorldChange = worldChangesBQ.pop())){
+            //protocolo.sendGusanos(aWorldChange.getGusanos()); // todos los players se ennteran de la salud, posicion de los gusanos.
+            //protocolo.sendDataPlayer(aWorldChange.getPlayer(this->idPlayer)) // enviamos un unicast (filtro por id) del player - municiones a cada player correspondiente).
+        }
+    }catch (const std::exception& e ){
+        sktPeer.totalClosure();
+        sktPeer.close();
+    }
 }
 
 void ClientConnection::runReceiver() {
 
 }
 
-void ClientConnection::pushUpdates() {
+void ClientConnection::stop() {
+    worldChangesBQ.close();
+}
+
+
+void ClientConnection::pushUpdates(const std::vector<PlayerDTO> &vector) {
     WorldChangesDTO* worldChangesDto = new WorldChangesDTO();
-    worldChangesNB.push(worldChangesDto);
+    worldChangesBQ.push(worldChangesDto);
 }
 

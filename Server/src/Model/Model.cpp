@@ -10,11 +10,15 @@ Model::Model() {
 
 
 void Model::addPlayer(const std::string &playerName, const size_t &idPlayer) {
-    this->players[idPlayer] = Player(playerName, idPlayer);
+    players.addPlayer(playerName, idPlayer);
 }
 
 StageDTO Model::getStageDTO() const {
     return stage.getStageDTO();
+}
+
+std::vector<PlayerDTO> Model::getPlayersDTO() const {
+    return players.getPlayersDTO();
 }
 
 

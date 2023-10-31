@@ -6,8 +6,8 @@
 #include "EstablishedConnections.h"
 #include "../../../Common/DTO/StageDTO.h"
 
-EstablishedConnections::EstablishedConnections(Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO *>& aWorldChangesNB)
-        : commandQueueNB(aCommandQueueNB), worldChangesNB(aWorldChangesNB) {
+EstablishedConnections::EstablishedConnections(Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO *>& aWorldChangesBQ)
+        : commandQueueNB(aCommandQueueNB), worldChangesBQ(aWorldChangesBQ) {
 
 }
 
@@ -16,7 +16,7 @@ void EstablishedConnections::addConnection(const size_t &idPlayer, Socket sktPee
         throw std::runtime_error(" [EstablishedConnections]: El id del cliente ya ha sido agregado \n");
     }
     // uso emplace para no realize copias sino lo cree ahi mismo.
-    clientConnections.emplace(idPlayer, ClientConnection(idPlayer, sktPeer, commandQueueNB, worldChangesNB) );
+    clientConnections.emplace(idPlayer, ClientConnection(idPlayer, sktPeer, commandQueueNB, worldChangesBQ) );
 }
 
 void EstablishedConnections::start(const StageDTO &stageDTO) {
@@ -33,9 +33,9 @@ void EstablishedConnections::stop() {
     clientConnections.clear();
 }
 
-void EstablishedConnections::pushUpdate() {
+void EstablishedConnections::pushUpdate(const std::vector<PlayerDTO> &playersDTO) {
     for (auto &element : clientConnections) {   // Le digo a todos mis clientConnection start
-        element.second.pushUpdates();
+        element.second.pushUpdates(playersDTO);
     }
 }
 

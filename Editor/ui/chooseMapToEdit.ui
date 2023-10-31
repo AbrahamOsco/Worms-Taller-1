@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ChooseMapToEdit</class>
+ <widget class="QWidget" name="ChooseMapToEdit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Edit Map</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>30</y>
+     <width>121</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Pick a map to edit</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="mapNameList">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>60</y>
+     <width>261</width>
+     <height>192</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="goBackBtn">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>31</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>←</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="confirmBtn">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>260</y>
+     <width>89</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Confirm</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>goBackBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>ChooseMapToEdit</receiver>
+   <slot>onGoBackBtnClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>34</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>85</x>
+     <y>605</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>confirmBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>ChooseMapToEdit</receiver>
+   <slot>onConfirmBtnClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>298</x>
+     <y>282</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>264</x>
+     <y>519</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onGoBackBtnClicked()</slot>
+  <slot>onConfirmBtnClicked()</slot>
+ </slots>
+</ui>
