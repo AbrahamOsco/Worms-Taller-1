@@ -29,14 +29,6 @@ void AcceptorThread::addNewClient() {
     ClientLogin* aClientLogin = new ClientLogin(std::move(sktPeer), games);
     clientsLogin.emplace_back(aClientLogin);
     aClientLogin->start();
-    //ClientThread* thrCliente = new ClientThread(std::move(sktPeer), nuevoId, games);
-    //thrCliente->start();
-    //clientes.push_back(thrCliente);
-    /*
-    Queue<AnswerDTO>* unaCola = new Queue<AnswerDTO>;
-    mapQueuesProtected.addNewQueue(nuevoId, unaCola);
-    idActual++;
-    */
 }
 
 void AcceptorThread::cleanDeadClients() {

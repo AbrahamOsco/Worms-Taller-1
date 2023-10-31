@@ -13,6 +13,7 @@
 
 class Players {
 private:
+    size_t idPlayer;
     std::map<size_t, Player> players;
 
 public:
