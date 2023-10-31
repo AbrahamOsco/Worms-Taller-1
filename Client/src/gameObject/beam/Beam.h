@@ -6,6 +6,7 @@
 #define WORMS_TALLER_1_BEAM_H
 
 #include "../GameObject.h"
+#include "../../../../Common/DTO/BeamDTO.h"
 
 enum Angle {
     ANGLE_0 = 0,
@@ -28,17 +29,12 @@ enum Angle {
     ANGLE_170 = 170
 };
 
-enum BeamType {
-    SHORT_BEAM = 3,
-    LONG_BEAM = 6
-};
-
 class Beam : public GameObject{
 private:
-    BeamType m_type;
+    TypeBeam m_type;
     Angle m_angle;
 public:
-    Beam(int posCenterX, int posCenterY, Angle angle, BeamType type);
+    Beam(int posCenterX, int posCenterY, Angle angle, TypeBeam type);
     void draw(SDL2pp::Renderer& renderer, TextureManager& textureManager) override;
     void update(float dt) override;
 };

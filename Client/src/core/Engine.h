@@ -12,6 +12,7 @@
 #include "../gameObject/GameObject.h"
 #include "../loaderParams/LoaderParams.h"
 #include "../buttonManager/buttonManager.h"
+#include "../gameObject/beam/Beam.h"
 
 class Engine {
 private:
@@ -21,11 +22,12 @@ private:
     SDL2pp::Renderer m_pRenderer;
     Timer m_timer;
 
+    std::vector<std::unique_ptr<Beam>>& m_beams;
     std::vector<std::unique_ptr<GameObject>> m_gameObjects;
     buttonManager m_buttons;
 
 public:
-    Engine();
+    Engine(std::vector<std::unique_ptr<Beam>>& beams);
     ~Engine() = default;
     void init();
     void render();

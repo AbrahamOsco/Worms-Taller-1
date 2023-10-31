@@ -4,7 +4,7 @@
 
 #include "Beam.h"
 
-Beam::Beam(int posCenterX, int posCenterY, Angle angle, BeamType type) : GameObject(LoaderParams(0, 0, 0, 0, "")) {
+Beam::Beam(int posCenterX, int posCenterY, Angle angle, TypeBeam type) : GameObject(LoaderParams(0, 0, 0, 0, "")) {
     m_type = type;
     m_angle = angle;
     m_textureID = "beam_" + std::to_string(m_type) + "_" + std::to_string(m_angle);

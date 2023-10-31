@@ -10,7 +10,7 @@
 #include "DTO.h"
 
 enum TypeBeam {
-    SHORT_BEAM = 1 , LONG_BEAM = 2
+    SHORT_BEAM = 3 , LONG_BEAM = 6
 };
 
 class BeamDTO : public DTO {

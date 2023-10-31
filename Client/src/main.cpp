@@ -1,15 +1,11 @@
-#include "SDL2pp/SDL2pp.hh"
-#include "core/Engine.h"
+#include "protocol/ClientProtocol.h"
+#include "game/Game.h"
 
 int main () {
-    SDL2pp::SDL sdl(SDL_INIT_VIDEO);
-    Engine engine;
-    engine.init();
-    while (engine.running()) {
-        engine.events();
-        engine.update();
-        engine.render();
-        engine.tick();
-    }
+    const char* ip = "127.0.0.1";
+    const char* port = "8080";
+    Game game(ip, port);
+    game.loadMap();
+    game.run();
     return 0;
 }

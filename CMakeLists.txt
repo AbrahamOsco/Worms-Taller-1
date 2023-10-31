@@ -20,38 +20,11 @@ include_directories(${SDL2PP_INCLUDE_DIRS})
 FIND_PACKAGE(yaml-cpp REQUIRED)
 INCLUDE_DIRECTORIES(${YAML_CPP_INCLUDE_DIRS})
 
-add_executable(worms-client Client/src/main.cpp
-        Client/src/core/Engine.cpp
-        Client/src/core/Engine.h
-        Client/src/graphics/TextureManager.cpp
-        Client/src/graphics/TextureManager.h
-        Client/src/timer/Timer.cpp
-        Client/src/timer/Timer.h
-        Client/src/gameObject/GameObject.cpp
-        Client/src/gameObject/GameObject.h
-        Client/src/gameObject/IObject.h
-        Client/src/loaderParams/LoaderParams.cpp
-        Client/src/loaderParams/LoaderParams.h
-        Client/src/gameObject/player/Player.cpp
-        Client/src/gameObject/player/Player.h
-        Client/src/animation/Animation.cpp
-        Client/src/animation/Animation.h
-        Common/DTO/DTO.h
-        Common/DTO/DTO.cpp
-        Common/DTO/ResponseInitialStateDTO.h
-        Common/DTO/ResponseInitialStateDTO.cpp
-        Common/DTO/RoomDTO.h
-        Common/DTO/RoomDTO.cpp
-        Common/DTO/ResolverInitialDTO.h
-        Common/DTO/ResolverInitialDTO.cpp
-        Client/src/gameObject/button/Button.cpp
-        Client/src/gameObject/button/Button.h
-        Client/src/buttonManager/buttonManager.cpp
-        Client/src/buttonManager/buttonManager.h
-        Client/src/utils/Constants.h
-        Client/src/gameObject/beam/Beam.cpp
-        Client/src/gameObject/beam/Beam.h
-)
+# Archivos Fuente
+file(GLOB_RECURSE client_src "Client/src/*.cpp" "Client/src/*.h")
+file(GLOB_RECURSE common_src "Common/*.cpp" "Common/*.h")
+
+add_executable(worms-client ${client_src} ${common_src})
 
 # Para el main mas externo: Server/main.cpp
 add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
