@@ -52,8 +52,6 @@ void ClientLogin::execute(const ResponseInitialStateDTO &response, const std::st
     if( operationType == FINAL_CREATE_GAME){
         answer = games.createGameAndAddPlayer(response, sktPeer, playerName);         //pasamos el skt por referenciia y si salio todo ok sera movido sino no se movera.
         if(answer == OPERATION_SUCCESS){
-            ResolverInitialDTO aNewResolverInitial(RESPONSE_FINAL_CREATE_GAME, OPERATION_SUCCESS);
-            serverProtocol.sendResolverInitialDTO(aNewResolverInitial);
             isRunning = false;
         } else if ( answer == OPERATION_ERROR ) {
             ResolverInitialDTO aNewResolverInitial(RESPONSE_FINAL_CREATE_GAME, OPERATION_ERROR);
@@ -62,8 +60,6 @@ void ClientLogin::execute(const ResponseInitialStateDTO &response, const std::st
     } else if ( operationType == FINAL_JOIN_GAME){
         answer = games.addPlayer(response, sktPeer, playerName);
         if (answer == OPERATION_SUCCESS){
-            ResolverInitialDTO responseJoinGame(RESPONSE_FINAL_JOIN_GAME, OPERATION_SUCCESS);
-            serverProtocol.sendResolverInitialDTO(responseJoinGame);
             isRunning = false;
         }
         else if (answer == OPERATION_ERROR){

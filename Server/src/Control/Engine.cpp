@@ -19,6 +19,9 @@ int Engine::addClient(Socket &socket, const std::string &playerName) {
     int answer = ERROR;
     if( this->currentPlayers < numberPlayerReq ){
         model.addPlayer(playerName, currentPlayers);
+        ResolverInitialDTO responseJoinGame(RESPONSE_FINAL_JOIN_GAME, SUCCESS);
+        ServerProtocol serverProtocol(socket);
+        serverProtocol.sendResolverInitialDTO(responseJoinGame);
         connections.addConnection(currentPlayers, std::move(socket));
         currentPlayers++;
         if (currentPlayers == numberPlayerReq){

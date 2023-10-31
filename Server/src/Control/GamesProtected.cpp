@@ -5,6 +5,8 @@
 #include <iostream>
 #include "GamesProtected.h"
 #include "../../../Common/DTO/RoomDTO.h"
+#include "../../../Common/DTO/ResolverInitialDTO.h"
+#include "../Protocol/ServerProtocol.h"
 
 #define SUCCESS 1
 #define ERROR 2
@@ -23,6 +25,9 @@ GamesProtected::createGameAndAddPlayer(const ResponseInitialStateDTO &response, 
         return answer;
     }
     games[response.getGameName()] = new Engine(response); // Si el nombre no existe creamos un engine y unimos al jugador.
+    ResolverInitialDTO aNewResolverInitial(RESPONSE_FINAL_CREATE_GAME, SUCCESS);
+    ServerProtocol serverProtocol(sktPeer);
+    serverProtocol.sendResolverInitialDTO(aNewResolverInitial);
     answer = games[response.getGameName()]->addClient(sktPeer, playerName);
     std::cerr << "[GamesProtected]: Se unio: " + playerName + " con exito a la partida : " + response.getGameName() + "\n";
     return answer;
