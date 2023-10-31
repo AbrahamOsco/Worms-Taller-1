@@ -14,12 +14,10 @@ MainMenu::MainMenu(QWidget *parent,char* server,char* port,char* name) :
 }
 
 void MainMenu::crearPartida() {
-    /*
     ClientProtocol clientProtocol(socket);
     InitialStateDTO initialState(SCENARIO_LIST_REQUEST, playerName);
     clientProtocol.sendInitialStateDTO(initialState);
     ResolverInitialDTO resolvIniCreate = clientProtocol.recvResolverInitialDTO();
-    */
     std::vector<std::string> nameScenarios;
     crear.buscar(nameScenarios);
 

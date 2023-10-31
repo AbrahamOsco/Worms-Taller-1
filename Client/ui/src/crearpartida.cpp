@@ -27,7 +27,6 @@ void CrearPartida::crear() {
     QString qScenarioName = mapList->currentText();
     QString qPlayerRequired = numberList->currentText();
     size_t playersRequired = std::stoi(qPlayerRequired.toStdString());
-    /*
     ResponseInitialStateDTO responIniCreateGame(FINAL_CREATE_GAME, qGameName.toStdString(), qScenarioName.toStdString(), playersRequired);
     ClientProtocol clientProtocol(reinterpret_cast<Socket &>(socket));  // ver si explota es por esto
     clientProtocol.sendResponseInitialStateDTO(responIniCreateGame);
@@ -40,7 +39,6 @@ void CrearPartida::crear() {
         // Mostrar que no se puddo crear y de alguna manera resetear todos los campos y volver a mostrar el stage CrearPartida
         // Como estan cacheado los scenariosName (es un atributo) no hay problema. @Girardi
     }
-    */
     this->hide();
     lobby.start();
     lobby.show();
