@@ -13,15 +13,16 @@
 #include "../../../Common/Queue/Queue.h"
 #include "Command/Command.h"
 #include "../../../Common/DTO/StageDTO.h"
+#include "../../../Common/DTO/PlayerDTO.h"
 
 class EstablishedConnections {
 private:
     std::map<size_t, ClientConnection> clientConnections;
     Queue<Command*> &commandQueueNB;
-    Queue<WorldChangesDTO*>& worldChangesNB;
+    Queue<WorldChangesDTO*>& worldChangesBQ;
 public:
 
-    EstablishedConnections(Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO *>& aWorldChangesNB);
+    EstablishedConnections(Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO *>& aWorldChangesBQ);
 
     void addConnection(const size_t &idPlayer, Socket sktPeer);
 
@@ -29,7 +30,7 @@ public:
 
     void stop();
 
-    void pushUpdate();
+    void pushUpdate(const std::vector<PlayerDTO> &playersDTO);
 };
 
 

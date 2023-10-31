@@ -13,6 +13,7 @@
 #include "Command/Command.h"
 #include "../../../Common/DTO/WorldChangesDTO.h"
 #include "../../../Common/DTO/StageDTO.h"
+#include "../../../Common/DTO/PlayerDTO.h"
 
 class ClientConnection {
 private:
@@ -21,9 +22,9 @@ private:
     std::thread sender;
     std::thread receiver;
     Queue<Command*> &commandQueueNB;
-    Queue<WorldChangesDTO*>& worldChangesNB;
+    Queue<WorldChangesDTO*>& worldChangesBQ;
 public:
-    ClientConnection(const size_t &idPlayer, Socket &aSktPeer, Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO*>& aWorldChangesNB);
+    ClientConnection(const size_t &idPlayer, Socket &aSktPeer, Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO*>& aWorldChangesBQ);
 
     //ClientConnection(const size_t &idPlayer, Socket& aSktPeer, Queue<Command *> &aCommandQueueNB);
 
@@ -37,7 +38,7 @@ public:
 
     void join();
 
-    void pushUpdates();
+    void pushUpdates(const std::vector<PlayerDTO> &vector);
 };
 
 

@@ -310,7 +310,7 @@ public:
 	////////////////////////////////////////////////////////////
 	/// \brief Queue more audio for a non-callback device
 	///
-	/// \param[in] data Data to worldChangesNB for later playback
+	/// \param[in] data Data to worldChangesBQ for later playback
 	/// \param[in] len Data length in bytes (not samples!)
 	///
 	/// \returns Reference to self

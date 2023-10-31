@@ -8,19 +8,19 @@
 #include <queue>
 
 struct ClosedQueue: public std::runtime_error {
-    ClosedQueue(): std::runtime_error("The worldChangesNB is closed") {}
+    ClosedQueue(): std::runtime_error("The worldChangesBQ is closed") {}
 };
 
 /*
  * Multiproducer/Multiconsumer Blocking Queue (MPMC)
  *
- * Queue is a generic MPMC worldChangesNB with blocking operations
+ * Queue is a generic MPMC worldChangesBQ with blocking operations
  * push() and pop().
  *
  * Two additional methods, try_push() and try_pop() allow
  * non-blocking operations.
  *
- * On a closed worldChangesNB, any method will raise ClosedQueue.
+ * On a closed worldChangesBQ, any method will raise ClosedQueue.
  *
  * */
 template <typename T, class C = std::deque<T> >
@@ -119,7 +119,7 @@ public:
         std::unique_lock<std::mutex> lck(mtx);
 
         if (closed) {
-            throw std::runtime_error("The worldChangesNB is already closed.");
+            throw std::runtime_error("The worldChangesBQ is already closed.");
         }
 
         closed = true;
@@ -241,7 +241,7 @@ public:
         std::unique_lock<std::mutex> lck(mtx);
 
         if (closed) {
-            throw std::runtime_error("The worldChangesNB is already closed.");
+            throw std::runtime_error("The worldChangesBQ is already closed.");
         }
 
         closed = true;

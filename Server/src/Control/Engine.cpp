@@ -11,7 +11,7 @@
 
 Engine::Engine(const ResponseInitialStateDTO &response) : nameGameRoom( response.getGameName()) , nameScenario(response.getScenarioName()),
                                                           numberPlayerReq(response.getPlayerRequired()), keepTalking(true),
-                                                          commandsQueueNB(UINT_MAX - 1), worldChangesNB(UINT_MAX - 1), connections(commandsQueueNB, worldChangesNB) {
+                                                          commandsQueueNB(UINT_MAX - 1), worldChangesBQ(UINT_MAX - 1), connections(commandsQueueNB, worldChangesBQ) {
 }
 
 // Retorna 1 si agrego con exito al jugador o retorna 2 Si hubo un ERROR.
@@ -34,7 +34,7 @@ void Engine::run() {
     std::string estadoPartida = std::to_string(currentPlayers) + "/" + std::to_string(numberPlayerReq)  + " Ha comenzado\n";
     std::cout << "[Engine]: La partida  " + this->nameGameRoom  + " En el scenario: " + this->nameScenario + " Con : " + estadoPartida;
     connections.start(model.getStageDTO()); // Le digo a todos las conexiones de esta partida  "start". es decir que lanzen los hilos sender y receiv cada conexion.
-    connections.pushUpdate();  //pusheamos actualizaciones
+    connections.pushUpdate(model.getPlayersDTO());  //pusheamos actualizaciones
     while(keepTalking){
 
     }

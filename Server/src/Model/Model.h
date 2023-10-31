@@ -8,6 +8,8 @@
 #include <cstddef>
 #include "Player.h"
 #include "Stage.h"
+#include "Players.h"
+#include "../../../Common/DTO/PlayerDTO.h"
 #include <map>
 #include <string>
 
@@ -16,12 +18,14 @@ private:
     size_t numberPlayerReq;
     size_t currentPlayers;
     bool finishedGame;
-    std::map<size_t, Player> players;
+    Players players;
     Stage stage;
-
 public:
     Model();
+
     void addPlayer(const std::string &playerName, const size_t &idPlayer);
+
+    std::vector<PlayerDTO> getPlayersDTO() const;
 
     StageDTO getStageDTO() const;
 };
