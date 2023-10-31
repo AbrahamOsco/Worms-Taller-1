@@ -1,6 +1,7 @@
 #ifndef PROTOCOLO_COMMON_DTO_H
 #define PROTOCOLO_COMMON_DTO_H
-
+#define SUCCESS_STATUS 1
+#define ERROR_STATUS 2
 enum OperationType {
     INITIAL_STATE = 250,  // Si imprime 250 es porque no esta inicializado.
     START_GAME = 1,

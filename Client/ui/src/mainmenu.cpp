@@ -1,30 +1,46 @@
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
+#include "../../src/protocol/ClientProtocol.h"
 
-MainMenu::MainMenu(QWidget *parent,char* server,char* port,char* name) : 
-                                    QWidget(parent),
-                                    socket(server,port),
-                                    my_name(name),
-                                    crear(nullptr,&socket),
-                                    buscar(nullptr,&socket) {
+MainMenu::MainMenu(QWidget *parent,char* server,char* port,char* name) :
+        QWidget(parent),
+        socket(server,port),
+        playerName(name),
+        crear(nullptr,&socket),
+        buscar(nullptr,&socket) {
     Ui::MainMenu mainMenu;
     mainMenu.setupUi(this);
     connectEvents();
 }
 
 void MainMenu::crearPartida() {
-    crear.buscar(my_name);
+    /*
+    ClientProtocol clientProtocol(socket);
+    InitialStateDTO initialState(SCENARIO_LIST_REQUEST, playerName);
+    clientProtocol.sendInitialStateDTO(initialState);
+    ResolverInitialDTO resolvIniCreate = clientProtocol.recvResolverInitialDTO();
+    */
+    std::vector<std::string> nameScenarios;
+    crear.buscar(nameScenarios);
+
     this->hide();
     crear.show();
 }
+
 void MainMenu::salir(){
     this->close();
 }
+
 void MainMenu::buscarPartida(){
-    buscar.buscar(my_name);
+    ClientProtocol clientProtocol(socket);
+    InitialStateDTO initialState(ROOM_LIST_REQUEST, playerName);
+    clientProtocol.sendInitialStateDTO(initialState);
+    ResolverInitialDTO resolvIniJoin = clientProtocol.recvResolverInitialDTO();
+    buscar.buscar(resolvIniJoin.getGameRooms());
     this->hide();
     buscar.show();
 }
+
 void MainMenu::connectEvents() {
     QPushButton* buttonSalir = findChild<QPushButton*>("buttonSalir");
     QObject::connect(buttonSalir, &QPushButton::clicked,

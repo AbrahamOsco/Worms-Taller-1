@@ -43,5 +43,6 @@ add_executable(test
   src/waiter.cpp
   ${UIS_HEADERS})
 
+
 # Use the Widgets module from Qt 5.
 target_link_libraries(test Qt5::Widgets)

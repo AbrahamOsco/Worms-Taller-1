@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "lobby.h"
+#include "../../src/protocol/ClientProtocol.h"
 
 
 BuscarPartida::BuscarPartida(QWidget *parent,Socket* socket) :  QWidget(parent),
@@ -15,14 +16,23 @@ BuscarPartida::BuscarPartida(QWidget *parent,Socket* socket) :  QWidget(parent),
 
 void BuscarPartida::unirse() {
     QComboBox* gameList = findChild<QComboBox*>("listaPartidas");
-    QString qgame = gameList->currentText();
-    std::string game = qgame.toStdString();
-    //aca se envia el comando de unirse
-    //aca recibo la confirmacion de si me uni
-    //si me uni
-    this->hide();
-    lobby.start();
-    lobby.show();
+    QString qGameName = gameList->currentText();
+    ClientProtocol clientProtocol(reinterpret_cast<Socket &>(skt));
+    ResponseInitialStateDTO responseJoinGame(FINAL_JOIN_GAME, qGameName.toStdString());
+    clientProtocol.sendResponseInitialStateDTO(responseJoinGame);
+
+    ResolverInitialDTO answerServer = clientProtocol.recvResolverInitialDTO();
+    if(answerServer.getStatusAnswer() == SUCCESS_STATUS ){
+        this->hide();
+        lobby.start();
+        lobby.show();
+    } else if ( answerServer.getStatusAnswer() == ERROR_STATUS){
+        // limpiamos los rooms q tenemos (Desactualizado) y ademas del error obtenemos los nuevos rooms disponibles.
+        gameRooms.clear();
+        this-> gameRooms = answerServer.getGameRooms();
+        // volver a mostrar este stage con estos nuevos Rooms @Girardi.
+    }
+
 }
 void BuscarPartida::mostrar() {
     QComboBox* gameList = findChild<QComboBox*>("listaPartidas");
@@ -30,40 +40,31 @@ void BuscarPartida::mostrar() {
     QLabel* labelMap = findChild<QLabel*>("labelEscenario");
     QLabel* labelJugadores = findChild<QLabel*>("labelNum");
     QLabel* labelCap = findChild<QLabel*>("labelCapacidad");
-    QString aux = QString::fromStdString(partidas[i].mapa);
-    QString update = QString("Mapa: %1").arg(aux);
+    QString aux = QString::fromStdString(gameRooms[i].getScenarioName());
+    QString update = QString("Scenario: %1").arg(aux);
     labelMap->setText(update);
-    aux = QString::fromStdString(std::to_string(partidas[i].jugadores));
-    update = QString("Jugadores: %1").arg(aux);
+    aux = QString::fromStdString(std::to_string(gameRooms[i].getPlayerCurrent()));
+    update = QString("Jugadores Actuales : %1").arg(aux);
     labelJugadores->setText(update);
-    aux = QString::fromStdString(std::to_string(partidas[i].capacidad));
-    update = QString("Capacidad: %1").arg(aux);
+    aux = QString::fromStdString(std::to_string(gameRooms[i].getPlayerRequired()));
+    update = QString("Jugadores Requeridos: %1").arg(aux);
     labelCap->setText(update);
 }
 void BuscarPartida::salir() {
     this->close();
 }
-void BuscarPartida::buscar(std::string& nombre){
-    //hace request de todas las partidas
-    //recibo el vector, lo guardo en my vector
+
+void BuscarPartida::buscar(const std::vector<RoomDTO> &gameRooms){
     QComboBox* gameList = findChild<QComboBox*>("listaPartidas");
     gameList->clear();
-    Partida partida;
-    partida.nombre = "mi partida";
-    partida.mapa = "mapa pequeño";
-    partida.jugadores = 1;
-    partida.capacidad = 4;
-    partidas.push_back(partida);
-    partida.nombre = "partida definitiva";
-    partida.mapa = "mapa grande";
-    partida.jugadores = 2;
-    partida.capacidad = 4;
-    partidas.push_back(partida);
-    for (int i = 0;i<partidas.size();i++){
-        QString qgame = QString::fromStdString(partidas[i].nombre);
-        gameList->addItem(qgame);
+    this->gameRooms = gameRooms;
+
+    for(size_t i = 0; i<gameRooms.size(); i++){
+        QString qGameName = QString::fromStdString(gameRooms[i].getGameName());
+        gameList->addItem(qGameName);
     }
 }
+
 void BuscarPartida::connectEvents() {
     QPushButton* buttonUnirse = findChild<QPushButton*>("buttonUnirse");
     QObject::connect(buttonUnirse, &QPushButton::clicked,

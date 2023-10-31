@@ -5,8 +5,17 @@
 #include "ResponseInitialStateDTO.h"
 
 ResponseInitialStateDTO::ResponseInitialStateDTO() :DTO(INITIAL_STATE) {
+}
+
+ResponseInitialStateDTO::ResponseInitialStateDTO(const OperationType &aOperationType, const std::string &aGameName) : DTO(aOperationType), gameName(aGameName)  {
+}
+
+ResponseInitialStateDTO::ResponseInitialStateDTO(const OperationType &aOperationType, const std::string &aGameName,
+                                                 const std::string &aScenarioName, const size_t &playersRequired)
+                                                : DTO(aOperationType), gameName(aGameName), scenarioName(aScenarioName), playersRequired(playersRequired)  {
 
 }
+
 
 void ResponseInitialStateDTO::setGameName(const std::string &aGameName) {
     this->gameName = aGameName;
@@ -31,4 +40,5 @@ std::string ResponseInitialStateDTO::getScenarioName() const {
 size_t ResponseInitialStateDTO::getPlayerRequired() const {
     return playersRequired;
 }
+
 

@@ -9,7 +9,7 @@
 class MainMenu : public QWidget {
 private:
     Socket socket;
-    std::string my_name;
+    std::string playerName;
     CrearPartida crear;
     BuscarPartida buscar;
 public:

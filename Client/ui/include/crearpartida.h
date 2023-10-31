@@ -11,9 +11,10 @@ private:
     Socket* socket;
     QWidget* my_parent;
     Lobby lobby;
+    std::vector<std::string> namesScenarios;
 public:
     explicit CrearPartida(QWidget *parent = 0,Socket* skt=0);
-    void buscar(std::string& nombre);
+    void buscar(const std::vector<std::string> &nameScenarios);
 private:
     void crear();
     void connectEvents();

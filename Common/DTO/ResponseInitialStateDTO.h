@@ -17,6 +17,10 @@ private:
 public:
     ResponseInitialStateDTO();
 
+    ResponseInitialStateDTO(const OperationType& aOperationType, const std::string& aGameName );
+
+    ResponseInitialStateDTO(const OperationType& aOperationType, const std::string& aGameName, const std::string& aScenarioName, const size_t& playersRequired);
+
     void setGameName(const std::string& aGameName);
 
     void setScenarioName(const std::string& aScenarioName);
