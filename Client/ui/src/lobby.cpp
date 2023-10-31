@@ -6,6 +6,7 @@
 #include "Queue.h"
 #include "thread.h"
 #include "waiter.h"
+#include "../../src/game/Game.h"
 
 Lobby::Lobby(QWidget *parent,Socket* socket) : QWidget(parent),
                                                 timer(this),
@@ -29,7 +30,9 @@ void Lobby::enviar(){
     }
 }
 void Lobby::empezar(){
-
+    Game game(*skt);
+    game.loadMap();
+    game.run();
 }
 void Lobby::update(){
     QListWidget* chat = findChild<QListWidget*>("chat");
@@ -42,6 +45,7 @@ void Lobby::update(){
             chat->scrollToItem(lastItem);
         }
         waiter.join();
+        this->empezar();
     }
 }
 void Lobby::start(){

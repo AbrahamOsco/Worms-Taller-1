@@ -28,7 +28,7 @@ void CrearPartida::crear() {
     QString qPlayerRequired = numberList->currentText();
     size_t playersRequired = std::stoi(qPlayerRequired.toStdString());
     ResponseInitialStateDTO responIniCreateGame(FINAL_CREATE_GAME, qGameName.toStdString(), qScenarioName.toStdString(), playersRequired);
-    ClientProtocol clientProtocol(reinterpret_cast<Socket &>(socket));  // ver si explota es por esto
+    ClientProtocol clientProtocol(*socket);  // ver si explota es por esto
     clientProtocol.sendResponseInitialStateDTO(responIniCreateGame);
     ResolverInitialDTO answerServer = clientProtocol.recvResolverInitialDTO();
     if(answerServer.getStatusAnswer() == SUCCESS_STATUS ){

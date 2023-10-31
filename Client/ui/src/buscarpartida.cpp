@@ -17,7 +17,7 @@ BuscarPartida::BuscarPartida(QWidget *parent,Socket* socket) :  QWidget(parent),
 void BuscarPartida::unirse() {
     QComboBox* gameList = findChild<QComboBox*>("listaPartidas");
     QString qGameName = gameList->currentText();
-    ClientProtocol clientProtocol(reinterpret_cast<Socket &>(skt));
+    ClientProtocol clientProtocol(*skt);
     ResponseInitialStateDTO responseJoinGame(FINAL_JOIN_GAME, qGameName.toStdString());
     clientProtocol.sendResponseInitialStateDTO(responseJoinGame);
 
