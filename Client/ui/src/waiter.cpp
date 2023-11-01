@@ -6,7 +6,7 @@
 #include "../../src/protocol/ClientProtocol.h"
 #include "../../../Common/DTO/ResolverInitialDTO.h"
 
-Waiter::Waiter(Socket* socket,Queue<int>* queue){
+Waiter::Waiter(Socket* socket,Queue<ResolverInitialDTO>* queue){
     skt = socket;
     my_queue = queue;
 }
