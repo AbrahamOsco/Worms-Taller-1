@@ -40,15 +40,7 @@ qt5_wrap_ui(UIS_HEADERS
         Client/ui/ui/buscarpartida.ui
         Client/ui/ui/lobby.ui)
 
-add_executable(worms-client ${UIS_HEADERS}  ${client_src} ${qt_src} ${common_src}
-        Client/src/thread/SenderThread.cpp
-        Client/src/thread/SenderThread.h
-        Client/src/command/MoveRight.cpp
-        Client/src/command/MoveRight.h
-        Client/src/command/MoveLeft.cpp
-        Client/src/command/MoveLeft.h)
-
-
+add_executable(worms-client ${UIS_HEADERS}  ${client_src} ${qt_src} ${common_src})
 
 # Para el main mas externo: Server/main.cpp
 add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
