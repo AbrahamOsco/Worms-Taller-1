@@ -24,6 +24,8 @@ void ClientLogin::run() {
             ResolverInitialDTO resolverInitialDto(RESPONSE_INITIAL_JOIN_GAME, games.getAvailableRooms());
             serverProtocol.sendResolverInitialDTO(resolverInitialDto);
             std::cerr << "[ClientLogin]:run Se recibio una peticion peticion de unirse a alguna partida -> se envia los rooms disponibles   ";
+        } else if (operationType == INITIAL_STATE){
+            isRunning = false;              // El cliente se descoencto salimos  (es un cliente muerto) simplemente salimos
         }
         while( isRunning){
             ResponseInitialStateDTO response = serverProtocol.recvReponseInitialStateDTO();
@@ -42,8 +44,14 @@ bool ClientLogin::isDead() const {
 }
 
 void ClientLogin::stop() {
-    isRunning = false;
-    sktPeer.totalClosure();
+    try{
+        if(isRunning){
+            isRunning = false;
+            sktPeer.totalClosure();
+        }
+    }catch (std::exception& e){
+        std::cerr << e.what() << "\n";
+    }
 }
 
 void ClientLogin::execute(const ResponseInitialStateDTO &response, const std::string &playerName) {
@@ -60,15 +68,19 @@ void ClientLogin::execute(const ResponseInitialStateDTO &response, const std::st
     } else if ( operationType == FINAL_JOIN_GAME){
         answer = games.addPlayer(response, sktPeer, playerName);
         if (answer == OPERATION_SUCCESS){
+            std::cerr << "[ClientLogin]:execute Se recibe OPERATION_SUCCESS En el Join \n";
             isRunning = false;
         }
         else if (answer == OPERATION_ERROR){
+            std::cerr << "[ClientLogin]:execute Se recibe OPERATION_ERROR En el Join \n";
             ResolverInitialDTO responseJoinGame(RESPONSE_FINAL_JOIN_GAME, OPERATION_ERROR);
             responseJoinGame.setGameRooms(games.getAvailableRooms());
             serverProtocol.sendResolverInitialDTO(responseJoinGame);
         }
     }
 }
+
+
 
 
 

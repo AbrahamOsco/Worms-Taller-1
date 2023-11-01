@@ -19,6 +19,7 @@ private:
     std::atomic<bool> isRunning;
     ServerProtocol serverProtocol;
 public:
+    
     ClientLogin(Socket socket, GamesProtected& aGames);
 
     void run() override;

@@ -35,12 +35,12 @@ private:
 
     //std::map<size_t, ClientThread*> playersInRoom;
     // ACA AGREGAR UN MONITOR DE LOS CLIENTES CONECTADOAS A ESTA PARTIDA.
-
+    void sendStatusAnswer(Socket &sktPeer, const OperationType &operationType);
 public:
 
     Engine(const ResponseInitialStateDTO &response);
 
-    int addClient(Socket &socket, const std::string &playerName);
+    int addClient(Socket &socket, const std::string &playerName, const OperationType &aOperation);
 
     bool isAvailable() const;
 
@@ -53,6 +53,7 @@ public:
     RoomDTO getRoomDTO() const;
 
     void clearAll();
+
 };
 
 

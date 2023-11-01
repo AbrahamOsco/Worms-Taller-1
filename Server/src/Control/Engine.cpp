@@ -10,18 +10,22 @@
 #define ERROR 2
 
 Engine::Engine(const ResponseInitialStateDTO &response) : nameGameRoom( response.getGameName()) , nameScenario(response.getScenarioName()),
-                                                          numberPlayerReq(response.getPlayerRequired()), keepTalking(true),
+                                                          numberPlayerReq(response.getPlayerRequired()), currentPlayers(0),  keepTalking(true),
                                                           commandsQueueNB(UINT_MAX - 1), worldChangesBQ(UINT_MAX - 1), connections(commandsQueueNB, worldChangesBQ) {
 }
 
 // Retorna 1 si agrego con exito al jugador o retorna 2 Si hubo un ERROR.
-int Engine::addClient(Socket &socket, const std::string &playerName) {
+void Engine::sendStatusAnswer(Socket& sktPeer, const OperationType& operationType) {
+    ResolverInitialDTO aNewResolverInitial(operationType, SUCCESS);
+    ServerProtocol serverProtocol(sktPeer);
+    serverProtocol.sendResolverInitialDTO(aNewResolverInitial);
+}
+
+int Engine::addClient(Socket &socket, const std::string &playerName, const OperationType &aOperation) {
     int answer = ERROR;
     if( this->currentPlayers < numberPlayerReq ){
         model.addPlayer(playerName, currentPlayers);
-        ResolverInitialDTO responseJoinGame(RESPONSE_FINAL_JOIN_GAME, SUCCESS);
-        ServerProtocol serverProtocol(socket);
-        serverProtocol.sendResolverInitialDTO(responseJoinGame);
+        sendStatusAnswer(socket, aOperation);
         connections.addConnection(currentPlayers, std::move(socket));
         currentPlayers++;
         if (currentPlayers == numberPlayerReq){

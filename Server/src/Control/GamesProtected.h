@@ -18,9 +18,10 @@
 
 class GamesProtected {
 private:
-    std::map<std::string, Engine*> games;
+    std::map<std::string, std::unique_ptr<Engine>> games;
 
     std::mutex mtx;
+
 public:
     GamesProtected();
 
@@ -34,6 +35,9 @@ public:
     std::vector<std::string> getScenarios();
 
     std::vector<RoomDTO> getAvailableRooms();
+
+    void stop();
+
 };
 
 

@@ -26,16 +26,15 @@ void AcceptorThread::run() {
 void AcceptorThread::addNewClient() {
     Socket sktPeer = sktAccept.accept();
     std::cout << "[AcceptorThread] : Se conecto un nuevo cliente\n";
-    ClientLogin* aClientLogin = new ClientLogin(std::move(sktPeer), games);  // No tener news si no con unique_ptr
-    clientsLogin.emplace_back(aClientLogin);
-    aClientLogin->start();
+    std::unique_ptr<ClientLogin> unCliente{new ClientLogin(std::move(sktPeer), games)};  // No tener news si no con unique_ptr
+    unCliente->start();
+    clientsLogin.push_back(std::move(unCliente));
 }
 
 void AcceptorThread::cleanDeadClients() {
-    clientsLogin.remove_if([this](ClientLogin* aClientLogin) {
+    clientsLogin.remove_if([this](const std::unique_ptr<ClientLogin>& aClientLogin) {
         if (aClientLogin->isDead()) {
             aClientLogin->join();
-            delete aClientLogin;
             return true;
         }
         return false;
@@ -46,7 +45,6 @@ void AcceptorThread::killAllClients() {
     for (auto& unCliente: clientsLogin) {
         unCliente->stop();
         unCliente->join();
-        delete unCliente;
     }
     clientsLogin.clear();
 }

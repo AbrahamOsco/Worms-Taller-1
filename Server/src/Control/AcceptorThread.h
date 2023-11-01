@@ -12,11 +12,12 @@
 #include "../../../Common/Thread/Thread.h"
 #include "GamesProtected.h"
 #include "ClientLogin.h"
+#include <memory>
 
 class AcceptorThread : public Thread {
 private:
-    Socket& sktAccept;                      // cppcheck-suppress unusedStructMember
-    std::list<ClientLogin*> clientsLogin;      // cppcheck-suppress unusedStructMember
+    Socket& sktAccept;                                          // cppcheck-suppress unusedStructMember
+    std::list<std::unique_ptr<ClientLogin>> clientsLogin;      // cppcheck-suppress unusedStructMember
     std::atomic<bool> keepAcepting;
     GamesProtected& games;
 

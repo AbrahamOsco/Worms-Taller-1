@@ -17,16 +17,20 @@ BuscarPartida::BuscarPartida(QWidget *parent,Socket* socket) :  QWidget(parent),
 void BuscarPartida::unirse() {
     QComboBox* gameList = findChild<QComboBox*>("listaPartidas");
     QString qGameName = gameList->currentText();
-    ClientProtocol clientProtocol(reinterpret_cast<Socket &>(skt));
+    ClientProtocol clientProtocol(*skt);
+    std::cout << "game a unrise: " << qGameName.toStdString();
     ResponseInitialStateDTO responseJoinGame(FINAL_JOIN_GAME, qGameName.toStdString());
     clientProtocol.sendResponseInitialStateDTO(responseJoinGame);
+    std::cout << "Se envia con exito el ResponseInitialStateDTO \n";
 
     ResolverInitialDTO answerServer = clientProtocol.recvResolverInitialDTO();
     if(answerServer.getStatusAnswer() == SUCCESS_STATUS ){
+        std::cout << "Se recibio con exito el SUCCESS_STATUS \n";
         this->hide();
         lobby.start();
         lobby.show();
     } else if ( answerServer.getStatusAnswer() == ERROR_STATUS){
+        std::cout << "Se recibio un ERROR  el ERROR_STATUS \n";
         // limpiamos los rooms q tenemos (Desactualizado) y ademas del error obtenemos los nuevos rooms disponibles.
         gameRooms.clear();
         this-> gameRooms = answerServer.getGameRooms();
