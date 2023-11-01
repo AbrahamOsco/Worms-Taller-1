@@ -68,6 +68,8 @@ ResolverInitialDTO ClientProtocol::recvResolverInitialDTO() {
             }
             resolverInitialDto.setGameRooms(gameRooms);
         }
+    } else if (typeOperation == START_GAME){
+        resolverInitialDto.setOperationType(START_GAME);
     }
     return resolverInitialDto;
 }

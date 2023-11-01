@@ -3,15 +3,19 @@
 #include <unistd.h>
 #include <iostream>
 #include "../../../Common/Queue/Queue.h"
+#include "../../src/protocol/ClientProtocol.h"
+#include "../../../Common/DTO/ResolverInitialDTO.h"
+
 Waiter::Waiter(Socket* socket,Queue<int>* queue){
     skt = socket;
     my_queue = queue;
 }
 
 void Waiter::run(){
-    uint8_t code = 1;
-    bool closed = false;
-    //skt->recvall(&code,1,&closed);
-    sleep(10);
-    my_queue->push((int) code);
+    ClientProtocol protocol(*skt);
+    ResolverInitialDTO respuesta;
+    while (respuesta.getOperationType() == START_GAME){
+        respuesta = protocol.recvResolverInitialDTO();
+    }
+    my_queue->push(respuesta);
 }

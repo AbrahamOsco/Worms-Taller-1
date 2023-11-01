@@ -7,6 +7,7 @@
 #include "thread.h"
 #include "waiter.h"
 #include "../../src/game/Game.h"
+#include "../../../Common/DTO/ResolverInitialDTO.h"
 
 Lobby::Lobby(QWidget *parent,Socket* socket) : QWidget(parent),
                                                 timer(this),
@@ -38,21 +39,17 @@ void Lobby::empezar(){
 }
 void Lobby::update(){
     QListWidget* chat = findChild<QListWidget*>("chat");
-    int val;
+    ResolverInitialDTO val;
     bool result = my_queue.try_pop(val);
-    if(result){
-        chat->addItem("lei algo");
-        QListWidgetItem *lastItem = chat->item(chat->count() - 1);
-        if (lastItem) {
-            chat->scrollToItem(lastItem);
-        }
-        waiter.join();
-        this->empezar();
+    if (result){
+        if (val.getOperationType() == START_GAME)
+            waiter.join();
+            this->empezar();
     }
 }
 void Lobby::start(){
     waiter.start();
-    timer.start(500);
+    timer.start(100);
 }
 void Lobby::keyPressEvent(QKeyEvent *event){
     if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter){

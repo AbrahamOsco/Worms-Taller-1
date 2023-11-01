@@ -6,13 +6,14 @@
 #include "socket.h"
 #include <QTimer>
 #include "../../../Common/Queue/Queue.h"
+#include "../../../Common/DTO/ResolverInitialDTO.h"
 #include "waiter.h"
 
 class Lobby : public QWidget {
 private:
     Socket* skt;
     QTimer timer;
-    Queue<int> my_queue;
+    Queue<ResolverInitialDTO> my_queue;
     Waiter waiter;
 
 public:
