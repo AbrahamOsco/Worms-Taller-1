@@ -92,5 +92,5 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
 
 
 target_link_libraries(worms-client PUBLIC SDL2pp yaml-cpp Qt5::Widgets)
-
+# agregar editor.
 target_link_libraries(Worms-Taller-1 box2d SDL2pp yaml-cpp)

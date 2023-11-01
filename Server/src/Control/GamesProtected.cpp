@@ -56,7 +56,10 @@ void GamesProtected::printRooms() {
 
 std::vector<std::string> GamesProtected::getScenarios() {
     std::unique_lock<std::mutex> lck(mtx); // operacion de solo lectura no debe habe problemas.
-    std::vector<std::string> scenariosHard {"VigaMania", "Jaula Maldita", "Vigas 10"};
+    std::vector<std::string> scenariosHard;
+    scenariosHard.emplace_back("Jaula maldita");
+    scenariosHard.emplace_back("Vigamania");
+
     return scenariosHard;
 }
 
