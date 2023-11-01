@@ -18,9 +18,7 @@ void MainMenu::crearPartida() {
     InitialStateDTO initialState(SCENARIO_LIST_REQUEST, playerName);
     clientProtocol.sendInitialStateDTO(initialState);
     ResolverInitialDTO resolvIniCreate = clientProtocol.recvResolverInitialDTO();
-    std::vector<std::string> nameScenarios;
-    crear.buscar(nameScenarios);
-
+    crear.buscar(resolvIniCreate.getScenariosNames());
     this->hide();
     crear.show();
 }

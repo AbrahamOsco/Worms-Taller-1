@@ -22,7 +22,6 @@ int Server::run() {
             games.printRooms();
         }
     }
-
     acceptorThread.stop();
     acceptorThread.join();
     return 0;
