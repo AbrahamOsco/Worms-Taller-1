@@ -35,6 +35,9 @@ void BuscarPartida::unirse() {
         gameRooms.clear();
         this-> gameRooms = answerServer.getGameRooms();
         // volver a mostrar este stage con estos nuevos Rooms @Girardi.
+        QLabel* labelResultado = findChild<QLabel*>("labelResult");
+        QString update = QString("No se pudo unir a la partida, vuelva a intentar");
+        labelResultado->setText(update);
     }
 
 }

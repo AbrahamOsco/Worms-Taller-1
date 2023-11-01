@@ -8,27 +8,17 @@
 #include "waiter.h"
 #include "../../src/game/Game.h"
 #include "../../../Common/DTO/ResolverInitialDTO.h"
+#include <QMovie>
 
 Lobby::Lobby(QWidget *parent,Socket* socket) : QWidget(parent),
                                                 timer(this),
                                                 my_queue(200),
-                                                waiter(socket,&my_queue) {
+                                                waiter(socket,&my_queue){
     skt = socket;
     Ui::Lobby lobby;
     lobby.setupUi(this);
     timer.start(500);
     connectEvents();
-}
-void Lobby::enviar(){
-    QListWidget* chat = findChild<QListWidget*>("chat");
-    QLineEdit* inputChat = findChild<QLineEdit*>("inputChat");
-    QString qchat = inputChat->text();
-    chat->addItem(qchat);
-    inputChat->clear();
-    QListWidgetItem *lastItem = chat->item(chat->count() - 1);
-    if (lastItem) {
-        chat->scrollToItem(lastItem);
-    }
 }
 void Lobby::empezar(){
     this->hide();
@@ -38,30 +28,19 @@ void Lobby::empezar(){
     this->close();
 }
 void Lobby::update(){
-    QListWidget* chat = findChild<QListWidget*>("chat");
     ResolverInitialDTO val;
     bool result = my_queue.try_pop(val);
     if (result){
-        if (val.getOperationType() == START_GAME)
+        if (val.getOperationType() == START_GAME){
             waiter.join();
             this->empezar();
+        }
     }
 }
 void Lobby::start(){
     waiter.start();
     timer.start(100);
 }
-void Lobby::keyPressEvent(QKeyEvent *event){
-    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter){
-        this->enviar();
-    }
-}
 void Lobby::connectEvents() {
-    QPushButton* buttonEnviar = findChild<QPushButton*>("buttonEnviar");
-    QObject::connect(buttonEnviar, &QPushButton::clicked,
-                     this, &Lobby::enviar);
-    QPushButton* buttonEmpezar = findChild<QPushButton*>("buttonEmpezar");
-    QObject::connect(buttonEmpezar, &QPushButton::clicked,
-                     this, &Lobby::empezar);
-    QObject::connect(&timer,&QTimer::timeout,this,&Lobby::update); 
+    QObject::connect(&timer,&QTimer::timeout,this,&Lobby::update);
 }

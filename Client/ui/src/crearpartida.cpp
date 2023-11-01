@@ -38,8 +38,9 @@ void CrearPartida::crear() {
         this->hide();
         lobby.show();
     } else if ( answerServer.getStatusAnswer() == ERROR_STATUS ){
-        // Mostrar que no se puddo crear y de alguna manera resetear todos los campos y volver a mostrar el stage CrearPartida
-        // Como estan cacheado los scenariosName (es un atributo) no hay problema. @Girardi
+        QLabel* labelResultado = findChild<QLabel*>("labelResultado");
+        QString update = QString("No se pudo crear la partida, vuelva a intentar");
+        labelResultado->setText(update);
     }
 }
 
