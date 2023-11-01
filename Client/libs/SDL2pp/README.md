@@ -126,7 +126,7 @@ methods. These classes support:
   need to manually check return code after each function call)
 * Method overloading, default arguments, method chaining allow shorter
   and cleaner code
-* Move semantics support, which allow you to store SDL objects
+* MoveRight semantics support, which allow you to store SDL objects
   in containers and pass/return them by value without noticeable overhead
 
 Set of functional extensions above SDL2 is also available:

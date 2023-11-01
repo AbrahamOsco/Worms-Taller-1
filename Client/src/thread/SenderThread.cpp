@@ -7,10 +7,11 @@
 SenderThread::SenderThread(ClientProtocol &protocol, Queue<std::unique_ptr<Command>> &queue) : m_protocol(protocol), m_queue(queue){}
 
 void SenderThread::run() {
-    /*while (running) {
+    while (running) {
         std::unique_ptr<Command> action;
         action = m_queue.pop();
-    }*/
+        action->execute(m_protocol);
+    }
 }
 
 void SenderThread::stop() {

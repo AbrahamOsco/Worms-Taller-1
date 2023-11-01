@@ -8,7 +8,6 @@ Beam::Beam(int posCenterX, int posCenterY, Angle angle, TypeBeam type) : GameObj
     m_type = type;
     m_angle = angle;
     m_textureID = "beam_" + std::to_string(m_type) + "_" + std::to_string(m_angle);
-    std::cout << m_textureID << std::endl;
     if (type == SHORT_BEAM) {
         if (angle == ANGLE_0) {
             m_width = 180;
@@ -77,7 +76,6 @@ Beam::Beam(int posCenterX, int posCenterY, Angle angle, TypeBeam type) : GameObj
 
     m_x = posCenterX - m_width/2;
     m_y = posCenterY - m_height/2;
-    std::cout << "(" << m_x << "," << m_y <<")" << std::endl;
 }
 
 void Beam::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {

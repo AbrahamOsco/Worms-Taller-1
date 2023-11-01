@@ -13,6 +13,8 @@
 #include "../loaderParams/LoaderParams.h"
 #include "../buttonManager/buttonManager.h"
 #include "../gameObject/beam/Beam.h"
+#include "../command/Command.h"
+#include "../../../Common/Queue/Queue.h"
 
 class Engine {
 private:
@@ -26,13 +28,15 @@ private:
     std::vector<std::unique_ptr<GameObject>> m_gameObjects;
     buttonManager m_buttons;
 
+    Queue<std::unique_ptr<Command>>& m_bQueue;
+
 public:
-    Engine(std::vector<std::unique_ptr<Beam>>& beams);
+    Engine(std::vector<std::unique_ptr<Beam>>& beams, Queue<std::unique_ptr<Command>>& bQueue);
     ~Engine() = default;
     void init();
-    void render();
-    void update();
     void events();
+    void update();
+    void render();
     bool running() const;
     void tick();
 };

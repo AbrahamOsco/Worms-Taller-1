@@ -6,8 +6,12 @@
 #define WORMS_TALLER_1_COMMAND_H
 
 
-class Command {
+#include "../protocol/ClientProtocol.h"
 
+class Command {
+public:
+    virtual void execute(ClientProtocol &protocol) = 0;
+    virtual ~Command() = default;
 };
 
 

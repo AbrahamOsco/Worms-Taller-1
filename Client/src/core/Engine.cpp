@@ -6,11 +6,37 @@
 #include "../gameObject/player/Player.h"
 #include "../utils/Constants.h"
 #include "../gameObject/beam/Beam.h"
+#include "../command/MoveRight.h"
+#include "../command/MoveLeft.h"
 
-Engine::Engine(std::vector<std::unique_ptr<Beam>>& beams) : m_pWindow("SDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT,
+Engine::Engine(std::vector<std::unique_ptr<Beam>>& beams, Queue<std::unique_ptr<Command>>& bQueue) : m_pWindow("SDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT,
                              0),
-                   m_pRenderer(m_pWindow, -1, SDL_RENDERER_ACCELERATED), m_beams(beams) {
+                   m_pRenderer(m_pWindow, -1, SDL_RENDERER_ACCELERATED), m_beams(beams), m_bQueue(bQueue) {
     m_bRunning = true;
+}
+
+void Engine::events() {
+    SDL_Event event;
+    while(SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT) {
+            m_bRunning = false;
+        } else if (event.type == SDL_KEYDOWN) {
+            if (event.key.keysym.sym == SDLK_RIGHT) {
+                std::unique_ptr<Command> command(new MoveRight()); // Comando para mover a la derecha
+                m_bQueue.push(std::move(command));
+            } else if (event.key.keysym.sym == SDLK_LEFT) {
+                std::unique_ptr<Command> command(new MoveLeft()); // Comando para mover a la izquierda
+                m_bQueue.push(std::move(command));
+            }
+        }
+    }
+}
+
+void Engine::update() {
+    float dt = m_timer.getDeltaTime();
+    for (const auto & m_gameObject : m_gameObjects) {
+        m_gameObject->update(dt);
+    }
 }
 
 void Engine::render() {
@@ -29,26 +55,6 @@ void Engine::render() {
     m_buttons.draw(m_pRenderer, m_textureManager);
 
     m_pRenderer.Present();
-}
-
-void Engine::update() {
-    float dt = m_timer.getDeltaTime();
-    for (const auto & m_gameObject : m_gameObjects) {
-        m_gameObject->update(dt);
-    }
-}
-
-void Engine::events() {
-    SDL_Event event;
-    if (SDL_PollEvent(&event)) {
-        switch (event.type) {
-            case SDL_QUIT:
-                m_bRunning = false;
-                break;
-            default:
-                break;
-        }
-    }
 }
 
 void Engine::init() {
