@@ -9,7 +9,7 @@
 #include "../command/MoveRight.h"
 #include "../command/MoveLeft.h"
 
-Engine::Engine(std::vector<std::unique_ptr<Beam>>& beams, Queue<std::unique_ptr<Command>>& bQueue) : m_pWindow("SDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT,
+Engine::Engine(std::vector<Beam>& beams, Queue<std::unique_ptr<Command>>& bQueue) : m_pWindow("SDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT,
                              0),
                    m_pRenderer(m_pWindow, -1, SDL_RENDERER_ACCELERATED), m_beams(beams), m_bQueue(bQueue) {
     m_bRunning = true;
@@ -42,8 +42,8 @@ void Engine::update() {
 void Engine::render() {
     m_pRenderer.Clear();
 
-    for (const auto &beams: m_beams) {
-        beams->draw(m_pRenderer, m_textureManager);
+    for (Beam beams: m_beams) {
+        beams.draw(m_pRenderer, m_textureManager);
     }
 
     m_textureManager.draw("bg", 0, 0, 1920, 1080, m_pRenderer,SDL_FLIP_NONE);

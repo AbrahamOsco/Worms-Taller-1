@@ -14,7 +14,7 @@ class Game {
 private:
     ClientProtocol m_protocol;
 
-    std::vector<std::unique_ptr<Beam>> m_beams;
+    std::vector<Beam> m_beams;
 public:
     Game(Socket& skt);
     void loadMap();

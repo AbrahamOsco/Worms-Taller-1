@@ -8,7 +8,7 @@
 #include "../GameObject.h"
 #include "../../../../Common/DTO/BeamDTO.h"
 
-enum Angle {
+enum Angle : size_t {
     ANGLE_0 = 0,
     ANGLE_10 = 10,
     ANGLE_20 = 20,

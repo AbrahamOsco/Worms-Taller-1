@@ -24,14 +24,14 @@ private:
     SDL2pp::Renderer m_pRenderer;
     Timer m_timer;
 
-    std::vector<std::unique_ptr<Beam>>& m_beams;
+    std::vector<Beam>& m_beams;
     std::vector<std::unique_ptr<GameObject>> m_gameObjects;
     buttonManager m_buttons;
 
     Queue<std::unique_ptr<Command>>& m_bQueue;
 
 public:
-    Engine(std::vector<std::unique_ptr<Beam>>& beams, Queue<std::unique_ptr<Command>>& bQueue);
+    Engine(std::vector<Beam>& beams, Queue<std::unique_ptr<Command>>& bQueue);
     ~Engine() = default;
     void init();
     void events();

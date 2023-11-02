@@ -12,12 +12,19 @@
 Game::Game(Socket& skt) : m_protocol(skt){}
 
 void Game::loadMap() {
-    //protocol.recvStageDTO();
-    m_beams.push_back(std::make_unique<Beam>(0, 0, ANGLE_0, SHORT_BEAM));
-    m_beams.push_back(std::make_unique<Beam>(200, 200, ANGLE_10, SHORT_BEAM));
+    StageDTO stageDto;
+    stageDto = m_protocol.recvStageDTO();
+    std::vector<BeamDTO> beams = stageDto.getBeams();
+    for (const BeamDTO& beamDto: beams) {
+        m_beams.emplace_back(beamDto.getXCenter(),beamDto.getYCenter(), static_cast<Angle>(beamDto.getAngle()), beamDto.getTypeBeam());
+    }
 
-    m_beams.push_back(std::make_unique<Beam>(400, 400, ANGLE_20, LONG_BEAM));
-    m_beams.push_back(std::make_unique<Beam>(600, 600, ANGLE_0, LONG_BEAM));
+
+    /*m_beams.emplace_back(0, 0, ANGLE_0, SHORT_BEAM);
+    m_beams.emplace_back(200, 200, ANGLE_10, SHORT_BEAM);
+
+    m_beams.emplace_back(400, 400, ANGLE_20, LONG_BEAM);
+    m_beams.emplace_back(600, 600, ANGLE_0, LONG_BEAM);*/
 }
 
 void Game::run() {
