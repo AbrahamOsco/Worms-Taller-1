@@ -11,7 +11,7 @@
 
 CrearPartida::CrearPartida(QWidget *parent,Socket* skt) : 
                                     QWidget(parent),
-                                    lobby(nullptr,socket){
+                                    lobby(nullptr,skt){
     socket = skt;
     my_parent = parent;
     Ui::CrearPartida crear;
@@ -30,6 +30,7 @@ void CrearPartida::crear() {
     size_t playersRequired = std::stoi(qPlayerRequired.toStdString());
     ResponseInitialStateDTO responIniCreateGame(FINAL_CREATE_GAME, qGameName.toStdString(), qScenarioName.toStdString(), playersRequired);
     ClientProtocol clientProtocol(*socket);  // ver si explota es por esto
+    std::cout << socket << std::endl;
     bool closed = false;
     clientProtocol.sendResponseInitialStateDTO(responIniCreateGame);
     ResolverInitialDTO answerServer = clientProtocol.recvResolverInitialDTO();

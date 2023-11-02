@@ -14,7 +14,8 @@ Waiter::Waiter(Socket* socket,Queue<ResolverInitialDTO>* queue){
 void Waiter::run(){
     ClientProtocol protocol(*skt);
     ResolverInitialDTO respuesta;
-    while (respuesta.getOperationType() == START_GAME){
+    std::cout << skt << std::endl;
+    while (respuesta.getOperationType() != START_GAME){
         respuesta = protocol.recvResolverInitialDTO();
     }
     my_queue->push(respuesta);
