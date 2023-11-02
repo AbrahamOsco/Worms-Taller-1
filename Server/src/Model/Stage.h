@@ -18,8 +18,6 @@ private:
     std::vector<Beam> beams;
 public:
 
-    Stage();
-
     Stage(const std::string& name);
 
     StageDTO getStageDTO() const;

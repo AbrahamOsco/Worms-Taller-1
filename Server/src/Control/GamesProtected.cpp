@@ -8,12 +8,14 @@
 #include "../../../Common/DTO/RoomDTO.h"
 #include "../../../Common/DTO/ResolverInitialDTO.h"
 #include "../Protocol/ServerProtocol.h"
+#include "../Model/YamlParser.h"
 
 #define SUCCESS 1
 #define ERROR 2
 
 
 GamesProtected::GamesProtected() {
+    this->nameScenarios = YamlParser::getScenarioNames();
 }
 
 
@@ -53,11 +55,7 @@ void GamesProtected::printRooms() {
 
 std::vector<std::string> GamesProtected::getScenarios() {
     std::unique_lock<std::mutex> lck(mtx); // operacion de solo lectura no debe habe problemas.
-    std::vector<std::string> scenariosHard;
-    scenariosHard.emplace_back("Jaula maldita");
-    scenariosHard.emplace_back("Vigamania");
-
-    return scenariosHard;
+    return nameScenarios;
 }
 
 std::vector<RoomDTO> GamesProtected::getAvailableRooms() {

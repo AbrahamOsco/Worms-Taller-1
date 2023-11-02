@@ -5,7 +5,8 @@
 #include <string>
 #include "Model.h"
 
-Model::Model() {
+Model::Model(const std::string &scenarioName) : stage(scenarioName) {
+
 }
 
 
@@ -20,5 +21,6 @@ StageDTO Model::getStageDTO() const {
 std::vector<PlayerDTO> Model::getPlayersDTO() const {
     return players.getPlayersDTO();
 }
+
 
 

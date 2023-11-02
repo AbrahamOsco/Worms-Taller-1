@@ -21,7 +21,7 @@ private:
     Players players;
     Stage stage;
 public:
-    Model();
+    Model(const std::string& scenarioName);
 
     void addPlayer(const std::string &playerName, const size_t &idPlayer);
 

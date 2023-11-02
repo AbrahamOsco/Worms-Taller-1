@@ -13,8 +13,8 @@
 Lobby::Lobby(QWidget *parent,Socket* socket) : QWidget(parent),
                                                 timer(this),
                                                 my_queue(200),
-                                                waiter(socket,&my_queue){
-    skt = socket;
+                                                skt(socket),
+                                                waiter(skt,&my_queue){
     Ui::Lobby lobby;
     lobby.setupUi(this);
     timer.start(500);

@@ -1,21 +1,21 @@
-name: Jaula Maldita
-height: 30
-width: 40
+name: Viga Mania
+height: 100
+width: 100
 beams:
-  - x: 4.7
-    y: -6.25
+  - x: 14.7
+    y: -16.25
     angle: 150.0
     length: 3.0
-  - x: 9.0
+  - x: 91.0
     y: -7.0
-    angle: 0.0
+    angle: 90.0
     length: 6.0
   - x: 15.0
     y: -7.0
     angle: 0.0
     length: 6.0
-  - x: 21.0
-    y: -7.0
+  - x: 8.0
+    y: -4.0
     angle: 0.0
     length: 6.0
   - x: 30.0
@@ -28,18 +28,18 @@ beams:
     length: 6.0
   - x: 27.0
     y: -12.0
-    angle: 0.0
+    angle: 45.0
     length: 3.0
-  - x: 18.5
-    y: -13.0
-    angle: 0.0
+  - x: 20.5
+    y: -8.0
+    angle: 50.0
     length: 6.0
-  - x: 12.5
+  - x: 32.5
     y: -13.0
     angle: 0.0
     length: 3.0
-  - x: 23.5
-    y: -16.0
+  - x: 33.5
+    y: -6.0
     angle: 0.0
     length: 6.0
   - x: 0

@@ -11,7 +11,7 @@
 
 CrearPartida::CrearPartida(QWidget *parent,Socket* skt) : 
                                     QWidget(parent),
-                                    lobby(nullptr,socket){
+                                    lobby(nullptr,skt){
     socket = skt;
     my_parent = parent;
     Ui::CrearPartida crear;

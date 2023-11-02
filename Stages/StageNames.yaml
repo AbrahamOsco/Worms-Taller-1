@@ -1,6 +1,7 @@
-- fileName: JaulaMaldita.yaml
-  name: Jaula Maldita
-- fileName: Vigamania.yaml
-  name: Vigamania
-- fileName: CaminoLoco.yaml
-  name: Camino Loco
+namesScenarios:
+  - name: Jaula Maldita
+  - name: Viga Mania
+  - name: Vigas 10
+  - name: Final Stage
+
+
