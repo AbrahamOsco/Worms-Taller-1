@@ -21,6 +21,8 @@ public:
     YamlParser();
 
     static void loadDataStage(const std::string &aStageName, float &height, float &length, std::vector<Beam> &aBeams);
+
+    static std::vector<std::string> getScenarioNames();
 };
 
 

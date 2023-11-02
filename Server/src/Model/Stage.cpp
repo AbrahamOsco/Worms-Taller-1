@@ -4,8 +4,6 @@
 
 #include "Stage.h"
 #include "YamlParser.h"
-Stage::Stage() {
-}
 
 Stage::Stage(const std::string &name) {
     YamlParser::loadDataStage(name, height, length, beams);

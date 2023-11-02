@@ -19,7 +19,7 @@
 class GamesProtected {
 private:
     std::map<std::string, std::unique_ptr<Engine>> games;
-
+    std::vector<std::string> nameScenarios;
     std::mutex mtx;
 
 public:

@@ -10,7 +10,7 @@
 #define ERROR 2
 
 Engine::Engine(const ResponseInitialStateDTO &response) : nameGameRoom( response.getGameName()) , nameScenario(response.getScenarioName()),
-                                                          numberPlayerReq(response.getPlayerRequired()), currentPlayers(0),  keepTalking(true),
+                                                          numberPlayerReq(response.getPlayerRequired()), currentPlayers(0), model(response.getScenarioName()),  keepTalking(true),
                                                           commandsQueueNB(UINT_MAX - 1), worldChangesBQ(UINT_MAX - 1), connections(commandsQueueNB, worldChangesBQ) {
 }
 
