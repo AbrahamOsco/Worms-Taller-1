@@ -41,12 +41,11 @@ void Engine::update() {
 
 void Engine::render() {
     m_pRenderer.Clear();
+    m_textureManager.draw("bg", 0, 0, 1920, 1080, m_pRenderer,SDL_FLIP_NONE);
 
     for (Beam beams: m_beams) {
         beams.draw(m_pRenderer, m_textureManager);
     }
-
-    m_textureManager.draw("bg", 0, 0, 1920, 1080, m_pRenderer,SDL_FLIP_NONE);
 
     for (const auto &m_gameObject: m_gameObjects) {
         m_gameObject->draw(m_pRenderer, m_textureManager);
@@ -71,12 +70,6 @@ void Engine::init() {
     m_buttons.addButton(std::make_unique<Button>("mortar_icon"));
     m_buttons.addButton(std::make_unique<Button>("red_grenade_icon"));
     m_buttons.addButton(std::make_unique<Button>("teleportation_icon"));
-
-    m_gameObjects.push_back(std::make_unique<Beam>(0, 0, ANGLE_0, SHORT_BEAM));
-    m_gameObjects.push_back(std::make_unique<Beam>(200, 200, ANGLE_10, SHORT_BEAM));
-
-    m_gameObjects.push_back(std::make_unique<Beam>(400, 400, ANGLE_20, LONG_BEAM));
-    m_gameObjects.push_back(std::make_unique<Beam>(600, 600, ANGLE_0, LONG_BEAM));
 }
 
 bool Engine::running() const {
