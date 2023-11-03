@@ -8,9 +8,13 @@ SenderThread::SenderThread(ClientProtocol &protocol, Queue<std::unique_ptr<Comma
 
 void SenderThread::run() {
     while (running) {
-        std::unique_ptr<Command> action;
-        action = m_queue.pop();
-        action->execute(m_protocol);
+        try {
+            std::unique_ptr<Command> action;
+            action = m_queue.pop();
+            action->execute(m_protocol);
+        } catch (ClosedQueue & closedQueue) {
+            running = false;
+        }
     }
 }
 
