@@ -5,9 +5,9 @@
 #include <string>
 #include "Model.h"
 #include "../../../Common/DTO/PlayersIniDTO.h"
+#define GRAVEDAD -10.0f
 
-Model::Model(const std::string &scenarioName) : stage(scenarioName), players(stage.getIdsAndPositionsWorms()) {
-
+Model::Model(const std::string &scenarioName) : stage(scenarioName), players(stage.getIdsAndPositionsWorms()), world( b2Vec2(0.0f, GRAVEDAD) ) {
 }
 
 
@@ -25,7 +25,16 @@ PlayersIniDTO Model::getPlayersDTO() const {
 
 void Model::start() {
     players.assignWormsToPlayers();
+    addBeamsToWorld();
+    addWormsToWorld();
 }
 
+void Model::addBeamsToWorld() {
+    stage.addBeamsToWorld(&world);
+}
+
+void Model::addWormsToWorld() {
+
+}
 
 

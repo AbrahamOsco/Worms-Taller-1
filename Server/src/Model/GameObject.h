@@ -6,7 +6,10 @@
 #define WORMS_TALLER_1_GAMEOBJECT_H
 
 
+#include "../../../Common/DTO/DTO.h" // importamos el enum de los DTO.
+
 class GameObject {
+    OperationType operationType;
 
 };
 

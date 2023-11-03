@@ -13,6 +13,7 @@
 #include "../../../Common/DTO/PlayersIniDTO.h"
 #include <map>
 #include <string>
+#include <box2d/box2d.h>
 
 class Model {
 private:
@@ -21,6 +22,10 @@ private:
     bool finishedGame;
     Stage stage;
     Players players;
+    b2World world;
+
+    void addWormsToWorld();
+    void addBeamsToWorld();
 public:
     Model(const std::string& scenarioName);
 

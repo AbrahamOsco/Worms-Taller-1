@@ -13,7 +13,8 @@ Beam::Beam(const TypeBeam &aTypeBeam, const float &aXcenter, const float &aYCent
 }
 
 BeamDTO Beam::getBeamDTO() {
-    BeamDTO beamDto(typeBeam, xCenter, yCenter, length, height, angle);
+    float coordYClient = yCenter* (-1);
+    BeamDTO beamDto(typeBeam, xCenter, coordYClient, length, height, angle);
     return beamDto;
 }
 

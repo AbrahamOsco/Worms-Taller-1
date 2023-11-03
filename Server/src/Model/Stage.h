@@ -10,6 +10,7 @@
 #include <map>
 #include "../../../Common/DTO/StageDTO.h"
 #include "Beam.h"
+#include "box2d/b2_world.h"
 
 class Stage {
 private:
@@ -27,6 +28,8 @@ public:
 
     StageDTO getStageDTO() const;
 
+
+    void addBeamsToWorld(b2World *world);
 };
 
 
