@@ -8,6 +8,7 @@
 #define GRAVEDAD -10.0f
 
 Model::Model(const std::string &scenarioName) : stage(scenarioName), players(stage.getIdsAndPositionsWorms()), world( b2Vec2(0.0f, GRAVEDAD) ) {
+
 }
 
 
