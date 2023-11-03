@@ -14,6 +14,7 @@
 #include "../../../Common/DTO/WorldChangesDTO.h"
 #include "../../../Common/DTO/StageDTO.h"
 #include "../../../Common/DTO/PlayerDTO.h"
+#include "../../../Common/DTO/PlayersIniDTO.h"
 
 class ClientConnection {
 private:
@@ -32,7 +33,7 @@ public:
 
     void runReceiver();
 
-    void start(const StageDTO &stageDTO);
+    void start(const StageDTO &stageDTO, const PlayersIniDTO &playersIniDTO);
 
     void stop();
 

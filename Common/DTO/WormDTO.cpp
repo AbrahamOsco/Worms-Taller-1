@@ -1,13 +1,22 @@
 #include "WormDTO.h"
 
-WormDTO::WormDTO(int x, int y) : DTO(WORM), x(x), y(y) {}
 
-int WormDTO::getX() const {
-    return x;
+WormDTO::WormDTO(const size_t &idWorm, const size_t &positionX, const size_t &positionY) : DTO(WORM) {
+
 }
 
-int WormDTO::getY() const {
-    return y;
+size_t WormDTO::getIdWorm() const {
+    return idWorm;
 }
+
+size_t WormDTO::getPositionX() const {
+    return positionX;
+}
+
+size_t WormDTO::getPositionY() const {
+    return positionY;
+}
+
 
 WormDTO::~WormDTO() = default;
+

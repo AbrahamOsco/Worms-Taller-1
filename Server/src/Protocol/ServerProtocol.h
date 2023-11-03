@@ -3,13 +3,15 @@
 
 #include "../../../Common/Protocol/Protocol.h"
 #include "../../../Common/Socket/Socket.h"
-#include "../../../Common/DTO/LobbyAnswerDTO.h"
 #include "../../../Common/DTO/ResolverInitialDTO.h"
 #include "../../../Common/DTO/InitialStateDTO.h"
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
 #include "../../../Common/DTO/StageDTO.h"
+#include "../../../Common/DTO/PlayerDTO.h"
+#include "../../../Common/DTO/PlayersIniDTO.h"
 
-#define ERROR 0
+#define BYTE_DISCONNECT 0
+#define STATUS_ERROR 2
 
 class ServerProtocol : public Protocol {
 
@@ -28,12 +30,14 @@ public:
 
     void sendBeam(const BeamDTO& beamDTO);
 
-    void sendWorm(const WormDTO &aWorm);
+    void sendPlayersIni(const PlayersIniDTO &playersIniDTO);
 
-    LobbyAnswerDTO recvLobbyAnswer();
 
     ~ServerProtocol() = default;
 
+    void sendAPlayerDTO(const PlayerDTO &playerDTO);
+
+    void sendAWormIniDTO(const WormDTO &aWormDTO);
 };
 
 

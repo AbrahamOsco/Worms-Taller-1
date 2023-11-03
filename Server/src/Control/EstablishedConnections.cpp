@@ -19,9 +19,9 @@ void EstablishedConnections::addConnection(const size_t &idPlayer, Socket sktPee
     clientConnections.emplace(idPlayer, ClientConnection(idPlayer, sktPeer, commandQueueNB, worldChangesBQ) );
 }
 
-void EstablishedConnections::start(const StageDTO &stageDTO) {
+void EstablishedConnections::start(const StageDTO &stageDTO, const PlayersIniDTO &playersIniDTO) {
     for (auto &element : clientConnections) {   // Le digo a todos mis clientConnection start
-        element.second.start(stageDTO);
+        element.second.start(stageDTO, playersIniDTO);
     }
 }
 

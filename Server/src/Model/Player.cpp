@@ -12,7 +12,21 @@ Player::Player(const std::string &playerName, const size_t &idPlayer) : playerNa
 }
 
 PlayerDTO Player::getPlayerDTO() const {
-    return PlayerDTO();
+    std::vector<WormDTO> vecWorms;
+    for(auto& aWorm: worms){
+        vecWorms.push_back( aWorm.second.getWormInitialDTO() );
+    }
+    return PlayerDTO(idPlayer, vecWorms);
 }
 
+void Player::assignWorm(const int &idWorm, const std::pair<float, float> &positionInitialWorm) {
+    // agregamos al diccionario la calve el id de worm y el valor el worm con su position inicial en x,y.
+    worms.emplace(idWorm, Worm(positionInitialWorm.second, idWorm, positionInitialWorm.first));
+}
+
+void Player::assignBonusLife() {
+    for(auto& pair : worms){
+        pair.second.assignBonusLife();
+    }
+}
 

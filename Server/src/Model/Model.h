@@ -10,6 +10,7 @@
 #include "Stage.h"
 #include "Players.h"
 #include "../../../Common/DTO/PlayerDTO.h"
+#include "../../../Common/DTO/PlayersIniDTO.h"
 #include <map>
 #include <string>
 
@@ -18,16 +19,18 @@ private:
     size_t numberPlayerReq;
     size_t currentPlayers;
     bool finishedGame;
-    Players players;
     Stage stage;
+    Players players;
 public:
     Model(const std::string& scenarioName);
 
     void addPlayer(const std::string &playerName, const size_t &idPlayer);
 
-    std::vector<PlayerDTO> getPlayersDTO() const;
+    PlayersIniDTO getPlayersDTO() const;
 
     StageDTO getStageDTO() const;
+
+    void start();
 };
 
 

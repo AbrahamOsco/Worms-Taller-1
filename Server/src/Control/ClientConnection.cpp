@@ -4,6 +4,7 @@
 
 #include "ClientConnection.h"
 #include "../Protocol/ServerProtocol.h"
+#include "../../../Common/DTO/PlayersIniDTO.h"
 
 ClientConnection::ClientConnection(const size_t &idPlayer, Socket& aSktPeer, Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO*>& aWorldChangesBQ) :
         idPlayer(idPlayer), sktPeer(std::move(aSktPeer)), commandQueueNB(aCommandQueueNB), worldChangesBQ(aWorldChangesBQ){
@@ -11,11 +12,12 @@ ClientConnection::ClientConnection(const size_t &idPlayer, Socket& aSktPeer, Que
 }
 
 
-void ClientConnection::start(const StageDTO &stageDTO) {        //Lanzo los threads sender y receiver
+void ClientConnection::start(const StageDTO &stageDTO, const PlayersIniDTO &playersIniDTO) {        //Lanzo los threads sender y receiver
     // Aca envio el byte START_GAME y el stage completo antes de lanzar los thread receiver y sender.
     ServerProtocol serverProtocol(sktPeer);
     serverProtocol.sendANumberByte(START_GAME);
     serverProtocol.sendStage(stageDTO);
+    serverProtocol.sendPlayersIni(playersIniDTO);
     receiver = std::thread(&ClientConnection::runReceiver, this);
     sender = std::thread(&ClientConnection::runSender, this);
 }

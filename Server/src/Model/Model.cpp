@@ -4,8 +4,9 @@
 
 #include <string>
 #include "Model.h"
+#include "../../../Common/DTO/PlayersIniDTO.h"
 
-Model::Model(const std::string &scenarioName) : stage(scenarioName) {
+Model::Model(const std::string &scenarioName) : stage(scenarioName), players(stage.getIdsAndPositionsWorms()) {
 
 }
 
@@ -18,8 +19,12 @@ StageDTO Model::getStageDTO() const {
     return stage.getStageDTO();
 }
 
-std::vector<PlayerDTO> Model::getPlayersDTO() const {
-    return players.getPlayersDTO();
+PlayersIniDTO Model::getPlayersDTO() const {
+    return PlayersIniDTO(players.getPlayersDTO());
+}
+
+void Model::start() {
+    players.assignWormsToPlayers();
 }
 
 

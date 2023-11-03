@@ -13,16 +13,18 @@
 
 class Players {
 private:
-    size_t idPlayer;
+    std::map<size_t, std::pair<float, float>> idsAndPositionsWorms;
     std::map<size_t, Player> players;
 
 public:
-    Players();
+    explicit Players(const std::map<size_t, std::pair<float, float>>& idsAndPositionsWorms);
 
     void addPlayer(const std::string &playerName, const size_t &idPlayer);
 
+    void assignWormsToPlayers();
 
     std::vector<PlayerDTO> getPlayersDTO() const;
+
 };
 
 

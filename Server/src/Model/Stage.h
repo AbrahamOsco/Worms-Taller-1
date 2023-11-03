@@ -7,6 +7,7 @@
 
 
 #include <string>
+#include <map>
 #include "../../../Common/DTO/StageDTO.h"
 #include "Beam.h"
 
@@ -16,9 +17,13 @@ private:
     float height;
     float length;
     std::vector<Beam> beams;
+    std::map<size_t, std::pair<float, float>> idsAndPositionsWorms;
+
 public:
 
     Stage(const std::string& name);
+
+    std::map<size_t, std::pair<float, float>> getIdsAndPositionsWorms() const;
 
     StageDTO getStageDTO() const;
 

@@ -6,14 +6,23 @@
 #define WORMS_TALLER_1_PLAYERDTO_H
 
 
-class PlayerDTO {
+#include <cstddef>
+#include <vector>
+#include "DTO.h"
+#include "WormDTO.h"
+
+class PlayerDTO : public DTO {
 private:
-
-
+    size_t idPlayer;
+    std::vector<WormDTO> wormsBelongToPlayer;
 public:
     PlayerDTO();
 
+    PlayerDTO(const size_t& idPlayer, const std::vector<WormDTO>& worms);
 
+    size_t getIdPlayer() const;
+
+    std::vector<WormDTO> getWorms() const;
 };
 
 

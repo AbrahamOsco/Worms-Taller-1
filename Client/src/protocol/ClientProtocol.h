@@ -7,6 +7,7 @@
 #include "../../../Common/DTO/ResolverInitialDTO.h"
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
 #include "../../../Common/DTO/StageDTO.h"
+#include "../../../Common/DTO/PlayersIniDTO.h"
 
 class ClientProtocol : public Protocol {
 
@@ -25,10 +26,14 @@ public:
 
     BeamDTO recvBeamDTO();
 
-    WormDTO recvWorm();
+    PlayersIniDTO recvPlayersIni();
+
+    PlayerDTO recvAPlayerDTO();
+
+    WormDTO recvWormIni();
 
 
-    ~ClientProtocol();
+    ~ClientProtocol() = default;
 
 };
 

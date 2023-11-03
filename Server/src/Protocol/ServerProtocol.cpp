@@ -1,42 +1,14 @@
 #include "ServerProtocol.h"
 #include "../../../Common/DTO/InitialStateDTO.h"
+#include "../../../Common/DTO/PlayerDTO.h"
 
 ServerProtocol::ServerProtocol(Socket& skt) :
         Protocol(skt){}
 
-void ServerProtocol::sendWorm(const WormDTO &aWorm) {
-    OperationType op = aWorm.getOperationType();
-    sendANumberByte(op);
-
-    int xCoord = aWorm.getX();
-    sendNum2Bytes(xCoord);
-
-    int yCoord = aWorm.getY();
-    sendNum2Bytes(yCoord);
-}
-
-LobbyAnswerDTO ServerProtocol::recvLobbyAnswer() {
-    LobbyAnswerDTO aLobbyAnswer;
-    int operationType = static_cast<int>(recvANumberByte());
-    if(operationType == CLOSED_CONNECTION){
-        return aLobbyAnswer; // cliente cerro la conexion;
-    }
-    std::string gameName = recvString();
-    aLobbyAnswer.setGameName(gameName);
-    if (operationType == OperationType::CREATE_GAME){
-        aLobbyAnswer.setOperationType(OperationType::CREATE_GAME);
-        std::string nameScenario = recvString();
-        aLobbyAnswer.setSelectScenario(nameScenario);
-    } else if (operationType == OperationType::JOIN_GAME){
-        aLobbyAnswer.setOperationType(OperationType::JOIN_GAME);
-    }
-    return aLobbyAnswer;
-}
-
 InitialStateDTO ServerProtocol::recvInitialStateDTO() {
     InitialStateDTO initialStateDto;
     int operationType =  recvANumberByte();
-    if (operationType == ERROR){
+    if (operationType == BYTE_DISCONNECT){
         return initialStateDto;
     }
     std::string playerName =  recvString();
@@ -71,7 +43,7 @@ void ServerProtocol::sendResolverInitialDTO(const ResolverInitialDTO &resolverIn
     } else if ( operationType == RESPONSE_FINAL_JOIN_GAME ){
         sendANumberByte(RESPONSE_FINAL_JOIN_GAME);
         sendANumberByte(resolverInitial.getStatusAnswer());
-        if ( resolverInitial.getStatusAnswer() == ERROR ){ // Si es error el tipo de status mandamos todos los rooms disponibles
+        if ( resolverInitial.getStatusAnswer() == STATUS_ERROR ){ // Si es error el tipo de status mandamos todos los rooms disponibles
             sendANumberByte(resolverInitial.getGameRooms().size());
             for (const auto& aRoomGame : resolverInitial.getGameRooms() ) {
                 sendRoom(aRoomGame);
@@ -106,7 +78,7 @@ ResponseInitialStateDTO ServerProtocol::recvReponseInitialStateDTO() {
 }
 
 void ServerProtocol::sendStage(const StageDTO &stageDTO) {
-    sendANumberByte(STAGE);
+    sendANumberByte(stageDTO.getOperationType());
     sendANumberByte(stageDTO.getBeams().size());
     for(BeamDTO aBeamDTO : stageDTO.getBeams()){
         sendBeam(aBeamDTO);
@@ -114,7 +86,7 @@ void ServerProtocol::sendStage(const StageDTO &stageDTO) {
 }
 
 void ServerProtocol::sendBeam(const BeamDTO &beamDTO) {
-    sendANumberByte(BEAM);
+    sendANumberByte(beamDTO.getOperationType());
     sendANumberByte(beamDTO.getTypeBeam());
     sendANumberByte(beamDTO.getXCenter());
     sendANumberByte(beamDTO.getYCenter());
@@ -122,4 +94,29 @@ void ServerProtocol::sendBeam(const BeamDTO &beamDTO) {
     sendANumberByte(beamDTO.getLenghth());
     sendANumberByte(beamDTO.getHeight());
 }
+
+void ServerProtocol::sendPlayersIni(const PlayersIniDTO &playersIniDTO) {
+    sendANumberByte(playersIniDTO.getOperationType());
+    sendANumberByte(playersIniDTO.getPlayersIniDTO().size());
+    for(const auto& aPlayer : playersIniDTO.getPlayersIniDTO()){
+        sendAPlayerDTO(aPlayer);
+    }
+}
+
+void ServerProtocol::sendAPlayerDTO(const PlayerDTO &playerDTO) {
+    sendANumberByte(playerDTO.getOperationType());
+    sendANumberByte(playerDTO.getIdPlayer());
+    sendANumberByte(playerDTO.getWorms().size());
+    for (const auto& aWorm : playerDTO.getWorms()){
+        sendAWormIniDTO(aWorm);
+    }
+}
+
+void ServerProtocol::sendAWormIniDTO(const WormDTO &aWormDTO) {
+    sendANumberByte(aWormDTO.getOperationType());
+    sendANumberByte(aWormDTO.getIdWorm());
+    sendNum2Bytes(aWormDTO.getPositionX());
+    sendNum2Bytes(aWormDTO.getPositionY());
+}
+
 

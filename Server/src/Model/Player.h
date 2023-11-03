@@ -7,17 +7,15 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include "Worm.h"
 #include "../../../Common/DTO/PlayerDTO.h"
 
 class Player {
 private:
-
     std::string playerName;
     size_t idPlayer;
-    size_t wormCurrentPosition;
-    std::vector<Worm> worms;
-
+    std::map<size_t, Worm> worms;
 public:
     Player();
 
@@ -25,6 +23,9 @@ public:
 
     PlayerDTO getPlayerDTO() const;
 
+    void assignWorm(const int &idWorm, const std::pair<float, float> &positionInitialWorm);
+
+    void assignBonusLife();
 };
 
 

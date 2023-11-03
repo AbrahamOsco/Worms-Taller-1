@@ -14,6 +14,7 @@
 #include "Command/Command.h"
 #include "../../../Common/DTO/StageDTO.h"
 #include "../../../Common/DTO/PlayerDTO.h"
+#include "../../../Common/DTO/PlayersIniDTO.h"
 
 class EstablishedConnections {
 private:
@@ -26,7 +27,7 @@ public:
 
     void addConnection(const size_t &idPlayer, Socket sktPeer);
 
-    void start(const StageDTO &stageDTO);
+    void start(const StageDTO &stageDTO, const PlayersIniDTO &playersIniDTO);
 
     void stop();
 

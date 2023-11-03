@@ -19,16 +19,16 @@ protected:
 
     std::string recvString();
 
-    void sendNum2Bytes(const unsigned int& aNumber);
-
-    uint16_t recvNum2Bytes();
-
 public:
     explicit Protocol(Socket& skt);
 
     void sendANumberByte(const unsigned int& aNumber);
 
     uint8_t recvANumberByte();
+
+    void sendNum2Bytes(const unsigned int& aNumber);
+
+    uint16_t recvNum2Bytes();
 
     bool isAvailable() const;
 

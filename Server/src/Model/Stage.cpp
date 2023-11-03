@@ -6,7 +6,7 @@
 #include "YamlParser.h"
 
 Stage::Stage(const std::string &name) {
-    YamlParser::loadDataStage(name, height, length, beams);
+    YamlParser::loadDataStage(name, height, length, beams, idsAndPositionsWorms);
 }
 
 StageDTO Stage::getStageDTO() const {
@@ -16,6 +16,10 @@ StageDTO Stage::getStageDTO() const {
     }
     StageDTO stageDto(beamsDTO);
     return stageDto;
+}
+
+std::map<size_t, std::pair<float, float>> Stage::getIdsAndPositionsWorms() const {
+    return this->idsAndPositionsWorms;
 }
 
 

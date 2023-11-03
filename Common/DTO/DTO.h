@@ -17,9 +17,10 @@ enum OperationType {
     RESPONSE_INITIAL_JOIN_GAME = 26,
     FINAL_JOIN_GAME = 27,
     ROOM_GAME = 28,
-    WORM = 30, //Unidades, armas, etc.
-    BEAM = 31
-
+    WORM = 29, //Unidades, armas, etc.
+    BEAM = 30,
+    PLAYERS_INITIAL = 31,
+    PLAYER = 32
 };
 
 class DTO {

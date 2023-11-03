@@ -40,8 +40,9 @@ int Engine::addClient(Socket &socket, const std::string &playerName, const Opera
 void Engine::run() {
     std::string estadoPartida = std::to_string(currentPlayers) + "/" + std::to_string(numberPlayerReq)  + " Ha comenzado\n";
     std::cout << "[Engine]: La partida  " + this->nameGameRoom  + " En el scenario: " + this->nameScenario + " Con : " + estadoPartida;
-    connections.start(model.getStageDTO()); // Le digo a todos las conexiones de esta partida  "start". es decir que lanzen los hilos sender y receiv cada conexion.
-    connections.pushUpdate(model.getPlayersDTO());  //pusheamos actualizaciones
+    model.start();
+    connections.start(model.getStageDTO(), model.getPlayersDTO()); // Le digo a todos las conexiones de esta partida  "start". es decir que lanzen los hilos sender y receiv cada conexion.
+    //connections.pushUpdate(model.getPlayersDTO());  //pusheamos actualizaciones
     while(keepTalking){
 
     }
@@ -49,9 +50,6 @@ void Engine::run() {
     this->clearAll(); // Limpiamos las queues.
     std::cerr << "[Engine]:run Terminando la ejecucion del juego \n";
 }
-
-
-
 
 void Engine::print() {
     std::cout << "Scenario: " << nameScenario << "|" << currentPlayers << "/" << numberPlayerReq << "\n";

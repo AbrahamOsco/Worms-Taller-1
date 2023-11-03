@@ -1,3 +1,4 @@
+#include <iostream>
 #include "ClientProtocol.h"
 
 #include "../../../Common/DTO/InitialStateDTO.h"
@@ -8,20 +9,6 @@ ClientProtocol::ClientProtocol(Socket& skt) :
         Protocol(skt) {}
 
 
-
-WormDTO ClientProtocol::recvWorm() {
-    auto opType = static_cast<OperationType>(recvANumberByte());
-    if (opType != OperationType::WORM) {
-        // no se si conviene exception o return worm vacio.
-    }
-
-    int xCoord = recvNum2Bytes();
-
-    int yCoord = recvNum2Bytes();
-
-    WormDTO worm(xCoord, yCoord);
-    return worm;
-}
 
 // ---------------Comunicacion inicial metodos
 
@@ -137,5 +124,43 @@ BeamDTO ClientProtocol::recvBeamDTO() {
     return beamDto;
 }
 
+PlayersIniDTO ClientProtocol::recvPlayersIni() {
+    int operationType = recvANumberByte();
+    std::vector<PlayerDTO> playersIniDTO;
+    if (operationType == PLAYERS_INITIAL){
+        size_t numberPlayers = recvANumberByte();
+        for(size_t i = 0; i < numberPlayers; i++){
+            playersIniDTO.push_back( recvAPlayerDTO());
+        }
+        return PlayersIniDTO(playersIniDTO);
+    }
+    std::cerr << "Error en el recvPlayersIni";
+    return PlayersIniDTO(playersIniDTO);
+}
 
-ClientProtocol::~ClientProtocol() = default;
+PlayerDTO ClientProtocol::recvAPlayerDTO() {
+    int operationType = recvANumberByte();
+    std::vector<WormDTO> wormsBelongPlayer;
+    if (operationType == PLAYER){
+        size_t idPlayer = recvANumberByte();
+        size_t numberWorms = recvANumberByte();
+        for(size_t i = 0; i < numberWorms; i++){
+            wormsBelongPlayer.push_back( recvWormIni() );
+        }
+        return PlayerDTO(idPlayer, wormsBelongPlayer);
+    }
+    std::cerr << "Error en el recvAPlayerDTO";
+    return PlayerDTO(0,wormsBelongPlayer);
+}
+
+WormDTO ClientProtocol::recvWormIni() {
+    int operationType = recvANumberByte();
+    if (operationType == WORM){
+        size_t idWorm = recvANumberByte();
+        size_t positionX =  recvNum2Bytes();
+        size_t positionY = recvNum2Bytes();
+        return WormDTO(idWorm, positionX, positionY);
+    }
+    std::cerr << "Error en el recvWormIni";
+    return WormDTO(0, 0, 0);
+}

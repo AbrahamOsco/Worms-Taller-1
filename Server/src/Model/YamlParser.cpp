@@ -4,11 +4,13 @@
 
 #include <iostream>
 #include "YamlParser.h"
+#include "Worm.h"
+
 YamlParser::YamlParser() {
 }
 
-
-void YamlParser::loadDataStage(const std::string &aStageName, float& height, float& length, std::vector<Beam>& aBeams) {
+void YamlParser::loadDataStage(const std::string &aStageName, float &height, float &length, std::vector<Beam> &aBeams,
+                               std::map<size_t, std::pair<float, float>> &idPosWorms) {
     char startPathC[PATH_MAX];
     realpath("../../", startPathC);
     std::string startPath(startPathC);
@@ -16,34 +18,20 @@ void YamlParser::loadDataStage(const std::string &aStageName, float& height, flo
     stgNamNoSpace.erase(std::remove(stgNamNoSpace.begin(), stgNamNoSpace.end(), ' '), stgNamNoSpace.end());
     std::string fullPath(startPath + "/Worms-Taller-1" + "/Stages/"+ stgNamNoSpace + ".yaml");
     YAML::Node node = YAML::LoadFile(fullPath);
-
+    std::map<size_t, std::pair<float, float>> idPosInitialWorms;
+    YAML::Node wormsNode = node["worms"];
+    size_t idWorm = 0;
+    for (const auto& posWorm : node["worms"]) {
+        float posInitialX = posWorm["positionX"].as<float>();
+        float posInitialY = posWorm["positionY"].as<float>();
+        idPosInitialWorms[idWorm] = std::pair<float, float>{posInitialX, posInitialY};
+        idWorm++;
+    }
     height = node["height"].as<float>();
     length = node["width"].as<float>();
     aBeams = getBeams(node["beams"]);
+    idPosWorms = idPosInitialWorms;
 }
-
-std::vector<std::string> YamlParser::getScenarioNames() {
-    std::vector<std::string> scenarioNames;
-
-    char startPathC[PATH_MAX];
-    realpath("../../", startPathC);
-    std::string startPath(startPathC);
-    std::string fullPath(startPath + "/Worms-Taller-1" + "/Stages/"+ "StageNames" + ".yaml");
-    try{
-        YAML::Node config = YAML::LoadFile(fullPath);
-        for (const auto& scenario : config["namesScenarios"]) {
-            auto name = scenario["name"].as<std::string>();
-            scenarioNames.push_back(name);
-        }
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
-
-
-    return scenarioNames;
-}
-
-
 
 std::vector<Beam> YamlParser::getBeams(const YAML::Node &beamsNode) {
     std::vector<Beam> beams;
@@ -66,6 +54,28 @@ std::vector<Beam> YamlParser::getBeams(const YAML::Node &beamsNode) {
         beams.push_back(beam);
     }
     return beams;
+}
+
+
+std::vector<std::string> YamlParser::getScenarioNames() {
+    std::vector<std::string> scenarioNames;
+
+    char startPathC[PATH_MAX];
+    realpath("../../", startPathC);
+    std::string startPath(startPathC);
+    std::string fullPath(startPath + "/Worms-Taller-1" + "/Stages/"+ "StageNames" + ".yaml");
+    try{
+        YAML::Node config = YAML::LoadFile(fullPath);
+        for (const auto& scenario : config["namesScenarios"]) {
+            auto name = scenario["name"].as<std::string>();
+            scenarioNames.push_back(name);
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+
+
+    return scenarioNames;
 }
 
 
