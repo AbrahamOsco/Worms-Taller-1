@@ -29,6 +29,7 @@ void waterCollidesWithWorm(GameObject* water, GameObject* worm){
     std::cout << "Water colisionar con el Worm\n";
     wormCollidesWithWater(worm, water);
 }
+
 void wormCollidesWithEdege(GameObject* worm, GameObject* edge){
     std::cout << "Worm collisiona con el edge\n";
 }
@@ -36,6 +37,22 @@ void edgeCollidesWithWorm(GameObject* edge, GameObject* worm){
     std::cout << "Edge collisiona con el worm\n";
 }
 
+void wormCollidesWithWorm(GameObject* worm1, GameObject* worm2){
+    Worm* aWorm1 = (Worm*) (worm1);
+    Worm* aWorm2 = (Worm*) (worm2);
+    if(aWorm1->getBody()->GetLinearVelocity().x > 0 ){
+        std::cerr << "Worm 1 choco con velocidad a Worm 2 asi que le reducimos a cero para q no lo empuje\n";
+        b2Vec2 velocity = aWorm1->getBody()->GetLinearVelocity();
+        velocity.x = 0.0f;
+        aWorm1->getBody()->SetLinearVelocity(velocity);
+    }
+    else if(aWorm2->getBody()->GetLinearVelocity().x > 0 ){
+        std::cerr << "Worm 2 choco con velocidad a Worm 1 asi que le reducimos a cero para q no lo empuje\n";
+        b2Vec2 velocity = aWorm1->getBody()->GetLinearVelocity();
+        velocity.x = 0.0f;
+        aWorm2->getBody()->SetLinearVelocity(velocity);
+    }
+}
 
 MyContactListener::MyContactListener(b2World *world){
     world->SetContactListener(this);
@@ -45,6 +62,7 @@ MyContactListener::MyContactListener(b2World *world){
     collisionsMap[std::make_pair(ENTITY_WATER, ENTITY_WORM)] = &waterCollidesWithWorm;
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_EDGE)] = &wormCollidesWithEdege;
     collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_WORM)] = &edgeCollidesWithWorm;
+    collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_WORM)] = &wormCollidesWithWorm;
 }
 
 void MyContactListener::BeginContact(b2Contact* contact){

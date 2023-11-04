@@ -15,7 +15,7 @@ enum Direction{
 };
 
 
-class Worm : GameObject {
+class Worm : public GameObject {
     size_t idWorm;
     Direction directionLook;
     float  hp;
@@ -40,6 +40,8 @@ public:
     void jumpForwards();
 
     void walk(Direction aDirection);
+
+    bool isInContactWithAnotherWorm();
 
     //void startContact();
 

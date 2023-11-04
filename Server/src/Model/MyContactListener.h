@@ -21,6 +21,12 @@ public:
 
     void BeginContact(b2Contact* contact);
 
+
+
+
+
+
+
     ~MyContactListener() = default;
 };
 

@@ -3,9 +3,10 @@ height: 60
 width: 60
 worms:
   - positionX: 10.0
-    positionY: 30.0
-  - positionX: 40.0
-    positionY: 30.0
+    positionY: 0.0
+  - positionX: 15.0
+    positionY: 0.0
+
 
 beams:
   - x: 4.7

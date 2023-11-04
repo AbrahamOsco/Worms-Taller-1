@@ -43,27 +43,29 @@ void Worm::addToTheWorld(b2World *world) {
 }
 
 void Worm::jumpBackwards() {
-    float angleTita, initialSpeed;
-    angleTita = atan(4.0f * jumpBack.second / jumpBack.first);       //  (4 *hmax)/distMaxHorizontal.
-    initialSpeed = sqrt(jumpBack.first * 10.0f / (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
-    float speedX = initialSpeed * cos(angleTita);
-    float speedY = initialSpeed * sin(angleTita);
+    if( not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ){
+        float angleTita, initialSpeed;
+        angleTita = atan(4.0f * jumpBack.second / jumpBack.first);       //  (4 *hmax)/distMaxHorizontal.
+        initialSpeed = sqrt(jumpBack.first * 10.0f / (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
+        float speedX = initialSpeed * cos(angleTita);
+        float speedY = initialSpeed * sin(angleTita);
 
-    float impulseX = body->GetMass() * speedX;
-    float impulseY = body->GetMass() * speedY;
+        float impulseX = body->GetMass() * speedX;
+        float impulseY = body->GetMass() * speedY;
 
-    if (directionLook == RIGHT) {
-        impulseX = -impulseX;
-        directionLook = LEFT;       // Gusano "Da una vuelta hacia atras" mira al lado opuesto esta OK.
-    } else if (directionLook == LEFT) {
-        directionLook = RIGHT;   //MIRAMOS LADO OPUESTO AL Saltar hacia atras.
-    } // ^
+        if (directionLook == RIGHT) {
+            impulseX = -impulseX;
+            directionLook = LEFT;       // Gusano "Da una vuelta hacia atras" mira al lado opuesto esta OK.
+        } else if (directionLook == LEFT) {
+            directionLook = RIGHT;   //MIRAMOS LADO OPUESTO AL Saltar hacia atras.
+        } // ^
 
-    b2Vec2 impulse(impulseX, impulseY); //  por la gravedad
-    body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
+        b2Vec2 impulse(impulseX, impulseY); //  por la gravedad
+        body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
+    }
 }
 void Worm::jumpForwards() {
-    if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
+    if(not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)) {
         float angleTita, initialSpeed;
         angleTita = atan(4.0f * jumpForward.second / jumpForward.first);       //  (4 *hmax)/distMaxHorizontal.
         initialSpeed = sqrt(jumpForward.first * 10.0f /
@@ -81,7 +83,7 @@ void Worm::jumpForwards() {
     }
 }
 void Worm::walk(Direction aDirection) {
-    if(abs(body->GetLinearVelocity().x) < 2.0f && abs(body->GetLinearVelocity().y) < 2.0f) {
+    if(not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ) {
         directionLook = aDirection;
         float acceleration = getBody()->GetFixtureList()[0].GetFriction() * 10.0f; // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
         float speed = sqrt(2.0f * acceleration * dragSpeed); // la velocidad la sacamos como 2 * aceleracion * distancia.
@@ -92,6 +94,17 @@ void Worm::walk(Direction aDirection) {
         b2Vec2 impulseSpeed(impulse, 0.0f); //  por la gravedad
         body->ApplyLinearImpulse(impulseSpeed, body->GetWorldCenter(), true);
     }
+}
+
+bool Worm::isInContactWithAnotherWorm(){
+    for(b2ContactEdge* ce = body->GetContactList(); ce; ce = ce->next){ // iterar sobre todos los contactos de un cuerpo:
+        GameObject* aGameObj = (GameObject*) ce->contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+        GameObject* aOtherGamObj = (GameObject*) ce->contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+        if ( aGameObj->getEntityType() == ENTITY_WORM and aOtherGamObj->getEntityType() == ENTITY_WORM ){
+            return true;
+        }
+    }
+    return false;
 }
 
 

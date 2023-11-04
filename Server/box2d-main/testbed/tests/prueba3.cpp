@@ -9,6 +9,10 @@
 #include <yaml-cpp/yaml.h>
 #include <cstdlib>
 #include <linux/limits.h>
+#include "imgui/imgui.h"
+#include <GL/gl.h> // Incluir la biblioteca principal de OpenGL
+#include <GL/glu.h> // Incluir la biblioteca de utilidades de GLUT
+#include <GLFW/glfw3.h> // Opcional: Incluir la biblioteca GLFW si estás utilizando GLFW para gestionar la ventana
 
 enum Entity{
     ENTITY_BEAM = 1,
@@ -88,7 +92,6 @@ public:
         if(angle > 45.0f && angle <= 170.0f ){
             beamFriction = 0.0f;
         }
-        std::cout << "Angle Act:" << angle << "Friciton: " << beamFriction << "\n";
         defFixtureBeam.friction = beamFriction;
         this->body->CreateFixture(&defFixtureBeam);
     }
@@ -286,7 +289,7 @@ public:
 
         //  creamos la forma del gusano.
         b2CircleShape wormShape;
-        wormShape.m_p.Set(10.0f, 10.0f);
+        wormShape.m_p.Set(0.0f, 1.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
         wormShape.m_radius = 1.0f;
 
         b2FixtureDef defFixtureWorm;
@@ -295,29 +298,42 @@ public:
         defFixtureWorm.density = 1.0f;
         this->body->CreateFixture(&defFixtureWorm);
     }
+    // add
+    bool isInContactWithAnotherWorm(){
+        for(b2ContactEdge* ce = body->GetContactList(); ce; ce = ce->next){ // iterar sobre todos los contactos de un cuerpo:
+            GameObject* aGameObj = (GameObject*) ce->contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+            GameObject* aOtherGamObj = (GameObject*) ce->contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+            if ( aGameObj->getEntityType() == ENTITY_WORM and aOtherGamObj->getEntityType() == ENTITY_WORM ){
+                return true;
+            }
+        }
+        return false;
+    }
 
     void jumpBackwards() {
-        float angleTita, initialSpeed;
-        angleTita = atan(4.0f * jumpBack.second / jumpBack.first);       //  (4 *hmax)/distMaxHorizontal.
-        initialSpeed = sqrt(jumpBack.first * 10.0f / (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
-        float speedX = initialSpeed * cos(angleTita);
-        float speedY = initialSpeed * sin(angleTita);
+        if( not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
+            float angleTita, initialSpeed;
+            angleTita = atan(4.0f * jumpBack.second / jumpBack.first);       //  (4 *hmax)/distMaxHorizontal.
+            initialSpeed = sqrt(jumpBack.first * 10.0f / (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
+            float speedX = initialSpeed * cos(angleTita);
+            float speedY = initialSpeed * sin(angleTita);
 
-        float impulseX = body->GetMass() * speedX;
-        float impulseY = body->GetMass() * speedY;
+            float impulseX = body->GetMass() * speedX;
+            float impulseY = body->GetMass() * speedY;
 
-        if (directionLook == RIGHT) {
-            impulseX = -impulseX;
-            directionLook = LEFT;       // Gusano "Da una vuelta hacia atras" mira al lado opuesto esta OK.
-        } else if (directionLook == LEFT) {
-            directionLook = RIGHT;   //MIRAMOS LADO OPUESTO AL Saltar hacia atras.
-        } // ^
+            if (directionLook == RIGHT) {
+                impulseX = -impulseX;
+                directionLook = LEFT;       // Gusano "Da una vuelta hacia atras" mira al lado opuesto esta OK.
+            } else if (directionLook == LEFT) {
+                directionLook = RIGHT;   //MIRAMOS LADO OPUESTO AL Saltar hacia atras.
+            } // ^
 
-        b2Vec2 impulse(impulseX, impulseY); //  por la gravedad
-        body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
+            b2Vec2 impulse(impulseX, impulseY); //  por la gravedad
+            body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
+        }
     }
     void jumpForwards() {
-        if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
+        if( not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
             float angleTita, initialSpeed;
             angleTita = atan(4.0f * jumpForward.second / jumpForward.first);       //  (4 *hmax)/distMaxHorizontal.
             initialSpeed = sqrt(jumpForward.first * 10.0f /
@@ -335,7 +351,7 @@ public:
         }
     }
     void walk(Direction aDirection) {
-        if(abs(body->GetLinearVelocity().x) < 2.0f && abs(body->GetLinearVelocity().y) < 2.0f) {
+        if( not isInContactWithAnotherWorm() and  body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ){
             directionLook = aDirection;
             float acceleration = getBody()->GetFixtureList()[0].GetFriction() * 10.0f; // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
             float speed = sqrt(2.0f * acceleration * dragSpeed); // la velocidad la sacamos como 2 * aceleracion * distancia.
@@ -357,9 +373,9 @@ public:
 
     void render(){
         if(numberContacts > 0 ){
-            std::cout << "Hay contacnto  jejeje\n";
+            //std::cout << "Hay contacnto  jejeje\n";
         } else {
-            std::cout << "No hay contacto aun\n";
+            //std::cout << "No hay contacto aun\n";
         }
     }
 
@@ -367,32 +383,48 @@ public:
 
 // Clase de colisiones el listener:
 void wormCollidesWithBeam(GameObject* worm, GameObject* beam){
-    std::cout << "Worm colisionar con el beam\n";
+    //std::cout << "Worm colisionar con el beam\n";
     Worm* unWorm = (Worm*) (worm);
     Beam* unaBeam = (Beam*) (beam);
     unWorm->startContact();
 }
 
 void beamCollideWithWorm(GameObject* beam, GameObject* worm){
-    std::cout << "BEAM colisionar con el WORM\n";
+    //std::cout << "BEAM colisionar con el WORM\n";
     wormCollidesWithBeam(worm, beam);
 }
 
 void wormCollidesWithWater(GameObject* worm, GameObject* water){
-    std::cout << "Worm colisionar con WATER\n";
+    //std::cout << "Worm colisionar con WATER\n";
     worm->destroyBody();
 }
 void waterCollidesWithWorm(GameObject* water, GameObject* worm){
-    std::cout << "Water colisionar con el Worm\n";
+    //std::cout << "Water colisionar con el Worm\n";
     wormCollidesWithWater(worm, water);
 }
 void wormCollidesWithEdege(GameObject* worm, GameObject* edge){
-    std::cout << "Worm collisiona con el edge\n";
+    //std::cout << "Worm collisiona con el edge\n";
 }
 void edgeCollidesWithWorm(GameObject* edge, GameObject* worm){
-    std::cout << "Edge collisiona con el worm\n";
+    //std::cout << "Edge collisiona con el worm\n";
 }
 
+void wormCollidesWithWorm(GameObject* worm1, GameObject* worm2){
+    Worm* aWorm1 = (Worm*) (worm1);
+    Worm* aWorm2 = (Worm*) (worm2);
+    if (aWorm1->getBody()->GetLinearVelocity().x > 0 ){
+        // std::cerr << "Worm 1 choco con velocidad a Worm 2 asi que le reducimos a cero para q no lo empuje\n";
+        b2Vec2 velocity = aWorm1->getBody()->GetLinearVelocity();
+        velocity.x = 0.0f;
+        aWorm1->getBody()->SetLinearVelocity(velocity);
+    }
+    else if ( aWorm2->getBody()->GetLinearVelocity().x > 0 ){
+        //  std::cerr << "Worm 2 choco con velocidad a Worm 1 asi que le reducimos a cero para q no lo empuje\n";
+        b2Vec2 velocity = aWorm1->getBody()->GetLinearVelocity();
+        velocity.x = 0.0f;
+        aWorm2->getBody()->SetLinearVelocity(velocity);
+    }
+}
 
 class MyContactListener : public b2ContactListener {
 private:
@@ -409,17 +441,14 @@ public:
         collisionsMap[std::make_pair(ENTITY_WATER, ENTITY_WORM)] = &waterCollidesWithWorm;
         collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_EDGE)] = &wormCollidesWithEdege;
         collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_WORM)] = &edgeCollidesWithWorm;
+        collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_WORM)] = &wormCollidesWithWorm;
     }
-
     void BeginContact(b2Contact* contact) override{
         GameObject* gameObject = (GameObject*) contact->GetFixtureA()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
         GameObject* otroGameObject = (GameObject*) contact->GetFixtureB()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
         if(gameObject == nullptr || otroGameObject == nullptr) return;
         auto iteratorElement =  collisionsMap.find( std::make_pair(gameObject->getEntityType(), otroGameObject->getEntityType())); // nos retorna un iterador
-        std::cout << "gameObject->getEntityType()" << gameObject->getEntityType() << "\n";
-        std::cout << "otroGameObject->getEntityType()" << otroGameObject->getEntityType() << "\n";
         if(iteratorElement != collisionsMap.end() ){
-            std::cout << "iteratorElement != collisionsMap.end()\n";
             auto hitFunction = iteratorElement->second;
             if(hitFunction){
                 hitFunction(gameObject, otroGameObject);
@@ -429,40 +458,70 @@ public:
 
 };
 
+
+
 class Prueba3 : public Test{
 public:
     std::unique_ptr<Stage>  stage;
-    std::unique_ptr<Worm> aWorm;
+    std::vector<std::unique_ptr<Worm>> vecWorms;
     std::unique_ptr<MyContactListener> myContactListener;
+    float rayAngle;
+    float rayLength;
+    b2Vec2 p1;
+    b2Vec2 p2;
+
     Prueba3() {
+        rayAngle = 90.0f * (b2_pi /180.0f); //En box2d el angulo 90 en nuestro realidad es el cero y el angulo 0 de la realidad es el 90 en box2d.
+        // box2d arranca sus angulos desde
+        std::cout << "angulo actual inicial en DEG:" << (rayAngle * 180.0f/ b2_pi) << "\n";
+        rayLength = 25;
         // Todo variable q esta aca dentro y queramos que perdure debemos usar el heap .
         stage = std::unique_ptr<Stage>{new Stage("Jaula Maldita")};
         stage->addToTheWorld(m_world);
-        aWorm = std::unique_ptr<Worm>{new Worm(0, 5.0f, 20.0f) };
-        aWorm->addToTheWorld(m_world);
+        //    std::map<size_t, std::pair<float, float>> idsAndPositionsWorms;
+        for(auto& aElement : stage->getIdsAndPositionsWorms()){
+            vecWorms.push_back(std::unique_ptr<Worm>{ new Worm(aElement.first, aElement.second.first, aElement.second.second) });
+            vecWorms.back()->addToTheWorld(m_world);
+        }
         myContactListener = std::unique_ptr<MyContactListener>{new MyContactListener(m_world)};
+        p1 = b2Vec2(20.0f, 20.0f); // origen del rayo desde donde apuntara
+        p2 = p1;
     }
 
     void Keyboard(int key) override{
         if ( key == GLFW_KEY_I){
-            aWorm->jumpForwards();
+            vecWorms[0]->jumpForwards();
         }
         else if (key == GLFW_KEY_Y){
-            aWorm->jumpBackwards();
+            vecWorms[0]->jumpBackwards();
         }
         else if (key == GLFW_KEY_K){
-            aWorm->walk(RIGHT);
+            vecWorms[0]->walk(RIGHT);
         }
         else if (key == GLFW_KEY_H ){
-            aWorm->walk(LEFT);
+            vecWorms[0]->walk(LEFT);
+        } else if (key == GLFW_KEY_T){
+            rayAngle -= (10.0f * (b2_pi/180) ); // angulo lo pasamos a radianes
+            std::cout << "angulo actual en deg" << (rayAngle * 180.0f/ b2_pi);
+            std::cout << "Ray angle rad: " << rayAngle << "\n";
+            if (rayAngle <= 0.0f){
+                rayAngle += (10.0f * (b2_pi/180) ); // volvemos al estado anterior
+                return;
+            }
+            p2 = p1 + rayLength * b2Vec2( sinf(rayAngle), cosf(rayAngle) );
+        } else if (key == GLFW_KEY_G){
+            rayAngle += (10.0f * (b2_pi/180));
+            std::cout << "angulo actual en deg" << (rayAngle * 180.0f/ b2_pi);
+            std::cout << "Ray angle rad: " << rayAngle << "\n";
+            if (rayAngle >= b2_pi){
+                rayAngle -= (10.0f * (b2_pi/180)); // volvemos al estado anterior.
+                return;
+            }
+            p2 = p1 + rayLength * b2Vec2( sinf(rayAngle), cosf(rayAngle) );
         }
     }
 
     void update() {
-        if(aWorm != nullptr && aWorm->isDestroyedBody()){
-            m_world->DestroyBody(aWorm->getBody());
-            aWorm = nullptr;
-        }
 
     }
 
@@ -470,12 +529,13 @@ public:
         Test::Step(settings);
         g_debugDraw.DrawString(5, m_textLine, "Keys: (d) dynamic, (s) static, (k) kinematic");
         m_textLine += m_textIncrement;
-        if(aWorm != nullptr){
-            b2Vec2 posicion = aWorm->getBody()->GetWorldCenter();
-            std::string posWorm = "X: " + std::to_string(posicion.x)  + " Y: " + std::to_string(posicion.y) + "  Masa: " + std::to_string( aWorm->getBody()->GetMass() ) + "\n";
+        if(vecWorms[0] != nullptr){
+            b2Vec2 posicion = vecWorms[0]->getBody()->GetWorldCenter();
+            std::string posWorm = "X: " + std::to_string(posicion.x)  + " Y: " + std::to_string(posicion.y) + "  Masa: " + std::to_string( vecWorms[0]->getBody()->GetMass() ) + "\n";
             g_debugDraw.DrawString(5, m_textLine, posWorm.data());
             update();
         }
+        g_debugDraw.DrawSegment(p1, p2, b2Color(1.0f, 1.0f, 1.0f));
     }
 
     static Test* Create(){
