@@ -2,7 +2,7 @@
 // Created by riclui on 25/10/23.
 //
 
-#ifndef WORMS_TALLER_1_PLAYER_H
+#ifndef WORMS_TALLER_1_WORM_H
 #define WORMS_TALLER_1_PLAYER_H
 
 
@@ -10,17 +10,17 @@
 #include "../../loaderParams/LoaderParams.h"
 #include "../../animation/Animation.h"
 
-class Player : public GameObject {
+class Worm : public GameObject {
 private:
     bool m_isRunning;
 
     Animation m_animation;
 
 public:
-    explicit Player(const LoaderParams &params);
+    explicit Worm(const LoaderParams &params);
     void draw(SDL2pp::Renderer& renderer, TextureManager& textureManager) override;
     void update(float dt) override;
 };
 
 
-#endif //WORMS_TALLER_1_PLAYER_H
+#endif //WORMS_TALLER_1_WORM_H

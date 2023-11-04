@@ -3,7 +3,7 @@
 //
 
 #include "Engine.h"
-#include "../gameObject/player/Player.h"
+#include "../gameObject/worm/Worm.h"
 #include "../utils/Constants.h"
 #include "../gameObject/beam/Beam.h"
 #include "../command/MoveRight.h"
