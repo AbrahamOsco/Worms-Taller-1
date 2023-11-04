@@ -88,7 +88,30 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
 
         Server/src/Model/Edges.cpp Server/src/Model/Edges.h Server/src/Model/Water.cpp Server/src/Model/Water.h Server/src/Model/MyContactListener.cpp Server/src/Model/MyContactListener.h)
 
+# para el editor
+include_directories(${PROJECT_SOURCE_DIR}/Editor/include)
 
+qt5_wrap_ui(UIS_HEADERS
+        Editor/ui/chooseMapToEdit.ui
+        Editor/ui/editingWindow.ui
+        Editor/ui/editor.ui
+        Editor/ui/nameNewMap.ui
+)
+
+add_executable(editor
+        Editor/src/main.cpp
+        Editor/include/editor.h
+        Editor/src/editor.cpp
+        Editor/include/chooseMapToEdit.h
+        Editor/src/chooseMapToEdit.cpp
+        Editor/include/nameNewMap.h
+        Editor/src/nameNewMap.cpp
+        Editor/include/editingWindow.h
+        Editor/src/editingWindow.cpp
+        Editor/include/zoom.h
+        Editor/src/zoom.cpp
+        ${UIS_HEADERS})
+
+target_link_libraries(editor Qt5::Widgets yaml-cpp)
 target_link_libraries(worms-client PUBLIC SDL2pp yaml-cpp Qt5::Widgets)
-# agregar editor.
 target_link_libraries(Worms-Taller-1 box2d SDL2pp yaml-cpp)
