@@ -68,3 +68,9 @@ std::vector<PlayerDTO> Players::getPlayersDTO() const{
     }
     return playersDTO;
 }
+
+void Players::addToTheWorld(b2World *world) {
+    for(auto& aPlayer : players){
+        aPlayer.second.addToTheWorld(world);
+    }
+}

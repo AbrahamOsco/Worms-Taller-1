@@ -8,6 +8,7 @@
 
 #include <map>
 #include <vector>
+#include <box2d/b2_world.h>
 #include "Player.h"
 #include "../../../Common/DTO/PlayerDTO.h"
 
@@ -25,6 +26,7 @@ public:
 
     std::vector<PlayerDTO> getPlayersDTO() const;
 
+    void addToTheWorld(b2World *world);
 };
 
 

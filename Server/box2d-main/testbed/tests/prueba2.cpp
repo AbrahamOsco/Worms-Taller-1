@@ -12,7 +12,6 @@
 #include <linux/limits.h>
 
 #define MITAD_TAMANIO_GUSANO 1.0f
-
 enum EntityType {WATER_ENTITY, EDGE_ENTITY, WORM_ENTITY, BEAM_ENTITY};
 enum Direction {LEFT, RIGHT};
 
@@ -190,7 +189,7 @@ public:
         edges = new EntityEdges(world,height,width);
         water = new EntityWater(world,height,width);
         for (auto & beam : beams) {
-            beam->addToWorld(world);
+            //beam->addToTheWorld(world);
         }
     }
     ~Stage(){
@@ -267,23 +266,19 @@ public:
 class Prueba2 : public Test{
     EntityWorm* worm;
     Stage* stage;
-    contactListener cl;
 public:
-    Prueba2() : worm(nullptr), stage(nullptr), cl(m_world) {
-
+    Prueba2()  { //: worm(nullptr), stage(nullptr), cl(m_world)
         // Stage
         stage = StageLoader::getStage("JaulaMaldita");
-        stage->addToWorld(m_world);
 
         // Worm
         b2Vec2 initialPos(15,-5);
         worm = new EntityWorm(m_world,initialPos);
 
-
-        m_world->SetContactListener(&cl);
     }
 
     void Keyboard(int key) override{
+
         if ( key == GLFW_KEY_I){
             worm->jumpForwards();
         }
@@ -296,6 +291,7 @@ public:
         else if (key == GLFW_KEY_A ){
             worm->walk(LEFT);
         }
+
     }
 
     void update() {

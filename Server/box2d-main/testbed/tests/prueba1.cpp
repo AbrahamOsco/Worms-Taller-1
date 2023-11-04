@@ -97,6 +97,7 @@ public:
             body->ApplyLinearImpulse(impulsoVelocidad, body->GetWorldCenter(), true);
         }
     }
+
     void jump(JUMP_TYPE tipoSalto){
         float anguloTita, velocidadInicial, factorDirecion = 1.0f;
 
@@ -209,7 +210,7 @@ public:
     Worm unGusano;
     std::vector<Beam*> vigas;
     MyContactListener myContactListener;
-    Prueba1() : unGusano(1, m_world, 3.450f), myContactListener(m_world){
+    Prueba1() : unGusano(m_world, 3.450f, 1), myContactListener(m_world){
         float tamanio = 30.0f;
                                         // paso (Coordx, Coordy) , (mitadLargo, mitadAncho), angulo
         Beam* vigaUna = new Beam(m_world, b2Vec2(tamanio/2, 0.0f), b2Vec2(tamanio/2, 0.4f), 0 );

@@ -23,12 +23,13 @@ std::map<size_t, std::pair<float, float>> Stage::getIdsAndPositionsWorms() const
 }
 
 // por cada beam creamos su body y lo agregamos al mundo.
-void Stage::addBeamsToWorld(b2World *world) {
-    // agregamos primero las vigas.
+void Stage::addToTheWorld(b2World *world) {
+    this->edges = Edges(world, height, length);
+    this->water = Water(world, height, length);
     for(auto& aBeam : beams){
-
-        aBeam.getBeamDTO();
+        aBeam.addToWorld(world);
     }
+
 }
 
 

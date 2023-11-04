@@ -26,16 +26,8 @@ PlayersIniDTO Model::getPlayersDTO() const {
 
 void Model::start() {
     players.assignWormsToPlayers();
-    addBeamsToWorld();
-    addWormsToWorld();
-}
-
-void Model::addBeamsToWorld() {
-    stage.addBeamsToWorld(&world);
-}
-
-void Model::addWormsToWorld() {
-
+    stage.addToTheWorld(&world);
+    players.addToTheWorld(&world);
 }
 
 

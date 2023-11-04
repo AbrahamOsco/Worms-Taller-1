@@ -20,7 +20,7 @@ enum OperationType {
     WORM = 29, //Unidades, armas, etc.
     BEAM = 30,
     PLAYERS_INITIAL = 31,
-    PLAYER = 32
+    PLAYER = 32,
 };
 
 class DTO {

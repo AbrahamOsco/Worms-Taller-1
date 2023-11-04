@@ -24,9 +24,8 @@ private:
     Players players;
     b2World world;
 
-    void addWormsToWorld();
-    void addBeamsToWorld();
 public:
+
     Model(const std::string& scenarioName);
 
     void addPlayer(const std::string &playerName, const size_t &idPlayer);

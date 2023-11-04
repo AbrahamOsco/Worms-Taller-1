@@ -11,6 +11,8 @@
 #include "../../../Common/DTO/StageDTO.h"
 #include "Beam.h"
 #include "box2d/b2_world.h"
+#include "Edges.h"
+#include "Water.h"
 
 class Stage {
 private:
@@ -19,7 +21,8 @@ private:
     float length;
     std::vector<Beam> beams;
     std::map<size_t, std::pair<float, float>> idsAndPositionsWorms;
-
+    Edges edges;
+    Water water;
 public:
 
     Stage(const std::string& name);
@@ -29,7 +32,7 @@ public:
     StageDTO getStageDTO() const;
 
 
-    void addBeamsToWorld(b2World *world);
+    void addToTheWorld(b2World *world);
 };
 
 

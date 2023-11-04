@@ -8,8 +8,9 @@
 
 #include <cstddef>
 #include "../../../Common/DTO/BeamDTO.h"
+#include "GameObject.h"
 
-class Beam {
+class Beam : public GameObject {
 private:
     TypeBeam typeBeam;
     float xCenter;
@@ -24,6 +25,7 @@ public:
 
     BeamDTO getBeamDTO();
 
+    void addToWorld(b2World *world);
 };
 
 

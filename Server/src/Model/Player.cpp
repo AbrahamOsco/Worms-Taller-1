@@ -30,3 +30,9 @@ void Player::assignBonusLife() {
     }
 }
 
+void Player::addToTheWorld(b2World *world) {
+    for(auto aWorm : worms){
+        aWorm.second.addToTheWorld(world);
+    }
+}
+

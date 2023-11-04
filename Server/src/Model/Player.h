@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <box2d/b2_world.h>
 #include "Worm.h"
 #include "../../../Common/DTO/PlayerDTO.h"
 
@@ -26,6 +27,8 @@ public:
     void assignWorm(const int &idWorm, const std::pair<float, float> &positionInitialWorm);
 
     void assignBonusLife();
+
+    void addToTheWorld(b2World *world);
 };
 
 
