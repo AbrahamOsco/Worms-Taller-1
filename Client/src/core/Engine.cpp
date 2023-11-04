@@ -52,23 +52,13 @@ void Engine::render() {
         m_gameObject->draw(m_pRenderer, m_textureManager);
     }
 
-    m_buttons.draw(m_pRenderer, m_textureManager);
+    //m_buttons.draw(m_pRenderer, m_textureManager);
 
     m_pRenderer.Present();
 }
 
 void Engine::init() {
     m_textureManager.parseTexture("../Client/resources/assets/textures.yaml", m_pRenderer);
-    m_buttons.addButton(std::make_unique<Button>("air_attack_icon"));
-    m_buttons.addButton(std::make_unique<Button>("banana_icon"));
-    m_buttons.addButton(std::make_unique<Button>("bat_icon"));
-    m_buttons.addButton(std::make_unique<Button>("bazooka_icon"));
-    m_buttons.addButton(std::make_unique<Button>("dynamite_icon"));
-    m_buttons.addButton(std::make_unique<Button>("green_grenade_icon"));
-    m_buttons.addButton(std::make_unique<Button>("holy_grenade_icon"));
-    m_buttons.addButton(std::make_unique<Button>("mortar_icon"));
-    m_buttons.addButton(std::make_unique<Button>("red_grenade_icon"));
-    m_buttons.addButton(std::make_unique<Button>("teleportation_icon"));
 }
 
 bool Engine::running() const {

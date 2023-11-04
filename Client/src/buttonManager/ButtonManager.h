@@ -9,29 +9,30 @@
 #include "../utils/Constants.h"
 #include "../gameObject/button/Button.h"
 
-class buttonManager {
+class ButtonManager : public GameObject {
 private:
-    std::vector<std::unique_ptr<Button>> m_buttons;
+    std::vector<Button> m_buttons;
 public:
-    void addButton(std::unique_ptr<Button>);
-    void draw(SDL2pp::Renderer& renderer, TextureManager& textureManager);
+    ButtonManager(const LoaderParams &params, std::vector<Button>&& buttons);
+    void draw(SDL2pp::Renderer& renderer, TextureManager& textureManager) override;
+    void update(float dt) override;
 
     void arrangeButtonsVerticallyLeftAligned(int verticalSpacing) {
         int totalHeight = getTotalButtonHeight() + (getTotalButtons() - 1) * verticalSpacing;
         int currentY = (WINDOW_HEIGHT - totalHeight) / 2; // Centra verticalmente
 
-        for (auto& button : m_buttons) {
+        for (Button& button : m_buttons) {
             int x = 0; // Alineación a la izquierda
-            button->setX(x);
-            button->setY(currentY);
-            currentY += button->getHeight() + verticalSpacing;
+            button.setX(x);
+            button.setY(currentY);
+            currentY += button.getHeight() + verticalSpacing;
         }
     }
 
-    int getTotalButtonHeight() const {
+    int getTotalButtonHeight() {
         int totalHeight = 0;
-        for (const auto& button : m_buttons) {
-            totalHeight += button->getHeight();
+        for (Button& button : m_buttons) {
+            totalHeight += button.getHeight();
         }
         return totalHeight;
     }

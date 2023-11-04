@@ -11,7 +11,7 @@
 #include "../timer/Timer.h"
 #include "../gameObject/GameObject.h"
 #include "../loaderParams/LoaderParams.h"
-#include "../buttonManager/buttonManager.h"
+#include "../buttonManager/ButtonManager.h"
 #include "../gameObject/beam/Beam.h"
 #include "../command/Command.h"
 #include "../../../Common/Queue/Queue.h"
@@ -26,7 +26,6 @@ private:
 
     std::vector<Beam>& m_beams;
     std::vector<std::unique_ptr<GameObject>> m_gameObjects;
-    buttonManager m_buttons;
 
     Queue<std::unique_ptr<Command>>& m_bQueue;
     Queue<std::vector<std::unique_ptr<GameObject>>>& m_nbQueue;
