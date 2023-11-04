@@ -10,7 +10,7 @@ void SenderThread::run() {
     while (running) {
         try {
             std::unique_ptr<Command> action;
-            action = m_queue.pop();
+            action = m_queue.move_pop();
             action->execute(m_protocol);
         } catch (ClosedQueue & closedQueue) {
             running = false;

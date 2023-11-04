@@ -29,9 +29,10 @@ private:
     buttonManager m_buttons;
 
     Queue<std::unique_ptr<Command>>& m_bQueue;
+    Queue<std::vector<std::unique_ptr<GameObject>>>& m_nbQueue;
 
 public:
-    Engine(std::vector<Beam>& beams, Queue<std::unique_ptr<Command>>& bQueue);
+    Engine(std::vector<Beam>& beams, Queue<std::unique_ptr<Command>>& bQueue, Queue<std::vector<std::unique_ptr<GameObject>>>& nbQueue);
     ~Engine() = default;
     void init();
     void events();

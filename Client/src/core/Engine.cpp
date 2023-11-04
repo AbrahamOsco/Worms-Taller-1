@@ -9,9 +9,9 @@
 #include "../command/MoveRight.h"
 #include "../command/MoveLeft.h"
 
-Engine::Engine(std::vector<Beam>& beams, Queue<std::unique_ptr<Command>>& bQueue) : m_pWindow("SDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT,
+Engine::Engine(std::vector<Beam>& beams, Queue<std::unique_ptr<Command>>& bQueue, Queue<std::vector<std::unique_ptr<GameObject>>>& nbQueue) : m_pWindow("SDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT,
                              0),
-                   m_pRenderer(m_pWindow, -1, SDL_RENDERER_ACCELERATED), m_beams(beams), m_bQueue(bQueue) {
+                   m_pRenderer(m_pWindow, -1, SDL_RENDERER_ACCELERATED), m_beams(beams), m_bQueue(bQueue), m_nbQueue(nbQueue) {
     m_bRunning = true;
 }
 
@@ -23,10 +23,10 @@ void Engine::events() {
         } else if (event.type == SDL_KEYDOWN) {
             if (event.key.keysym.sym == SDLK_RIGHT) {
                 std::unique_ptr<Command> command(new MoveRight()); // Comando para mover a la derecha
-                m_bQueue.push(std::move(command));
+                m_bQueue.move_push(std::move(command));
             } else if (event.key.keysym.sym == SDLK_LEFT) {
                 std::unique_ptr<Command> command(new MoveLeft()); // Comando para mover a la izquierda
-                m_bQueue.push(std::move(command));
+                m_bQueue.move_push(std::move(command));
             }
         }
     }
@@ -34,6 +34,7 @@ void Engine::events() {
 
 void Engine::update() {
     float dt = m_timer.getDeltaTime();
+    while (m_nbQueue.move_try_pop(m_gameObjects)){}
     for (const auto & m_gameObject : m_gameObjects) {
         m_gameObject->update(dt);
     }
@@ -58,8 +59,6 @@ void Engine::render() {
 
 void Engine::init() {
     m_textureManager.parseTexture("../Client/resources/assets/textures.yaml", m_pRenderer);
-    LoaderParams params1(512, 384, 60, 60, "player");
-    m_gameObjects.push_back(std::make_unique<Player>(params1));
     m_buttons.addButton(std::make_unique<Button>("air_attack_icon"));
     m_buttons.addButton(std::make_unique<Button>("banana_icon"));
     m_buttons.addButton(std::make_unique<Button>("bat_icon"));

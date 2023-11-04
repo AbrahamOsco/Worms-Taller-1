@@ -117,6 +117,82 @@ public:
         return val;
     }
 
+    bool move_try_push(T&& val) {
+        std::unique_lock<std::mutex> lck(mtx);
+
+        if (closed) {
+            throw ClosedQueue();
+        }
+
+        if (q.size() == this->max_size) {
+            return false; // No se pudo insertar, la cola está llena
+        }
+
+        if (q.empty()) {
+            is_not_empty.notify_all();
+        }
+
+        q.push(std::move(val));
+        return true; // Inserción exitosa
+    }
+
+    bool move_try_pop(T& val) {
+        std::unique_lock<std::mutex> lck(mtx);
+
+        if (q.empty()) {
+            if (closed) {
+                throw ClosedQueue();
+            }
+            return false; // No hay elementos para extraer
+        }
+
+        if (q.size() == this->max_size) {
+            is_not_full.notify_all();
+        }
+
+        val = std::move(q.front());
+        q.pop();
+        return true; // Extracción exitosa
+    }
+
+    void move_push(T&& val) {
+        std::unique_lock<std::mutex> lck(mtx);
+
+        if (closed) {
+            throw ClosedQueue();
+        }
+
+        while (q.size() == this->max_size) {
+            is_not_full.wait(lck);
+        }
+
+        if (q.empty()) {
+            is_not_empty.notify_all();
+        }
+
+        q.push(std::move(val));
+    }
+
+    T move_pop() {
+        std::unique_lock<std::mutex> lck(mtx);
+
+        while (q.empty()) {
+            if (closed) {
+                throw ClosedQueue();
+            }
+            is_not_empty.wait(lck);
+        }
+
+        if (q.size() == this->max_size) {
+            is_not_full.notify_all();
+        }
+
+        T val = std::move(q.front());
+        q.pop();
+
+        return val;
+    }
+
     void close() {  // cppcheck-suppress duplInheritedMember
         std::unique_lock<std::mutex> lck(mtx);
 
@@ -273,111 +349,6 @@ public:
     T* pop() { return (T*)Queue<void*>::pop(); }  // cppcheck-suppress duplInheritedMember
 
     void close() { return Queue<void*>::close(); }  // cppcheck-suppress duplInheritedMember
-
-private:
-    Queue(const Queue&) = delete;
-    Queue& operator=(const Queue&) = delete;
-};
-
-template <typename T>
-class Queue<std::unique_ptr<T>> {
-private:
-    std::queue<std::unique_ptr<T>> q;
-    const unsigned int max_size;
-    bool closed;
-    std::mutex mtx;
-    std::condition_variable is_not_full;
-    std::condition_variable is_not_empty;
-
-public:
-    Queue(): max_size(UINT_MAX - 1), closed(false) {}
-
-    bool try_push(std::unique_ptr<T> val) {
-        std::unique_lock<std::mutex> lck(mtx);
-
-        if (closed) {
-            throw ClosedQueue();
-        }
-
-        if (q.size() == this->max_size) {
-            return false;
-        }
-
-        if (q.empty()) {
-            is_not_empty.notify_all();
-        }
-
-        q.push(std::move(val));
-        return true;
-    }
-
-    bool try_pop(std::unique_ptr<T>& val) {
-        std::unique_lock<std::mutex> lck(mtx);
-
-        if (q.empty()) {
-            if (closed) {
-                throw ClosedQueue();
-            }
-            return false;
-        }
-
-        if (q.size() == this->max_size) {
-            is_not_full.notify_all();
-        }
-
-        val = std::move(q.front());
-        q.pop();
-        return true;
-    }
-
-    void push(std::unique_ptr<T> val) {
-        std::unique_lock<std::mutex> lck(mtx);
-
-        if (closed) {
-            throw ClosedQueue();
-        }
-
-        while (q.size() == this->max_size) {
-            is_not_full.wait(lck);
-        }
-
-        if (q.empty()) {
-            is_not_empty.notify_all();
-        }
-
-        q.push(std::move(val));
-    }
-
-    std::unique_ptr<T> pop() {
-        std::unique_lock<std::mutex> lck(mtx);
-
-        while (q.empty()) {
-            if (closed) {
-                throw ClosedQueue();
-            }
-            is_not_empty.wait(lck);
-        }
-
-        if (q.size() == this->max_size) {
-            is_not_full.notify_all();
-        }
-
-        std::unique_ptr<T> val = std::move(q.front());
-        q.pop();
-
-        return val;
-    }
-
-    void close() {
-        std::unique_lock<std::mutex> lck(mtx);
-
-        if (closed) {
-            throw std::runtime_error("The Queue is already closed.");
-        }
-
-        closed = true;
-        is_not_empty.notify_all();
-    }
 
 private:
     Queue(const Queue&) = delete;

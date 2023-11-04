@@ -21,16 +21,17 @@ void Game::loadMap() {
 }
 
 void Game::run() {
-    //Queue<std::vector<std::unique_ptr<GameObject>>> nbQueue;
+    Queue<std::vector<std::unique_ptr<GameObject>>> nbQueue;
     Queue<std::unique_ptr<Command>> bQueue;
 
-    //ReceiverThread receiverThread(nbQueue, m_protocol);
+    ReceiverThread receiverThread(m_protocol, nbQueue);
     SenderThread senderThread(m_protocol, bQueue);
-    //receiverThread.start();
+
+    receiverThread.start();
     senderThread.start();
 
     SDL2pp::SDL sdl(SDL_INIT_VIDEO);
-    Engine engine(m_beams, bQueue);
+    Engine engine(m_beams, bQueue, nbQueue);
     engine.init();
     while (engine.running()) {
         engine.events();
@@ -40,7 +41,7 @@ void Game::run() {
     }
 
     senderThread.stop();
-    //receiverThread.stop();
+    receiverThread.stop();
     senderThread.join();
-    //receiverThread.join();
+    receiverThread.join();
 }

@@ -13,7 +13,7 @@
 #include "../../../Common/Queue/Queue.h"
 #include "../../../Common/Thread/Thread.h"
 
-class SenderThread : public Thread{
+class SenderThread : public Thread {
 private:
     ClientProtocol& m_protocol;
     Queue<std::unique_ptr<Command>>& m_queue;

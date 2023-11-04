@@ -6,8 +6,21 @@
 #define WORMS_TALLER_1_RECEIVERTHREAD_H
 
 
-class ReceiverThread {
+#include "../../../Common/Thread/Thread.h"
+#include "../gameObject/GameObject.h"
+#include "../protocol/ClientProtocol.h"
+#include "../../../Common/Queue/Queue.h"
 
+class ReceiverThread : public Thread {
+private:
+    Queue<std::vector<std::unique_ptr<GameObject>>>& m_queue;
+    ClientProtocol& m_protocol;
+    std::atomic<bool> m_running;
+
+public:
+    ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::unique_ptr<GameObject>>> &queue);
+    void run() override;
+    void stop() override;
 };
 
 
