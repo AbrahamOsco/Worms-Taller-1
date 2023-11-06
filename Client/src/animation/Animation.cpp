@@ -12,7 +12,7 @@ void Animation::draw(int x, int y, SDL_RendererFlip flip, SDL2pp::Renderer &rend
     textureManager.drawFrame(m_TextureID, x, y, m_spriteWidth, m_spriteHeight, m_SpriteFrame, 0, renderer, flip);
 }
 
-void Animation::setProps(std::string &textureID, int spriteWidth, int spriteHeight, int frameCount, int animSpeed, SDL_RendererFlip flip) {
+void Animation::setProps(const std::string &textureID, int spriteWidth, int spriteHeight, int frameCount, int animSpeed, SDL_RendererFlip flip) {
     m_spriteWidth = spriteWidth;
     m_spriteHeight = spriteHeight;
     m_TextureID = textureID;

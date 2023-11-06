@@ -4,7 +4,7 @@
 
 #include "Worm.h"
 
-Worm::Worm(const LoaderParams &params) : GameObject(params), m_isRunning(false), m_life(0) {
+Worm::Worm(const LoaderParams &params) : GameObject(params), m_isRunning(true), m_life(0) {
     m_flip = SDL_FLIP_NONE;
     m_animation.setProps(m_textureID, m_width, m_height, 14, 80);
 }
@@ -34,4 +34,13 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
 
 void Worm::update(float dt) {
     m_animation.update();
+    animationState();
+}
+
+void Worm::animationState() {
+    m_animation.setProps("player", m_width, m_height, 14, 80, SDL_FLIP_NONE);
+
+    if (m_isRunning) {
+        m_animation.setProps("walk", 30, 30,14, 80, SDL_FLIP_NONE);
+    }
 }
