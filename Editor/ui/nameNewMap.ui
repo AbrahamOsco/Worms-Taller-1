@@ -48,12 +48,15 @@
    <property name="text">
     <string>Confirm</string>
    </property>
+   <property name="shortcut">
+    <string>Return</string>
+   </property>
   </widget>
   <widget class="QLabel" name="mapNameFailLable">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>136</y>
+     <x>20</x>
+     <y>150</y>
      <width>231</width>
      <height>41</height>
     </rect>

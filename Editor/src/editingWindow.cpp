@@ -15,7 +15,8 @@
 #define LONG_BEAM 6
 #define LONG_BEAM_IMG "longBeam.png"
 #define SHORT_BEAM_IMG "shortBeam.png"
-#define BG_IMG "bg.png"
+//#define BG_IMG "bg3600x3600.png"
+#define BG_IMG "bg1920x1080.png"
 #define WORM_IMG "worm.png"
 
 EditingWindow::EditingWindow(QWidget *parent,const std::string& mapName) :
@@ -222,6 +223,7 @@ void EditingWindow::onAddWormBtnClicked()
 
 void EditingWindow::onAddBeamBtnClicked()
 {
+    GetSelectedBeamLength();
     std::string beamImg("../Editor/resources/" + newBeamLength);
     QGraphicsPixmapItem* beam = scene->addPixmap(QPixmap(beamImg.c_str()));
     beam->setFlag(QGraphicsItem::ItemIsMovable);
@@ -232,13 +234,11 @@ void EditingWindow::onAddBeamBtnClicked()
 }
 
 
-void EditingWindow::onChangeLenBtnClicked()
+void EditingWindow::GetSelectedBeamLength()
 {
-    if (ui->changeLenBtn->text() == "long") {
-        ui->changeLenBtn->setText("short");
+    if (ui->lenComboBox->currentText() == "Short") {
         newBeamLength  = SHORT_BEAM_IMG;
-    } else if (ui->changeLenBtn->text() == "short") {
-        ui->changeLenBtn->setText("long");
+    } else if (ui->lenComboBox->currentText() == "Long") {
         newBeamLength  = LONG_BEAM_IMG;
     }
 }

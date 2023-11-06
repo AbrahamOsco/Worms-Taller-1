@@ -1,7 +1,7 @@
 #ifndef EDITINGWINDOW_H
 #define EDITINGWINDOW_H
 
-#include "../include/zoom.h"
+#include "zoom.h"
 #include <QWidget>
 #include  <QGraphicsRectItem>
 #include <QCloseEvent>
@@ -22,8 +22,6 @@ private slots:
     void onAddWormBtnClicked();
 
     void onAddBeamBtnClicked();
-
-    void onChangeLenBtnClicked();
 
     void onDeleteBtnClicked();
 
@@ -51,6 +49,7 @@ private:
     QPointF translatedPos(const QPointF& pos, int angle, int length, int height, TranslationType factor);
     void getFileName(const std::string& mapName);
     void closeEvent(QCloseEvent *event);
+    void GetSelectedBeamLength();
 };
 
 #endif // EDITINGWINDOW_H
