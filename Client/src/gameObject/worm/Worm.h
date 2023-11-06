@@ -12,6 +12,7 @@
 
 class Worm : public GameObject {
 private:
+    int m_life;
     bool m_isRunning;
 
     Animation m_animation;
