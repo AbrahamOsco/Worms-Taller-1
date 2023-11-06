@@ -5,6 +5,9 @@
 #include <memory>
 #include "mainmenu.h"
 #include "liberror.h"
+#include <QPixmap>
+#include <QDesktopWidget>
+#include <QResizeEvent>
 
 Login::Login(QWidget *parent) : QWidget(parent) {
     Ui::Login login;
@@ -16,7 +19,7 @@ void Login::updateLogin() {
     QLineEdit* inputServer = findChild<QLineEdit*>("inputServer");
     QLineEdit* inputPort = findChild<QLineEdit*>("inputPort");
     QLineEdit* inputName = findChild<QLineEdit*>("inputName");
-    QLabel* labelOut = findChild<QLabel*>("labelConnection");
+    QLabel* labelOut = findChild<QLabel*>("labelConnection");                           
     QString qserver = inputServer->text();
     QString qport = inputPort->text();
     QString qname = inputName->text();
@@ -46,6 +49,14 @@ void Login::keyPressEvent(QKeyEvent *event){
         this->updateLogin();
     }
 }
+void Login::resizeEvent(QResizeEvent* event){
+    QLabel* back = findChild<QLabel*>("labelBackground");  
+    back->resize(event->size().width(),event->size().height());
+    this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QVBoxLayout * layout = findChild<QVBoxLayout*>("verticalLayout");
+    layout->setStretch(0, 1);
+    layout->setStretch(1, 1);
+}
 void Login::connectEvents() {
     // Conecto el evento del boton
     QPushButton* buttonConnect = findChild<QPushButton*>("buttonLogin");
@@ -54,4 +65,14 @@ void Login::connectEvents() {
     QPushButton* buttonSalir = findChild<QPushButton*>("buttonExit");
     QObject::connect(buttonSalir, &QPushButton::clicked,
                      this, &Login::exit);
+    QLabel* back = findChild<QLabel*>("labelBackground");  
+    QPixmap pixmap("../Client/ui/resources/login.png");
+    back->setPixmap(pixmap);
+    back->setScaledContents(true);
+    this->setWindowTitle("Worms");
+    QRect screenGeometry = QApplication::desktop()->availableGeometry(this);
+    int x = (screenGeometry.width() - this->width()) / 2;
+    int y = (screenGeometry.height() - this->height()) / 2;
+    this->move(x, y);
+    this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }

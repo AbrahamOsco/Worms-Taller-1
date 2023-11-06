@@ -16,5 +16,6 @@ private:
     void connectEvents();
     void exit();
     void keyPressEvent(QKeyEvent *event) override;
+    void resizeEvent(QResizeEvent* event) override;
 };
 #endif 
