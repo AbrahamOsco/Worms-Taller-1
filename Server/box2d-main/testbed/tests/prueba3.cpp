@@ -13,6 +13,7 @@
 #include <GL/gl.h> // Incluir la biblioteca principal de OpenGL
 #include <GL/glu.h> // Incluir la biblioteca de utilidades de GLUT
 #include <GLFW/glfw3.h> // Opcional: Incluir la biblioteca GLFW si estás utilizando GLFW para gestionar la ventana
+#define DEGRATORADIANS (b2_pi/180.0f)
 
 enum Entity{
     ENTITY_BEAM = 1,
@@ -120,8 +121,6 @@ public:
             idPosInitialWorms[idWorm] = std::pair<float, float>{posInitialX, posInitialY};
             idWorm++;
         }
-        std::cerr << "Luego dle for del YamlParser  \n";
-
         height = node["height"].as<float>();
         length = node["width"].as<float>();
         aBeams = getBeams(node["beams"]);
@@ -364,9 +363,13 @@ public:
         }
     }
 
+    float getHp(){
+        return hp;
+    }
     void startContact(){
         numberContacts++;
     }
+
     void endContact(){
         numberContacts--;
     }
@@ -377,6 +380,17 @@ public:
         } else {
             //std::cout << "No hay contacto aun\n";
         }
+    }
+
+    void takeDamage(float aDamage){
+        this->hp -=aDamage;
+        if(hp <= 0.0f){
+            this->destroyBody();
+        }
+    }
+
+    Direction getDirectionLook(){
+        return this->directionLook;
     }
 
 };
@@ -457,24 +471,66 @@ public:
     }
 
 };
+class Bat {
+private:
+    float damage;
+    std::pair<float, float> impulseDamage;
+public:
+    
+};
 
 
+class MyFirstRayCastCallback : public b2RayCastCallback{
+private:
+    b2Body* body;
+    b2Vec2 point;
+    b2Vec2 normal;
+    float fraction;
+public:
+    MyFirstRayCastCallback(){
+    }
+
+    float ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float fraction) override{
+        std::cout <<"fraction: " << fraction;
+        std::cout << "Estoy aqui en ReportFixture \n";
+        if(fraction  <= 0.1){
+            return fraction;
+        }
+        GameObject* gameObject = (GameObject*) fixture->GetBody()->GetUserData().pointer;
+        this->body = fixture->GetBody();
+        this->point = point;
+        this->normal = normal;
+        this->fraction = fraction;
+        return fraction;
+    }
+    b2Body* getBody(){
+        return body;
+    }
+    float getFraction(){
+        return fraction;
+    }
+    void resetRayCast(){  //No olvidar invocar el resestRayCast luego de un rayCast.
+        this->body = nullptr;
+        this->fraction = 0.0f;
+        this->point = this->normal = b2Vec2(0.0, 0.0f);
+    }
+
+};
 
 class Prueba3 : public Test{
 public:
     std::unique_ptr<Stage>  stage;
     std::vector<std::unique_ptr<Worm>> vecWorms;
     std::unique_ptr<MyContactListener> myContactListener;
+    std::unique_ptr<MyFirstRayCastCallback> myFirstRayCast;
     float rayAngle;
     float rayLength;
-    b2Vec2 p1;
-    b2Vec2 p2;
+    b2Vec2 p1Toy;
+    b2Vec2 p2Toy;
 
     Prueba3() {
-        rayAngle = 90.0f * (b2_pi /180.0f); //En box2d el angulo 90 en nuestro realidad es el cero y el angulo 0 de la realidad es el 90 en box2d.
-        // box2d arranca sus angulos desde
-        std::cout << "angulo actual inicial en DEG:" << (rayAngle * 180.0f/ b2_pi) << "\n";
-        rayLength = 25;
+        rayAngle = 0.0f * (DEGRATORADIANS); //En box2d el angulo 90 en nuestro realidad es el cero y el angulo 0 de la realidad es el 90 en box2d.
+        rayLength = 5;
         // Todo variable q esta aca dentro y queramos que perdure debemos usar el heap .
         stage = std::unique_ptr<Stage>{new Stage("Jaula Maldita")};
         stage->addToTheWorld(m_world);
@@ -484,40 +540,69 @@ public:
             vecWorms.back()->addToTheWorld(m_world);
         }
         myContactListener = std::unique_ptr<MyContactListener>{new MyContactListener(m_world)};
-        p1 = b2Vec2(20.0f, 20.0f); // origen del rayo desde donde apuntara
-        p2 = p1;
+        p1Toy = b2Vec2( vecWorms[0]->getBody()->GetWorldCenter().x , vecWorms[0]->getBody()->GetWorldCenter().y); // origen del rayo desde donde apuntara
+        p2Toy = p1Toy + rayLength * b2Vec2( cosf(rayAngle), sinf(rayAngle));
+        myFirstRayCast = std::unique_ptr<MyFirstRayCastCallback>{new MyFirstRayCastCallback()}; // inmediatamente dsp de crear el rayCast lo seteamos al mundo
+
     }
 
     void Keyboard(int key) override{
         if ( key == GLFW_KEY_I){
             vecWorms[0]->jumpForwards();
+            p1Toy = b2Vec2( vecWorms[0]->getBody()->GetWorldCenter().x , vecWorms[0]->getBody()->GetWorldCenter().y); // origen del rayo desde donde apuntara
+            p2Toy = p1Toy + rayLength * b2Vec2( cosf(rayAngle), sinf(rayAngle));
         }
         else if (key == GLFW_KEY_Y){
             vecWorms[0]->jumpBackwards();
+            p1Toy = b2Vec2( vecWorms[0]->getBody()->GetWorldCenter().x , vecWorms[0]->getBody()->GetWorldCenter().y); // origen del rayo desde donde apuntara
+            p2Toy = p1Toy + rayLength * b2Vec2( cosf(rayAngle), sinf(rayAngle));
         }
         else if (key == GLFW_KEY_K){
             vecWorms[0]->walk(RIGHT);
+            p1Toy = b2Vec2( vecWorms[0]->getBody()->GetWorldCenter().x , vecWorms[0]->getBody()->GetWorldCenter().y); // origen del rayo desde donde apuntara
+            p2Toy = p1Toy + rayLength * b2Vec2( cosf(rayAngle), sinf(rayAngle));
         }
         else if (key == GLFW_KEY_H ){
             vecWorms[0]->walk(LEFT);
+            p1Toy = b2Vec2( vecWorms[0]->getBody()->GetWorldCenter().x , vecWorms[0]->getBody()->GetWorldCenter().y); // origen del rayo desde donde apuntara
+            p2Toy = p1Toy + rayLength * b2Vec2( cosf(rayAngle), sinf(rayAngle));
         } else if (key == GLFW_KEY_T){
-            rayAngle -= (10.0f * (b2_pi/180) ); // angulo lo pasamos a radianes
+            rayAngle += (10.0f * DEGRATORADIANS ); // angulo lo pasamos a radianes
             std::cout << "angulo actual en deg" << (rayAngle * 180.0f/ b2_pi);
             std::cout << "Ray angle rad: " << rayAngle << "\n";
-            if (rayAngle <= 0.0f){
-                rayAngle += (10.0f * (b2_pi/180) ); // volvemos al estado anterior
+            if (rayAngle >= ((b2_pi/2) + 0.01f) ){
+                rayAngle -= (10.0f * DEGRATORADIANS ); // volvemos al estado anterior
                 return;
             }
-            p2 = p1 + rayLength * b2Vec2( sinf(rayAngle), cosf(rayAngle) );
-        } else if (key == GLFW_KEY_G){
-            rayAngle += (10.0f * (b2_pi/180));
+            p2Toy = p1Toy + rayLength * b2Vec2( cosf(rayAngle), sinf(rayAngle) );
+        }
+        else if (key == GLFW_KEY_G){
+            rayAngle -= (10.0f * (b2_pi/180));
             std::cout << "angulo actual en deg" << (rayAngle * 180.0f/ b2_pi);
             std::cout << "Ray angle rad: " << rayAngle << "\n";
-            if (rayAngle >= b2_pi){
-                rayAngle -= (10.0f * (b2_pi/180)); // volvemos al estado anterior.
+            if (rayAngle <= ((-b2_pi/2) - 0.01f) ){
+                rayAngle += (10.0f * DEGRATORADIANS); // volvemos al estado anterior.
                 return;
             }
-            p2 = p1 + rayLength * b2Vec2( sinf(rayAngle), cosf(rayAngle) );
+            p2Toy = p1Toy + rayLength * b2Vec2( cosf(rayAngle), sinf(rayAngle) );
+        }
+        else if (key == GLFW_KEY_B){
+            m_world->RayCast(myFirstRayCast.get(), p1Toy, p2Toy);
+            if(myFirstRayCast->getFraction() <= 0.1f){
+                std::cout << "No colisono con nada pa golpeaste mal! \n";
+                return;
+            }
+            GameObject* gameObject = (GameObject*) myFirstRayCast->getBody()->GetUserData().pointer;
+            if ( gameObject != nullptr and gameObject->getEntityType() == ENTITY_WORM){
+                std::cout << "colisione con un gusano ahora le bajo la vida a punta de un golpe \n";
+                Worm* worm = (Worm*) gameObject;
+                worm->takeDamage(40.0f);  //danio del bate
+                float impulseBate = 10.0f; //imagino 10.0Ns
+                float impulsoX = impulseBate * cosf(rayAngle);
+                float impulsoY = impulseBate * sinf(rayAngle);
+                worm->getBody()->ApplyLinearImpulse(b2Vec2(impulsoX, impulsoY), worm->getBody()->GetWorldCenter(), true);
+            }
+            myFirstRayCast->resetRayCast();
         }
     }
 
@@ -531,11 +616,16 @@ public:
         m_textLine += m_textIncrement;
         if(vecWorms[0] != nullptr){
             b2Vec2 posicion = vecWorms[0]->getBody()->GetWorldCenter();
-            std::string posWorm = "X: " + std::to_string(posicion.x)  + " Y: " + std::to_string(posicion.y) + "  Masa: " + std::to_string( vecWorms[0]->getBody()->GetMass() ) + "\n";
-            g_debugDraw.DrawString(5, m_textLine, posWorm.data());
+            b2Vec2 posicion2 = vecWorms[1]->getBody()->GetWorldCenter();
+            std::string dateGusano1 = "X: " + std::to_string(posicion.x)  + " Y: " + std::to_string(posicion.y) +" HP: " +  std::to_string(vecWorms[0]->getHp()) + " \n";
+            std::string dateGusano2 = "\nX: " + std::to_string(posicion2.x)  + " Y: " + std::to_string(posicion2.y) +" HP: " +  std::to_string(vecWorms[1]->getHp()) + " \n";
+            std::string textFinal = dateGusano1 + dateGusano2 + "RAY ANGLE INITIAL: RADIANDS:" + std::to_string(rayAngle) + "IN DEG: " + std::to_string(rayAngle* 180/b2_pi) + "\n";
+            g_debugDraw.DrawString(5, m_textLine, textFinal.data());
             update();
         }
-        g_debugDraw.DrawSegment(p1, p2, b2Color(1.0f, 1.0f, 1.0f));
+        std::string positionsRay =  "\nRAY:p1: X: " + std::to_string(p1Toy.x) + " Y: " + std::to_string(p1Toy.y)  + "   p2 X:" + std::to_string(p2Toy.x) + "  Y: " + std::to_string(p2Toy.y) + "\n";
+        g_debugDraw.DrawString(5, m_textLine, positionsRay.data());
+        g_debugDraw.DrawSegment(p1Toy, p2Toy, b2Color(1.0f, 1.0f, 1.0f));
     }
 
     static Test* Create(){
