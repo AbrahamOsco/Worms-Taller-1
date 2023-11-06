@@ -20,14 +20,11 @@ void Engine::events() {
     while(SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             m_bRunning = false;
-        } else if (event.type == SDL_KEYDOWN) {
-            if (event.key.keysym.sym == SDLK_RIGHT) {
-                std::unique_ptr<Command> command(new MoveRight()); // Comando para mover a la derecha
-                m_bQueue.move_push(std::move(command));
-            } else if (event.key.keysym.sym == SDLK_LEFT) {
-                std::unique_ptr<Command> command(new MoveLeft()); // Comando para mover a la izquierda
-                m_bQueue.move_push(std::move(command));
-            }
+            break;
+        }
+
+        for (const auto & m_gameObject : m_gameObjects) {
+            m_gameObject->processEvent(event, m_bQueue);
         }
     }
 }
@@ -51,8 +48,6 @@ void Engine::render() {
     for (const auto &m_gameObject: m_gameObjects) {
         m_gameObject->draw(m_pRenderer, m_textureManager);
     }
-
-    //m_buttons.draw(m_pRenderer, m_textureManager);
 
     m_pRenderer.Present();
 }

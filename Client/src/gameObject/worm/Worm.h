@@ -20,6 +20,7 @@ public:
     explicit Worm(const LoaderParams &params);
     void draw(SDL2pp::Renderer& renderer, TextureManager& textureManager) override;
     void update(float dt) override;
+    void processEvent(SDL_Event &event, Queue<std::unique_ptr<Command>>& queue) override {};
 };
 
 
