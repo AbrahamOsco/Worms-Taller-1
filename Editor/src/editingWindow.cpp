@@ -222,6 +222,7 @@ void EditingWindow::onAddWormBtnClicked()
 
 void EditingWindow::onAddBeamBtnClicked()
 {
+    GetSelectedBeamLength();
     std::string beamImg("../Editor/resources/" + newBeamLength);
     QGraphicsPixmapItem* beam = scene->addPixmap(QPixmap(beamImg.c_str()));
     beam->setFlag(QGraphicsItem::ItemIsMovable);
@@ -232,13 +233,11 @@ void EditingWindow::onAddBeamBtnClicked()
 }
 
 
-void EditingWindow::onChangeLenBtnClicked()
+void EditingWindow::GetSelectedBeamLength()
 {
-    if (ui->changeLenBtn->text() == "long") {
-        ui->changeLenBtn->setText("short");
+    if (ui->lenComboBox->currentText() == "Short") {
         newBeamLength  = SHORT_BEAM_IMG;
-    } else if (ui->changeLenBtn->text() == "short") {
-        ui->changeLenBtn->setText("long");
+    } else if (ui->lenComboBox->currentText() == "Long") {
         newBeamLength  = LONG_BEAM_IMG;
     }
 }

@@ -16,6 +16,9 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QPushButton" name="goBackBtn">
        <property name="enabled">
@@ -23,32 +26,15 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>31</width>
+         <width>50</width>
          <height>25</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Go Back</string>
+       </property>
        <property name="text">
         <string>←</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_14">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="saveBtn">
-       <property name="text">
-        <string>Save</string>
        </property>
       </widget>
      </item>
@@ -138,6 +124,9 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="toolTip">
+        <string>Map Name</string>
+       </property>
        <property name="text">
         <string>TextLabel</string>
        </property>
@@ -222,14 +211,199 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="saveBtn">
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Save</string>
+       </property>
+       <property name="shortcut">
+        <string>Ctrl+S</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_2">
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_5"/>
+     </item>
+     <item>
+      <widget class="Line" name="line_6">
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Worm:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="addWormBtn">
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>25</height>
+        </size>
+       </property>
        <property name="text">
         <string>Add Worm</string>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_3">
+      <widget class="Line" name="line_7">
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line">
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Beam:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="spinBox">
+         <property name="toolTip">
+          <string>Beam Angle</string>
+         </property>
+         <property name="toolTipDuration">
+          <number>-1</number>
+         </property>
+         <property name="accessibleDescription">
+          <string/>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::UpDownArrows</enum>
+         </property>
+         <property name="accelerated">
+          <bool>true</bool>
+         </property>
+         <property name="correctionMode">
+          <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
+         </property>
+         <property name="suffix">
+          <string>°</string>
+         </property>
+         <property name="prefix">
+          <string/>
+         </property>
+         <property name="maximum">
+          <number>170</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="stepType">
+          <enum>QAbstractSpinBox::DefaultStepType</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="lenComboBox">
+         <property name="toolTip">
+          <string>Beam Length</string>
+         </property>
+         <property name="placeholderText">
+          <string>Length</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Long</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Short</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addBeamBtn">
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Add Beam</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="Line" name="line_4">
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_16">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -242,21 +416,17 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="addBeamBtn">
-       <property name="text">
-        <string>Add Beam</string>
+      <spacer name="horizontalSpacer_19">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="changeLenBtn">
-       <property name="text">
-        <string>long</string>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="spinBox"/>
+      </spacer>
      </item>
      <item>
       <spacer name="horizontalSpacer_4">
@@ -272,85 +442,69 @@
       </spacer>
      </item>
      <item>
+      <widget class="Line" name="line_5">
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="deleteBtn">
+       <property name="maximumSize">
+        <size>
+         <width>62</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Delete</string>
+       </property>
+       <property name="shortcut">
+        <string>Backspace</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line_3">
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QGraphicsView" name="graphicsView"/>
+    <widget class="QGraphicsView" name="graphicsView">
+     <property name="whatsThis">
+      <string/>
+     </property>
+     <property name="accessibleDescription">
+      <string/>
+     </property>
+     <property name="midLineWidth">
+      <number>0</number>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
  <resources/>
  <connections>
-  <connection>
-   <sender>goBackBtn</sender>
-   <signal>clicked()</signal>
-   <receiver>EditingWindow</receiver>
-   <slot>onGoBackBtnClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>40</x>
-     <y>34</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>149</x>
-     <y>492</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>addWormBtn</sender>
-   <signal>clicked()</signal>
-   <receiver>EditingWindow</receiver>
-   <slot>onAddWormBtnClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>509</x>
-     <y>17</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-32</x>
-     <y>485</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>addBeamBtn</sender>
-   <signal>clicked()</signal>
-   <receiver>EditingWindow</receiver>
-   <slot>onAddBeamBtnClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>613</x>
-     <y>32</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>945</x>
-     <y>606</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>changeLenBtn</sender>
-   <signal>clicked()</signal>
-   <receiver>EditingWindow</receiver>
-   <slot>onChangeLenBtnClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>718</x>
-     <y>19</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>986</x>
-     <y>584</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>deleteBtn</sender>
    <signal>clicked()</signal>
@@ -380,6 +534,54 @@
     <hint type="destinationlabel">
      <x>-90</x>
      <y>573</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addBeamBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>EditingWindow</receiver>
+   <slot>onAddBeamBtnClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>613</x>
+     <y>32</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>945</x>
+     <y>606</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addWormBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>EditingWindow</receiver>
+   <slot>onAddWormBtnClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>509</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-32</x>
+     <y>485</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>goBackBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>EditingWindow</receiver>
+   <slot>onGoBackBtnClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>40</x>
+     <y>34</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>149</x>
+     <y>492</y>
     </hint>
    </hints>
   </connection>
