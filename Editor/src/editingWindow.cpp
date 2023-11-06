@@ -15,7 +15,8 @@
 #define LONG_BEAM 6
 #define LONG_BEAM_IMG "longBeam.png"
 #define SHORT_BEAM_IMG "shortBeam.png"
-#define BG_IMG "bg.png"
+//#define BG_IMG "bg3600x3600.png"
+#define BG_IMG "bg1920x1080.png"
 #define WORM_IMG "worm.png"
 
 EditingWindow::EditingWindow(QWidget *parent,const std::string& mapName) :

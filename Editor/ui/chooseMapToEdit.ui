@@ -61,6 +61,9 @@
    <property name="text">
     <string>Confirm</string>
    </property>
+   <property name="shortcut">
+    <string>Return</string>
+   </property>
   </widget>
  </widget>
  <resources/>
