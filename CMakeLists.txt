@@ -40,7 +40,9 @@ qt5_wrap_ui(UIS_HEADERS
         Client/ui/ui/buscarpartida.ui
         Client/ui/ui/lobby.ui)
 
-add_executable(worms-client ${UIS_HEADERS}  ${client_src} ${qt_src} ${common_src} )
+add_executable(worms-client ${UIS_HEADERS}  ${client_src} ${qt_src} ${common_src}
+        Common/DTO/CommandDTO.cpp
+        Common/DTO/CommandDTO.h)
 
 # Para el main mas externo: Server/main.cpp
 add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
@@ -79,6 +81,8 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Common/DTO/RoomDTO.cpp
         Common/DTO/ResolverInitialDTO.h
         Common/DTO/ResolverInitialDTO.cpp
+        Common/DTO/CommandDTO.cpp
+        Common/DTO/CommandDTO.h
         Server/src/Model/Model.h Server/src/Model/Model.cpp
         Server/src/Model/Player.h Server/src/Model/Player.cpp
         Server/src/Control/ClientConnection.cpp Server/src/Control/ClientConnection.h Server/src/Model/Worm.cpp Server/src/Model/Worm.h Server/src/Model/Stage.cpp Server/src/Model/Stage.h Common/DTO/WorldChangesDTO.cpp Common/DTO/WorldChangesDTO.h

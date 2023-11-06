@@ -164,3 +164,8 @@ WormDTO ClientProtocol::recvWormIni() {
     std::cerr << "Error en el recvWormIni";
     return WormDTO(0, 0, 0);
 }
+
+void ClientProtocol::sendCommandDTO(const CommandDTO& commandDto) {
+    sendANumberByte(commandDto.getOperationType());
+    sendANumberByte(commandDto.getTypeCommand());
+}

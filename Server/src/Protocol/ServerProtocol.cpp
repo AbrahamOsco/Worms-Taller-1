@@ -119,4 +119,16 @@ void ServerProtocol::sendAWormIniDTO(const WormDTO &aWormDTO) {
     sendNum2Bytes(aWormDTO.getPositionY());
 }
 
+CommandDTO ServerProtocol::recvCommandDTO() {
+    CommandDTO commandDto;
+    int operationType = recvANumberByte();
+
+    if (operationType == COMMAND) {
+        TypeCommand commandType = static_cast<TypeCommand>(recvANumberByte());
+        commandDto.setTypeCommand(commandType);
+    }
+
+    return commandDto;
+}
+
 

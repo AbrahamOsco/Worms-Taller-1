@@ -8,6 +8,7 @@
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
 #include "../../../Common/DTO/StageDTO.h"
 #include "../../../Common/DTO/PlayersIniDTO.h"
+#include "../../../Common/DTO/CommandDTO.h"
 
 class ClientProtocol : public Protocol {
 
@@ -31,6 +32,8 @@ public:
     PlayerDTO recvAPlayerDTO();
 
     WormDTO recvWormIni();
+
+    void sendCommandDTO(const CommandDTO& commandDto);
 
 
     ~ClientProtocol() = default;

@@ -9,6 +9,7 @@
 #include "../../../Common/DTO/StageDTO.h"
 #include "../../../Common/DTO/PlayerDTO.h"
 #include "../../../Common/DTO/PlayersIniDTO.h"
+#include "../../../Common/DTO/CommandDTO.h"
 
 #define BYTE_DISCONNECT 0
 #define STATUS_ERROR 2
@@ -38,6 +39,8 @@ public:
     void sendAPlayerDTO(const PlayerDTO &playerDTO);
 
     void sendAWormIniDTO(const WormDTO &aWormDTO);
+
+    CommandDTO recvCommandDTO();
 };
 
 
