@@ -27,6 +27,10 @@ void NameNewMap::onGoBackBtnClicked() {
 void NameNewMap::onConfirmBtnClicked() {
     // check if name is available
     std::string newName = ui->mapNameInput->text().toStdString();
+    std::string newNameNoSpaces(newName);
+    newNameNoSpaces.erase(std::remove(newNameNoSpaces.begin(),
+                                   newNameNoSpaces.end(), ' '),
+                                    newNameNoSpaces.end());
     bool nameIsAvailable = true;
     YAML::Node node = YAML::LoadFile("../Stages/StageNames.yaml");
     for (YAML::const_iterator it = node["namesScenarios"].begin();
@@ -37,8 +41,7 @@ void NameNewMap::onConfirmBtnClicked() {
         nameNoSpaces.erase(std::remove(nameNoSpaces.begin(),
                                        nameNoSpaces.end(), ' '),
                                         nameNoSpaces.end());
-        if (name == newName ||
-            nameNoSpaces == newName) {
+        if (newNameNoSpaces == nameNoSpaces) {
             ui->mapNameFailLable->setText("A map already exists with this name."
                                           "\nPlease pick a different one.");
             nameIsAvailable = false;
