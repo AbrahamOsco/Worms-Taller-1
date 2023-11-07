@@ -77,7 +77,7 @@ color: rgb(255, 255, 255);</string>
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nombre del Jugador&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: #FFFFFF;
+         <string notr="true">
 </string>
         </property>
        </widget>
@@ -134,7 +134,7 @@ border-color: rgb(0, 0, 0);
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;IP del servidor&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true"/>
         </property>
        </widget>
       </item>
@@ -190,7 +190,7 @@ border-color: rgb(0, 0, 0);
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;PORT del servidor&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: white;</string>
+         <string notr="true"/>
         </property>
        </widget>
       </item>
