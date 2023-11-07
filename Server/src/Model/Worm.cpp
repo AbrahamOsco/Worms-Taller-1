@@ -32,7 +32,7 @@ void Worm::addToTheWorld(b2World *world) {
 
     //  creamos la forma del gusano.
     b2CircleShape wormShape;
-    wormShape.m_p.Set(10.0f, 10.0f);
+    wormShape.m_p.Set(0.0f, 1.0f);
     wormShape.m_radius = 1.0f;
 
     b2FixtureDef defFixtureWorm;

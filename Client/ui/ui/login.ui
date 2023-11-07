@@ -77,8 +77,10 @@ color: rgb(255, 255, 255);</string>
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nombre del Jugador&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">
-</string>
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>player_name</string>
         </property>
        </widget>
       </item>
@@ -136,6 +138,9 @@ border-color: rgb(0, 0, 0);
         <property name="styleSheet">
          <string notr="true"/>
         </property>
+        <property name="text">
+         <string>127.0.0.1</string>
+        </property>
        </widget>
       </item>
      </layout>
@@ -191,6 +196,9 @@ border-color: rgb(0, 0, 0);
         </property>
         <property name="styleSheet">
          <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>9000</string>
         </property>
        </widget>
       </item>
