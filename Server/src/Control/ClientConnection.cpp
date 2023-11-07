@@ -53,4 +53,3 @@ void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO) {
     this->snapShotQueueB->move_push(std::move(aSnapShot));
 }
 
-
