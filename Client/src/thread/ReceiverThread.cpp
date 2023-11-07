@@ -13,7 +13,16 @@ ReceiverThread::ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::
 void ReceiverThread::run() {
     std::vector<std::unique_ptr<GameObject>> gameObjects;
     LoaderParams params1(512, 384, 60, 60, "player");
-    gameObjects.push_back(std::make_unique<Worm>(params1));
+    //gameObjects.push_back(std::make_unique<Worm>(params1));
+
+    SnapShot snapShot;
+    snapShot = m_protocol.recvASnapShot();
+    std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
+    for (const WormDTO& wormDto: wormsDto) {
+        LoaderParams params(wormDto.getPositionX()*60, wormDto.getPositionY()*60, 60, 60, "player");
+        std::unique_ptr<Worm> worm = std::make_unique<Worm>(params);
+        gameObjects.push_back(std::move(worm));
+    }
 
     gameObjects.push_back(std::make_unique<Turn>(true));
 
