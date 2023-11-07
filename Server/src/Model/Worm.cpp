@@ -37,7 +37,7 @@ void Worm::addToTheWorld(b2World *world) {
 
     b2CircleShape wormShape;
     wormShape.m_p.Set(0.0f, 1.0f);
-    wormShape.m_radius = 0.4f;
+    wormShape.m_radius = 0.2f;   // ALTURA DEL GUSANO  @RICARDO
 
     b2FixtureDef defFixtureWorm;
     defFixtureWorm.shape = &wormShape;
