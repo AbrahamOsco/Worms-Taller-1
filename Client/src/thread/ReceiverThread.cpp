@@ -15,15 +15,12 @@ void ReceiverThread::run() {
     while (m_running) {
         std::vector<std::unique_ptr<GameObject>> gameObjects;
         LoaderParams params1(512, 384, 60, 60, "player");
-        //gameObjects.push_back(std::make_unique<Worm>(params1));
 
         SnapShot snapShot;
         snapShot = m_protocol.recvASnapShot();
         std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
         for (const WormDTO& wormDto: wormsDto) {
-            std::cout << '(' << wormDto.getPositionX() << ',' << wormDto.getPositionY() << ')' << std::endl;
-            LoaderParams params((int)wormDto.getPositionX() * 60, 1080 - (int)wormDto.getPositionY() * 60 , 60, 60, "player");
-            std::unique_ptr<Worm> worm = std::make_unique<Worm>(params);
+            std::unique_ptr<Worm> worm = std::make_unique<Worm>((int)wormDto.getPositionX() * 60, 1080 - (int)wormDto.getPositionY() * 60 );
             gameObjects.push_back(std::move(worm));
         }
 

@@ -4,7 +4,9 @@
 
 #include "Worm.h"
 
-Worm::Worm(const LoaderParams &params) : GameObject(params), m_isRunning(true), m_life(0) {
+Worm::Worm(int posCenterX, int posCenterY) : GameObject(LoaderParams(0, 0, 60, 60, "player")), m_isRunning(false), m_life(0) {
+    m_x = posCenterX - m_width/2;
+    m_y = posCenterY - m_height/2;
     m_flip = SDL_FLIP_NONE;
     m_animation.setProps(m_textureID, m_width, m_height, 14, 80);
 }
