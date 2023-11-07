@@ -2,7 +2,6 @@
 #include "ui_nameNewMap.h"
 #include <QScreen>
 #include <yaml-cpp/yaml.h>
-#include <iostream>
 
 NameNewMap::NameNewMap(QWidget *parent) :
     QWidget(parent),
@@ -42,7 +41,6 @@ void NameNewMap::onConfirmBtnClicked() {
         nameNoSpaces.erase(std::remove(nameNoSpaces.begin(),
                                        nameNoSpaces.end(), ' '),
                                         nameNoSpaces.end());
-        std::cout << nameNoSpaces << "\n";
         if (newNameNoSpaces == nameNoSpaces) {
             ui->mapNameFailLable->setText("A map already exists with this name."
                                           "\nPlease pick a different one.");
