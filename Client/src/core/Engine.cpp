@@ -6,8 +6,8 @@
 #include "../gameObject/worm/Worm.h"
 #include "../utils/Constants.h"
 #include "../gameObject/beam/Beam.h"
-#include "../command/MoveRight.h"
-#include "../command/MoveLeft.h"
+#include "../command/RightCmd.h"
+#include "../command/LeftCmd.h"
 
 Engine::Engine(std::vector<Beam>& beams, Queue<std::unique_ptr<Command>>& bQueue, Queue<std::vector<std::unique_ptr<GameObject>>>& nbQueue) : m_pWindow("SDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT,
                              0),

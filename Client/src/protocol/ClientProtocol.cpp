@@ -168,6 +168,10 @@ WormDTO ClientProtocol::recvWormIni() {
 */
 
 void ClientProtocol::sendCommandDTO(const CommandDTO& commandDto) {
-    sendANumberByte(commandDto.getOperationType());
-    sendANumberByte(commandDto.getTypeCommand());
+    unsigned int operationType = commandDto.getOperationType();
+    unsigned int commandType = commandDto.getTypeCommand();
+    std::cout << operationType << std::endl;
+    std::cout << commandType << std::endl;
+    sendANumberByte(operationType);
+    sendANumberByte(commandType);
 }

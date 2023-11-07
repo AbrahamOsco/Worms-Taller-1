@@ -19,6 +19,7 @@ protected:
     SDL_RendererFlip m_flip;
 
 public:
+    GameObject();
     explicit GameObject(const LoaderParams &params);
     virtual void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) = 0;
     virtual void update(float dt) = 0;
