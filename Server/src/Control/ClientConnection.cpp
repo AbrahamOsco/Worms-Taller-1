@@ -5,10 +5,10 @@
 #include "ClientConnection.h"
 #include "../Protocol/ServerProtocol.h"
 #include "../../../Common/DTO/PlayersIniDTO.h"
-
-ClientConnection::ClientConnection(const size_t &idPlayer, Socket& aSktPeer, Queue<Command *> &aCommandQueueNB, Queue<std::unique_ptr<SnapShot>>& aWorldChangesBQ) :
-        idPlayer(idPlayer), sktPeer(std::move(aSktPeer)), commandQueueNB(aCommandQueueNB), worldChangesBQ(aWorldChangesBQ){
-
+//commandsQueueNB(UINT_MAX - 1)
+ClientConnection::ClientConnection(const size_t &idPlayer, Socket aSktPeer, Queue<std::unique_ptr<CommandDTO>> &aCommandQueueNB) :
+        idPlayer(idPlayer), sktPeer(std::move(aSktPeer)), commandQueueNB(aCommandQueueNB),
+        snapShotQueueB(std::make_unique<Queue<std::unique_ptr<SnapShot>>>(UINT_MAX -1)) {
 }
 
 
@@ -24,16 +24,16 @@ void ClientConnection::start(const StageDTO &stageDTO) {        //Lanzo los thre
 void ClientConnection::join() {
     sender.join();
     receiver.join();
-
 }
 
+// enviamos snapShots al cliente (actualizaciones del mundo)
 void ClientConnection::runSender() {
     try{
-        //WorldChangesDTO* aWorldChange = NULL;
-        //while((aWorldChange = SnapShotQueueB.pop())){}
-            //protocolo.sendGusanos(aWorldChange.getGusanos()); // todos los players se ennteran de la salud, posicion de los gusanos.
-            //protocolo.sendDataPlayer(aWorldChange.getPlayer(this->idPlayer)) // enviamos un unicast (filtro por id) del player - municiones a cada player correspondiente).
-        //
+        ServerProtocol serverProtocol(sktPeer);
+        std::unique_ptr<SnapShot> aSnapShot = nullptr;
+        while( (aSnapShot = snapShotQueueB->move_pop()) ){
+            serverProtocol.sendSnapShot(aSnapShot);
+        }
     }catch (const std::exception& e ){
         sktPeer.totalClosure();
         sktPeer.close();
@@ -45,12 +45,12 @@ void ClientConnection::runReceiver() {
 }
 
 void ClientConnection::stop() {
-    worldChangesBQ.close();
+    snapShotQueueB->close();
 }
 
-
-void ClientConnection::pushUpdates(const std::vector<PlayerDTO> &vector) {
-    //WorldChangesDTO* worldChangesDto = new WorldChangesDTO();
-    //SnapShotQueueB.push(worldChangesDto);
+void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO) {
+    std::unique_ptr<SnapShot> aSnapShot = std::make_unique<SnapShot>(vecWormsDTO);
+    this->snapShotQueueB->move_push(std::move(aSnapShot));
 }
+
 

@@ -13,10 +13,10 @@
 #include "../Model/Model.h"
 #include "../../../Common/DTO/RoomDTO.h"
 #include "EstablishedConnections.h"
-#include "Command/Command.h"
 #include "../../../Common/Queue/Queue.h"
-#include "../Model/SnapShot.h"
+#include "../../../Common/DTO/SnapShot.h"
 #include "../../../Common/Thread/Thread.h"
+#include "../../../Common/DTO/CommandDTO.h"
 
 /*
 Entidad que sera el motor del juego en el server tendra el loop del box2d para iterar la fisica.
@@ -28,10 +28,10 @@ private:
     std::string nameScenario;
     size_t numberPlayerReq;
     size_t currentPlayers;
+    b2World world;
     Model model;
     std::atomic<bool> keepTalking;
-    Queue<Command*> commandsQueueNB;  // La queue para popear los comandos recibido por el cliente.
-    Queue<std::unique_ptr<SnapShot>> SnapShotQueueB;   // La queue para pushear los update del mundo  para ser enviados al protocolo. Es pateado hasta ClientConnection es bloqueante
+    Queue<std::unique_ptr<CommandDTO>> commandsQueueNB;  // La queue para popear los comandos recibido por el cliente.
     EstablishedConnections connections;
 
     //std::map<size_t, ClientThread*> playersInRoom;

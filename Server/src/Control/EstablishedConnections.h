@@ -11,19 +11,18 @@
 #include "../../../Common/Socket/Socket.h"
 #include "ClientConnection.h"
 #include "../../../Common/Queue/Queue.h"
-#include "Command/Command.h"
 #include "../../../Common/DTO/StageDTO.h"
 #include "../../../Common/DTO/PlayerDTO.h"
 #include "../../../Common/DTO/PlayersIniDTO.h"
+#include "../../../Common/DTO/CommandDTO.h"
 
 class EstablishedConnections {
 private:
     std::map<size_t, ClientConnection> clientConnections;
-    Queue<Command*> &commandQueueNB;
-    Queue<std::unique_ptr<SnapShot>>& worldChangesBQ;
+    Queue<std::unique_ptr<CommandDTO>> &commandQueueNB;
 public:
 
-    EstablishedConnections(Queue<Command*>& aCommandQueueNB, Queue<std::unique_ptr<SnapShot>>& aWorldChangesBQ);
+    EstablishedConnections(Queue<std::unique_ptr<CommandDTO>>& aCommandQueueNB);
 
     void addConnection(const size_t &idPlayer, Socket sktPeer);
 
@@ -31,7 +30,7 @@ public:
 
     void stop();
 
-    void pushUpdate(const std::vector<PlayerDTO> &playersDTO);
+    void pushSnapShot(const std::vector<WormDTO> &vectorWormsDTO);
 };
 
 

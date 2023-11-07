@@ -20,10 +20,12 @@ private:
     size_t positionY;
     size_t hpWorm;
     Direction directionLook;
-    TypeFocusWorm typeFocus;
     MoveWorm moveWorm;
+    TypeFocusWorm typeFocus;
 
 public:
+    WormDTO();
+
     WormDTO(const size_t& positionX, const size_t& positionY, const size_t& hpWorm, const Direction& aDirection, const TypeFocusWorm& aTypeFocus, const MoveWorm& aMoveWorm);
 
     size_t getIdWorm() const;

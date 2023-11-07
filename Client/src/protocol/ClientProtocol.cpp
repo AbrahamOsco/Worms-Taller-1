@@ -175,3 +175,55 @@ void ClientProtocol::sendCommandDTO(const CommandDTO& commandDto) {
     sendANumberByte(operationType);
     sendANumberByte(commandType);
 }
+
+SnapShot ClientProtocol::recvASnapShot() {
+    SnapShot aSnapShot;
+    std::vector<WormDTO> vecWormsDTO;
+    size_t operationType = recvANumberByte();
+    if (operationType == SNAP_SHOT){
+        size_t numbersWorms = recvANumberByte();
+        for(size_t i = 0; i < numbersWorms; i++){
+            vecWormsDTO.push_back(recvAWormDTO());
+        }
+        aSnapShot.setWormsDTO(vecWormsDTO);
+    }
+    return aSnapShot;
+}
+
+WormDTO ClientProtocol::recvAWormDTO() {
+    WormDTO aWormDTO;
+    int operationType = recvANumberByte();
+    if (operationType == OperationType::WORM){
+        size_t positionX = recvNum2Bytes();
+        size_t positionY = recvNum2Bytes();
+        size_t hpWorm = recvANumberByte();
+        size_t directionLook = recvANumberByte();
+        Direction aDirection;
+        if( directionLook == Direction::LEFT){
+            aDirection = Direction::LEFT;
+        } else if (directionLook == Direction::RIGHT){
+            aDirection  = Direction::RIGHT;
+        }
+        MoveWorm aMoveWorm;
+        size_t moveWorm = recvANumberByte();
+        if (moveWorm == MoveWorm::WALKING){
+            aMoveWorm = MoveWorm::WALKING;
+        } else if (moveWorm == MoveWorm::JUMPING){
+            aMoveWorm = MoveWorm::JUMPING;
+        } else if (moveWorm == MoveWorm::STANDING){
+            aMoveWorm = MoveWorm::STANDING;
+        }
+        TypeFocusWorm typeFocusWorm;
+        size_t focusWorm = recvANumberByte();
+        if( focusWorm == TypeFocusWorm::FOCUS ){
+            typeFocusWorm = TypeFocusWorm::FOCUS;
+        } else if (focusWorm == TypeFocusWorm::NO_FOCUS){
+            typeFocusWorm = TypeFocusWorm::NO_FOCUS;
+        }
+        WormDTO otherWormDTO(positionX, positionY, hpWorm, aDirection, typeFocusWorm, aMoveWorm);
+        return otherWormDTO;
+    }
+    return aWormDTO;
+}
+
+

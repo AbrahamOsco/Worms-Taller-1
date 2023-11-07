@@ -1,6 +1,7 @@
 #ifndef WORMS_TALLER_1_SERVERPROTOCOL_H
 #define WORMS_TALLER_1_SERVERPROTOCOL_H
 
+#include <memory>
 #include "../../../Common/Protocol/Protocol.h"
 #include "../../../Common/Socket/Socket.h"
 #include "../../../Common/DTO/ResolverInitialDTO.h"
@@ -10,6 +11,7 @@
 #include "../../../Common/DTO/PlayerDTO.h"
 #include "../../../Common/DTO/PlayersIniDTO.h"
 #include "../../../Common/DTO/CommandDTO.h"
+#include "../../../Common/DTO/SnapShot.h"
 
 #define BYTE_DISCONNECT 0
 #define STATUS_ERROR 2
@@ -42,6 +44,9 @@ public:
 
     //void sendAWormIniDTO(const WormDTO &aWormDTO);
 
+    void sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot);
+
+    void sendAWormDTO(const WormDTO &aWormDTO);
 };
 
 

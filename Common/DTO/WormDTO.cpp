@@ -1,8 +1,11 @@
 #include "WormDTO.h"
+WormDTO::WormDTO() : DTO(WORM) {
+}
+
 
 WormDTO::WormDTO(const size_t &positionX, const size_t &positionY, const size_t &hpWorm, const Direction &aDirection,
                  const TypeFocusWorm &aTypeFocus, const MoveWorm &aMoveWorm) : DTO(WORM), positionX(positionX), positionY(positionY), hpWorm(hpWorm),
-                 directionLook(aDirection), typeFocus(aTypeFocus), moveWorm(aMoveWorm){
+                 directionLook(aDirection), moveWorm(aMoveWorm), typeFocus(aTypeFocus){
 }
 
 
@@ -54,4 +57,5 @@ void WormDTO::setTypeFocus(const TypeFocusWorm &typeFocus) {
 void WormDTO::setMoveWorm(const MoveWorm &moveWorm) {
     this->moveWorm = moveWorm;
 }
+
 

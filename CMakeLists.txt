@@ -86,11 +86,11 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Server/src/Model/Model.h Server/src/Model/Model.cpp
         Server/src/Model/Player.h Server/src/Model/Player.cpp
         Server/src/Control/ClientConnection.cpp Server/src/Control/ClientConnection.h Server/src/Model/Worm.cpp Server/src/Model/Worm.h Server/src/Model/Stage.cpp Server/src/Model/Stage.h
-        Server/src/Control/EstablishedConnections.h Server/src/Control/EstablishedConnections.cpp Server/src/Control/Command/Command.cpp Server/src/Control/Command/Command.h
+        Server/src/Control/EstablishedConnections.h Server/src/Control/EstablishedConnections.cpp
         Common/DTO/StageDTO.cpp Common/DTO/StageDTO.h Server/src/Model/Beam.cpp Server/src/Model/Beam.h Common/DTO/BeamDTO.cpp Common/DTO/BeamDTO.h Server/src/Model/YamlParser.cpp Server/src/Model/YamlParser.h Server/src/Model/GameObject.cpp Server/src/Model/GameObject.h Server/src/Model/Players.h Server/src/Model/Players.cpp Common/DTO/PlayerDTO.cpp Common/DTO/PlayerDTO.h
         Common/DTO/PlayersIniDTO.cpp Common/DTO/PlayersIniDTO.h
 
-        Server/src/Model/Edges.cpp Server/src/Model/Edges.h Server/src/Model/Water.cpp Server/src/Model/Water.h Server/src/Model/MyContactListener.cpp Server/src/Model/MyContactListener.h Server/src/Model/SnapShot.cpp Server/src/Model/SnapShot.h)
+        Server/src/Model/Edges.cpp Server/src/Model/Edges.h Server/src/Model/Water.cpp Server/src/Model/Water.h Server/src/Model/MyContactListener.cpp Server/src/Model/MyContactListener.h Common/DTO/SnapShot.cpp Common/DTO/SnapShot.h)
 
 # para el editor
 include_directories(${PROJECT_SOURCE_DIR}/Editor/include)

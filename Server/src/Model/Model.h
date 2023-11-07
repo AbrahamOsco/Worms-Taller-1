@@ -22,11 +22,10 @@ private:
     bool finishedGame;
     Stage stage;
     Players players;
-    b2World world;
-
+    b2World& world;
 public:
 
-    Model(const std::string& scenarioName);
+    Model(const std::string& scenarioName, b2World& aWorld );
 
     void addPlayer(const std::string &playerName, const size_t &idPlayer);
 
@@ -35,6 +34,9 @@ public:
     StageDTO getStageDTO() const;
 
     void start();
+
+    b2World getWorld();
+
 };
 
 

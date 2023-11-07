@@ -7,7 +7,7 @@
 
 
 #include <vector>
-#include "../../../Common/DTO/WormDTO.h"
+#include "WormDTO.h"
 
 class SnapShot : public DTO {
 private:

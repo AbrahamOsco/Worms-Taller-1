@@ -133,3 +133,22 @@ CommandDTO ServerProtocol::recvCommandDTO() {
     }
     return commandDto;
 }
+
+void ServerProtocol::sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot) {
+    sendANumberByte(OperationType::SNAP_SHOT);
+    sendANumberByte(aSnapShot->getWormsDto().size()); // enviamos la cantida de gusanos
+    for(const auto& aWormDTO : aSnapShot->getWormsDto()){
+        sendAWormDTO(aWormDTO);
+    }
+}
+
+void ServerProtocol::sendAWormDTO(const WormDTO &aWormDTO) {
+    sendANumberByte(aWormDTO.getOperationType());
+    sendNum2Bytes(aWormDTO.getPositionX());
+    sendNum2Bytes(aWormDTO.getPositionY());
+    sendANumberByte(aWormDTO.getHpWorm());
+    sendANumberByte(aWormDTO.getDirectionLook());
+    sendANumberByte(aWormDTO.getMoveWorm());
+    sendANumberByte(aWormDTO.getTypeFocus());
+}
+

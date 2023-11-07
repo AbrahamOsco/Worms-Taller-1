@@ -9,6 +9,7 @@
 #include "../../../Common/DTO/StageDTO.h"
 #include "../../../Common/DTO/PlayersIniDTO.h"
 #include "../../../Common/DTO/CommandDTO.h"
+#include "../../../Common/DTO/SnapShot.h"
 
 class ClientProtocol : public Protocol {
 
@@ -35,6 +36,9 @@ public:
 
     void sendCommandDTO(const CommandDTO& commandDto);
 
+    SnapShot recvASnapShot();
+
+    WormDTO recvAWormDTO();
 
     ~ClientProtocol() = default;
 

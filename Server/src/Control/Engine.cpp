@@ -6,14 +6,16 @@
 #include <memory>
 #include "Engine.h"
 #include "../Protocol/ServerProtocol.h"
-#include "../Model/SnapShot.h"
+#include "../../../Common/DTO/SnapShot.h"
 
 #define SUCCESS 1
 #define ERROR 2
+#define GRAVEDAD -10.0f
 
 Engine::Engine(const ResponseInitialStateDTO &response) : nameGameRoom( response.getGameName()) , nameScenario(response.getScenarioName()),
-                                                          numberPlayerReq(response.getPlayerRequired()), currentPlayers(0), model(response.getScenarioName()), keepTalking(true),
-                                                          commandsQueueNB(UINT_MAX - 1), SnapShotQueueB(UINT_MAX - 1), connections(commandsQueueNB, SnapShotQueueB) {
+                                                          numberPlayerReq(response.getPlayerRequired()), currentPlayers(0), world(b2Vec2(0.0f, GRAVEDAD)),
+                                                          model(response.getScenarioName(), world), keepTalking(true), commandsQueueNB(UINT_MAX - 1),
+                                                          connections(commandsQueueNB) {
 }
 
 // Retorna 1 si agrego con exito al jugador o retorna 2 Si hubo un ERROR.
@@ -45,10 +47,29 @@ void Engine::run() {
     model.start();
     connections.start(model.getStageDTO()); // Le digo a todos las conexiones de esta partida  "start". es decir que lanzen los hilos sender y receiv cada conexion.
     //connections.pushUpdate(model.getWormsDTO());  //pusheamos actualizaciones
-    std::unique_ptr<SnapShot> snapShot = std::make_unique<SnapShot>(model.getWormsDTO());
+    float timeStep = 1.0f / 60.0f;
+    int velocityIter = 6, positiIter = 2;
+    std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point t2, t3;
+    std::chrono::duration<double> frameTime, sleepTime, timeUsed, target(timeStep);
+    std::chrono::duration<double> sleepAdjustSeconds(0.0);
+
     while(keepTalking){
-        SnapShotQueueB.move_push(std::move(snapShot));
+        t1 = std::chrono::steady_clock::now();
+        // hacemos toda nuestra logica.
+        this->world.Step(timeStep, velocityIter, positiIter); // Hacemos un step en el world.
+        connections.pushSnapShot(model.getWormsDTO());
+        t2 = std::chrono::steady_clock::now();
+        timeUsed = t2 - t1;
+        sleepTime = (target - timeUsed) + sleepAdjustSeconds;
+        if (sleepTime > std::chrono::duration<double>(0) ){
+            std::this_thread::sleep_for(sleepTime);
+        }
+        t3 = std::chrono::steady_clock::now();
+        frameTime = t3 - t1;
+        sleepAdjustSeconds = std::chrono::duration<double>(0.9 * sleepAdjustSeconds.count()) + std::chrono::duration<double>(0.1 * (target - frameTime).count());
     }
+
     this->connections.stop();
     this->clearAll(); // Limpiamos las queues.
     std::cerr << "[Engine]:run Terminando la ejecucion del juego \n";
