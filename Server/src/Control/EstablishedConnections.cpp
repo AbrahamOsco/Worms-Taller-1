@@ -6,7 +6,7 @@
 #include "EstablishedConnections.h"
 #include "../../../Common/DTO/StageDTO.h"
 
-EstablishedConnections::EstablishedConnections(Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO *>& aWorldChangesBQ)
+EstablishedConnections::EstablishedConnections(Queue<Command *> &aCommandQueueNB, Queue<std::unique_ptr<SnapShot>>& aWorldChangesBQ)
         : commandQueueNB(aCommandQueueNB), worldChangesBQ(aWorldChangesBQ) {
 
 }
@@ -19,9 +19,9 @@ void EstablishedConnections::addConnection(const size_t &idPlayer, Socket sktPee
     clientConnections.emplace(idPlayer, ClientConnection(idPlayer, sktPeer, commandQueueNB, worldChangesBQ) );
 }
 
-void EstablishedConnections::start(const StageDTO &stageDTO, const PlayersIniDTO &playersIniDTO) {
+void EstablishedConnections::start(const StageDTO &stageDTO) {
     for (auto &element : clientConnections) {   // Le digo a todos mis clientConnection start
-        element.second.start(stageDTO, playersIniDTO);
+        element.second.start(stageDTO);
     }
 }
 
@@ -38,4 +38,5 @@ void EstablishedConnections::pushUpdate(const std::vector<PlayerDTO> &playersDTO
         element.second.pushUpdates(playersDTO);
     }
 }
+
 

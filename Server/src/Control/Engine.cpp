@@ -3,15 +3,17 @@
 //
 
 #include <iostream>
+#include <memory>
 #include "Engine.h"
 #include "../Protocol/ServerProtocol.h"
+#include "../Model/SnapShot.h"
 
 #define SUCCESS 1
 #define ERROR 2
 
 Engine::Engine(const ResponseInitialStateDTO &response) : nameGameRoom( response.getGameName()) , nameScenario(response.getScenarioName()),
-                                                          numberPlayerReq(response.getPlayerRequired()), currentPlayers(0), model(response.getScenarioName()),  keepTalking(true),
-                                                          commandsQueueNB(UINT_MAX - 1), worldChangesBQ(UINT_MAX - 1), connections(commandsQueueNB, worldChangesBQ) {
+                                                          numberPlayerReq(response.getPlayerRequired()), currentPlayers(0), model(response.getScenarioName()), keepTalking(true),
+                                                          commandsQueueNB(UINT_MAX - 1), SnapShotQueueB(UINT_MAX - 1), connections(commandsQueueNB, SnapShotQueueB) {
 }
 
 // Retorna 1 si agrego con exito al jugador o retorna 2 Si hubo un ERROR.
@@ -41,10 +43,11 @@ void Engine::run() {
     std::string estadoPartida = std::to_string(currentPlayers) + "/" + std::to_string(numberPlayerReq)  + " Ha comenzado\n";
     std::cout << "[Engine]: La partida  " + this->nameGameRoom  + " En el scenario: " + this->nameScenario + " Con : " + estadoPartida;
     model.start();
-    connections.start(model.getStageDTO(), model.getPlayersDTO()); // Le digo a todos las conexiones de esta partida  "start". es decir que lanzen los hilos sender y receiv cada conexion.
-    //connections.pushUpdate(model.getPlayersDTO());  //pusheamos actualizaciones
+    connections.start(model.getStageDTO()); // Le digo a todos las conexiones de esta partida  "start". es decir que lanzen los hilos sender y receiv cada conexion.
+    //connections.pushUpdate(model.getWormsDTO());  //pusheamos actualizaciones
+    std::unique_ptr<SnapShot> snapShot = std::make_unique<SnapShot>(model.getWormsDTO());
     while(keepTalking){
-
+        SnapShotQueueB.move_push(std::move(snapShot));
     }
     this->connections.stop();
     this->clearAll(); // Limpiamos las queues.

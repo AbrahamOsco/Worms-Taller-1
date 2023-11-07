@@ -5,7 +5,7 @@
 #include "Players.h"
 #include <algorithm>
 
-Players::Players(const std::map<size_t, std::pair<float, float>> &idsAndPositionsWorms) : idsAndPositionsWorms(idsAndPositionsWorms) {
+Players::Players(const std::map<size_t, std::pair<float, float>> &idsAndPositionsWorms) : idsAndPositionsWorms(idsAndPositionsWorms), idCurrenPlayer(VALUE_INITIAL) {
 
 }
 
@@ -24,7 +24,7 @@ void Players::assignWormsToPlayers() {
     }
 
     for (auto it = players.begin(); it != players.end(); it++) {
-        idWormsOrig.push_back(it->first);
+        idPlayersOrig.push_back(it->first);
     }
 
     std::random_shuffle(idWormsOrig.begin(), idWormsOrig.end());
@@ -61,16 +61,31 @@ void Players::assignWormsToPlayers() {
 
 }
 
-std::vector<PlayerDTO> Players::getPlayersDTO() const{
-    std::vector<PlayerDTO> playersDTO;
+std::vector<WormDTO> Players::getWormsDTO() const{
+    std::vector<WormDTO> wormsDTOCompl;
     for(auto it = players.begin();  it != players.end(); it++){
-        playersDTO.push_back(it->second.getPlayerDTO());
+        std::vector<WormDTO> vecWormsDTO =  (it->second.getWormsDTO());
+        wormsDTOCompl.insert(wormsDTOCompl.end(), vecWormsDTO.begin(), vecWormsDTO.end() );
     }
-    return playersDTO;
+    return wormsDTOCompl;
 }
 
 void Players::addToTheWorld(b2World *world) {
     for(auto& aPlayer : players){
         aPlayer.second.addToTheWorld(world);
     }
+}
+
+size_t Players::getCurrentPlayerId() {
+    if (idCurrenPlayer == VALUE_INITIAL){
+        playerIterator = players.begin();
+        this->idCurrenPlayer = playerIterator->first;
+        return idCurrenPlayer;
+    }
+    idCurrenPlayer++;
+    if ( playerIterator == players.end()){
+        playerIterator = players.begin();
+    }
+    this->idCurrenPlayer = playerIterator->first;
+    return this->idCurrenPlayer;
 }

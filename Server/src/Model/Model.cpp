@@ -20,8 +20,8 @@ StageDTO Model::getStageDTO() const {
     return stage.getStageDTO();
 }
 
-PlayersIniDTO Model::getPlayersDTO() const {
-    return PlayersIniDTO(players.getPlayersDTO());
+std::vector<WormDTO> Model::getWormsDTO() const {
+    return players.getWormsDTO();
 }
 
 void Model::start() {

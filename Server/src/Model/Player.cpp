@@ -3,20 +3,20 @@
 //
 
 #include "Player.h"
-
-Player::Player() {
+Player::Player() : idCurrentWorm(VALUE_INITIAL) {
 }
 
-
-Player::Player(const std::string &playerName, const size_t &idPlayer) : playerName(playerName), idPlayer(idPlayer) {
+Player::Player(const std::string &playerName, const size_t &idPlayer) : playerName(playerName), idPlayer(idPlayer), idCurrentWorm(VALUE_INITIAL) {
 }
 
-PlayerDTO Player::getPlayerDTO() const {
-    std::vector<WormDTO> vecWorms;
-    for(auto& aWorm: worms){
-        vecWorms.push_back( aWorm.second.getWormInitialDTO() );
+std::vector<WormDTO> Player::getWormsDTO() const {
+    std::vector<WormDTO> vecWormsDTO;
+    for(auto& aWormElement: worms){
+        Worm aWorm = aWormElement.second;
+        WormDTO aWormDTO = WormDTO(aWorm.getPositionX(), aWorm.getPositionY(), aWorm.getHP(), aWorm.getDirectionLook(), aWorm.getTypeFocusWorm(), aWorm.getTypeMov());
+        vecWormsDTO.push_back(aWormDTO);
     }
-    return PlayerDTO(idPlayer, vecWorms);
+    return vecWormsDTO;
 }
 
 void Player::assignWorm(const int &idWorm, const std::pair<float, float> &positionInitialWorm) {
@@ -34,5 +34,21 @@ void Player::addToTheWorld(b2World *world) {
     for(auto aWorm : worms){
         aWorm.second.addToTheWorld(world);
     }
+}
+
+size_t Player::getCurrentWormId() {
+    if( idCurrentWorm == VALUE_INITIAL){
+        wormIterator = worms.begin();
+        this->idCurrentWorm = wormIterator->first;
+        worms[idCurrentWorm].activateFocus();
+        return idCurrentWorm;
+    }
+    wormIterator++; // avanzamos al iterador.
+    if (wormIterator == worms.end()){
+        wormIterator == worms.begin();
+    }
+    this->idCurrentWorm = wormIterator->first;
+    worms[idCurrentWorm].activateFocus();
+    return this->idCurrentWorm;
 }
 

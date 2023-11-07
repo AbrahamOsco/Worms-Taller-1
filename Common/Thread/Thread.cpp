@@ -9,7 +9,7 @@ void Thread::start() {
             _is_alive = true;
             _keep_running = true;
             thread = std::thread(&Thread::main, this);
-        }
+}
 
 void Thread::main() {
             try {

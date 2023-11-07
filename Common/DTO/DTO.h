@@ -21,7 +21,8 @@ enum OperationType {
     BEAM = 30,
     PLAYERS_INITIAL = 31,
     PLAYER = 32,
-    COMMAND = 33
+    COMMAND = 33,
+    SNAP_SHOT = 34
 };
 
 class DTO {

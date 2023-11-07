@@ -30,7 +30,7 @@ public:
 
     void addPlayer(const std::string &playerName, const size_t &idPlayer);
 
-    PlayersIniDTO getPlayersDTO() const;
+    std::vector<WormDTO> getWormsDTO() const;
 
     StageDTO getStageDTO() const;
 

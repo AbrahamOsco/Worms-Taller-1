@@ -16,6 +16,9 @@ class Players {
 private:
     std::map<size_t, std::pair<float, float>> idsAndPositionsWorms;
     std::map<size_t, Player> players;
+    size_t idCurrenPlayer;
+    std::map<size_t, Player>::iterator playerIterator;
+
 
 public:
     explicit Players(const std::map<size_t, std::pair<float, float>>& idsAndPositionsWorms);
@@ -24,7 +27,9 @@ public:
 
     void assignWormsToPlayers();
 
-    std::vector<PlayerDTO> getPlayersDTO() const;
+    std::vector<WormDTO> getWormsDTO() const;
+
+    size_t getCurrentPlayerId();
 
     void addToTheWorld(b2World *world);
 };

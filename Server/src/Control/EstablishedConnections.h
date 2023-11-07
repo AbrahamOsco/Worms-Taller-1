@@ -20,14 +20,14 @@ class EstablishedConnections {
 private:
     std::map<size_t, ClientConnection> clientConnections;
     Queue<Command*> &commandQueueNB;
-    Queue<WorldChangesDTO*>& worldChangesBQ;
+    Queue<std::unique_ptr<SnapShot>>& worldChangesBQ;
 public:
 
-    EstablishedConnections(Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO *>& aWorldChangesBQ);
+    EstablishedConnections(Queue<Command*>& aCommandQueueNB, Queue<std::unique_ptr<SnapShot>>& aWorldChangesBQ);
 
     void addConnection(const size_t &idPlayer, Socket sktPeer);
 
-    void start(const StageDTO &stageDTO, const PlayersIniDTO &playersIniDTO);
+    void start(const StageDTO &stageDTO);
 
     void stop();
 

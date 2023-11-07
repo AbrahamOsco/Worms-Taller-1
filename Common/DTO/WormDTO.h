@@ -3,17 +3,20 @@
 
 #include <cstddef>
 #include "DTO.h"
+#include "../../Server/src/Model/Worm.h"
+
 
 class WormDTO : public DTO {
-
 private:
-    size_t idWorm;
     size_t positionX;
     size_t positionY;
-    // faltaria mandar HP y mas cosas por ahora esos 3.
+    size_t hpWorm;
+    Direction directionLook;
+    TypeFocusWorm typeFocus;
+    MoveWorm moveWorm;
 
 public:
-    WormDTO(const size_t& idWorm, const size_t& positionX, const size_t& positionY);
+    WormDTO(const size_t& positionX, const size_t& positionY, const size_t& hpWorm, const Direction& aDirection, const TypeFocusWorm& aTypeFocus, const MoveWorm& aMoveWorm);
 
     size_t getIdWorm() const;
 
@@ -21,8 +24,27 @@ public:
 
     size_t getPositionY() const;
 
+    size_t getHpWorm() const;
 
-    ~WormDTO();
+    Direction getDirectionLook() const;
+
+    TypeFocusWorm getTypeFocus() const;
+
+    MoveWorm getMoveWorm() const;
+
+    void setPositionX(const size_t &positionX);
+
+    void setPositionY(const size_t &positionY);
+
+    void setHpWorm(const size_t &hpWorm);
+
+    void setDirectionLook(const Direction &directionLook);
+
+    void setTypeFocus(const TypeFocusWorm &typeFocus);
+
+    void setMoveWorm(const MoveWorm &moveWorm);
+
+    ~WormDTO() = default;
 
 };
 

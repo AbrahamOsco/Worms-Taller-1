@@ -6,18 +6,17 @@
 #include "../Protocol/ServerProtocol.h"
 #include "../../../Common/DTO/PlayersIniDTO.h"
 
-ClientConnection::ClientConnection(const size_t &idPlayer, Socket& aSktPeer, Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO*>& aWorldChangesBQ) :
+ClientConnection::ClientConnection(const size_t &idPlayer, Socket& aSktPeer, Queue<Command *> &aCommandQueueNB, Queue<std::unique_ptr<SnapShot>>& aWorldChangesBQ) :
         idPlayer(idPlayer), sktPeer(std::move(aSktPeer)), commandQueueNB(aCommandQueueNB), worldChangesBQ(aWorldChangesBQ){
 
 }
 
 
-void ClientConnection::start(const StageDTO &stageDTO, const PlayersIniDTO &playersIniDTO) {        //Lanzo los threads sender y receiver
+void ClientConnection::start(const StageDTO &stageDTO) {        //Lanzo los threads sender y receiver
     // Aca envio el byte START_GAME y el stage completo antes de lanzar los thread receiver y sender.
     ServerProtocol serverProtocol(sktPeer);
     serverProtocol.sendANumberByte(START_GAME);
     serverProtocol.sendStage(stageDTO);
-    serverProtocol.sendPlayersIni(playersIniDTO);
     receiver = std::thread(&ClientConnection::runReceiver, this);
     sender = std::thread(&ClientConnection::runSender, this);
 }
@@ -30,11 +29,11 @@ void ClientConnection::join() {
 
 void ClientConnection::runSender() {
     try{
-        WorldChangesDTO* aWorldChange = NULL;
-        while((aWorldChange = worldChangesBQ.pop())){
+        //WorldChangesDTO* aWorldChange = NULL;
+        //while((aWorldChange = SnapShotQueueB.pop())){}
             //protocolo.sendGusanos(aWorldChange.getGusanos()); // todos los players se ennteran de la salud, posicion de los gusanos.
             //protocolo.sendDataPlayer(aWorldChange.getPlayer(this->idPlayer)) // enviamos un unicast (filtro por id) del player - municiones a cada player correspondiente).
-        }
+        //
     }catch (const std::exception& e ){
         sktPeer.totalClosure();
         sktPeer.close();
@@ -51,7 +50,7 @@ void ClientConnection::stop() {
 
 
 void ClientConnection::pushUpdates(const std::vector<PlayerDTO> &vector) {
-    WorldChangesDTO* worldChangesDto = new WorldChangesDTO();
-    worldChangesBQ.push(worldChangesDto);
+    //WorldChangesDTO* worldChangesDto = new WorldChangesDTO();
+    //SnapShotQueueB.push(worldChangesDto);
 }
 

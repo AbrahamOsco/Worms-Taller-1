@@ -94,6 +94,7 @@ void ServerProtocol::sendBeam(const BeamDTO &beamDTO) {
     sendANumberByte(beamDTO.getLenghth());
     sendANumberByte(beamDTO.getHeight());
 }
+/*
 
 void ServerProtocol::sendPlayersIni(const PlayersIniDTO &playersIniDTO) {
     sendANumberByte(playersIniDTO.getOperationType());
@@ -119,16 +120,16 @@ void ServerProtocol::sendAWormIniDTO(const WormDTO &aWormDTO) {
     sendNum2Bytes(aWormDTO.getPositionY());
 }
 
+
+
+*/
+
 CommandDTO ServerProtocol::recvCommandDTO() {
     CommandDTO commandDto;
     int operationType = recvANumberByte();
-
     if (operationType == COMMAND) {
-        TypeCommand commandType = static_cast<TypeCommand>(recvANumberByte());
+        TypeCommand commandType = static_cast<TypeCommand>((int) recvANumberByte()); // probar esto
         commandDto.setTypeCommand(commandType);
     }
-
     return commandDto;
 }
-
-

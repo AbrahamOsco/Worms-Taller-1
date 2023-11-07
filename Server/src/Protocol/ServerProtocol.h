@@ -31,16 +31,17 @@ public:
 
     void sendBeam(const BeamDTO& beamDTO);
 
-    void sendPlayersIni(const PlayersIniDTO &playersIniDTO);
-
-
     ~ServerProtocol() = default;
 
-    void sendAPlayerDTO(const PlayerDTO &playerDTO);
-
-    void sendAWormIniDTO(const WormDTO &aWormDTO);
 
     CommandDTO recvCommandDTO();
+
+    //void sendPlayersIni(const PlayersIniDTO &playersIniDTO);
+
+    //void sendAPlayerDTO(const PlayerDTO &playerDTO);
+
+    //void sendAWormIniDTO(const WormDTO &aWormDTO);
+
 };
 
 

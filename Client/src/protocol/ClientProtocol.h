@@ -27,11 +27,11 @@ public:
 
     BeamDTO recvBeamDTO();
 
-    PlayersIniDTO recvPlayersIni();
+    //PlayersIniDTO recvPlayersIni();
 
-    PlayerDTO recvAPlayerDTO();
+    //PlayerDTO recvAPlayerDTO();
 
-    WormDTO recvWormIni();
+    //WormDTO recvWormIni();
 
     void sendCommandDTO(const CommandDTO& commandDto);
 

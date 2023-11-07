@@ -11,10 +11,10 @@
 #include "../../../Common/Socket/Socket.h"
 #include "../../../Common/Queue/Queue.h"
 #include "Command/Command.h"
-#include "../../../Common/DTO/WorldChangesDTO.h"
 #include "../../../Common/DTO/StageDTO.h"
 #include "../../../Common/DTO/PlayerDTO.h"
 #include "../../../Common/DTO/PlayersIniDTO.h"
+#include "../Model/SnapShot.h"
 
 class ClientConnection {
 private:
@@ -23,9 +23,9 @@ private:
     std::thread sender;
     std::thread receiver;
     Queue<Command*> &commandQueueNB;
-    Queue<WorldChangesDTO*>& worldChangesBQ;
+    Queue<std::unique_ptr<SnapShot>>& worldChangesBQ;
 public:
-    ClientConnection(const size_t &idPlayer, Socket &aSktPeer, Queue<Command *> &aCommandQueueNB, Queue<WorldChangesDTO*>& aWorldChangesBQ);
+    ClientConnection(const size_t &idPlayer, Socket &aSktPeer, Queue<Command *> &aCommandQueueNB, Queue<std::unique_ptr<SnapShot>>& aWorldChangesBQ);
 
     //ClientConnection(const size_t &idPlayer, Socket& aSktPeer, Queue<Command *> &aCommandQueueNB);
 
@@ -33,7 +33,7 @@ public:
 
     void runReceiver();
 
-    void start(const StageDTO &stageDTO, const PlayersIniDTO &playersIniDTO);
+    void start(const StageDTO &stageDTO);
 
     void stop();
 

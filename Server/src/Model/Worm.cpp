@@ -4,6 +4,8 @@
 
 #include <cstddef>
 #include "Worm.h"
+Worm::Worm() : GameObject(ENTITY_WORM) {
+}
 
 Worm::Worm(const size_t &idWorm, const float &posIniX, const float &posIniY) : GameObject(ENTITY_WORM), positionInitialX(posIniX), positionInitialY(posIniY) {
     this->idWorm = idWorm;
@@ -12,14 +14,12 @@ Worm::Worm(const size_t &idWorm, const float &posIniX, const float &posIniY) : G
     directionLook = Direction::RIGHT;
     jumpForward = std::pair<float,float>{1.0f, 0.5f};
     jumpBack = std::pair<float,float>{0.2f, 1.2f};
+    typeFocus = NO_FOCUS;
+    typeMov = STANDING;
 }
 
 void Worm::assignBonusLife() {
     hp += LIFE_BONUS;
-}
-
-WormDTO Worm::getWormInitialDTO() const {
-    return WormDTO(idWorm, positionInitialX, positionInitialY);
 }
 
 void Worm::addToTheWorld(b2World *world) {
@@ -83,6 +83,7 @@ void Worm::jumpForwards() {
     }
 }
 void Worm::walk(Direction aDirection) {
+    this->typeMov = MoveWorm::WALKING;
     if(not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ) {
         directionLook = aDirection;
         float acceleration = getBody()->GetFixtureList()[0].GetFriction() * 10.0f; // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
@@ -105,6 +106,34 @@ bool Worm::isInContactWithAnotherWorm(){
         }
     }
     return false;
+}
+
+Direction Worm::getDirectionLook() const {
+    return this->directionLook;
+}
+
+float Worm::getPositionX() const {
+    return this->body->GetWorldCenter().x;
+}
+
+float Worm::getPositionY() {
+    return this->body->GetWorldCenter().y;
+}
+
+float Worm::getHP() const {
+    return this->hp;
+}
+
+TypeFocusWorm Worm::getTypeFocusWorm() const {
+    return this->typeFocus;
+}
+
+void Worm::activateFocus() {
+    this->typeFocus = TypeFocusWorm::FOCUS;
+}
+
+MoveWorm Worm::getTypeMov() const {
+    return typeMov;
 }
 
 

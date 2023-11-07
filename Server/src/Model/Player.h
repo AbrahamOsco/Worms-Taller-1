@@ -11,18 +11,23 @@
 #include <box2d/b2_world.h>
 #include "Worm.h"
 #include "../../../Common/DTO/PlayerDTO.h"
+#define VALUE_INITIAL 1000
 
 class Player {
 private:
     std::string playerName;
     size_t idPlayer;
     std::map<size_t, Worm> worms;
+    std::map<size_t, Worm>::iterator wormIterator;
+    size_t idCurrentWorm;
 public:
     Player();
 
     Player(const std::string& playerName, const size_t& idPlayer);
 
-    PlayerDTO getPlayerDTO() const;
+    std::vector<WormDTO> getWormsDTO() const;
+
+    size_t getCurrentWormId();
 
     void assignWorm(const int &idWorm, const std::pair<float, float> &positionInitialWorm);
 
