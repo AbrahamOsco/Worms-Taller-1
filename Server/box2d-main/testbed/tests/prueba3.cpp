@@ -291,7 +291,7 @@ public:
         //  creamos la forma del gusano.
         b2CircleShape wormShape;
         wormShape.m_p.Set(0.0f, 1.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
-        wormShape.m_radius = 1.0f;
+        wormShape.m_radius = 0.2f;
 
         b2FixtureDef defFixtureWorm;
         defFixtureWorm.shape = &wormShape;
