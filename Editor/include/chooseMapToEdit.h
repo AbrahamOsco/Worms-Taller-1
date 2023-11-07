@@ -8,22 +8,21 @@ namespace Ui {
 class ChooseMapToEdit;
 }
 
-class ChooseMapToEdit : public QWidget
-{
+class ChooseMapToEdit : public QWidget {
     Q_OBJECT
 
-public:
+ public:
     explicit ChooseMapToEdit(QWidget *parent = nullptr);
     void setPrev(QWidget* prev);
     ~ChooseMapToEdit();
 
-private slots:
+ private slots:
     void onGoBackBtnClicked();
     void onConfirmBtnClicked();
 
-private:
+ private:
     Ui::ChooseMapToEdit *ui;
     QWidget *prev;
 };
 
-#endif // CHOOSEMAPTOEDIT_H
+#endif  // CHOOSEMAPTOEDIT_H

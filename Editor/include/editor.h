@@ -9,22 +9,19 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class Editor; }
 QT_END_NAMESPACE
 
-class Editor : public QWidget
-{
+class Editor : public QWidget {
     Q_OBJECT
 
-public:
-    Editor(QWidget *parent = nullptr);
+ public:
+    explicit Editor(QWidget *parent = nullptr);
     ~Editor();
 
-private slots:
+ private slots:
     void on_createMapBtn_clicked();
 
     void on_editMapBtn_clicked();
 
-private:
+ private:
     Ui::Editor *ui;
-    //NameNewMap *nnm;
-    //ChooseMapToEdit *cmte;
 };
-#endif // EDITOR_H
+#endif  // EDITOR_H
