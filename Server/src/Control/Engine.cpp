@@ -7,7 +7,8 @@
 #include "Engine.h"
 #include "../Protocol/ServerProtocol.h"
 #include "../../../Common/DTO/SnapShot.h"
-
+#define VELOCITY_ITERATIONS 6
+#define POSITION_TIERATIONS 2
 #define SUCCESS 1
 #define ERROR 2
 #define GRAVEDAD -10.0f
@@ -48,7 +49,6 @@ void Engine::run() {
     connections.start(model.getStageDTO()); // Le digo a todos las conexiones de esta partida  "start". es decir que lanzen los hilos sender y receiv cada conexion.
 
     float timeStep = 1.0f / 60.0f;
-    int velocityIter = 6, positiIter = 2;
     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now(), t2,t3;
     std::chrono::duration<double> frameTime, sleepTime, timeUsed, target(timeStep), sleepAdjustSeconds(0.0);
 
@@ -59,10 +59,9 @@ void Engine::run() {
         if (commandsQueueNB.move_try_pop(aCommanDTO)){
             this->model.execute(aCommanDTO);
         }
-        this->world.Step(timeStep, velocityIter, positiIter); // Hacemos un step en el world.
+        this->world.Step(timeStep, VELOCITY_ITERATIONS, POSITION_TIERATIONS); // Hacemos un step en el world.
 
         connections.pushSnapShot(model.getWormsDTO()); //envio actualizaciones del nuevo mundo;
-
         t2 = std::chrono::steady_clock::now();
         timeUsed = t2 - t1;
         sleepTime = (target - timeUsed) + sleepAdjustSeconds;
