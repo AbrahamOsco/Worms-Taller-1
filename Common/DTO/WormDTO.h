@@ -3,8 +3,16 @@
 
 #include <cstddef>
 #include "DTO.h"
-#include "../../Server/src/Model/Worm.h"
 
+enum Direction{
+    RIGHT = 1, LEFT = 2
+};
+enum TypeFocusWorm{
+    FOCUS = 1, NO_FOCUS = 2
+};
+enum MoveWorm{
+    STANDING = 1, WALKING = 2, JUMPING =3
+};
 
 class WormDTO : public DTO {
 private:

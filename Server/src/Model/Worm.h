@@ -7,17 +7,9 @@
 
 #include "box2d/box2d.h"
 #include "GameObject.h"
+#include "../../../Common/DTO/WormDTO.h"
 
 #define LIFE_BONUS 25
-enum Direction{
-    RIGHT = 1, LEFT = 2
-};
-enum TypeFocusWorm{
-    FOCUS = 1, NO_FOCUS = 2
-};
-enum MoveWorm{
-    STANDING = 1, WALKING = 2, JUMPING =3
-};
 
 class Worm : public GameObject {
     size_t idWorm;
