@@ -4,20 +4,19 @@
 #include <QObject>
 #include <QGraphicsView>
 
-class Zoom : public QObject
-{
+class Zoom : public QObject {
     Q_OBJECT
-public:
+ public:
     explicit Zoom(QGraphicsView *view);
 
-private:
+ private:
     QGraphicsView  *view;
     QPointF mousePosScene;
     QPointF mousePosView;
     bool eventFilter(QObject *watched, QEvent *event);
 
-signals:
+ signals:
     void zoomed();
 };
 
-#endif // ZOOM_H
+#endif  // ZOOM_H

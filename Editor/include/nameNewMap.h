@@ -8,22 +8,21 @@ namespace Ui {
 class NameNewMap;
 }
 
-class NameNewMap : public QWidget
-{
+class NameNewMap : public QWidget {
     Q_OBJECT
 
-public:
+ public:
     explicit NameNewMap(QWidget *parent = nullptr);
     void setPrev(QWidget *prev);
     ~NameNewMap();
 
-private slots:
+ private slots:
     void onGoBackBtnClicked();
     void onConfirmBtnClicked();
 
-private:
+ private:
     Ui::NameNewMap *ui;
     QWidget *prev;
 };
 
-#endif // NAMENEWMAP_H
+#endif  // NAMENEWMAP_H
