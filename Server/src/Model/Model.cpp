@@ -31,7 +31,7 @@ void Model::start() {
 void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
     if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
         this->leftWorm();
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD ){
         this->rightWorm();
     }
 }
