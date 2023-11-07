@@ -22,7 +22,7 @@ void ReceiverThread::run() {
         std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
         for (const WormDTO& wormDto: wormsDto) {
             std::cout << '(' << wormDto.getPositionX() << ',' << wormDto.getPositionY() << ')' << std::endl;
-            LoaderParams params(wormDto.getPositionX()*60, wormDto.getPositionY()*60, 60, 60, "player");
+            LoaderParams params(wormDto.getPositionX()*60, wormDto.getPositionY()*60 , 60, 60, "player");
             std::unique_ptr<Worm> worm = std::make_unique<Worm>(params);
             gameObjects.push_back(std::move(worm));
         }

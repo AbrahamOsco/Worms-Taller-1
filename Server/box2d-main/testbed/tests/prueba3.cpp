@@ -125,6 +125,7 @@ public:
         length = node["width"].as<float>();
         aBeams = getBeams(node["beams"]);
         idPosWorms = idPosInitialWorms;
+        std::cout << "Se termina el yaml parser: OK \n";
     }
 
     static std::vector<Beam> getBeams(const YAML::Node &beamsNode) {
@@ -239,6 +240,7 @@ public:
     }
 
     void addToTheWorld(b2World *world) {
+        std::cout << "Se arranca el addToTheWorld : OK \n";
         this->edges = std::unique_ptr<Edges>{new Edges(world, height, length)};
         this->water = std::unique_ptr<Water>{new Water(world, height, length)};
         for(auto& aBeam : beams){
@@ -529,6 +531,7 @@ public:
     b2Vec2 p2Toy;
 
     Prueba3() {
+        std::cout << "Se arranca el Prueba3 : OK \n";
         rayAngle = 0.0f * (DEGRATORADIANS); //En box2d el angulo 90 en nuestro realidad es el cero y el angulo 0 de la realidad es el 90 en box2d.
         rayLength = 5;
         // Todo variable q esta aca dentro y queramos que perdure debemos usar el heap .
@@ -616,10 +619,10 @@ public:
         m_textLine += m_textIncrement;
         if(vecWorms[0] != nullptr){
             b2Vec2 posicion = vecWorms[0]->getBody()->GetWorldCenter();
-            b2Vec2 posicion2 = vecWorms[1]->getBody()->GetWorldCenter();
+            //b2Vec2 posicion2 = vecWorms[1]->getBody()->GetWorldCenter();
             std::string dateGusano1 = "X: " + std::to_string(posicion.x)  + " Y: " + std::to_string(posicion.y) +" HP: " +  std::to_string(vecWorms[0]->getHp()) + " \n";
-            std::string dateGusano2 = "\nX: " + std::to_string(posicion2.x)  + " Y: " + std::to_string(posicion2.y) +" HP: " +  std::to_string(vecWorms[1]->getHp()) + " \n";
-            std::string textFinal = dateGusano1 + dateGusano2 + "RAY ANGLE INITIAL: RADIANDS:" + std::to_string(rayAngle) + "IN DEG: " + std::to_string(rayAngle* 180/b2_pi) + "\n";
+            //std::string dateGusano2 = "\nX: " + std::to_string(posicion2.x)  + " Y: " + std::to_string(posicion2.y) +" HP: " +  std::to_string(vecWorms[1]->getHp()) + " \n";
+            std::string textFinal = dateGusano1 + "RAY ANGLE INITIAL: RADIANDS:" + std::to_string(rayAngle) + "IN DEG: " + std::to_string(rayAngle* 180/b2_pi) + "\n";
             g_debugDraw.DrawString(5, m_textLine, textFinal.data());
             update();
         }

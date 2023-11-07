@@ -1,12 +1,12 @@
 name: Jaula Maldita
-height: 60
-width: 60
+height: 18
+width: 32
 worms:
   - positionX: 10.0
-    positionY: 30.0
+    positionY: 10.0
 
 beams:
-  - x: 4.7
+  - x: 20.7
     y: 6.25
     angle: 150.0
     length: 3.0
@@ -14,7 +14,7 @@ beams:
     y: 7.0
     angle: 0.0
     length: 6.0
-  - x: 15.0
+  - x: 18.0
     y: 7.0
     angle: 90.0
     length: 6.0
@@ -22,43 +22,39 @@ beams:
     y: 7.0
     angle: 0.0
     length: 6.0
-  - x: 30.0
-    y: 12.0
-    angle: 0.0
-    length: 3.0
-  - x: 50.0
-    y: 9.05
+  - x: 8.0
+    y: 16.05
     angle: 80.0
     length: 6.0
-  - x: 27.0
-    y: 12.0
+  - x: 14.0
+    y: 13.0
     angle: 90.0
     length: 3.0
-  - x: 18.5
-    y: 13.0
+  - x: 10.5
+    y: 1.0
     angle: 0.0
     length: 6.0
-  - x: 12.5
-    y: 13.0
+  - x: 6.5
+    y: 8.0
     angle: 0.0
     length: 3.0
-  - x: 23.5
-    y: 16.0
+  - x: 9.5
+    y: 15.0
     angle: 150.0
     length: 6.0
-  - x: 20.0
-    y: 40.0
+  - x: 1.0
+    y: 3.0
     angle: 60.0
     length: 6.0
-  - x: 10.0
-    y: 50.0
+  - x: 17.0
+    y: 4.0
     angle: 70.0
     length: 6.0
   - x: 5.0
-    y: 40.0
+    y: 3.0
     angle: 140.0
     length: 6.0
-  - x: 45.0
-    y: 40.0
+  - x: 20.0
+    y: 14.0
     angle: 150.0
     length: 6.0
