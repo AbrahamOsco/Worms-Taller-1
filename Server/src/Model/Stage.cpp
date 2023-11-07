@@ -2,11 +2,15 @@
 // Created by abraham on 28/10/23.
 //
 
+#include <iostream>
 #include "Stage.h"
 #include "YamlParser.h"
 
 Stage::Stage(const std::string &name) {
     YamlParser::loadDataStage(name, height, length, beams, idsAndPositionsWorms);
+    std::cout << "Positio initial worm \n";
+    std::cout << idsAndPositionsWorms[0].first << idsAndPositionsWorms[0].second << "\n";
+
 }
 
 StageDTO Stage::getStageDTO() const {

@@ -48,6 +48,9 @@ void Engine::run() {
     model.start();
     connections.start(model.getStageDTO()); // Le digo a todos las conexiones de esta partida  "start". es decir que lanzen los hilos sender y receiv cada conexion.
 
+    std::cout << "Position initial worm : \n";
+    std::cout << " ( " <<  model.getWormsDTO().back().getPositionX() << " , " << model.getWormsDTO().back().getPositionY() << " ) \n";
+
     float timeStep = 1.0f / 60.0f;
     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now(), t2,t3;
     std::chrono::duration<double> frameTime, sleepTime, timeUsed, target(timeStep), sleepAdjustSeconds(0.0);
@@ -62,6 +65,7 @@ void Engine::run() {
         this->world.Step(timeStep, VELOCITY_ITERATIONS, POSITION_TIERATIONS); // Hacemos un step en el world.
 
         connections.pushSnapShot(model.getWormsDTO()); //envio actualizaciones del nuevo mundo;
+        //std::cout << " ( " << model.getWormsDTO()[0].getPositionX() << " , " << model.getWormsDTO()[0].getPositionY() << " ) \n";
         t2 = std::chrono::steady_clock::now();
         timeUsed = t2 - t1;
         sleepTime = (target - timeUsed) + sleepAdjustSeconds;
