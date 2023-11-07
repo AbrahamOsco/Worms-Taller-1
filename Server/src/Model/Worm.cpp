@@ -12,8 +12,8 @@ Worm::Worm(const size_t &idWorm, const float &posIniX, const float &posIniY) : G
     hp = 100.0f;
     dragSpeed = 0.2f;
     directionLook = Direction::RIGHT;
-    jumpForward = std::pair<float,float>{1.0f, 0.5f};
-    jumpBack = std::pair<float,float>{0.2f, 1.2f};
+    jumpForward = std::make_pair(1.0f, 0.5f);
+    jumpBack = std::make_pair(0.2f, 1.2f);
     typeFocus = NO_FOCUS;
     typeMov = STANDING;
 }
@@ -135,6 +135,16 @@ void Worm::activateFocus() {
 MoveWorm Worm::getTypeMov() const {
     return typeMov;
 }
+
+void Worm::leftWorm() {
+    // chequeo si esta con un arma entonces solo cambiar la dirreccio hacia donde mira.
+    walk(Direction::LEFT);
+}
+
+void Worm::rightWorm() {
+    walk(Direction::RIGHT);
+}
+
 
 
 

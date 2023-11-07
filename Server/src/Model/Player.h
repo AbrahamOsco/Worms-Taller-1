@@ -9,6 +9,7 @@
 #include <vector>
 #include <map>
 #include <box2d/b2_world.h>
+#include <memory>
 #include "Worm.h"
 #include "../../../Common/DTO/PlayerDTO.h"
 #define VALUE_INITIAL 1000
@@ -17,8 +18,8 @@ class Player {
 private:
     std::string playerName;
     size_t idPlayer;
-    std::map<size_t, Worm> worms;
-    std::map<size_t, Worm>::iterator wormIterator;
+    std::map<size_t, std::unique_ptr<Worm>> worms;
+    std::map<size_t, std::unique_ptr<Worm>>::iterator wormIterator;
     size_t idCurrentWorm;
 public:
     Player();
@@ -34,6 +35,10 @@ public:
     void assignBonusLife();
 
     void addToTheWorld(b2World *world);
+
+    void leftWorm();
+
+    void rightWorm();
 };
 
 

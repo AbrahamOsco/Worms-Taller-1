@@ -11,9 +11,9 @@ Player::Player(const std::string &playerName, const size_t &idPlayer) : playerNa
 
 std::vector<WormDTO> Player::getWormsDTO() const {
     std::vector<WormDTO> vecWormsDTO;
-    for(auto& aWormElement: worms){
-        Worm aWorm = aWormElement.second;
-        WormDTO aWormDTO = WormDTO(aWorm.getPositionX(), aWorm.getPositionY(), aWorm.getHP(), aWorm.getDirectionLook(), aWorm.getTypeFocusWorm(), aWorm.getTypeMov());
+    for(auto& aWormElem: worms){
+        WormDTO aWormDTO = WormDTO(aWormElem.second->getPositionX(), aWormElem.second->getPositionY(), aWormElem.second->getHP(),
+                                   aWormElem.second->getDirectionLook(), aWormElem.second->getTypeFocusWorm(), aWormElem.second->getTypeMov());
         vecWormsDTO.push_back(aWormDTO);
     }
     return vecWormsDTO;
@@ -21,18 +21,18 @@ std::vector<WormDTO> Player::getWormsDTO() const {
 
 void Player::assignWorm(const int &idWorm, const std::pair<float, float> &positionInitialWorm) {
     // agregamos al diccionario la calve el id de worm y el valor el worm con su position inicial en x,y.
-    worms.emplace(idWorm, Worm(positionInitialWorm.second, idWorm, positionInitialWorm.first));
+    worms.emplace(idWorm, std::make_unique<Worm>(positionInitialWorm.second, idWorm, positionInitialWorm.first)) ;
 }
 
 void Player::assignBonusLife() {
     for(auto& pair : worms){
-        pair.second.assignBonusLife();
+        pair.second->assignBonusLife();
     }
 }
 
 void Player::addToTheWorld(b2World *world) {
-    for(auto aWorm : worms){
-        aWorm.second.addToTheWorld(world);
+    for(auto& aWorm : worms){
+        aWorm.second->addToTheWorld(world);
     }
 }
 
@@ -40,7 +40,7 @@ size_t Player::getCurrentWormId() {
     if( idCurrentWorm == VALUE_INITIAL){
         wormIterator = worms.begin();
         this->idCurrentWorm = wormIterator->first;
-        worms[idCurrentWorm].activateFocus();
+        worms[idCurrentWorm]->activateFocus();
         return idCurrentWorm;
     }
     wormIterator++; // avanzamos al iterador.
@@ -48,7 +48,14 @@ size_t Player::getCurrentWormId() {
         wormIterator == worms.begin();
     }
     this->idCurrentWorm = wormIterator->first;
-    worms[idCurrentWorm].activateFocus();
+    worms[idCurrentWorm]->activateFocus();
     return this->idCurrentWorm;
 }
 
+void Player::leftWorm() {
+    this->worms[idCurrentWorm]->leftWorm();
+}
+
+void Player::rightWorm() {
+    this->worms[idCurrentWorm]->rightWorm();
+}

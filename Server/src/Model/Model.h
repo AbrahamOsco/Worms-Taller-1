@@ -11,9 +11,11 @@
 #include "Players.h"
 #include "../../../Common/DTO/PlayerDTO.h"
 #include "../../../Common/DTO/PlayersIniDTO.h"
+#include "../../../Common/DTO/CommandDTO.h"
 #include <map>
 #include <string>
 #include <box2d/box2d.h>
+#include <memory>
 
 class Model {
 private:
@@ -23,6 +25,8 @@ private:
     Stage stage;
     Players players;
     b2World& world;
+    std::pair<size_t, size_t> idPlayerWormCurrent;
+
 public:
 
     Model(const std::string& scenarioName, b2World& aWorld );
@@ -37,6 +41,11 @@ public:
 
     b2World getWorld();
 
+    void execute(std::unique_ptr<CommandDTO> &aCommandDTO);
+
+    void leftWorm();
+
+    void rightWorm();
 };
 
 

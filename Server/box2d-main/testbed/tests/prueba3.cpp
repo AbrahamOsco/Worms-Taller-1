@@ -118,7 +118,7 @@ public:
         for (const auto& posWorm : node["worms"]) {
             float posInitialX = posWorm["positionX"].as<float>();
             float posInitialY = posWorm["positionY"].as<float>();
-            idPosInitialWorms[idWorm] = std::pair<float, float>{posInitialX, posInitialY};
+            idPosInitialWorms[idWorm] = std::make_pair(posInitialX, posInitialY);
             idWorm++;
         }
         height = node["height"].as<float>();

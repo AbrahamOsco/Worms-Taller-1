@@ -4,7 +4,7 @@
 
 #include "GameObject.h"
 
-GameObject::GameObject(const Entity& aEntity) : typeEntity(aEntity), body(nullptr) {
+GameObject::GameObject(const Entity& aEntity) : typeEntity(aEntity), body(nullptr), isDestroyed(false) {
 }
 
 

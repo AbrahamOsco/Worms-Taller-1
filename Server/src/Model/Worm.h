@@ -58,7 +58,12 @@ public:
     //void endContact();
 
     //void render();
+
     void activateFocus();
+
+    void leftWorm();
+
+    void rightWorm();
 };
 
 

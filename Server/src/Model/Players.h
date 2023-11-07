@@ -19,7 +19,6 @@ private:
     size_t idCurrenPlayer;
     std::map<size_t, Player>::iterator playerIterator;
 
-
 public:
     explicit Players(const std::map<size_t, std::pair<float, float>>& idsAndPositionsWorms);
 
@@ -32,6 +31,12 @@ public:
     size_t getCurrentPlayerId();
 
     void addToTheWorld(b2World *world);
+
+    std::pair<size_t, size_t> getIdPlayerWormCurrent();
+
+    void leftWorm();
+
+    void rightWorm();
 };
 
 

@@ -25,9 +25,25 @@ void Model::start() {
     players.assignWormsToPlayers();
     stage.addToTheWorld(&world);
     players.addToTheWorld(&world);
+    idPlayerWormCurrent = players.getIdPlayerWormCurrent() ;
 }
 
+void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
+    if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
+        this->leftWorm();
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
+        this->rightWorm();
+    }
 }
+
+void Model::leftWorm() {
+    players.leftWorm();
+}
+
+void Model::rightWorm() {
+    players.rightWorm();
+}
+
 
 
 

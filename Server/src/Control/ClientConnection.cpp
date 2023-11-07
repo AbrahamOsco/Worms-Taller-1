@@ -41,7 +41,11 @@ void ClientConnection::runSender() {
 }
 
 void ClientConnection::runReceiver() {
-
+    ServerProtocol serverProtocol(sktPeer);
+    while(serverProtocol.isAvailable()){
+        std::unique_ptr<CommandDTO> aCommandDTO = std::make_unique<CommandDTO>(serverProtocol.recvCommandDTO());
+        commandQueueNB.move_try_push(std::move(aCommandDTO));  // usamos una cola no bloqueante es -> try_push
+    }
 }
 
 void ClientConnection::stop() {

@@ -89,3 +89,16 @@ size_t Players::getCurrentPlayerId() {
     this->idCurrenPlayer = playerIterator->first;
     return this->idCurrenPlayer;
 }
+
+std::pair<size_t, size_t> Players::getIdPlayerWormCurrent(){
+    size_t idPlayerCurrent = this->getCurrentPlayerId();
+    return std::make_pair(idPlayerCurrent, players[idPlayerCurrent].getCurrentWormId());
+}
+
+void Players::leftWorm() {
+    players[idCurrenPlayer].leftWorm();
+}
+
+void Players::rightWorm() {
+    players[idCurrenPlayer].rightWorm();
+}

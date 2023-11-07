@@ -46,19 +46,23 @@ void Engine::run() {
     std::cout << "[Engine]: La partida  " + this->nameGameRoom  + " En el scenario: " + this->nameScenario + " Con : " + estadoPartida;
     model.start();
     connections.start(model.getStageDTO()); // Le digo a todos las conexiones de esta partida  "start". es decir que lanzen los hilos sender y receiv cada conexion.
-    //connections.pushUpdate(model.getWormsDTO());  //pusheamos actualizaciones
+
     float timeStep = 1.0f / 60.0f;
     int velocityIter = 6, positiIter = 2;
-    std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
-    std::chrono::steady_clock::time_point t2, t3;
-    std::chrono::duration<double> frameTime, sleepTime, timeUsed, target(timeStep);
-    std::chrono::duration<double> sleepAdjustSeconds(0.0);
+    std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now(), t2,t3;
+    std::chrono::duration<double> frameTime, sleepTime, timeUsed, target(timeStep), sleepAdjustSeconds(0.0);
 
     while(keepTalking){
         t1 = std::chrono::steady_clock::now();
         // hacemos toda nuestra logica.
+        std::unique_ptr<CommandDTO> aCommanDTO;
+        if (commandsQueueNB.move_try_pop(aCommanDTO)){
+            this->model.execute(aCommanDTO);
+        }
         this->world.Step(timeStep, velocityIter, positiIter); // Hacemos un step en el world.
-        connections.pushSnapShot(model.getWormsDTO());
+
+        connections.pushSnapShot(model.getWormsDTO()); //envio actualizaciones del nuevo mundo;
+
         t2 = std::chrono::steady_clock::now();
         timeUsed = t2 - t1;
         sleepTime = (target - timeUsed) + sleepAdjustSeconds;
