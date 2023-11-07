@@ -16,7 +16,8 @@ void Game::loadMap() {
     stageDto = m_protocol.recvStageDTO();
     std::vector<BeamDTO> beams = stageDto.getBeams();
     for (const BeamDTO& beamDto: beams) {
-        m_beams.emplace_back(beamDto.getXCenter()*60,beamDto.getYCenter()*60, static_cast<Angle>(beamDto.getAngle()), beamDto.getTypeBeam());
+        //std::cout << '(' << beamDto.getXCenter() * 60 << ',' << 1080 - beamDto.getYCenter() * 60 << ')' << std::endl;
+        m_beams.emplace_back(beamDto.getXCenter() * 60,1080 - beamDto.getYCenter() * 60, static_cast<Angle>(beamDto.getAngle()), beamDto.getTypeBeam());
     }
 }
 
