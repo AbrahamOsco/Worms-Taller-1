@@ -11,7 +11,7 @@
 #include <linux/limits.h>
 #include "imgui/imgui.h"
 #include <GL/gl.h> // Incluir la biblioteca principal de OpenGL
-#include <GL/glu.h> // Incluir la biblioteca de utilidades de GLUT
+//#include <GL/glu.h> // Incluir la biblioteca de utilidades de GLUT
 #include <GLFW/glfw3.h> // Opcional: Incluir la biblioteca GLFW si estás utilizando GLFW para gestionar la ventana
 #define DEGRATORADIANS (b2_pi/180.0f)
 
