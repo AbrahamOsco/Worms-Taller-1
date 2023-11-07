@@ -2,8 +2,8 @@ name: Jaula Maldita
 height: 18
 width: 32
 worms:
-  - positionX: 0.0
-    positionY: 0.0
+  - positionX: 5.0
+    positionY: 10.0
 
 beams:
   - x: 20.7

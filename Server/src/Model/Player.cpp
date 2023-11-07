@@ -21,7 +21,7 @@ std::vector<WormDTO> Player::getWormsDTO() const {
 
 void Player::assignWorm(const int &idWorm, const std::pair<float, float> &positionInitialWorm) {
     // agregamos al diccionario la calve el id de worm y el valor el worm con su position inicial en x,y.
-    worms.emplace(idWorm, std::make_unique<Worm>(positionInitialWorm.second, idWorm, positionInitialWorm.first)) ;
+    worms.emplace(idWorm, std::make_unique<Worm>(idWorm, positionInitialWorm.first, positionInitialWorm.second)) ;
 }
 
 void Player::assignBonusLife() {

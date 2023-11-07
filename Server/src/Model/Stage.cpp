@@ -8,8 +8,8 @@
 
 Stage::Stage(const std::string &name) {
     YamlParser::loadDataStage(name, height, length, beams, idsAndPositionsWorms);
-    std::cout << "Positio initial worm \n";
-    std::cout << idsAndPositionsWorms[0].first << idsAndPositionsWorms[0].second << "\n";
+    std::cout << "Positio initial worm CARGADO DEL ARCHIVO SE LEE:  \n";
+    std::cout << idsAndPositionsWorms[0].first << ", " << idsAndPositionsWorms[0].second << "\n";
 
 }
 

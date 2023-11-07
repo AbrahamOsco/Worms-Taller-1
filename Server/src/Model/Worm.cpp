@@ -3,6 +3,7 @@
 //
 
 #include <cstddef>
+#include <iostream>
 #include "Worm.h"
 Worm::Worm() : GameObject(ENTITY_WORM) {
 }
@@ -31,6 +32,9 @@ void Worm::addToTheWorld(b2World *world) {
     this->body = world->CreateBody(&wormDef);
 
     //  creamos la forma del gusano.
+    std::cout << "positionInitialX" << positionInitialX;
+    std::cout << "positionInitialY" << positionInitialY;
+
     b2CircleShape wormShape;
     wormShape.m_p.Set(0.0f, 1.0f);
     wormShape.m_radius = 1.0f;
@@ -40,6 +44,9 @@ void Worm::addToTheWorld(b2World *world) {
     defFixtureWorm.friction = 4.0f;
     defFixtureWorm.density = 1.0f;
     this->body->CreateFixture(&defFixtureWorm);
+    std::cout << "body->GetWorldCenter().x" << body->GetWorldCenter().x;
+    std::cout << "body->GetWorldCenter().y" << body->GetWorldCenter().y;
+
 }
 
 void Worm::jumpBackwards() {
