@@ -17,7 +17,7 @@ Beam::Beam(const TypeBeam &aTypeBeam, const float &aXcenter, const float &aYCent
 }
 
 BeamDTO Beam::getBeamDTO() {
-    BeamDTO beamDto(typeBeam, xCenter, yCenter, length, height, angle);  // AJUSTAR TAMBIEN LAS VIGAS @RICARDO
+    BeamDTO beamDto(typeBeam, xCenter * 60, yCenter * 60, length, height, angle);  // AJUSTAR TAMBIEN LAS VIGAS @RICARDO
     return beamDto;
 }
 

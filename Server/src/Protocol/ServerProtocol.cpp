@@ -88,8 +88,8 @@ void ServerProtocol::sendStage(const StageDTO &stageDTO) {
 void ServerProtocol::sendBeam(const BeamDTO &beamDTO) {
     sendANumberByte(beamDTO.getOperationType());
     sendANumberByte(beamDTO.getTypeBeam());
-    sendANumberByte(beamDTO.getXCenter());
-    sendANumberByte(beamDTO.getYCenter());
+    sendNum2Bytes(beamDTO.getXCenter());
+    sendNum2Bytes(beamDTO.getYCenter());
     sendANumberByte(beamDTO.getAngle());
     sendANumberByte(beamDTO.getLenghth());
     sendANumberByte(beamDTO.getHeight());

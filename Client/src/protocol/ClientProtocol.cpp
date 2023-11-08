@@ -113,8 +113,8 @@ BeamDTO ClientProtocol::recvBeamDTO() {
         } else if (typeBeam == LONG_BEAM){
             aTypeBeam = LONG_BEAM;
         }
-        size_t xCenter = recvANumberByte();
-        size_t yCenter = recvANumberByte();
+        size_t xCenter = recvNum2Bytes();
+        size_t yCenter = recvNum2Bytes();
         size_t angle = recvANumberByte();
         size_t length = recvANumberByte();
         size_t height = recvANumberByte();
@@ -170,8 +170,6 @@ WormDTO ClientProtocol::recvWormIni() {
 void ClientProtocol::sendCommandDTO(const CommandDTO& commandDto) {
     unsigned int operationType = commandDto.getOperationType();
     unsigned int commandType = commandDto.getTypeCommand();
-    std::cout << operationType << std::endl;
-    std::cout << commandType << std::endl;
     sendANumberByte(operationType);
     sendANumberByte(commandType);
 }

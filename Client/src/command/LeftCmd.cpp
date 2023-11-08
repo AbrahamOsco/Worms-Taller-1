@@ -6,7 +6,6 @@
 #include "LeftCmd.h"
 
 void LeftCmd::execute(ClientProtocol &protocol) {
-    std::cout << "sending: move left" << std::endl;
     CommandDTO commandDto;
     commandDto.setTypeCommand(TypeCommand::LEFT_CMD);
     protocol.sendCommandDTO(commandDto);

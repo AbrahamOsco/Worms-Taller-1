@@ -35,11 +35,11 @@ void BeamDTO::setAngle(const size_t &aAngle) {
     this->angle = aAngle;
 }
 
-size_t BeamDTO::getXCenter() const {
+int BeamDTO::getXCenter() const {
     return xCenter;
 }
 
-size_t BeamDTO::getYCenter() const {
+int BeamDTO::getYCenter() const {
     return yCenter;
 }
 

@@ -16,8 +16,8 @@ enum TypeBeam {
 class BeamDTO : public DTO {
 private:
     TypeBeam typeBeam;
-    size_t xCenter;
-    size_t yCenter;
+    int xCenter;
+    int yCenter;
     size_t length;
     size_t height;
     size_t angle;
@@ -41,9 +41,9 @@ public:
 
     TypeBeam getTypeBeam() const;
 
-    size_t getXCenter() const;
+    int getXCenter() const;
 
-    size_t getYCenter() const;
+    int getYCenter() const;
 
     size_t getLenghth() const;
 
