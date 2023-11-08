@@ -3,13 +3,12 @@
 //
 
 #include "Player.h"
-#include "../../ConfigureParameters/ConfigParameters.h"
+#include "../../GameParameters//GameParameters.h"
 
 
-Player::Player() : idCurrentWorm(VALUE_INITIAL) {
-}
 
-Player::Player(const std::string &playerName, const size_t &idPlayer) : playerName(playerName), idPlayer(idPlayer), idCurrentWorm(VALUE_INITIAL) {
+Player::Player(const std::string &playerName, const size_t &idPlayer, GameParameters& gameParameters) : playerName(playerName),
+                idPlayer(idPlayer), idCurrentWorm(VALUE_INITIAL), gameParameters(gameParameters) {
 }
 
 std::vector<WormDTO> Player::getWormsDTO() const {
@@ -76,3 +75,5 @@ void Player::updateStateWorms() {
         pair.second->stopIfUnmoving();
     }
 }
+
+

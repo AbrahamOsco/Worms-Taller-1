@@ -5,7 +5,7 @@
 #include <cstddef>
 #include <iostream>
 #include "Worm.h"
-#include "../../ConfigureParameters/ConfigParameters.h"
+#include "../../GameParameters//GameParameters.h"
 
 Worm::Worm() : GameObject(ENTITY_WORM) {
 }

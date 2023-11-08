@@ -6,7 +6,7 @@
 #include "box2d/b2_world.h"
 #include "box2d/b2_fixture.h"
 #include "box2d/b2_polygon_shape.h"
-#include "../../ConfigureParameters/ConfigParameters.h"
+#include "../../GameParameters//GameParameters.h"
 
 Beam::Beam() : GameObject(ENTITY_BEAM){
 }

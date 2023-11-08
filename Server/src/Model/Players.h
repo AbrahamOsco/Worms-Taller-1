@@ -18,9 +18,10 @@ private:
     std::map<size_t, Player> players;
     size_t idCurrenPlayer;
     std::map<size_t, Player>::iterator playerIterator;
+    GameParameters& gameParameters;
 
 public:
-    explicit Players(const std::map<size_t, std::pair<float, float>>& idsAndPositionsWorms);
+    explicit Players(const std::map<size_t, std::pair<float, float>> &idsAndPositionsWorms, GameParameters& parameters);
 
     void addPlayer(const std::string &playerName, const size_t &idPlayer);
 

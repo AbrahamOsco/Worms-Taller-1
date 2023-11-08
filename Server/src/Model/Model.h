@@ -29,7 +29,7 @@ private:
 
 public:
 
-    Model(const std::string& scenarioName, b2World& aWorld );
+    Model(const std::string &scenarioName, b2World &aWorld, GameParameters& parameters);
 
     void addPlayer(const std::string &playerName, const size_t &idPlayer);
 

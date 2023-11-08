@@ -24,6 +24,7 @@ Entidad que sera el motor del juego en el server tendra el loop del box2d para i
 
 class Engine : public Thread {
 private:
+    GameParameters gameParameters;
     std::string nameGameRoom;
     std::string nameScenario;
     size_t numberPlayerReq;
