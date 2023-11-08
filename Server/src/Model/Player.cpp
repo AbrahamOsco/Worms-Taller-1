@@ -70,3 +70,9 @@ void Player::jumpBackWorm() {
 void Player::jumpForwardWorm() {
     this->worms[idCurrentWorm]->jumpForwards();
 }
+
+void Player::updateStateWorms() {
+    for(auto& pair : worms){
+        pair.second->stopIfUnmoving();
+    }
+}

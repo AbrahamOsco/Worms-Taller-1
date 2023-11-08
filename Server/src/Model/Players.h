@@ -41,6 +41,8 @@ public:
     void jumpBackWorm();
 
     void jumpForwardWorm();
+
+    void updateStateWorms();
 };
 
 

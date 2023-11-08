@@ -64,6 +64,8 @@ public:
     void leftWorm();
 
     void rightWorm();
+
+    void stopIfUnmoving();
 };
 
 

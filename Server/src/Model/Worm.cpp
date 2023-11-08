@@ -45,6 +45,7 @@ void Worm::addToTheWorld(b2World *world) {
 
 void Worm::jumpBackwards() {
     if( not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ){
+        this->typeMov = JUMPING;
         float angleTita, initialSpeed;
         angleTita = atan(4.0f * jumpBack.second / jumpBack.first);       //  (4 *hmax)/distMaxHorizontal.
         initialSpeed = sqrt(jumpBack.first * 10.0f / (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
@@ -60,13 +61,13 @@ void Worm::jumpBackwards() {
         } else if (directionLook == LEFT) {
             directionLook = RIGHT;   //MIRAMOS LADO OPUESTO AL Saltar hacia atras.
         } // ^
-
         b2Vec2 impulse(impulseX, impulseY); //  por la gravedad
         body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
     }
 }
 void Worm::jumpForwards() {
     if(not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)) {
+        this->typeMov = JUMPING;
         float angleTita, initialSpeed;
         angleTita = atan(4.0f * jumpForward.second / jumpForward.first);       //  (4 *hmax)/distMaxHorizontal.
         initialSpeed = sqrt(jumpForward.first * 10.0f /
@@ -84,10 +85,9 @@ void Worm::jumpForwards() {
     }
 }
 void Worm::walk(Direction aDirection) {
-    this->typeMov = MoveWorm::WALKING;
     if(not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ) {
+        this->typeMov = MoveWorm::WALKING;
         directionLook = aDirection;
-        /*
         float acceleration = getBody()->GetFixtureList()[0].GetFriction() * 10.0f; // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
         float speed = sqrt(2.0f * acceleration * dragSpeed); // la velocidad la sacamos como 2 * aceleracion * distancia.
         float impulse = body->GetMass() * speed;
@@ -96,13 +96,14 @@ void Worm::walk(Direction aDirection) {
         }
         b2Vec2 impulseSpeed(impulse, 0.0f); //  por la gravedad
         body->ApplyLinearImpulse(impulseSpeed, body->GetWorldCenter(), true);
-        */
+        /*
         b2Vec2 velocity = body->GetLinearVelocity();
         velocity.x = SPEED_WORM;//upwards - don't change x velocity
         if (directionLook == Direction::LEFT ) {
             velocity.x = -SPEED_WORM;
         }
         body->SetLinearVelocity(velocity);
+        */
     }
 }
 
@@ -152,6 +153,12 @@ void Worm::leftWorm() {
 
 void Worm::rightWorm() {
     walk(Direction::RIGHT);
+}
+
+void Worm::stopIfUnmoving() {
+    if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
+        this->typeMov = STANDING;
+    }
 }
 
 

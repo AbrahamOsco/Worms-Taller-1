@@ -48,6 +48,8 @@ public:
     void rightWorm();
 
     void jumpBackWorm();
+
+    void updateStateWorms();
 };
 
 

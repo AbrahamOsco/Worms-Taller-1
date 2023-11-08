@@ -110,3 +110,9 @@ void Players::jumpBackWorm() {
 void Players::jumpForwardWorm() {
     players[idCurrenPlayer].jumpForwardWorm();
 }
+
+void Players::updateStateWorms() {
+    for(auto& aPlayer : players){
+        aPlayer.second.updateStateWorms();
+    }
+}

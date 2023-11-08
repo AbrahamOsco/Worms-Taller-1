@@ -58,6 +58,14 @@ void Engine::run() {
         }
         connections.pushSnapShot(model.getWormsDTO());
         this->world.Step(timeStep, VELOCITY_ITERATIONS, POSITION_TIERATIONS); // Hacemos un step en el world.
+        this->model.updateStateWorms();
+        if(model.getWormsDTO().back().getMoveWorm() == STANDING){
+            std::cout << "Quieto\n";
+        } else if (model.getWormsDTO().back().getMoveWorm() == WALKING){
+            std::cout << "Caminando\n";
+        } else if (model.getWormsDTO().back().getMoveWorm() == JUMPING){
+            std::cout << "Saltando \n";
+        }
         adjustFPS(target, t1, t2, t3, timeUsed, sleepTime, frameTime, sleepAdjustSeconds);
     }
 

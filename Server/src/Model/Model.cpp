@@ -52,6 +52,10 @@ void Model::jumpBackWorm() {
     players.jumpBackWorm();
 }
 
+void Model::updateStateWorms() {
+    players.updateStateWorms();
+}
+
 
 
 
