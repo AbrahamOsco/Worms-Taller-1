@@ -39,6 +39,10 @@ public:
     void leftWorm();
 
     void rightWorm();
+
+    void jumpBackWorm();
+
+    void jumpForwardWorm();
 };
 
 

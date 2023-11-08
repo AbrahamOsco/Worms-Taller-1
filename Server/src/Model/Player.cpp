@@ -62,3 +62,11 @@ void Player::leftWorm() {
 void Player::rightWorm() {
     this->worms[idCurrentWorm]->rightWorm();
 }
+
+void Player::jumpBackWorm() {
+    this->worms[idCurrentWorm]->jumpBackwards();
+}
+
+void Player::jumpForwardWorm() {
+    this->worms[idCurrentWorm]->jumpForwards();
+}

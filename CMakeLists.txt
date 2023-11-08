@@ -27,8 +27,8 @@ find_package(Qt5Widgets COMPONENTS Widgets REQUIRED)
 include_directories(${PROJECT_SOURCE_DIR}/Client/ui/include)
 
 # Archivos Fuente Cliente @Ricardo
-file(GLOB_RECURSE client_src "Client/src/*.cpp" "Client/src/*.h")
-file(GLOB_RECURSE common_src "Common/*.cpp" "Common/*.h")
+file(GLOB_RECURSE client_src "Client/src/*.cpp" "Client/src/*.h"  "Client/src/command/*.h")
+file(GLOB_RECURSE common_src "Common/*.cpp" "Common/*.h" "Client/src/command/*.cpp")
 
 #File de girardi  @Girardi  # parte qt
 file(GLOB_RECURSE qt_src "Client/ui/*.cpp" "Client/ui/*.h")

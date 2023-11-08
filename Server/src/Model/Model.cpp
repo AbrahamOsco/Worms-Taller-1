@@ -30,9 +30,13 @@ void Model::start() {
 
 void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
     if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
-        this->leftWorm();
+        players.leftWorm();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD ){
-        this->rightWorm();
+        players.rightWorm();
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_BACK_CMD){
+        players.jumpBackWorm();
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_FORWARD_CMD){
+        players.jumpForwardWorm();
     }
 }
 
@@ -42,6 +46,10 @@ void Model::leftWorm() {
 
 void Model::rightWorm() {
     players.rightWorm();
+}
+
+void Model::jumpBackWorm() {
+    players.jumpBackWorm();
 }
 
 

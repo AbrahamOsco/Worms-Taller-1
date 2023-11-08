@@ -102,3 +102,11 @@ void Players::leftWorm() {
 void Players::rightWorm() {
     players[idCurrenPlayer].rightWorm();
 }
+
+void Players::jumpBackWorm() {
+    players[idCurrenPlayer].jumpBackWorm();
+}
+
+void Players::jumpForwardWorm() {
+    players[idCurrenPlayer].jumpForwardWorm();
+}
