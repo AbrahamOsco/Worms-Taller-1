@@ -12,13 +12,15 @@
 
 class Worm : public GameObject {
 private:
-    int m_life;
-    bool m_isRunning;
+    size_t m_hpWorm;
+    Direction m_directionLook;
+    MoveWorm m_moveWorm;
+    TypeFocusWorm m_typeFocus;
 
     Animation m_animation;
 
 public:
-    explicit Worm(int posCenterX, int posCenterY);
+    explicit Worm(int posCenterX, int posCenterY, const size_t& hpWorm, const Direction& direction, const TypeFocusWorm& focus, const MoveWorm& moveWorm);
     void draw(SDL2pp::Renderer& renderer, TextureManager& textureManager) override;
     void update(float dt) override;
     void processEvent(SDL_Event &event, Queue<std::unique_ptr<Command>>& queue) override {};

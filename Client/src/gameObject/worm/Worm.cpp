@@ -4,10 +4,18 @@
 
 #include "Worm.h"
 
-Worm::Worm(int posCenterX, int posCenterY) : GameObject(LoaderParams(0, 0, 60, 60, "player")), m_isRunning(false), m_life(0) {
+Worm::Worm(int posCenterX, int posCenterY, const size_t& hpWorm, const Direction& direction, const TypeFocusWorm& focus, const MoveWorm& moveWorm) : GameObject(LoaderParams(0, 0, 60, 60, "player")) {
     m_x = posCenterX - m_width/2;
     m_y = posCenterY - m_height/2;
-    m_flip = SDL_FLIP_NONE;
+    m_hpWorm = hpWorm;
+    m_directionLook = direction;
+    m_typeFocus = focus;
+    m_moveWorm = moveWorm;
+    if (m_directionLook == Direction::RIGHT) {
+        m_flip = SDL_FLIP_HORIZONTAL;
+    } else {
+        m_flip = SDL_FLIP_NONE;
+    }
     m_animation.setProps(m_textureID, m_width, m_height, 14, 80);
 }
 
@@ -18,7 +26,7 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
 
     SDL2pp::SDLTTF ttf;
     SDL2pp::Font font("../Client/resources/fonts/GROBOLD.ttf", 11);
-    SDL2pp::Texture text(renderer, font.RenderText_Blended(std::to_string(m_life), SDL_Color{225, 225, 225, 255}));
+    SDL2pp::Texture text(renderer, font.RenderText_Blended(std::to_string(m_hpWorm), SDL_Color{225, 225, 225, 255}));
 
 // Obtener las dimensiones del texto
     int textWidth = text.GetWidth();
@@ -42,7 +50,7 @@ void Worm::update(float dt) {
 void Worm::animationState() {
     m_animation.setProps("player", m_width, m_height, 14, 80, SDL_FLIP_NONE);
 
-    if (m_isRunning) {
+    if (m_moveWorm == MoveWorm::WALKING) {
         m_animation.setProps("walk", 30, 30,14, 80, SDL_FLIP_NONE);
     }
 }
