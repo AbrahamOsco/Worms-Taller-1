@@ -3,6 +3,8 @@ textures:
     source: "../Client/resources/assets/worms/wglnce1.png"
   - name: walk
     source: "../Client/resources/assets/worms/walk.png"
+  - name: air
+    source: "../Client/resources/assets/worms/waccuseu.png"
   - name: air_attack
     source: "../Client/resources/assets/worms/AirAttack_scope.png"
   - name: dynamite

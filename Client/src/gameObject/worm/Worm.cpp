@@ -46,6 +46,11 @@ void Worm::animationState() {
     if (m_moveWorm == MoveWorm::WALKING) {
         m_width = 30;
         m_height = 30;
-        m_animation.setProps("walk", 30, 30,14, 80, SDL_FLIP_NONE);
+        m_animation.setProps("walk", m_width, m_height,14, 80, SDL_FLIP_NONE);
+    }
+    if (m_moveWorm == MoveWorm::JUMPING) {
+        m_width = 60;
+        m_height = 60;
+        m_animation.setProps("air", m_width, m_height, 36, 80, SDL_FLIP_NONE);
     }
 }
