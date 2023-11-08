@@ -7,6 +7,9 @@
 #include "lobby.h"
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
 #include "../../src/protocol/ClientProtocol.h"
+#include <QPixmap>
+#include <QDesktopWidget>
+#include <QResizeEvent>
 #define EXIT_S
 
 CrearPartida::CrearPartida(QWidget *parent,Socket* skt) : 
@@ -53,7 +56,13 @@ void CrearPartida::buscar(const std::vector<std::string> &nameScenarios){
         maplist->addItem(qmap);
     }
 }
-
+void CrearPartida::resizeEvent(QResizeEvent* event){
+    QPixmap pixmap("../Client/ui/resources/create-search.jpg");
+    pixmap = pixmap.scaled(event->size(),Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Window,pixmap);
+    this->setPalette(palette);
+}
 void CrearPartida::salir(){
     this->close();
 }
@@ -64,4 +73,9 @@ void CrearPartida::connectEvents() {
     QPushButton* buttonVolver = findChild<QPushButton*>("buttonSalir");
     QObject::connect(buttonVolver, &QPushButton::clicked,
                      this, &CrearPartida::salir);
+    this->setWindowTitle("Worms-Crear Partida");
+    QRect screenGeometry = QApplication::desktop()->availableGeometry(this);
+    int x = (screenGeometry.width() - this->width()) / 2;
+    int y = (screenGeometry.height() - this->height()) / 2;
+    this->move(x, y); 
 }

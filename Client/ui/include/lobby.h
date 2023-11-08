@@ -8,6 +8,7 @@
 #include "../../../Common/Queue/Queue.h"
 #include "../../../Common/DTO/ResolverInitialDTO.h"
 #include "waiter.h"
+#include <QMovie>
 
 class Lobby : public QWidget {
 private:
@@ -15,6 +16,7 @@ private:
     QTimer timer;
     Queue<ResolverInitialDTO> my_queue;
     Waiter waiter;
+    QMovie gif;
 
 public:
     explicit Lobby(QWidget *parent = 0,Socket* socket = 0);
@@ -22,6 +24,8 @@ public:
 private:
     void empezar();
     void update();
+    void play();
+    void stop();
     void connectEvents();
 };
 #endif

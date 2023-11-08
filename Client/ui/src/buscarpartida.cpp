@@ -4,6 +4,9 @@
 #include <iostream>
 #include "lobby.h"
 #include "../../src/protocol/ClientProtocol.h"
+#include <QPixmap>
+#include <QDesktopWidget>
+#include <QResizeEvent>
 
 
 BuscarPartida::BuscarPartida(QWidget *parent,Socket* socket) :  QWidget(parent),
@@ -71,7 +74,13 @@ void BuscarPartida::buscar(const std::vector<RoomDTO> &gameRooms){
         gameList->addItem(qGameName);
     }
 }
-
+void BuscarPartida::resizeEvent(QResizeEvent* event){
+    QPixmap pixmap("../Client/ui/resources/create-search.jpg");
+    pixmap = pixmap.scaled(event->size(),Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Window,pixmap);
+    this->setPalette(palette);
+}
 void BuscarPartida::connectEvents() {
     QPushButton* buttonUnirse = findChild<QPushButton*>("buttonUnirse");
     QObject::connect(buttonUnirse, &QPushButton::clicked,
@@ -82,4 +91,9 @@ void BuscarPartida::connectEvents() {
     QPushButton* buttonSalir = findChild<QPushButton*>("buttonSalir");
     QObject::connect(buttonSalir, &QPushButton::clicked,
                      this, &BuscarPartida::salir);
+    this->setWindowTitle("Worms-Buscar Partida");
+    QRect screenGeometry = QApplication::desktop()->availableGeometry(this);
+    int x = (screenGeometry.width() - this->width()) / 2;
+    int y = (screenGeometry.height() - this->height()) / 2;
+    this->move(x, y);  
 }

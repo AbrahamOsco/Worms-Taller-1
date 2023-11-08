@@ -19,5 +19,6 @@ private:
     void crear();
     void connectEvents();
     void salir();
+    void resizeEvent(QResizeEvent* event) override;
 };
 #endif 
