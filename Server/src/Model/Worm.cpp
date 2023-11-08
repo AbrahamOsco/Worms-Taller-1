@@ -5,6 +5,8 @@
 #include <cstddef>
 #include <iostream>
 #include "Worm.h"
+#include "../../ConfigureParameters/ConfigParameters.h"
+
 Worm::Worm() : GameObject(ENTITY_WORM) {
 }
 
@@ -31,22 +33,14 @@ void Worm::addToTheWorld(b2World *world) {
     wormDef.userData.pointer = (uintptr_t) this;
     this->body = world->CreateBody(&wormDef);
 
-    //  creamos la forma del gusano.
-    std::cout << "positionInitialX" << positionInitialX;
-    std::cout << "positionInitialY" << positionInitialY;
-
     b2CircleShape wormShape;
     wormShape.m_p.Set(0.0f, 1.0f);
-    wormShape.m_radius = 0.2f;   // ALTURA DEL GUSANO  @RICARDO
-
+    wormShape.m_radius = 0.2f;
     b2FixtureDef defFixtureWorm;
     defFixtureWorm.shape = &wormShape;
-    defFixtureWorm.friction = 4.0f;
+    defFixtureWorm.friction = 1.0f;
     defFixtureWorm.density = 1.0f;
     this->body->CreateFixture(&defFixtureWorm);
-    std::cout << "body->GetWorldCenter().x" << body->GetWorldCenter().x;
-    std::cout << "body->GetWorldCenter().y" << body->GetWorldCenter().y;
-
 }
 
 void Worm::jumpBackwards() {
@@ -93,6 +87,7 @@ void Worm::walk(Direction aDirection) {
     this->typeMov = MoveWorm::WALKING;
     if(not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ) {
         directionLook = aDirection;
+        /*
         float acceleration = getBody()->GetFixtureList()[0].GetFriction() * 10.0f; // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
         float speed = sqrt(2.0f * acceleration * dragSpeed); // la velocidad la sacamos como 2 * aceleracion * distancia.
         float impulse = body->GetMass() * speed;
@@ -101,6 +96,13 @@ void Worm::walk(Direction aDirection) {
         }
         b2Vec2 impulseSpeed(impulse, 0.0f); //  por la gravedad
         body->ApplyLinearImpulse(impulseSpeed, body->GetWorldCenter(), true);
+        */
+        b2Vec2 velocity = body->GetLinearVelocity();
+        velocity.x = SPEED_WORM;//upwards - don't change x velocity
+        if (directionLook == Direction::LEFT ) {
+            velocity.x = -SPEED_WORM;
+        }
+        body->SetLinearVelocity(velocity);
     }
 }
 

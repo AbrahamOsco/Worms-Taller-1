@@ -6,6 +6,7 @@
 #include "box2d/b2_world.h"
 #include "box2d/b2_fixture.h"
 #include "box2d/b2_polygon_shape.h"
+#include "../../ConfigureParameters/ConfigParameters.h"
 
 Beam::Beam() : GameObject(ENTITY_BEAM){
 }
@@ -16,7 +17,7 @@ Beam::Beam(const TypeBeam &aTypeBeam, const float &aXcenter, const float &aYCent
 }
 
 BeamDTO Beam::getBeamDTO() {
-    BeamDTO beamDto(typeBeam, xCenter, yCenter, length, height, angle);
+    BeamDTO beamDto(typeBeam, xCenter, yCenter, length, height, angle);  // AJUSTAR TAMBIEN LAS VIGAS @RICARDO
     return beamDto;
 }
 

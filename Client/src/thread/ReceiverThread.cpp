@@ -20,7 +20,7 @@ void ReceiverThread::run() {
         snapShot = m_protocol.recvASnapShot();
         std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
         for (const WormDTO& wormDto: wormsDto) {
-            std::unique_ptr<Worm> worm = std::make_unique<Worm>((int)wormDto.getPositionX() * 60, 1080 - (int)wormDto.getPositionY() * 60 );
+            std::unique_ptr<Worm> worm = std::make_unique<Worm>((int)wormDto.getPositionX(), 1080 - (int)wormDto.getPositionY());
             gameObjects.push_back(std::move(worm));
         }
 

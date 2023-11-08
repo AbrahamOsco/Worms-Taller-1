@@ -3,6 +3,9 @@
 //
 
 #include "Player.h"
+#include "../../ConfigureParameters/ConfigParameters.h"
+
+
 Player::Player() : idCurrentWorm(VALUE_INITIAL) {
 }
 
@@ -12,7 +15,7 @@ Player::Player(const std::string &playerName, const size_t &idPlayer) : playerNa
 std::vector<WormDTO> Player::getWormsDTO() const {
     std::vector<WormDTO> vecWormsDTO;
     for(auto& aWormElem: worms){
-        WormDTO aWormDTO = WormDTO(aWormElem.second->getPositionX(), aWormElem.second->getPositionY(), aWormElem.second->getHP(),
+        WormDTO aWormDTO = WormDTO(aWormElem.second->getPositionX() * POSITION_ADJUSTMENT, aWormElem.second->getPositionY() * POSITION_ADJUSTMENT, aWormElem.second->getHP(),
                                    aWormElem.second->getDirectionLook(), aWormElem.second->getTypeFocusWorm(), aWormElem.second->getTypeMov());
         vecWormsDTO.push_back(aWormDTO);
     }

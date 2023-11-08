@@ -15,6 +15,10 @@
 #include <GLFW/glfw3.h> // Opcional: Incluir la biblioteca GLFW si estás utilizando GLFW para gestionar la ventana
 #define DEGRATORADIANS (b2_pi/180.0f)
 
+
+const float SPEED_WORM = 6.5f;
+
+
 enum Entity{
     ENTITY_BEAM = 1,
     ENTITY_WATER = 2,
@@ -125,7 +129,6 @@ public:
         length = node["width"].as<float>();
         aBeams = getBeams(node["beams"]);
         idPosWorms = idPosInitialWorms;
-        std::cout << "Se termina el yaml parser: OK \n";
     }
 
     static std::vector<Beam> getBeams(const YAML::Node &beamsNode) {
@@ -240,7 +243,6 @@ public:
     }
 
     void addToTheWorld(b2World *world) {
-        std::cout << "Se arranca el addToTheWorld : OK \n";
         this->edges = std::unique_ptr<Edges>{new Edges(world, height, length)};
         this->water = std::unique_ptr<Water>{new Water(world, height, length)};
         for(auto& aBeam : beams){
@@ -295,7 +297,7 @@ public:
 
         b2FixtureDef defFixtureWorm;
         defFixtureWorm.shape = &wormShape;
-        defFixtureWorm.friction = 4.0f;
+        defFixtureWorm.friction = 1.0f;
         defFixtureWorm.density = 1.0f;
         this->body->CreateFixture(&defFixtureWorm);
     }
@@ -354,6 +356,7 @@ public:
     void walk(Direction aDirection) {
         if( not isInContactWithAnotherWorm() and  body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ){
             directionLook = aDirection;
+            /*
             float acceleration = getBody()->GetFixtureList()[0].GetFriction() * 10.0f; // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
             float speed = sqrt(2.0f * acceleration * dragSpeed); // la velocidad la sacamos como 2 * aceleracion * distancia.
             float impulse = body->GetMass() * speed;
@@ -362,6 +365,13 @@ public:
             }
             b2Vec2 impulseSpeed(impulse, 0.0f); //  por la gravedad
             body->ApplyLinearImpulse(impulseSpeed, body->GetWorldCenter(), true);
+            */
+            b2Vec2 vel = body->GetLinearVelocity();
+            vel.x = SPEED_WORM;//upwards - don't change x velocity
+            if (directionLook == Direction::LEFT ) {
+                vel.x = -SPEED_WORM;
+            }
+            body->SetLinearVelocity( vel );
         }
     }
 
@@ -531,7 +541,6 @@ public:
     b2Vec2 p2Toy;
 
     Prueba3() {
-        std::cout << "Se arranca el Prueba3 : OK \n";
         rayAngle = 0.0f * (DEGRATORADIANS); //En box2d el angulo 90 en nuestro realidad es el cero y el angulo 0 de la realidad es el 90 en box2d.
         rayLength = 5;
         // Todo variable q esta aca dentro y queramos que perdure debemos usar el heap .

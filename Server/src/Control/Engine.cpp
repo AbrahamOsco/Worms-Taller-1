@@ -41,40 +41,24 @@ int Engine::addClient(Socket &socket, const std::string &playerName, const Opera
     return answer;
 }
 
-
 void Engine::run() {
     std::string estadoPartida = std::to_string(currentPlayers) + "/" + std::to_string(numberPlayerReq)  + " Ha comenzado\n";
     std::cout << "[Engine]: La partida  " + this->nameGameRoom  + " En el scenario: " + this->nameScenario + " Con : " + estadoPartida;
     model.start();
-    connections.start(model.getStageDTO()); // Le digo a todos las conexiones de esta partida  "start". es decir que lanzen los hilos sender y receiv cada conexion.
-
-    std::cout << "Position initial worm : \n";
-    std::cout << " ( " <<  model.getWormsDTO().back().getPositionX() << " , " << model.getWormsDTO().back().getPositionY() << " ) \n";
-
+    connections.start(model.getStageDTO());
     float timeStep = 1.0f / 60.0f;
     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now(), t2,t3;
-    std::chrono::duration<double> frameTime, sleepTime, timeUsed, target(timeStep), sleepAdjustSeconds(0.0);
+    std::chrono::duration<double> frameTime{}, sleepTime{}, timeUsed{}, target(timeStep), sleepAdjustSeconds(0.0);
 
     while(keepTalking){
         t1 = std::chrono::steady_clock::now();
-        // hacemos toda nuestra logica.
         std::unique_ptr<CommandDTO> aCommanDTO;
         if (commandsQueueNB.move_try_pop(aCommanDTO)){
             this->model.execute(aCommanDTO);
         }
+        connections.pushSnapShot(model.getWormsDTO());
         this->world.Step(timeStep, VELOCITY_ITERATIONS, POSITION_TIERATIONS); // Hacemos un step en el world.
-
-        connections.pushSnapShot(model.getWormsDTO()); //envio actualizaciones del nuevo mundo;
-        //std::cout << " ( " << model.getWormsDTO()[0].getPositionX() << " , " << model.getWormsDTO()[0].getPositionY() << " ) \n";
-        t2 = std::chrono::steady_clock::now();
-        timeUsed = t2 - t1;
-        sleepTime = (target - timeUsed) + sleepAdjustSeconds;
-        if (sleepTime > std::chrono::duration<double>(0) ){
-            std::this_thread::sleep_for(sleepTime);
-        }
-        t3 = std::chrono::steady_clock::now();
-        frameTime = t3 - t1;
-        sleepAdjustSeconds = std::chrono::duration<double>(0.9 * sleepAdjustSeconds.count()) + std::chrono::duration<double>(0.1 * (target - frameTime).count());
+        adjustFPS(target, t1, t2, t3, timeUsed, sleepTime, frameTime, sleepAdjustSeconds);
     }
 
     this->connections.stop();
@@ -106,3 +90,19 @@ void Engine::stop() {
 void Engine::clearAll() {
     // Limpiaremos las queeus aca?
 }
+
+void Engine::adjustFPS(const std::chrono::duration<double> &target, std::chrono::steady_clock::time_point &t1, std::chrono::steady_clock::time_point &t2,
+                       std::chrono::steady_clock::time_point &t3, std::chrono::duration<double> &timeUsed,
+                       std::chrono::duration<double> &sleepTime, std::chrono::duration<double> &frameTime,
+                       std::chrono::duration<double> &sleepAdjustSeconds) {
+    t2 = std::chrono::steady_clock::now();
+    timeUsed = t2 - t1;
+    sleepTime = (target - timeUsed) + sleepAdjustSeconds;
+    if (sleepTime > std::chrono::duration<double>(0) ){
+        std::this_thread::sleep_for(sleepTime);
+    }
+    t3 = std::chrono::steady_clock::now();
+    frameTime = t3 - t1;
+    sleepAdjustSeconds = std::chrono::duration<double>(0.9 * sleepAdjustSeconds.count()) + std::chrono::duration<double>(0.1 * (target - frameTime).count());
+}
+
