@@ -7,7 +7,6 @@
 
 void JumpBackwardCmd::execute(ClientProtocol &protocol) {
     CommandDTO commandDto;
-    std::cout << "send: jump_backward" << std::endl;
     commandDto.setTypeCommand(TypeCommand::JUMP_BACK_CMD);
     protocol.sendCommandDTO(commandDto);
 }

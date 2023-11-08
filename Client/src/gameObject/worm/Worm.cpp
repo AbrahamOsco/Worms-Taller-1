@@ -4,29 +4,13 @@
 
 #include "Worm.h"
 
-Worm::Worm(int posCenterX, int posCenterY, const size_t& hpWorm, const Direction& direction, const TypeFocusWorm& focus, const MoveWorm& moveWorm) : GameObject(LoaderParams(0, 0, 60, 60, "player")) {
-    if (m_moveWorm == MoveWorm::WALKING) {
-        m_width = 30;
-        m_height = 30;
-        m_textureID = "walk";
-    }
-
-    m_x = posCenterX - m_width/2;
-    m_y = posCenterY - m_height/2;
-    m_hpWorm = hpWorm;
-    m_directionLook = direction;
-    m_typeFocus = focus;
-    m_moveWorm = moveWorm;
-    if (m_directionLook == Direction::RIGHT) {
-        m_flip = SDL_FLIP_HORIZONTAL;
-    } else {
-        m_flip = SDL_FLIP_NONE;
-    }
+Worm::Worm(const LoaderParams &params, const size_t& hpWorm, const Direction& direction, const TypeFocusWorm& focus, const MoveWorm& moveWorm) : GameObject(params), m_hpWorm(hpWorm), m_directionLook(direction), m_typeFocus(focus), m_moveWorm(moveWorm) {
+    m_flip = SDL_FLIP_NONE;
     m_animation.setProps(m_textureID, m_width, m_height, 14, 80);
 }
 
 void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
-    SDL_Rect rect = {m_x + 10, m_y, 36, 15}; // Coordenadas (x, y) y tamaño (ancho, alto) del cuadrado
+    SDL_Rect rect = {m_x - 20, m_y - 30, 36, 15}; // Coordenadas (x, y) y tamaño (ancho, alto) del cuadrado
     SDL_SetRenderDrawColor(renderer.Get(), 0, 0, 0, 255); // Color negro: (R, G, B, Alpha)
     SDL_RenderFillRect(renderer.Get(), &rect); // Dibujar el cuadrado
 
@@ -45,18 +29,23 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
     renderer.Copy(text, SDL2pp::NullOpt, SDL2pp::Rect(textX, textY, textWidth, textHeight));
 
 
-    m_animation.draw(m_x, m_y, m_flip,renderer, textureManager);
+    m_animation.draw(m_x - m_width/2, m_y - m_height/2, m_flip,renderer, textureManager);
 }
 
 void Worm::update(float dt) {
+    if ( m_directionLook == Direction::RIGHT) {
+        m_flip = SDL_FLIP_HORIZONTAL;
+    }
     m_animation.update();
     animationState();
 }
 
 void Worm::animationState() {
-    /*m_animation.setProps("player", m_width, m_height, 14, 80, SDL_FLIP_NONE);
+    m_animation.setProps("player", m_width, m_height, 14, 80, SDL_FLIP_NONE);
 
     if (m_moveWorm == MoveWorm::WALKING) {
+        m_width = 30;
+        m_height = 30;
         m_animation.setProps("walk", 30, 30,14, 80, SDL_FLIP_NONE);
-    }*/
+    }
 }

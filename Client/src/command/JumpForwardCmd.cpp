@@ -7,7 +7,6 @@
 
 void JumpForwardCmd::execute(ClientProtocol &protocol) {
     CommandDTO commandDto;
-    std::cout << "send: jump_forward" << std::endl;
     commandDto.setTypeCommand(TypeCommand::JUMP_FORWARD_CMD);
     protocol.sendCommandDTO(commandDto);
 }
