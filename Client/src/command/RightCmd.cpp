@@ -7,6 +7,7 @@
 
 void RightCmd::execute(ClientProtocol &protocol) {
     CommandDTO commandDto;
+    std::cout << "send: right" << std::endl;
     commandDto.setTypeCommand(TypeCommand::RIGHT_CMD);
     protocol.sendCommandDTO(commandDto);
 }

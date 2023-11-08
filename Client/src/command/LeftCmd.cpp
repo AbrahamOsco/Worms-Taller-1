@@ -7,6 +7,7 @@
 
 void LeftCmd::execute(ClientProtocol &protocol) {
     CommandDTO commandDto;
+    std::cout << "send: left" << std::endl;
     commandDto.setTypeCommand(TypeCommand::LEFT_CMD);
     protocol.sendCommandDTO(commandDto);
 }
