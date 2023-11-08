@@ -28,5 +28,6 @@ private:
     void mostrar();
     void salir();
     void connectEvents();
+    void resizeEvent(QResizeEvent* event) override;
 };
 #endif 
