@@ -5,6 +5,12 @@
 #include "Worm.h"
 
 Worm::Worm(int posCenterX, int posCenterY, const size_t& hpWorm, const Direction& direction, const TypeFocusWorm& focus, const MoveWorm& moveWorm) : GameObject(LoaderParams(0, 0, 60, 60, "player")) {
+    if (m_moveWorm == MoveWorm::WALKING) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "walk";
+    }
+
     m_x = posCenterX - m_width/2;
     m_y = posCenterY - m_height/2;
     m_hpWorm = hpWorm;
@@ -48,9 +54,9 @@ void Worm::update(float dt) {
 }
 
 void Worm::animationState() {
-    m_animation.setProps("player", m_width, m_height, 14, 80, SDL_FLIP_NONE);
+    /*m_animation.setProps("player", m_width, m_height, 14, 80, SDL_FLIP_NONE);
 
     if (m_moveWorm == MoveWorm::WALKING) {
         m_animation.setProps("walk", 30, 30,14, 80, SDL_FLIP_NONE);
-    }
+    }*/
 }
