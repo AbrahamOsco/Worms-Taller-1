@@ -32,7 +32,7 @@ void ReceiverThread::run() {
         PlayersInfo playersInfo;
         PlayerInfo playerInfo1(0, "Agustin", 80);
         playersInfo.addPlayer(playerInfo1);
-        PlayerInfo playerInfo2(0, "Juan", 80);
+        PlayerInfo playerInfo2(1, "Juan", 80);
         playersInfo.addPlayer(playerInfo2);
         std::vector<Weapon> weapons;
         WeaponInventory weaponInventory(params, weapons);
