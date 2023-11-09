@@ -7,14 +7,15 @@
 
 
 
-Player::Player(const std::string &playerName, const size_t &idPlayer, GameParameters& gameParameters) : playerName(playerName),
+Player::Player(const std::string &playerName, const size_t &idPlayer, const GameParameters& gameParameters) : playerName(playerName),
                 idPlayer(idPlayer), idCurrentWorm(VALUE_INITIAL), gameParameters(gameParameters) {
 }
 
 std::vector<WormDTO> Player::getWormsDTO() const {
     std::vector<WormDTO> vecWormsDTO;
     for(auto& aWormElem: worms){
-        WormDTO aWormDTO = WormDTO(aWormElem.second->getPositionX() * POSITION_ADJUSTMENT, aWormElem.second->getPositionY() * POSITION_ADJUSTMENT, aWormElem.second->getHP(),
+        WormDTO aWormDTO = WormDTO(aWormElem.second->getPositionX() * gameParameters.getPositionAdjustment(),
+                                   aWormElem.second->getPositionY() * gameParameters.getPositionAdjustment(), aWormElem.second->getHP(),
                                    aWormElem.second->getDirectionLook(), aWormElem.second->getTypeFocusWorm(), aWormElem.second->getTypeMov());
         vecWormsDTO.push_back(aWormDTO);
     }
@@ -23,7 +24,7 @@ std::vector<WormDTO> Player::getWormsDTO() const {
 
 void Player::assignWorm(const int &idWorm, const std::pair<float, float> &positionInitialWorm) {
     // agregamos al diccionario la calve el id de worm y el valor el worm con su position inicial en x,y.
-    worms.emplace(idWorm, std::make_unique<Worm>(idWorm, positionInitialWorm.first, positionInitialWorm.second)) ;
+    worms.emplace(idWorm, std::make_unique<Worm>(idWorm, positionInitialWorm.first, positionInitialWorm.second, gameParameters)) ;
 }
 
 void Player::assignBonusLife() {

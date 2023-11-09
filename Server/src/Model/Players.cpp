@@ -6,7 +6,7 @@
 #include "../../GameParameters/GameParameters.h"
 #include <algorithm>
 
-Players::Players(const std::map<size_t, std::pair<float, float>> &idsAndPositionsWorms, GameParameters& parameters)
+Players::Players(const std::map<size_t, std::pair<float, float>> &idsAndPositionsWorms, const GameParameters& parameters)
         : idsAndPositionsWorms(idsAndPositionsWorms), idCurrenPlayer(VALUE_INITIAL), gameParameters(parameters) {
 
 }

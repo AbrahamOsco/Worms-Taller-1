@@ -47,22 +47,43 @@ float GameParameters::getGravity() const {
     return parameters.at("GRAVITY");
 }
 
-float GameParameters::getPositionAdjustmentStatic() {
+YAML::Node GameParameters::getNodeInitial() {
     char startPathC[PATH_MAX];
     realpath("../../", startPathC);
     std::string startPath(startPathC);
     std::string fullPath(startPath + "/Worms-Taller-1/Server/GameParameters/" + "GameParameters.yaml" );
     std::cout << "FUll path es " << fullPath << "\n";
     YAML::Node nodeInitial = YAML::LoadFile(fullPath);
-
-    return nodeInitial["POSITION_ADJUSTMENT"].as<float>();
+    return nodeInitial;
 }
+
+float GameParameters::getPositionAdjustmentStatic() {
+    YAML::Node aNode = getNodeInitial();
+    return aNode["POSITION_ADJUSTMENT"].as<float>();
+}
+
+float GameParameters::getBeamMinimumScalableAngle() {
+    YAML::Node aNode = getNodeInitial();
+    return aNode["BEAM_MINIMUM_SCALABLE_ANGLE"].as<float>();
+}
+
+float GameParameters::getBeamMaximumUnscalableAngle() {
+    YAML::Node aNode = getNodeInitial();
+    return aNode["BEAM_MAXIMUM_UNSCALABLE_ANGLE"].as<float>();
+}
+
+float GameParameters::getBeamFriction() {
+    YAML::Node aNode = getNodeInitial();
+    return aNode["BEAM_FRICTION"].as<float>();
+}
+
+
 
 float GameParameters::getPositionAdjustment() const {
     return parameters.at("POSITION_ADJUSTMENT");
 }
 
-float GameParameters::getWormDragSpped() const {
+float GameParameters::getWormDragSpeed() const {
     return parameters.at("WORM_DRAG_SPEED");
 }
 
@@ -97,5 +118,8 @@ float GameParameters::getHalfHeightWorm() const {
 float GameParameters::getFrictionWorm() const {
     return parameters.at("WORM_FRICTION");
 }
+
+
+
 
 

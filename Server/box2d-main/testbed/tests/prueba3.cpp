@@ -264,8 +264,8 @@ class Worm : public GameObject {
     float dragSpeed;
     float positionInitialX;
     float positionInitialY;
-    std::pair<float, float> jumpForward;
-    std::pair<float, float> jumpBack;
+    std::pair<float, float> distancesJumpForward;
+    std::pair<float, float> distancesJumpBack;
     size_t numberContacts;
 
 public:
@@ -274,8 +274,8 @@ public:
         hp = 100.0f;
         dragSpeed = 0.2f;
         directionLook = Direction::RIGHT;
-        jumpForward = std::pair<float,float>{1.0f, 0.5f};
-        jumpBack = std::pair<float,float>{0.2f, 1.2f};
+        distancesJumpForward = std::pair<float,float>{1.0f, 0.5f};
+        distancesJumpBack = std::pair<float,float>{0.2f, 1.2f};
     }
 
     void assignBonusLife() {
@@ -316,8 +316,8 @@ public:
     void jumpBackwards() {
         if( not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
             float angleTita, initialSpeed;
-            angleTita = atan(4.0f * jumpBack.second / jumpBack.first);       //  (4 *hmax)/distMaxHorizontal.
-            initialSpeed = sqrt(jumpBack.first * 10.0f / (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
+            angleTita = atan(4.0f * distancesJumpBack.second / distancesJumpBack.first);       //  (4 *hmax)/distMaxHorizontal.
+            initialSpeed = sqrt(distancesJumpBack.first * 10.0f / (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
             float speedX = initialSpeed * cos(angleTita);
             float speedY = initialSpeed * sin(angleTita);
 
@@ -338,8 +338,8 @@ public:
     void jumpForwards() {
         if( not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
             float angleTita, initialSpeed;
-            angleTita = atan(4.0f * jumpForward.second / jumpForward.first);       //  (4 *hmax)/distMaxHorizontal.
-            initialSpeed = sqrt(jumpForward.first * 10.0f /
+            angleTita = atan(4.0f * distancesJumpForward.second / distancesJumpForward.first);       //  (4 *hmax)/distMaxHorizontal.
+            initialSpeed = sqrt(distancesJumpForward.first * 10.0f /
                                 (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
             float speedX = initialSpeed * cos(angleTita);
             float speedY = initialSpeed * sin(angleTita);

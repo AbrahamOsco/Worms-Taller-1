@@ -6,7 +6,9 @@
 #include "box2d/b2_world.h"
 #include "box2d/b2_fixture.h"
 #include "box2d/b2_polygon_shape.h"
-#include "../../GameParameters//GameParameters.h"
+#include "../../GameParameters/GameParameters.h"
+#define MINIMUM_SCALABLE_ANGLE 45
+#define MAXIMUM_UNSCALABLE_ANGLE 170
 
 Beam::Beam() : GameObject(ENTITY_BEAM){
 }
@@ -17,7 +19,8 @@ Beam::Beam(const TypeBeam &aTypeBeam, const float &aXcenter, const float &aYCent
 }
 
 BeamDTO Beam::getBeamDTO() {
-    BeamDTO beamDto(typeBeam, xCenter * POSITION_ADJUSTMENT, yCenter * POSITION_ADJUSTMENT, length, height, angle);  // AJUSTAR TAMBIEN LAS VIGAS @RICARDO
+    BeamDTO beamDto(typeBeam, xCenter * GameParameters::getPositionAdjustmentStatic(),
+                    yCenter * GameParameters::getPositionAdjustmentStatic(), length, height, angle);  // AJUSTAR TAMBIEN LAS VIGAS @RICARDO
     return beamDto;
 }
 
@@ -34,9 +37,9 @@ void Beam::addToWorld(b2World *world) {
 
     b2FixtureDef defFixtureBeam;
     defFixtureBeam.shape = &shapeBeam;
-    float beamFriction = 2.0f; // antes era 1.5f
-    if(angle > 45.0f && angle <= 90){
-        beamFriction = 0.2f;
+    float beamFriction = GameParameters::getBeamFriction(); // antes era 1.5f
+    if(angle > GameParameters::getBeamMinimumScalableAngle() && angle <= GameParameters::getBeamMaximumUnscalableAngle()){
+        beamFriction = 0.0f;
     }
     defFixtureBeam.friction = beamFriction;
     this->body->CreateFixture(&defFixtureBeam);

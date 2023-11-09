@@ -23,10 +23,10 @@ private:
     std::map<size_t, std::unique_ptr<Worm>> worms;
     std::map<size_t, std::unique_ptr<Worm>>::iterator wormIterator;
     size_t idCurrentWorm;
-    GameParameters& gameParameters;
+    const GameParameters& gameParameters;
 public:
 
-    Player(const std::string& playerName, const size_t& idPlayer, GameParameters& gameParameters);
+    Player(const std::string& playerName, const size_t& idPlayer, const GameParameters& gameParameters);
 
     std::vector<WormDTO> getWormsDTO() const;
 
