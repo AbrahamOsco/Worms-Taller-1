@@ -92,7 +92,7 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
 
         Server/src/Model/Edges.cpp Server/src/Model/Edges.h Server/src/Model/Water.cpp Server/src/Model/Water.h Server/src/Model/MyContactListener.cpp Server/src/Model/MyContactListener.h Common/DTO/SnapShot.cpp Common/DTO/SnapShot.h Server/GameParameters/GameParameters.h
         Server/GameParameters/GameParameters.h Server/GameParameters/GameParameters.cpp
-
+        Common/DTO/WeaponDTO.cpp Common/DTO/WeaponDTO.h Common/DTO/WeaponsDTO.cpp Common/DTO/WeaponsDTO.h
         )
 
 # para el editor

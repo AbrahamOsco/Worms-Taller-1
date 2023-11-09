@@ -12,6 +12,7 @@
 #include "../../../Common/DTO/PlayersDTO.h"
 #include "../../../Common/DTO/CommandDTO.h"
 #include "../../../Common/DTO/SnapShot.h"
+#include "../../../Common/DTO/WeaponsDTO.h"
 
 #define BYTE_DISCONNECT 0
 #define STATUS_ERROR 2
@@ -47,6 +48,11 @@ public:
     void sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot);
 
     void sendAWormDTO(const WormDTO &aWormDTO);
+
+    void sendWeaponsDTO(const WeaponsDTO& weapons);
+
+    void sendAWeaponDTO(const WeaponDTO& aWeapon);
+
 };
 
 

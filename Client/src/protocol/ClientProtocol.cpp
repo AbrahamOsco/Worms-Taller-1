@@ -106,13 +106,7 @@ BeamDTO ClientProtocol::recvBeamDTO() {
     BeamDTO beamDto;
     int operationType = recvANumberByte();
     if ( operationType == BEAM){
-        size_t typeBeam = recvANumberByte();
-        TypeBeam aTypeBeam;
-        if(typeBeam == SHORT_BEAM){
-            aTypeBeam = SHORT_BEAM;
-        } else if (typeBeam == LONG_BEAM){
-            aTypeBeam = LONG_BEAM;
-        }
+        TypeBeam aTypeBeam = static_cast<TypeBeam>( (int) recvANumberByte() );
         size_t xCenter = recvNum2Bytes();
         size_t yCenter = recvNum2Bytes();
         size_t angle = recvANumberByte();
@@ -215,4 +209,29 @@ WormDTO ClientProtocol::recvAWormDTO() {
     return aWormDTO;
 }
 
+WeaponsDTO ClientProtocol::recvWeaponsDTO() {
+    WeaponsDTO weaponsDT0;
+    std::vector<WeaponDTO> vecWeaponDTO;
+    int operationType = recvANumberByte();
+    if (operationType == WEAPONS_TOTAL){
+        size_t numberWeapons = recvANumberByte();
+        for(size_t i = 0; i < numberWeapons ; i++){
+            vecWeaponDTO.push_back(recvAWeaponDTO());
+        }
+        weaponsDT0.setWeapons(vecWeaponDTO);
+    }
+    return weaponsDT0;
+}
+
+WeaponDTO ClientProtocol::recvAWeaponDTO() {
+    WeaponDTO aWeaponDTO;
+    int operationType = recvANumberByte();
+    if (operationType == WEAPON){
+        TypeWeapon typeWeapon = static_cast<TypeWeapon>( (int) recvANumberByte());
+        TypeMunition typeMunition = static_cast<TypeMunition>( (int) recvANumberByte() );
+        size_t munition = recvANumberByte();
+        return WeaponDTO(typeWeapon, typeMunition, munition);
+    }
+    return aWeaponDTO;
+}
 

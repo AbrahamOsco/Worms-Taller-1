@@ -10,6 +10,7 @@
 #include "../../../Common/DTO/PlayersDTO.h"
 #include "../../../Common/DTO/CommandDTO.h"
 #include "../../../Common/DTO/SnapShot.h"
+#include "../../../Common/DTO/WeaponsDTO.h"
 
 class ClientProtocol : public Protocol {
 
@@ -37,6 +38,11 @@ public:
     SnapShot recvASnapShot();
 
     WormDTO recvAWormDTO();
+
+    WeaponsDTO recvWeaponsDTO();
+
+    WeaponDTO recvAWeaponDTO();
+
 
     ~ClientProtocol() = default;
 

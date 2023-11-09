@@ -112,16 +112,12 @@ void ServerProtocol::sendAPlayerDTO(const PlayerDTO &playerDTO) {
 }
 
 /*
-
 void ServerProtocol::sendAWormIniDTO(const WormDTO &aWormDTO) {
     sendANumberByte(aWormDTO.getOperationType());
     sendANumberByte(aWormDTO.getIdWorm());
     sendNum2Bytes(aWormDTO.getPositionX());
     sendNum2Bytes(aWormDTO.getPositionY());
 }
-
-
-
 */
 
 CommandDTO ServerProtocol::recvCommandDTO() {
@@ -153,4 +149,21 @@ void ServerProtocol::sendAWormDTO(const WormDTO &aWormDTO) {
     sendANumberByte(aWormDTO.getMoveWorm());
     sendANumberByte(aWormDTO.getTypeFocus());
 }
+
+void ServerProtocol::sendWeaponsDTO(const WeaponsDTO &weapons) {
+    sendANumberByte(weapons.getOperationType());
+    sendANumberByte(weapons.getWeapons().size()); // mandamos la cantida de armas y luego mandamos cada arma.
+    for(auto& aWeapon : weapons.getWeapons()){
+        sendAWeaponDTO(aWeapon);
+    }
+}
+
+void ServerProtocol::sendAWeaponDTO(const WeaponDTO &aWeapon) {
+    sendANumberByte(aWeapon.getOperationType());
+    sendANumberByte(aWeapon.getTypeWeapon());
+    sendANumberByte(aWeapon.getTypeMunition());
+    sendANumberByte(aWeapon.getMunition());
+}
+
+
 

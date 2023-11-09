@@ -22,7 +22,10 @@ enum OperationType {
     PLAYERS_TOTAL = 31,
     PLAYER = 32,
     COMMAND = 33,
-    SNAP_SHOT = 34
+    SNAP_SHOT = 34,
+    WEAPONS_TOTAL = 35,
+    WEAPON = 36,
+
 };
 
 class DTO {
