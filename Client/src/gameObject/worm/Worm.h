@@ -3,7 +3,7 @@
 //
 
 #ifndef WORMS_TALLER_1_WORM_H
-#define WORMS_TALLER_1_PLAYER_H
+#define WORMS_TALLER_1_WORM_H
 
 
 #include "../GameObject.h"
