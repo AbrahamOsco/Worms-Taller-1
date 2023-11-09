@@ -5,7 +5,7 @@
 #include "WeaponInventory.h"
 #include "../../utils/Constants.h"
 
-WeaponInventory::WeaponInventory() : GameObject(LoaderParams(WINDOW_WIDTH - 120,0,0,0," ")) {}
+WeaponInventory::WeaponInventory() : GameObject(LoaderParams(WINDOW_WIDTH - 120, 40, 0, 0, " ")) {}
 
 void WeaponInventory::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
     verticalAligned(10);
@@ -23,7 +23,7 @@ void WeaponInventory::addWeapon(Weapon &weapon) {
 void WeaponInventory::verticalAligned(int verticalSpacing) {
     int yPos = m_y;
 
-    for (Weapon& weapon : m_weapons) {
+    for (Weapon &weapon: m_weapons) {
         weapon.setParams(m_x, yPos);
         yPos += weapon.getHeight() + verticalSpacing;
     }

@@ -18,10 +18,11 @@ private:
     WeaponInventory m_weaponInventory;
     WindInfo m_wind;
     std::string m_currentTurn;
+    int m_time;
     bool m_isMyTurn;
 public:
-    GameInfo(const LoaderParams &params, PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind,
-             const std::string &currentTurn, bool isMyTurn);
+    GameInfo(PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind,
+             const std::string &currentTurn, int time,bool isMyTurn);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override;
 

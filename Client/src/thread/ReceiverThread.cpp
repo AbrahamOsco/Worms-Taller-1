@@ -61,7 +61,7 @@ void ReceiverThread::run() {
         WindInfo wind(params, 10, Direction::RIGHT);
         std::string currentTurn = "Pepe";
         gameObjects.push_back(
-                std::make_unique<GameInfo>(params, playersInfo, weaponInventory, wind, currentTurn, true));
+                std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, currentTurn, 10, true));
         m_queue.move_try_push(std::move(gameObjects));
     }
 }

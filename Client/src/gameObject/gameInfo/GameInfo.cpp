@@ -7,11 +7,13 @@
 #include "../../command/LeftCmd.h"
 #include "../../command/JumpForwardCmd.h"
 #include "../../command/JumpBackwardCmd.h"
+#include "../../utils/Constants.h"
 
-GameInfo::GameInfo(const LoaderParams &params, PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind,
-                   const std::string &currentTurn,
-                   bool isMyTurn) : GameObject(params), m_players(players), m_weaponInventory(weaponInventory),
-                                    m_wind(wind), m_currentTurn(currentTurn), m_isMyTurn(isMyTurn) {
+GameInfo::GameInfo(PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind,
+                   const std::string &currentTurn, int time,
+                   bool isMyTurn) : GameObject(LoaderParams(0, 10, 0, 0, "arrow_no")), m_players(players),
+                                    m_weaponInventory(weaponInventory),
+                                    m_wind(wind), m_currentTurn(currentTurn), m_time(time), m_isMyTurn(isMyTurn) {
     if (isMyTurn) {
         m_currentTurn = "Tu turno";
     }
@@ -22,9 +24,12 @@ void GameInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) 
     m_weaponInventory.draw(renderer, textureManager);
     m_wind.draw(renderer, textureManager);
 
+    int fontSize = 16;
     SDL_Color textColor = {0, 0, 0, 255};
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
-    textureManager.drawText(m_currentTurn, (m_width - m_x) / 2, m_y, fontPath, m_height, textColor, renderer);
+    textureManager.drawText(m_currentTurn, 400, m_y, fontPath, fontSize, textColor, renderer);
+    textureManager.drawText("Time: " + std::to_string(m_time), 560, m_y, fontPath, fontSize, textColor, renderer);
+
 }
 
 void GameInfo::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) {
