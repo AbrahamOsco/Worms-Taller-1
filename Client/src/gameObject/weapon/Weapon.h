@@ -10,14 +10,17 @@
 
 class Weapon : public GameObject {
 private:
-    std::string m_weapon;
     int m_ammoCount;
 public:
-    Weapon(const LoaderParams &params, const std::string &weapon, int ammoCount);
+    Weapon(const std::string &weapon, int ammoCount);
 
-    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override {}
+    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override;
 
     void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) override {}
+
+    void setParams(int x, int y);
+
+    int getHeight();
 };
 
 

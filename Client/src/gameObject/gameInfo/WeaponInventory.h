@@ -13,11 +13,15 @@ class WeaponInventory : GameObject {
 private:
     std::vector<Weapon> m_weapons;
 public:
-    WeaponInventory(const LoaderParams &params, std::vector<Weapon> &weapons);
+    WeaponInventory();
 
-    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override {}
+    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override;
 
-    void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) override {}
+    void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) override;
+
+    void addWeapon(Weapon &weapon);
+
+    void verticalAligned(int verticalSpacing);
 
 };
 
