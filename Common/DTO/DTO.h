@@ -19,10 +19,13 @@ enum OperationType {
     ROOM_GAME = 28,
     WORM = 29, //Unidades, armas, etc.
     BEAM = 30,
-    PLAYERS_INITIAL = 31,
+    PLAYERS_TOTAL = 31,
     PLAYER = 32,
     COMMAND = 33,
-    SNAP_SHOT = 34
+    SNAP_SHOT = 34,
+    WEAPONS_TOTAL = 35,
+    WEAPON = 36,
+
 };
 
 class DTO {

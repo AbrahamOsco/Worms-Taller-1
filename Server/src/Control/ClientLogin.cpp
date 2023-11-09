@@ -19,16 +19,22 @@ void ClientLogin::run() {
         if( operationType == SCENARIO_LIST_REQUEST ){        // scenarios harcodeado los nombre debemos acarlos de un archivo @Anita.
             ResolverInitialDTO resolverInitialDto(RESPONSE_INITIAL_CREATE_GAME, games.getScenarios());
             serverProtocol.sendResolverInitialDTO(resolverInitialDto);
-            std::cerr << "[ClientLogin]:run Se recibio una peticion de crear  una partida -> Se envian los escenarios   ";
+            std::cerr << "[ClientLogin]:run Se recibio una peticion de crear  una partida -> Se envian los escenarios\n";
         } else if ( operationType == ROOM_LIST_REQUEST ){
             ResolverInitialDTO resolverInitialDto(RESPONSE_INITIAL_JOIN_GAME, games.getAvailableRooms());
             serverProtocol.sendResolverInitialDTO(resolverInitialDto);
-            std::cerr << "[ClientLogin]:run Se recibio una peticion peticion de unirse a alguna partida -> se envia los rooms disponibles   ";
+            std::cerr << "[ClientLogin]:run Se recibio una peticion peticion de unirse a alguna partida -> se envia los rooms disponibles\n";
         } else if (operationType == INITIAL_STATE){
+            std::cerr << "[ClinetLogin]: Cliente se desconecto antes de siquiera conectarse/unirse a una partida\n";
             isRunning = false;              // El cliente se descoencto salimos  (es un cliente muerto) simplemente salimos
         }
         while( isRunning){
             ResponseInitialStateDTO response = serverProtocol.recvReponseInitialStateDTO();
+            if(response.getOperationType() == INITIAL_STATE){ // se desconecto el cliente al momento de la creacion de la partida.
+                std::cerr << "[ClientLogin]: Cliente se desconecto en la creacion/union de una partida.\n";
+                isRunning = false;
+                return;
+            }
             execute(response, initialState.getPlayerName());
         }
     }catch ( const std::exception& e){

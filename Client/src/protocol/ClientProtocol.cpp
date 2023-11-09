@@ -106,13 +106,7 @@ BeamDTO ClientProtocol::recvBeamDTO() {
     BeamDTO beamDto;
     int operationType = recvANumberByte();
     if ( operationType == BEAM){
-        size_t typeBeam = recvANumberByte();
-        TypeBeam aTypeBeam;
-        if(typeBeam == SHORT_BEAM){
-            aTypeBeam = SHORT_BEAM;
-        } else if (typeBeam == LONG_BEAM){
-            aTypeBeam = LONG_BEAM;
-        }
+        TypeBeam aTypeBeam = static_cast<TypeBeam>( recvANumberByte() );
         size_t xCenter = recvNum2Bytes();
         size_t yCenter = recvNum2Bytes();
         size_t angle = recvANumberByte();
@@ -123,49 +117,32 @@ BeamDTO ClientProtocol::recvBeamDTO() {
     }
     return beamDto;
 }
-/*
-PlayersIniDTO ClientProtocol::recvPlayersIni() {
+PlayersDTO ClientProtocol::recvPlayersDTO() {
     int operationType = recvANumberByte();
-    std::vector<PlayerDTO> playersIniDTO;
-    if (operationType == PLAYERS_INITIAL){
+    std::vector<PlayerDTO> vecPlayerDTO;
+    if (operationType == PLAYERS_TOTAL){
         size_t numberPlayers = recvANumberByte();
         for(size_t i = 0; i < numberPlayers; i++){
-            playersIniDTO.push_back( recvAPlayerDTO());
+            vecPlayerDTO.push_back( recvAPlayerDTO());
         }
-        return PlayersIniDTO(playersIniDTO);
+        return PlayersDTO(vecPlayerDTO);
     }
-    std::cerr << "Error en el recvPlayersIni";
-    return PlayersIniDTO(playersIniDTO);
+    return PlayersDTO(vecPlayerDTO);
 }
 
 PlayerDTO ClientProtocol::recvAPlayerDTO() {
+    PlayerDTO aPlayerDto;
     int operationType = recvANumberByte();
-    std::vector<WormDTO> wormsBelongPlayer;
     if (operationType == PLAYER){
         size_t idPlayer = recvANumberByte();
-        size_t numberWorms = recvANumberByte();
-        for(size_t i = 0; i < numberWorms; i++){
-            wormsBelongPlayer.push_back( recvWormIni() );
-        }
-        return PlayerDTO(idPlayer, wormsBelongPlayer);
-    }
-    std::cerr << "Error en el recvAPlayerDTO";
-    return PlayerDTO(0,wormsBelongPlayer);
-}
+        std::string namePlayer = recvString();
+        TurnType aTurnType = static_cast<TurnType>( recvANumberByte());
+        size_t totalHpWorms = recvNum2Bytes();
 
-WormDTO ClientProtocol::recvWormIni() {
-    int operationType = recvANumberByte();
-    if (operationType == WORM){
-        size_t idWorm = recvANumberByte();
-        size_t positionX =  recvNum2Bytes();
-        size_t positionY = recvNum2Bytes();
-        return WormDTO(idWorm, positionX, positionY);
+        return PlayerDTO(idPlayer, namePlayer, aTurnType, totalHpWorms);
     }
-    std::cerr << "Error en el recvWormIni";
-    return WormDTO(0, 0, 0);
+    return aPlayerDto;
 }
-
-*/
 
 void ClientProtocol::sendCommandDTO(const CommandDTO& commandDto) {
     unsigned int operationType = commandDto.getOperationType();
@@ -184,6 +161,8 @@ SnapShot ClientProtocol::recvASnapShot() {
             vecWormsDTO.push_back(recvAWormDTO());
         }
         aSnapShot.setWormsDTO(vecWormsDTO);
+        // recibimos todos los playersDTO
+        aSnapShot.setPlayersDto(recvPlayersDTO());
     }
     return aSnapShot;
 }
@@ -195,33 +174,38 @@ WormDTO ClientProtocol::recvAWormDTO() {
         size_t positionX = recvNum2Bytes();
         size_t positionY = recvNum2Bytes();
         size_t hpWorm = recvANumberByte();
-        size_t directionLook = recvANumberByte();
-        Direction aDirection;
-        if( directionLook == Direction::LEFT){
-            aDirection = Direction::LEFT;
-        } else if (directionLook == Direction::RIGHT){
-            aDirection  = Direction::RIGHT;
-        }
-        MoveWorm aMoveWorm;
-        size_t moveWorm = recvANumberByte();
-        if (moveWorm == MoveWorm::WALKING){
-            aMoveWorm = MoveWorm::WALKING;
-        } else if (moveWorm == MoveWorm::JUMPING){
-            aMoveWorm = MoveWorm::JUMPING;
-        } else if (moveWorm == MoveWorm::STANDING){
-            aMoveWorm = MoveWorm::STANDING;
-        }
-        TypeFocusWorm typeFocusWorm;
-        size_t focusWorm = recvANumberByte();
-        if( focusWorm == TypeFocusWorm::FOCUS ){
-            typeFocusWorm = TypeFocusWorm::FOCUS;
-        } else if (focusWorm == TypeFocusWorm::NO_FOCUS){
-            typeFocusWorm = TypeFocusWorm::NO_FOCUS;
-        }
+        Direction aDirection = static_cast<Direction>( recvANumberByte() ) ;
+        MoveWorm aMoveWorm = static_cast<MoveWorm>( recvANumberByte());
+        TypeFocusWorm typeFocusWorm = static_cast<TypeFocusWorm>(  recvANumberByte());
         WormDTO otherWormDTO(positionX, positionY, hpWorm, aDirection, typeFocusWorm, aMoveWorm);
         return otherWormDTO;
     }
     return aWormDTO;
 }
 
+WeaponsDTO ClientProtocol::recvWeaponsDTO() {
+    WeaponsDTO weaponsDT0;
+    std::vector<WeaponDTO> vecWeaponDTO;
+    int operationType = recvANumberByte();
+    if (operationType == WEAPONS_TOTAL){
+        size_t numberWeapons = recvANumberByte();
+        for(size_t i = 0; i < numberWeapons ; i++){
+            vecWeaponDTO.push_back(recvAWeaponDTO());
+        }
+        weaponsDT0.setWeapons(vecWeaponDTO);
+    }
+    return weaponsDT0;
+}
+
+WeaponDTO ClientProtocol::recvAWeaponDTO() {
+    WeaponDTO aWeaponDTO;
+    int operationType = recvANumberByte();
+    if (operationType == WEAPON){
+        TypeWeapon typeWeapon = static_cast<TypeWeapon>( recvANumberByte());
+        TypeMunition typeMunition = static_cast<TypeMunition>( recvANumberByte() );
+        size_t munition = recvANumberByte();
+        return WeaponDTO(typeWeapon, typeMunition, munition);
+    }
+    return aWeaponDTO;
+}
 

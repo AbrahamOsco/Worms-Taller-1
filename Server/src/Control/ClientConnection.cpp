@@ -4,7 +4,7 @@
 
 #include "ClientConnection.h"
 #include "../Protocol/ServerProtocol.h"
-#include "../../../Common/DTO/PlayersIniDTO.h"
+#include "../../../Common/DTO/PlayersDTO.h"
 //commandsQueueNB(UINT_MAX - 1)
 ClientConnection::ClientConnection(const size_t &idPlayer, Socket aSktPeer, Queue<std::unique_ptr<CommandDTO>> &aCommandQueueNB) :
         idPlayer(idPlayer), sktPeer(std::move(aSktPeer)), commandQueueNB(aCommandQueueNB),
@@ -52,8 +52,8 @@ void ClientConnection::stop() {
     snapShotQueueB->close();
 }
 
-void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO) {
-    std::unique_ptr<SnapShot> aSnapShot = std::make_unique<SnapShot>(vecWormsDTO);
+void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, const PlayersDTO &playersDTO) {
+    std::unique_ptr<SnapShot> aSnapShot = std::make_unique<SnapShot>(vecWormsDTO, playersDTO);
     this->snapShotQueueB->move_push(std::move(aSnapShot));
 }
 

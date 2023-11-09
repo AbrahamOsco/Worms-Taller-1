@@ -11,6 +11,7 @@
 #include <box2d/b2_world.h>
 #include "Player.h"
 #include "../../../Common/DTO/PlayerDTO.h"
+#include "../../../Common/DTO/PlayersDTO.h"
 
 class Players {
 private:
@@ -44,6 +45,8 @@ public:
     void jumpForwardWorm();
 
     void updateStateWorms();
+
+    PlayersDTO getPlayersDTO() const;
 };
 
 

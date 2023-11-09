@@ -9,7 +9,6 @@ GameParameters::GameParameters() {
     realpath("../../", startPathC);
     std::string startPath(startPathC);
     std::string fullPath(startPath + "/Worms-Taller-1/Server/GameParameters/" + "GameParameters.yaml" );
-    std::cout << "FUll path es " << fullPath << "\n";
     this->nodeInitial = YAML::LoadFile(fullPath); //basicamente el nodo inicial es como un diccionario le pasamos una clave y nos escupe un valor.
     parameters["FPS_GAME"] = 1/nodeInitial["FPS_GAME"].as<float>();
     parameters["VELOCITY_ITERATIONS"] = nodeInitial["VELOCITY_ITERATIONS"].as<float>();
@@ -52,7 +51,6 @@ YAML::Node GameParameters::getNodeInitial() {
     realpath("../../", startPathC);
     std::string startPath(startPathC);
     std::string fullPath(startPath + "/Worms-Taller-1/Server/GameParameters/" + "GameParameters.yaml" );
-    std::cout << "FUll path es " << fullPath << "\n";
     YAML::Node nodeInitial = YAML::LoadFile(fullPath);
     return nodeInitial;
 }

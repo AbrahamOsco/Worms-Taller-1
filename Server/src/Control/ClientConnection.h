@@ -12,7 +12,7 @@
 #include "../../../Common/Queue/Queue.h"
 #include "../../../Common/DTO/StageDTO.h"
 #include "../../../Common/DTO/PlayerDTO.h"
-#include "../../../Common/DTO/PlayersIniDTO.h"
+#include "../../../Common/DTO/PlayersDTO.h"
 #include "../../../Common/DTO/SnapShot.h"
 #include "../../../Common/DTO/CommandDTO.h"
 
@@ -41,7 +41,7 @@ public:
 
     void join();
 
-    void pushSnapShot(const std::vector<WormDTO> &vecWormsDTO);
+    void pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, const PlayersDTO &playersDTO);
 };
 
 

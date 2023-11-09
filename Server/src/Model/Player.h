@@ -47,6 +47,8 @@ public:
     void jumpForwardWorm();
 
     void updateStateWorms();
+
+    PlayerDTO getPlayerDTO(const size_t &idCurrentPlayer) const;
 };
 
 

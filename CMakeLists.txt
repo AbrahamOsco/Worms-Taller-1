@@ -88,11 +88,11 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Server/src/Control/ClientConnection.cpp Server/src/Control/ClientConnection.h Server/src/Model/Worm.cpp Server/src/Model/Worm.h Server/src/Model/Stage.cpp Server/src/Model/Stage.h
         Server/src/Control/EstablishedConnections.h Server/src/Control/EstablishedConnections.cpp
         Common/DTO/StageDTO.cpp Common/DTO/StageDTO.h Server/src/Model/Beam.cpp Server/src/Model/Beam.h Common/DTO/BeamDTO.cpp Common/DTO/BeamDTO.h Server/src/Model/YamlParser.cpp Server/src/Model/YamlParser.h Server/src/Model/GameObject.cpp Server/src/Model/GameObject.h Server/src/Model/Players.h Server/src/Model/Players.cpp Common/DTO/PlayerDTO.cpp Common/DTO/PlayerDTO.h
-        Common/DTO/PlayersIniDTO.cpp Common/DTO/PlayersIniDTO.h
+        Common/DTO/PlayersDTO.cpp Common/DTO/PlayersDTO.h
 
         Server/src/Model/Edges.cpp Server/src/Model/Edges.h Server/src/Model/Water.cpp Server/src/Model/Water.h Server/src/Model/MyContactListener.cpp Server/src/Model/MyContactListener.h Common/DTO/SnapShot.cpp Common/DTO/SnapShot.h Server/GameParameters/GameParameters.h
         Server/GameParameters/GameParameters.h Server/GameParameters/GameParameters.cpp
-
+        Common/DTO/WeaponDTO.cpp Common/DTO/WeaponDTO.h Common/DTO/WeaponsDTO.cpp Common/DTO/WeaponsDTO.h
         )
 
 # para el editor

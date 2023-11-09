@@ -1,0 +1,28 @@
+//
+// Created by abraham on 02/11/23.
+//
+
+#ifndef WORMS_TALLER_1_PLAYERSDTO_H
+#define WORMS_TALLER_1_PLAYERSDTO_H
+
+
+#include "PlayerDTO.h"
+
+class PlayersDTO : public DTO {
+private:
+    std::vector<PlayerDTO> playersDTO;
+
+public:
+    PlayersDTO();
+
+    PlayersDTO(const std::vector<PlayerDTO>& aPlayersDTO);
+
+    std::vector<PlayerDTO> getPlayersDTO() const;
+
+    void setPlayersIniDTO(const std::vector<PlayerDTO>& aPlayersDTO);
+
+
+};
+
+
+#endif //WORMS_TALLER_1_PLAYERSDTO_H

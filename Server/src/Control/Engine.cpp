@@ -48,7 +48,6 @@ void Engine::run() {
     connections.start(model.getStageDTO());
     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now(), t2,t3;
     std::chrono::duration<double> frameTime{}, sleepTime{}, timeUsed{}, target(gameParameters.getFPS()), sleepAdjustSeconds(0.0);
-
     while(keepTalking){
         t1 = std::chrono::steady_clock::now();
         this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(), gameParameters.getPositionIterations()); // Hacemos un step en el world.
@@ -56,7 +55,7 @@ void Engine::run() {
         if (commandsQueueNB.move_try_pop(aCommanDTO)){
             this->model.execute(aCommanDTO);
         }
-        connections.pushSnapShot(model.getWormsDTO());
+        connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO());
         this->model.updateStateWorms();
         /*
         if(model.getWormsDTO().back().getMoveWorm() == STANDING){
@@ -69,7 +68,6 @@ void Engine::run() {
          */
         adjustFPS(target, t1, t2, t3, timeUsed, sleepTime, frameTime, sleepAdjustSeconds);
     }
-
     this->connections.stop();
     this->clearAll(); // Limpiamos las queues.
     std::cerr << "[Engine]:run Terminando la ejecucion del juego \n";
