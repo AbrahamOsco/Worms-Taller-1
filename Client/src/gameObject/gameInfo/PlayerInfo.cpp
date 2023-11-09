@@ -13,7 +13,8 @@ void PlayerInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager
     SDL_Color textColor = {225, 225, 225, 255};
     SDL_Color boxColor = {0, 0, 0, 255};
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
-    textureManager.drawBoxText(m_name, m_x, m_y, m_width, m_height, fontPath, 12, textColor, boxColor, renderer);
+    textureManager.drawTextBox(std::to_string(m_id), m_x, m_y, fontPath, 12, textColor, boxColor, renderer);
+    textureManager.drawText(m_name, m_x + 20, m_y, fontPath, 12, boxColor, renderer);
 }
 
 void PlayerInfo::setParams(int x, int y) {

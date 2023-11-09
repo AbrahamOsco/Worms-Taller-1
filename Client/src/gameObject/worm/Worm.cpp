@@ -15,7 +15,7 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
     SDL_Color textColor = {225, 225, 225, 255};
     SDL_Color boxColor = {0, 0, 0, 255};
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
-    textureManager.drawBoxText(std::to_string(m_hpWorm), m_x - 20, m_y - 30, 36, 15, fontPath, 11, textColor, boxColor,
+    textureManager.drawTextBox(std::to_string(m_hpWorm), m_x - 20, m_y - 30, fontPath, 11, textColor, boxColor,
                                renderer);
     m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_flip, renderer, textureManager);
 }

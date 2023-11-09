@@ -78,25 +78,31 @@ void TextureManager::parseTexture(const std::string &yamlFileName, SDL2pp::Rende
     }
 }
 
-void
-TextureManager::drawBoxText(const std::string &text, int x, int y, int width, int height, const std::string &fontPath,
-                            int fontSize,
-                            SDL_Color textColor, SDL_Color boxColor, SDL2pp::Renderer &renderer) {
-    SDL_Rect textBoxRect = {x, y, width,
-                            height};
-
-    SDL_SetRenderDrawColor(renderer.Get(), boxColor.r, boxColor.g, boxColor.b, boxColor.a);
-    SDL_RenderFillRect(renderer.Get(), &textBoxRect);
-
+void TextureManager::drawTextBox(const std::string &text, int x, int y, const std::string &fontPath, int fontSize,
+                                 SDL_Color textColor, SDL_Color boxColor, SDL2pp::Renderer &renderer) {
     SDL2pp::Font font(fontPath, fontSize);
     SDL2pp::Texture textTexture(renderer, font.RenderText_Blended(text, textColor));
 
     int textWidth = textTexture.GetWidth();
     int textHeight = textTexture.GetHeight();
 
-    int textX = x + (textBoxRect.w - textWidth) / 2;
-    int textY = y + (textBoxRect.h - textHeight) / 2;
+    // Calcular la posición del texto para que quede en el punto (x, y)
+    int textX = x;
+    int textY = y;
 
+    int padding = 2;
+
+    // Calcular la caja del texto basado en las dimensiones reales del texto
+    SDL_Rect textBoxRect = {x - padding, y - padding, textWidth + 2 * padding, textHeight + 2 * padding};
+
+    // Ajustar la posición de la caja si es necesario
+    // ... (puedes ajustar la posición o las dimensiones de la caja según lo desees)
+
+    // Renderizar la caja del texto
+    SDL_SetRenderDrawColor(renderer.Get(), boxColor.r, boxColor.g, boxColor.b, boxColor.a);
+    SDL_RenderFillRect(renderer.Get(), &textBoxRect);
+
+    // Dibujar el texto en las coordenadas calculadas
     renderer.Copy(textTexture, SDL2pp::NullOpt, SDL2pp::Rect(textX, textY, textWidth, textHeight));
 }
 

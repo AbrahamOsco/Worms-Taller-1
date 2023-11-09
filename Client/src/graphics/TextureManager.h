@@ -27,7 +27,7 @@ public:
                    SDL2pp::Renderer &renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
     void
-    drawBoxText(const std::string &text, int x, int y, int width, int height, const std::string &fontPath, int fontSize,
+    drawTextBox(const std::string &text, int x, int y, const std::string &fontPath, int fontSize,
                 SDL_Color textColor, SDL_Color boxColor, SDL2pp::Renderer &renderer);
 
     void drawText(const std::string &text, int x, int y, const std::string &fontPath, int fontSize, SDL_Color textColor,
