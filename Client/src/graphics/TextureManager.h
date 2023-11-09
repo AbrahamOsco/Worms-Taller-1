@@ -20,6 +20,7 @@ public:
     void load(const std::string& fileName, std::string& id, SDL2pp::Renderer& renderer);
     void draw(const std::string& id, int x, int y, int width, int height, SDL2pp::Renderer& renderer, SDL_RendererFlip flip);
     void drawFrame(const std::string& id, int x, int y, int width, int height, int currentRow, int currentCol, SDL2pp::Renderer& renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    void drawText(const std::string& text, int x, int y, int width, int height, const std::string& fontPath, int fontSize, SDL_Color textColor, SDL_Color boxColor, SDL2pp::Renderer& renderer);
 };
 
 

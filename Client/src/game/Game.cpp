@@ -31,6 +31,7 @@ void Game::run() {
     senderThread.start();
 
     SDL2pp::SDL sdl(SDL_INIT_VIDEO);
+    SDL2pp::SDLTTF ttf;
     Engine engine(m_beams, bQueue, nbQueue);
     engine.init();
     while (engine.running()) {
