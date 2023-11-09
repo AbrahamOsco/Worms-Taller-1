@@ -14,8 +14,8 @@
 #define GRAVEDAD -10.0f
 
 Engine::Engine(const ResponseInitialStateDTO &response) : nameGameRoom( response.getGameName()) , nameScenario(response.getScenarioName()),
-                                                          numberPlayerReq(response.getPlayerRequired()), currentPlayers(0), world(b2Vec2(0.0f, GRAVEDAD)),
-                                                          model(response.getScenarioName(), world), keepTalking(true), commandsQueueNB(UINT_MAX - 1),
+                                                          numberPlayerReq(response.getPlayerRequired()), currentPlayers(0), world(b2Vec2(0.0f, gameParameters.getGravity())),
+                                                          model(response.getScenarioName(), world, gameParameters), keepTalking(true), commandsQueueNB(UINT_MAX - 1),
                                                           connections(commandsQueueNB) {
 }
 
@@ -46,19 +46,19 @@ void Engine::run() {
     std::cout << "[Engine]: La partida  " + this->nameGameRoom  + " En el scenario: " + this->nameScenario + " Con : " + estadoPartida;
     model.start();
     connections.start(model.getStageDTO());
-    float timeStep = 1.0f / 60.0f;
     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now(), t2,t3;
-    std::chrono::duration<double> frameTime{}, sleepTime{}, timeUsed{}, target(timeStep), sleepAdjustSeconds(0.0);
+    std::chrono::duration<double> frameTime{}, sleepTime{}, timeUsed{}, target(gameParameters.getFPS()), sleepAdjustSeconds(0.0);
 
     while(keepTalking){
         t1 = std::chrono::steady_clock::now();
+        this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(), gameParameters.getPositionIterations()); // Hacemos un step en el world.
         std::unique_ptr<CommandDTO> aCommanDTO;
         if (commandsQueueNB.move_try_pop(aCommanDTO)){
             this->model.execute(aCommanDTO);
         }
         connections.pushSnapShot(model.getWormsDTO());
-        this->world.Step(timeStep, VELOCITY_ITERATIONS, POSITION_TIERATIONS); // Hacemos un step en el world.
         this->model.updateStateWorms();
+        /*
         if(model.getWormsDTO().back().getMoveWorm() == STANDING){
             std::cout << "Quieto\n";
         } else if (model.getWormsDTO().back().getMoveWorm() == WALKING){
@@ -66,6 +66,7 @@ void Engine::run() {
         } else if (model.getWormsDTO().back().getMoveWorm() == JUMPING){
             std::cout << "Saltando \n";
         }
+         */
         adjustFPS(target, t1, t2, t3, timeUsed, sleepTime, frameTime, sleepAdjustSeconds);
     }
 

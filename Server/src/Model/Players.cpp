@@ -3,14 +3,16 @@
 //
 
 #include "Players.h"
+#include "../../GameParameters/GameParameters.h"
 #include <algorithm>
 
-Players::Players(const std::map<size_t, std::pair<float, float>> &idsAndPositionsWorms) : idsAndPositionsWorms(idsAndPositionsWorms), idCurrenPlayer(VALUE_INITIAL) {
+Players::Players(const std::map<size_t, std::pair<float, float>> &idsAndPositionsWorms, const GameParameters& parameters)
+        : idsAndPositionsWorms(idsAndPositionsWorms), idCurrenPlayer(VALUE_INITIAL), gameParameters(parameters) {
 
 }
 
 void Players::addPlayer(const std::string &playerName, const size_t &idPlayer) {
-    players[idPlayer] = Player(playerName, idPlayer);
+    players.emplace(idPlayer, Player(playerName, idPlayer, gameParameters));
 }
 
 void Players::assignWormsToPlayers() {
@@ -35,7 +37,7 @@ void Players::assignWormsToPlayers() {
     size_t i = 0;
     while( i < iterations){
         while( not idWormsCopy.empty() and not idPlayersCopy.empty() ){
-            players[ idPlayersCopy.back() ].assignWorm(idWormsCopy.back(), idsAndPositionsWorms[idWormsCopy.back()]);
+            players.at(idPlayersCopy.back()).assignWorm(idWormsCopy.back(), idsAndPositionsWorms[idWormsCopy.back()]);
             idPlayersCopy.pop_back();
             idWormsCopy.pop_back();
         }
@@ -48,13 +50,13 @@ void Players::assignWormsToPlayers() {
         idPlayersCopy = idPlayersOrig;
         idWormsCopy = idWormsOrig;
         while( not idWormsCopy.empty()){
-            players[idPlayersCopy.back()].assignWorm(idWormsCopy.back(), idsAndPositionsWorms[idWormsCopy.back()] );
+            players.at(idPlayersCopy.back()).assignWorm(idWormsCopy.back(), idsAndPositionsWorms[idWormsCopy.back()] );
             idWormsCopy.pop_back();
             idPlayersCopy.back();
         }
         // Si ya no hay guasnos y hay jugadores que tienen menos gusanos (por q les falto repartir en esta vuelta) les damos la bonificacion de puntos.
         while ( not idPlayersCopy.empty()){
-            players[idPlayersCopy.back()].assignBonusLife();
+            players.at(idPlayersCopy.back()).assignBonusLife();
             idPlayersCopy.pop_back();
         }
     }
@@ -92,23 +94,23 @@ size_t Players::getCurrentPlayerId() {
 
 std::pair<size_t, size_t> Players::getIdPlayerWormCurrent(){
     size_t idPlayerCurrent = this->getCurrentPlayerId();
-    return std::make_pair(idPlayerCurrent, players[idPlayerCurrent].getCurrentWormId());
+    return std::make_pair(idPlayerCurrent, players.at(idPlayerCurrent).getCurrentWormId());
 }
 
 void Players::leftWorm() {
-    players[idCurrenPlayer].leftWorm();
+    players.at(idCurrenPlayer).leftWorm();
 }
 
 void Players::rightWorm() {
-    players[idCurrenPlayer].rightWorm();
+    players.at(idCurrenPlayer).rightWorm();
 }
 
 void Players::jumpBackWorm() {
-    players[idCurrenPlayer].jumpBackWorm();
+    players.at(idCurrenPlayer).jumpBackWorm();
 }
 
 void Players::jumpForwardWorm() {
-    players[idCurrenPlayer].jumpForwardWorm();
+    players.at(idCurrenPlayer).jumpForwardWorm();
 }
 
 void Players::updateStateWorms() {

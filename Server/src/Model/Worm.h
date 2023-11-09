@@ -8,6 +8,7 @@
 #include "box2d/box2d.h"
 #include "GameObject.h"
 #include "../../../Common/DTO/WormDTO.h"
+#include "../../GameParameters/GameParameters.h"
 
 #define LIFE_BONUS 25
 
@@ -18,16 +19,15 @@ class Worm : public GameObject {
     float dragSpeed;
     float positionInitialX;
     float positionInitialY;
-    std::pair<float, float> jumpForward;
-    std::pair<float, float> jumpBack;
+    std::pair<float, float> distancesJumpForward;
+    std::pair<float, float> distancesJumpBack;
     size_t numberContacts;
     TypeFocusWorm typeFocus; // 1 Si esta siendo focus , 2 sino.
     MoveWorm typeMov;
+    const GameParameters& gameParameter;
 public:
 
-    Worm();
-
-    Worm(const size_t &idWorm, const float &posIniX, const float &posIniY);
+    Worm(const size_t &idWorm, const float &posIniX, const float &posIniY, const GameParameters& gameParameter);
 
     Direction getDirectionLook() const;
 

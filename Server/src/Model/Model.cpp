@@ -6,7 +6,8 @@
 #include "Model.h"
 #include "../../../Common/DTO/PlayersIniDTO.h"
 
-Model::Model(const std::string &scenarioName, b2World &aWorld) : stage(scenarioName), players(stage.getIdsAndPositionsWorms()), world(aWorld) {
+Model::Model(const std::string &scenarioName, b2World &aWorld, GameParameters& parameters)
+        : stage(scenarioName), players(stage.getIdsAndPositionsWorms(), parameters), world(aWorld) {
 }
 
 void Model::addPlayer(const std::string &playerName, const size_t &idPlayer) {

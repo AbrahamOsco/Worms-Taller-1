@@ -90,8 +90,8 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Common/DTO/StageDTO.cpp Common/DTO/StageDTO.h Server/src/Model/Beam.cpp Server/src/Model/Beam.h Common/DTO/BeamDTO.cpp Common/DTO/BeamDTO.h Server/src/Model/YamlParser.cpp Server/src/Model/YamlParser.h Server/src/Model/GameObject.cpp Server/src/Model/GameObject.h Server/src/Model/Players.h Server/src/Model/Players.cpp Common/DTO/PlayerDTO.cpp Common/DTO/PlayerDTO.h
         Common/DTO/PlayersIniDTO.cpp Common/DTO/PlayersIniDTO.h
 
-        Server/src/Model/Edges.cpp Server/src/Model/Edges.h Server/src/Model/Water.cpp Server/src/Model/Water.h Server/src/Model/MyContactListener.cpp Server/src/Model/MyContactListener.h Common/DTO/SnapShot.cpp Common/DTO/SnapShot.h Server/ConfigureParameters/ConfigParameters.h
-        Server/ConfigureParameters/ConfigParameters.h
+        Server/src/Model/Edges.cpp Server/src/Model/Edges.h Server/src/Model/Water.cpp Server/src/Model/Water.h Server/src/Model/MyContactListener.cpp Server/src/Model/MyContactListener.h Common/DTO/SnapShot.cpp Common/DTO/SnapShot.h Server/GameParameters/GameParameters.h
+        Server/GameParameters/GameParameters.h Server/GameParameters/GameParameters.cpp
 
         )
 

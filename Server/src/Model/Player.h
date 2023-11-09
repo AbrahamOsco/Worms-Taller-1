@@ -12,6 +12,8 @@
 #include <memory>
 #include "Worm.h"
 #include "../../../Common/DTO/PlayerDTO.h"
+#include "../../GameParameters/GameParameters.h"
+
 #define VALUE_INITIAL 1000
 
 class Player {
@@ -21,10 +23,10 @@ private:
     std::map<size_t, std::unique_ptr<Worm>> worms;
     std::map<size_t, std::unique_ptr<Worm>>::iterator wormIterator;
     size_t idCurrentWorm;
+    const GameParameters& gameParameters;
 public:
-    Player();
 
-    Player(const std::string& playerName, const size_t& idPlayer);
+    Player(const std::string& playerName, const size_t& idPlayer, const GameParameters& gameParameters);
 
     std::vector<WormDTO> getWormsDTO() const;
 
