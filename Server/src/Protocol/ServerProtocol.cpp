@@ -94,12 +94,11 @@ void ServerProtocol::sendBeam(const BeamDTO &beamDTO) {
     sendANumberByte(beamDTO.getLenghth());
     sendANumberByte(beamDTO.getHeight());
 }
-/*
 
-void ServerProtocol::sendPlayersIni(const PlayersIniDTO &playersIniDTO) {
-    sendANumberByte(playersIniDTO.getOperationType());
-    sendANumberByte(playersIniDTO.getPlayersIniDTO().size());
-    for(const auto& aPlayer : playersIniDTO.getPlayersIniDTO()){
+void ServerProtocol::sendPlayersDTO(const PlayersDTO &aPlayersDTO) {
+    sendANumberByte(aPlayersDTO.getOperationType());
+    sendANumberByte(aPlayersDTO.getPlayersDTO().size());
+    for(const auto& aPlayer : aPlayersDTO.getPlayersDTO()){
         sendAPlayerDTO(aPlayer);
     }
 }
@@ -107,11 +106,12 @@ void ServerProtocol::sendPlayersIni(const PlayersIniDTO &playersIniDTO) {
 void ServerProtocol::sendAPlayerDTO(const PlayerDTO &playerDTO) {
     sendANumberByte(playerDTO.getOperationType());
     sendANumberByte(playerDTO.getIdPlayer());
-    sendANumberByte(playerDTO.getWorms().size());
-    for (const auto& aWorm : playerDTO.getWorms()){
-        sendAWormIniDTO(aWorm);
-    }
+    sendString(playerDTO.getNamePlayer());
+    sendANumberByte(playerDTO.getTurnType());
+    sendNum2Bytes(playerDTO.getTotalHpWorms());
 }
+
+/*
 
 void ServerProtocol::sendAWormIniDTO(const WormDTO &aWormDTO) {
     sendANumberByte(aWormDTO.getOperationType());
@@ -140,6 +140,8 @@ void ServerProtocol::sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot) {
     for(const auto& aWormDTO : aSnapShot->getWormsDto()){
         sendAWormDTO(aWormDTO);
     }
+    // Ahora enviamos a los playersDTO 1 sola linea.
+    sendPlayersDTO(aSnapShot->getPlayersDto());
 }
 
 void ServerProtocol::sendAWormDTO(const WormDTO &aWormDTO) {

@@ -9,7 +9,7 @@
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
 #include "../../../Common/DTO/StageDTO.h"
 #include "../../../Common/DTO/PlayerDTO.h"
-#include "../../../Common/DTO/PlayersIniDTO.h"
+#include "../../../Common/DTO/PlayersDTO.h"
 #include "../../../Common/DTO/CommandDTO.h"
 #include "../../../Common/DTO/SnapShot.h"
 
@@ -38,9 +38,9 @@ public:
 
     CommandDTO recvCommandDTO();
 
-    //void sendPlayersIni(const PlayersIniDTO &playersIniDTO);
+    void sendPlayersDTO(const PlayersDTO &aPlayersDTO);
 
-    //void sendAPlayerDTO(const PlayerDTO &playerDTO);
+    void sendAPlayerDTO(const PlayerDTO &playerDTO);
 
     //void sendAWormIniDTO(const WormDTO &aWormDTO);
 

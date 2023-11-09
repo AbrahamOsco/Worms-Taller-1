@@ -4,7 +4,7 @@
 
 #include <string>
 #include "Model.h"
-#include "../../../Common/DTO/PlayersIniDTO.h"
+#include "../../../Common/DTO/PlayersDTO.h"
 
 Model::Model(const std::string &scenarioName, b2World &aWorld, GameParameters& parameters)
         : stage(scenarioName), players(stage.getIdsAndPositionsWorms(), parameters), world(aWorld) {
@@ -21,6 +21,11 @@ StageDTO Model::getStageDTO() const {
 std::vector<WormDTO> Model::getWormsDTO() const {
     return players.getWormsDTO();
 }
+
+PlayersDTO Model::getPlayersDTO() const {
+    return players.getPlayersDTO();
+}
+
 
 void Model::start() {
     players.assignWormsToPlayers();
@@ -56,6 +61,7 @@ void Model::jumpBackWorm() {
 void Model::updateStateWorms() {
     players.updateStateWorms();
 }
+
 
 
 

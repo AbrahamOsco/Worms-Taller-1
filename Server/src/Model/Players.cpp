@@ -118,3 +118,11 @@ void Players::updateStateWorms() {
         aPlayer.second.updateStateWorms();
     }
 }
+
+PlayersDTO Players::getPlayersDTO() const {
+    std::vector<PlayerDTO> vecPlayersDTO;
+    for(auto& mapPlayers : players){
+        vecPlayersDTO.push_back(mapPlayers.second.getPlayerDTO(idCurrenPlayer));
+    }
+    return PlayersDTO(vecPlayersDTO);
+}

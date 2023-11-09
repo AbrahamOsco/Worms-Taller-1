@@ -8,18 +8,24 @@
 
 #include <vector>
 #include "WormDTO.h"
+#include "PlayersDTO.h"
 
 class SnapShot : public DTO {
 private:
     std::vector<WormDTO> wormsDTO;
+    PlayersDTO playersDTO;
 public:
     SnapShot();
 
-    explicit SnapShot(const std::vector<WormDTO>& wormsDTO);
+    explicit SnapShot(const std::vector<WormDTO>& wormsDTO, const PlayersDTO &aPlayersDTO);
 
     void setWormsDTO(const std::vector<WormDTO>& wormsDTO);
 
-    const std::vector<WormDTO> &getWormsDto() const;
+    std::vector<WormDTO> getWormsDto() const;
+
+    PlayersDTO getPlayersDto() const;
+
+    void setPlayersDto(const PlayersDTO &playersDto);
 
 };
 

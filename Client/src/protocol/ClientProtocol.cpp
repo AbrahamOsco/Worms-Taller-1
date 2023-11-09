@@ -123,49 +123,38 @@ BeamDTO ClientProtocol::recvBeamDTO() {
     }
     return beamDto;
 }
-/*
-PlayersIniDTO ClientProtocol::recvPlayersIni() {
+PlayersDTO ClientProtocol::recvPlayersDTO() {
     int operationType = recvANumberByte();
-    std::vector<PlayerDTO> playersIniDTO;
-    if (operationType == PLAYERS_INITIAL){
+    std::vector<PlayerDTO> vecPlayerDTO;
+    if (operationType == PLAYERS_TOTAL){
         size_t numberPlayers = recvANumberByte();
         for(size_t i = 0; i < numberPlayers; i++){
-            playersIniDTO.push_back( recvAPlayerDTO());
+            vecPlayerDTO.push_back( recvAPlayerDTO());
         }
-        return PlayersIniDTO(playersIniDTO);
+        return PlayersDTO(vecPlayerDTO);
     }
-    std::cerr << "Error en el recvPlayersIni";
-    return PlayersIniDTO(playersIniDTO);
+    return PlayersDTO(vecPlayerDTO);
 }
 
 PlayerDTO ClientProtocol::recvAPlayerDTO() {
+    PlayerDTO aPlayerDto;
     int operationType = recvANumberByte();
-    std::vector<WormDTO> wormsBelongPlayer;
     if (operationType == PLAYER){
         size_t idPlayer = recvANumberByte();
-        size_t numberWorms = recvANumberByte();
-        for(size_t i = 0; i < numberWorms; i++){
-            wormsBelongPlayer.push_back( recvWormIni() );
+        std::string namePlayer = recvString();
+        int typeTurn = recvANumberByte();
+        TurnType aTurnType;
+        if (typeTurn == TurnType::MY_TURN ){
+            aTurnType = TurnType::MY_TURN;
+        } else if ( typeTurn == TurnType::NOT_IS_MY_TURN ){
+            aTurnType = TurnType::NOT_IS_MY_TURN;
         }
-        return PlayerDTO(idPlayer, wormsBelongPlayer);
-    }
-    std::cerr << "Error en el recvAPlayerDTO";
-    return PlayerDTO(0,wormsBelongPlayer);
-}
+        size_t totalHpWorms = recvNum2Bytes();
 
-WormDTO ClientProtocol::recvWormIni() {
-    int operationType = recvANumberByte();
-    if (operationType == WORM){
-        size_t idWorm = recvANumberByte();
-        size_t positionX =  recvNum2Bytes();
-        size_t positionY = recvNum2Bytes();
-        return WormDTO(idWorm, positionX, positionY);
+        return PlayerDTO(idPlayer, namePlayer, aTurnType, totalHpWorms);
     }
-    std::cerr << "Error en el recvWormIni";
-    return WormDTO(0, 0, 0);
+    return aPlayerDto;
 }
-
-*/
 
 void ClientProtocol::sendCommandDTO(const CommandDTO& commandDto) {
     unsigned int operationType = commandDto.getOperationType();
@@ -184,6 +173,8 @@ SnapShot ClientProtocol::recvASnapShot() {
             vecWormsDTO.push_back(recvAWormDTO());
         }
         aSnapShot.setWormsDTO(vecWormsDTO);
+        // recibimos todos los playersDTO
+        aSnapShot.setPlayersDto(recvPlayersDTO());
     }
     return aSnapShot;
 }

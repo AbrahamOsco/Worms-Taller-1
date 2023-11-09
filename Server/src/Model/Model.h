@@ -10,7 +10,7 @@
 #include "Stage.h"
 #include "Players.h"
 #include "../../../Common/DTO/PlayerDTO.h"
-#include "../../../Common/DTO/PlayersIniDTO.h"
+#include "../../../Common/DTO/PlayersDTO.h"
 #include "../../../Common/DTO/CommandDTO.h"
 #include <map>
 #include <string>
@@ -40,6 +40,8 @@ public:
     void start();
 
     b2World getWorld();
+
+    PlayersDTO getPlayersDTO() const;
 
     void execute(std::unique_ptr<CommandDTO> &aCommandDTO);
 

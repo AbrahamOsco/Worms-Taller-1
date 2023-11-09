@@ -77,4 +77,16 @@ void Player::updateStateWorms() {
     }
 }
 
+PlayerDTO Player::getPlayerDTO(const size_t &idCurrentPlayer) const {
+    TurnType aTurnType = TurnType::NOT_IS_MY_TURN;
+    if(this->idPlayer == idCurrentPlayer ){
+        aTurnType = TurnType::MY_TURN;
+    }
+    size_t hpTotalWorms = 0;
+    for(auto& mapWorm : worms ){
+        hpTotalWorms += mapWorm.second->getHP();
+    }
+    return PlayerDTO(idPlayer, playerName, aTurnType, hpTotalWorms);
+}
+
 

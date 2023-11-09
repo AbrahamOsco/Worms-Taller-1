@@ -7,7 +7,7 @@
 #include "../../../Common/DTO/ResolverInitialDTO.h"
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
 #include "../../../Common/DTO/StageDTO.h"
-#include "../../../Common/DTO/PlayersIniDTO.h"
+#include "../../../Common/DTO/PlayersDTO.h"
 #include "../../../Common/DTO/CommandDTO.h"
 #include "../../../Common/DTO/SnapShot.h"
 
@@ -28,11 +28,9 @@ public:
 
     BeamDTO recvBeamDTO();
 
-    //PlayersIniDTO recvPlayersIni();
+    PlayersDTO recvPlayersDTO();
 
-    //PlayerDTO recvAPlayerDTO();
-
-    //WormDTO recvWormIni();
+    PlayerDTO recvAPlayerDTO();
 
     void sendCommandDTO(const CommandDTO& commandDto);
 
