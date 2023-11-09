@@ -20,10 +20,14 @@ private:
     Animation m_animation;
 
 public:
-    explicit Worm(const LoaderParams &params, const size_t& hpWorm, const Direction& direction, const TypeFocusWorm& focus, const MoveWorm& moveWorm);
-    void draw(SDL2pp::Renderer& renderer, TextureManager& textureManager) override;
+    explicit Worm(const LoaderParams &params, const size_t &hpWorm, const Direction &direction,
+                  const TypeFocusWorm &focus, const MoveWorm &moveWorm);
+
+    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override;
+
     void update(float dt) override;
-    void processEvent(SDL_Event &event, Queue<std::unique_ptr<Command>>& queue) override {};
+
+    void processEvent(SDL_Event &event, Queue<std::unique_ptr<Command>> &queue) override {};
 
     void animationState();
 };
