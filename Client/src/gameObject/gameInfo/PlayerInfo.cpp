@@ -10,11 +10,14 @@ PlayerInfo::PlayerInfo(int id, const std::string &name, int totalLife) : GameObj
                                                                          m_totalLife(totalLife) {}
 
 void PlayerInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
+    int fontSize = 12;
+    int padding = 10;
     SDL_Color textColor = {225, 225, 225, 255};
     SDL_Color boxColor = {0, 0, 0, 255};
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
-    textureManager.drawTextBox(std::to_string(m_id), m_x, m_y, fontPath, 12, textColor, boxColor, renderer);
-    textureManager.drawText(m_name, m_x + 20, m_y, fontPath, 12, boxColor, renderer);
+    textureManager.drawTextBox(std::to_string(m_id), m_x, m_y, fontPath, fontSize, textColor, boxColor, renderer);
+    std::string text = m_name + ": " + std::to_string(m_totalLife);
+    textureManager.drawText(text, m_x + padding, m_y, fontPath, fontSize, boxColor, renderer);
 }
 
 void PlayerInfo::setParams(int x, int y) {
