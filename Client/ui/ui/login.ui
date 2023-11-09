@@ -62,9 +62,8 @@
       <item>
        <widget class="QLabel" name="label_3">
         <property name="styleSheet">
-         <string notr="true">border-width: 15px;
-border-color: rgb(0, 0, 0);
-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color: rgba(0, 0, 0, 0.5);
+color: #FFFFFF</string>
         </property>
         <property name="text">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Nombre Jugador&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -107,9 +106,8 @@ color: rgb(255, 255, 255);</string>
       <item>
        <widget class="QLabel" name="label">
         <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);
-border-width: 15px;
-border-color: rgb(0, 0, 0);
+         <string notr="true">background-color: rgba(0, 0, 0, 0.5);
+color: #FFFFFF
 </string>
         </property>
         <property name="text">
@@ -166,10 +164,8 @@ border-color: rgb(0, 0, 0);
       <item>
        <widget class="QLabel" name="label_2">
         <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);
-border-width: 15px;
-border-color: rgb(0, 0, 0);
-</string>
+         <string notr="true">background-color: rgba(0, 0, 0, 0.5);
+color: #FFFFFF</string>
         </property>
         <property name="text">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Port&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
