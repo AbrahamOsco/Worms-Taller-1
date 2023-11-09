@@ -4,10 +4,8 @@
 
 #include "ReceiverThread.h"
 #include "../gameObject/worm/Worm.h"
-#include "../gameObject/button/Button.h"
-#include "../buttonManager/ButtonManager.h"
-#include "../gameObject/turn/Turn.h"
 #include "../gameObject/gameInfo/GameInfo.h"
+#include "../utils/Constants.h"
 
 ReceiverThread::ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::unique_ptr<GameObject>>> &queue)
         : m_protocol(protocol), m_queue(queue), m_running(true) {}
@@ -16,7 +14,7 @@ void ReceiverThread::run() {
 
     while (m_running) {
         std::vector<std::unique_ptr<GameObject>> gameObjects;
-        LoaderParams params(512, 384, 60, 60, "player");
+
 
         SnapShot snapShot;
         snapShot = m_protocol.recvASnapShot();
@@ -30,15 +28,18 @@ void ReceiverThread::run() {
             gameObjects.push_back(std::move(worm));
         }
 
-        std::vector<PlayerInfo> players;
-        PlayersInfo playersInfo(params, players);
+        LoaderParams params(0, 0, WINDOW_WIDTH, 20, "arrow_no");
+        PlayersInfo playersInfo;
+        PlayerInfo playerInfo1(0, "Agustin", 80);
+        playersInfo.addPlayer(playerInfo1);
+        PlayerInfo playerInfo2(0, "Juan", 80);
+        playersInfo.addPlayer(playerInfo2);
         std::vector<Weapon> weapons;
         WeaponInventory weaponInventory(params, weapons);
         WindInfo wind(params, 10, Direction::RIGHT);
-        std::string currentTurn = " ";
-        bool isMyTurn = true;
+        std::string currentTurn = "Pepe";
         gameObjects.push_back(
-                std::make_unique<GameInfo>(params, playersInfo, weaponInventory, wind, currentTurn, isMyTurn));
+                std::make_unique<GameInfo>(params, playersInfo, weaponInventory, wind, currentTurn, true));
         m_queue.move_try_push(std::move(gameObjects));
     }
 }

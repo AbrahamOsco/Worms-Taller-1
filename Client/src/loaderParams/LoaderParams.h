@@ -18,6 +18,8 @@ private:
     SDL_RendererFlip m_flip;
 
 public:
+    LoaderParams();
+
     LoaderParams(int x, int y, int width, int height, const std::string &textureID, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
     int getX() const;

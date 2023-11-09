@@ -11,17 +11,20 @@
 GameInfo::GameInfo(const LoaderParams &params, PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind,
                    const std::string &currentTurn,
                    bool isMyTurn) : GameObject(params), m_players(players), m_weaponInventory(weaponInventory),
-                                    m_wind(wind), m_currentTurn(currentTurn), m_isMyTurn(isMyTurn) {}
+                                    m_wind(wind), m_currentTurn(currentTurn), m_isMyTurn(isMyTurn) {
+    if (isMyTurn) {
+        m_currentTurn = "Tu turno";
+    }
+}
 
 void GameInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
     m_players.draw(renderer, textureManager);
-    m_weaponInventory.draw(renderer,textureManager);
+    m_weaponInventory.draw(renderer, textureManager);
     m_wind.draw(renderer, textureManager);
 
-    SDL_Color textColor = {225, 225, 225, 255};
-    SDL_Color boxColor = {0, 0, 0, 255};
+    SDL_Color textColor = {0, 0, 0, 255};
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
-    textureManager.drawText(m_currentTurn, 20, 20, 20, 20, fontPath, 12, textColor, boxColor, renderer);
+    textureManager.drawText(m_currentTurn, (m_width - m_x) / 2, m_y, fontPath, m_height, textColor, renderer);
 }
 
 void GameInfo::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) {

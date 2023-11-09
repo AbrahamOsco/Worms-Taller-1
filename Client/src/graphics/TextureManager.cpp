@@ -8,7 +8,7 @@ void TextureManager::load(const std::string &fileName, std::string &id, SDL2pp::
     try {
         // Cargar la textura usando SDL2pp
         SDL2pp::Surface surface(fileName);
-        std::unique_ptr <SDL2pp::Texture> texture = std::make_unique<SDL2pp::Texture>(renderer, surface);
+        std::unique_ptr<SDL2pp::Texture> texture = std::make_unique<SDL2pp::Texture>(renderer, surface);
 
         // Almacenar la textura en el mapa con el ID proporcionado
         m_textureMap[id] = std::move(texture);
@@ -78,8 +78,10 @@ void TextureManager::parseTexture(const std::string &yamlFileName, SDL2pp::Rende
     }
 }
 
-void TextureManager::drawText(const std::string &text, int x, int y, int width, int height, const std::string &fontPath, int fontSize,
-                              SDL_Color textColor, SDL_Color boxColor, SDL2pp::Renderer &renderer) {
+void
+TextureManager::drawBoxText(const std::string &text, int x, int y, int width, int height, const std::string &fontPath,
+                            int fontSize,
+                            SDL_Color textColor, SDL_Color boxColor, SDL2pp::Renderer &renderer) {
     SDL_Rect textBoxRect = {x, y, width,
                             height};
 
@@ -96,4 +98,15 @@ void TextureManager::drawText(const std::string &text, int x, int y, int width, 
     int textY = y + (textBoxRect.h - textHeight) / 2;
 
     renderer.Copy(textTexture, SDL2pp::NullOpt, SDL2pp::Rect(textX, textY, textWidth, textHeight));
+}
+
+void TextureManager::drawText(const std::string &text, int x, int y, const std::string &fontPath, int fontSize,
+                              SDL_Color textColor, SDL2pp::Renderer &renderer) {
+    SDL2pp::Font font(fontPath, fontSize);
+    SDL2pp::Texture textTexture(renderer, font.RenderText_Blended(text, textColor));
+
+    int textWidth = textTexture.GetWidth();
+    int textHeight = textTexture.GetHeight();
+
+    renderer.Copy(textTexture, SDL2pp::NullOpt, SDL2pp::Rect(x, y, textWidth, textHeight));
 }

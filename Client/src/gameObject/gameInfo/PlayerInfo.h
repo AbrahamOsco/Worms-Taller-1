@@ -15,11 +15,15 @@ private:
     std::string m_name;
     int m_totalLife;
 public:
-    PlayerInfo(const LoaderParams &params, int id, const std::string &name, int totalLife);
+    PlayerInfo(int id, const std::string &name, int totalLife);
 
-    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override {}
+    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override;
 
     void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) override {}
+
+    void setParams(int x, int y);
+
+    int getHeight();
 };
 
 

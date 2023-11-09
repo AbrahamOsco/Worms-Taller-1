@@ -117,5 +117,11 @@ textures:
     source: "../Client/resources/assets/girder/girder_6_160.png"
   - name: beam_6_170
     source: "../Client/resources/assets/girder/girder_6_170.png"
+  - name: arrow_left
+    source: "../Client/resources/assets/wind/arrow_left.png"
+  - name: arrow_right
+    source: "../Client/resources/assets/wind/arrow_right.png"
+  - name: arrow_no
+    source: "../Client/resources/assets/wind/arrow_no.png"
   - name: bg
     source: "../Client/resources/assets/background/bg.jpg"
