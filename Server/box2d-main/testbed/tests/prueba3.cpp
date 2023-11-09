@@ -405,6 +405,10 @@ public:
         return this->directionLook;
     }
 
+    void teleport(size_t newPositionX, size_t newPositionY){
+        this->body.
+    }
+
 };
 
 // Clase de colisiones el listener:

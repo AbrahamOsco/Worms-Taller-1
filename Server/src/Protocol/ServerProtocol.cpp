@@ -50,7 +50,6 @@ void ServerProtocol::sendResolverInitialDTO(const ResolverInitialDTO &resolverIn
             }
         }
     }
-
 }
 
 void ServerProtocol::sendRoom(const RoomDTO &aRoomDTO) {
@@ -124,7 +123,7 @@ CommandDTO ServerProtocol::recvCommandDTO() {
     CommandDTO commandDto;
     int operationType = recvANumberByte();
     if (operationType == COMMAND) {
-        TypeCommand commandType = static_cast<TypeCommand>((int) recvANumberByte()); // probar esto
+        TypeCommand commandType = static_cast<TypeCommand>( recvANumberByte()); // probar esto
         commandDto.setTypeCommand(commandType);
     }
     return commandDto;
@@ -164,6 +163,4 @@ void ServerProtocol::sendAWeaponDTO(const WeaponDTO &aWeapon) {
     sendANumberByte(aWeapon.getTypeMunition());
     sendANumberByte(aWeapon.getMunition());
 }
-
-
 

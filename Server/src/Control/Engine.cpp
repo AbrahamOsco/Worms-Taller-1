@@ -68,7 +68,6 @@ void Engine::run() {
          */
         adjustFPS(target, t1, t2, t3, timeUsed, sleepTime, frameTime, sleepAdjustSeconds);
     }
-
     this->connections.stop();
     this->clearAll(); // Limpiamos las queues.
     std::cerr << "[Engine]:run Terminando la ejecucion del juego \n";
