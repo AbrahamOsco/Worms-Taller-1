@@ -51,7 +51,6 @@ YAML::Node GameParameters::getNodeInitial() {
     realpath("../../", startPathC);
     std::string startPath(startPathC);
     std::string fullPath(startPath + "/Worms-Taller-1/Server/GameParameters/" + "GameParameters.yaml" );
-    std::cout << "FUll path es " << fullPath << "\n";
     YAML::Node nodeInitial = YAML::LoadFile(fullPath);
     return nodeInitial;
 }
