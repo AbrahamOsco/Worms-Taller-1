@@ -20,7 +20,7 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
     m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_flip, renderer, textureManager);
 }
 
-void Worm::update(float dt) {
+void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) {
     if (m_directionLook == Direction::RIGHT) {
         m_flip = SDL_FLIP_HORIZONTAL;
     }

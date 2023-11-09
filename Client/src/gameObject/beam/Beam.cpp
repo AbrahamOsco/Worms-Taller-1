@@ -4,7 +4,7 @@
 
 #include "Beam.h"
 
-Beam::Beam(int posCenterX, int posCenterY, Angle angle, TypeBeam type) : GameObject(LoaderParams(0, 0, 0, 0, "")) {
+Beam::Beam(int posCenterX, int posCenterY, Angle angle, TypeBeam type) {
     m_type = type;
     m_angle = angle;
     m_textureID = "beam_" + std::to_string(m_type) + "_" + std::to_string(m_angle);
@@ -80,7 +80,4 @@ Beam::Beam(int posCenterX, int posCenterY, Angle angle, TypeBeam type) : GameObj
 
 void Beam::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
     textureManager.draw(m_textureID, m_x, m_y, m_width, m_height, renderer, SDL_FLIP_NONE);
-}
-
-void Beam::update(float dt) {
 }

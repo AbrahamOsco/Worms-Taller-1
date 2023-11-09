@@ -13,11 +13,9 @@ void ButtonManager::draw(SDL2pp::Renderer& renderer, TextureManager& textureMana
     }
 }
 
-void ButtonManager::update(float dt) {}
-
-void ButtonManager::processEvent(SDL_Event &event, Queue<std::unique_ptr<Command>> &queue) {
+void ButtonManager::update(float dt, Input &input, Queue<std::unique_ptr<Command>>& queue) {
     for (Button& button : m_buttons) {
-        button.processEvent(event, queue);
+        button.update(dt, input, queue);
     }
 }
 

@@ -31,14 +31,12 @@ void Button::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
     renderer.Copy(ammo_count, SDL2pp::NullOpt, SDL2pp::Rect(m_width + 20, m_y + 30, ammo_count.GetWidth(), ammo_count.GetHeight()));
 }
 
-void Button::update(float dt) {}
-
-void Button::processEvent(SDL_Event &event, Queue<std::unique_ptr<Command>> &queue) {
-    if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
+void Button::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) {
+    /*if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
         SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);
         SDL2pp::Point point(event.motion.x, event.motion.y);
         if (SDL_PointInRect(&point, &shape)) {
             std::cout << "Click button:" << m_textureID << std::endl;
         }
-    }
+    }*/
 }

@@ -15,6 +15,7 @@
 #include "../gameObject/beam/Beam.h"
 #include "../command/Command.h"
 #include "../../../Common/Queue/Queue.h"
+#include "../inputs/Input.h"
 
 class Engine {
 private:
@@ -22,7 +23,7 @@ private:
     bool m_running;
     SDL2pp::Window m_window;
     SDL2pp::Renderer m_renderer;
-    SDL_Event m_event;
+    Input m_input;
     Timer m_timer;
 
     std::vector<Beam> &m_beams;

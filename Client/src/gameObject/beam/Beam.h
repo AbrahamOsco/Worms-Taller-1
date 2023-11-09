@@ -29,15 +29,16 @@ enum Angle : size_t {
     ANGLE_170 = 170
 };
 
-class Beam : public GameObject{
+class Beam{
 private:
+    std::string m_textureID;
+    int m_width, m_height;
+    int m_x, m_y;
     TypeBeam m_type;
     Angle m_angle;
 public:
     Beam(int posCenterX, int posCenterY, Angle angle, TypeBeam type);
-    void draw(SDL2pp::Renderer& renderer, TextureManager& textureManager) override;
-    void update(float dt) override;
-    void processEvent(SDL_Event &event, Queue<std::unique_ptr<Command>>& queue) override {};
+    void draw(SDL2pp::Renderer& renderer, TextureManager& textureManager);
 };
 
 

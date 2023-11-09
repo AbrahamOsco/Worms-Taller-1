@@ -8,16 +8,20 @@
 
 #include "../GameObject.h"
 
-class Button : public GameObject{
+class Button : public GameObject {
 protected:
     int m_value;
 public:
     explicit Button(const std::string &textureID);
-    void draw(SDL2pp::Renderer& renderer, TextureManager& textureManager) override;
-    void update(float dt) override;
-    void processEvent(SDL_Event &event, Queue<std::unique_ptr<Command>>& queue) override;
+
+    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override;
+
+    void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) override;
+
     void setX(int x);
+
     void setY(int y);
+
     int getHeight();
 
 };

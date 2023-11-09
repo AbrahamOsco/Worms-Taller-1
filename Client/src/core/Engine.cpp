@@ -23,24 +23,20 @@ Engine::Engine(std::vector<Beam> &beams, Queue<std::unique_ptr<Command>> &bQueue
 }
 
 void Engine::events() {
-    while (SDL_PollEvent(&m_event)) {
-        if (m_event.type == SDL_QUIT) {
-            m_running = false;
-            break;
-        }
-
-        for (const auto &m_gameObject: m_gameObjects) {
-            m_gameObject->processEvent(m_event, m_bQueue);
-        }
+    m_input.listen();
+    if (m_input.closed()) {
+        m_running = false;
     }
 }
 
 void Engine::update() {
     float dt = m_timer.getDeltaTime();
-    while (m_nbQueue.move_try_pop(m_gameObjects)) {}
-    for (const auto &m_gameObject: m_gameObjects) {
-        m_gameObject->update(dt);
+    while (m_nbQueue.move_try_pop(m_gameObjects)) {
+        for (const auto &m_gameObject: m_gameObjects) {
+            m_gameObject->update(dt, m_input, m_bQueue);
+        }
     }
+
 }
 
 void Engine::render() {
