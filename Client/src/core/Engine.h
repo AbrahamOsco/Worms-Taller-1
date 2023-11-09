@@ -19,25 +19,34 @@
 class Engine {
 private:
     TextureManager m_textureManager;
-    bool m_bRunning;
-    SDL2pp::Window m_pWindow;
-    SDL2pp::Renderer m_pRenderer;
+    bool m_running;
+    SDL2pp::Window m_window;
+    SDL2pp::Renderer m_renderer;
+    SDL_Event m_event;
     Timer m_timer;
 
-    std::vector<Beam>& m_beams;
+    std::vector<Beam> &m_beams;
     std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 
-    Queue<std::unique_ptr<Command>>& m_bQueue;
-    Queue<std::vector<std::unique_ptr<GameObject>>>& m_nbQueue;
+    Queue<std::unique_ptr<Command>> &m_bQueue;
+    Queue<std::vector<std::unique_ptr<GameObject>>> &m_nbQueue;
 
 public:
-    Engine(std::vector<Beam>& beams, Queue<std::unique_ptr<Command>>& bQueue, Queue<std::vector<std::unique_ptr<GameObject>>>& nbQueue);
+    Engine(std::vector<Beam> &beams, Queue<std::unique_ptr<Command>> &bQueue,
+           Queue<std::vector<std::unique_ptr<GameObject>>> &nbQueue);
+
     ~Engine() = default;
+
     void init();
+
     void events();
+
     void update();
+
     void render();
+
     bool running() const;
+
     void tick();
 };
 
