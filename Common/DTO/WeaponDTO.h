@@ -19,7 +19,7 @@ enum TypeWeapon{
     DYNAMITE,
     BASEBALL_BAT,
     AIR_ATTACK,
-    TELEPORTATION
+    TELEPORT
 };
 
 enum TypeMunition{

@@ -93,7 +93,7 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Server/src/Model/Edges.cpp Server/src/Model/Edges.h Server/src/Model/Water.cpp Server/src/Model/Water.h Server/src/Model/MyContactListener.cpp Server/src/Model/MyContactListener.h Common/DTO/SnapShot.cpp Common/DTO/SnapShot.h Server/GameParameters/GameParameters.h
         Server/GameParameters/GameParameters.h Server/GameParameters/GameParameters.cpp
         Common/DTO/WeaponDTO.cpp Common/DTO/WeaponDTO.h Common/DTO/WeaponsDTO.cpp Common/DTO/WeaponsDTO.h
-        )
+        Server/src/Model/Armament.cpp Server/src/Model/Armament.h Server/src/Model/Weapon.cpp Server/src/Model/Weapon.h Server/src/Model/Bat.cpp Server/src/Model/Bat.h Server/src/Model/Teleport.cpp Server/src/Model/Teleport.h Server/src/Model/WeaponRayCast.cpp Server/src/Model/WeaponRayCast.h)
 
 # para el editor
 include_directories(${PROJECT_SOURCE_DIR}/Editor/include)

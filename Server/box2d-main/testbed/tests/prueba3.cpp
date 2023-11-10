@@ -263,7 +263,7 @@ private:
     b2Vec2 normal;
     float fraction;
 public:
-    MyFirstRayCastCallback(){}
+        MyFirstRayCastCallback(){}
 
     float ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float fraction) override{
         std::cout << "Entre a reportFixture Esto signfica que colisone con algo y hay que reportarlo \n";
@@ -287,7 +287,7 @@ public:
         this->point = this->normal = b2Vec2(0.0, 0.0f);
     }
 
-    ~MyFirstRayCastCallback() = default;
+        ~MyFirstRayCastCallback() = default;
 };
 
 
@@ -298,6 +298,7 @@ private:
     MyFirstRayCastCallback myRayCast;
     float rayAngle; // esta en radianes.
     float rayLength;
+    Direction direction;
 
 public:
     Bat(float damage, float impulseX, float impulseY) : damage(damage){
@@ -308,7 +309,9 @@ public:
 
     GameObject* attack(b2World *world, const b2Vec2& vec2) {
         b2Vec2 p1 = vec2;
-        b2Vec2 p2 = p1 + rayLength * b2Vec2(cosf(rayAngle), sinf(rayAngle));
+        int factor = 1;
+        if (this->direction == LEFT) factor = -1;
+        b2Vec2 p2 = p1 + rayLength * b2Vec2(factor* cosf(rayAngle * DEGRATORADIANS), sinf(rayAngle * DEGRATORADIANS));
         world->RayCast(&myRayCast, p1, p2);
         std::cout << "myFirstRayCast->getFraction(): " << myRayCast.getFraction() << "\n";
         if ( myRayCast.getFraction() <= 0.001f ){
@@ -338,21 +341,29 @@ public:
         this->myRayCast.resetRayCast();
     }
 
-    void upMira() {
+    void upMira(Direction direction) {
+        this->direction = direction;
+        rayAngle += 10.0f;
+        if(rayAngle > 90.0f){
+            rayAngle -= 10.0f;
+        }
+        std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
+        /*
         rayAngle += (10.0f * DEGRATORADIANS ); // angulo lo pasamos a radianes
         if (rayAngle >= ((b2_pi/2) + 0.01f) ){
             rayAngle -= (10.0f * DEGRATORADIANS ); // volvemos al estado anterior
         }
         std::cout << "Angle current Degree / Rad: : " << rayAngle * RADIANSTODEGREE << " / " <<  rayAngle << " \n";
+        */
     }
 
-    void downMira() {
-        rayAngle -= (10.0f * DEGRATORADIANS);
-        if (rayAngle <= ((-b2_pi/2) - 0.01f) ){
-            rayAngle += (10.0f * DEGRATORADIANS); // volvemos al estado anterior.
+    void downMira(Direction direction) {
+        this->direction = direction;
+        rayAngle -= 10.0f;
+        if (rayAngle < -90.0f){
+            rayAngle += 10.0f;
         }
-        std::cout << "Angle current Degree / Rad: : " << rayAngle * RADIANSTODEGREE << " / " <<  rayAngle << " \n";
-
+        std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
     }
 
 };
@@ -491,7 +502,7 @@ public:
         }
     }
 
-    void takeDamage(float aDamage){
+    void takeDamage(const float &aDamage){
         this->hp -=aDamage;
         if(hp <= 0.0f){
             this->destroyBody();
@@ -520,15 +531,18 @@ public:
         }
         Worm* worm = (Worm*) gameObject;
         worm->takeDamage(bat.getDamage());  //danio del bate
-        worm->getBody()->ApplyLinearImpulse(b2Vec2(bat.getImpulseX(), bat.getImpulseY()), worm->getBody()->GetWorldCenter(), true);
+        int factor = 1;
+        if(directionLook == LEFT) factor = -1;
+        worm->getBody()->ApplyLinearImpulse(b2Vec2( factor * bat.getImpulseX(), bat.getImpulseY()), worm->getBody()->GetWorldCenter(), true);
         bat.resetRayCast();
-      }
+    }
+
     void upMira(){
-        bat.upMira();
+        bat.upMira(directionLook);
     }
 
     void downMira(){
-       bat.downMira();
+        bat.downMira(directionLook);
     }
 
 };

@@ -13,6 +13,7 @@
 #include "Worm.h"
 #include "../../../Common/DTO/PlayerDTO.h"
 #include "../../GameParameters/GameParameters.h"
+#include "Armament.h"
 
 #define VALUE_INITIAL 1000
 
@@ -24,6 +25,7 @@ private:
     std::map<size_t, std::unique_ptr<Worm>>::iterator wormIterator;
     size_t idCurrentWorm;
     const GameParameters& gameParameters;
+    Armament armament;
 public:
 
     Player(const std::string& playerName, const size_t& idPlayer, const GameParameters& gameParameters);
