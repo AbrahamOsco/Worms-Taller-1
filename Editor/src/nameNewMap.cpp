@@ -11,8 +11,8 @@ NameNewMap::NameNewMap(QWidget *parent) :
     this->setAttribute(Qt::WA_DeleteOnClose);
 }
 
-void NameNewMap::setPrev(QWidget *prev) {
-    this->prev = prev;
+void NameNewMap::setPrev(QWidget *prev_) {
+    this->prev = prev_;
 }
 
 NameNewMap::~NameNewMap() {
@@ -51,8 +51,8 @@ void NameNewMap::onConfirmBtnClicked() {
 
     if (nameIsAvailable) {
         this->hide();
-        std::string text(newName);
-        auto*  ew  = new EditingWindow(nullptr, text);
+        const std::string& text(newName);
+        auto* ew  =new EditingWindow(nullptr, text);
         ew->setPrev(this);
         ew->show();
     }

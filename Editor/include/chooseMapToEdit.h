@@ -22,7 +22,7 @@ class ChooseMapToEdit : public QWidget {
 
  private:
     Ui::ChooseMapToEdit *ui;
-    QWidget *prev;
+    QWidget* prev;
 };
 
 #endif  // CHOOSEMAPTOEDIT_H

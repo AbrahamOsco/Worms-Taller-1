@@ -243,8 +243,64 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_5"/>
      </item>
+     <item><widget class="Line" name="line_10">
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="midLineWidth">
+       <number>1</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Background:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="bgComboBox">
+       <item>
+        <property name="text">
+         <string>Forest</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Hell</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Manhattan</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Dungeon</string>
+        </property>
+       </item>
+      </widget>
+     </item>
      <item>
       <widget class="Line" name="line_6">
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line_8">
        <property name="lineWidth">
         <number>0</number>
        </property>
@@ -512,8 +568,8 @@
    <slot>onDeleteBtnClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>845</x>
-     <y>24</y>
+     <x>890</x>
+     <y>77</y>
     </hint>
     <hint type="destinationlabel">
      <x>953</x>
@@ -528,8 +584,8 @@
    <slot>onSaveBtnClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>101</x>
-     <y>24</y>
+     <x>899</x>
+     <y>34</y>
     </hint>
     <hint type="destinationlabel">
      <x>-90</x>
@@ -544,8 +600,8 @@
    <slot>onAddBeamBtnClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>613</x>
-     <y>32</y>
+     <x>650</x>
+     <y>77</y>
     </hint>
     <hint type="destinationlabel">
      <x>945</x>
@@ -560,8 +616,8 @@
    <slot>onAddWormBtnClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>509</x>
-     <y>17</y>
+     <x>349</x>
+     <y>77</y>
     </hint>
     <hint type="destinationlabel">
      <x>-32</x>
@@ -585,6 +641,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>spinBox</sender>
+   <signal>editingFinished()</signal>
+   <receiver>EditingWindow</receiver>
+   <slot>onSpinBoxEdited()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>481</x>
+     <y>78</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-7</x>
+     <y>594</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bgComboBox</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>EditingWindow</receiver>
+   <slot>onBgComboBoxChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>69</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-87</x>
+     <y>505</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onGoBackBtnClicked()</slot>
@@ -593,5 +681,7 @@
   <slot>onChangeLenBtnClicked()</slot>
   <slot>onDeleteBtnClicked()</slot>
   <slot>onSaveBtnClicked()</slot>
+  <slot>onSpinBoxEdited()</slot>
+  <slot>onBgComboBoxChanged()</slot>
  </slots>
 </ui>
