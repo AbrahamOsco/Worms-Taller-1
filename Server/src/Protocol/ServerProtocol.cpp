@@ -137,6 +137,10 @@ void ServerProtocol::sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot) {
     }
     // Ahora enviamos a los playersDTO 1 sola linea.
     sendPlayersDTO(aSnapShot->getPlayersDto());
+
+    //ahora enviamos a WeaponsDTO.
+    sendWeaponsDTO(aSnapShot->getWeaponsDto());
+
 }
 
 void ServerProtocol::sendAWormDTO(const WormDTO &aWormDTO) {

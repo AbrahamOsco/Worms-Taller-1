@@ -12,6 +12,7 @@
 #include "../../../Common/DTO/PlayerDTO.h"
 #include "../../../Common/DTO/PlayersDTO.h"
 #include "../../../Common/DTO/CommandDTO.h"
+#include "../../../Common/DTO/WeaponsDTO.h"
 #include <map>
 #include <string>
 #include <box2d/box2d.h>
@@ -37,11 +38,13 @@ public:
 
     StageDTO getStageDTO() const;
 
+    PlayersDTO getPlayersDTO() const;
+
+    std::vector<WeaponsDTO> getVecWeaponsDTO() const;
+
     void start();
 
     b2World getWorld();
-
-    PlayersDTO getPlayersDTO() const;
 
     void execute(std::unique_ptr<CommandDTO> &aCommandDTO);
 

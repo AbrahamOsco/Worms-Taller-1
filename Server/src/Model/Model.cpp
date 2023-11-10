@@ -62,6 +62,10 @@ void Model::updateStateWorms() {
     players.updateStateWorms();
 }
 
+std::vector<WeaponsDTO> Model::getVecWeaponsDTO() const {
+    return players.getVecWeaponsDTO();
+}
+
 
 
 

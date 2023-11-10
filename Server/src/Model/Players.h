@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "../../../Common/DTO/PlayerDTO.h"
 #include "../../../Common/DTO/PlayersDTO.h"
+#include "../../../Common/DTO/WeaponsDTO.h"
 
 class Players {
 private:
@@ -47,6 +48,8 @@ public:
     void updateStateWorms();
 
     PlayersDTO getPlayersDTO() const;
+
+    std::vector<WeaponsDTO> getVecWeaponsDTO() const;
 };
 
 

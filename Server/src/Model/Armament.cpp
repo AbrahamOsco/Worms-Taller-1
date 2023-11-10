@@ -60,5 +60,13 @@ void Armament::assignWeapon(const TypeWeapon &weapon, const Direction &direction
     }
 }
 
+WeaponsDTO Armament::getWeaponsDTO() const {
+    std::vector<WeaponDTO> vecWeaponDTO;
+    for(auto& mapWeapons : armament){
+        vecWeaponDTO.push_back(mapWeapons.second->getWeaponDTO());
+    }
+    return WeaponsDTO(idPlayer, vecWeaponDTO);
+}
+
 
 

@@ -41,4 +41,8 @@ void Weapon::prepareWeapon(const Direction &aDirection) {
     // no hago nada caso de dinamita -telepor y air attack.
 }
 
+WeaponDTO Weapon::getWeaponDTO() const {
+    return WeaponDTO(typeWeapon, typeMunition, munition);
+}
+
 

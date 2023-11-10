@@ -21,6 +21,8 @@ public:
 
     TypeWeapon getTypeWeapon() const;
 
+    WeaponDTO getWeaponDTO() const;
+
     float getMainDamage() const;
 
     TypeMunition getTypeMunition() const;

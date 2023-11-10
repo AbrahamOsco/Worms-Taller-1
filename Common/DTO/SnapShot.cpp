@@ -8,7 +8,8 @@ SnapShot::SnapShot() : DTO(SNAP_SHOT) {
 
 }
 
-SnapShot::SnapShot(const std::vector<WormDTO> &wormsDTO, const PlayersDTO &aPlayersDTO) : DTO(SNAP_SHOT), wormsDTO(wormsDTO), playersDTO(aPlayersDTO)  {
+SnapShot::SnapShot(const std::vector<WormDTO> &wormsDTO, const PlayersDTO &aPlayersDTO, const WeaponsDTO& weaponsDTO) : DTO(SNAP_SHOT),
+            wormsDTO(wormsDTO), playersDTO(aPlayersDTO), weaponsDTO(weaponsDTO)   {
 }
 
 void SnapShot::setWormsDTO(const std::vector<WormDTO> &wormsDTO) {
@@ -25,6 +26,14 @@ PlayersDTO SnapShot::getPlayersDto() const {
 
 void SnapShot::setPlayersDto(const PlayersDTO &playersDto) {
     this->playersDTO = playersDto;
+}
+
+WeaponsDTO SnapShot::getWeaponsDto() const {
+    return weaponsDTO;
+}
+
+void SnapShot::setWeaponsDto(const WeaponsDTO &weaponsDto) {
+    this->weaponsDTO = weaponsDto;
 }
 
 
