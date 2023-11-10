@@ -1,6 +1,7 @@
 name: Jaula Maldita
 height: 18
 width: 32
+background: Forest
 worms:
   - positionX: 5.0
     positionY: 10.0

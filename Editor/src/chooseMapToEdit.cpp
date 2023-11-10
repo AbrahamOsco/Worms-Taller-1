@@ -19,8 +19,8 @@ ChooseMapToEdit::ChooseMapToEdit(QWidget *parent) :
     }
 }
 
-void ChooseMapToEdit::setPrev(QWidget *prev) {
-    this->prev = prev;
+void ChooseMapToEdit::setPrev(QWidget *prev_) {
+    this->prev = prev_;
 }
 
 ChooseMapToEdit::~ChooseMapToEdit() {
@@ -35,7 +35,7 @@ void ChooseMapToEdit::onGoBackBtnClicked() {
 void ChooseMapToEdit::onConfirmBtnClicked() {
     this->hide();
     std::string text(ui->mapNameList->currentItem()->text().toStdString());
-    auto*  ew  = new EditingWindow(nullptr, text);
+    auto  *ew  = new EditingWindow(nullptr, text);
     ew->setPrev(this);
     ew->loadMapToEdit();
     ew->show();

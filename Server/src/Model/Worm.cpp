@@ -6,9 +6,12 @@
 #include <iostream>
 #include "Worm.h"
 #include "../../GameParameters//GameParameters.h"
+#include "Armament.h"
+#include "Bat.h"
 
-Worm::Worm(const size_t &idWorm, const float &posIniX, const float &posIniY, const GameParameters& gameParameter) : GameObject(ENTITY_WORM),
-                positionInitialX(posIniX), positionInitialY(posIniY), gameParameter(gameParameter) {
+Worm::Worm(const size_t &idWorm, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
+           Armament& armament) : GameObject(ENTITY_WORM),
+                positionInitialX(posIniX), positionInitialY(posIniY), gameParameter(gameParameter), aWorld(nullptr), armament(armament) {
     this->idWorm = idWorm;
     hp = gameParameter.getInitialHPWorm();
     dragSpeed = gameParameter.getWormDragSpeed();
@@ -38,11 +41,14 @@ void Worm::addToTheWorld(b2World *world) {
     defFixtureWorm.shape = &wormShape;
     defFixtureWorm.friction = gameParameter.getFrictionWorm();
     defFixtureWorm.density = 1.0f;
+    this->aWorld = world;
     this->body->CreateFixture(&defFixtureWorm);
 }
 
 void Worm::jumpBackwards() {
     if( not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ){
+        armament.putWeaponOnStandBy(); // guardamos el arma actual y nos desarmamos
+        armament.unarmed();
         this->typeMov = JUMPING;
         float angleTita, initialSpeed;
         angleTita = atan(4.0f * distancesJumpBack.second / distancesJumpBack.first);       //  (4 *hmax)/distMaxHorizontal.
@@ -65,6 +71,8 @@ void Worm::jumpBackwards() {
 }
 void Worm::jumpForwards() {
     if(not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)) {
+        armament.putWeaponOnStandBy(); // guardamos el arma actual y nos desarmamos
+        armament.unarmed();
         this->typeMov = JUMPING;
         float angleTita, initialSpeed;
         angleTita = atan(4.0f * distancesJumpForward.second / distancesJumpForward.first);       //  (4 *hmax)/distMaxHorizontal.
@@ -82,6 +90,7 @@ void Worm::jumpForwards() {
         body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
     }
 }
+
 void Worm::walk(Direction aDirection) {
     if(not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ) {
         this->typeMov = MoveWorm::WALKING;
@@ -138,17 +147,65 @@ MoveWorm Worm::getTypeMov() const {
 
 void Worm::leftWorm() {
     // chequeo si esta con un arma entonces solo cambiar la dirreccio hacia donde mira.
-    walk(Direction::LEFT);
+    if( armament.isUnarmed() ){
+        walk(Direction::LEFT);
+    } else if ( not armament.isUnarmed() and this->directionLook == Direction::LEFT ){
+        armament.putWeaponOnStandBy();
+        armament.unarmed();
+        walk(Direction::LEFT);
+    } else{             // no esta desarmando y estaba mirando a la derecha pasamos a que mire a la izquierda
+        this->directionLook = Direction::LEFT;
+        armament.changeDirection(Direction::LEFT);
+    }
+
 }
 
 void Worm::rightWorm() {
-    walk(Direction::RIGHT);
+    if( armament.isUnarmed()){
+        walk(Direction::RIGHT);
+    } else if ( not armament.isUnarmed() and this->directionLook == Direction::RIGHT){
+        armament.putWeaponOnStandBy();
+        armament.unarmed();
+        walk(Direction::RIGHT);
+    } else{         // NO ESTA desarmado y estaba mirando a la izquierda lo hacemos que mira a la derecha
+        this->directionLook = Direction::RIGHT;
+        armament.changeDirection(Direction::RIGHT);
+    }
 }
 
 void Worm::stopIfUnmoving() {
     if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
         this->typeMov = STANDING;
+        armament.getWeaponOnStandBy();
     }
+}
+
+void Worm::takeDamage(const float &aDamage){
+    this->hp -=aDamage;
+    if(hp <=0.0){
+        this->destroyBody();
+    }
+}
+
+void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
+    armament.assignWeapon(aTypeWeapon, this->directionLook);
+}
+
+void Worm::attackWithBat(){
+    Bat* aBat = (Bat*) this->armament.getWeapon(BASEBALL_BAT);
+    GameObject* gameObject = aBat->getBodyShocked(aWorld, this->getBody()->GetWorldCenter() );
+    if ( gameObject == nullptr){
+        std::cout << "No se golpeo a ningun worm \n";         // signfica que no alcanza a nadie nuestro ataque o golpeamos a algo que no es un worm  por ej una viga
+        return;
+    }
+    Worm* worm = (Worm*) gameObject;
+    worm->takeDamage(aBat->getMainDamage());  //danio del bate
+    float factor = 1.0f;
+    if(directionLook == LEFT){
+        factor = -1.0f;
+    }
+    worm->getBody()->ApplyLinearImpulse(b2Vec2(factor * aBat->getImpulseX(), aBat->getImpulseY()), worm->getBody()->GetWorldCenter(), true);
+    aBat->resetRayCast();
 }
 
 

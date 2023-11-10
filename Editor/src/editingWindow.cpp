@@ -9,16 +9,18 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <utility>
 
-#define FIXED_WORLD_SIZE_M 60
+#define WORLD_HEIGHT 18
+#define WORLD_WIDTH 32
 #define PIX_PER_M 60
-#define BEAM_HEIGHT 24
-#define WORM_SIZE 30
+#define ANGLE_KEY 0
+#define TYPE_KEY 1
+#define WORM "worm"
+#define BEAM "beam"
 #define LONG_BEAM 6
-#define LONG_BEAM_IMG "longBeam.png"
-#define SHORT_BEAM_IMG "shortBeam.png"
-// #define BG_IMG "bg3600x3600.png"
-#define BG_IMG "bg1920x1080.png"
+#define LONG_BEAM_IMG "beams/longBeam"
+#define SHORT_BEAM_IMG "beams/shortBeam"
 #define WORM_IMG "worm.png"
 
 EditingWindow::EditingWindow(QWidget *parent, const std::string& mapName) :
@@ -26,7 +28,8 @@ EditingWindow::EditingWindow(QWidget *parent, const std::string& mapName) :
     ui(new Ui::EditingWindow),
     scene(nullptr),
     newBeamLength(LONG_BEAM_IMG),
-    mapName(mapName) {
+    mapName(mapName),
+    zoom(nullptr) {
     ui->setupUi(this);
     move(screen()->geometry().center() - frameGeometry().center());
     this->setAttribute(Qt::WA_DeleteOnClose);
@@ -36,25 +39,30 @@ EditingWindow::EditingWindow(QWidget *parent, const std::string& mapName) :
 
     scene  =  new QGraphicsScene;
     ui->graphicsView->setScene(scene);
-    std::string bgImg("../Editor/resources/" + std::string(BG_IMG));
-    scene->addPixmap(QPixmap(bgImg.c_str()));
+    std::string bgImg("../Editor/resources/" + ui->bgComboBox->currentText().toStdString() + ".png");
+    bg = scene->addPixmap(QPixmap(bgImg.c_str()));
 
     zoom = new Zoom(ui->graphicsView);
 }
 
-void EditingWindow::setPrev(QWidget *prev) {
-    this->prev = prev;
+void EditingWindow::setPrev(QWidget* prev_) {
+    this->prev = prev_;
 }
 
 void EditingWindow::loadMapToEdit() {
     YAML::Node mapNode = YAML::LoadFile("../Stages/" +  mapFileName);
-    auto height = mapNode["height"].as<float>();
+    auto bgName = mapNode["background"].as<std::string>();
+    std::string bgImg("../Editor/resources/" + bgName + ".png");
+    ui->bgComboBox->setCurrentText(bgName.c_str());
+    bg->setPixmap(QPixmap(bgImg.c_str()));
+    bg->setPixmap(QPixmap(bgImg.c_str()));
+    auto height = mapNode["height"].as<double>();
     YAML::Node beamsNode = mapNode["beams"];
     YAML::Node wormsNode = mapNode["worms"];
     for (YAML::const_iterator it = beamsNode.begin();
                         it != beamsNode.end(); ++it) {
         const YAML::Node& beamNode = *it;
-        auto length = static_cast<int>(beamNode["length"].as<float>());
+        auto length = beamNode["length"].as<double>();
         auto angle = static_cast<int>(beamNode["angle"].as<float>());
 
         /* si box2d trabajamos con y negativas:
@@ -62,8 +70,8 @@ void EditingWindow::loadMapToEdit() {
         auto posY = - (beamNode["y"].as<float>() * PIX_PER_M);
         */
 
-        auto posX = beamNode["x"].as<float>() * PIX_PER_M;
-        auto posY = (height - (beamNode["y"].as<float>())) * PIX_PER_M;
+        auto posX = beamNode["x"].as<double>() * PIX_PER_M;
+        auto posY = (height - (beamNode["y"].as<double>())) * PIX_PER_M;
 
         if (length == LONG_BEAM) {
             newBeamLength  = LONG_BEAM_IMG;
@@ -71,14 +79,15 @@ void EditingWindow::loadMapToEdit() {
             newBeamLength  = SHORT_BEAM_IMG;
         }
 
-        std::string beamImg("../Editor/resources/" + newBeamLength);
+        std::string beamImg("../Editor/resources/" + newBeamLength +
+                        std::to_string(angle) + ".png");
         QGraphicsPixmapItem* beam = scene->addPixmap(QPixmap(beamImg.c_str()));
-        beam->setPos(translatedPos(QPointF(posX, posY), angle,
-                                   length*PIX_PER_M, BEAM_HEIGHT,
-                                   CENTER_TO_VERTIX));
+        beam->setPos(translatedPos(QPointF(posX, posY), beam,
+                                   CENTER_TO_VERTEX));
         beam->setFlag(QGraphicsItem::ItemIsMovable);
         beam->setFlag(QGraphicsItem::ItemIsSelectable);
-        beam->setRotation(translatedRotation(angle));
+        beam->setData(ANGLE_KEY, angle);
+        beam->setData(TYPE_KEY, BEAM);
         beams.push_back(beam);
     }
 
@@ -91,62 +100,107 @@ void EditingWindow::loadMapToEdit() {
         auto posY = - (wormNode["positionY"].as<float>() * PIX_PER_M);
         */
 
-        auto posX = wormNode["positionX"].as<float>() * PIX_PER_M;
-        auto posY = (height - (wormNode["positionY"].as<float>())) * PIX_PER_M;
+        auto posX = wormNode["positionX"].as<double>() * PIX_PER_M;
+        auto posY = (height - (wormNode["positionY"].as<double>())) * PIX_PER_M;
 
         std::string wormImg("../Editor/resources/" + std::string(WORM_IMG));
         QGraphicsPixmapItem* worm = scene->addPixmap(QPixmap(wormImg.c_str()));
-        worm->setPos(translatedPos(QPointF(posX, posY), 0,
-                                   WORM_SIZE, WORM_SIZE,
-                                   CENTER_TO_VERTIX));
+        worm->setPos(translatedPos(QPointF(posX, posY), worm,
+                                   CENTER_TO_VERTEX));
         worm->setFlag(QGraphicsItem::ItemIsMovable);
         worm->setFlag(QGraphicsItem::ItemIsSelectable);
+        worm->setData(TYPE_KEY, WORM);
         worms.push_back(worm);
     }
 }
 
-int EditingWindow::translatedRotation(int rot) {
-    int tRot = rot;
-    if (rot != 0) {
-        tRot = 180 - rot;
-    }
-    return tRot;
-}
-
-QPointF EditingWindow::translatedPos(const QPointF& pos, int angle,
-                                     int length, int height,
+QPointF EditingWindow::translatedPos(const QPointF& pos, QGraphicsPixmapItem* item,
                                      TranslationType factor) {
-    float posX = pos.x();
-    float posY = pos.y();
+    auto posX = pos.x();
+    auto posY = pos.y();
 
-    if (angle == 0) {
-        posY = posY - ((height/2)*factor);
-        posX = posX - ((length/2)*factor);
-    } else if (angle == 90) {
-        posY = posY - ((length/2)*factor);
-        posX = posX + ((height/2)*factor);
-    } else if (angle < 90) {
-        float hip = qSqrt(qPow((height/2), 2)+qPow(length/2, 2));
-        float ang = angle + qRadiansToDegrees(qAtan((height/2)/(length/2)));
-        posY = posY - ((qSin(qDegreesToRadians(ang))*hip)*factor);
-        posX = posX + ((qCos(qDegreesToRadians(ang))*hip)*factor);
-    } else if (angle > 90) {
-        float hip = qSqrt(qPow((height/2), 2)+qPow(length/2, 2));
-        float ang = translatedRotation(angle) -
-                qRadiansToDegrees(qAtan((height/2)/(length/2)));
-        posY = posY - ((qSin(qDegreesToRadians(ang))*hip)*factor);
-        posX = posX - ((qCos(qDegreesToRadians(ang))*hip)*factor);
-    }
+    posX = posX - (item->boundingRect().width()/2)*factor;
+    posY = posY - (item->boundingRect().height()/2)*factor;
 
     return(QPointF(posX, posY));
 }
 
-void EditingWindow::getFileName(const std::string& mapName) {
-    mapFileName = mapName;
+void EditingWindow::getFileName(const std::string& mapName_) {
+    mapFileName = mapName_;
     mapFileName.erase(std::remove(mapFileName.begin(),
                                     mapFileName.end(), ' '),
                                     mapFileName.end());
     mapFileName += ".yaml";
+}
+
+void EditingWindow::removeItemsOutsideBounds() {
+    std::vector<QGraphicsPixmapItem*> wormsOutsideBounds;
+    for (auto & worm : worms) {
+        if (!worm->collidesWithItem(bg)) {
+            wormsOutsideBounds.push_back(worm);
+        }
+    }
+    for (auto & worm : wormsOutsideBounds) {
+        worms.erase(std::remove(worms.begin(), worms.end(),worm),
+                        worms.end());
+        delete worm;
+    }
+
+    std::vector<QGraphicsPixmapItem*> beamsOutsideBounds;
+    for (auto & beam : beams) {
+        if (!(beam->collidesWithItem(bg))) {
+            beamsOutsideBounds.push_back(beam);
+        }
+    }
+
+    for (auto & beam : beamsOutsideBounds) {
+        beams.erase(std::remove(beams.begin(), beams.end(),beam),
+                        beams.end());
+        delete beam;
+    }
+}
+
+bool EditingWindow::hasAtLeastOneWorm() {
+    bool aWormIsVisible = false;
+    for (auto & worm : worms) {
+        aWormIsVisible = true;
+        break;
+    }
+    return aWormIsVisible;
+}
+
+bool EditingWindow::hasOverlappingWorms() {
+    bool overlapping = false;
+    for (auto & worm : worms) {
+        if (worm->collidingItems().size() > 1) {
+            overlapping = true;
+            worm->setSelected(true);
+        }
+    }
+    return overlapping;
+}
+
+void EditingWindow::manageOverlappingWorms() {
+    unsigned long wormsNum = worms.size();
+    int start = 0;
+    for (int i = 0; i < wormsNum && start < wormsNum; i++) {
+        QGraphicsPixmapItem* collidingWorm = nullptr;
+        for (auto worm = worms.begin() + start; worm != worms.end(); ++worm) {
+            QList collidingItems = (*worm)->collidingItems();
+            if (collidingItems.size() > 1) {
+                collidingWorm = *worm;
+                start--;
+                break;
+            }
+            start++;
+        }
+        start++;
+        if (collidingWorm != nullptr) {
+            worms.erase(std::remove(worms.begin(), worms.end(),
+                                    collidingWorm), worms.end());
+            delete collidingWorm;
+        }
+    }
 }
 
 void EditingWindow::closeEvent(QCloseEvent *event) {
@@ -168,6 +222,25 @@ void EditingWindow::onGoBackBtnClicked() {
 }
 
 void EditingWindow::onSaveBtnClicked() {
+    removeItemsOutsideBounds();
+    if (hasOverlappingWorms()){
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Warning: Your worms overlap!",
+                                      "Any worms that overlap beams\n"
+                                      "or other worms will be deleted.\n\n"
+                                      "Are you sure you want to continue?",
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::No) {
+            return;
+        }
+    }
+    manageOverlappingWorms();
+    if (!hasAtLeastOneWorm()) {
+        QMessageBox::critical(nullptr,"Not enough worms","Add at least one worm to save.");
+        return;
+    }
+
+
     YAML::Node node;
     if (std::filesystem::exists("../Stages/" + mapFileName)) {
         node = YAML::LoadFile("../Stages/" +  mapFileName);
@@ -183,41 +256,35 @@ void EditingWindow::onSaveBtnClicked() {
         foutNames << namesNode;
 
         node["name"] = mapName;
-        node["height"] = FIXED_WORLD_SIZE_M;
-        node["width"] = FIXED_WORLD_SIZE_M;
+        node["height"] = WORLD_HEIGHT;
+        node["width"] = WORLD_WIDTH;
     }
 
-    for (auto & worm : worms) {
-        if (worm->isVisible()) {
-            YAML::Node wormNode;
-            QPointF pos = translatedPos(worm->pos(), 0,
-                                        WORM_SIZE, WORM_SIZE,
-                                        VERTIX_TO_CENTER);
-            wormNode["positionX"] = pos.x()/PIX_PER_M;
-            wormNode["positionY"] = node["height"].as<float>() -
-                                                (pos.y()/PIX_PER_M);
+    node["background"] = ui->bgComboBox->currentText().toStdString();
 
-            node["worms"].push_back(wormNode);
-        }
+    for (auto & worm : worms) {
+        YAML::Node wormNode;
+        QPointF pos = translatedPos(worm->pos(), worm,
+                                    VERTEX_TO_CENTER);
+        wormNode["positionX"] = pos.x()/PIX_PER_M;
+        wormNode["positionY"] = node["height"].as<float>() -
+                                    (pos.y()/PIX_PER_M);
+
+        node["worms"].push_back(wormNode);
+
     }
 
     for (auto & beam : beams) {
-        if (beam->isVisible()) {
-            YAML::Node beamNode;
-            QPointF pos = translatedPos(beam->pos(),
-                                        translatedRotation(beam->rotation()),
-                                        static_cast<int>
-                                        (beam->boundingRect().width()),
-                                        BEAM_HEIGHT,
-                                        VERTIX_TO_CENTER);
-            beamNode["x"] = pos.x()/PIX_PER_M;
-            beamNode["y"] = node["height"].as<float>() - (pos.y()/PIX_PER_M);
-            beamNode["angle"] = translatedRotation(beam->rotation());
-            beamNode["length"] = static_cast<int>
+        YAML::Node beamNode;
+        QPointF pos = translatedPos(beam->pos(),beam,
+                                    VERTEX_TO_CENTER);
+        beamNode["x"] = pos.x()/PIX_PER_M;
+        beamNode["y"] = node["height"].as<float>() - (pos.y()/PIX_PER_M);
+        beamNode["angle"] = beam->data(ANGLE_KEY).toInt();
+        beamNode["length"] = static_cast<int>
                     (beam->boundingRect().width()/PIX_PER_M);
+        node["beams"].push_back(beamNode);
 
-            node["beams"].push_back(beamNode);
-        }
     }
 
     std::ofstream fout("../Stages/" + mapFileName);
@@ -237,11 +304,12 @@ void EditingWindow::onAddWormBtnClicked() {
 
 void EditingWindow::onAddBeamBtnClicked() {
     GetSelectedBeamLength();
-    std::string beamImg("../Editor/resources/" + newBeamLength);
+    std::string beamImg("../Editor/resources/" + newBeamLength +
+                    std::to_string(ui->spinBox->value()) + ".png");
     QGraphicsPixmapItem* beam = scene->addPixmap(QPixmap(beamImg.c_str()));
     beam->setFlag(QGraphicsItem::ItemIsMovable);
     beam->setFlag(QGraphicsItem::ItemIsSelectable);
-    beam->setRotation(translatedRotation(ui->spinBox->value()));
+    beam->setData(ANGLE_KEY,ui->spinBox->value());
     beam->setPos(ui->graphicsView->mapToScene(
             ui->graphicsView->viewport()->rect().center()));
     beams.push_back(beam);
@@ -260,8 +328,26 @@ void EditingWindow::GetSelectedBeamLength() {
 void EditingWindow::onDeleteBtnClicked() {
     auto list  = scene->selectedItems();
     for (int i = 0; i < list.count(); i++) {
-        (list[i])->hide();
+        if(worms.erase(std::remove(worms.begin(), worms.end(),list[i])
+                       ,worms.end()) == worms.end()) {
+            beams.erase(std::remove(beams.begin(), beams.end(),list[i])
+                    ,beams.end());
+        }
+        delete list[i];
     }
+}
+
+void EditingWindow::onSpinBoxEdited() {
+    int value = ui->spinBox->value();
+    if (value%10 != 0) {
+        ui->spinBox->setValue((value/10)*10);
+    }
+}
+
+void EditingWindow::onBgComboBoxChanged() {
+    std::string bgImg("../Editor/resources/" +
+                ui->bgComboBox->currentText().toStdString() + ".png");
+    bg->setPixmap(QPixmap(bgImg.c_str()));
 }
 
 

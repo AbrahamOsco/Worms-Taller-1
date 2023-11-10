@@ -26,32 +26,39 @@ class EditingWindow : public QWidget {
 
     void onSaveBtnClicked();
 
+    void onSpinBoxEdited();
+
+    void onBgComboBoxChanged();
+
 
  public:
     explicit EditingWindow(QWidget *parent = nullptr,
                            const std::string& mapName = "");
     void setPrev(QWidget* prev);
     void loadMapToEdit();
-    ~EditingWindow();
+    ~EditingWindow() override;
 
  private:
     Ui::EditingWindow *ui;
-    Zoom *zoom;
-    QWidget *prev;
+    Zoom* zoom;
+    QWidget* prev;
     QGraphicsScene *scene;
+    QGraphicsPixmapItem *bg;
     std::vector<QGraphicsPixmapItem*> worms;
     std::vector<QGraphicsPixmapItem*> beams;
     std::string newBeamLength;
     std::string mapName;
     std::string mapFileName;
-    int translatedRotation(int rot);
-    enum TranslationType {VERTIX_TO_CENTER = -1, CENTER_TO_VERTIX = 1};
-    QPointF translatedPos(const QPointF& pos, int angle,
-                          int length, int height,
+    enum TranslationType {VERTEX_TO_CENTER = -1, CENTER_TO_VERTEX = 1};
+    static QPointF translatedPos(const QPointF& pos, QGraphicsPixmapItem* item,
                           TranslationType factor);
     void getFileName(const std::string& mapName);
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
     void GetSelectedBeamLength();
+    bool hasAtLeastOneWorm();
+    void removeItemsOutsideBounds();
+    bool hasOverlappingWorms();
+    void manageOverlappingWorms();
 };
 
 #endif  // EDITINGWINDOW_H

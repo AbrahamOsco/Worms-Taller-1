@@ -9,6 +9,7 @@
 #include "GameObject.h"
 #include "../../../Common/DTO/WormDTO.h"
 #include "../../GameParameters/GameParameters.h"
+#include "Armament.h"
 
 #define LIFE_BONUS 25
 
@@ -25,9 +26,12 @@ class Worm : public GameObject {
     TypeFocusWorm typeFocus; // 1 Si esta siendo focus , 2 sino.
     MoveWorm typeMov;
     const GameParameters& gameParameter;
+    b2World* aWorld;
+    Armament& armament;
 public:
 
-    Worm(const size_t &idWorm, const float &posIniX, const float &posIniY, const GameParameters& gameParameter);
+    Worm(const size_t &idWorm, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
+         Armament& armament);
 
     Direction getDirectionLook() const;
 
@@ -66,6 +70,12 @@ public:
     void rightWorm();
 
     void stopIfUnmoving();
+
+    void attackWithBat();
+
+    void takeDamage(const float &aDamage);
+
+    void assignWeapon(const TypeWeapon &aTypeWeapon);
 };
 
 
