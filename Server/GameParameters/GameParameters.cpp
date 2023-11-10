@@ -11,6 +11,10 @@ GameParameters::GameParameters() {
     std::string fullPath(startPath + "/Worms-Taller-1/Server/GameParameters/" + "GameParameters.yaml" );
     this->nodeInitial = YAML::LoadFile(fullPath); //basicamente el nodo inicial es como un diccionario le pasamos una clave y nos escupe un valor.
     parameters["FPS_GAME"] = 1/nodeInitial["FPS_GAME"].as<float>();
+
+    parameters["MAX_WIDTH_PIXEL"] = nodeInitial["MAX_WIDTH_PIXEL"].as<float>();
+    parameters["MAX_HEIGHT_PIXEL"] = nodeInitial["MAX_HEIGHT_PIXEL"].as<float>();
+
     parameters["VELOCITY_ITERATIONS"] = nodeInitial["VELOCITY_ITERATIONS"].as<float>();
     parameters["POSITION_ITERATIONS"] = nodeInitial["POSITION_ITERATIONS"].as<float>();
     parameters["GRAVITY"] = nodeInitial["GRAVITY"].as<float>();
@@ -27,7 +31,6 @@ GameParameters::GameParameters() {
 
     parameters["WORM_HALF_HEIGHT"] = nodeInitial["WORM_HALF_HEIGHT"].as<float>();
     parameters["WORM_FRICTION"] = nodeInitial["WORM_FRICTION"].as<float>();
-
 }
 
 float GameParameters::getFPS() const{
@@ -58,6 +61,15 @@ YAML::Node GameParameters::getNodeInitial() {
 float GameParameters::getPositionAdjustmentStatic() {
     YAML::Node aNode = getNodeInitial();
     return aNode["POSITION_ADJUSTMENT"].as<float>();
+}
+
+float GameParameters::getMaxHeightPixelStatic() {
+    YAML::Node aNode = getNodeInitial();
+    return aNode["MAX_HEIGHT_PIXEL"].as<float>();
+}
+
+float GameParameters::getMaxHeightPixel() const {
+    return parameters.at("MAX_HEIGHT_PIXEL");
 }
 
 float GameParameters::getBeamMinimumScalableAngle() {
@@ -116,6 +128,10 @@ float GameParameters::getHalfHeightWorm() const {
 float GameParameters::getFrictionWorm() const {
     return parameters.at("WORM_FRICTION");
 }
+
+
+
+
 
 
 

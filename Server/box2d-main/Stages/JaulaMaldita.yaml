@@ -4,6 +4,8 @@ width: 32
 worms:
   - positionX: 5.0
     positionY: 10.0
+  - positionX: 8.0
+    positionY: 10.0
 
 beams:
   - x: 20.7

@@ -11,6 +11,8 @@ Player::Player(const std::string &playerName, const size_t &idPlayer, const Game
                 idPlayer(idPlayer), idCurrentWorm(VALUE_INITIAL), gameParameters(gameParameters) {
 }
 
+// Aca Falta hacer gameParameters.getMaxHeightPixel() - (aWormElem.second->getPositionY() * gameParameters.getPositionAdjustment())  para la posicion en Y.
+
 std::vector<WormDTO> Player::getWormsDTO() const {
     std::vector<WormDTO> vecWormsDTO;
     for(auto& aWormElem: worms){

@@ -34,6 +34,10 @@ public:
 
     static float getBeamMaximumUnscalableAngle();
 
+    static float getMaxHeightPixelStatic();
+
+    float getMaxHeightPixel() const;
+
     static float getBeamFriction();
 
     float getPositionAdjustment() const;
