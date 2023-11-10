@@ -10,16 +10,16 @@ Input::Input() : m_quit(false) {
 
 void Input::listen() {
     SDL_Event event;
-    while(SDL_PollEvent(&event)) {
-        switch(event.type) {
-            case SDL_QUIT: m_quit = true;
-                break;
-            case SDL_KEYDOWN: keyDown();
-                break;
-            case SDL_KEYUP: keyUp();
-                break;
-        }
+    SDL_PollEvent(&event);
+    switch (event.type) {
+        case SDL_QUIT:
+            m_quit = true;
+        case SDL_KEYDOWN:
+            keyDown();
+        case SDL_KEYUP:
+            keyUp();
     }
+
 }
 
 bool Input::getKeyDown(SDL_Scancode key) {
