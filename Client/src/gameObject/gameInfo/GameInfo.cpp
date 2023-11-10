@@ -24,10 +24,10 @@ void GameInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) 
     m_weaponInventory.draw(renderer, textureManager);
     m_wind.draw(renderer, textureManager);
 
-    int fontSize = 16;
+    int fontSize = 22;
     SDL_Color textColor = {0, 0, 0, 255};
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
-    textureManager.drawText(m_currentTurn, 400, m_y, fontPath, fontSize, textColor, renderer);
+    textureManager.drawText(m_currentTurn, 378, m_y, fontPath, fontSize, textColor, renderer);
     textureManager.drawText("Time: " + std::to_string(m_time), 560, m_y, fontPath, fontSize, textColor, renderer);
 
 }

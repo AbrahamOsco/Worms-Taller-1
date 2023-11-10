@@ -14,7 +14,7 @@ private:
     int m_velocity;
     Direction m_direction;
 public:
-    WindInfo(const LoaderParams &params, int velocity, Direction direction);
+    WindInfo(int velocity, Direction direction);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override;
 

@@ -58,7 +58,7 @@ void ReceiverThread::run() {
         weaponInventory.addWeapon(weapon9);
         weaponInventory.addWeapon(weapon10);
 
-        WindInfo wind(params, 10, Direction::RIGHT);
+        WindInfo wind(10, Direction::RIGHT);
         std::string currentTurn = "Pepe";
         gameObjects.push_back(
                 std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, currentTurn, 10, true));

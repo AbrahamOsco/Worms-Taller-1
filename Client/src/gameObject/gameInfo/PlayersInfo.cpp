@@ -4,7 +4,7 @@
 
 #include "PlayersInfo.h"
 
-PlayersInfo::PlayersInfo() : GameObject(LoaderParams(5, 10, 0, 0, " ")) {}
+PlayersInfo::PlayersInfo() : GameObject(LoaderParams(10, 140, 0, 0, " ")) {}
 
 void PlayersInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
     verticalAligned(10);
