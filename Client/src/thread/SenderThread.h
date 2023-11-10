@@ -17,7 +17,7 @@ class SenderThread : public Thread {
 private:
     ClientProtocol& m_protocol;
     Queue<std::unique_ptr<Command>>& m_queue;
-    std::atomic<bool> running;
+    std::atomic<bool> m_isRunning;
 
 public:
     SenderThread(ClientProtocol& protocol, Queue<std::unique_ptr<Command>>& queue);
