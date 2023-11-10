@@ -151,6 +151,7 @@ void ServerProtocol::sendAWormDTO(const WormDTO &aWormDTO) {
 
 void ServerProtocol::sendWeaponsDTO(const WeaponsDTO &weapons) {
     sendANumberByte(weapons.getOperationType());
+    sendANumberByte(weapons.getIdPlayer());
     sendANumberByte(weapons.getWeapons().size()); // mandamos la cantida de armas y luego mandamos cada arma.
     for(auto& aWeapon : weapons.getWeapons()){
         sendAWeaponDTO(aWeapon);

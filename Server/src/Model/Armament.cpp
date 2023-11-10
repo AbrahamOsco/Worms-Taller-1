@@ -7,10 +7,9 @@
 #include "Bat.h"
 #include "Teleport.h"
 
-Armament::Armament() : currentWeapon(NONE_WEAPON), weaponOnStandBy(NONE_WEAPON) {
+Armament::Armament(const size_t &idPlayer) : idPlayer(idPlayer), currentWeapon(NONE_WEAPON), weaponOnStandBy(NONE_WEAPON) {
     armament.emplace(BASEBALL_BAT, std::make_unique<Bat>(BASEBALL_BAT, 10.0f, INFINITE, 1) );
     armament.emplace(TELEPORT, std::make_unique<Teleport>(TELEPORT, 0.0f, INFINITE, 1) );
-
 }
 
 bool Armament::isUnarmed() const{
@@ -60,5 +59,6 @@ void Armament::assignWeapon(const TypeWeapon &weapon, const Direction &direction
         armament.at(currentWeapon)->prepareWeapon(direction);
     }
 }
+
 
 

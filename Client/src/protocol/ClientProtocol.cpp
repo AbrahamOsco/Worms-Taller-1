@@ -187,11 +187,13 @@ WeaponsDTO ClientProtocol::recvWeaponsDTO() {
     WeaponsDTO weaponsDT0;
     std::vector<WeaponDTO> vecWeaponDTO;
     int operationType = recvANumberByte();
+    size_t idPlayer = recvANumberByte();
     if (operationType == WEAPONS_TOTAL){
         size_t numberWeapons = recvANumberByte();
         for(size_t i = 0; i < numberWeapons ; i++){
             vecWeaponDTO.push_back(recvAWeaponDTO());
         }
+        weaponsDT0.setIdPlayer(idPlayer);
         weaponsDT0.setWeapons(vecWeaponDTO);
     }
     return weaponsDT0;

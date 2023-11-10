@@ -8,7 +8,7 @@
 
 
 Player::Player(const std::string &playerName, const size_t &idPlayer, const GameParameters& gameParameters) : playerName(playerName),
-                idPlayer(idPlayer), idCurrentWorm(VALUE_INITIAL), gameParameters(gameParameters) {
+                idPlayer(idPlayer), idCurrentWorm(VALUE_INITIAL), gameParameters(gameParameters), armament(idPlayer) {
 }
 
 // Aca Falta hacer gameParameters.getMaxHeightPixel() - (aWormElem.second->getPositionY() * gameParameters.getPositionAdjustment())  para la posicion en Y.

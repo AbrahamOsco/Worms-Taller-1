@@ -14,12 +14,13 @@
 
 class Armament {
 private:
+    size_t idPlayer;
     std::map<TypeWeapon, std::unique_ptr<Weapon> > armament; // si no funcionan usaremos unique_ptr en weapon
     TypeWeapon currentWeapon;
     TypeWeapon weaponOnStandBy;
 
 public:
-    Armament();
+    Armament(const size_t& idPlayer);
 
     bool hasAWeapon();
 
