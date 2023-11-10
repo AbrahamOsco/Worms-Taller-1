@@ -8,7 +8,7 @@ Worm::Worm(const LoaderParams &params, const size_t &hpWorm, const Direction &di
            const MoveWorm &moveWorm) : GameObject(params), m_hpWorm(hpWorm), m_directionLook(direction),
                                        m_typeFocus(focus), m_moveWorm(moveWorm) {
     m_flip = SDL_FLIP_NONE;
-    m_animation.setProps(m_textureID, m_width, m_height, 14, 80);
+    m_animation.setProps(m_textureID, m_width, m_height, 14, 140);
 }
 
 void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
@@ -24,21 +24,21 @@ void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue
     if (m_directionLook == Direction::RIGHT) {
         m_flip = SDL_FLIP_HORIZONTAL;
     }
-    m_animation.update();
     animationState();
+    m_animation.update();
 }
 
 void Worm::animationState() {
-    m_animation.setProps("player", m_width, m_height, 14, 80, SDL_FLIP_NONE);
+    m_animation.setProps("player", m_width, m_height, 14, 140, SDL_FLIP_NONE);
 
     if (m_moveWorm == MoveWorm::WALKING) {
         m_width = 30;
         m_height = 30;
-        m_animation.setProps("walk", m_width, m_height, 14, 80, SDL_FLIP_NONE);
+        m_animation.setProps("walk", m_width, m_height, 14, 54, SDL_FLIP_NONE);
     }
     if (m_moveWorm == MoveWorm::JUMPING) {
         m_width = 60;
         m_height = 60;
-        m_animation.setProps("air", m_width, m_height, 36, 80, SDL_FLIP_NONE);
+        m_animation.setProps("air", m_width, m_height, 36, 60, SDL_FLIP_NONE);
     }
 }
