@@ -15,6 +15,7 @@
 #include "../../../Common/DTO/PlayersDTO.h"
 #include "../../../Common/DTO/SnapShot.h"
 #include "../../../Common/DTO/CommandDTO.h"
+#include "../../../Common/DTO/WeaponsDTO.h"
 
 class ClientConnection {
 private:
@@ -41,7 +42,8 @@ public:
 
     void join();
 
-    void pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, const PlayersDTO &playersDTO);
+    void pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, const PlayersDTO &playersDTO,
+                      const std::vector<WeaponsDTO> &vecWeaponsDTO);
 };
 
 

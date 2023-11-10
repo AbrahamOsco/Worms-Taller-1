@@ -91,4 +91,8 @@ PlayerDTO Player::getPlayerDTO(const size_t &idCurrentPlayer) const {
     return PlayerDTO(idPlayer, playerName, aTurnType, hpTotalWorms);
 }
 
+WeaponsDTO Player::getWeaponsDTO() const {
+    return armament.getWeaponsDTO();
+}
+
 

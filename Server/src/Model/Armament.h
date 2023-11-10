@@ -11,6 +11,7 @@
 #include "Weapon.h"
 #include "Bat.h"
 #include "../../../Common/DTO/WormDTO.h"
+#include "../../../Common/DTO/WeaponsDTO.h"
 
 class Armament {
 private:
@@ -41,6 +42,8 @@ public:
     void getWeaponOnStandBy();
 
     void assignWeapon(const TypeWeapon &weapon, const Direction &direction);
+
+    WeaponsDTO getWeaponsDTO() const;
 };
 
 

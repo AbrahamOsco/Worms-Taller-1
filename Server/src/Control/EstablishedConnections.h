@@ -13,8 +13,8 @@
 #include "../../../Common/Queue/Queue.h"
 #include "../../../Common/DTO/StageDTO.h"
 #include "../../../Common/DTO/PlayerDTO.h"
-#include "../../../Common/DTO/PlayersDTO.h"
 #include "../../../Common/DTO/CommandDTO.h"
+#include "../../../Common/DTO/WeaponsDTO.h"
 
 class EstablishedConnections {
 private:
@@ -30,7 +30,9 @@ public:
 
     void stop();
 
-    void pushSnapShot(const std::vector<WormDTO> &vectorWormsDTO, const PlayersDTO &playersDTO);
+    void pushSnapShot(const std::vector<WormDTO> &vectorWormsDTO, const PlayersDTO &playersDTO, const std::vector<WeaponsDTO> &vecWeaponsDTO);
+
+
 };
 
 

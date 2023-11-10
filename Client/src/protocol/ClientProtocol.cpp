@@ -163,6 +163,9 @@ SnapShot ClientProtocol::recvASnapShot() {
         aSnapShot.setWormsDTO(vecWormsDTO);
         // recibimos todos los playersDTO
         aSnapShot.setPlayersDto(recvPlayersDTO());
+
+        //ahora recibimos a WeaponsDTO.
+        aSnapShot.setWeaponsDto(recvWeaponsDTO());
     }
     return aSnapShot;
 }

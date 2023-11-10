@@ -126,3 +126,13 @@ PlayersDTO Players::getPlayersDTO() const {
     }
     return PlayersDTO(vecPlayersDTO);
 }
+
+std::vector<WeaponsDTO> Players::getVecWeaponsDTO() const {
+    std::vector<WeaponsDTO> vecWeaponsDTO;
+    for(auto& mapPlayers: players){
+        vecWeaponsDTO.push_back(mapPlayers.second.getWeaponsDTO());
+    }
+    return vecWeaponsDTO;
+}
+
+

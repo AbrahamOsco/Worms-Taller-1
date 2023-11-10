@@ -7,7 +7,8 @@
 WeaponsDTO::WeaponsDTO() : DTO(WEAPONS_TOTAL) {
 }
 
-WeaponsDTO::WeaponsDTO(const std::vector<WeaponDTO> &aWeapons, const size_t &idPlayer) : DTO(WEAPONS_TOTAL), weapons(aWeapons), idPlayer(idPlayer) {
+WeaponsDTO::WeaponsDTO(const size_t &idPlayer, const std::vector<WeaponDTO> &aWeapons)
+        : DTO(WEAPONS_TOTAL), idPlayer(idPlayer), weapons(aWeapons) {
 }
 
 

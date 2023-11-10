@@ -14,6 +14,7 @@
 #include "../../../Common/DTO/PlayerDTO.h"
 #include "../../GameParameters/GameParameters.h"
 #include "Armament.h"
+#include "../../../Common/DTO/WeaponsDTO.h"
 
 #define VALUE_INITIAL 1000
 
@@ -31,6 +32,8 @@ public:
     Player(const std::string& playerName, const size_t& idPlayer, const GameParameters& gameParameters);
 
     std::vector<WormDTO> getWormsDTO() const;
+
+    WeaponsDTO getWeaponsDTO() const;
 
     size_t getCurrentWormId();
 
