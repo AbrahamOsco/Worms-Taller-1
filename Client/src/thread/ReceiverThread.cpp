@@ -34,7 +34,11 @@ void ReceiverThread::run() {
             if (weaponDto.getTypeMunition() == TypeMunition::NO_INFINITE) {
                 ammoCount = static_cast<int>(weaponDto.getMunition());
             }
-            Weapon weapon(weaponDto.getTypeWeapon(), ammoCount, weaponDto.getIsSelected());
+            bool isSelect = false;
+            if (weaponDto.getTypeWeapon() == weaponsDto.getWeaponCurrent()){
+                isSelect = true;
+            }
+            Weapon weapon(weaponDto.getTypeWeapon(), ammoCount, isSelect);
             weaponInventory.addWeapon(weapon);
         }
 

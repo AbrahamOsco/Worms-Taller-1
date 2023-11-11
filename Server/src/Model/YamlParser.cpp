@@ -56,26 +56,44 @@ std::vector<Beam> YamlParser::getBeams(const YAML::Node &beamsNode) {
     return beams;
 }
 
+size_t YamlParser::getNumberWorms(const std::string &aStageName) {
+    char startPathC[PATH_MAX];
+    realpath("../../", startPathC);
+    std::string startPath(startPathC);
+    std::string stgNamNoSpace = aStageName;
+    stgNamNoSpace.erase(std::remove(stgNamNoSpace.begin(), stgNamNoSpace.end(), ' '), stgNamNoSpace.end());
+    std::string fullPath(startPath + "/Worms-Taller-1" + "/Stages/"+ stgNamNoSpace + ".yaml");
+    YAML::Node node = YAML::LoadFile(fullPath);
+    YAML::Node wormsNode = node["worms"];
+    size_t numberWorms = 0;
+    for (const auto& posWorm : node["worms"]) {
+        numberWorms++;
+    }
+    return numberWorms;
+}
 
-std::vector<std::string> YamlParser::getScenarioNames() {
+
+void YamlParser::getScenarioAndMaxWorms(std::vector<std::string>& vecScenarios, std::vector<size_t>& vecMaxNumberWorms) {
     std::vector<std::string> scenarioNames;
 
     char startPathC[PATH_MAX];
     realpath("../../", startPathC);
     std::string startPath(startPathC);
     std::string fullPath(startPath + "/Worms-Taller-1" + "/Stages/"+ "StageNames" + ".yaml");
+    std::vector<size_t> maxNumberWorms;
     try{
         YAML::Node config = YAML::LoadFile(fullPath);
         for (const auto& scenario : config["namesScenarios"]) {
             auto name = scenario["name"].as<std::string>();
             scenarioNames.push_back(name);
+            maxNumberWorms.push_back(getNumberWorms(name));
         }
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
     }
-
-
-    return scenarioNames;
+    vecScenarios = scenarioNames;
+    vecMaxNumberWorms = maxNumberWorms;
 }
+
 
 

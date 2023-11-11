@@ -31,6 +31,10 @@ void ServerProtocol::sendResolverInitialDTO(const ResolverInitialDTO &resolverIn
         for (const auto& aNameScenario : resolverInitial.getScenariosNames() ) {
             sendString(aNameScenario);
         }
+        sendANumberByte(resolverInitial.getVecMaxNumbersWorms().size());
+        for (const auto& aMaxNumberWorm : resolverInitial.getVecMaxNumbersWorms() ){
+            sendANumberByte(aMaxNumberWorm);
+        }
     } else if ( operationType == RESPONSE_FINAL_CREATE_GAME ){    // Enviamos el tipo de operacion y el estado de la  respuesta.
         sendANumberByte(RESPONSE_FINAL_CREATE_GAME);
         sendANumberByte(resolverInitial.getStatusAnswer());

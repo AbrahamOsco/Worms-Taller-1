@@ -17,7 +17,7 @@ void ClientLogin::run() {
         InitialStateDTO initialState = serverProtocol.recvInitialStateDTO();
         int operationType = initialState.getOperationType();
         if( operationType == SCENARIO_LIST_REQUEST ){        // scenarios harcodeado los nombre debemos acarlos de un archivo @Anita.
-            ResolverInitialDTO resolverInitialDto(RESPONSE_INITIAL_CREATE_GAME, games.getScenarios());
+            ResolverInitialDTO resolverInitialDto(RESPONSE_INITIAL_CREATE_GAME, games.getScenarios(), games.getMaxNumbersWorms());
             serverProtocol.sendResolverInitialDTO(resolverInitialDto);
             std::cerr << "[ClientLogin]:run Se recibio una peticion de crear  una partida -> Se envian los escenarios\n";
         } else if ( operationType == ROOM_LIST_REQUEST ){

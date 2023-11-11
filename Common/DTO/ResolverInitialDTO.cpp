@@ -9,7 +9,8 @@ ResolverInitialDTO::ResolverInitialDTO() : DTO(INITIAL_STATE) {
 }
 
 ResolverInitialDTO::ResolverInitialDTO(const OperationType &operationType,
-                                       const std::vector<std::string> &aScenariosNames) : DTO(operationType), scenariosNames(aScenariosNames) {
+                                       const std::vector<std::string> &aScenariosNames, const std::vector<size_t>& vecMaxNumbersWorms) : DTO(operationType),
+                                       scenariosNames(aScenariosNames), vecMaxNumbersWorms(vecMaxNumbersWorms) {
 }
 
 ResolverInitialDTO::ResolverInitialDTO(const OperationType &operationType, const std::vector<RoomDTO> &aGameRooms) : DTO(operationType), gameRooms(aGameRooms) {
@@ -41,5 +42,13 @@ size_t ResolverInitialDTO::getStatusAnswer() const {
 
 std::vector<RoomDTO> ResolverInitialDTO::getGameRooms() const {
     return gameRooms;
+}
+
+std::vector<size_t> ResolverInitialDTO::getVecMaxNumbersWorms() const {
+    return vecMaxNumbersWorms;
+}
+
+void ResolverInitialDTO::setVecMaxNumbersWorms(const std::vector<size_t> &vecMaxNumbersWorms) {
+    this->vecMaxNumbersWorms = vecMaxNumbersWorms;
 }
 

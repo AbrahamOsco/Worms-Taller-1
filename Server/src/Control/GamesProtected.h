@@ -20,6 +20,7 @@ class GamesProtected {
 private:
     std::map<std::string, std::unique_ptr<Engine>> games;
     std::vector<std::string> nameScenarios;
+    std::vector<std::size_t> maxNumbersWorms;
     std::mutex mtx;
 
 public:
@@ -33,6 +34,8 @@ public:
     void printRooms();
 
     std::vector<std::string> getScenarios();
+
+    std::vector<std::size_t> getMaxNumbersWorms();
 
     std::vector<RoomDTO> getAvailableRooms();
 

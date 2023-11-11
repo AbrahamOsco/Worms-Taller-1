@@ -32,6 +32,14 @@ ResolverInitialDTO ClientProtocol::recvResolverInitialDTO() {
         }
         resolverInitialDto.setOperationType(RESPONSE_INITIAL_CREATE_GAME);
         resolverInitialDto.setScenarioNames(scenarioNames);
+
+        size_t sizeVecMaxWorms = recvANumberByte();
+        std::vector<size_t> vecMaxNumberWorms;
+        for(size_t i = 0; i < sizeVecMaxWorms; i++){
+            vecMaxNumberWorms.push_back( recvANumberByte() );
+        }
+        resolverInitialDto.setVecMaxNumbersWorms(vecMaxNumberWorms);
+
     } else if ( typeOperation == RESPONSE_FINAL_CREATE_GAME ){
         resolverInitialDto.setOperationType( RESPONSE_FINAL_CREATE_GAME);
         resolverInitialDto.setStatusAnswer( recvANumberByte() );

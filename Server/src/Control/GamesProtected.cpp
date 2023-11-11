@@ -15,7 +15,7 @@
 
 
 GamesProtected::GamesProtected() {
-    this->nameScenarios = YamlParser::getScenarioNames();
+    YamlParser::getScenarioAndMaxWorms(nameScenarios, maxNumbersWorms);
 }
 
 
@@ -73,6 +73,11 @@ std::vector<RoomDTO> GamesProtected::getAvailableRooms() {
 
 void GamesProtected::stop() {
     // deterner todos los client connect ACA.
+}
+
+std::vector<std::size_t> GamesProtected::getMaxNumbersWorms() {
+    std::unique_lock<std::mutex> lck(mtx); // operacion de solo lectura no debe habe problemas.
+    return this->maxNumbersWorms;
 }
 
 

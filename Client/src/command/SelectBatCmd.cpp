@@ -9,3 +9,4 @@ void SelectBatCmd::execute(ClientProtocol &protocol) {
     commandDto.setTypeCommand(TypeCommand::SELECT_BAT);
     protocol.sendCommandDTO(commandDto);
 }
+

@@ -22,6 +22,12 @@ void MainMenu::crearPartida() {
     InitialStateDTO initialState(SCENARIO_LIST_REQUEST, playerName);
     clientProtocol.sendInitialStateDTO(initialState);
     ResolverInitialDTO resolvIniCreate = clientProtocol.recvResolverInitialDTO();
+    std::vector<size_t> vecMaxNumberWomrs = resolvIniCreate.getVecMaxNumbersWorms();
+    std::map<std::string, size_t> mapStageMaxWorm;
+    for(size_t i = 0 ; i < resolvIniCreate.getVecMaxNumbersWorms().size(); i++){
+        mapStageMaxWorm[ resolvIniCreate.getScenariosNames()[i] ] = resolvIniCreate.getVecMaxNumbersWorms()[i];
+    }
+    // guardar ese mapa como atributo y usarlo @GIRARDI
     crear.buscar(resolvIniCreate.getScenariosNames());
     this->hide();
     crear.show();

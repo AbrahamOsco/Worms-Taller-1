@@ -14,13 +14,14 @@
 class ResolverInitialDTO : public DTO {
 private:
     std::vector<std::string> scenariosNames;
+    std::vector<size_t> vecMaxNumbersWorms;
     size_t statusAnswer;
     std::vector<RoomDTO> gameRooms;
 
 public:
     ResolverInitialDTO();
 
-    ResolverInitialDTO(const OperationType& operationType, const std::vector<std::string>& aScenariosNames);
+    ResolverInitialDTO(const OperationType& operationType, const std::vector<std::string>& aScenariosNames, const std::vector<size_t>& vecMaxNumbersWorms );
 
     ResolverInitialDTO(const OperationType& operationType, const std::vector<RoomDTO>& aGameRooms);
 
@@ -37,6 +38,11 @@ public:
     size_t getStatusAnswer() const;
 
     std::vector<RoomDTO> getGameRooms() const;
+
+    std::vector<size_t> getVecMaxNumbersWorms() const;
+
+    void setVecMaxNumbersWorms(const std::vector<size_t> &vecMaxNumbersWorms);
+
 };
 
 
