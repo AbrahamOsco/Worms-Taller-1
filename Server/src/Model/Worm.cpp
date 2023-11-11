@@ -8,6 +8,7 @@
 #include "../../GameParameters//GameParameters.h"
 #include "Armament.h"
 #include "Bat.h"
+#include "Teleport.h"
 
 Worm::Worm(const size_t &idWorm, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
            Armament& armament) : GameObject(ENTITY_WORM),
@@ -195,12 +196,13 @@ void Worm::takeDamage(const float &aDamage){
     }
 }
 
+// se debe llamar a esta funcion antes de todo para asignar el arma a usar.
 void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
     armament.assignWeapon(aTypeWeapon, this->directionLook);
 }
 
 void Worm::attackWithBat(){
-    Bat* aBat = (Bat*) this->armament.getWeapon(BASEBALL_BAT);
+    Bat* aBat = (Bat*) this->armament.getWeaponCurrentPtr();
     GameObject* gameObject = aBat->getBodyShocked(aWorld, this->getBody()->GetWorldCenter() );
     if ( gameObject == nullptr){
         std::cout << "No se golpeo a ningun worm \n";         // signfica que no alcanza a nadie nuestro ataque o golpeamos a algo que no es un worm  por ej una viga
@@ -220,5 +222,9 @@ TypeWeapon Worm::getWeaponCurrent() const {
     return this->armament.getWeaponCurrent();
 }
 
+void Worm::teleportWorm(const float& posXTeleport, const float& posYTeleport){
+    Teleport* teleport = (Teleport*) this->armament.getWeaponCurrentPtr();
+    teleport->teleportIn(getBody(), posXTeleport, posYTeleport);
+}
 
 

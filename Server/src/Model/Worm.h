@@ -82,6 +82,7 @@ public:
 
     void assignWeapon(const TypeWeapon &aTypeWeapon);
 
+    void teleportWorm(const float &posXTeleport, const float &posYTeleport);
 
 };
 

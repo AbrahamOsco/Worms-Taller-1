@@ -52,22 +52,6 @@ size_t Player::getCurrentWormId() {
     return this->idCurrentWorm;
 }
 
-void Player::leftWorm() {
-    this->worms[idCurrentWorm]->leftWorm();
-}
-
-void Player::rightWorm() {
-    this->worms[idCurrentWorm]->rightWorm();
-}
-
-void Player::jumpBackWorm() {
-    this->worms[idCurrentWorm]->jumpBackwards();
-}
-
-void Player::jumpForwardWorm() {
-    this->worms[idCurrentWorm]->jumpForwards();
-}
-
 void Player::updateStateWorms() {
     for(auto& pair : worms){
         pair.second->stopIfUnmoving();
@@ -88,6 +72,10 @@ PlayerDTO Player::getPlayerDTO(const size_t &idCurrentPlayer) const {
 
 WeaponsDTO Player::getWeaponsDTO() const {
     return armament.getWeaponsDTO();
+}
+
+Worm * Player::getCurrentWorm() {
+    return worms.at(idCurrentWorm).get();
 }
 
 

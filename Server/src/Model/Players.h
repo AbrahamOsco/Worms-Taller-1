@@ -37,19 +37,13 @@ public:
 
     std::pair<size_t, size_t> getIdPlayerWormCurrent();
 
-    void leftWorm();
-
-    void rightWorm();
-
-    void jumpBackWorm();
-
-    void jumpForwardWorm();
-
     void updateStateWorms();
 
     PlayersDTO getPlayersDTO() const;
 
     std::vector<WeaponsDTO> getVecWeaponsDTO() const;
+
+    Worm *getCurrentWorm();
 };
 
 

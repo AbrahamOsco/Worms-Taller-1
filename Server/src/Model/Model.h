@@ -44,15 +44,7 @@ public:
 
     void start();
 
-    b2World getWorld();
-
     void execute(std::unique_ptr<CommandDTO> &aCommandDTO);
-
-    void leftWorm();
-
-    void rightWorm();
-
-    void jumpBackWorm();
 
     void updateStateWorms();
 };
