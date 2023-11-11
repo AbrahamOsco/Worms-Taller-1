@@ -55,7 +55,6 @@ void Worm::jumpBackwards() {
         initialSpeed = sqrt(distancesJumpBack.first * (gameParameters.getGravity() * -1) / (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
         float speedX = initialSpeed * cos(angleTita);
         float speedY = initialSpeed * sin(angleTita);
-
         float impulseX = body->GetMass() * speedX;
         float impulseY = body->GetMass() * speedY;
 
