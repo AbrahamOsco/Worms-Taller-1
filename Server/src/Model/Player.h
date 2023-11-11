@@ -43,17 +43,11 @@ public:
 
     void addToTheWorld(b2World *world);
 
-    void leftWorm();
-
-    void rightWorm();
-
-    void jumpBackWorm();
-
-    void jumpForwardWorm();
-
     void updateStateWorms();
 
     PlayerDTO getPlayerDTO(const size_t &idCurrentPlayer) const;
+
+    Worm *getCurrentWorm();
 };
 
 

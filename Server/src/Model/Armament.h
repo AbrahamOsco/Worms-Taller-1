@@ -25,7 +25,7 @@ public:
 
     bool hasAWeapon();
 
-    Weapon* getWeapon(const TypeWeapon& aTypeWeapon);
+    Weapon *getWeaponCurrentPtr();
 
     TypeWeapon getWeaponCurrent() const;
 

@@ -97,22 +97,6 @@ std::pair<size_t, size_t> Players::getIdPlayerWormCurrent(){
     return std::make_pair(idPlayerCurrent, players.at(idPlayerCurrent).getCurrentWormId());
 }
 
-void Players::leftWorm() {
-    players.at(idCurrenPlayer).leftWorm();
-}
-
-void Players::rightWorm() {
-    players.at(idCurrenPlayer).rightWorm();
-}
-
-void Players::jumpBackWorm() {
-    players.at(idCurrenPlayer).jumpBackWorm();
-}
-
-void Players::jumpForwardWorm() {
-    players.at(idCurrenPlayer).jumpForwardWorm();
-}
-
 void Players::updateStateWorms() {
     for(auto& aPlayer : players){
         aPlayer.second.updateStateWorms();
@@ -133,6 +117,10 @@ std::vector<WeaponsDTO> Players::getVecWeaponsDTO() const {
         vecWeaponsDTO.push_back(mapPlayers.second.getWeaponsDTO());
     }
     return vecWeaponsDTO;
+}
+
+Worm * Players::getCurrentWorm() {
+    return players.at(idCurrenPlayer).getCurrentWorm();
 }
 
 

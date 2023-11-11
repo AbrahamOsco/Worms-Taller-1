@@ -26,7 +26,6 @@ PlayersDTO Model::getPlayersDTO() const {
     return players.getPlayersDTO();
 }
 
-
 void Model::start() {
     players.assignWormsToPlayers();
     stage.addToTheWorld(&world);
@@ -36,26 +35,14 @@ void Model::start() {
 
 void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
     if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
-        players.leftWorm();
+        players.getCurrentWorm()->leftWorm();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD ){
-        players.rightWorm();
+        players.getCurrentWorm()->rightWorm();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_BACK_CMD){
-        players.jumpBackWorm();
+        players.getCurrentWorm()->jumpBackwards();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_FORWARD_CMD){
-        players.jumpForwardWorm();
+        players.getCurrentWorm()->jumpForwards();
     }
-}
-
-void Model::leftWorm() {
-    players.leftWorm();
-}
-
-void Model::rightWorm() {
-    players.rightWorm();
-}
-
-void Model::jumpBackWorm() {
-    players.jumpBackWorm();
 }
 
 void Model::updateStateWorms() {

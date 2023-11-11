@@ -21,9 +21,16 @@ TypeWeapon Armament::getWeaponCurrent() const {
     return this->currentWeapon;
 }
 
-Weapon* Armament::getWeapon(const TypeWeapon &aTypeWeapon) {
-    this->currentWeapon = aTypeWeapon;
-    return armament.at(aTypeWeapon).get();
+void Armament::assignWeapon(const TypeWeapon &weapon, const Direction &direction) {
+    this->currentWeapon = weapon;
+    if (armament.at(currentWeapon)->hasAScope()){
+        armament.at(currentWeapon)->prepareWeapon(direction);
+    }
+}
+
+Weapon * Armament::getWeaponCurrentPtr() {
+   // this->currentWeapon = aTypeWeapon; ->  SE LLAMA a asingWeapon antes de todo. el metodo de arriba.
+    return armament.at(currentWeapon).get();
 }
 
 bool Armament::hasAScoped() {
@@ -51,13 +58,6 @@ void Armament::putWeaponOnStandBy() {
 void Armament::getWeaponOnStandBy() {
     this->currentWeapon = weaponOnStandBy;
     this->weaponOnStandBy = NONE_WEAPON;
-}
-
-void Armament::assignWeapon(const TypeWeapon &weapon, const Direction &direction) {
-    this->currentWeapon = weapon;
-    if (armament.at(currentWeapon)->hasAScope()){
-        armament.at(currentWeapon)->prepareWeapon(direction);
-    }
 }
 
 WeaponsDTO Armament::getWeaponsDTO() const {
