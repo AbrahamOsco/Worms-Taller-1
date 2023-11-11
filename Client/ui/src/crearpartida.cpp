@@ -47,7 +47,8 @@ void CrearPartida::crear() {
     }
 }
 
-void CrearPartida::buscar(const std::vector<std::string> &nameScenarios){
+void CrearPartida::buscar(const std::vector<std::string> &nameScenarios,std::map<std::string, size_t>& mapStageMaxWorm){
+    this->mapStageMaxWorm = mapStageMaxWorm;
     this->namesScenarios = nameScenarios;
     QComboBox* maplist = findChild<QComboBox*>("listaMapas");
     maplist->clear();
@@ -66,6 +67,21 @@ void CrearPartida::resizeEvent(QResizeEvent* event){
 void CrearPartida::salir(){
     this->close();
 }
+void CrearPartida::changeMax(){
+    QComboBox* mapList = findChild<QComboBox*>("listaMapas");
+    QComboBox* maxList = findChild<QComboBox*>("listaCantidad");
+    maxList->clear();
+    QString qmap = mapList->currentText();
+    std::string map = qmap.toStdString();
+    size_t maxPlayer = mapStageMaxWorm[map];
+    for (size_t i = 1; i <= maxPlayer; i++)
+    {
+        std::string number = std::to_string(i);
+        QString qnumber = QString::fromStdString(number);
+        maxList->addItem(qnumber);
+    }
+    
+}
 void CrearPartida::connectEvents() {
     QPushButton* buttonCrear = findChild<QPushButton*>("buttonCrear");
     QObject::connect(buttonCrear, &QPushButton::clicked,
@@ -73,6 +89,9 @@ void CrearPartida::connectEvents() {
     QPushButton* buttonVolver = findChild<QPushButton*>("buttonSalir");
     QObject::connect(buttonVolver, &QPushButton::clicked,
                      this, &CrearPartida::salir);
+    QComboBox* mapList = findChild<QComboBox*>("listaMapas");
+    QObject::connect(mapList, &QComboBox::currentTextChanged,
+                     this, &CrearPartida::changeMax);
     this->setWindowTitle("Worms-Crear Partida");
     QRect screenGeometry = QApplication::desktop()->availableGeometry(this);
     int x = (screenGeometry.width() - this->width()) / 2;

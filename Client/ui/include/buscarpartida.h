@@ -8,7 +8,7 @@
 #include "../../../Common/DTO/RoomDTO.h"
 
 struct Partida{
-    std::string nombre;
+    std::string name;
     std::string mapa;
     size_t jugadores;
     size_t capacidad;
@@ -30,4 +30,4 @@ private:
     void connectEvents();
     void resizeEvent(QResizeEvent* event) override;
 };
-#endif 
+#endif

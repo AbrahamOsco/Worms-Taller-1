@@ -5,6 +5,7 @@
 #include <QDesktopWidget>
 #include <QResizeEvent>
 #include <QPalette>
+#include <map>
 
 MainMenu::MainMenu(QWidget *parent,char* server,char* port,char* name) :
         QWidget(parent),
@@ -28,7 +29,7 @@ void MainMenu::crearPartida() {
         mapStageMaxWorm[ resolvIniCreate.getScenariosNames()[i] ] = resolvIniCreate.getVecMaxNumbersWorms()[i];
     }
     // guardar ese mapa como atributo y usarlo @GIRARDI
-    crear.buscar(resolvIniCreate.getScenariosNames());
+    crear.buscar(resolvIniCreate.getScenariosNames(),mapStageMaxWorm);
     this->hide();
     crear.show();
 }
