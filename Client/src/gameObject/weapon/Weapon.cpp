@@ -36,7 +36,13 @@ void Weapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
     int padding = 6;
     textureManager.draw(m_textureID, m_x, m_y, m_width, m_height, renderer, SDL_FLIP_NONE);
     textureManager.drawText("Ammo:", m_x + m_width + padding, m_y + 12, fontPath, fontSize, textColor, renderer);
-    textureManager.drawText(std::to_string(m_ammoCount), m_x + m_width + 20, m_y + 32, fontPath, fontSize, textColor,
+    std::string text;
+    if (m_ammoCount == -1) {
+        text = "Inf";
+    } else {
+        text = std::to_string(m_ammoCount);
+    }
+    textureManager.drawText(text, m_x + m_width + 20, m_y + 32, fontPath, fontSize, textColor,
                             renderer);
 }
 

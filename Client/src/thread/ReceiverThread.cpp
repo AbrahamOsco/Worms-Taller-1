@@ -32,7 +32,11 @@ void ReceiverThread::run() {
         WeaponsDTO weaponsDto = snapShot.getWeaponsDto();
         std::vector<WeaponDTO> weapons = weaponsDto.getWeapons();
         for (const WeaponDTO & weaponDto: weapons) {
-            Weapon weapon(weaponDto.getTypeWeapon(), (int)weaponDto.getMunition());
+            int ammoCount = -1;
+            if(weaponDto.getTypeMunition() == TypeMunition::NO_INFINITE) {
+                ammoCount = (int) weaponDto.getMunition();
+            }
+            Weapon weapon(weaponDto.getTypeWeapon(), ammoCount);
             weaponInventory.addWeapon(weapon);
         }
 
