@@ -350,13 +350,6 @@ public:
             rayAngle -= 10.0f;
         }
         std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
-        /*
-        rayAngle += (10.0f * DEGRATORADIANS ); // angulo lo pasamos a radianes
-        if (rayAngle >= ((b2_pi/2) + 0.01f) ){
-            rayAngle -= (10.0f * DEGRATORADIANS ); // volvemos al estado anterior
-        }
-        std::cout << "Angle current Degree / Rad: : " << rayAngle * RADIANSTODEGREE << " / " <<  rayAngle << " \n";
-        */
     }
 
     void downMira(Direction direction) {
@@ -379,20 +372,62 @@ private:
     float impulseX;
     float impulseY;
     b2World* aWorld;
+    MyFirstRayCastCallback myRayCast;
+    float rayAngle; // esta en radianes.
+    float rayLength;
+    Direction direction;
+
 public:
     Bazooka(const Entity &aTpeEntity) : GameObject(aTpeEntity) {
         damage = 50.0f;
-        impulseX = 0.15f;
-        impulseY = 0.20f;
+        impulseX = 0.08f;
+        impulseY = 0.11f;
+        rayAngle = 0.13;
+        rayLength = 0.4f;
     }
-    void attack(b2World *world, b2Vec2 positionWorm, Direction directionLook) {
+
+    void resetRayCast() {
+        this->myRayCast.resetRayCast();
+    }
+
+    void upMira(Direction direction) {
+        this->direction = direction;
+        rayAngle += 10.0f;
+        if(rayAngle > 90.0f){
+            rayAngle -= 10.0f;
+        }
+        std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
+    }
+
+    void downMira(Direction direction) {
+        this->direction = direction;
+        rayAngle -= 10.0f;
+        if (rayAngle < -90.0f){
+            rayAngle += 10.0f;
+        }
+        std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
+    }
+
+    void changeDirectiond(Direction direction) {
+        this->direction = direction;
+    }
+
+    b2Vec2 getPositionToAttack(b2World *world, const b2Vec2& vec2) {
+        b2Vec2 p1 = vec2;
+        int factor = 1;
+        if (this->direction == LEFT) factor = -1;
+        b2Vec2 p2 = p1 + rayLength * b2Vec2(factor* cosf(rayAngle * DEGRATORADIANS), sinf(rayAngle * DEGRATORADIANS));
+        return p2;
+    }
+
+    void attack(b2World *world, b2Vec2 positionWorm) {
         b2BodyDef wormDef;
         wormDef.type = b2_dynamicBody;
         wormDef.fixedRotation = true;
-        wormDef.position.Set(positionWorm.x + 0.2, positionWorm.y + 0.2);
+        b2Vec2 p2 = getPositionToAttack(world, positionWorm);
+        wormDef.position.Set(p2.x, p2.y );
         wormDef.userData.pointer = (uintptr_t) this;
         this->body = world->CreateBody(&wormDef);
-
         //  creamos la forma del gusano.
         b2CircleShape bazookaForm;
         bazookaForm.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
@@ -404,7 +439,7 @@ public:
         defFixtureBazooka.density = 1.0f;
         this->body->CreateFixture(&defFixtureBazooka);
         int factor = 1;
-        if (directionLook == LEFT){
+        if (this->direction == LEFT){
             factor = -1;
         }
         b2Vec2 impulse(factor * impulseX, impulseY); //  por la gravedad
@@ -493,7 +528,8 @@ public:
             } else if (directionLook == LEFT) {
                 directionLook = RIGHT;   //MIRAMOS LADO OPUESTO AL Saltar hacia atras.
             } // ^
-            bat.changeDirectiond(directionLook);
+            //bat.changeDirectiond(directionLook);
+            bazooka.changeDirectiond(directionLook);
             b2Vec2 impulse(impulseX, impulseY); //  por la gravedad
             body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
         }
@@ -519,7 +555,8 @@ public:
     void walk(Direction aDirection) {
         if( not isInContactWithAnotherWorm() and  body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ){
             directionLook = aDirection;
-            bat.changeDirectiond(directionLook);
+            //bat.changeDirectiond(directionLook);
+            bazooka.changeDirectiond(directionLook);
             float acceleration = getBody()->GetFixtureList()[0].GetFriction() * 10.0f; // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
             float speed = sqrt(2.0f * acceleration * dragSpeed); // la velocidad la sacamos como 2 * aceleracion * distancia.
             float impulse = body->GetMass() * speed;
@@ -586,15 +623,17 @@ public:
     }
 
     void upMira(){
-        bat.upMira(directionLook);
+        //bat.upMira(directionLook);
+        bazooka.upMira(directionLook);
     }
 
     void downMira(){
-        bat.downMira(directionLook);
+        //bat.downMira(directionLook);
+        bazooka.downMira(directionLook);
     }
 
     void attackWithBazooka(){
-        bazooka.attack(world, getBody()->GetWorldCenter(), directionLook);
+        bazooka.attack(world, getBody()->GetWorldCenter());
     }
 
 };
