@@ -28,35 +28,19 @@ void ReceiverThread::run() {
             gameObjects.push_back(std::move(worm));
         }
 
-        LoaderParams params(0, 0, WINDOW_WIDTH, 20, "arrow_no");
+        WeaponInventory weaponInventory;
+        WeaponsDTO weaponsDto = snapShot.getWeaponsDto();
+        std::vector<WeaponDTO> weapons = weaponsDto.getWeapons();
+        for (const WeaponDTO & weaponDto: weapons) {
+            Weapon weapon(weaponDto.getTypeWeapon(), (int)weaponDto.getMunition());
+            weaponInventory.addWeapon(weapon);
+        }
 
         PlayersInfo playersInfo;
         PlayerInfo playerInfo1(0, "Agustin", 80);
         PlayerInfo playerInfo2(1, "Juan", 80);
         playersInfo.addPlayer(playerInfo1);
         playersInfo.addPlayer(playerInfo2);
-
-        WeaponInventory weaponInventory;
-        Weapon weapon1("air_attack_icon", 10);
-        Weapon weapon2("banana_icon", 10);
-        Weapon weapon3("bat_icon", 10);
-        Weapon weapon4("bazooka_icon", 10);
-        Weapon weapon5("dynamite_icon", 10);
-        Weapon weapon6("green_grenade_icon", 10);
-        Weapon weapon7("holy_grenade_icon", 10);
-        Weapon weapon8("mortar_icon", 10);
-        Weapon weapon9("red_grenade_icon", 10);
-        Weapon weapon10("teleportation_icon", 10);
-        weaponInventory.addWeapon(weapon1);
-        weaponInventory.addWeapon(weapon2);
-        weaponInventory.addWeapon(weapon3);
-        weaponInventory.addWeapon(weapon4);
-        weaponInventory.addWeapon(weapon5);
-        weaponInventory.addWeapon(weapon6);
-        weaponInventory.addWeapon(weapon7);
-        weaponInventory.addWeapon(weapon8);
-        weaponInventory.addWeapon(weapon9);
-        weaponInventory.addWeapon(weapon10);
 
         WindInfo wind(10, Direction::RIGHT);
         std::string currentTurn = "Pepe";

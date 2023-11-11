@@ -10,9 +10,10 @@
 
 class Weapon : public GameObject {
 private:
+    TypeWeapon m_typeWeapon;
     int m_ammoCount;
 public:
-    Weapon(const std::string &weapon, int ammoCount);
+    Weapon(TypeWeapon typeWeapon, int ammoCount);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override;
 
