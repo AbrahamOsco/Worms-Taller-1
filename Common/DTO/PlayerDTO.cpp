@@ -9,7 +9,7 @@ PlayerDTO::PlayerDTO() : DTO(PLAYER) {
 }
 
 PlayerDTO::PlayerDTO(const size_t &idPlayer, const std::string &aNamePlayer, const TurnType &aTurnType,
-                     const size_t &aTotalHPWorms) : DTO(PLAYER), namePlayer(aNamePlayer), turnType(aTurnType), totalHPWorms(aTotalHPWorms)  {
+                     const size_t &aTotalHPWorms) : DTO(PLAYER), idPlayer(idPlayer), namePlayer(aNamePlayer), turnType(aTurnType), totalHPWorms(aTotalHPWorms)  {
 
 }
 
