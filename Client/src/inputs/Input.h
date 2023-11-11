@@ -10,18 +10,29 @@
 class Input {
 private:
     const Uint8* m_keyStates;
+    bool m_quit;
+
+    // Nuevas variables para el manejo del clic del mouse
+    bool m_mouseButtonDown;
+    int m_mouseX;
+    int m_mouseY;
 
     void keyUp();
     void keyDown();
-
-    bool m_quit;
+    void mouseButtonDown(SDL_Event& event);
+    void mouseButtonUp(SDL_Event& event);
+    void mouseMotion(SDL_Event& event);
 
 public:
     Input();
     void listen();
     bool getKeyDown(SDL_Scancode key);
 
-    bool closed();
+    bool isMouseButtonDown() const;
+    int getMouseX() const;
+    int getMouseY() const;
+
+    bool closed() const;
 };
 
 #endif //WORMS_TALLER_1_INPUT_H

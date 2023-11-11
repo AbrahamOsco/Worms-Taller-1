@@ -12,12 +12,13 @@ class Weapon : public GameObject {
 private:
     TypeWeapon m_typeWeapon;
     int m_ammoCount;
+    bool m_isSelected;
 public:
-    Weapon(TypeWeapon typeWeapon, int ammoCount);
+    Weapon(TypeWeapon typeWeapon, int ammoCount, bool isSelected);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override;
 
-    void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) override {}
+    void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) override;
 
     void setParams(int x, int y);
 

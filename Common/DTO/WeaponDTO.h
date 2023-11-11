@@ -49,6 +49,7 @@ public:
 
     void setMunition(const size_t &munition);
 
+    bool getIsSelected() const;
 };
 
 

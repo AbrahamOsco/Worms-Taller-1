@@ -34,4 +34,8 @@ void WeaponDTO::setATypeMunition(const TypeMunition &aTypeMunition) {
     this->typeMunition = aTypeMunition;
 }
 
+bool WeaponDTO::getIsSelected() const{
+    return false;
+}
+
 

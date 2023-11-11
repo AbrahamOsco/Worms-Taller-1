@@ -3,9 +3,11 @@
 //
 
 #include "Weapon.h"
+#include "../../command/SelectTeleportCmd.h"
+#include "../../command/SelectBatCmd.h"
 
-Weapon::Weapon(TypeWeapon typeWeapon, int ammoCount) : GameObject(LoaderParams(0, 0, 50, 55, " ")),
-                                                        m_typeWeapon(typeWeapon), m_ammoCount(ammoCount) {
+Weapon::Weapon(TypeWeapon typeWeapon, int ammoCount, bool isSelected) : GameObject(LoaderParams(0, 0, 50, 55, " ")),
+                                                        m_typeWeapon(typeWeapon), m_ammoCount(ammoCount), m_isSelected(isSelected) {
     if (m_typeWeapon == TypeWeapon::AIR_ATTACK) {
         m_textureID = "air_attack_icon";
     } else if (m_typeWeapon == TypeWeapon::DYNAMITE) {
@@ -53,6 +55,23 @@ void Weapon::setParams(int x, int y) {
 
 int Weapon::getHeight() {
     return m_height;
+}
+
+void Weapon::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) {
+    if (input.isMouseButtonDown()) {
+        SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);
+        SDL2pp::Point point(input.getMouseX(), input.getMouseY());
+        if (SDL_PointInRect(&point, &shape) && !m_isSelected) {
+            std::cout << "Click button: " << m_typeWeapon << std::endl;
+            if (m_typeWeapon == TypeWeapon::TELEPORT) {
+                std::unique_ptr<Command> command(new SelectTeleportCmd());
+                queue.move_push(std::move(command));
+            } else if (m_typeWeapon == TypeWeapon::BASEBALL_BAT) {
+                std::unique_ptr<Command> command(new SelectBatCmd());
+                queue.move_push(std::move(command));
+            }
+        }
+    }
 }
 
 

@@ -4,26 +4,35 @@
 
 #include "Input.h"
 
-Input::Input() : m_quit(false) {
+Input::Input() : m_quit(false), m_mouseButtonDown(false), m_mouseX(0), m_mouseY(0) {
     m_keyStates = SDL_GetKeyboardState(nullptr);
 }
 
 void Input::listen() {
     SDL_Event event;
-    SDL_PollEvent(&event);
-    switch (event.type) {
-        case SDL_QUIT:
-            m_quit = true;
-        case SDL_KEYDOWN:
-            keyDown();
-        case SDL_KEYUP:
-            keyUp();
+    while (SDL_PollEvent(&event)) {
+        switch (event.type) {
+            case SDL_QUIT:
+                m_quit = true;
+                break;
+            case SDL_KEYDOWN:
+                keyDown();
+                break;
+            case SDL_KEYUP:
+                keyUp();
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                mouseButtonDown(event);
+                break;
+            case SDL_MOUSEBUTTONUP:
+                mouseButtonUp(event);
+                break;
+            case SDL_MOUSEMOTION:
+                mouseMotion(event);
+                break;
+                // Puedes agregar más casos según sea necesario
+        }
     }
-
-}
-
-bool Input::getKeyDown(SDL_Scancode key) {
-    return (m_keyStates[key] == 1);
 }
 
 void Input::keyUp() {
@@ -34,6 +43,39 @@ void Input::keyDown() {
     m_keyStates = SDL_GetKeyboardState(nullptr);
 }
 
-bool Input::closed() {
+void Input::mouseButtonDown(SDL_Event& event) {
+    m_mouseButtonDown = true;
+    m_mouseX = event.button.x;
+    m_mouseY = event.button.y;
+}
+
+void Input::mouseButtonUp(SDL_Event& event) {
+    m_mouseButtonDown = false;
+    m_mouseX = event.button.x;
+    m_mouseY = event.button.y;
+}
+
+void Input::mouseMotion(SDL_Event& event) {
+    m_mouseX = event.motion.x;
+    m_mouseY = event.motion.y;
+}
+
+bool Input::getKeyDown(SDL_Scancode key) {
+    return (m_keyStates[key] == 1);
+}
+
+bool Input::isMouseButtonDown() const {
+    return m_mouseButtonDown;
+}
+
+int Input::getMouseX() const {
+    return m_mouseX;
+}
+
+int Input::getMouseY() const {
+    return m_mouseY;
+}
+
+bool Input::closed() const {
     return m_quit;
 }
