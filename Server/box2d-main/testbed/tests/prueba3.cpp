@@ -23,7 +23,9 @@ enum Entity{
     ENTITY_BEAM = 1,
     ENTITY_WATER = 2,
     ENTITY_EDGE = 3,
-    ENTITY_WORM = 4
+    ENTITY_WORM = 4,
+    ENTITY_BAZOOKA = 5,
+
 };
 #define GRAVITY_GAME 10.0f  // AGREGAR
 
@@ -366,8 +368,52 @@ public:
         std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
     }
 
+    void changeDirectiond(Direction direction) {
+        this->direction = direction;
+    }
 };
 
+class Bazooka : public GameObject{
+private:
+    float damage;
+    float impulseX;
+    float impulseY;
+    b2World* aWorld;
+public:
+    Bazooka(const Entity &aTpeEntity) : GameObject(aTpeEntity) {
+        damage = 50.0f;
+        impulseX = 0.15f;
+        impulseY = 0.20f;
+    }
+    void attack(b2World *world, b2Vec2 positionWorm, Direction directionLook) {
+        b2BodyDef wormDef;
+        wormDef.type = b2_dynamicBody;
+        wormDef.fixedRotation = true;
+        wormDef.position.Set(positionWorm.x + 0.2, positionWorm.y + 0.2);
+        wormDef.userData.pointer = (uintptr_t) this;
+        this->body = world->CreateBody(&wormDef);
+
+        //  creamos la forma del gusano.
+        b2CircleShape bazookaForm;
+        bazookaForm.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
+        bazookaForm.m_radius = 0.1f;
+
+        b2FixtureDef defFixtureBazooka;
+        defFixtureBazooka.shape = &bazookaForm;
+        defFixtureBazooka.friction = 1.0f;
+        defFixtureBazooka.density = 1.0f;
+        this->body->CreateFixture(&defFixtureBazooka);
+        int factor = 1;
+        if (directionLook == LEFT){
+            factor = -1;
+        }
+        b2Vec2 impulse(factor * impulseX, impulseY); //  por la gravedad
+
+        body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
+        this->aWorld = world;
+    }
+
+};
 
 class Worm : public GameObject {
     size_t idWorm;
@@ -381,10 +427,11 @@ class Worm : public GameObject {
     size_t numberContacts;
     b2World* world;
     Bat bat;
+    Bazooka bazooka;
 
 public:
     Worm(const size_t &idWorm, const float &posIniX, const float &posIniY) : GameObject(ENTITY_WORM), positionInitialX(posIniX),
-        positionInitialY(posIniY), bat(10.0f, 0.30f, 0.42f){
+        positionInitialY(posIniY), bat(10.0f, 0.30f, 0.42f), bazooka(ENTITY_BAZOOKA){
         this->idWorm = idWorm;
         hp = 100.0f;
         dragSpeed = 0.2f;
@@ -446,7 +493,7 @@ public:
             } else if (directionLook == LEFT) {
                 directionLook = RIGHT;   //MIRAMOS LADO OPUESTO AL Saltar hacia atras.
             } // ^
-
+            bat.changeDirectiond(directionLook);
             b2Vec2 impulse(impulseX, impulseY); //  por la gravedad
             body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
         }
@@ -472,6 +519,7 @@ public:
     void walk(Direction aDirection) {
         if( not isInContactWithAnotherWorm() and  body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ){
             directionLook = aDirection;
+            bat.changeDirectiond(directionLook);
             float acceleration = getBody()->GetFixtureList()[0].GetFriction() * 10.0f; // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
             float speed = sqrt(2.0f * acceleration * dragSpeed); // la velocidad la sacamos como 2 * aceleracion * distancia.
             float impulse = body->GetMass() * speed;
@@ -543,6 +591,10 @@ public:
 
     void downMira(){
         bat.downMira(directionLook);
+    }
+
+    void attackWithBazooka(){
+        bazooka.attack(world, getBody()->GetWorldCenter(), directionLook);
     }
 
 };
@@ -625,7 +677,6 @@ public:
             }
         }
     }
-
 };
 
 
@@ -672,6 +723,8 @@ public:
             vecWorms[0]->attackWithBat();
         } else if ( key == GLFW_KEY_8){
             vecWorms[0]->teleport(25.0f, 16.0f );
+        } else if ( key == GLFW_KEY_7){
+            vecWorms[0]->attackWithBazooka();
         }
     }
 

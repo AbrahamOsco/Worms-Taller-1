@@ -66,6 +66,7 @@ void Worm::jumpBackwards() {
         } else if (directionLook == LEFT) {
             directionLook = RIGHT;
         }
+        armament.changeDirection(directionLook);
         b2Vec2 impulse(impulseX, impulseY); //  por la gravedaddfd
         body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
     }
