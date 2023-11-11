@@ -346,7 +346,7 @@ public:
     void upMira(Direction direction) {
         this->direction = direction;
         rayAngle += 10.0f;
-        if(rayAngle > 90.0f){
+        if(rayAngle > 90.30f){
             rayAngle -= 10.0f;
         }
         std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
@@ -355,7 +355,7 @@ public:
     void downMira(Direction direction) {
         this->direction = direction;
         rayAngle -= 10.0f;
-        if (rayAngle < -90.0f){
+        if (rayAngle < -90.10f){
             rayAngle += 10.0f;
         }
         std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
@@ -380,7 +380,7 @@ private:
 public:
     Bazooka(const Entity &aTpeEntity) : GameObject(aTpeEntity) {
         damage = 50.0f;
-        impulseX = 0.08f;
+        impulseX = 0.11f;
         impulseY = 0.11f;
         rayAngle = 0.13;
         rayLength = 0.4f;
@@ -393,7 +393,7 @@ public:
     void upMira(Direction direction) {
         this->direction = direction;
         rayAngle += 10.0f;
-        if(rayAngle > 90.0f){
+        if(rayAngle > 90.3f){
             rayAngle -= 10.0f;
         }
         std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
@@ -402,7 +402,7 @@ public:
     void downMira(Direction direction) {
         this->direction = direction;
         rayAngle -= 10.0f;
-        if (rayAngle < -90.0f){
+        if (rayAngle < -90.3f){
             rayAngle += 10.0f;
         }
         std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
