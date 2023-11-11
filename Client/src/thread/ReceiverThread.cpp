@@ -20,7 +20,7 @@ void ReceiverThread::run() {
         snapShot = m_protocol.recvASnapShot();
         std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
         for (const WormDTO &wormDto: wormsDto) {
-            LoaderParams loaderParams((int) wormDto.getPositionX(), 1080 - (int) wormDto.getPositionY(), 60, 60,
+            LoaderParams loaderParams(static_cast<int>(wormDto.getPositionX()), 1080 - static_cast<int>(wormDto.getPositionY()), 60, 60,
                                       "player");
             std::unique_ptr<Worm> worm = std::make_unique<Worm>(loaderParams, wormDto.getHpWorm(),
                                                                 wormDto.getDirectionLook(), wormDto.getTypeFocus(),
@@ -31,20 +31,22 @@ void ReceiverThread::run() {
         WeaponInventory weaponInventory;
         WeaponsDTO weaponsDto = snapShot.getWeaponsDto();
         std::vector<WeaponDTO> weapons = weaponsDto.getWeapons();
-        for (const WeaponDTO & weaponDto: weapons) {
+        for (const WeaponDTO &weaponDto: weapons) {
             int ammoCount = -1;
-            if(weaponDto.getTypeMunition() == TypeMunition::NO_INFINITE) {
-                ammoCount = (int) weaponDto.getMunition();
+            if (weaponDto.getTypeMunition() == TypeMunition::NO_INFINITE) {
+                ammoCount = static_cast<int>(weaponDto.getMunition());
             }
             Weapon weapon(weaponDto.getTypeWeapon(), ammoCount);
             weaponInventory.addWeapon(weapon);
         }
 
         PlayersInfo playersInfo;
-        PlayerInfo playerInfo1(0, "Agustin", 80);
-        PlayerInfo playerInfo2(1, "Juan", 80);
-        playersInfo.addPlayer(playerInfo1);
-        playersInfo.addPlayer(playerInfo2);
+        PlayersDTO playersDto = snapShot.getPlayersDto();
+        std::vector<PlayerDTO> players = playersDto.getPlayersDTO();
+        for (const PlayerDTO &playerDto: players) {
+            PlayerInfo playerInfo(static_cast<int>(playerDto.getIdPlayer()), playerDto.getNamePlayer(), static_cast<int>(playerDto.getTotalHpWorms()));
+            playersInfo.addPlayer(playerInfo);
+        }
 
         WindInfo wind(10, Direction::RIGHT);
         std::string currentTurn = "Pepe";
