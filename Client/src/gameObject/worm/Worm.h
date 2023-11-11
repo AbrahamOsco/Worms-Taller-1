@@ -16,12 +16,13 @@ private:
     Direction m_directionLook;
     MoveWorm m_moveWorm;
     TypeFocusWorm m_typeFocus;
+    TypeWeapon m_weaponCurrent;
 
     Animation m_animation;
 
 public:
-    explicit Worm(const LoaderParams &params, const size_t &hpWorm, const Direction &direction,
-                  const TypeFocusWorm &focus, const MoveWorm &moveWorm);
+    explicit Worm(int x, int y, const size_t &hpWorm, const Direction &direction,
+                  const TypeFocusWorm &focus, const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override;
 

@@ -4,10 +4,57 @@
 
 #include "Worm.h"
 
-Worm::Worm(const LoaderParams &params, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
-           const MoveWorm &moveWorm) : GameObject(params), m_hpWorm(hpWorm), m_directionLook(direction),
-                                       m_typeFocus(focus), m_moveWorm(moveWorm) {
+Worm::Worm(int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
+           const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_hpWorm(hpWorm), m_directionLook(direction),
+                                       m_typeFocus(focus), m_moveWorm(moveWorm), m_weaponCurrent(weaponCurrent) {
     m_flip = SDL_FLIP_NONE;
+    if (m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
+        m_width = 60;
+        m_height = 60;
+        m_textureID = "player";
+    } else if (m_weaponCurrent == TypeWeapon::BAZOOKA) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "bazzoka";
+    } else if (m_weaponCurrent == TypeWeapon::MORTAR) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "mortar";
+    } else if (m_weaponCurrent == TypeWeapon::RED_GRENADE) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "red_grenade";
+    } else if (m_weaponCurrent == TypeWeapon::GREEN_GRENADE) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "green_grenade";
+    } else if (m_weaponCurrent == TypeWeapon::BANANA) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "banana";
+    } else if (m_weaponCurrent == TypeWeapon::HOLY_GRENADE) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "holy_grenade";
+    } else if (m_weaponCurrent == TypeWeapon::DYNAMITE) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "dynamite";
+    } else if (m_weaponCurrent == TypeWeapon::BASEBALL_BAT) {
+        m_width = 40;
+        m_height = 30;
+        m_textureID = "bat";
+    } else if (m_weaponCurrent == TypeWeapon::AIR_ATTACK) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "air_attack";
+    } else if (m_weaponCurrent == TypeWeapon::TELEPORT) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "teleportation";
+    } else {
+        std::cout << "weapon not found" << std::endl;
+    }
     m_animation.setProps(m_textureID, m_width, m_height, 14, 140);
 }
 
@@ -38,7 +85,7 @@ void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue
 }
 
 void Worm::animationState() {
-    m_animation.setProps("player", m_width, m_height, 14, 140, SDL_FLIP_NONE);
+    //m_animation.setProps("player", m_width, m_height, 14, 140, SDL_FLIP_NONE);
 
     if (m_moveWorm == MoveWorm::WALKING) {
         m_width = 30;
