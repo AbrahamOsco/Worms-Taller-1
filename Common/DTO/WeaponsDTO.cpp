@@ -7,8 +7,8 @@
 WeaponsDTO::WeaponsDTO() : DTO(WEAPONS_TOTAL) {
 }
 
-WeaponsDTO::WeaponsDTO(const size_t &idPlayer, const std::vector<WeaponDTO> &aWeapons)
-        : DTO(WEAPONS_TOTAL), idPlayer(idPlayer), weapons(aWeapons) {
+WeaponsDTO::WeaponsDTO(const size_t &idPlayer, const std::vector<WeaponDTO> &aWeapons, const TypeWeapon& weaponCurrent)
+        : DTO(WEAPONS_TOTAL), idPlayer(idPlayer), weapons(aWeapons), weaponCurrent(weaponCurrent) {
 }
 
 
@@ -28,6 +28,12 @@ void WeaponsDTO::setIdPlayer(const size_t &idPlayer) {
     this->idPlayer = idPlayer;
 }
 
+TypeWeapon WeaponsDTO::getWeaponCurrent() const {
+    return weaponCurrent;
+}
 
+void WeaponsDTO::setWeaponCurrent(const TypeWeapon &weaponCurrent) {
+    this->weaponCurrent = weaponCurrent;
+}
 
 

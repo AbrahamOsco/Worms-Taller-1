@@ -68,7 +68,15 @@ WeaponsDTO Armament::getWeaponsDTO() const {
     for(auto& mapWeapons : armament){
         vecWeaponDTO.push_back(mapWeapons.second->getWeaponDTO());
     }
-    return WeaponsDTO(idPlayer, vecWeaponDTO);
+    TypeWeapon aCurrentWP;
+    if(currentWeapon == NONE_WEAPON and weaponOnStandBy != NONE_WEAPON){
+        aCurrentWP = weaponOnStandBy;
+    } else if ( currentWeapon != NONE_WEAPON and weaponOnStandBy == NONE_WEAPON){
+        aCurrentWP = currentWeapon;
+    } else if ( currentWeapon == NONE_WEAPON and weaponOnStandBy == NONE_WEAPON){
+        aCurrentWP = currentWeapon;
+    }
+    return WeaponsDTO(idPlayer, vecWeaponDTO, aCurrentWP);
 }
 
 

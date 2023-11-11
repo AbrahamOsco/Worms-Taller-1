@@ -14,18 +14,23 @@ class WeaponsDTO : public DTO {
 private:
     size_t idPlayer;
     std::vector<WeaponDTO> weapons;
+    TypeWeapon weaponCurrent;
 public:
     WeaponsDTO();
 
-    WeaponsDTO(const size_t &idPlayer, const std::vector<WeaponDTO> &aWeapons);
+    WeaponsDTO(const size_t &idPlayer, const std::vector<WeaponDTO> &aWeapons,const TypeWeapon& weaponCurrent );
 
     std::vector<WeaponDTO> getWeapons() const;
 
     size_t getIdPlayer() const;
 
+    TypeWeapon getWeaponCurrent() const;
+
     void setWeapons(const std::vector<WeaponDTO> &weapons);
 
     void setIdPlayer(const size_t &idPlayer);
+
+    void setWeaponCurrent(const TypeWeapon &weaponCurrent);
 
 };
 
