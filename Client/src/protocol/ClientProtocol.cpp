@@ -176,12 +176,13 @@ WormDTO ClientProtocol::recvAWormDTO() {
     if (operationType == OperationType::WORM){
         size_t positionX = recvNum2Bytes();
         size_t positionY = recvNum2Bytes();
+        size_t idPlayer = recvANumberByte();
         size_t hpWorm = recvANumberByte();
         Direction aDirection = static_cast<Direction>( recvANumberByte() ) ;
         MoveWorm aMoveWorm = static_cast<MoveWorm>( recvANumberByte());
         TypeFocusWorm typeFocusWorm = static_cast<TypeFocusWorm>(  recvANumberByte());
         TypeWeapon typeWeapon = static_cast<TypeWeapon> (recvANumberByte() );
-        WormDTO otherWormDTO(positionX, positionY, hpWorm, aDirection, typeFocusWorm, aMoveWorm, typeWeapon);
+        WormDTO otherWormDTO(positionX, positionY, idPlayer, hpWorm, aDirection, typeFocusWorm, aMoveWorm, typeWeapon);
         return otherWormDTO;
     }
     return aWormDTO;

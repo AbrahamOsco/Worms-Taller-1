@@ -19,6 +19,7 @@ class WormDTO : public DTO {
 private:
     size_t positionX;
     size_t positionY;
+    size_t idPlayer;
     size_t hpWorm;
     Direction directionLook;
     MoveWorm moveWorm;
@@ -27,7 +28,7 @@ private:
 public:
     WormDTO();
 
-    WormDTO(const size_t& positionX, const size_t& positionY, const size_t& hpWorm, const Direction& aDirection,
+    WormDTO(const size_t& positionX, const size_t& positionY, const size_t& idPlayer, const size_t& hpWorm, const Direction& aDirection,
             const TypeFocusWorm& aTypeFocus, const MoveWorm& aMoveWorm, const TypeWeapon& weaponCurrent);
 
     size_t getIdWorm() const;
@@ -46,6 +47,9 @@ public:
 
     TypeWeapon getWeaponCurrent() const;
 
+    size_t getIdPlayer() const;
+
+    // Si no se usa  en un futuro elimianr estos setters @todo
     void setPositionX(const size_t &positionX);
 
     void setPositionY(const size_t &positionY);
@@ -59,6 +63,9 @@ public:
     void setMoveWorm(const MoveWorm &moveWorm);
 
     void setWeaponCurrent(const TypeWeapon &weaponCurrent);
+
+    void setIdPlayer(size_t idPlayer);
+
 
     ~WormDTO() = default;
 

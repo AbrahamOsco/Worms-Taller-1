@@ -3,9 +3,9 @@ WormDTO::WormDTO() : DTO(WORM) {
 }
 
 
-WormDTO::WormDTO(const size_t &positionX, const size_t &positionY, const size_t &hpWorm, const Direction &aDirection,
-                 const TypeFocusWorm &aTypeFocus, const MoveWorm &aMoveWorm, const TypeWeapon& weaponCurrent) : DTO(WORM), positionX(positionX), positionY(positionY), hpWorm(hpWorm),
-                 directionLook(aDirection), moveWorm(aMoveWorm), typeFocus(aTypeFocus), weaponCurrent(weaponCurrent) {
+WormDTO::WormDTO(const size_t &positionX, const size_t &positionY, const size_t& idPlayer,  const size_t &hpWorm, const Direction &aDirection,
+                 const TypeFocusWorm &aTypeFocus, const MoveWorm &aMoveWorm, const TypeWeapon& weaponCurrent) : DTO(WORM), positionX(positionX), positionY(positionY),
+                 idPlayer(idPlayer), hpWorm(hpWorm), directionLook(aDirection), moveWorm(aMoveWorm), typeFocus(aTypeFocus), weaponCurrent(weaponCurrent) {
 }
 
 
@@ -34,6 +34,14 @@ MoveWorm WormDTO::getMoveWorm() const {
     return moveWorm;
 }
 
+TypeWeapon WormDTO::getWeaponCurrent() const {
+    return weaponCurrent;
+}
+
+size_t WormDTO::getIdPlayer() const {
+    return this->idPlayer;
+}
+
 void WormDTO::setPositionX(const size_t &positionX) {
     this->positionX = positionX;
 }
@@ -58,12 +66,12 @@ void WormDTO::setMoveWorm(const MoveWorm &moveWorm) {
     this->moveWorm = moveWorm;
 }
 
-TypeWeapon WormDTO::getWeaponCurrent() const {
-    return weaponCurrent;
-}
-
 void WormDTO::setWeaponCurrent(const TypeWeapon &weaponCurrent) {
     this->weaponCurrent = weaponCurrent;
+}
+
+void WormDTO::setIdPlayer(size_t idPlayer) {
+    this->idPlayer = idPlayer;
 }
 
 

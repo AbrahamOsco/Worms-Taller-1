@@ -147,6 +147,7 @@ void ServerProtocol::sendAWormDTO(const WormDTO &aWormDTO) {
     sendANumberByte(aWormDTO.getOperationType());
     sendNum2Bytes(aWormDTO.getPositionX());
     sendNum2Bytes(aWormDTO.getPositionY());
+    sendANumberByte(aWormDTO.getIdPlayer());
     sendANumberByte(aWormDTO.getHpWorm());
     sendANumberByte(aWormDTO.getDirectionLook());
     sendANumberByte(aWormDTO.getMoveWorm());

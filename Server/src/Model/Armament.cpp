@@ -42,7 +42,10 @@ bool Armament::hasAScoped() {
 
 void Armament::changeDirection(const Direction &direction) {
     if(this->currentWeapon == NONE_WEAPON){
+        // en el caso de que estamos desarmado no hacemos nada.
         std::cerr << "Error: [changeDirection] estas intentado acceder a un arma pero la arma actual es NONE_WEAPN \n";
+        return;
+
     }
     return this->armament.at(currentWeapon)->changeDirection(direction);
 }

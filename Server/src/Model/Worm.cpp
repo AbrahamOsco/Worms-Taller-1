@@ -10,10 +10,9 @@
 #include "Bat.h"
 #include "Teleport.h"
 
-Worm::Worm(const size_t &idWorm, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
-           Armament& armament) : GameObject(ENTITY_WORM),
+Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
+           Armament& armament) : GameObject(ENTITY_WORM), idWorm(idWorm), idPlayer(idPlayer),
                                  positionInitialX(posIniX), positionInitialY(posIniY), gameParameters(gameParameter), aWorld(nullptr), armament(armament) {
-    this->idWorm = idWorm;
     hp = gameParameter.getInitialHPWorm();
     dragSpeed = gameParameter.getWormDragSpeed();
     directionLook = Direction::RIGHT;
@@ -66,7 +65,6 @@ void Worm::jumpBackwards() {
         } else if (directionLook == LEFT) {
             directionLook = RIGHT;
         }
-        armament.changeDirection(directionLook);
         b2Vec2 impulse(impulseX, impulseY); //  por la gravedaddfd
         body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
     }
@@ -135,24 +133,24 @@ float Worm::getHP() const {
     return this->hp;
 }
 
-TypeFocusWorm Worm::getTypeFocusWorm() const {
-    return this->typeFocus;
-}
-
 // [todo] Aca Falta hacer gameParameters.getMaxHeightPixel() - (aWormElem.second->getPositionY() * gameParameters.getPositionAdjustment())  para la posicion en Y.
 
 WormDTO Worm::getWormDTO() const {
     return WormDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(), this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(),
-                   this->hp, this->directionLook, this->typeFocus, this->typeMov, this->armament.getWeaponCurrent() );
+                   this->idPlayer, this->hp, this->directionLook, this->typeFocus, this->typeMov, this->armament.getWeaponCurrent() );
 }
-
 
 void Worm::activateFocus() {
     this->typeFocus = TypeFocusWorm::FOCUS;
 }
 
+
 MoveWorm Worm::getTypeMov() const {
     return typeMov;
+}
+
+TypeFocusWorm Worm::getTypeFocusWorm() const {
+    return this->typeFocus;
 }
 
 void Worm::leftWorm() {
@@ -187,6 +185,9 @@ void Worm::stopIfUnmoving() {
     if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
         this->typeMov = STANDING;
         armament.getWeaponOnStandBy();
+        if(armament.getWeaponCurrent() != NONE_WEAPON){
+            armament.changeDirection(this->directionLook);
+        }
     }
 }
 

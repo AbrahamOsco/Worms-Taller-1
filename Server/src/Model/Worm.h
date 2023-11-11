@@ -15,6 +15,7 @@
 
 class Worm : public GameObject {
     size_t idWorm;
+    size_t idPlayer;
     Direction directionLook;
     float  hp;
     float dragSpeed;
@@ -30,7 +31,7 @@ class Worm : public GameObject {
     Armament& armament;
 public:
 
-    Worm(const size_t &idWorm, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
+    Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
          Armament& armament);
 
     float getHP() const;
