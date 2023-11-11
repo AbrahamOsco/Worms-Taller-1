@@ -27,7 +27,7 @@ public:
 
     Weapon* getWeapon(const TypeWeapon& aTypeWeapon);
 
-    TypeWeapon getTypeWeaponCurrent() const;
+    TypeWeapon getWeaponCurrent() const;
 
     bool isUnarmed() const;
 

@@ -3,6 +3,7 @@
 
 #include <cstddef>
 #include "DTO.h"
+#include "WeaponDTO.h"
 
 enum Direction{
     RIGHT = 1, LEFT = 2
@@ -22,11 +23,12 @@ private:
     Direction directionLook;
     MoveWorm moveWorm;
     TypeFocusWorm typeFocus;
-
+    TypeWeapon weaponCurrent;
 public:
     WormDTO();
 
-    WormDTO(const size_t& positionX, const size_t& positionY, const size_t& hpWorm, const Direction& aDirection, const TypeFocusWorm& aTypeFocus, const MoveWorm& aMoveWorm);
+    WormDTO(const size_t& positionX, const size_t& positionY, const size_t& hpWorm, const Direction& aDirection,
+            const TypeFocusWorm& aTypeFocus, const MoveWorm& aMoveWorm, const TypeWeapon& weaponCurrent);
 
     size_t getIdWorm() const;
 
@@ -42,6 +44,8 @@ public:
 
     MoveWorm getMoveWorm() const;
 
+    TypeWeapon getWeaponCurrent() const;
+
     void setPositionX(const size_t &positionX);
 
     void setPositionY(const size_t &positionY);
@@ -53,6 +57,8 @@ public:
     void setTypeFocus(const TypeFocusWorm &typeFocus);
 
     void setMoveWorm(const MoveWorm &moveWorm);
+
+    void setWeaponCurrent(const TypeWeapon &weaponCurrent);
 
     ~WormDTO() = default;
 

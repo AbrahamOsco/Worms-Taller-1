@@ -17,7 +17,7 @@ bool Armament::isUnarmed() const{
 }
 
 
-TypeWeapon Armament::getTypeWeaponCurrent() const {
+TypeWeapon Armament::getWeaponCurrent() const {
     return this->currentWeapon;
 }
 

@@ -11,7 +11,7 @@
 
 Worm::Worm(const size_t &idWorm, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
            Armament& armament) : GameObject(ENTITY_WORM),
-                positionInitialX(posIniX), positionInitialY(posIniY), gameParameter(gameParameter), aWorld(nullptr), armament(armament) {
+                                 positionInitialX(posIniX), positionInitialY(posIniY), gameParameters(gameParameter), aWorld(nullptr), armament(armament) {
     this->idWorm = idWorm;
     hp = gameParameter.getInitialHPWorm();
     dragSpeed = gameParameter.getWormDragSpeed();
@@ -23,7 +23,7 @@ Worm::Worm(const size_t &idWorm, const float &posIniX, const float &posIniY, con
 }
 
 void Worm::assignBonusLife() {
-    hp += gameParameter.getWormHPBonus();
+    hp += gameParameters.getWormHPBonus();
 }
 
 void Worm::addToTheWorld(b2World *world) {
@@ -36,10 +36,10 @@ void Worm::addToTheWorld(b2World *world) {
 
     b2CircleShape wormShape;
     wormShape.m_p.Set(0.0f, 1.0f);
-    wormShape.m_radius = gameParameter.getHalfHeightWorm();
+    wormShape.m_radius = gameParameters.getHalfHeightWorm();
     b2FixtureDef defFixtureWorm;
     defFixtureWorm.shape = &wormShape;
-    defFixtureWorm.friction = gameParameter.getFrictionWorm();
+    defFixtureWorm.friction = gameParameters.getFrictionWorm();
     defFixtureWorm.density = 1.0f;
     this->aWorld = world;
     this->body->CreateFixture(&defFixtureWorm);
@@ -52,7 +52,7 @@ void Worm::jumpBackwards() {
         this->typeMov = JUMPING;
         float angleTita, initialSpeed;
         angleTita = atan(4.0f * distancesJumpBack.second / distancesJumpBack.first);       //  (4 *hmax)/distMaxHorizontal.
-        initialSpeed = sqrt(distancesJumpBack.first * (gameParameter.getGravity()*-1) / (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
+        initialSpeed = sqrt(distancesJumpBack.first * (gameParameters.getGravity() * -1) / (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
         float speedX = initialSpeed * cos(angleTita);
         float speedY = initialSpeed * sin(angleTita);
 
@@ -76,7 +76,7 @@ void Worm::jumpForwards() {
         this->typeMov = JUMPING;
         float angleTita, initialSpeed;
         angleTita = atan(4.0f * distancesJumpForward.second / distancesJumpForward.first);       //  (4 *hmax)/distMaxHorizontal.
-        initialSpeed = sqrt(distancesJumpForward.first * (gameParameter.getGravity()*-1) /
+        initialSpeed = sqrt(distancesJumpForward.first * (gameParameters.getGravity() * -1) /
                             (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
         float speedX = initialSpeed * cos(angleTita);
         float speedY = initialSpeed * sin(angleTita);
@@ -95,7 +95,7 @@ void Worm::walk(Direction aDirection) {
     if(not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ) {
         this->typeMov = MoveWorm::WALKING;
         directionLook = aDirection;
-        float acceleration = getBody()->GetFixtureList()[0].GetFriction() * (gameParameter.getGravity()*-1); // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
+        float acceleration = getBody()->GetFixtureList()[0].GetFriction() * (gameParameters.getGravity() * -1); // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
         float speed = sqrt(2.0f * acceleration * dragSpeed); // la velocidad la sacamos como 2 * aceleracion * distancia.
         float impulse = body->GetMass() * speed;
         if (directionLook == Direction::LEFT ) {
@@ -136,6 +136,14 @@ float Worm::getHP() const {
 TypeFocusWorm Worm::getTypeFocusWorm() const {
     return this->typeFocus;
 }
+
+// [todo] Aca Falta hacer gameParameters.getMaxHeightPixel() - (aWormElem.second->getPositionY() * gameParameters.getPositionAdjustment())  para la posicion en Y.
+
+WormDTO Worm::getWormDTO() const {
+    return WormDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(), this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(),
+                   this->hp, this->directionLook, this->typeFocus, this->typeMov, this->armament.getWeaponCurrent() );
+}
+
 
 void Worm::activateFocus() {
     this->typeFocus = TypeFocusWorm::FOCUS;
@@ -208,6 +216,9 @@ void Worm::attackWithBat(){
     aBat->resetRayCast();
 }
 
+TypeWeapon Worm::getWeaponCurrent() const {
+    return this->armament.getWeaponCurrent();
+}
 
 
 

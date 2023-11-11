@@ -25,7 +25,7 @@ class Worm : public GameObject {
     size_t numberContacts;
     TypeFocusWorm typeFocus; // 1 Si esta siendo focus , 2 sino.
     MoveWorm typeMov;
-    const GameParameters& gameParameter;
+    const GameParameters& gameParameters;
     b2World* aWorld;
     Armament& armament;
 public:
@@ -33,17 +33,22 @@ public:
     Worm(const size_t &idWorm, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
          Armament& armament);
 
+    float getHP() const;
+
+    // Posibles getters que si no se usan se eliminaran en un futuro todo
     Direction getDirectionLook() const;
 
     float getPositionX() const;
 
     float getPositionY();
 
-    float getHP() const;
-
     TypeFocusWorm getTypeFocusWorm() const;
 
     MoveWorm getTypeMov() const;
+
+    TypeWeapon getWeaponCurrent() const;
+
+    WormDTO getWormDTO() const;
 
     void assignBonusLife();
 
@@ -76,6 +81,8 @@ public:
     void takeDamage(const float &aDamage);
 
     void assignWeapon(const TypeWeapon &aTypeWeapon);
+
+
 };
 
 

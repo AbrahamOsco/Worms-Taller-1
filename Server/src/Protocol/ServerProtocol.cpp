@@ -151,6 +151,7 @@ void ServerProtocol::sendAWormDTO(const WormDTO &aWormDTO) {
     sendANumberByte(aWormDTO.getDirectionLook());
     sendANumberByte(aWormDTO.getMoveWorm());
     sendANumberByte(aWormDTO.getTypeFocus());
+    sendANumberByte(aWormDTO.getWeaponCurrent());
 }
 
 void ServerProtocol::sendWeaponsDTO(const WeaponsDTO &weapons) {
