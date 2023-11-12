@@ -9,6 +9,9 @@
 #include "../../../Common/DTO/ResolverInitialDTO.h"
 #include "waiter.h"
 #include <QMovie>
+#include <QtMultimedia/QMediaPlayer>
+#include <QSound>
+ #include <QAudioOutput>
 
 class Lobby : public QWidget {
 private:
@@ -17,6 +20,7 @@ private:
     Queue<ResolverInitialDTO> my_queue;
     Waiter waiter;
     QMovie gif;
+    QSound song;
 
 public:
     explicit Lobby(QWidget *parent = 0,Socket* socket = 0);

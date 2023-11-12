@@ -12,13 +12,17 @@
 #include <QPixmap>
 #include <QDesktopWidget>
 #include <QResizeEvent>
+#include <QtMultimedia/QMediaPlayer>
+#include <QAudioOutput>
+#include <QMediaPlayer>
 
 Lobby::Lobby(QWidget *parent,Socket* socket) : QWidget(parent),
                                                 timer(this),
                                                 my_queue(200),
                                                 skt(socket),
                                                 waiter(skt,&my_queue),
-                                                gif(QMovie("../Client/ui/resources/waiting.gif")){
+                                                gif(QMovie("../Client/ui/resources/waiting.gif")),
+                                                song("../Client/ui/resources/home.wav"){
     Ui::Lobby lobby;
     lobby.setupUi(this);
     timer.start(500);
@@ -49,14 +53,20 @@ void Lobby::start(){
     timer.start(500);
 }
 void Lobby::play(){
-
+    song.play();
 }
 void Lobby::stop(){
-
+    song.stop();
 }
 void Lobby::connectEvents() {
     QObject::connect(&timer,&QTimer::timeout,this,&Lobby::update);
     this->setWindowTitle("Worms-Lobby");
+    QPushButton* buttonPlay= findChild<QPushButton*>("buttonPlay");
+    QObject::connect(buttonPlay, &QPushButton::clicked,
+                     this, &Lobby::play);
+    QPushButton* buttonStop= findChild<QPushButton*>("buttonStop");
+    QObject::connect(buttonStop, &QPushButton::clicked,
+                     this, &Lobby::stop);
     QRect screenGeometry = QApplication::desktop()->availableGeometry(this);
     int x = (screenGeometry.width() - this->width()) / 2;
     int y = (screenGeometry.height() - this->height()) / 2;

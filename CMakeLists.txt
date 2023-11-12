@@ -24,6 +24,8 @@ INCLUDE_DIRECTORIES(${YAML_CPP_INCLUDE_DIRS})
 set(CMAKE_AUTOMOC ON)
 
 find_package(Qt5Widgets COMPONENTS Widgets REQUIRED)
+find_package(Qt5Multimedia)
+
 include_directories(${PROJECT_SOURCE_DIR}/Client/ui/include)
 
 # Archivos Fuente Cliente @Ricardo
@@ -120,5 +122,5 @@ add_executable(editor
         ${UIS_HEADERS})
 
 target_link_libraries(editor Qt5::Widgets yaml-cpp)
-target_link_libraries(worms-client PUBLIC SDL2pp yaml-cpp Qt5::Widgets)
+target_link_libraries(worms-client PUBLIC SDL2pp yaml-cpp Qt5::Widgets Qt5::Multimedia)
 target_link_libraries(Worms-Taller-1 box2d SDL2pp yaml-cpp)

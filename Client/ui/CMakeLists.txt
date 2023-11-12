@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.22)
 project(qt5-demo)
-
 # Find the QtWidgets library
 find_package(Qt5Widgets COMPONENTS Widgets REQUIRED)
+find_package(Qt5Multimedia)
 
 message("[INFO] La raiz del proyecto es ${PROJECT_SOURCE_DIR}")
 
@@ -40,4 +40,4 @@ add_executable(test
 
 
 # Use the Widgets module from Qt 5.
-target_link_libraries(test Qt5::Widgets)
+target_link_libraries(test Qt5::Widgets Qt5::Multimedia Qt5::Multimedia)
