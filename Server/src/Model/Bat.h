@@ -12,6 +12,7 @@
 #define DEGRATORADIANS (b2_pi/180.0f)
 #define RADIANSTODEGREE (180/b2_pi)
 
+// agregar weponaSight t toda la gracia. 
 class Bat : public Weapon{
 private:
     float impulseX;
