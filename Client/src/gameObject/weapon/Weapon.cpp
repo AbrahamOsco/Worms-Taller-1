@@ -6,8 +6,13 @@
 #include "../../command/SelectTeleportCmd.h"
 #include "../../command/SelectBatCmd.h"
 
-Weapon::Weapon(TypeWeapon typeWeapon, int ammoCount, bool isSelected) : GameObject(LoaderParams(0, 0, 50, 55, " ")),
-                                                        m_typeWeapon(typeWeapon), m_ammoCount(ammoCount), m_isSelected(isSelected) {
+Weapon::Weapon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon) : GameObject(LoaderParams(0, 0, 50, 55, " ")),
+                                                        m_typeWeapon(typeWeapon), m_ammoCount(ammoCount), m_isSelected(false) {
+
+    if (m_typeWeapon == currentWeapon) {
+        m_isSelected = true;
+    }
+
     if (m_typeWeapon == TypeWeapon::AIR_ATTACK) {
         m_textureID = "air_attack_icon";
     } else if (m_typeWeapon == TypeWeapon::DYNAMITE) {

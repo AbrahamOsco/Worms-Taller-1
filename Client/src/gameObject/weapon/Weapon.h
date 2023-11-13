@@ -14,7 +14,7 @@ private:
     int m_ammoCount;
     bool m_isSelected;
 public:
-    Weapon(TypeWeapon typeWeapon, int ammoCount, bool isSelected);
+    Weapon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override;
 
