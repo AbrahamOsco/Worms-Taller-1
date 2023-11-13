@@ -15,16 +15,14 @@
 #include <GLFW/glfw3.h> // Opcional: Incluir la biblioteca GLFW si estás utilizando GLFW para gestionar la ventana
 #define DEGRATORADIANS (b2_pi/180.0f)
 #define RADIANSTODEGREE (180/b2_pi)
-
 const float SPEED_WORM = 6.5f;
-
 
 enum Entity{
     ENTITY_BEAM = 1,
     ENTITY_WATER = 2,
     ENTITY_EDGE = 3,
     ENTITY_WORM = 4,
-    ENTITY_BAZOOKA = 5,
+    ENTITY_MUNITION_BAZOOKA = 6,
 
 };
 #define GRAVITY_GAME 10.0f  // AGREGAR
@@ -71,6 +69,7 @@ private:
     float length;
     float height;
     float angle;
+    b2World* aWorld;
 public:
     Beam() : GameObject(ENTITY_BEAM){
     }
@@ -101,6 +100,11 @@ public:
         }
         defFixtureBeam.friction = beamFriction;
         this->body->CreateFixture(&defFixtureBeam);
+        this->aWorld = world;
+    }
+
+    b2World* getWorld(){
+        return this->aWorld;
     }
 };
 
@@ -280,7 +284,7 @@ public:
     b2Body* getBody(){
         return body;
     }
-    float getFraction(){
+    float getFraction() const{
         return fraction;
     }
     void resetRayCast(){  //No olvidar invocar el resestRayCast luego de un rayCast.
@@ -292,26 +296,46 @@ public:
         ~MyFirstRayCastCallback() = default;
 };
 
-
-class Bat {
+class WeaponSight{
 private:
-    float damage;
-    std::pair<float, float> impulseWeapon;
     MyFirstRayCastCallback myRayCast;
-    float rayAngle; // esta en radianes.
     float rayLength;
-    Direction direction;
+    float rayAngle; // esta en grados.
+    Direction direction; //posiblemnte elminarla ya que lo usamos dentro de un metodo y como que no mas por ej ataques
 
 public:
-    Bat(float damage, float impulseX, float impulseY) : damage(damage){
-        impulseWeapon = std::make_pair(impulseX, impulseY);
-        rayAngle = 0.0f;
-        rayLength = 3.0f;
+    WeaponSight(float rayLength, float rayAngle) : rayLength(rayLength), rayAngle(rayAngle){
     }
 
-    GameObject* attack(b2World *world, const b2Vec2& vec2) {
+    void resetRayCast() {
+        this->myRayCast.resetRayCast();
+    }
+
+    void upMira() {
+        rayAngle += 10.0f;
+        if(rayAngle > 90.1f){
+            rayAngle -= 10.0f;
+        }
+        std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
+    }
+
+    void downMira() {
+        rayAngle -= 10.0f;
+        if (rayAngle < -90.1f){
+            rayAngle += 10.0f;
+        }
+        std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
+    }
+
+    // posiblemente sacarlo en un futuro  pasar directamnte la direccion al momento de hacer el raycast para obtener el curpo colisionado.
+    void changeDirectiond(Direction direction) {
+        this->direction = direction;
+    }
+
+    GameObject* getBodyCollidesWithRayCast(b2World *world, const b2Vec2& vec2, Direction directionCurrent) {
         b2Vec2 p1 = vec2;
         int factor = 1;
+        this->direction = directionCurrent;
         if (this->direction == LEFT) factor = -1;
         b2Vec2 p2 = p1 + rayLength * b2Vec2(factor* cosf(rayAngle * DEGRATORADIANS), sinf(rayAngle * DEGRATORADIANS));
         world->RayCast(&myRayCast, p1, p2);
@@ -328,6 +352,51 @@ public:
         return nullptr;
     }
 
+    // metodo de la clase weapon sight
+    b2Vec2 getPositionP2RayCast(b2World *world, const b2Vec2& vec2, Direction direction) {
+        b2Vec2 p1 = vec2;
+        int factor = 1;
+        this->direction = direction;
+        if( direction == LEFT) {
+            factor = -1;
+        }
+        b2Vec2 p2 = p1 + rayLength * b2Vec2( factor * cosf(rayAngle * DEGRATORADIANS), sinf(rayAngle * DEGRATORADIANS));
+        std::cout << "Ray angle degr:" << rayAngle;
+        std::cout << " |    p2.x : " << p2.x << " p2 .y : " << p2.y << " \n ";
+        return p2;
+    }
+
+    b2Vec2 getImpulseForMuniBazooka(Direction direction, std::pair<float, float> impulse){
+        int factor = 1, factorAngle = 1;
+        if ( direction == LEFT){
+            factor = -1;
+        }
+        // este if solo para la bazooka porque hace mov parabolico el misil. para darle efecto parabolico cuando los angulos son negativos nada mas
+        if (rayAngle < 0.0f){
+            factorAngle = -1; // OK !
+        }
+        return b2Vec2(factor * impulse.first , impulse.second * factorAngle);
+    }
+
+
+};
+
+
+class Bat {
+private:
+    float damage;
+    std::pair<float, float> impulseWeapon;
+    WeaponSight weaponSight;
+
+public:
+    Bat(float damage, float impulseX, float impulseY) : damage(damage), weaponSight(3.0f, 3.0f){
+        impulseWeapon = std::make_pair(impulseX, impulseY);
+    }
+
+    GameObject* getBodyCollidesWithRayCast(b2World *world, const b2Vec2& positionWorm, Direction directionCurrent) {
+        return weaponSight.getBodyCollidesWithRayCast(world, positionWorm, directionCurrent);
+    }
+
     float getDamage(){
         return damage;
     }
@@ -340,115 +409,121 @@ public:
     }
 
     void resetRayCast() {
-        this->myRayCast.resetRayCast();
+        weaponSight.resetRayCast();
     }
 
-    void upMira(Direction direction) {
-        this->direction = direction;
-        rayAngle += 10.0f;
-        if(rayAngle > 90.30f){
-            rayAngle -= 10.0f;
-        }
-        std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
+    void upMira() {
+        weaponSight.upMira();
     }
 
-    void downMira(Direction direction) {
-        this->direction = direction;
-        rayAngle -= 10.0f;
-        if (rayAngle < -90.10f){
-            rayAngle += 10.0f;
-        }
-        std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
+    void downMira() {
+        weaponSight.downMira();
     }
 
-    void changeDirectiond(Direction direction) {
-        this->direction = direction;
+    //necesariamente la direccion del arma tiene que cambiar o simplemente depende de la direccion del gusano al momento de golpear.
+    // creo que no va este metodo
+    void changeDirection(Direction direction) {
+        //weaponSight.changeDirectiond(direction);
+    }
+
+};
+
+class MunitionBazooka : public GameObject{
+private:
+    float mainDamage;
+    float maxRadio;
+    float maxImpulseMagnitude;
+
+public:
+    MunitionBazooka(Entity aEntity) : GameObject(aEntity){
+        this->mainDamage = 50.0f;
+        this->maxRadio = 2.0f;
+        this->maxImpulseMagnitude = 2.0f;
+    }
+
+    // obtenemos el area para buscar en el caso de la municion de bazooka son 2m.
+    b2AABB getAreaForSearch(const b2Vec2& positionMunition) const {
+        b2AABB searchArea;
+        searchArea.lowerBound = positionMunition - b2Vec2(2.0f, 2.0f);
+        searchArea.upperBound = positionMunition + b2Vec2(2.0f, 2.0f);
+        return searchArea;
+    }
+
+    void addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impulseMunition){
+        b2BodyDef munitBazoDef;
+        munitBazoDef.type = b2_dynamicBody;
+        munitBazoDef.fixedRotation = true;
+        munitBazoDef.position.Set(positionOrigen.x, positionOrigen.y );
+        munitBazoDef.userData.pointer = (uintptr_t) this;
+        this->body = aWorld->CreateBody(&munitBazoDef);
+        b2CircleShape munitBazoForm;
+        munitBazoForm.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
+        munitBazoForm.m_radius = 0.1f;
+
+        b2FixtureDef defFixMuniBazooka;
+        defFixMuniBazooka.shape = &munitBazoForm;
+        defFixMuniBazooka.density = 1.0f; // ver el tema del aire luego.
+        this->body->CreateFixture(&defFixMuniBazooka);
+        body->ApplyLinearImpulse( impulseMunition, body->GetWorldCenter(), true);
+    }
+
+    b2Vec2 getImpulseForWorm(const b2Vec2 &positionWorm, const b2Vec2 &positionMunition, float distanceWormToMunition) {
+        b2Vec2 impulseDirection = positionWorm - positionMunition;
+        impulseDirection.Normalize();
+        float impulseMagnitude = maxImpulseMagnitude * std::max(0.0f, 1.0f - sqrt(distanceWormToMunition) / maxRadio );
+        b2Vec2 impulseWorm = impulseMagnitude * impulseDirection;
+        impulseWorm.y = abs(impulseWorm.x) * 0.7;
+        return impulseWorm;
+    }
+
+    float getDamageForWorm(const float &wormDistance) {
+        float damageForWorm = mainDamage * std::max(0.0f, 1.0f - sqrt(wormDistance) / maxRadio);
+        return damageForWorm;
     }
 };
 
-class Bazooka : public GameObject{
+class Bazooka { // creo que al pedo la bazooka hereda de gameObject
 private:
-    float damage;
-    float impulseX;
-    float impulseY;
-    b2World* aWorld;
-    MyFirstRayCastCallback myRayCast;
-    float rayAngle; // esta en radianes.
-    float rayLength;
-    Direction direction;
+    std::pair<float, float> impulseWeapon; // impulse x, impulse y
+    WeaponSight weaponSight;
+    std::vector<std::unique_ptr<MunitionBazooka>> munitionsBazooka;
 
 public:
-    Bazooka(const Entity &aTpeEntity) : GameObject(aTpeEntity) {
-        damage = 50.0f;
-        impulseX = 0.11f;
-        impulseY = 0.11f;
-        rayAngle = 0.13;
-        rayLength = 0.4f;
+    Bazooka() : weaponSight(0.5f, 0.0) {
+        impulseWeapon.first = 0.1f;
+        impulseWeapon.second = 0.1f;
     }
 
     void resetRayCast() {
-        this->myRayCast.resetRayCast();
+        weaponSight.resetRayCast();
     }
 
-    void upMira(Direction direction) {
-        this->direction = direction;
-        rayAngle += 10.0f;
-        if(rayAngle > 90.3f){
-            rayAngle -= 10.0f;
-        }
-        std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
+    void upMira() {
+        weaponSight.upMira();
     }
 
-    void downMira(Direction direction) {
-        this->direction = direction;
-        rayAngle -= 10.0f;
-        if (rayAngle < -90.3f){
-            rayAngle += 10.0f;
-        }
-        std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
+    void downMira() {
+        weaponSight.downMira();
     }
 
-    void changeDirectiond(Direction direction) {
-        this->direction = direction;
+    // metodo de la clase weapon sight
+    void attack(b2World *world, b2Vec2 positionWorm, Direction direction) {
+        b2Vec2 p2 = weaponSight.getPositionP2RayCast(world, positionWorm, direction);
+        b2Vec2 impulseMuniBazooka = weaponSight.getImpulseForMuniBazooka(direction, impulseWeapon);
+        //std::unique_ptr<ClientLogin> unCliente{new ClientLogin(std::move(sktPeer), games)}
+
+        // creamos la munition de la bazooka
+        std::unique_ptr <MunitionBazooka> munitionBazooka{new MunitionBazooka(ENTITY_MUNITION_BAZOOKA)};
+        munitionBazooka->addToTheWorld(world, p2, impulseMuniBazooka);
+        munitionsBazooka.push_back(std::move(munitionBazooka));
     }
 
-    b2Vec2 getPositionToAttack(b2World *world, const b2Vec2& vec2) {
-        b2Vec2 p1 = vec2;
-        int factor = 1;
-        if (this->direction == LEFT) factor = -1;
-        b2Vec2 p2 = p1 + rayLength * b2Vec2(factor* cosf(rayAngle * DEGRATORADIANS), sinf(rayAngle * DEGRATORADIANS));
-        return p2;
-    }
-
-    void attack(b2World *world, b2Vec2 positionWorm) {
-        b2BodyDef wormDef;
-        wormDef.type = b2_dynamicBody;
-        wormDef.fixedRotation = true;
-        b2Vec2 p2 = getPositionToAttack(world, positionWorm);
-        wormDef.position.Set(p2.x, p2.y );
-        wormDef.userData.pointer = (uintptr_t) this;
-        this->body = world->CreateBody(&wormDef);
-        //  creamos la forma del gusano.
-        b2CircleShape bazookaForm;
-        bazookaForm.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
-        bazookaForm.m_radius = 0.1f;
-
-        b2FixtureDef defFixtureBazooka;
-        defFixtureBazooka.shape = &bazookaForm;
-        defFixtureBazooka.friction = 1.0f;
-        defFixtureBazooka.density = 1.0f;
-        this->body->CreateFixture(&defFixtureBazooka);
-        int factor = 1;
-        if (this->direction == LEFT){
-            factor = -1;
-        }
-        b2Vec2 impulse(factor * impulseX, impulseY); //  por la gravedad
-
-        body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
-        this->aWorld = world;
+    std::vector<std::unique_ptr<MunitionBazooka>>* getMunitionsBazooka(){
+        return &munitionsBazooka;
     }
 
 };
+
 
 class Worm : public GameObject {
     size_t idWorm;
@@ -466,7 +541,7 @@ class Worm : public GameObject {
 
 public:
     Worm(const size_t &idWorm, const float &posIniX, const float &posIniY) : GameObject(ENTITY_WORM), positionInitialX(posIniX),
-        positionInitialY(posIniY), bat(10.0f, 0.30f, 0.42f), bazooka(ENTITY_BAZOOKA){
+        positionInitialY(posIniY), bat(10.0f, 0.30f, 0.42f) {
         this->idWorm = idWorm;
         hp = 100.0f;
         dragSpeed = 0.2f;
@@ -529,7 +604,7 @@ public:
                 directionLook = RIGHT;   //MIRAMOS LADO OPUESTO AL Saltar hacia atras.
             } // ^
             //bat.changeDirectiond(directionLook);
-            bazooka.changeDirectiond(directionLook);
+            //bazooka.changeDirectiond(directionLook);
             b2Vec2 impulse(impulseX, impulseY); //  por la gravedad
             body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
         }
@@ -556,7 +631,7 @@ public:
         if( not isInContactWithAnotherWorm() and  body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ){
             directionLook = aDirection;
             //bat.changeDirectiond(directionLook);
-            bazooka.changeDirectiond(directionLook);
+            //bazooka.changeDirectiond(directionLook);
             float acceleration = getBody()->GetFixtureList()[0].GetFriction() * 10.0f; // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
             float speed = sqrt(2.0f * acceleration * dragSpeed); // la velocidad la sacamos como 2 * aceleracion * distancia.
             float impulse = body->GetMass() * speed;
@@ -608,7 +683,7 @@ public:
     }
 
     void attackWithBat(){
-        GameObject* gameObject = bat.attack(world, this->body->GetWorldCenter());
+        GameObject* gameObject = bat.getBodyCollidesWithRayCast(world, this->body->GetWorldCenter(), directionLook);
         if (  gameObject == nullptr ){
             // signfica que no alcanza a nadie nuestro ataque o golpeamos a algo que no es un worm  por ej una viga
             std::cout << "No se golpeo a ningun worm \n";
@@ -617,23 +692,35 @@ public:
         Worm* worm = (Worm*) gameObject;
         worm->takeDamage(bat.getDamage());  //danio del bate
         int factor = 1;
-        if(directionLook == LEFT) factor = -1;
-        worm->getBody()->ApplyLinearImpulse(b2Vec2( factor * bat.getImpulseX(), bat.getImpulseY()), worm->getBody()->GetWorldCenter(), true);
+        if(directionLook == LEFT){
+            factor = -1;
+        }
+        std::cout << "VALOR De factor actual: " << factor <<  "\n";
+        worm->getBody()->ApplyLinearImpulse(b2Vec2( factor* bat.getImpulseX(), bat.getImpulseY()), worm->getBody()->GetWorldCenter(), true);
         bat.resetRayCast();
     }
 
     void upMira(){
-        //bat.upMira(directionLook);
-        bazooka.upMira(directionLook);
+        bat.upMira();
+        bazooka.upMira();
     }
 
     void downMira(){
-        //bat.downMira(directionLook);
-        bazooka.downMira(directionLook);
+        bat.downMira();
+        bazooka.downMira();
     }
 
     void attackWithBazooka(){
-        bazooka.attack(world, getBody()->GetWorldCenter());
+        bazooka.attack(world, getBody()->GetWorldCenter(), directionLook);
+        bazooka.resetRayCast();
+    }
+
+    b2World* getWorld(){
+        return world;
+    }
+
+    std::vector<std::unique_ptr<MunitionBazooka>>* getMunitionsBazooka(){
+        return this->bazooka.getMunitionsBazooka();
     }
 
 };
@@ -683,7 +770,70 @@ void wormCollidesWithWorm(GameObject* worm1, GameObject* worm2){
     }
 }
 
+void munitionBazookaCollidesWithWorm(GameObject* bazooka, GameObject* worm){
+    std::cout << "munitionBazookaCollidesWithWorm\n";
+    if(bazooka == nullptr or worm == nullptr) return;
+    Worm* wormSelect = (Worm*) (worm);
 
+    bazooka->destroyBody();
+    //wormSelect->getWorld()->DestroyBody(bazooka->getBody());
+    wormSelect->takeDamage(50.0f);
+}
+
+void wormCollidesWithMunitionBazooka(GameObject* worm1, GameObject* bazooka){
+    std::cout << "wormCollidesWithMunitionBazooka\n";
+    munitionBazookaCollidesWithWorm(bazooka, worm1);
+}
+
+class SaveWormsInAreaQuery : public b2QueryCallback{
+private:
+    std::map<GameObject*, float> wormAndDistanceSquar;
+    b2Vec2 munitionPosition;
+public:
+    SaveWormsInAreaQuery(b2Vec2 munitionPosition) : munitionPosition(munitionPosition){
+    }
+
+    bool ReportFixture(b2Fixture* fixture) override {
+        std::cout << "En SaveWormsInAreaQuery entre a reportFixture tengo que reportar que encontre un objeto en el intervalo del cuadrado\n";
+        GameObject* obj = (GameObject*) (fixture->GetBody()->GetUserData().pointer);
+        if (obj && obj->getEntityType() == ENTITY_WORM) {
+            std::cout << "Ese objeto es un worm entro al report fiture de query\n";
+            float distanceSquared = b2DistanceSquared(munitionPosition, fixture->GetBody()->GetWorldCenter()); // sacamos la distancia al cuadrado
+            // es decir distancia = c.c -> c = (a-b) = (x1-x2; y1-y2) -> c.c = (x1-x2)² + (y1-y2)²
+            std::cout << "obj" << obj << "\n";
+            wormAndDistanceSquar[obj] = distanceSquared;
+        }
+        return true; // Continuar con la búsqueda
+    }
+    std::map<GameObject*, float>  getWormsAndDistSquar(){
+        return this->wormAndDistanceSquar;
+    };
+};
+
+void munitionBazookaCollideWithBeam(GameObject* munitionBazooka, GameObject* beam){
+    std::cout << "munitionBazookaCollideWithBeam\n";
+    b2Vec2 munitionPosition = munitionBazooka->getBody()->GetWorldCenter();
+
+    MunitionBazooka* munitionSelect = (MunitionBazooka*)  munitionBazooka;
+
+    SaveWormsInAreaQuery savWormsinArea(munitionPosition);     // Función de devolución de llamada para la búsqueda
+
+    Beam * beamSelected = (Beam*) beam;
+    beamSelected->getWorld()->QueryAABB(&savWormsinArea, munitionSelect->getAreaForSearch(munitionPosition));
+    for(auto& aElement : savWormsinArea.getWormsAndDistSquar() ){
+        Worm* aWormToTakeDamage = (Worm*)(aElement.first);
+        b2Vec2 impulseForWorm = munitionSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(), munitionPosition, aElement.second);
+        float damageForWorm = munitionSelect->getDamageForWorm(aElement.second);
+        aWormToTakeDamage->getBody()->ApplyLinearImpulse( impulseForWorm, aWormToTakeDamage->getBody()->GetWorldCenter(), true);
+        aWormToTakeDamage->takeDamage(damageForWorm);
+    }
+    munitionBazooka->destroyBody();
+}
+
+void beamCollidesWithMunitionBazooka(GameObject* beam, GameObject* munitionBazooka){
+    std::cout << "beamCollidesWithMunitionBazooka\n";
+    munitionBazookaCollideWithBeam(munitionBazooka, beam);
+}
 
 class MyContactListener : public b2ContactListener {
 
@@ -702,6 +852,10 @@ public:
         collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_EDGE)] = &wormCollidesWithEdege;
         collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_WORM)] = &edgeCollidesWithWorm;
         collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_WORM)] = &wormCollidesWithWorm;
+        collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_MUNITION_BAZOOKA)] = &wormCollidesWithMunitionBazooka;
+        collisionsMap[std::make_pair(ENTITY_MUNITION_BAZOOKA, ENTITY_BEAM)] = &munitionBazookaCollideWithBeam;
+        collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_MUNITION_BAZOOKA )] = &beamCollidesWithMunitionBazooka;
+
     }
 
     void BeginContact(b2Contact* contact) override{
@@ -709,6 +863,7 @@ public:
         GameObject* otroGameObject = (GameObject*) contact->GetFixtureB()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
         if(gameObject == nullptr || otroGameObject == nullptr) return;
         auto iteratorElement =  collisionsMap.find( std::make_pair(gameObject->getEntityType(), otroGameObject->getEntityType())); // nos retorna un iterador
+        std::cout << "Collision detected between " << gameObject->getEntityType() << " and " << otroGameObject->getEntityType() << "\n";
         if(iteratorElement != collisionsMap.end() ){
             auto hitFunction = iteratorElement->second;
             if(hitFunction){
@@ -743,11 +898,9 @@ public:
           }
         else if (key == GLFW_KEY_Y){
             vecWorms[0]->jumpBackwards();
-
         }
         else if (key == GLFW_KEY_K){
             vecWorms[0]->walk(RIGHT);
-
         }
         else if (key == GLFW_KEY_H ){
             vecWorms[0]->walk(LEFT);
@@ -768,7 +921,16 @@ public:
     }
 
     void update() {
-
+        std::vector<std::unique_ptr<MunitionBazooka>>* munitionsBazooka = vecWorms[0]->getMunitionsBazooka();
+        auto it = munitionsBazooka->begin();
+        while (it != munitionsBazooka->end()) {
+            if ((*it)->isDestroyedBody()) {
+                m_world->DestroyBody((*it)->getBody()); // Destruimos el cuerpo
+                it = munitionsBazooka->erase(it);       // Eliminar el elemento del vector usando el iterador
+            } else {
+                ++it;                 // Avanzar al siguiente elemento si no se elimina
+            }
+        }
     }
 
     void Step(Settings &settings) override {
@@ -780,7 +942,7 @@ public:
             b2Vec2 posicion2 = vecWorms[1]->getBody()->GetWorldCenter();
             std::string dateGusano1 = "X: " + std::to_string(posicion.x)  + " Y: " + std::to_string(posicion.y) +" HP: " +  std::to_string(vecWorms[0]->getHp()) + " \n";
             std::string dateGusano2 = "\nX: " + std::to_string(posicion2.x)  + " Y: " + std::to_string(posicion2.y) +" HP: " +  std::to_string(vecWorms[1]->getHp()) + " \n";
-            std::string textFinal = dateGusano1 + "\n";
+            std::string textFinal =  "\n" + dateGusano1 + "\n" + dateGusano2 + "\n";
             g_debugDraw.DrawString(5, m_textLine, textFinal.data());
             update();
         }
