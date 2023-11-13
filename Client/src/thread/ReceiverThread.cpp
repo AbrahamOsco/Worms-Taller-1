@@ -19,16 +19,19 @@ void ReceiverThread::run() {
         SnapShot snapShot;
         snapShot = m_protocol.recvASnapShot();
         std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
-        for (const WormDTO &wormDto: wormsDto) {
-            std::unique_ptr<Worm> worm = std::make_unique<Worm>(static_cast<int>(wormDto.getPositionX()), 1080 - static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(),
-                                                                wormDto.getDirectionLook(), wormDto.getTypeFocus(),
-                                                                wormDto.getMoveWorm(), wormDto.getWeaponCurrent());
-            gameObjects.push_back(std::move(worm));
-        }
 
         WeaponInventory weaponInventory;
         WeaponsDTO weaponsDto = snapShot.getWeaponsDto();
         std::vector<WeaponDTO> weapons = weaponsDto.getWeapons();
+
+        for (const WormDTO &wormDto: wormsDto) {
+            std::unique_ptr<Worm> worm = std::make_unique<Worm>(static_cast<int>(wormDto.getPositionX()), 1080 - static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(),
+                                                                wormDto.getDirectionLook(), wormDto.getTypeFocus(),
+                                                                wormDto.getMoveWorm(), weaponsDto.getWeaponCurrent());
+            gameObjects.push_back(std::move(worm));
+        }
+
+
         for (const WeaponDTO &weaponDto: weapons) {
             int ammoCount = -1;
             if (weaponDto.getTypeMunition() == TypeMunition::NO_INFINITE) {
