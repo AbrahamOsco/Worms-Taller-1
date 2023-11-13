@@ -42,7 +42,12 @@ void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
         players.getCurrentWorm()->jumpBackwards();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_FORWARD_CMD){
         players.getCurrentWorm()->jumpForwards();
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BAT){
+        players.getCurrentWorm()->assignWeapon(TypeWeapon::BASEBALL_BAT);
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_TELEPORT){
+        players.getCurrentWorm()->assignWeapon(TypeWeapon::TELEPORT);
     }
+
 }
 
 void Model::updateStateWorms() {
