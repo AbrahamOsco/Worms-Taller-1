@@ -20,7 +20,7 @@ Beam::Beam(const TypeBeam &aTypeBeam, const float &aXcenter, const float &aYCent
 // aca Falta hacer GameParameters::getMaxHeightPixelStatic() - (yCenter * GameParameters::getPositionAdjustmentStatic())
 BeamDTO Beam::getBeamDTO() {
     BeamDTO beamDto(typeBeam, xCenter * GameParameters::getPositionAdjustmentStatic(),
-                    yCenter * GameParameters::getPositionAdjustmentStatic(), length, height, angle);  // AJUSTAR TAMBIEN LAS VIGAS @RICARDO
+    GameParameters::getMaxHeightPixelStatic()  - (yCenter * GameParameters::getPositionAdjustmentStatic()), length, height, angle);  // AJUSTAR TAMBIEN LAS VIGAS @RICARDO
     return beamDto;
 }
 
