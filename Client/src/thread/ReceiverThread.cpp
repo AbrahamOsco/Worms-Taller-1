@@ -24,10 +24,12 @@ void ReceiverThread::run() {
         WeaponsDTO weaponsDto = snapShot.getWeaponsDto();
         std::vector<WeaponDTO> weapons = weaponsDto.getWeapons();
 
+        std::cout << weaponsDto.getWeaponCurrent() << std::endl;
+
         for (const WormDTO &wormDto: wormsDto) {
             std::unique_ptr<Worm> worm = std::make_unique<Worm>(static_cast<int>(wormDto.getPositionX()), 1080 - static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(),
                                                                 wormDto.getDirectionLook(), wormDto.getTypeFocus(),
-                                                                wormDto.getMoveWorm(), weaponsDto.getWeaponCurrent());
+                                                                wormDto.getMoveWorm(), wormDto.getWeaponCurrent());
             gameObjects.push_back(std::move(worm));
         }
 
