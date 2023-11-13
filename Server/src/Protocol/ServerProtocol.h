@@ -13,6 +13,7 @@
 #include "../../../Common/DTO/CommandDTO.h"
 #include "../../../Common/DTO/SnapShot.h"
 #include "../../../Common/DTO/WeaponsDTO.h"
+#include "../../../Common/DTO/WeaponSightDTO.h"
 
 #define BYTE_DISCONNECT 0
 #define STATUS_ERROR 2
@@ -52,6 +53,8 @@ public:
     void sendWeaponsDTO(const WeaponsDTO& weapons);
 
     void sendAWeaponDTO(const WeaponDTO& aWeapon);
+
+    void sendWeaponSightDTO(const WeaponSightDTO& weaponSightDto);
 
 };
 

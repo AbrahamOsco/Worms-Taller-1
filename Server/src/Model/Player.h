@@ -48,6 +48,8 @@ public:
     PlayerDTO getPlayerDTO(const size_t &idCurrentPlayer) const;
 
     Worm *getCurrentWorm();
+
+
 };
 
 

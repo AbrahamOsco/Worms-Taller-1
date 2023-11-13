@@ -11,6 +11,7 @@
 #include "../../../Common/DTO/CommandDTO.h"
 #include "../../../Common/DTO/SnapShot.h"
 #include "../../../Common/DTO/WeaponsDTO.h"
+#include "../../../Common/DTO/WeaponSightDTO.h"
 
 class ClientProtocol : public Protocol {
 
@@ -43,6 +44,7 @@ public:
 
     WeaponDTO recvAWeaponDTO();
 
+    WeaponSightDTO recvWeaponSightDTO();
 
     ~ClientProtocol() = default;
 

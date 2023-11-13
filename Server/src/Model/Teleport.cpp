@@ -5,7 +5,7 @@
 #include "Teleport.h"
 
 Teleport::Teleport(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, const TypeMunition &aTypeMunition,
-                   const size_t &aMunition) : Weapon(aTypeWeapon, damagePrincipal, aTypeMunition, aMunition) {
+                   const size_t &aMunition, const GameParameters& gameParameters) : Weapon(aTypeWeapon, damagePrincipal, aTypeMunition, aMunition, gameParameters) {
 
 }
 

@@ -174,6 +174,8 @@ SnapShot ClientProtocol::recvASnapShot() {
 
         //ahora recibimos a WeaponsDTO.
         aSnapShot.setWeaponsDto(recvWeaponsDTO());
+
+        aSnapShot.setWeaponSightDto(recvWeaponSightDTO());
     }
     return aSnapShot;
 }
@@ -224,5 +226,16 @@ WeaponDTO ClientProtocol::recvAWeaponDTO() {
         return WeaponDTO(typeWeapon, typeMunition, munition);
     }
     return aWeaponDTO;
+}
+
+WeaponSightDTO ClientProtocol::recvWeaponSightDTO() {
+    int operationType = recvANumberByte();
+    if( operationType == WEAPON_SIGHT){
+        TypeSight aTypeSight = static_cast<TypeSight>( recvANumberByte() );
+        size_t positionX = recvNum2Bytes();
+        size_t positionY = recvNum2Bytes();
+        return WeaponSightDTO(aTypeSight, positionX, positionY);
+    }
+    return WeaponSightDTO();
 }
 

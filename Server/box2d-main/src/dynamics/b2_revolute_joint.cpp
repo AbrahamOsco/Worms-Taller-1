@@ -450,7 +450,7 @@ void b2RevoluteJoint::Dump()
 	b2Dump("  jd.localAnchorB.Set(%.9g, %.9g);\n", m_localAnchorB.x, m_localAnchorB.y);
 	b2Dump("  jd.referenceAngle = %.9g;\n", m_referenceAngle);
 	b2Dump("  jd.enableLimit = bool(%d);\n", m_enableLimit);
-	b2Dump("  jd.lowerAngle = %.9g;\n", m_lowerAngle);
+	b2Dump("  jd.decreaseAngle = %.9g;\n", m_lowerAngle);
 	b2Dump("  jd.upperAngle = %.9g;\n", m_upperAngle);
 	b2Dump("  jd.enableMotor = bool(%d);\n", m_enableMotor);
 	b2Dump("  jd.motorSpeed = %.9g;\n", m_motorSpeed);

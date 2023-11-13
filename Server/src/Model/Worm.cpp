@@ -134,9 +134,12 @@ float Worm::getHP() const {
 
 WormDTO Worm::getWormDTO() const {
     std::cout << "WeaponCurrent: " << this->armament.getWeaponCurrent() << "\n";
-    return WormDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(), this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(),
+    return WormDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
+                   gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()),
                    this->idPlayer, this->hp, this->directionLook, this->typeFocus, this->typeMov, this->armament.getWeaponCurrent() );
+
 }
+
 
 void Worm::activateFocus() {
     this->typeFocus = TypeFocusWorm::FOCUS;
@@ -157,11 +160,10 @@ void Worm::leftWorm() {
         walk(Direction::LEFT);
     } else if ( not armament.isUnarmed() and this->directionLook == Direction::LEFT ){
         armament.putWeaponOnStandByAndUnarmed();
-        armament.unarmed();
         walk(Direction::LEFT);
     } else{             // no esta desarmando y estaba mirando a la derecha pasamos a que mire a la izquierda
         this->directionLook = Direction::LEFT;
-        armament.changeDirection(Direction::LEFT);
+        //armament.changeDirection(Direction::LEFT);
     }
 
 }
@@ -171,11 +173,10 @@ void Worm::rightWorm() {
         walk(Direction::RIGHT);
     } else if ( not armament.isUnarmed() and this->directionLook == Direction::RIGHT){
         armament.putWeaponOnStandByAndUnarmed();
-        armament.unarmed();
         walk(Direction::RIGHT);
     } else{         // NO ESTA desarmado y estaba mirando a la izquierda lo hacemos que mira a la derecha
         this->directionLook = Direction::RIGHT;
-        armament.changeDirection(Direction::RIGHT);
+        //armament.changeDirection(Direction::RIGHT);
     }
 }
 
@@ -205,7 +206,7 @@ void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
 
 void Worm::attackWithBat(){
     Bat* aBat = (Bat*) this->armament.getWeaponCurrentPtr();
-    GameObject* gameObject = aBat->getBodyShocked(aWorld, this->getBody()->GetWorldCenter() );
+    GameObject* gameObject = aBat->getBodyCollidesWithRayCast(aWorld, this->getBody()->GetWorldCenter(), directionLook);
     if ( gameObject == nullptr){
         std::cout << "No se golpeo a ningun worm \n";         // signfica que no alcanza a nadie nuestro ataque o golpeamos a algo que no es un worm  por ej una viga
         return;
@@ -227,6 +228,10 @@ TypeWeapon Worm::getWeaponCurrent() const {
 void Worm::teleportWorm(const float& posXTeleport, const float& posYTeleport){
     Teleport* teleport = (Teleport*) this->armament.getWeaponCurrentPtr();
     teleport->teleportIn(getBody(), posXTeleport, posYTeleport);
+}
+
+WeaponSightDTO Worm::getWeaponSightDTO() {
+    return armament.getWeaponSightDTO(this->body->GetWorldCenter(), directionLook);
 }
 
 

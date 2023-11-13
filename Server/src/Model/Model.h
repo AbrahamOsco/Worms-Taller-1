@@ -47,6 +47,8 @@ public:
     void execute(std::unique_ptr<CommandDTO> &aCommandDTO);
 
     void updateStateWorms();
+
+    WeaponSightDTO getWeaponSightDTO();
 };
 
 

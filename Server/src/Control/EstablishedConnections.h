@@ -15,6 +15,7 @@
 #include "../../../Common/DTO/PlayerDTO.h"
 #include "../../../Common/DTO/CommandDTO.h"
 #include "../../../Common/DTO/WeaponsDTO.h"
+#include "../../../Common/DTO/WeaponSightDTO.h"
 
 class EstablishedConnections {
 private:
@@ -30,7 +31,8 @@ public:
 
     void stop();
 
-    void pushSnapShot(const std::vector<WormDTO> &vectorWormsDTO, const PlayersDTO &playersDTO, const std::vector<WeaponsDTO> &vecWeaponsDTO);
+    void pushSnapShot(const std::vector<WormDTO> &vectorWormsDTO, const PlayersDTO &playersDTO,
+                      const std::vector<WeaponsDTO> &vecWeaponsDTO, const WeaponSightDTO &weaponSightDTO);
 
 
 };

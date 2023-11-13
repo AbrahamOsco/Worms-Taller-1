@@ -9,24 +9,19 @@
 #include "Weapon.h"
 #include "WeaponRayCast.h"
 #include "GameObject.h"
-#define DEGRATORADIANS (b2_pi/180.0f)
-#define RADIANSTODEGREE (180/b2_pi)
+#include "WeaponSight.h"
+
 
 // agregar weponaSight t toda la gracia. 
 class Bat : public Weapon{
 private:
-    float impulseX;
-    float impulseY;
-    float rayAngle;
-    float rayLength;
-    WeaponRayCast weaponRayCast;
-    Direction direction;
-
+    std::pair<float, float> impulseWeapon;
+    WeaponSight weaponSight;
 public:
     Bat(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, const TypeMunition &aTypeMunition,
-        const size_t &aMunition);
+        const size_t &aMunition, const GameParameters& gameParameters);
 
-    GameObject *getBodyShocked(b2World *world, const b2Vec2 &positionWorm);
+    GameObject *getBodyCollidesWithRayCast(b2World *world, const b2Vec2 &positionWorm, const Direction &directionCurrent);
 
     float getImpulseX() const;
 
@@ -34,16 +29,15 @@ public:
 
     void resetRayCast();
 
-    virtual void riseAngle() override;
+    virtual void increaseAngle() override;
 
-    virtual void lowerAngle() override;
-
-    virtual void changeDirection(const Direction &aDirection) override;
+    virtual void decreaseAngle() override;
 
     virtual bool hasAScope() override;
 
-    virtual void prepareWeapon(const Direction &aDirection) override;
+    //virtual void prepareWeapon(const Direction &aDirection) override;
 
+    virtual WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) override;
 };
 
 

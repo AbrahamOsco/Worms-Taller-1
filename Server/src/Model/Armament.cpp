@@ -7,9 +7,10 @@
 #include "Bat.h"
 #include "Teleport.h"
 
-Armament::Armament(const size_t &idPlayer) : idPlayer(idPlayer), currentWeapon(NONE_WEAPON), weaponOnStandBy(NONE_WEAPON) {
-    armament.emplace(BASEBALL_BAT, std::make_unique<Bat>(BASEBALL_BAT, 10.0f, INFINITE, 1) );
-    armament.emplace(TELEPORT, std::make_unique<Teleport>(TELEPORT, 0.0f, INFINITE, 1) );
+Armament::Armament(const size_t &idPlayer, const GameParameters& gameParameters)
+        : idPlayer(idPlayer), currentWeapon(NONE_WEAPON), weaponOnStandBy(NONE_WEAPON), gameParameters(gameParameters) {
+    armament.emplace(BASEBALL_BAT, std::make_unique<Bat>(BASEBALL_BAT, 10.0f, INFINITE, 1, gameParameters) );
+    armament.emplace(TELEPORT, std::make_unique<Teleport>(TELEPORT, 0.0f, INFINITE, 1, gameParameters));
 }
 
 bool Armament::isUnarmed() const{
@@ -24,7 +25,7 @@ TypeWeapon Armament::getWeaponCurrent() const {
 void Armament::assignWeapon(const TypeWeapon &weapon, const Direction &direction) {
     this->currentWeapon = weapon;
     if (armament.at(currentWeapon)->hasAScope()){
-        armament.at(currentWeapon)->prepareWeapon(direction);
+        //armament.at(currentWeapon)->prepareWeapon(direction);
     }
 }
 
@@ -40,6 +41,8 @@ bool Armament::hasAScoped() {
     return this->armament.at(currentWeapon)->hasAScope();
 }
 
+/*
+// quizas lo saquemos?
 void Armament::changeDirection(const Direction &direction) {
     if(this->currentWeapon == NONE_WEAPON){
         // en el caso de que estamos desarmado no hacemos nada.
@@ -49,10 +52,7 @@ void Armament::changeDirection(const Direction &direction) {
     }
     return this->armament.at(currentWeapon)->changeDirection(direction);
 }
-
-void Armament::unarmed() {
-    this->currentWeapon = NONE_WEAPON;
-}
+*/
 
 void Armament::putWeaponOnStandByAndUnarmed() {
     if(currentWeapon != NONE_WEAPON){
@@ -82,6 +82,13 @@ WeaponsDTO Armament::getWeaponsDTO() const {
         aCurrentWP = currentWeapon;
     }
     return WeaponsDTO(idPlayer, vecWeaponDTO, aCurrentWP);
+}
+
+WeaponSightDTO Armament::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) {
+    if( currentWeapon == NONE_WEAPON){
+        return WeaponSightDTO(NO_SHOW_SIGHT, 0, 0);
+    }
+    return armament.at(currentWeapon)->getWeaponSightDTO(positionWorm, directionCurrent);
 }
 
 

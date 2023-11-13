@@ -55,7 +55,8 @@ void Engine::run() {
         if (commandsQueueNB.move_try_pop(aCommanDTO)){
             this->model.execute(aCommanDTO);
         }
-        connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO());
+        connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
+                                 model.getWeaponSightDTO());
         this->model.updateStateWorms();
         /*
         if(model.getWormsDTO().back().getMoveWorm() == STANDING){

@@ -145,6 +145,9 @@ void ServerProtocol::sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot) {
     //ahora enviamos a WeaponsDTO.
     sendWeaponsDTO(aSnapShot->getWeaponsDto());
 
+    // enviamos la mira
+    sendWeaponSightDTO(aSnapShot->getWeaponSightDto());
+
 }
 
 void ServerProtocol::sendAWormDTO(const WormDTO &aWormDTO) {
@@ -174,5 +177,12 @@ void ServerProtocol::sendAWeaponDTO(const WeaponDTO &aWeapon) {
     sendANumberByte(aWeapon.getTypeWeapon());
     sendANumberByte(aWeapon.getTypeMunition());
     sendANumberByte(aWeapon.getMunition());
+}
+
+void ServerProtocol::sendWeaponSightDTO(const WeaponSightDTO &weaponSightDto) {
+    sendANumberByte(weaponSightDto.getOperationType());
+    sendANumberByte(weaponSightDto.getTypeSight());
+    sendNum2Bytes(weaponSightDto.getPositionXSight());
+    sendNum2Bytes(weaponSightDto.getPositionYSight());
 }
 

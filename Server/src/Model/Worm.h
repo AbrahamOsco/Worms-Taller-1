@@ -63,6 +63,8 @@ public:
 
     bool isInContactWithAnotherWorm();
 
+    WeaponSightDTO getWeaponSightDTO();
+
     //void startContact();
 
     //void endContact();

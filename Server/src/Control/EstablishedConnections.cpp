@@ -37,9 +37,10 @@ void EstablishedConnections::stop() {
 
 // Todos los clientes pushean el vector de wormsDTO que envio a su propio queue cada una asi visualizan todos los worms.
 // Esto es un broadcast. para todos los clientes.
-void EstablishedConnections::pushSnapShot(const std::vector<WormDTO> &vectorWormsDTO, const PlayersDTO &playersDTO,const std::vector<WeaponsDTO>& vecWeaponsDTO) {
+void EstablishedConnections::pushSnapShot(const std::vector<WormDTO> &vectorWormsDTO, const PlayersDTO &playersDTO,
+                                          const std::vector<WeaponsDTO> &vecWeaponsDTO, const WeaponSightDTO &weaponSightDTO) {
     for (auto &element : clientConnections) {
-        element.second.pushSnapShot(vectorWormsDTO, playersDTO, vecWeaponsDTO);
+        element.second.pushSnapShot(vectorWormsDTO, playersDTO, vecWeaponsDTO, weaponSightDTO);
     }
 }
 

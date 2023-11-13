@@ -332,7 +332,7 @@ public:
         this->direction = direction;
     }
 
-    GameObject* getBodyCollidesWithRayCast(b2World *world, const b2Vec2& vec2, Direction directionCurrent) {
+    GameObject* getBodyCollidesWithRayCast(b2World *world, const b2Vec2& vec2, const Direction &directionCurrent) {
         b2Vec2 p1 = vec2;
         int factor = 1;
         this->direction = directionCurrent;
@@ -377,8 +377,6 @@ public:
         }
         return b2Vec2(factor * impulse.first , impulse.second * factorAngle);
     }
-
-
 };
 
 
@@ -389,11 +387,11 @@ private:
     WeaponSight weaponSight;
 
 public:
-    Bat(float damage, float impulseX, float impulseY) : damage(damage), weaponSight(3.0f, 3.0f){
+    Bat(float damage, float impulseX, float impulseY) : damage(damage), weaponSight(3.0f, 3.0f, nullptr) {
         impulseWeapon = std::make_pair(impulseX, impulseY);
     }
 
-    GameObject* getBodyCollidesWithRayCast(b2World *world, const b2Vec2& positionWorm, Direction directionCurrent) {
+    GameObject* getBodyCollidesWithRayCast(b2World *world, const b2Vec2& positionWorm, const Direction &directionCurrent) {
         return weaponSight.getBodyCollidesWithRayCast(world, positionWorm, directionCurrent);
     }
 
@@ -489,7 +487,7 @@ private:
     std::vector<std::unique_ptr<MunitionBazooka>> munitionsBazooka;
 
 public:
-    Bazooka() : weaponSight(0.5f, 0.0) {
+    Bazooka() : weaponSight(0.5f, 0.0, nullptr) {
         impulseWeapon.first = 0.1f;
         impulseWeapon.second = 0.1f;
     }

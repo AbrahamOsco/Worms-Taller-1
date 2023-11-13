@@ -13,7 +13,7 @@ class Teleport : public Weapon {
 private:
 
 public:
-    Teleport(const TypeWeapon& aTypeWeapon, const float &damagePrincipal, const TypeMunition& aTypeMunition, const size_t& aMunition);
+    Teleport(const TypeWeapon& aTypeWeapon, const float &damagePrincipal, const TypeMunition& aTypeMunition, const size_t& aMunition, const GameParameters& gameParameters);
 
     void teleportIn(b2Body *bodyWorm, const float &posXTeleport, const float &posYTeleport);
 

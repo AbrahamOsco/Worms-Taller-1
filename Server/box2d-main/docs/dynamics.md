@@ -840,7 +840,7 @@ joint friction.
 ```cpp
 b2RevoluteJointDef jointDef;
 jointDef.Initialize(bodyA, bodyB, myBodyA->GetWorldCenter());
-jointDef.lowerAngle = -0.5f * b2_pi; // -90 degrees
+jointDef.decreaseAngle = -0.5f * b2_pi; // -90 degrees
 jointDef.upperAngle = 0.25f * b2_pi; // 45 degrees
 jointDef.enableLimit = true;
 jointDef.maxMotorTorque = 10.0f;

@@ -58,6 +58,10 @@ std::vector<WeaponsDTO> Model::getVecWeaponsDTO() const {
     return players.getVecWeaponsDTO();
 }
 
+WeaponSightDTO Model::getWeaponSightDTO() {
+    return players.getCurrentWorm()->getWeaponSightDTO();
+}
+
 
 
 

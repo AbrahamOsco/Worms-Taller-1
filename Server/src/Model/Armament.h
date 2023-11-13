@@ -12,6 +12,7 @@
 #include "Bat.h"
 #include "../../../Common/DTO/WormDTO.h"
 #include "../../../Common/DTO/WeaponsDTO.h"
+#include "../../GameParameters/GameParameters.h"
 
 class Armament {
 private:
@@ -19,9 +20,9 @@ private:
     std::map<TypeWeapon, std::unique_ptr<Weapon> > armament; // si no funcionan usaremos unique_ptr en weapon
     TypeWeapon currentWeapon;
     TypeWeapon weaponOnStandBy;
-
+    const GameParameters& gameParameters;
 public:
-    Armament(const size_t& idPlayer);
+    Armament(const size_t &idPlayer, const GameParameters &gameParameters);
 
     bool hasAWeapon();
 
@@ -33,9 +34,7 @@ public:
 
     bool hasAScoped();
 
-    void changeDirection(const Direction &direction);
-
-    void unarmed();
+    //void changeDirection(const Direction &direction);
 
     void putWeaponOnStandByAndUnarmed();
 
@@ -44,6 +43,8 @@ public:
     void assignWeapon(const TypeWeapon &weapon, const Direction &direction);
 
     WeaponsDTO getWeaponsDTO() const;
+
+    WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent);
 };
 
 
