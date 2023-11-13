@@ -37,7 +37,7 @@ public:
 
     void unarmed();
 
-    void putWeaponOnStandBy();
+    void putWeaponOnStandByAndUnarmed();
 
     void getWeaponOnStandBy();
 

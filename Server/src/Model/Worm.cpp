@@ -47,8 +47,7 @@ void Worm::addToTheWorld(b2World *world) {
 
 void Worm::jumpBackwards() {
     if( not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ){
-        armament.putWeaponOnStandBy(); // guardamos el arma actual y nos desarmamos
-        armament.unarmed();
+        armament.putWeaponOnStandByAndUnarmed(); // guardamos el arma actual y nos desarmamos
         this->typeMov = JUMPING;
         float angleTita, initialSpeed;
         angleTita = atan(4.0f * distancesJumpBack.second / distancesJumpBack.first);       //  (4 *hmax)/distMaxHorizontal.
@@ -70,8 +69,7 @@ void Worm::jumpBackwards() {
 }
 void Worm::jumpForwards() {
     if(not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)) {
-        armament.putWeaponOnStandBy(); // guardamos el arma actual y nos desarmamos
-        armament.unarmed();
+        armament.putWeaponOnStandByAndUnarmed(); // guardamos el arma actual y nos desarmamos
         this->typeMov = JUMPING;
         float angleTita, initialSpeed;
         angleTita = atan(4.0f * distancesJumpForward.second / distancesJumpForward.first);       //  (4 *hmax)/distMaxHorizontal.
@@ -135,6 +133,7 @@ float Worm::getHP() const {
 // [todo] Aca Falta hacer gameParameters.getMaxHeightPixel() - (aWormElem.second->getPositionY() * gameParameters.getPositionAdjustment())  para la posicion en Y.
 
 WormDTO Worm::getWormDTO() const {
+    std::cout << "WeaponCurrent: " << this->armament.getWeaponCurrent() << "\n";
     return WormDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(), this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(),
                    this->idPlayer, this->hp, this->directionLook, this->typeFocus, this->typeMov, this->armament.getWeaponCurrent() );
 }
@@ -157,7 +156,7 @@ void Worm::leftWorm() {
     if( armament.isUnarmed() ){
         walk(Direction::LEFT);
     } else if ( not armament.isUnarmed() and this->directionLook == Direction::LEFT ){
-        armament.putWeaponOnStandBy();
+        armament.putWeaponOnStandByAndUnarmed();
         armament.unarmed();
         walk(Direction::LEFT);
     } else{             // no esta desarmando y estaba mirando a la derecha pasamos a que mire a la izquierda
@@ -171,7 +170,7 @@ void Worm::rightWorm() {
     if( armament.isUnarmed()){
         walk(Direction::RIGHT);
     } else if ( not armament.isUnarmed() and this->directionLook == Direction::RIGHT){
-        armament.putWeaponOnStandBy();
+        armament.putWeaponOnStandByAndUnarmed();
         armament.unarmed();
         walk(Direction::RIGHT);
     } else{         // NO ESTA desarmado y estaba mirando a la izquierda lo hacemos que mira a la derecha
@@ -184,9 +183,11 @@ void Worm::stopIfUnmoving() {
     if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
         this->typeMov = STANDING;
         armament.getWeaponOnStandBy();
+        /*
         if(armament.getWeaponCurrent() != NONE_WEAPON){
             armament.changeDirection(this->directionLook);
         }
+        */
     }
 }
 

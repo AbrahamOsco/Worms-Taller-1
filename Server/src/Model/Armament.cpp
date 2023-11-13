@@ -54,13 +54,18 @@ void Armament::unarmed() {
     this->currentWeapon = NONE_WEAPON;
 }
 
-void Armament::putWeaponOnStandBy() {
-    this->weaponOnStandBy = currentWeapon;
+void Armament::putWeaponOnStandByAndUnarmed() {
+    if(currentWeapon != NONE_WEAPON){
+        this->weaponOnStandBy = currentWeapon;
+        currentWeapon = NONE_WEAPON;
+    }
 }
 
 void Armament::getWeaponOnStandBy() {
-    this->currentWeapon = weaponOnStandBy;
-    this->weaponOnStandBy = NONE_WEAPON;
+    if(weaponOnStandBy != NONE_WEAPON){
+        this->currentWeapon = weaponOnStandBy;
+        this->weaponOnStandBy = NONE_WEAPON;
+    }
 }
 
 WeaponsDTO Armament::getWeaponsDTO() const {
