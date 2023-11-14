@@ -49,5 +49,13 @@ WeaponSightDTO Weapon::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direc
     return WeaponSightDTO(NO_SHOW_SIGHT, 0, 0);
 }
 
+void Weapon::increaseImpulse() {
+    // no hago nada para algunas armas y las armas sin mira.
+}
+
+bool Weapon::hasMaxImpulse() {
+    return false;
+}
+
 
 

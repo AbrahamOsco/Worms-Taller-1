@@ -97,6 +97,13 @@ public:
 
     void teleportWorm(const float &posXTeleport, const float &posYTeleport);
 
+    void upWorm();
+
+    void downWorm();
+
+    void increaseImpulse();
+
+    void attack();
 };
 
 

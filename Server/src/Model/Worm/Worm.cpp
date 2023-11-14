@@ -248,5 +248,40 @@ void Worm::disableInclinedBeam() {
     this->onInclinedBeam = false;
 }
 
+void Worm::upWorm() {
+    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
+        return;
+    }
+    // con esto obtenemos la arma actual por ej un bate y vamos al increaseAngle del bate.
+    this->armament.getWeaponCurrentPtr()->increaseAngle();
+}
+
+void Worm::downWorm() {
+    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
+        return;
+    }
+    this->armament.getWeaponCurrentPtr()->decreaseAngle();
+}
+
+void Worm::increaseImpulse() {
+    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
+        return;
+    }
+    this->armament.getWeaponCurrentPtr()->increaseImpulse();
+    if(this->armament.getWeaponCurrentPtr()->hasMaxImpulse() ){
+        attack();
+    }
+}
+
+void Worm::attack() {
+    if(this->armament.getWeaponCurrent() == NONE_WEAPON){
+        return;
+    }
+    if( this->armament.getWeaponCurrent() == BASEBALL_BAT){
+        this->attackWithBat();
+    }
+
+}
+
 
 
