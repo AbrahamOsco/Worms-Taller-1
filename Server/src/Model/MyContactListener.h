@@ -7,8 +7,8 @@
 
 
 #include <map>
-#include "GameObject.h"
 #include "box2d/box2d.h"
+#include "GameObject/GameObject.h"
 
 class MyContactListener : public b2ContactListener {
 private:

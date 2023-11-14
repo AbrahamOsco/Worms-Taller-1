@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <linux/limits.h>
 #include "imgui/imgui.h"
+
 #include <GL/gl.h> // Incluir la biblioteca principal de OpenGL
 //#include <GL/glu.h> // Incluir la biblioteca de utilidades de GLUT
 #include <GLFW/glfw3.h> // Opcional: Incluir la biblioteca GLFW si estás utilizando GLFW para gestionar la ventana
@@ -387,7 +388,7 @@ private:
     WeaponSight weaponSight;
 
 public:
-    Bat(float damage, float impulseX, float impulseY) : damage(damage), weaponSight(3.0f, 3.0f, nullptr) {
+    Bat(float damage, float impulseX, float impulseY) : damage(damage), weaponSight(3.0f, 0.0f) {
         impulseWeapon = std::make_pair(impulseX, impulseY);
     }
 
@@ -487,7 +488,7 @@ private:
     std::vector<std::unique_ptr<MunitionBazooka>> munitionsBazooka;
 
 public:
-    Bazooka() : weaponSight(0.5f, 0.0, nullptr) {
+    Bazooka() : weaponSight(0.5f, 0.0) {
         impulseWeapon.first = 0.1f;
         impulseWeapon.second = 0.1f;
     }
@@ -504,7 +505,6 @@ public:
         weaponSight.downMira();
     }
 
-    // metodo de la clase weapon sight
     void attack(b2World *world, b2Vec2 positionWorm, Direction direction) {
         b2Vec2 p2 = weaponSight.getPositionP2RayCast(world, positionWorm, direction);
         b2Vec2 impulseMuniBazooka = weaponSight.getImpulseForMuniBazooka(direction, impulseWeapon);
@@ -783,12 +783,12 @@ void wormCollidesWithMunitionBazooka(GameObject* worm1, GameObject* bazooka){
     munitionBazookaCollidesWithWorm(bazooka, worm1);
 }
 
-class SaveWormsInAreaQuery : public b2QueryCallback{
+class SaveWormsInAreaQueryTest : public b2QueryCallback{
 private:
     std::map<GameObject*, float> wormAndDistanceSquar;
     b2Vec2 munitionPosition;
 public:
-    SaveWormsInAreaQuery(b2Vec2 munitionPosition) : munitionPosition(munitionPosition){
+    explicit SaveWormsInAreaQueryTest(const b2Vec2 &munitionPosition) : munitionPosition(munitionPosition){
     }
 
     bool ReportFixture(b2Fixture* fixture) override {
@@ -808,13 +808,14 @@ public:
     };
 };
 
+
 void munitionBazookaCollideWithBeam(GameObject* munitionBazooka, GameObject* beam){
     std::cout << "munitionBazookaCollideWithBeam\n";
     b2Vec2 munitionPosition = munitionBazooka->getBody()->GetWorldCenter();
 
     MunitionBazooka* munitionSelect = (MunitionBazooka*)  munitionBazooka;
 
-    SaveWormsInAreaQuery savWormsinArea(munitionPosition);     // Función de devolución de llamada para la búsqueda
+    SaveWormsInAreaQueryTest savWormsinArea(munitionPosition);     // Función de devolución de llamada para la búsqueda
 
     Beam * beamSelected = (Beam*) beam;
     beamSelected->getWorld()->QueryAABB(&savWormsinArea, munitionSelect->getAreaForSearch(munitionPosition));
