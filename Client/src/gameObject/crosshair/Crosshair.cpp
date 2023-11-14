@@ -5,6 +5,8 @@
 #include "Crosshair.h"
 #include "../../command/ChargeCmd.h"
 #include "../../command/FireCmd.h"
+#include "../../command/UpCmd.h"
+#include "../../command/DownCmd.h"
 
 Crosshair::Crosshair(int x, int y, const TypeSight &typeSight) : GameObject(LoaderParams(x, y, 60, 60, "crosshair")), m_typeSight(typeSight) {
     m_animation.setProps(m_textureID, m_width, m_height, 32, 60);
@@ -19,6 +21,16 @@ void Crosshair::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager)
 void Crosshair::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) {
     m_animation.update();
     if (m_typeSight == TypeSight::SHOW_SIGHT) {
+        if (input.getKeyDown(SDL_SCANCODE_UP)) {
+            std::unique_ptr<Command> command(new UpCmd());
+            queue.move_push(std::move(command));
+        }
+
+        if (input.getKeyDown(SDL_SCANCODE_DOWN)) {
+            std::unique_ptr<Command> command(new DownCmd());
+            queue.move_push(std::move(command));
+        }
+
         if (input.getKeyDown(SDL_SCANCODE_SPACE)) {
             std::unique_ptr<Command> command(new ChargeCmd());
             queue.move_push(std::move(command));

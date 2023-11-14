@@ -12,6 +12,8 @@
 enum TypeCommand {
     LEFT_CMD,
     RIGHT_CMD,
+    UP_CMD,
+    DOWN_CMD,
     JUMP_BACK_CMD,
     JUMP_FORWARD_CMD,
     SELECT_BAZOOKA,
