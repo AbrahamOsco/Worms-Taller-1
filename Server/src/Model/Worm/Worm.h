@@ -36,6 +36,7 @@ class Worm : public GameObject {
     bool onInclinedBeam;
     bool attacked;
     size_t iterationsForBatAttack;
+    std::pair<float, float> positionInAir; // para que el gusano sufra daño en caidas mayores a 2m.
 public:
 
     Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
@@ -107,6 +108,10 @@ public:
     void attack();
 
     ProjectilesDTO getProjectilesDTO();
+
+    void savePositionInAir(const float &positionXAir, const float &positionYAir);
+
+    std::pair<float, float> getPositionAir() const;
 };
 
 

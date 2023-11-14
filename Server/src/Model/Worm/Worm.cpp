@@ -20,6 +20,7 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     onInclinedBeam = false;
     attacked = false;
     iterationsForBatAttack = 15;
+    positionInAir= std::make_pair(0.0f, 0.0f);
 }
 
 void Worm::assignBonusLife() {
@@ -294,5 +295,12 @@ ProjectilesDTO Worm::getProjectilesDTO() {
     return armament.getProjectilesDTO();
 }
 
+void Worm::savePositionInAir(const float &positionXAir, const float &positionYAir) {
+    positionInAir = std::make_pair(positionXAir, positionYAir);
+}
+
+std::pair<float, float>  Worm::getPositionAir() const{
+    return positionInAir;
+}
 
 

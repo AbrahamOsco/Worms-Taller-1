@@ -18,7 +18,24 @@ void wormCollidesWithBeam(GameObject* worm, GameObject* beam){
     } else if ( unaBeam->getAngle() == 0 ){
         unWorm->disableInclinedBeam();
     }
-
+    // calcualamos danio.
+    float positionYInAirLast = unWorm->getPositionAir().second;
+    float positionYCurrent = unWorm->getBody()->GetWorldCenter().y;
+    float fallHeight = positionYInAirLast - positionYCurrent;
+    float thresholdFall = 2.0f; // sacar del archivo @ricardo.
+    std::cout << "Altura e la caida actual fue de  " << fallHeight << "\n";
+    if (fallHeight > thresholdFall){
+        std::cout << "Superamos el treshhold la caida es de " << fallHeight;
+        fallHeight -= thresholdFall;
+        int damageForFall = (int) std::min(fallHeight, 25.0f);
+        unWorm->takeDamage(damageForFall);
+        if(unWorm->getHP() <= 0){
+            unWorm->destroyBody();
+        }
+    }
+    //actualizamos la posicion en el aire gusano luego de caer.
+    b2Vec2 positonWormInAir = worm->getBody()->GetWorldCenter();
+    unWorm->savePositionInAir(positonWormInAir.x, positonWormInAir.y);
 }
 
 void beamCollideWithWorm(GameObject* beam, GameObject* worm){
@@ -97,6 +114,19 @@ void beamCollidesWithMunitionBazooka(GameObject* beam, GameObject* munitionBazoo
     munitionBazookaCollideWithBeam(munitionBazooka, beam);
 }
 
+void beamEndContactWithWorm(GameObject* beam, GameObject* worm){
+    std::cout << "beamEndContactWithWorm\n";
+    Worm* unWorm = (Worm*) (worm);
+    Beam* unaBeam = (Beam*) (beam);
+    b2Vec2 positonWormInAir = worm->getBody()->GetWorldCenter();
+    unWorm->savePositionInAir(positonWormInAir.x, positonWormInAir.y);
+}
+
+void wormEndContactWithBeam(GameObject* worm, GameObject* beam){
+    std::cout << "wormEndContactWithBeam\n ";
+    beamEndContactWithWorm(beam, worm);
+}
+
 
 GameContactListener::GameContactListener(b2World *aWorld) {
     aWorld->SetContactListener(this);
@@ -110,6 +140,8 @@ GameContactListener::GameContactListener(b2World *aWorld) {
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_BAZOOKA_PROJECTILE)] = &wormCollidesWithMunitionBazooka;
     collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_BEAM)] = &munitionBazookaCollideWithBeam;
     collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_BAZOOKA_PROJECTILE )] = &beamCollidesWithMunitionBazooka;
+    endContactMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM) ] = &beamEndContactWithWorm;
+    endContactMap[std::make_pair(ENTITY_WORM, ENTITY_BEAM) ] = &wormEndContactWithBeam;
 }
 
 
@@ -127,4 +159,20 @@ void GameContactListener::BeginContact(b2Contact *contact) {
         }
     }
 }
+
+void GameContactListener::EndContact(b2Contact *contact) {
+    std::cout << "termina el contacto \n";
+    GameObject* gameObject = (GameObject*) contact->GetFixtureA()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
+    GameObject* otroGameObject = (GameObject*) contact->GetFixtureB()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
+    if(gameObject == nullptr || otroGameObject == nullptr) return;
+    auto iteratorElement =  endContactMap.find( std::make_pair(gameObject->getEntityType(), otroGameObject->getEntityType())); // nos retorna un iterador
+    std::cout << "Collision finished between " << gameObject->getEntityType() << " and " << otroGameObject->getEntityType() << "\n";
+    if(iteratorElement != endContactMap.end() ){
+        auto hitFunction = iteratorElement->second;
+        if(hitFunction){
+            hitFunction(gameObject, otroGameObject);
+        }
+    }
+}
+
 
