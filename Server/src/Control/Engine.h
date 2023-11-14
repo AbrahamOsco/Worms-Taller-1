@@ -34,7 +34,7 @@ private:
     std::atomic<bool> keepTalking;
     Queue<std::unique_ptr<CommandDTO>> commandsQueueNB;  // La queue para popear los comandos recibido por el cliente.
     EstablishedConnections connections;
-
+    //GameContactListener gameContactListener;
     //std::map<size_t, ClientThread*> playersInRoom;
     // ACA AGREGAR UN MONITOR DE LOS CLIENTES CONECTADOAS A ESTA PARTIDA.
     void sendStatusAnswer(Socket &sktPeer, const OperationType &operationType);

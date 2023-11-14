@@ -10,10 +10,19 @@
 
 // Clase de colisiones el listener:
 void wormCollidesWithBeam(GameObject* worm, GameObject* beam){
-    std::cout << "Worm colisionar con el beam\n";
+    std::cout << "Worm colisionar con el WORM\n";
+    Worm* unWorm = (Worm*) (worm);
+    Beam* unaBeam = (Beam*) (beam);
+    if(unaBeam->getAngle() >0 and unaBeam->getAngle() <= 45){
+        unWorm->activaeInclinedBeam();
+    } else if ( unaBeam->getAngle() == 0 ){
+        unWorm->disableInclinedBeam();
+    }
+
 }
 
 void beamCollideWithWorm(GameObject* beam, GameObject* worm){
+    wormCollidesWithBeam(worm, beam);
     std::cout << "BEAM colisionar con el WORM\n";
 }
 
@@ -105,5 +114,17 @@ GameContactListener::GameContactListener(b2World *aWorld) {
 
 
 void GameContactListener::BeginContact(b2Contact *contact) {
-    b2ContactListener::BeginContact(contact);
+    std::cout << "inica colision en beginCOntact\n";
+    GameObject* gameObject = (GameObject*) contact->GetFixtureA()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
+    GameObject* otroGameObject = (GameObject*) contact->GetFixtureB()->GetBody()->GetUserData().pointer;  // me devuelve un uintptr_t lo casteo a gameObject.
+    if(gameObject == nullptr || otroGameObject == nullptr) return;
+    auto iteratorElement =  collisionsMap.find( std::make_pair(gameObject->getEntityType(), otroGameObject->getEntityType())); // nos retorna un iterador
+    std::cout << "Collision detected between " << gameObject->getEntityType() << " and " << otroGameObject->getEntityType() << "\n";
+    if(iteratorElement != collisionsMap.end() ){
+        auto hitFunction = iteratorElement->second;
+        if(hitFunction){
+            hitFunction(gameObject, otroGameObject);
+        }
+    }
 }
+

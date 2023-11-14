@@ -16,7 +16,7 @@
 Engine::Engine(const ResponseInitialStateDTO &response) : nameGameRoom( response.getGameName()) , nameScenario(response.getScenarioName()),
                                                           numberPlayerReq(response.getPlayerRequired()), currentPlayers(0), world(b2Vec2(0.0f, gameParameters.getGravity())),
                                                           model(response.getScenarioName(), world, gameParameters), keepTalking(true), commandsQueueNB(UINT_MAX - 1),
-                                                          connections(commandsQueueNB) {
+                                                          connections(commandsQueueNB){
 }
 
 // Retorna 1 si agrego con exito al jugador o retorna 2 Si hubo un ERROR.

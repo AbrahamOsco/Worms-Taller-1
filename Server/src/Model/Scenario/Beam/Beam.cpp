@@ -50,4 +50,8 @@ b2World *Beam::getWorld() const {
     return aWorld;
 }
 
+float Beam::getAngle() const {
+    return this->angle;
+}
+
 

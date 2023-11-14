@@ -92,14 +92,18 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Common/DTO/StageDTO.cpp Common/DTO/StageDTO.h Server/src/Model/Scenario/Beam/Beam.cpp Server/src/Model/Scenario/Beam/Beam.h Common/DTO/BeamDTO.cpp Common/DTO/BeamDTO.h Server/src/Model/YamlParser/YamlParser.cpp Server/src/Model/YamlParser/YamlParser.h Server/src/Model/GameObject/GameObject.cpp Server/src/Model/GameObject/GameObject.h Server/src/Model/Players/Players.h Server/src/Model/Players/Players.cpp Common/DTO/PlayerDTO.cpp Common/DTO/PlayerDTO.h
         Common/DTO/PlayersDTO.cpp Common/DTO/PlayersDTO.h
 
-        Server/src/Model/Scenario/Edges/Edges.cpp Server/src/Model/Scenario/Edges/Edges.h Server/src/Model/Scenario/Water/Water.cpp Server/src/Model/Scenario/Water/Water.h Server/src/Model/MyContactListener.cpp Server/src/Model/MyContactListener.h Common/DTO/SnapShot.cpp Common/DTO/SnapShot.h Server/GameParameters/GameParameters.h
+        Server/src/Model/Scenario/Edges/Edges.cpp Server/src/Model/Scenario/Edges/Edges.h Server/src/Model/Scenario/Water/Water.cpp Server/src/Model/Scenario/Water/Water.h Common/DTO/SnapShot.cpp Common/DTO/SnapShot.h Server/GameParameters/GameParameters.h
         Server/GameParameters/GameParameters.h Server/GameParameters/GameParameters.cpp
         Common/DTO/WeaponDTO.cpp Common/DTO/WeaponDTO.h Common/DTO/WeaponsDTO.cpp Common/DTO/WeaponsDTO.h
         Server/src/Model/Weapons/Armament/Armament.cpp Server/src/Model/Weapons/Armament/Armament.h Server/src/Model/Weapons/WeaponsWorm/Weapon.cpp Server/src/Model/Weapons/WeaponsWorm/Weapon.h Server/src/Model/Weapons/WeaponsWorm/Bat.cpp Server/src/Model/Weapons/WeaponsWorm/Bat.h Server/src/Model/Weapons/WeaponsWorm/Teleport.cpp Server/src/Model/Weapons/WeaponsWorm/Teleport.h Server/src/Model/Weapons/WeaponRayCast/WeaponRayCast.cpp Server/src/Model/Weapons/WeaponRayCast/WeaponRayCast.h Server/src/Model/Weapons/WeaponSight/WeaponSight.cpp Server/src/Model/Weapons/WeaponSight/WeaponSight.h
 
         Common/DTO/WeaponSightDTO.cpp Common/DTO/WeaponSightDTO.h
 
-        Server/src/Model/Weapons/WeaponsWorm/Bazooka.cpp Server/src/Model/Weapons/WeaponsWorm/Bazooka.h Server/src/Model/Projectiles/ProjectileBazooka.cpp Server/src/Model/Projectiles/ProjectileBazooka.h)
+        Server/src/Model/Weapons/WeaponsWorm/Bazooka.cpp Server/src/Model/Weapons/WeaponsWorm/Bazooka.h Server/src/Model/Projectiles/ProjectileBazooka.cpp Server/src/Model/Projectiles/ProjectileBazooka.h
+        Server/src/Model/GameContactListener/GameContactListener.cpp Server/src/Model/GameContactListener/GameContactListener.h Server/src/Model/QueriesToWorld/SaveWormsInAreaQuery.cpp Server/src/Model/QueriesToWorld/SaveWormsInAreaQuery.h
+
+
+        )
 
 # para el editor
 include_directories(${PROJECT_SOURCE_DIR}/Editor/include)
@@ -123,7 +127,11 @@ add_executable(editor
         Editor/src/editingWindow.cpp
         Editor/include/zoom.h
         Editor/src/zoom.cpp
-        ${UIS_HEADERS} Server/src/Model/GameContactListener/GameContactListener.cpp Server/src/Model/GameContactListener/GameContactListener.h Server/src/Model/QueriesToWorld/SaveWormsInAreaQuery.cpp Server/src/Model/QueriesToWorld/SaveWormsInAreaQuery.h)
+        ${UIS_HEADERS}
+
+
+
+        )
 
 target_link_libraries(editor Qt5::Widgets yaml-cpp)
 target_link_libraries(worms-client PUBLIC SDL2pp yaml-cpp Qt5::Widgets Qt5::Multimedia)

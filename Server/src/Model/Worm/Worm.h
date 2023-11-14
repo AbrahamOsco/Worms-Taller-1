@@ -33,6 +33,8 @@ class Worm : public GameObject {
     const GameParameters& gameParameters;
     b2World* aWorld;
     Armament& armament;
+    bool onInclinedBeam;
+
 public:
 
     Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
@@ -46,6 +48,10 @@ public:
     float getPositionX() const;
 
     float getPositionY();
+
+    void activaeInclinedBeam();
+
+    void disableInclinedBeam();
 
     TypeFocusWorm getTypeFocusWorm() const;
 
