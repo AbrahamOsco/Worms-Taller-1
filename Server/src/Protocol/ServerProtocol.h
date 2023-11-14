@@ -56,6 +56,9 @@ public:
 
     void sendWeaponSightDTO(const WeaponSightDTO& weaponSightDto);
 
+    void sendProjectilesDTO(const ProjectilesDTO &projectilesDto);
+
+    void sendAProjectileDTO(const ProjectileDTO &aProjectilDTO);
 };
 
 

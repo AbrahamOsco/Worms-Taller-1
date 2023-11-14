@@ -15,6 +15,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 # find_package(box2d CONFIG REQUIRED)
 # definitiones for SDL2DelRuso
+#mas
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
 FIND_PACKAGE(yaml-cpp REQUIRED)

@@ -176,8 +176,33 @@ SnapShot ClientProtocol::recvASnapShot() {
         aSnapShot.setWeaponsDto(recvWeaponsDTO());
 
         aSnapShot.setWeaponSightDto(recvWeaponSightDTO());
+        aSnapShot.setProjectilesDto(recvProjectilesDTO());
     }
     return aSnapShot;
+}
+ProjectilesDTO ClientProtocol::recvProjectilesDTO(){
+    int typeOperation = recvANumberByte();
+    std::vector<ProjectileDTO> vecProjectileDTO;
+    if( typeOperation == PROJECTILES_DTO ){
+        TypeShowProjectiles typeShow = static_cast<TypeShowProjectiles>(recvANumberByte());
+        size_t numberProjectiles = recvANumberByte();
+        for(size_t i = 0; i < numberProjectiles; i++){
+            vecProjectileDTO.push_back(recvAProjectileDTO());
+        }
+        return ProjectilesDTO(typeShow, vecProjectileDTO);
+    }
+    return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
+}
+
+ProjectileDTO ClientProtocol::recvAProjectileDTO(){
+    int operationType = recvANumberByte();
+    if ( operationType == OperationType::PROJECTILE_DTO){
+        TypeProjectil aTypeProj = static_cast<TypeProjectil>(recvANumberByte());
+        size_t positionX = recvNum2Bytes();
+        size_t postionY = recvNum2Bytes();
+        return ProjectileDTO(aTypeProj, positionX, postionY);
+    }
+    return ProjectileDTO(NONE_PROJECTILE, 0, 0);
 }
 
 WormDTO ClientProtocol::recvAWormDTO() {

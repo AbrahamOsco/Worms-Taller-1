@@ -148,6 +148,25 @@ void ServerProtocol::sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot) {
     // enviamos la mira
     sendWeaponSightDTO(aSnapShot->getWeaponSightDto());
 
+    // enviamos el projectil
+    sendProjectilesDTO(aSnapShot->getProjectilesDto());
+}
+
+void ServerProtocol::sendProjectilesDTO(const ProjectilesDTO& projectilesDto){
+    sendANumberByte(projectilesDto.getOperationType());
+    sendANumberByte(projectilesDto.getTypeShowProjectiles());
+    // enviamso la cantida de projectielsdto q existen.
+    sendANumberByte(projectilesDto.getProjectilesDto().size());
+    for(auto& aProjectil : projectilesDto.getProjectilesDto()){
+        sendAProjectileDTO(aProjectil);
+    }
+}
+
+void ServerProtocol::sendAProjectileDTO(const ProjectileDTO& aProjectilDTO){
+    sendANumberByte(aProjectilDTO.getOperationType());
+    sendANumberByte(aProjectilDTO.getTypeProjectil());
+    sendNum2Bytes(aProjectilDTO.getPositionX());
+    sendNum2Bytes(aProjectilDTO.getPositionY());
 }
 
 void ServerProtocol::sendAWormDTO(const WormDTO &aWormDTO) {

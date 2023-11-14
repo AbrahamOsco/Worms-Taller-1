@@ -48,6 +48,9 @@ public:
 
     ~ClientProtocol() = default;
 
+    ProjectileDTO recvAProjectileDTO();
+
+    ProjectilesDTO recvProjectilesDTO();
 };
 
 

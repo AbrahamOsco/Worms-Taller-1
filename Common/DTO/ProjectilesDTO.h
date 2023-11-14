@@ -15,8 +15,8 @@ enum TypeShowProjectiles{
 
 class ProjectilesDTO : public DTO {
 private:
-    std::vector<ProjectileDTO> projectilesDTO;
     TypeShowProjectiles typeShowProjectiles;
+    std::vector<ProjectileDTO> projectilesDTO;
 public:
     explicit ProjectilesDTO(const TypeShowProjectiles& typeShowProjectiles, const std::vector<ProjectileDTO>& projectilesDTO);
 
