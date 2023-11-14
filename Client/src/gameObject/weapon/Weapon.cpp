@@ -31,7 +31,7 @@ Weapon::Weapon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWe
     } else if (m_typeWeapon == TypeWeapon::HOLY_GRENADE) {
         m_textureID = "holy_grenade_icon";
     } else if (m_typeWeapon == TypeWeapon::BAZOOKA) {
-        m_textureID = "bazzoka_icon";
+        m_textureID = "bazooka_icon";
     } else if (m_typeWeapon == TypeWeapon::MORTAR) {
         m_textureID = "mortar_icon";
     }
