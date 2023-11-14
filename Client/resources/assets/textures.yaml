@@ -127,3 +127,5 @@ textures:
     source: "../Client/resources/assets/background/bg.jpg"
   - name: crosshair
     source: "../Client/resources/assets/crosshair/crshairr.png"
+  - name: bat_hit
+    source: "../Client/resources/assets/worms/Bat_hit.png"
