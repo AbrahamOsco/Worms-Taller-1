@@ -13,6 +13,8 @@ Armament::Armament(const size_t &idPlayer, const GameParameters& gameParameters)
         : idPlayer(idPlayer), currentWeapon(NONE_WEAPON), weaponOnStandBy(NONE_WEAPON), gameParameters(gameParameters) {
     armament.emplace(BASEBALL_BAT, std::make_unique<Bat>(BASEBALL_BAT, gameParameters.getBatDamage(), INFINITE, gameParameters.getBatMunition(), gameParameters) );
     armament.emplace(TELEPORT, std::make_unique<Teleport>(TELEPORT, gameParameters.getTeleportDamage(), INFINITE, gameParameters.getTeleportMunition(), gameParameters));
+    armament.emplace(BAZOOKA, std::make_unique<Teleport>(BAZOOKA, gameParameters.getBazookaProjectileDamageMax(), INFINITE, gameParameters.getBazookaMuntion(), gameParameters));
+
 }
 
 bool Armament::isUnarmed() const{
@@ -98,9 +100,12 @@ ProjectilesDTO Armament::getProjectilesDTO(){
     if (currentWeapon == NONE_WEAPON or (not this->armament.at(currentWeapon)->launchesProjectiles()) ){
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
     }
-
     armament.at(currentWeapon)->getProjectilesDTO(vecProjectileDTO);
-
+    TypeShowProjectiles typeShowProj = NO_SHOW_PROJECTILES;
+    if (vecProjectileDTO.size() > 0){
+        typeShowProj = SHOW_PROJECTILES;
+    }
+    return ProjectilesDTO(typeShowProj, vecProjectileDTO);
 }
 
 

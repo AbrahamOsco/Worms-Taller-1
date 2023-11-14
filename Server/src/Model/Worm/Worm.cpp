@@ -200,7 +200,6 @@ void Worm::stopIfUnmoving() {
             this->typeMov = STANDING;
         }
         armament.getWeaponOnStandBy();
-
     }
 }
 
@@ -289,6 +288,10 @@ void Worm::attack() {
         this->attackWithBat();
     }
     attacked = true;
+}
+
+ProjectilesDTO Worm::getProjectilesDTO() {
+    return armament.getProjectilesDTO();
 }
 
 

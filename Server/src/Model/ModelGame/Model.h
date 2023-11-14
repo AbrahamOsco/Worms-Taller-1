@@ -51,6 +51,8 @@ public:
     void updateStateWorms();
 
     WeaponSightDTO getWeaponSightDTO();
+
+    ProjectilesDTO getProjectilesDTO();
 };
 
 

@@ -3,6 +3,9 @@
 //
 
 #include "ProjectilesDTO.h"
+
+ProjectilesDTO::ProjectilesDTO() : DTO(PROJECTILES_DTO) {}
+
 ProjectilesDTO::ProjectilesDTO(const TypeShowProjectiles &typeShowProjectiles, const std::vector<ProjectileDTO> &projectilesDTO) :
             DTO(PROJECTILES_DTO), typeShowProjectiles(typeShowProjectiles), projectilesDTO(projectilesDTO){
 }
@@ -23,4 +26,5 @@ TypeShowProjectiles ProjectilesDTO::getTypeShowProjectiles() const {
 void ProjectilesDTO::setTypeShowProjectiles(const TypeShowProjectiles &typeShowProjectiles) {
     this->typeShowProjectiles = typeShowProjectiles;
 }
+
 

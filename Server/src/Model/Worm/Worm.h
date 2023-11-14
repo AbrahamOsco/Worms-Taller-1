@@ -105,6 +105,8 @@ public:
     void increaseImpulse();
 
     void attack();
+
+    ProjectilesDTO getProjectilesDTO();
 };
 
 

@@ -20,6 +20,8 @@ private:
 public:
     explicit ProjectilesDTO(const TypeShowProjectiles& typeShowProjectiles, const std::vector<ProjectileDTO>& projectilesDTO);
 
+    ProjectilesDTO();
+
     std::vector<ProjectileDTO> getProjectilesDto() const;
 
     void setProjectilesDto(const std::vector<ProjectileDTO> &projectilesDto);
