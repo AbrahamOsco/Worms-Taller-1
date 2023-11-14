@@ -5,6 +5,7 @@
 #include "Weapon.h"
 #include "../../command/SelectTeleportCmd.h"
 #include "../../command/SelectBatCmd.h"
+#include "../../command/SelectBazooka.h"
 
 Weapon::Weapon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon) : GameObject(LoaderParams(0, 0, 50, 55, " ")),
                                                         m_typeWeapon(typeWeapon), m_ammoCount(ammoCount), m_isSelected(false) {
@@ -67,12 +68,14 @@ void Weapon::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &que
         SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);
         SDL2pp::Point point(input.getMouseX(), input.getMouseY());
         if (SDL_PointInRect(&point, &shape) && !m_isSelected) {
-            std::cout << "Click button: " << m_typeWeapon << std::endl;
             if (m_typeWeapon == TypeWeapon::TELEPORT) {
                 std::unique_ptr<Command> command(new SelectTeleportCmd());
                 queue.move_push(std::move(command));
             } else if (m_typeWeapon == TypeWeapon::BASEBALL_BAT) {
                 std::unique_ptr<Command> command(new SelectBatCmd());
+                queue.move_push(std::move(command));
+            } else if (m_typeWeapon == TypeWeapon::BAZOOKA) {
+                std::unique_ptr<Command> command(new SelectBazooka());
                 queue.move_push(std::move(command));
             }
         }
