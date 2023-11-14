@@ -29,6 +29,7 @@ Lobby::Lobby(QWidget *parent,Socket* socket) : QWidget(parent),
     connectEvents();
 }
 void Lobby::empezar(){
+    song.stop();
     this->hide();
     Game game(*skt);
     game.loadMap();
