@@ -44,6 +44,7 @@ public:
     WeaponsDTO getWeaponsDTO() const;
 
     WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent);
+
 };
 
 

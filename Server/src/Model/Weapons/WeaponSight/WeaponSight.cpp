@@ -15,19 +15,19 @@ void WeaponSight::resetRayCast(){
 }
 
 void WeaponSight::increaseAngle() {
-    rayAngle += 10.0f;
+    rayAngle += 1.0f;
     if(rayAngle > 90.1f){
-        rayAngle -= 10.0f;
+        rayAngle -= 1.0f;
     }
-    std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
+    //std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
 }
 
 void WeaponSight::decreaseAngle() {
-    rayAngle -= 10.0f;
+    rayAngle -= 1.0f;
     if (rayAngle < -90.1f){
-        rayAngle += 10.0f;
+        rayAngle += 1.0f;
     }
-    std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
+    //std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
 }
 
 GameObject* WeaponSight::getBodyCollidesWithRayCast(b2World *world, const b2Vec2& positionWorm, const Direction &directionCurrent) {
@@ -60,8 +60,8 @@ b2Vec2 WeaponSight::getPositionP2RayCast(const b2Vec2 &positionWorm, const Direc
         factor = -1;
     }
     b2Vec2 p2 = p1 + rayLength * b2Vec2( factor * cosf(rayAngle * DEGRATORADIANS), sinf(rayAngle * DEGRATORADIANS));
-    std::cout << "Ray angle degr:" << rayAngle;
-    std::cout << " |    p2.x : " << p2.x << " p2 .y : " << p2.y << " \n ";
+    //std::cout << "Ray angle degr:" << rayAngle;
+    //std::cout << " |    p2.x : " << p2.x << " p2 .y : " << p2.y << " \n ";
     return p2;
 }
 

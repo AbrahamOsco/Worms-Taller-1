@@ -10,6 +10,7 @@ Bazooka::Bazooka(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, co
                  gameParameters.getWeaponAngleInitial(), gameParameters){
     impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(),
                                    gameParameters.getBazookaImpulseYInitial());
+    maxImpulseWeapon = std::make_pair(1.0f, 1.0f);
 }
 
 void Bazooka::increaseAngle() {

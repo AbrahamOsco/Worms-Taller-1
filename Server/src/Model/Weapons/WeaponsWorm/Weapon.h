@@ -45,6 +45,10 @@ public:
 
     virtual void decreaseAngle();
 
+    virtual void  increaseImpulse();
+
+    virtual bool hasMaxImpulse();
+
     virtual WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent);
 
 };

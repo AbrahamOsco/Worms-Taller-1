@@ -34,7 +34,7 @@ class Worm : public GameObject {
     b2World* aWorld;
     Armament& armament;
     bool onInclinedBeam;
-
+    bool attacked;
 public:
 
     Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
@@ -97,6 +97,13 @@ public:
 
     void teleportWorm(const float &posXTeleport, const float &posYTeleport);
 
+    void upWorm();
+
+    void downWorm();
+
+    void increaseImpulse();
+
+    void attack();
 };
 
 
