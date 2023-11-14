@@ -46,7 +46,9 @@ void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
         players.getCurrentWorm()->assignWeapon(BASEBALL_BAT);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_TELEPORT){
         players.getCurrentWorm()->assignWeapon(TELEPORT);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::UP_CMD){
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BAZOOKA){
+        players.getCurrentWorm()->assignWeapon(BAZOOKA);
+    }else if (aCommandDTO->getTypeCommand() == TypeCommand::UP_CMD){
         players.getCurrentWorm()->upWorm();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::DOWN_CMD){
         players.getCurrentWorm()->downWorm();
