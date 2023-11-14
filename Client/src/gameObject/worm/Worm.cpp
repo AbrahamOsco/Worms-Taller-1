@@ -3,6 +3,8 @@
 //
 
 #include "Worm.h"
+#include "../../command/ChargeCmd.h"
+#include "../../command/FireCmd.h"
 
 Worm::Worm(int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
            const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_hpWorm(hpWorm), m_directionLook(direction),
@@ -80,6 +82,14 @@ void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue
     if (m_directionLook == Direction::RIGHT) {
         m_flip = SDL_FLIP_HORIZONTAL;
     }
+
+    if (m_weaponCurrent == TypeWeapon::BASEBALL_BAT) {
+        if (input.getKeyDown(SDL_SCANCODE_SPACE)) {
+            std::unique_ptr<Command> command(new FireCmd());
+            queue.move_push(std::move(command));
+        }
+    }
+
     animationState();
     m_animation.update();
 }
