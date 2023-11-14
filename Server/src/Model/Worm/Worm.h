@@ -35,6 +35,7 @@ class Worm : public GameObject {
     Armament& armament;
     bool onInclinedBeam;
     bool attacked;
+    size_t iterationsForBatAttack;
 public:
 
     Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,

@@ -19,6 +19,7 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     typeMov = STANDING;
     onInclinedBeam = false;
     attacked = false;
+    iterationsForBatAttack = 15;
 }
 
 void Worm::assignBonusLife() {
@@ -189,16 +190,17 @@ void Worm::rightWorm() {
 
 void Worm::stopIfUnmoving() {
     if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
-        if(this->typeMov == ATTACKING){
+        if(this->typeMov == ATTACKING and iterationsForBatAttack > 0 ){
             std::cout << "Se deja de mostrar el attakking" << typeMov << "\n";
+            iterationsForBatAttack--;
+        } else if ( this->typeMov== ATTACKING and iterationsForBatAttack == 0){
+            iterationsForBatAttack = 15;
+            this->typeMov = STANDING;
+        } else{
+            this->typeMov = STANDING;
         }
-        this->typeMov = STANDING;
         armament.getWeaponOnStandBy();
-        /*
-        if(armament.getWeaponCurrent() != NONE_WEAPON){
-            armament.changeDirection(this->directionLook);
-        }
-        */
+
     }
 }
 
@@ -278,19 +280,14 @@ void Worm::increaseImpulse() {
 }
 
 void Worm::attack() {
-    if(this->armament.getWeaponCurrent() == NONE_WEAPON){
+    if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
         return;
     }
-    if(attacked){
-        return;
-    }
-
-    if( this->armament.getWeaponCurrent() == BASEBALL_BAT){
+    //std::cout << "Valor de attacked" << attacked << "\n";
+    if( this->armament.getWeaponCurrent() == BASEBALL_BAT and (not attacked)){
         this->typeMov = ATTACKING;
-        std::cout << "typeMov in attack" << typeMov << "\n";
         this->attackWithBat();
     }
-
     attacked = true;
 }
 
