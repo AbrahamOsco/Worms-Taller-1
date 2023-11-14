@@ -14,5 +14,14 @@ Juego worms
 ### Instalar SDL del ruso: 
     sudo apt-get install libjpeg-dev libpng-dev libfreetype-dev libopusfile-dev libflac-dev libxmp-dev libfluidsynth-dev libwavpack-dev cmake libmodplug-dev libsdl2-dev
         
+### Instalar Google Test c++
+    git clone https://github.com/google/googletest.git -b v1.14.0
+    cd googletest
+    mkdir build
+    cd build
+    cmake ..
+    make
+    sudo make install
 
+    
 

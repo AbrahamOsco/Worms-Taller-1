@@ -98,7 +98,7 @@ public:
      * Hacemos que el `Socket` sea movible.
      * */
     Socket(Socket&&);
-    Socket& operator=(Socket&&);
+    virtual Socket& operator=(Socket&&);
 
     /* `Socket::sendsome` lee hasta `sz` bytes del buffer y los envía. La función
      * puede enviar menos bytes sin embargo.
@@ -117,8 +117,8 @@ public:
      *
      * Lease manpage de `send` y `recv`
      * */
-    int sendsome(const void* data, unsigned int sz, bool* was_closed);
-    int recvsome(void* data, unsigned int sz, bool* was_closed);
+    virtual int sendsome(const void* data, unsigned int sz, bool* was_closed);
+    virtual int recvsome(void* data, unsigned int sz, bool* was_closed);
 
     /*
      * `Socket::sendall` envía exactamente `sz` bytes leídos del buffer, ni más,
@@ -138,8 +138,8 @@ public:
      * para envio/recibo, lease `sz`.
      *
      * */
-    int sendall(const void* data, unsigned int sz, bool* was_closed);
-    int recvall(void* data, unsigned int sz, bool* was_closed);
+    virtual int sendall(const void* data, unsigned int sz, bool* was_closed);
+    virtual int recvall(void* data, unsigned int sz, bool* was_closed);
 
     /*
      * Acepta una conexión entrante y retorna un nuevo socket
@@ -147,19 +147,19 @@ public:
      *
      * En caso de error, se lanza una excepción.
      * */
-    Socket accept();
+    virtual Socket accept();
 
     /*
      * Cierra la conexión ya sea parcial o completamente.
      * Lease manpage de `shutdown`
      * */
-    void shutdown(int how);
+    virtual void shutdown(int how);
 
     /*
      * Cierra el socket. El cierre no implica un `shutdown`
      * que debe ser llamado explícitamente.
      * */
-    int close();
+    virtual int close();
 
     /*
      * Destruye el socket. Si aun esta conectado,
@@ -170,14 +170,14 @@ public:
     //  Pre: recibir el host name y el serviceName (este ultimo puede ser un string o un numero) en
     //  char*. Post: Si el serviceName contiene letras (ej: http, mysql, ftp) retornara el puerto
     //  numerico (80, 3306, 21) asociado en string
-    std::string resolverServiceNames(const char* hostname, const char* servname);
+    virtual std::string resolverServiceNames(const char* hostname, const char* servname);
 
     //  Pre: -
     //  Post: Realiza el shutdown (a ambos canales de escritura y lectura) y el close al socket
     //  respectivamente .
-    void totalClosure();
+    virtual void totalClosure();
 
     //  Destructor
-    ~Socket();
+    virtual ~Socket();
 };
 #endif
