@@ -1,10 +1,11 @@
 #include <iostream>
 #include <gtest/gtest.h>
-#include "Socket.h"
+#include "Mock_Socket.h"
 #include <vector>
+#include <gmock/gmock.h> 
 
 TEST(TESTPROTOCOL,SENDSOME){
-    Socket skt;
+    MockSocket skt;
     std::vector<char> data;
     for(int i = 0;i<10;i++){
         data.push_back((char) i);
@@ -18,7 +19,7 @@ TEST(TESTPROTOCOL,SENDSOME){
         ASSERT_TRUE(data[i] == buff[i]);
 }
 TEST(TESTPROTOCOL,RECVSOME){
-    Socket skt;
+    MockSocket skt;
     std::vector<char> data;
     for(int i = 0;i<10;i++){
         data.push_back((char) i);
