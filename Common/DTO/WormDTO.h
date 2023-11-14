@@ -12,7 +12,7 @@ enum TypeFocusWorm{
     FOCUS = 1, NO_FOCUS = 2
 };
 enum MoveWorm{
-    STANDING = 1, WALKING = 2, JUMPING =3
+    STANDING = 1, WALKING = 2, JUMPING = 3, ATTACKING = 4
 };
 
 class WormDTO : public DTO {

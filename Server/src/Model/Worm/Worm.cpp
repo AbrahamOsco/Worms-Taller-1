@@ -18,6 +18,7 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     typeFocus = NO_FOCUS;
     typeMov = STANDING;
     onInclinedBeam = false;
+    attacked = false;
 }
 
 void Worm::assignBonusLife() {
@@ -104,7 +105,7 @@ void Worm::walk(Direction aDirection) {
                 impulseY = impulseX;
             }
         }
-        std::cout << "Impulse x: " << impulseX << " Impulse y:  " << impulseY << "\n";
+        //std::cout << "Impulse x: " << impulseX << " Impulse y:  " << impulseY << "\n";
         b2Vec2 impulseSpeed(impulseX, impulseY); //  por la gravedad
         body->ApplyLinearImpulse(impulseSpeed, body->GetWorldCenter(), true);
     }
@@ -188,6 +189,9 @@ void Worm::rightWorm() {
 
 void Worm::stopIfUnmoving() {
     if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
+        if(this->typeMov == ATTACKING){
+            std::cout << "Se deja de mostrar el attakking" << typeMov << "\n";
+        }
         this->typeMov = STANDING;
         armament.getWeaponOnStandBy();
         /*
@@ -277,10 +281,17 @@ void Worm::attack() {
     if(this->armament.getWeaponCurrent() == NONE_WEAPON){
         return;
     }
+    if(attacked){
+        return;
+    }
+
     if( this->armament.getWeaponCurrent() == BASEBALL_BAT){
+        this->typeMov = ATTACKING;
+        std::cout << "typeMov in attack" << typeMov << "\n";
         this->attackWithBat();
     }
 
+    attacked = true;
 }
 
 
