@@ -24,6 +24,8 @@ enum TypeCommand {
     SELECT_BAT,
     SELECT_AIR_ATTACK,
     SELECT_TELEPORT,
+    CHARGE_CMD,
+    FIRE_CMD,
     NONE
 };
 

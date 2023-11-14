@@ -11,6 +11,7 @@ class Input {
 private:
     const Uint8* m_keyStates;
     bool m_quit;
+    bool m_isPressed;
 
     // Nuevas variables para el manejo del clic del mouse
     bool m_mouseButtonDown;
@@ -26,11 +27,14 @@ private:
 public:
     Input();
     void listen();
-    bool getKeyDown(SDL_Scancode key);
+    bool getKeyDown(SDL_Scancode key) const;
+    bool getKeyUp(SDL_Scancode key);
 
     bool isMouseButtonDown() const;
     int getMouseX() const;
     int getMouseY() const;
+
+    bool getIsPressed() const;
 
     bool closed() const;
 };

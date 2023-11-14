@@ -4,12 +4,13 @@
 
 #include "Input.h"
 
-Input::Input() : m_quit(false), m_mouseButtonDown(false), m_mouseX(0), m_mouseY(0) {
+Input::Input() : m_quit(false), m_mouseButtonDown(false), m_mouseX(0), m_mouseY(0), m_isPressed(false) {
     m_keyStates = SDL_GetKeyboardState(nullptr);
 }
 
 void Input::listen() {
     SDL_Event event;
+    m_isPressed = true;
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
             case SDL_QUIT:
@@ -19,6 +20,7 @@ void Input::listen() {
                 keyDown();
                 break;
             case SDL_KEYUP:
+                m_isPressed = false;
                 keyUp();
                 break;
             case SDL_MOUSEBUTTONDOWN:
@@ -60,7 +62,7 @@ void Input::mouseMotion(SDL_Event& event) {
     m_mouseY = event.motion.y;
 }
 
-bool Input::getKeyDown(SDL_Scancode key) {
+bool Input::getKeyDown(SDL_Scancode key) const{
     return (m_keyStates[key] == 1);
 }
 
@@ -78,4 +80,12 @@ int Input::getMouseY() const {
 
 bool Input::closed() const {
     return m_quit;
+}
+
+bool Input::getIsPressed() const {
+    return m_isPressed;
+}
+
+bool Input::getKeyUp(SDL_Scancode key) {
+    return (m_keyStates[key] == 0);
 }
