@@ -5,7 +5,7 @@
 #include "Weapon.h"
 #include "../../command/SelectTeleportCmd.h"
 #include "../../command/SelectBatCmd.h"
-#include "../../command/SelectBazooka.h"
+#include "../../command/SelectBazookaCmd.h"
 
 Weapon::Weapon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon) : GameObject(LoaderParams(0, 0, 50, 55, " ")),
                                                         m_typeWeapon(typeWeapon), m_ammoCount(ammoCount), m_isSelected(false) {
@@ -75,7 +75,7 @@ void Weapon::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &que
                 std::unique_ptr<Command> command(new SelectBatCmd());
                 queue.move_push(std::move(command));
             } else if (m_typeWeapon == TypeWeapon::BAZOOKA) {
-                std::unique_ptr<Command> command(new SelectBazooka());
+                std::unique_ptr<Command> command(new SelectBazookaCmd());
                 queue.move_push(std::move(command));
             }
         }
