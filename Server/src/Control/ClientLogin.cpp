@@ -64,7 +64,7 @@ void ClientLogin::execute(const ResponseInitialStateDTO &response, const std::st
     int operationType = response.getOperationType(), answer;
     std::cerr << "[ClientLogin]:execute Se recibe respuesta del usuario  del tipo Operacion: " + std::to_string(operationType) + "\n";
     if( operationType == FINAL_CREATE_GAME){
-        answer = games.createGameAndAddPlayer(response, sktPeer, playerName);         //pasamos el skt por referenciia y si salio todo ok sera movido sino no se movera.
+        answer = games.createGameAndAddPlayer(response, sktPeer, playerName);
         if(answer == OPERATION_SUCCESS){
             isRunning = false;
         } else if ( answer == OPERATION_ERROR ) {

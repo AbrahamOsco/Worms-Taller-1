@@ -27,7 +27,6 @@ bool Bazooka::hasAScope() {
     return true;
 }
 
-// para incrementar el impulso OJO . @todo IMPULSO ES VARIABLE OJO !.
 void Bazooka::increaseImpulse() {
     impulseWeapon.first += 0.01;
     impulseWeapon.second += 0.01;
