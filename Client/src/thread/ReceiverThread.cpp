@@ -6,6 +6,7 @@
 #include "../gameObject/worm/Worm.h"
 #include "../gameObject/gameInfo/GameInfo.h"
 #include "../utils/Constants.h"
+#include "../gameObject/crosshair/Crosshair.h"
 
 ReceiverThread::ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::unique_ptr<GameObject>>> &queue)
         : m_protocol(protocol), m_queue(queue), m_running(true) {}
@@ -53,6 +54,13 @@ void ReceiverThread::run() {
         std::string currentTurn = "Pepe";
         gameObjects.push_back(
                 std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, currentTurn, 10, true));
+
+
+        WeaponSightDTO weaponSightDto = snapShot.getWeaponSightDto();
+
+        std::unique_ptr<Crosshair> crosshair = std::make_unique<Crosshair>(static_cast<int>(weaponSightDto.getPositionXSight()), static_cast<int>(weaponSightDto.getPositionYSight()), weaponSightDto.getTypeSight());
+        gameObjects.push_back(std::move(crosshair));
+
         m_queue.move_try_push(std::move(gameObjects));
     }
 }
