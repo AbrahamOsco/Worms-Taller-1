@@ -22,21 +22,25 @@ public:
 
     void resetRayCast();
 
-    virtual void increaseAngle() override;
+    void increaseAngle() override;
 
-    virtual void decreaseAngle() override;
+    void decreaseAngle() override;
 
-    virtual bool hasAScope() override;
+    bool hasAScope() override;
 
-    virtual void increaseImpulse() override;
+    void increaseImpulse() override;
 
-    virtual bool launchesProjectiles() override;
+    bool launchesProjectiles() override;
 
-    virtual void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
+    void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
 
     void shootProjectile(b2World *world, const b2Vec2& positionWorm, const Direction& direction);
 
     std::unique_ptr<ProjectileBazooka> * getProjectile();
+
+    // ambos metodos son para toda arma con mira
+
+    WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) override;
 
 };
 

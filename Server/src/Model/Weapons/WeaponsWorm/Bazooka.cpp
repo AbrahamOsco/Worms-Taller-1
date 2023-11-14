@@ -61,6 +61,10 @@ void Bazooka::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
     vecProjectileDTO.push_back(projectileDto);
 }
 
+WeaponSightDTO Bazooka::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) {
+    return weaponSight.getWeaponSightDTO(positionWorm, directionCurrent);
+}
+
 
 
 

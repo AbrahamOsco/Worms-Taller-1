@@ -22,23 +22,23 @@ public:
 
     GameObject *getBodyCollidesWithRayCast(b2World *world, const b2Vec2 &positionWorm, const Direction &directionCurrent);
 
+    WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) override;
+
     float getImpulseX() const;
 
     float getImpulseY() const;
 
     void resetRayCast();
 
-    virtual void increaseAngle() override;
+    void increaseAngle() override;
 
-    virtual void decreaseAngle() override;
+    void decreaseAngle() override;
 
-    virtual bool hasAScope() override;
+    bool hasAScope() override;
 
-    virtual bool launchesProjectiles() override;
+    bool launchesProjectiles() override;
 
     //virtual void prepareWeapon(const Direction &aDirection) override;
-
-    virtual WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) override;
 };
 
 
