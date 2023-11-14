@@ -90,7 +90,7 @@ public:
 
     float getBazookaProjectilMaxImpulseExplosion() const;
 
-    float getBazookaMuntion() const;
+    float getBazookaMunition() const;
 
     float getBazookaRayLength() const;
 

@@ -57,7 +57,9 @@ void Engine::run() {
         }
         connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
                                  model.getWeaponSightDTO(), model.getProjectilesDTO());
-
+        if(model.getWeaponSightDTO().getTypeSight() == SHOW_SIGHT){
+            std::cout << "Enviando la mira \n";
+        }
         this->model.updateStateWorms();
         adjustFPS(target, t1, t2, t3, timeUsed, sleepTime, frameTime, sleepAdjustSeconds);
     }

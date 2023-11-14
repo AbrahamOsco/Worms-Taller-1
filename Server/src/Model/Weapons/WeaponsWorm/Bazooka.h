@@ -30,7 +30,7 @@ public:
 
     void increaseImpulse() override;
 
-    bool launchesProjectiles() override;
+    bool    launchesProjectiles() override;
 
     void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
 

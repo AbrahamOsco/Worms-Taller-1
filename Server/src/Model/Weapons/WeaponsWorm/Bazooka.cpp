@@ -2,6 +2,7 @@
 // Created by abraham on 13/11/23.
 //
 
+#include <iostream>
 #include "Bazooka.h"
 
 Bazooka::Bazooka(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, const TypeMunition &aTypeMunition,
@@ -62,6 +63,7 @@ void Bazooka::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
 }
 
 WeaponSightDTO Bazooka::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) {
+    std::cout << "Enviando mira de la bazooka\n";
     return weaponSight.getWeaponSightDTO(positionWorm, directionCurrent);
 }
 

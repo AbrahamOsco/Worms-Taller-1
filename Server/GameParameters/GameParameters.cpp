@@ -55,8 +55,6 @@ GameParameters::GameParameters() {
     parameters["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"] = nodeInitial["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"].as<float>();
     parameters["BAZOOKA_MUNITION"] = nodeInitial["BAZOOKA_MUNITION"].as<float>();
     parameters["BAZOOKA_RAY_LENGTH"] = nodeInitial["BAZOOKA_RAY_LENGTH"].as<float>();
-
-
 }
 
 
@@ -190,15 +188,20 @@ float GameParameters::getTeleportMunition() const {
 }
 
 float GameParameters::getBazookaImpulseXInitial() const {
-    return parameters.at("BAZOOKA_IMPULSE_X");
+    return parameters.at("BAZOOKA_IMPULSE_X_INITIAL");
 }
 
 float GameParameters::getBazookaImpulseYInitial() const {
-    return parameters.at("BAZOOKA_IMPULSE_Y");
+    return parameters.at("BAZOOKA_IMPULSE_Y_INITIAL");
 }
 
 float GameParameters::getBazookaProjectileDamageMax() const {
-    return parameters.at("BAZOOKA_PROJECTILE_DAMAGE_MAX");
+    try{
+        return parameters.at("BAZOOKA_PROJECTILE_DAMAGE_MAX");
+    } catch (std::exception& e ){
+        std::cerr << e.what() << "\n";
+        return 50.0f;
+    }
 }
 
 float GameParameters::getBazookProjectileRadio() const {
@@ -209,7 +212,7 @@ float GameParameters::getBazookaProjectilMaxImpulseExplosion() const {
     return parameters.at("BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION");
 }
 
-float GameParameters::getBazookaMuntion() const {
+float GameParameters::getBazookaMunition() const {
     return parameters.at("BAZOOKA_MUNITION");
 }
 

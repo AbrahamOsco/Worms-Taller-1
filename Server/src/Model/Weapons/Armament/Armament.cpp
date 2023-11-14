@@ -7,13 +7,15 @@
 #include "../WeaponsWorm/Teleport.h"
 #include "../WeaponsWorm/Bat.h"
 #include "../../../../../Common/DTO/ProjectilesDTO.h"
+#include "../WeaponsWorm/Bazooka.h"
 
 
 Armament::Armament(const size_t &idPlayer, const GameParameters& gameParameters)
         : idPlayer(idPlayer), currentWeapon(NONE_WEAPON), weaponOnStandBy(NONE_WEAPON), gameParameters(gameParameters) {
     armament.emplace(BASEBALL_BAT, std::make_unique<Bat>(BASEBALL_BAT, gameParameters.getBatDamage(), INFINITE, gameParameters.getBatMunition(), gameParameters) );
     armament.emplace(TELEPORT, std::make_unique<Teleport>(TELEPORT, gameParameters.getTeleportDamage(), INFINITE, gameParameters.getTeleportMunition(), gameParameters));
-    armament.emplace(BAZOOKA, std::make_unique<Teleport>(BAZOOKA, gameParameters.getBazookaProjectileDamageMax(), INFINITE, gameParameters.getBazookaMuntion(), gameParameters));
+    armament.emplace(BAZOOKA, std::make_unique<Bazooka>(BAZOOKA, gameParameters.getBazookaProjectileDamageMax(), INFINITE,
+                                                        gameParameters.getBazookaMunition(), gameParameters));
 
 }
 
