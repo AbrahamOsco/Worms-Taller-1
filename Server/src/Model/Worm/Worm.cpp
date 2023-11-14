@@ -98,9 +98,9 @@ void Worm::walk(Direction aDirection) {
             impulseX *=-1;
         }
         if (onInclinedBeam){
-            impulseX *= 0.68; // WORM_FACTOR_IMPULSE_SCALING_DOWN
+            impulseX *= gameParameters.getWormImpulseFactoScalingDown(); // WORM_FACTOR_IMPULSE_SCALING_DOWN
             if (directionLook == Direction::RIGHT){
-                impulseX *=1.20; // WORM_FACTOR_IMPULSE_CLIMBING_UP
+                impulseX *= gameParameters.getWormImpulseFactorClimbingUp(); // WORM_FACTOR_IMPULSE_CLIMBING_UP
                 impulseY = impulseX;
             }
         }

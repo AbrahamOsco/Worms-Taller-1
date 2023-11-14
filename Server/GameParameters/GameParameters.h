@@ -60,6 +60,10 @@ public:
 
     float getFrictionWorm() const;
 
+    float getWormImpulseFactoScalingDown() const;
+
+    float getWormImpulseFactorClimbingUp() const;
+
     float getWeaponAngleInitial() const;
 
     float getBatDamage() const;

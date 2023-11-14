@@ -537,6 +537,7 @@ class Worm : public GameObject {
     Bat bat;
     Bazooka bazooka;
     bool onInclinedBeam;
+    bool onBeamWithAngleZero;
 
 public:
     Worm(const size_t &idWorm, const float &posIniX, const float &posIniY) : GameObject(ENTITY_WORM), positionInitialX(posIniX),
@@ -548,6 +549,18 @@ public:
         distancesJumpForward = std::pair<float,float>{1.0f, 0.5f};
         distancesJumpBack = std::pair<float,float>{0.2f, 1.2f};
         onInclinedBeam = false;
+        onBeamWithAngleZero = false;
+    }
+    bool getOnBeamZero(){
+        return onBeamWithAngleZero;
+    }
+
+    void activateBeamZero(){
+        onBeamWithAngleZero = true;
+    }
+
+    void disableBeamZero(){
+        onBeamWithAngleZero = false;
     }
 
     void assignBonusLife() {
@@ -745,9 +758,12 @@ void wormCollidesWithBeam(GameObject* worm, GameObject* beam){
     //std::cout << "Worm colisionar con el beam\n";
     Worm* unWorm = (Worm*) (worm);
     Beam* unaBeam = (Beam*) (beam);
+    //  @todo por ahora hay un atasque (Bug) si saltas dentro de la interseccion de las vigas. igual vigas no se superponen asi queste probleam nunca aparecer.a
     if(unaBeam->getAngle() >0 and unaBeam->getAngle() <= 45){
         unWorm->activeInclinedBeam();
-    } else if ( unaBeam->getAngle() == 0 ){
+    }
+    if ( unaBeam->getAngle() == 0 ){
+        unWorm->activateBeamZero();
         unWorm->inactiveInclinedBeam();
     }
     unWorm->startContact();
