@@ -25,7 +25,10 @@ enum OperationType {
     SNAP_SHOT = 34,
     WEAPONS_TOTAL = 35,
     WEAPON = 36,
-    WEAPON_SIGHT = 37
+    WEAPON_SIGHT = 37,
+    PROJECTILE_DTO = 38,
+    PROJECTILES_DTO = 39,
+
 };
 
 class DTO {
