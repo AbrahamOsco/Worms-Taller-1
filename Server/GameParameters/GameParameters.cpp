@@ -31,7 +31,33 @@ GameParameters::GameParameters() {
 
     parameters["WORM_HALF_HEIGHT"] = nodeInitial["WORM_HALF_HEIGHT"].as<float>();
     parameters["WORM_FRICTION"] = nodeInitial["WORM_FRICTION"].as<float>();
+
+
+    // armas:
+    parameters["WEAPON_ANGLE_INITIAL"] = nodeInitial["WEAPON_ANGLE_INITIAL"].as<float>();
+
+    parameters["BAT_DAMAGE"] = nodeInitial["BAT_DAMAGE"].as<float>();
+    parameters["BAT_IMPULSE_X"] = nodeInitial["BAT_IMPULSE_X"].as<float>();
+    parameters["BAT_IMPULSE_Y"] = nodeInitial["BAT_IMPULSE_Y"].as<float>();
+    parameters["BAT_MUNITION"] = nodeInitial["BAT_MUNITION"].as<float>();
+    parameters["BAY_RAY_LENGTH"] = nodeInitial["BAY_RAY_LENGTH"].as<float>();
+
+    parameters["TELEPORT_DAMAGE"] = nodeInitial["TELEPORT_DAMAGE"].as<float>();
+    parameters["TELEPORT_MUNITION"] = nodeInitial["TELEPORT_MUNITION"].as<float>();
+
+
+    parameters["BAZOOKA_PROJECTILE_DAMAGE_MAX"] = nodeInitial["BAZOOKA_PROJECTILE_DAMAGE_MAX"].as<float>();
+    parameters["BAZOOKA_IMPULSE_X_INITIAL"] = nodeInitial["BAZOOKA_IMPULSE_X_INITIAL"].as<float>();
+    parameters["BAZOOKA_IMPULSE_Y_INITIAL"] = nodeInitial["BAZOOKA_IMPULSE_Y_INITIAL"].as<float>();
+    parameters["BAZOOKA_PROJECTILE_RADIO"] = nodeInitial["BAZOOKA_PROJECTILE_RADIO"].as<float>();
+    parameters["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"] = nodeInitial["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"].as<float>();
+    parameters["BAZOOKA_MUNITION"] = nodeInitial["BAZOOKA_MUNITION"].as<float>();
+    parameters["BAZOOKA_RAY_LENGTH"] = nodeInitial["BAZOOKA_RAY_LENGTH"].as<float>();
+
+
 }
+
+
 
 float GameParameters::getFPS() const{
     return this->parameters.at("FPS_GAME");
@@ -129,10 +155,65 @@ float GameParameters::getFrictionWorm() const {
     return parameters.at("WORM_FRICTION");
 }
 
+float GameParameters::getWeaponAngleInitial() const {
+    return parameters.at("WEAPON_ANGLE_INITIAL");
+}
 
+float GameParameters::getBatDamage() const {
+    return parameters.at("BAT_DAMAGE");
+}
 
+float GameParameters::getBatImpulseX() const {
+    return parameters.at("BAT_IMPULSE_X");
+}
 
+float GameParameters::getBatImpulseY() const {
+    return parameters.at("BAT_IMPULSE_Y");
+}
 
+float GameParameters::getBatMunition() const {
+    return parameters.at("BAT_MUNITION");
+}
+
+float GameParameters::getBatRayLength() const {
+    return parameters.at("BAY_RAY_LENGTH");
+}
+
+float GameParameters::getTeleportDamage() const {
+    return parameters.at("TELEPORT_DAMAGE");
+}
+
+float GameParameters::getTeleportMunition() const {
+    return parameters.at("TELEPORT_MUNITION");
+}
+
+float GameParameters::getBazookaImpulseXInitial() const {
+    return parameters.at("BAZOOKA_IMPULSE_X");
+}
+
+float GameParameters::getBazookaImpulseYInitial() const {
+    return parameters.at("BAZOOKA_IMPULSE_Y");
+}
+
+float GameParameters::getBazookaProjectileDamageMax() const {
+    return parameters.at("BAZOOKA_PROJECTILE_DAMAGE_MAX");
+}
+
+float GameParameters::getBazookProjectileRadio() const {
+    return parameters.at("BAZOOKA_PROJECTILE_RADIO");
+}
+
+float GameParameters::getBazookaProjectilMaxImpulseExplosion() const {
+    return parameters.at("BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION");
+}
+
+float GameParameters::getBazookaMuntion() const {
+    return parameters.at("BAZOOKA_MUNITION");
+}
+
+float GameParameters::getBazookaRayLength() const {
+    return parameters.at("BAZOOKA_RAY_LENGTH");
+}
 
 
 

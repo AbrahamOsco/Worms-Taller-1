@@ -8,7 +8,7 @@
 #include "../../../Common/DTO/RoomDTO.h"
 #include "../../../Common/DTO/ResolverInitialDTO.h"
 #include "../Protocol/ServerProtocol.h"
-#include "../Model/YamlParser.h"
+#include "../Model/YamlParser/YamlParser.h"
 
 #define SUCCESS 1
 #define ERROR 2

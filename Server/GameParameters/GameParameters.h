@@ -60,6 +60,36 @@ public:
 
     float getFrictionWorm() const;
 
+    float getWeaponAngleInitial() const;
+
+    float getBatDamage() const;
+
+    float getBatImpulseX() const;
+
+    float getBatImpulseY() const;
+
+    float getBatMunition() const;
+
+    float getBatRayLength() const;
+
+    float getTeleportDamage() const;
+
+    float getTeleportMunition() const;
+
+    float getBazookaImpulseXInitial() const;
+
+    float getBazookaImpulseYInitial() const;
+
+    float getBazookaProjectileDamageMax() const;
+
+    float getBazookProjectileRadio() const;
+
+    float getBazookaProjectilMaxImpulseExplosion() const;
+
+    float getBazookaMuntion() const;
+
+    float getBazookaRayLength() const;
+
     ~GameParameters() = default;
 };
 

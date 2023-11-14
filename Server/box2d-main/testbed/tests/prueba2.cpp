@@ -268,7 +268,7 @@ class Prueba2 : public Test{
     Stage* stage;
 public:
     Prueba2()  { //: worm(nullptr), stage(nullptr), cl(m_world)
-        // Stage
+        // Scenario
         stage = StageLoader::getStage("JaulaMaldita");
 
         // Worm

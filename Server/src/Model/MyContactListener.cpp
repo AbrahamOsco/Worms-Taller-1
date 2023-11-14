@@ -4,8 +4,8 @@
 
 #include <iostream>
 #include "MyContactListener.h"
-#include "Worm.h"
-#include "Beam.h"
+#include "Scenario/Beam/Beam.h"
+#include "Worm/Worm.h"
 
 // funciones de la colision que usaremos en el map.
 

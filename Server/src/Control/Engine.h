@@ -10,7 +10,7 @@
 #include <atomic>
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
 #include "../../../Common/Socket/Socket.h"
-#include "../Model/Model.h"
+#include "../Model/ModelGame/Model.h"
 #include "../../../Common/DTO/RoomDTO.h"
 #include "EstablishedConnections.h"
 #include "../../../Common/Queue/Queue.h"
