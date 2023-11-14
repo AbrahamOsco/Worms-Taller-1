@@ -31,6 +31,8 @@ GameParameters::GameParameters() {
 
     parameters["WORM_HALF_HEIGHT"] = nodeInitial["WORM_HALF_HEIGHT"].as<float>();
     parameters["WORM_FRICTION"] = nodeInitial["WORM_FRICTION"].as<float>();
+    parameters["WORM_FACTOR_IMPULSE_SCALING_DOWN"] = nodeInitial["WORM_FACTOR_IMPULSE_SCALING_DOWN"].as<float>();
+    parameters["WORM_FACTOR_IMPULSE_CLIMBING_UP"] = nodeInitial["WORM_FACTOR_IMPULSE_CLIMBING_UP"].as<float>();
 
 
     // armas:
@@ -215,6 +217,13 @@ float GameParameters::getBazookaRayLength() const {
     return parameters.at("BAZOOKA_RAY_LENGTH");
 }
 
+float GameParameters::getWormImpulseFactoScalingDown() const {
+    return parameters.at("WORM_FACTOR_IMPULSE_SCALING_DOWN");
+}
+
+float GameParameters::getWormImpulseFactorClimbingUp() const {
+    return parameters.at("WORM_FACTOR_IMPULSE_CLIMBING_UP");
+}
 
 
 

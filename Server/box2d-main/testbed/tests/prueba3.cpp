@@ -536,6 +536,8 @@ class Worm : public GameObject {
     b2World* world;
     Bat bat;
     Bazooka bazooka;
+    bool onInclinedBeam;
+    bool onBeamWithAngleZero;
 
 public:
     Worm(const size_t &idWorm, const float &posIniX, const float &posIniY) : GameObject(ENTITY_WORM), positionInitialX(posIniX),
@@ -546,6 +548,19 @@ public:
         directionLook = Direction::RIGHT;
         distancesJumpForward = std::pair<float,float>{1.0f, 0.5f};
         distancesJumpBack = std::pair<float,float>{0.2f, 1.2f};
+        onInclinedBeam = false;
+        onBeamWithAngleZero = false;
+    }
+    bool getOnBeamZero(){
+        return onBeamWithAngleZero;
+    }
+
+    void activateBeamZero(){
+        onBeamWithAngleZero = true;
+    }
+
+    void disableBeamZero(){
+        onBeamWithAngleZero = false;
     }
 
     void assignBonusLife() {
@@ -582,6 +597,12 @@ public:
             }
         }
         return false;
+    }
+    void activeInclinedBeam(){
+        onInclinedBeam = true;
+    }
+    void inactiveInclinedBeam(){
+        onInclinedBeam = false;
     }
 
     void jumpBackwards() {
@@ -632,11 +653,20 @@ public:
             //bazooka.changeDirectiond(directionLook);
             float acceleration = getBody()->GetFixtureList()[0].GetFriction() * 10.0f; // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
             float speed = sqrt(2.0f * acceleration * dragSpeed); // la velocidad la sacamos como 2 * aceleracion * distancia.
-            float impulse = body->GetMass() * speed;
+            float impulseX = body->GetMass() * speed ;
+            float impulseY = 0;
             if (directionLook == Direction::LEFT ) {
-                impulse = -impulse;
+                impulseX *=-1;
             }
-            b2Vec2 impulseSpeed(impulse, 0.0f); //  por la gravedad
+            if (onInclinedBeam){
+                impulseX *= 0.68; // WORM_FACTOR_IMPULSE_SCALING_DOWN
+                if (directionLook == Direction::RIGHT){
+                    impulseX *=1.20; // WORM_FACTOR_IMPULSE_CLIMBING_UP
+                    impulseY = impulseX;
+                }
+            }
+            std::cout << "Impulse x: " << impulseX << " Impulse y:  " << impulseY << "\n";
+            b2Vec2 impulseSpeed(impulseX, impulseY); //  por la gravedad
             body->ApplyLinearImpulse(impulseSpeed, body->GetWorldCenter(), true);
         }
     }
@@ -728,6 +758,14 @@ void wormCollidesWithBeam(GameObject* worm, GameObject* beam){
     //std::cout << "Worm colisionar con el beam\n";
     Worm* unWorm = (Worm*) (worm);
     Beam* unaBeam = (Beam*) (beam);
+    //  @todo por ahora hay un atasque (Bug) si saltas dentro de la interseccion de las vigas. igual vigas no se superponen asi queste probleam nunca aparecer.a
+    if(unaBeam->getAngle() >0 and unaBeam->getAngle() <= 45){
+        unWorm->activeInclinedBeam();
+    }
+    if ( unaBeam->getAngle() == 0 ){
+        unWorm->activateBeamZero();
+        unWorm->inactiveInclinedBeam();
+    }
     unWorm->startContact();
 }
 

@@ -16,6 +16,7 @@
 #include <map>
 #include <string>
 #include "box2d/box2d.h"
+#include "../GameContactListener/GameContactListener.h"
 #include <memory>
 
 class Model {
@@ -27,6 +28,7 @@ private:
     Players players;
     b2World& world;
     std::pair<size_t, size_t> idPlayerWormCurrent;
+    GameContactListener gameContactListener;
 
 public:
 

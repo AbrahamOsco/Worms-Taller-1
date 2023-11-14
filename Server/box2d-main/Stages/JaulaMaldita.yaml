@@ -7,6 +7,7 @@ worms:
   - positionX: 8.0
     positionY: 10.0
 
+
 beams:
   - x: 20.7
     y: 6.25
@@ -17,7 +18,7 @@ beams:
     angle: 0.0
     length: 6.0
   - x: 18.0
-    y: 7.0
+    y: 11.0
     angle: 90.0
     length: 6.0
   - x: 21.0
@@ -37,7 +38,7 @@ beams:
     angle: 0.0
     length: 6.0
   - x: 6.5
-    y: 8.0
+    y: 7.5
     angle: 0.0
     length: 3.0
   - x: 9.5
@@ -50,7 +51,7 @@ beams:
     length: 6.0
   - x: 17.0
     y: 4.0
-    angle: 70.0
+    angle: 0.0
     length: 6.0
   - x: 5.0
     y: 3.0
@@ -59,4 +60,16 @@ beams:
   - x: 20.0
     y: 14.0
     angle: 150.0
+    length: 6.0
+  - x: 15.0
+    y: 9.0
+    angle: 0.0
+    length: 6.0
+  - x: 11.0
+    y: 4.0
+    angle: 0.0
+    length: 6.0
+  - x: 14.0
+    y: 4.40
+    angle: 30.0
     length: 6.0

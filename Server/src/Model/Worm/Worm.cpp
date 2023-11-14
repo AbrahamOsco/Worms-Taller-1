@@ -17,6 +17,7 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     distancesJumpBack = std::make_pair(gameParameter.getDistXBackJump(), gameParameter.getDistYBackJump());
     typeFocus = NO_FOCUS;
     typeMov = STANDING;
+    onInclinedBeam = false;
 }
 
 void Worm::assignBonusLife() {
@@ -91,11 +92,20 @@ void Worm::walk(Direction aDirection) {
         directionLook = aDirection;
         float acceleration = getBody()->GetFixtureList()[0].GetFriction() * (gameParameters.getGravity() * -1); // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
         float speed = sqrt(2.0f * acceleration * dragSpeed); // la velocidad la sacamos como 2 * aceleracion * distancia.
-        float impulse = body->GetMass() * speed;
+        float impulseX = body->GetMass() * speed ;
+        float impulseY = 0;
         if (directionLook == Direction::LEFT ) {
-            impulse = -impulse;
+            impulseX *=-1;
         }
-        b2Vec2 impulseSpeed(impulse, 0.0f); //  por la gravedad
+        if (onInclinedBeam){
+            impulseX *= gameParameters.getWormImpulseFactoScalingDown(); // WORM_FACTOR_IMPULSE_SCALING_DOWN
+            if (directionLook == Direction::RIGHT){
+                impulseX *= gameParameters.getWormImpulseFactorClimbingUp(); // WORM_FACTOR_IMPULSE_CLIMBING_UP
+                impulseY = impulseX;
+            }
+        }
+        std::cout << "Impulse x: " << impulseX << " Impulse y:  " << impulseY << "\n";
+        b2Vec2 impulseSpeed(impulseX, impulseY); //  por la gravedad
         body->ApplyLinearImpulse(impulseSpeed, body->GetWorldCenter(), true);
     }
 }
@@ -130,7 +140,6 @@ float Worm::getHP() const {
 // [todo] Aca Falta hacer gameParameters.getMaxHeightPixel() - (aWormElem.second->getPositionY() * gameParameters.getPositionAdjustment())  para la posicion en Y.
 
 WormDTO Worm::getWormDTO() const {
-    std::cout << "WeaponCurrent: " << this->armament.getWeaponCurrent() << "\n";
     return WormDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
                    gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()),
                    this->idPlayer, this->hp, this->directionLook, this->typeFocus, this->typeMov, this->armament.getWeaponCurrent() );
@@ -230,5 +239,14 @@ void Worm::teleportWorm(const float& posXTeleport, const float& posYTeleport){
 WeaponSightDTO Worm::getWeaponSightDTO() {
     return armament.getWeaponSightDTO(this->body->GetWorldCenter(), directionLook);
 }
+
+void Worm::activaeInclinedBeam() {
+    this->onInclinedBeam = true;
+}
+
+void Worm::disableInclinedBeam() {
+    this->onInclinedBeam = false;
+}
+
 
 

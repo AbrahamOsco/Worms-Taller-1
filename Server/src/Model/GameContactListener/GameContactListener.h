@@ -16,6 +16,8 @@ private:
     std::map<std::pair<Entity, Entity>, HitFunctionPtr> collisionsMap;
 
 public:
+    //explicit GameContactListener();
+
     explicit GameContactListener(b2World *world);
 
     void BeginContact(b2Contact* contact) override;

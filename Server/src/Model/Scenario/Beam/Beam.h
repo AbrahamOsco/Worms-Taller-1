@@ -26,6 +26,8 @@ public:
 
     BeamDTO getBeamDTO();
 
+    float getAngle() const;
+
     void addToWorld(b2World *world);
 
     b2World *getWorld() const;
