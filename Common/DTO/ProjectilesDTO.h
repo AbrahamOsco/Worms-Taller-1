@@ -6,7 +6,27 @@
 #define WORMS_TALLER_1_PROJECTILESDTO_H
 
 
-class ProjectilesDTO {
+#include <vector>
+#include "ProjectileDTO.h"
+
+enum TypeShowProjectiles{
+    SHOW_PROJECTILES, NO_SHOW_PROJECTILES
+};
+
+class ProjectilesDTO : public DTO {
+private:
+    std::vector<ProjectileDTO> projectilesDTO;
+    TypeShowProjectiles typeShowProjectiles;
+public:
+    explicit ProjectilesDTO(const TypeShowProjectiles& typeShowProjectiles, const std::vector<ProjectileDTO>& projectilesDTO);
+
+    std::vector<ProjectileDTO> getProjectilesDto() const;
+
+    void setProjectilesDto(const std::vector<ProjectileDTO> &projectilesDto);
+
+    TypeShowProjectiles getTypeShowProjectiles() const;
+
+    void setTypeShowProjectiles(const TypeShowProjectiles &typeShowProjectiles);
 
 };
 

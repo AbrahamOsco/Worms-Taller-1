@@ -11,6 +11,7 @@
 #include "../../../../GameParameters/GameParameters.h"
 #include "box2d/b2_math.h"
 #include "../../../../../Common/DTO/WeaponSightDTO.h"
+#include "../../../../../Common/DTO/ProjectileDTO.h"
 
 #define DEGRATORADIANS (b2_pi/180.0f)
 #define RADIANSTODEGREE (180/b2_pi)
@@ -39,6 +40,8 @@ public:
 
     virtual bool hasAScope() = 0;
 
+    virtual bool launchesProjectiles() = 0;
+
     // metodods para la mira
 
     virtual void increaseAngle();
@@ -48,6 +51,8 @@ public:
     virtual void  increaseImpulse();
 
     virtual bool hasMaxImpulse();
+
+    virtual void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO);
 
     virtual WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent);
 

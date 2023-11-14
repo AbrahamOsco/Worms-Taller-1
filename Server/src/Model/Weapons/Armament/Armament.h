@@ -12,6 +12,7 @@
 #include "../../../../../Common/DTO/WeaponsDTO.h"
 #include "../../../../GameParameters/GameParameters.h"
 #include "../WeaponsWorm/Weapon.h"
+#include "../../../../../Common/DTO/ProjectilesDTO.h"
 
 class Armament {
 private:
@@ -45,6 +46,7 @@ public:
 
     WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent);
 
+    ProjectilesDTO getProjectilesDTO();
 };
 
 

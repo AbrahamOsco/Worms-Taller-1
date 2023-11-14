@@ -20,4 +20,8 @@ bool Teleport::hasAScope() {
     return false;
 }
 
+bool Teleport::launchesProjectiles() {
+    return false;
+}
+
 

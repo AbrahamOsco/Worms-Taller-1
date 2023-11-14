@@ -34,6 +34,8 @@ public:
 
     virtual bool hasAScope() override;
 
+    virtual bool launchesProjectiles() override;
+
     //virtual void prepareWeapon(const Direction &aDirection) override;
 
     virtual WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) override;

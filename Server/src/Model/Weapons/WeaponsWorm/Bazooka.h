@@ -14,7 +14,7 @@ class Bazooka : public Weapon {
 private:
     std::pair<float, float> impulseWeapon; // impulse x, impulse y
     WeaponSight weaponSight;
-    std::vector<std::unique_ptr<ProjectileBazooka>> projectiles;
+    std::unique_ptr<ProjectileBazooka> projectil;
     std::pair<float, float> maxImpulseWeapon;
 public:
     explicit Bazooka(const TypeWeapon& aTypeWeapon, const float &damagePrincipal, const TypeMunition& aTypeMunition,
@@ -30,9 +30,13 @@ public:
 
     virtual void increaseImpulse() override;
 
+    virtual bool launchesProjectiles() override;
+
+    virtual void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
+
     void shootProjectile(b2World *world, const b2Vec2& positionWorm, const Direction& direction);
 
-    std::vector<std::unique_ptr<ProjectileBazooka>> *getProjectiles();
+    std::unique_ptr<ProjectileBazooka> * getProjectile();
 
 };
 

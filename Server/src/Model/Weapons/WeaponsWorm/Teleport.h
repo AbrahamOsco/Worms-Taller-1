@@ -19,6 +19,8 @@ public:
 
     virtual bool hasAScope() override;
 
+    virtual bool launchesProjectiles() override;
+
 };
 
 

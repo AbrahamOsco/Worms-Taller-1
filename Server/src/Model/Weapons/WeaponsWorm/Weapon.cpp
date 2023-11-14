@@ -57,5 +57,9 @@ bool Weapon::hasMaxImpulse() {
     return false;
 }
 
+void Weapon::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
+    // no hago nada para las armas sin mira y armas q no lanzan projectiles
+}
+
 
 

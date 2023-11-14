@@ -42,3 +42,7 @@ GameObject *Bat::getBodyCollidesWithRayCast(b2World *world, const b2Vec2 &positi
 WeaponSightDTO Bat::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent){
     return weaponSight.getWeaponSightDTO(positionWorm, directionCurrent);
 }
+
+bool Bat::launchesProjectiles() {
+    return false;
+}

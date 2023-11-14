@@ -6,6 +6,7 @@
 #include "Armament.h"
 #include "../WeaponsWorm/Teleport.h"
 #include "../WeaponsWorm/Bat.h"
+#include "../../../../../Common/DTO/ProjectilesDTO.h"
 
 
 Armament::Armament(const size_t &idPlayer, const GameParameters& gameParameters)
@@ -92,5 +93,14 @@ WeaponSightDTO Armament::getWeaponSightDTO(const b2Vec2 &positionWorm, const Dir
     return armament.at(currentWeapon)->getWeaponSightDTO(positionWorm, directionCurrent);
 }
 
+ProjectilesDTO Armament::getProjectilesDTO(){
+    std::vector<ProjectileDTO> vecProjectileDTO;
+    if (currentWeapon == NONE_WEAPON or (not this->armament.at(currentWeapon)->launchesProjectiles()) ){
+        return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
+    }
+
+    armament.at(currentWeapon)->getProjectilesDTO(vecProjectileDTO);
+
+}
 
 

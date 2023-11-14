@@ -11,6 +11,7 @@ Bazooka::Bazooka(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, co
     impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(),
                                    gameParameters.getBazookaImpulseYInitial());
     maxImpulseWeapon = std::make_pair(1.0f, 1.0f);
+    projectil = nullptr;
 }
 
 void Bazooka::increaseAngle() {
@@ -37,14 +38,29 @@ void Bazooka::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const 
     b2Vec2 impulseMuniBazooka = weaponSight.getImpulseForMuniBazooka(direction, impulseWeapon);
     //std::unique_ptr<ClientLogin> unCliente{new ClientLogin(std::move(sktPeer), games)}
     // creamos la munition de la bazooka
-    std::unique_ptr <ProjectileBazooka> aProjectile{new ProjectileBazooka(gameParameters)};
-    aProjectile->addToTheWorld(world, p2, impulseMuniBazooka);
-    projectiles.push_back(std::move(aProjectile));
+    projectil = std::make_unique<ProjectileBazooka>(gameParameters);
+    projectil->addToTheWorld(world, p2, impulseMuniBazooka);
 }
 
 
-std::vector<std::unique_ptr<ProjectileBazooka>>* Bazooka::getProjectiles(){
-    return &projectiles;
+std::unique_ptr<ProjectileBazooka> * Bazooka::getProjectile(){
+    return &projectil;
 }
+
+bool Bazooka::launchesProjectiles() {
+    return true;
+}
+
+void Bazooka::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
+    if(projectil == nullptr){
+        return;
+    }
+    b2Vec2 positionProj =  projectil->getBody()->GetWorldCenter();
+    ProjectileDTO projectileDto(BAZOOKA_PROJECTILE, positionProj.x * gameParameters.getPositionAdjustment() ,
+                                    gameParameters.getMaxHeightPixel() - positionProj.y * gameParameters.getPositionAdjustment() );
+    vecProjectileDTO.push_back(projectileDto);
+}
+
+
 
 
