@@ -117,7 +117,7 @@ qt5_wrap_ui(UIS_HEADERS
         Editor/ui/nameNewMap.ui
 )
 
-add_executable(editor
+add_executable(worms-editor
         Editor/src/main.cpp
         Editor/include/editor.h
         Editor/src/editor.cpp
@@ -135,6 +135,6 @@ add_executable(editor
 
         )
 
-target_link_libraries(editor Qt5::Widgets yaml-cpp)
+target_link_libraries(worms-editor Qt5::Widgets yaml-cpp)
 target_link_libraries(worms-client PUBLIC SDL2pp yaml-cpp Qt5::Widgets Qt5::Multimedia)
 target_link_libraries(Worms-Taller-1 box2d SDL2pp yaml-cpp)
