@@ -116,3 +116,25 @@ void TextureManager::drawText(const std::string &text, int x, int y, const std::
 
     renderer.Copy(textTexture, SDL2pp::NullOpt, SDL2pp::Rect(x, y, textWidth, textHeight));
 }
+
+void TextureManager::setColorMod(const std::string &id, Uint8 r, Uint8 g, Uint8 b, Uint8 alpha) {
+    auto it = m_textureMap.find(id);
+    if (it != m_textureMap.end()) {
+        SDL2pp::Texture *texture = it->second.get();
+        if (texture) {
+            texture->SetColorMod(r,g,b);
+            texture->SetAlphaMod(alpha);
+        }
+    }
+}
+
+void TextureManager::resetColorMod(const std::string &id) {
+    auto it = m_textureMap.find(id);
+    if (it != m_textureMap.end()) {
+        SDL2pp::Texture *texture = it->second.get();
+        if (texture) {
+            texture->SetColorMod(255,255,255);
+            texture->SetAlphaMod(255);
+        }
+    }
+}

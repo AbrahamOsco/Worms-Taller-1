@@ -42,7 +42,13 @@ void Weapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
     SDL_Color textColor = {0, 0, 0, 255};
     int fontSize = 16;
     int padding = 6;
+
+    if (m_isSelected) {
+        textureManager.setColorMod(m_textureID, 255, 255, 255, 100);
+    }
+
     textureManager.draw(m_textureID, m_x, m_y, m_width, m_height, renderer, SDL_FLIP_NONE);
+    textureManager.resetColorMod(m_textureID);
     textureManager.drawText("Ammo:", m_x + m_width + padding, m_y + 12, fontPath, fontSize, textColor, renderer);
     std::string text;
     if (m_ammoCount == -1) {

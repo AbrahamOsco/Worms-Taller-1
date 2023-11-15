@@ -32,6 +32,10 @@ public:
 
     void drawText(const std::string &text, int x, int y, const std::string &fontPath, int fontSize, SDL_Color textColor,
                   SDL2pp::Renderer &renderer);
+
+    void setColorMod(const std::string &id, Uint8 r, Uint8 g, Uint8 b, Uint8 alpha);
+
+    void resetColorMod(const std::string &id);
 };
 
 
