@@ -81,11 +81,23 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
         int angle = calcularAngulo(m_x, m_y, m_xCrosshair,m_yCrosshair);
 
         // Asegurarte de que el ángulo esté dentro del rango -90 a 90 grados
-        angle = std::max(-90, std::min(90, angle));
+        //std::cout << angle << std::endl;
+
 
         int numRows = 30;
-        // Convertir el ángulo a un índice de fila en tu sprite sheet
-        int rowIndex = 30 - static_cast<int>((angle + 90.0) / 180.0 * numRows);
+        int rowIndex;
+        if (m_directionLook == Direction::RIGHT) {
+             rowIndex = static_cast<int>(((90 - angle) * numRows )/ 180);
+        } else {
+            int dx = m_xCrosshair - m_x;
+            int dy = m_yCrosshair - m_y;
+            double radianes = std::atan2(dy, -dx);
+            int grados = static_cast<int>(radianes * (180.0 / M_PI));
+            angle = std::max(-90, std::min(90, grados));
+            rowIndex = static_cast<int>(((90 - angle) * numRows )/ 180);
+        }
+
+
 
         textureManager.drawFrame(m_textureID, m_x - m_width / 2, m_y - m_height / 2, m_width, m_height, rowIndex, 0, renderer,m_flip);
     }
