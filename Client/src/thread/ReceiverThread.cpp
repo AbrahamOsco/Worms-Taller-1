@@ -7,6 +7,7 @@
 #include "../gameObject/gameInfo/GameInfo.h"
 #include "../utils/Constants.h"
 #include "../gameObject/crosshair/Crosshair.h"
+#include "../gameObject/projectile/Projectile.h"
 
 ReceiverThread::ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::unique_ptr<GameObject>>> &queue)
         : m_protocol(protocol), m_queue(queue), m_running(true) {}
@@ -21,6 +22,14 @@ void ReceiverThread::run() {
         snapShot = m_protocol.recvASnapShot();
         std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
         WeaponSightDTO weaponSightDto = snapShot.getWeaponSightDto();
+        ProjectilesDTO projectilesDto = snapShot.getProjectilesDto();
+
+        std::vector<ProjectileDTO> projectiles =  projectilesDto.getProjectilesDto();
+        for(const ProjectileDTO &projectileDto : projectiles) {
+            std::unique_ptr<Projectile> projectile = std::make_unique<Projectile>(projectileDto.getPositionX(), projectileDto.getPositionY(), projectileDto.getTypeProjectil());
+            gameObjects.push_back(std::move(projectile));
+        }
+
 
         WeaponInventory weaponInventory;
         WeaponsDTO weaponsDto = snapShot.getWeaponsDto();

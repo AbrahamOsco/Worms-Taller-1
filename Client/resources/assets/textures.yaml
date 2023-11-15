@@ -129,3 +129,7 @@ textures:
     source: "../Client/resources/assets/crosshair/crshairr.png"
   - name: bat_hit
     source: "../Client/resources/assets/worms/Bat_hit.png"
+  - name: bazooka_projectile
+    source: "../Client/resources/assets/bullets/Bazooka.png"
+  - name: mortar_projectile
+    source: "../Client/resources/assets/bullets/Mortar.png"
