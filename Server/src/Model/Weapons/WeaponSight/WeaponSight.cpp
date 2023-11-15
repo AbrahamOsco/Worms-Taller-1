@@ -81,7 +81,7 @@ b2Vec2 WeaponSight::getImpulseForMuniBazooka(const Direction& directionCurrent, 
 
 WeaponSightDTO WeaponSight::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) {
     b2Vec2 p2 = getPositionP2RayCast(positionWorm, directionCurrent);
-    // todo falta agregar el 1080 - 60* p2.x  e 60 * p2.y
+    // todo Ejemplo de ajuste coordenada
     return WeaponSightDTO(SHOW_SIGHT, p2.x * gameParameters.getPositionAdjustment() , gameParameters.getMaxHeightPixel() - p2.y* gameParameters.getPositionAdjustment());
 }
 

@@ -22,7 +22,8 @@ private:
 public:
     Beam();
 
-    Beam(const TypeBeam &aTypeBeam, const float &aXcenter, const float &aYCenter, const float &aLength, const float &aHeight, const float &aAngle);
+    Beam(const TypeBeam &aTypeBeam, const float &aXcenter, const float &aYCenter, const float &aLength,
+         const float &aHeight, const float &aAngle);
 
     BeamDTO getBeamDTO();
 

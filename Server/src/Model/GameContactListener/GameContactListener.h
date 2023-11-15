@@ -14,6 +14,7 @@ class GameContactListener : public b2ContactListener{
 private:
     typedef void (*HitFunctionPtr)(GameObject *, GameObject *);
     std::map<std::pair<Entity, Entity>, HitFunctionPtr> collisionsMap;
+    std::map<std::pair<Entity, Entity>, HitFunctionPtr> endContactMap;
 
 public:
     //explicit GameContactListener();
@@ -21,6 +22,8 @@ public:
     explicit GameContactListener(b2World *world);
 
     void BeginContact(b2Contact* contact) override;
+
+    void EndContact(b2Contact* contact) override;
 
 };
 
