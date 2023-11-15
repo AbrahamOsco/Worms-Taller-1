@@ -7,8 +7,8 @@
 #include "../../command/FireCmd.h"
 
 Worm::Worm(int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
-           const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_hpWorm(hpWorm), m_directionLook(direction),
-                                       m_typeFocus(focus), m_moveWorm(moveWorm), m_weaponCurrent(weaponCurrent) {
+           const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, int xCrosshair, int yCrosshair, const TypeSight &typeSight) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_hpWorm(hpWorm), m_directionLook(direction),
+                                       m_typeFocus(focus), m_moveWorm(moveWorm), m_weaponCurrent(weaponCurrent), m_xCrosshair(xCrosshair), m_yCrosshair(yCrosshair), m_typeSight(typeSight) {
     m_flip = SDL_FLIP_NONE;
     if (m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
         m_width = 60;
@@ -17,7 +17,7 @@ Worm::Worm(int x, int y, const size_t &hpWorm, const Direction &direction, const
     } else if (m_weaponCurrent == TypeWeapon::BAZOOKA) {
         m_width = 30;
         m_height = 30;
-        m_textureID = "bazzoka";
+        m_textureID = "bazooka";
     } else if (m_weaponCurrent == TypeWeapon::MORTAR) {
         m_width = 30;
         m_height = 30;
@@ -75,7 +75,20 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
 
     textureManager.drawTextBox(text, m_x - textWidth/2, m_y - 30, fontPath, fontSize, textColor, boxColor,
                                renderer);
-    m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_flip, renderer, textureManager);
+    if (m_weaponCurrent == TypeWeapon::DYNAMITE || m_weaponCurrent == TypeWeapon::AIR_ATTACK || m_weaponCurrent == TypeWeapon::BASEBALL_BAT || m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
+        m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_flip, renderer, textureManager);
+    } else {
+        int angle = calcularAngulo(m_x, m_y, m_xCrosshair,m_yCrosshair);
+
+        // Asegurarte de que el ángulo esté dentro del rango -90 a 90 grados
+        angle = std::max(-90, std::min(90, angle));
+
+        int numRows = 30;
+        // Convertir el ángulo a un índice de fila en tu sprite sheet
+        int rowIndex = 30 - static_cast<int>((angle + 90.0) / 180.0 * numRows);
+
+        textureManager.drawFrame(m_textureID, m_x - m_width / 2, m_y - m_height / 2, m_width, m_height, rowIndex, 0, renderer,m_flip);
+    }
 }
 
 void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) {
@@ -95,8 +108,6 @@ void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue
 }
 
 void Worm::animationState() {
-    //m_animation.setProps("player", m_width, m_height, 14, 140, SDL_FLIP_NONE);
-
     if (m_moveWorm == MoveWorm::WALKING) {
         m_width = 30;
         m_height = 30;
@@ -112,4 +123,17 @@ void Worm::animationState() {
         m_height = 30;
         m_animation.setProps("bat_hit", m_width, m_height, 15, 30, SDL_FLIP_NONE);
     }
+}
+
+int Worm::calcularAngulo(int x, int y, int xCrosshair, int yCrosshair) {
+    int dx = xCrosshair - x;
+    int dy = yCrosshair - y;
+
+    // Calcular el ángulo en radianes
+    double radianes = std::atan2(dy, dx);
+
+    // Convertir radianes a grados
+    int grados = static_cast<int>(radianes * (180.0 / M_PI));
+
+    return grados;
 }

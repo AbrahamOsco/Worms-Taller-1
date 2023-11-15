@@ -20,6 +20,7 @@ void ReceiverThread::run() {
         SnapShot snapShot;
         snapShot = m_protocol.recvASnapShot();
         std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
+        WeaponSightDTO weaponSightDto = snapShot.getWeaponSightDto();
 
         WeaponInventory weaponInventory;
         WeaponsDTO weaponsDto = snapShot.getWeaponsDto();
@@ -28,7 +29,7 @@ void ReceiverThread::run() {
         for (const WormDTO &wormDto: wormsDto) {
             std::unique_ptr<Worm> worm = std::make_unique<Worm>(static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(),
                                                                 wormDto.getDirectionLook(), wormDto.getTypeFocus(),
-                                                                wormDto.getMoveWorm(), wormDto.getWeaponCurrent());
+                                                                wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), weaponSightDto.getPositionXSight(), weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight());
             gameObjects.push_back(std::move(worm));
         }
 
@@ -54,9 +55,6 @@ void ReceiverThread::run() {
         std::string currentTurn = "Pepe";
         gameObjects.push_back(
                 std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, currentTurn, 10, true));
-
-
-        WeaponSightDTO weaponSightDto = snapShot.getWeaponSightDto();
 
         std::unique_ptr<Crosshair> crosshair = std::make_unique<Crosshair>(static_cast<int>(weaponSightDto.getPositionXSight()), static_cast<int>(weaponSightDto.getPositionYSight()), weaponSightDto.getTypeSight());
         gameObjects.push_back(std::move(crosshair));

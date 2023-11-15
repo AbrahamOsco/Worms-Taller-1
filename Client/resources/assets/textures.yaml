@@ -21,7 +21,7 @@ textures:
     source: "../Client/resources/assets/worms/Bat_scope.png"
   - name: holy_grenade
     source: "../Client/resources/assets/worms/HolyGrenade_scope.png"
-  - name: bazzoka
+  - name: bazooka
     source: "../Client/resources/assets/worms/Bazooka_scope.png"
   - name: mortar
     source: "../Client/resources/assets/worms/Mortar_scope.png"
