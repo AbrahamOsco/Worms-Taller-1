@@ -98,6 +98,7 @@ void munitionBazookaCollideWithBeam(GameObject* munitionBazooka, GameObject* bea
         Worm* aWormToTakeDamage = (Worm*)(aElement.first);
         b2Vec2 impulseForWorm = munitionSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(), munitionPosition, aElement.second);
         float damageForWorm = munitionSelect->getDamageForWorm(aElement.second);
+        std::cout << "Se aplica impulso impulseForWorm.x" << impulseForWorm.x << "impulseForWorm.y : " << impulseForWorm.y << "\n";
         aWormToTakeDamage->getBody()->ApplyLinearImpulse( impulseForWorm, aWormToTakeDamage->getBody()->GetWorldCenter(), true);
         aWormToTakeDamage->takeDamage(damageForWorm);
     }

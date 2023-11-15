@@ -5,6 +5,9 @@
 #include "ProjectileBazooka.h"
 
 ProjectileBazooka::ProjectileBazooka(const GameParameters& gameParameters) : GameObject(ENTITY_BAZOOKA_PROJECTILE) , gameParameters(gameParameters) {
+    this->mainDamage = 50.0f;
+    this->radio = 2.0f;
+    this->maxImpulseExplosion = 2.0f;
 }
 
 b2AABB ProjectileBazooka::getAreaForSearch(const b2Vec2 &positionMunition) const {
