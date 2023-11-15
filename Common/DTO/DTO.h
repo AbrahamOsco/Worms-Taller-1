@@ -28,6 +28,7 @@ enum OperationType {
     WEAPON_SIGHT = 37,
     PROJECTILE_DTO = 38,
     PROJECTILES_DTO = 39,
+    TURN_DTO = 40,
 
 };
 
