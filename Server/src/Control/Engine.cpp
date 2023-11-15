@@ -57,7 +57,8 @@ void Engine::run() {
         }
         connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
                                  model.getWeaponSightDTO(), model.getProjectilesDTO());
-        this->model.updateStateWorms();
+        model.update();
+        // this->updateProjectiles()
         adjustFPS(target, t1, t2, t3, timeUsed, sleepTime, frameTime, sleepAdjustSeconds);
     }
     this->connections.stop();

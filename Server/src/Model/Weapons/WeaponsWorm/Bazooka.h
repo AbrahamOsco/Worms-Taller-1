@@ -40,6 +40,9 @@ public:
 
     // ambos metodos son para toda arma con mira
 
+    void tryCleanProjectiles(b2World* aWorld) override;
+
+
     WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) override;
 
 };

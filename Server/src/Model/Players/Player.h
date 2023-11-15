@@ -43,7 +43,7 @@ public:
 
     void addToTheWorld(b2World *world);
 
-    void updateStateWorms();
+    void update();
 
     PlayerDTO getPlayerDTO(const size_t &idCurrentPlayer) const;
 

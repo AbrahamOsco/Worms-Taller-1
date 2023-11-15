@@ -12,6 +12,7 @@
 #include "box2d/b2_math.h"
 #include "../../../../../Common/DTO/WeaponSightDTO.h"
 #include "../../../../../Common/DTO/ProjectileDTO.h"
+#include "box2d/b2_world.h"
 
 #define DEGRATORADIANS (b2_pi/180.0f)
 #define RADIANSTODEGREE (180/b2_pi)
@@ -47,6 +48,8 @@ public:
     virtual void increaseAngle();
 
     virtual void decreaseAngle();
+
+    virtual void tryCleanProjectiles(b2World* aWorld);
 
     virtual void  increaseImpulse();
 

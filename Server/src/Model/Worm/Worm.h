@@ -91,7 +91,7 @@ public:
 
     void rightWorm();
 
-    void updateState();
+    void update();
 
     void attackWithBat();
 

@@ -8,6 +8,7 @@
 
 #include <map>
 #include <memory>
+#include <box2d/b2_world.h>
 #include "../../../../../Common/DTO/WormDTO.h"
 #include "../../../../../Common/DTO/WeaponsDTO.h"
 #include "../../../../GameParameters/GameParameters.h"
@@ -38,7 +39,7 @@ public:
 
     void putWeaponOnStandByAndUnarmed();
 
-    void getWeaponOnStandBy();
+    void getWeaponOnStandBy(const bool &attacked);
 
     void assignWeapon(const TypeWeapon &weapon, const Direction &direction);
 
@@ -46,7 +47,9 @@ public:
 
     WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent);
 
-    ProjectilesDTO getProjectilesDTO();
+    ProjectilesDTO getProjectilesDTO(const bool &attackedWorm);
+
+    void tryCleanProjectiles(b2World *aWorld);
 };
 
 

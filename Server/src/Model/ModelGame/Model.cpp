@@ -60,8 +60,8 @@ void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
 
 }
 
-void Model::updateStateWorms() {
-    players.updateStateWorms();
+void Model::update() {
+    players.update();
 }
 
 std::vector<WeaponsDTO> Model::getVecWeaponsDTO() const {

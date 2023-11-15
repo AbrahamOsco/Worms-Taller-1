@@ -66,8 +66,8 @@ void Armament::putWeaponOnStandByAndUnarmed() {
     }
 }
 
-void Armament::getWeaponOnStandBy() {
-    if(weaponOnStandBy != NONE_WEAPON){
+void Armament::getWeaponOnStandBy(const bool &attacked) {
+    if(weaponOnStandBy != NONE_WEAPON  and not attacked){
         this->currentWeapon = weaponOnStandBy;
         this->weaponOnStandBy = NONE_WEAPON;
     }
@@ -96,17 +96,28 @@ WeaponSightDTO Armament::getWeaponSightDTO(const b2Vec2 &positionWorm, const Dir
     return armament.at(currentWeapon)->getWeaponSightDTO(positionWorm, directionCurrent);
 }
 
-ProjectilesDTO Armament::getProjectilesDTO(){
+ProjectilesDTO Armament::getProjectilesDTO(const bool &attackedWorm) {
     std::vector<ProjectileDTO> vecProjectileDTO;
-    if (currentWeapon == NONE_WEAPON or (not this->armament.at(currentWeapon)->launchesProjectiles()) ){
+    if( (currentWeapon == NONE_WEAPON and weaponOnStandBy == NONE_WEAPON)  or not attackedWorm ){
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
     }
-    armament.at(currentWeapon)->getProjectilesDTO(vecProjectileDTO);
+    // si ataco (entonces el currenWeapon sera none) y la arma con la q ataco pasa a standBy si esta no lanza projectiles no  muestro nada
+    if ( attackedWorm and  ( (weaponOnStandBy!= NONE_WEAPON) and not this->armament.at(weaponOnStandBy)->launchesProjectiles() ) ){
+        return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
+    }
+    // si el arma en standby si ataca con projectiles lo muestro.
+    armament.at(weaponOnStandBy)->getProjectilesDTO(vecProjectileDTO);
     TypeShowProjectiles typeShowProj = NO_SHOW_PROJECTILES;
     if (vecProjectileDTO.size() > 0){
         typeShowProj = SHOW_PROJECTILES;
     }
     return ProjectilesDTO(typeShowProj, vecProjectileDTO);
+}
+
+void Armament::tryCleanProjectiles(b2World *aWorld) {
+    if(weaponOnStandBy != NONE_WEAPON and armament.at(weaponOnStandBy)->launchesProjectiles()){
+        armament.at(weaponOnStandBy)->tryCleanProjectiles(aWorld);
+    }
 }
 
 

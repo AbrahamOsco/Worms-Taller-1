@@ -37,7 +37,7 @@ public:
 
     std::pair<size_t, size_t> getIdPlayerWormCurrent();
 
-    void updateStateWorms();
+    void update();
 
     PlayersDTO getPlayersDTO() const;
 

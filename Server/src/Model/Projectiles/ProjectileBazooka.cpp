@@ -2,6 +2,7 @@
 // Created by abraham on 13/11/23.
 //
 
+#include <iostream>
 #include "ProjectileBazooka.h"
 
 ProjectileBazooka::ProjectileBazooka(const GameParameters& gameParameters) : GameObject(ENTITY_BAZOOKA_PROJECTILE) , gameParameters(gameParameters) {
@@ -39,6 +40,7 @@ b2Vec2 ProjectileBazooka::getImpulseForWorm(const b2Vec2 &positionWorm, const b2
                                             const float &distanceWormToProjectile) {
     b2Vec2 impulseDirection = positionWorm - positionProjectile;
     impulseDirection.Normalize();
+    std::cout << "distanceWormToProjectile :" << distanceWormToProjectile << "\n";
     float impulseMagnitude = maxImpulseExplosion * std::max(0.0f, 1.0f - sqrt(distanceWormToProjectile) / radio );
     b2Vec2 impulseWorm = impulseMagnitude * impulseDirection;
     //impulseWorm.y = abs(impulseWorm.x) * 0.7;  // todo seguramnte falta ajustar aca el eje y
@@ -49,7 +51,10 @@ b2Vec2 ProjectileBazooka::getImpulseForWorm(const b2Vec2 &positionWorm, const b2
 }
 
 float ProjectileBazooka::getDamageForWorm(const float &wormDistanceSquared) {
-    float damageForWorm = mainDamage * std::max(0.0f, 1.0f - sqrt(wormDistanceSquared) / radio);
+    float factorDamage = 1.0f - sqrt(wormDistanceSquared) / radio;
+    std::cout << "wormDistanceSquared: " << wormDistanceSquared <<  "factorDamage: " << factorDamage << "\n";
+    float damageForWorm = mainDamage * std::max(0.0f, factorDamage);
+    std::cout << "damageForWorm: " << damageForWorm << "\n";
     return damageForWorm;
 }
 

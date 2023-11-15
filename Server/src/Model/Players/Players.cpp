@@ -97,9 +97,9 @@ std::pair<size_t, size_t> Players::getIdPlayerWormCurrent(){
     return std::make_pair(idPlayerCurrent, players.at(idPlayerCurrent).getCurrentWormId());
 }
 
-void Players::updateStateWorms() {
+void Players::update() {
     for(auto& aPlayer : players){
-        aPlayer.second.updateStateWorms();
+        aPlayer.second.update();
     }
 }
 

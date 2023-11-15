@@ -52,9 +52,9 @@ size_t Player::getCurrentWormId() {
     return this->idCurrentWorm;
 }
 
-void Player::updateStateWorms() {
+void Player::update() {
     for(auto& pair : worms){
-        pair.second->updateState();
+        pair.second->update();
     }
 }
 
