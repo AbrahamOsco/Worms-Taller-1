@@ -7,8 +7,11 @@
 #include "../../command/FireCmd.h"
 
 Worm::Worm(int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
-           const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, int xCrosshair, int yCrosshair, const TypeSight &typeSight) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_hpWorm(hpWorm), m_directionLook(direction),
-                                       m_typeFocus(focus), m_moveWorm(moveWorm), m_weaponCurrent(weaponCurrent), m_xCrosshair(xCrosshair), m_yCrosshair(yCrosshair), m_typeSight(typeSight) {
+           const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, int xCrosshair, int yCrosshair,
+           const TypeSight &typeSight) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_hpWorm(hpWorm),
+                                         m_directionLook(direction),
+                                         m_typeFocus(focus), m_moveWorm(moveWorm), m_weaponCurrent(weaponCurrent),
+                                         m_xCrosshair(xCrosshair), m_yCrosshair(yCrosshair), m_typeSight(typeSight) {
     m_flip = SDL_FLIP_NONE;
     if (m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
         m_width = 60;
@@ -73,33 +76,19 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
 
     int textWidth = textTexture.GetWidth();
 
-    textureManager.drawTextBox(text, m_x - textWidth/2, m_y - 30, fontPath, fontSize, textColor, boxColor,
+    textureManager.drawTextBox(text, m_x - textWidth / 2, m_y - 30, fontPath, fontSize, textColor, boxColor,
                                renderer);
-    if (m_weaponCurrent == TypeWeapon::DYNAMITE || m_weaponCurrent == TypeWeapon::AIR_ATTACK || m_weaponCurrent == TypeWeapon::BASEBALL_BAT || m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
+    if (m_weaponCurrent == TypeWeapon::DYNAMITE || m_weaponCurrent == TypeWeapon::AIR_ATTACK ||
+        m_weaponCurrent == TypeWeapon::BASEBALL_BAT || m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
         m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_flip, renderer, textureManager);
     } else {
-        int angle = calcularAngulo(m_x, m_y, m_xCrosshair,m_yCrosshair);
+        int frameCount = 30;
+        int angle = calcularAngulo(m_x, m_y, m_xCrosshair, m_yCrosshair, m_directionLook);
+        angle = std::max(-90, std::min(90, angle));
+        int rowIndex = static_cast<int>(((90 - angle) * frameCount) / 180);
 
-        // Asegurarte de que el ángulo esté dentro del rango -90 a 90 grados
-        //std::cout << angle << std::endl;
-
-
-        int numRows = 30;
-        int rowIndex;
-        if (m_directionLook == Direction::RIGHT) {
-             rowIndex = static_cast<int>(((90 - angle) * numRows )/ 180);
-        } else {
-            int dx = m_xCrosshair - m_x;
-            int dy = m_yCrosshair - m_y;
-            double radianes = std::atan2(dy, -dx);
-            int grados = static_cast<int>(radianes * (180.0 / M_PI));
-            angle = std::max(-90, std::min(90, grados));
-            rowIndex = static_cast<int>(((90 - angle) * numRows )/ 180);
-        }
-
-
-
-        textureManager.drawFrame(m_textureID, m_x - m_width / 2, m_y - m_height / 2, m_width, m_height, rowIndex, 0, renderer,m_flip);
+        textureManager.drawFrame(m_textureID, m_x - m_width / 2, m_y - m_height / 2, m_width, m_height, rowIndex, 0,
+                                 renderer, m_flip);
     }
 }
 
@@ -130,21 +119,25 @@ void Worm::animationState() {
         m_height = 60;
         m_animation.setProps("air", m_width, m_height, 36, 60, SDL_FLIP_NONE);
     }
-    if(m_moveWorm == MoveWorm::ATTACKING) {
+    if (m_moveWorm == MoveWorm::ATTACKING) {
         m_width = 60;
         m_height = 30;
         m_animation.setProps("bat_hit", m_width, m_height, 15, 30, SDL_FLIP_NONE);
     }
 }
 
-int Worm::calcularAngulo(int x, int y, int xCrosshair, int yCrosshair) {
+int Worm::calcularAngulo(int x, int y, int xCrosshair, int yCrosshair, const Direction &direction) {
     int dx = xCrosshair - x;
     int dy = yCrosshair - y;
 
-    // Calcular el ángulo en radianes
-    double radianes = std::atan2(dy, dx);
+    double radianes;
 
-    // Convertir radianes a grados
+    if (direction == Direction::RIGHT) {
+        radianes = std::atan2(dy, dx);
+    } else {
+        radianes = std::atan2(dy, -dx);
+    }
+
     int grados = static_cast<int>(radianes * (180.0 / M_PI));
 
     return grados;

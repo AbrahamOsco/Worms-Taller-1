@@ -35,7 +35,7 @@ public:
 
     void animationState();
 
-    int calcularAngulo(int x, int y, int xCrosshair, int yCrosshair);
+    int calcularAngulo(int x, int y, int xCrosshair, int yCrosshair, const Direction &direction);
 };
 
 
