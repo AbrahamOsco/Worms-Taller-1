@@ -35,7 +35,7 @@ public:
 
     WeaponsDTO getWeaponsDTO() const;
 
-    size_t getCurrentWormId();
+    size_t startAWormTurn();
 
     void assignWorm(const int &idWorm, const std::pair<float, float> &positionInitialWorm);
 
@@ -50,6 +50,7 @@ public:
     Worm *getCurrentWorm();
 
 
+    std::string getPlayerName() const;
 };
 
 

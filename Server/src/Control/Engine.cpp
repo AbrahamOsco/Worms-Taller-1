@@ -44,10 +44,12 @@ int Engine::addClient(Socket &socket, const std::string &playerName, const Opera
 void Engine::run() {
     std::string estadoPartida = std::to_string(currentPlayers) + "/" + std::to_string(numberPlayerReq)  + " Ha comenzado\n";
     std::cout << "[Engine]: La partida  " + this->nameGameRoom  + " En el scenario: " + this->nameScenario + " Con : " + estadoPartida;
-    model.start();
-    connections.start(model.getStageDTO());
+    StageDTO stageDto = model.startAndGetStageDTO();
+    connections.start(stageDto);
     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now(), t2,t3;
     std::chrono::duration<double> frameTime{}, sleepTime{}, timeUsed{}, target(gameParameters.getFPS()), sleepAdjustSeconds(0.0);
+    std::chrono::steady_clock::time_point lastTime = std::chrono::steady_clock::now(); // lastTime para el contador del tiempo.
+
     while(keepTalking){
         t1 = std::chrono::steady_clock::now();
         this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(), gameParameters.getPositionIterations()); // Hacemos un step en el world.
@@ -57,9 +59,15 @@ void Engine::run() {
         }
         connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
                                  model.getWeaponSightDTO(), model.getProjectilesDTO());
+        std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
+        std::chrono::duration<double> elapsedSeconds = currentTime - lastTime;
+        if( elapsedSeconds.count() >= 1.0f){
+            model.subtractTime();
+            lastTime = currentTime;
+        }
         model.update();
-        // this->updateProjectiles()
-        adjustFPS(target, t1, t2, t3, timeUsed, sleepTime, frameTime, sleepAdjustSeconds);
+
+       adjustFPS(target, t1, t2, t3, timeUsed, sleepTime, frameTime, sleepAdjustSeconds);
     }
     this->connections.stop();
     this->clearAll(); // Limpiamos las queues.

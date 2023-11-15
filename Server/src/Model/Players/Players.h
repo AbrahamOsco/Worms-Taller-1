@@ -31,11 +31,9 @@ public:
 
     std::vector<WormDTO> getWormsDTO() const;
 
-    size_t getCurrentPlayerId();
+    size_t startAPlayerTurn();
 
     void addToTheWorld(b2World *world);
-
-    std::pair<size_t, size_t> getIdPlayerWormCurrent();
 
     void update();
 
@@ -44,6 +42,8 @@ public:
     std::vector<WeaponsDTO> getVecWeaponsDTO() const;
 
     Worm *getCurrentWorm();
+
+    Player & getCurrentPlayer();
 };
 
 

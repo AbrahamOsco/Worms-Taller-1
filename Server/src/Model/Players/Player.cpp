@@ -36,7 +36,7 @@ void Player::addToTheWorld(b2World *world) {
     }
 }
 
-size_t Player::getCurrentWormId() {
+size_t Player::startAWormTurn() {
     if( idCurrentWorm == VALUE_INITIAL){
         wormIterator = worms.begin();
         this->idCurrentWorm = wormIterator->first;
@@ -45,7 +45,7 @@ size_t Player::getCurrentWormId() {
     }
     wormIterator++; // avanzamos al iterador.
     if (wormIterator == worms.end()){
-        wormIterator == worms.begin();
+        wormIterator = worms.begin();
     }
     this->idCurrentWorm = wormIterator->first;
     worms[idCurrentWorm]->activateFocus();
@@ -76,6 +76,10 @@ WeaponsDTO Player::getWeaponsDTO() const {
 
 Worm * Player::getCurrentWorm() {
     return worms.at(idCurrentWorm).get();
+}
+
+std::string Player::getPlayerName() const {
+    return this->playerName;
 }
 
 

@@ -28,7 +28,7 @@ public:
 
     void addConnection(const size_t &idPlayer, Socket sktPeer);
 
-    void start(const StageDTO &stageDTO);
+    void start(StageDTO &stageDTO);
 
     void stop();
 

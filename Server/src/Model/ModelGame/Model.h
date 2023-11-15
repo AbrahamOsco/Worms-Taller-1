@@ -17,6 +17,7 @@
 #include <string>
 #include "box2d/box2d.h"
 #include "../GameContactListener/GameContactListener.h"
+#include "../Turns/Turns.h"
 #include <memory>
 
 class Model {
@@ -27,8 +28,8 @@ private:
     Stage stage;
     Players players;
     b2World& world;
-    std::pair<size_t, size_t> idPlayerWormCurrent;
     GameContactListener gameContactListener;
+    Turns turns;
 
 public:
 
@@ -44,7 +45,7 @@ public:
 
     std::vector<WeaponsDTO> getVecWeaponsDTO() const;
 
-    void start();
+    StageDTO startAndGetStageDTO();
 
     void execute(std::unique_ptr<CommandDTO> &aCommandDTO);
 
@@ -53,6 +54,8 @@ public:
     WeaponSightDTO getWeaponSightDTO();
 
     ProjectilesDTO getProjectilesDTO();
+
+    void subtractTime();
 };
 
 
