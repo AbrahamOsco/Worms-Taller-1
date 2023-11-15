@@ -15,10 +15,9 @@
 #define WORLD_WIDTH 32
 #define PIX_PER_M 60
 #define ANGLE_KEY 0
-#define TYPE_KEY 1
-#define WORM "worm"
-#define BEAM "beam"
+#define LENGTH_KEY 1
 #define LONG_BEAM 6
+#define SHORT_BEAM 3
 #define LONG_BEAM_IMG "beams/longBeam"
 #define SHORT_BEAM_IMG "beams/shortBeam"
 #define WORM_IMG "worm.png"
@@ -27,7 +26,7 @@ EditingWindow::EditingWindow(QWidget *parent, const std::string& mapName) :
     QWidget(parent),
     ui(new Ui::EditingWindow),
     scene(nullptr),
-    newBeamLength(LONG_BEAM_IMG),
+    newBeamLengthImg(LONG_BEAM_IMG),
     mapName(mapName),
     zoom(nullptr) {
     ui->setupUi(this);
@@ -74,12 +73,12 @@ void EditingWindow::loadMapToEdit() {
         auto posY = (height - (beamNode["y"].as<double>())) * PIX_PER_M;
 
         if (length == LONG_BEAM) {
-            newBeamLength  = LONG_BEAM_IMG;
+            newBeamLengthImg  = LONG_BEAM_IMG;
         } else {
-            newBeamLength  = SHORT_BEAM_IMG;
+            newBeamLengthImg  = SHORT_BEAM_IMG;
         }
 
-        std::string beamImg("../Editor/resources/" + newBeamLength +
+        std::string beamImg("../Editor/resources/" + newBeamLengthImg +
                         std::to_string(angle) + ".png");
         QGraphicsPixmapItem* beam = scene->addPixmap(QPixmap(beamImg.c_str()));
         beam->setPos(translatedPos(QPointF(posX, posY), beam,
@@ -87,7 +86,7 @@ void EditingWindow::loadMapToEdit() {
         beam->setFlag(QGraphicsItem::ItemIsMovable);
         beam->setFlag(QGraphicsItem::ItemIsSelectable);
         beam->setData(ANGLE_KEY, angle);
-        beam->setData(TYPE_KEY, BEAM);
+        beam->setData(LENGTH_KEY, length);
         beams.push_back(beam);
     }
 
@@ -109,7 +108,6 @@ void EditingWindow::loadMapToEdit() {
                                    CENTER_TO_VERTEX));
         worm->setFlag(QGraphicsItem::ItemIsMovable);
         worm->setFlag(QGraphicsItem::ItemIsSelectable);
-        worm->setData(TYPE_KEY, WORM);
         worms.push_back(worm);
     }
 }
@@ -281,8 +279,7 @@ void EditingWindow::onSaveBtnClicked() {
         beamNode["x"] = pos.x()/PIX_PER_M;
         beamNode["y"] = node["height"].as<float>() - (pos.y()/PIX_PER_M);
         beamNode["angle"] = beam->data(ANGLE_KEY).toInt();
-        beamNode["length"] = static_cast<int>
-                    (beam->boundingRect().width()/PIX_PER_M);
+        beamNode["length"] = beam->data(LENGTH_KEY).toInt();
         node["beams"].push_back(beamNode);
 
     }
@@ -304,12 +301,13 @@ void EditingWindow::onAddWormBtnClicked() {
 
 void EditingWindow::onAddBeamBtnClicked() {
     GetSelectedBeamLength();
-    std::string beamImg("../Editor/resources/" + newBeamLength +
+    std::string beamImg("../Editor/resources/" + newBeamLengthImg +
                     std::to_string(ui->spinBox->value()) + ".png");
     QGraphicsPixmapItem* beam = scene->addPixmap(QPixmap(beamImg.c_str()));
     beam->setFlag(QGraphicsItem::ItemIsMovable);
     beam->setFlag(QGraphicsItem::ItemIsSelectable);
     beam->setData(ANGLE_KEY,ui->spinBox->value());
+    beam->setData(LENGTH_KEY, newBeamLengthInt);
     beam->setPos(ui->graphicsView->mapToScene(
             ui->graphicsView->viewport()->rect().center()));
     beams.push_back(beam);
@@ -318,9 +316,11 @@ void EditingWindow::onAddBeamBtnClicked() {
 
 void EditingWindow::GetSelectedBeamLength() {
     if (ui->lenComboBox->currentText() == "Short") {
-        newBeamLength  = SHORT_BEAM_IMG;
+        newBeamLengthImg  = SHORT_BEAM_IMG;
+        newBeamLengthInt = SHORT_BEAM;
     } else if (ui->lenComboBox->currentText() == "Long") {
-        newBeamLength  = LONG_BEAM_IMG;
+        newBeamLengthImg  = LONG_BEAM_IMG;
+        newBeamLengthInt = LONG_BEAM;
     }
 }
 

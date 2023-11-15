@@ -46,7 +46,8 @@ class EditingWindow : public QWidget {
     QGraphicsPixmapItem *bg;
     std::vector<QGraphicsPixmapItem*> worms;
     std::vector<QGraphicsPixmapItem*> beams;
-    std::string newBeamLength;
+    std::string newBeamLengthImg;
+    int newBeamLengthInt;
     std::string mapName;
     std::string mapFileName;
     enum TranslationType {VERTEX_TO_CENTER = -1, CENTER_TO_VERTEX = 1};
