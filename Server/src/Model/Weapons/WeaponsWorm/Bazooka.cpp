@@ -62,7 +62,6 @@ void Bazooka::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
 }
 
 WeaponSightDTO Bazooka::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) {
-    std::cout << "Enviando mira de la bazooka\n";
     return weaponSight.getWeaponSightDTO(positionWorm, directionCurrent);
 }
 

@@ -16,6 +16,10 @@
 #include "../Weapons/WeaponsWorm/Bazooka.h"
 
 #define LIFE_BONUS 25
+enum TypeJump{
+    JUMP_BACKWARDS, JUMP_FORWARDS
+};
+
 
 class Worm : public GameObject {
     size_t idWorm;
@@ -67,9 +71,7 @@ public:
 
     void addToTheWorld(b2World *world);
 
-    void jumpBackwards();
-
-    void jumpForwards();
+    void jump(const TypeJump &typeJump);
 
     void walk(Direction aDirection);
 
@@ -89,7 +91,7 @@ public:
 
     void rightWorm();
 
-    void stopIfUnmoving();
+    void updateState();
 
     void attackWithBat();
 
@@ -112,6 +114,9 @@ public:
     void savePositionInAir(const float &positionXAir, const float &positionYAir);
 
     std::pair<float, float> getPositionAir() const;
+
+    void attackWithBazooka();
+
 };
 
 

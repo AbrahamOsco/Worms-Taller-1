@@ -29,16 +29,13 @@ void wormCollidesWithBeam(GameObject* worm, GameObject* beam){
         fallHeight -= thresholdFall;
         int damageForFall = (int) std::min(fallHeight, 25.0f);
         unWorm->takeDamage(damageForFall);
-        if(unWorm->getHP() <= 0){
-            unWorm->destroyBody();
-        }
     }
     //actualizamos la posicion en el aire gusano luego de caer.
     b2Vec2 positonWormInAir = worm->getBody()->GetWorldCenter();
     unWorm->savePositionInAir(positonWormInAir.x, positonWormInAir.y);
 }
 
-void beamCollideWithWorm(GameObject* beam, GameObject* worm){
+void beamCollidesWithWorm(GameObject* beam, GameObject* worm){
     wormCollidesWithBeam(worm, beam);
     std::cout << "BEAM colisionar con el WORM\n";
 }
@@ -80,9 +77,7 @@ void munitionBazookaCollidesWithWorm(GameObject* bazooka, GameObject* worm){
     Worm* wormSelect = (Worm*) (worm);
     bazooka->destroyBody();
     wormSelect->takeDamage(50.0f);
-    if (wormSelect->getHP() <= 0.0f){
-        wormSelect->destroyBody();
-    }
+    // aca aplicar el daño en area.
 }
 
 void wormCollidesWithMunitionBazooka(GameObject* worm1, GameObject* bazooka){
@@ -131,7 +126,7 @@ void wormEndContactWithBeam(GameObject* worm, GameObject* beam){
 GameContactListener::GameContactListener(b2World *aWorld) {
     aWorld->SetContactListener(this);
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_BEAM)] = &wormCollidesWithBeam;
-    collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM)] = &beamCollideWithWorm;
+    collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM)] = &beamCollidesWithWorm;
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_WATER)] = &wormCollidesWithWater;
     collisionsMap[std::make_pair(ENTITY_WATER, ENTITY_WORM)] = &waterCollidesWithWorm;
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_EDGE)] = &wormCollidesWithEdege;

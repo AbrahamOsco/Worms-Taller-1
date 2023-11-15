@@ -23,6 +23,22 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     positionInAir= std::make_pair(0.0f, 0.0f);
 }
 
+void Worm::savePositionInAir(const float &positionXAir, const float &positionYAir) {
+    positionInAir = std::make_pair(positionXAir, positionYAir);
+}
+
+std::pair<float, float>  Worm::getPositionAir() const{
+    return positionInAir;
+}
+
+void Worm::activaeInclinedBeam() {
+    this->onInclinedBeam = true;
+}
+
+void Worm::disableInclinedBeam() {
+    this->onInclinedBeam = false;
+}
+
 void Worm::assignBonusLife() {
     hp += gameParameters.getWormHPBonus();
 }
@@ -46,45 +62,36 @@ void Worm::addToTheWorld(b2World *world) {
     this->body->CreateFixture(&defFixtureWorm);
 }
 
-void Worm::jumpBackwards() {
+// for worm moves.
+
+void Worm::jump(const TypeJump& typeJump){
     if( not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ){
         armament.putWeaponOnStandByAndUnarmed(); // guardamos el arma actual y nos desarmamos
+        float distanceX = distancesJumpForward.first;
+        float distanceY = distancesJumpForward.second;
+        if(typeJump == JUMP_BACKWARDS){
+            distanceX = distancesJumpBack.first;
+            distanceY = distancesJumpBack.second;
+        }
         this->typeMov = JUMPING;
-        float angleTita, initialSpeed;
-        angleTita = atan(4.0f * distancesJumpBack.second / distancesJumpBack.first);       //  (4 *hmax)/distMaxHorizontal.
-        initialSpeed = sqrt(distancesJumpBack.first * (gameParameters.getGravity() * -1) / (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
-        float speedX = initialSpeed * cos(angleTita);
-        float speedY = initialSpeed * sin(angleTita);
-        float impulseX = body->GetMass() * speedX;
-        float impulseY = body->GetMass() * speedY;
+        float angleTita = atan(4.0f * distanceY / distanceX);       //  (4 *hmax)/distMaxHorizontal.
+        float initialSpeed = sqrt(distanceX * (gameParameters.getGravity() * -1) / (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
+        float speedX = initialSpeed * cos(angleTita), speedY = initialSpeed * sin(angleTita);
+        float impulseX = body->GetMass() * speedX, impulseY = body->GetMass() * speedY;
 
-        if (directionLook == RIGHT) {
-            impulseX = -impulseX;
-            directionLook = LEFT;
-        } else if (directionLook == LEFT) {
-            directionLook = RIGHT;
+        if( typeJump == JUMP_BACKWARDS){
+            if (directionLook == RIGHT) {
+                impulseX = -impulseX;
+                directionLook = LEFT;
+            } else if (directionLook == LEFT) {
+                directionLook = RIGHT;
+            }
+        } else if ( typeJump == JUMP_FORWARDS){
+            if (directionLook == LEFT) {
+                impulseX = -impulseX;
+            }
         }
         b2Vec2 impulse(impulseX, impulseY); //  por la gravedaddfd
-        body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
-    }
-}
-void Worm::jumpForwards() {
-    if(not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)) {
-        armament.putWeaponOnStandByAndUnarmed(); // guardamos el arma actual y nos desarmamos
-        this->typeMov = JUMPING;
-        float angleTita, initialSpeed;
-        angleTita = atan(4.0f * distancesJumpForward.second / distancesJumpForward.first);       //  (4 *hmax)/distMaxHorizontal.
-        initialSpeed = sqrt(distancesJumpForward.first * (gameParameters.getGravity() * -1) /
-                            (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
-        float speedX = initialSpeed * cos(angleTita);
-        float speedY = initialSpeed * sin(angleTita);
-
-        float impulseX = body->GetMass() * speedX;
-        float impulseY = body->GetMass() * speedY;
-        if (directionLook == LEFT) {
-            impulseX = -impulseX;
-        }
-        b2Vec2 impulse(impulseX, impulseY);
         body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
     }
 }
@@ -124,6 +131,51 @@ bool Worm::isInContactWithAnotherWorm(){
     return false;
 }
 
+void Worm::leftWorm() {
+    if( armament.isUnarmed() ){
+        walk(Direction::LEFT);
+    } else if ( not armament.isUnarmed() and this->directionLook == Direction::LEFT ){
+        armament.putWeaponOnStandByAndUnarmed();
+        walk(Direction::LEFT);
+    } else{             // no esta desarmando y estaba mirando a la derecha pasamos a que mire a la izquierda
+        this->directionLook = Direction::LEFT;
+    }
+}
+
+void Worm::rightWorm() {
+    if( armament.isUnarmed()){
+        walk(Direction::RIGHT);
+    } else if ( not armament.isUnarmed() and this->directionLook == Direction::RIGHT){
+        armament.putWeaponOnStandByAndUnarmed();
+        walk(Direction::RIGHT);
+    } else{         // NO ESTA desarmado y estaba mirando a la izquierda lo hacemos que mira a la derecha
+        this->directionLook = Direction::RIGHT;
+    }
+}
+
+void Worm::upWorm() {
+    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
+        return;
+    }
+    this->armament.getWeaponCurrentPtr()->increaseAngle();
+}
+
+void Worm::downWorm() {
+    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
+        return;
+    }
+    this->armament.getWeaponCurrentPtr()->decreaseAngle();
+}
+
+// geters.
+MoveWorm Worm::getTypeMov() const {
+    return typeMov;
+}
+
+TypeFocusWorm Worm::getTypeFocusWorm() const {
+    return this->typeFocus;
+}
+
 Direction Worm::getDirectionLook() const {
     return this->directionLook;
 }
@@ -135,64 +187,37 @@ float Worm::getPositionX() const {
 float Worm::getPositionY() {
     return this->body->GetWorldCenter().y;
 }
+TypeWeapon Worm::getWeaponCurrent() const {
+    return this->armament.getWeaponCurrent();
+}
 
 float Worm::getHP() const {
     return this->hp;
 }
 
-// [todo] Aca Falta hacer gameParameters.getMaxHeightPixel() - (aWormElem.second->getPositionY() * gameParameters.getPositionAdjustment())  para la posicion en Y.
-
+// DTOS.
 WormDTO Worm::getWormDTO() const {
     return WormDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
                    gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()),
                    this->idPlayer, this->hp, this->directionLook, this->typeFocus, this->typeMov, this->armament.getWeaponCurrent() );
 
 }
+WeaponSightDTO Worm::getWeaponSightDTO() {
+    return armament.getWeaponSightDTO(this->body->GetWorldCenter(), directionLook);
+}
 
+ProjectilesDTO Worm::getProjectilesDTO() {
+    return armament.getProjectilesDTO();
+}
 
 void Worm::activateFocus() {
     this->typeFocus = TypeFocusWorm::FOCUS;
 }
 
-
-MoveWorm Worm::getTypeMov() const {
-    return typeMov;
-}
-
-TypeFocusWorm Worm::getTypeFocusWorm() const {
-    return this->typeFocus;
-}
-
-void Worm::leftWorm() {
-    // chequeo si esta con un arma entonces solo cambiar la dirreccio hacia donde mira.
-    if( armament.isUnarmed() ){
-        walk(Direction::LEFT);
-    } else if ( not armament.isUnarmed() and this->directionLook == Direction::LEFT ){
-        armament.putWeaponOnStandByAndUnarmed();
-        walk(Direction::LEFT);
-    } else{             // no esta desarmando y estaba mirando a la derecha pasamos a que mire a la izquierda
-        this->directionLook = Direction::LEFT;
-        //armament.changeDirection(Direction::LEFT);
-    }
-
-}
-
-void Worm::rightWorm() {
-    if( armament.isUnarmed()){
-        walk(Direction::RIGHT);
-    } else if ( not armament.isUnarmed() and this->directionLook == Direction::RIGHT){
-        armament.putWeaponOnStandByAndUnarmed();
-        walk(Direction::RIGHT);
-    } else{         // NO ESTA desarmado y estaba mirando a la izquierda lo hacemos que mira a la derecha
-        this->directionLook = Direction::RIGHT;
-        //armament.changeDirection(Direction::RIGHT);
-    }
-}
-
-void Worm::stopIfUnmoving() {
+void Worm::updateState() {
     if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
         if(this->typeMov == ATTACKING and iterationsForBatAttack > 0 ){
-            std::cout << "Se deja de mostrar el attakking" << typeMov << "\n";
+            std::cout << "Iteracion para mostrar el ataque con el bate" << typeMov << "\n";
             iterationsForBatAttack--;
         } else if ( this->typeMov== ATTACKING and iterationsForBatAttack == 0){
             iterationsForBatAttack = 15;
@@ -204,6 +229,7 @@ void Worm::stopIfUnmoving() {
     }
 }
 
+// weapons.
 void Worm::takeDamage(const float &aDamage){
     this->hp -=aDamage;
     if(hp <=0.0){
@@ -211,9 +237,36 @@ void Worm::takeDamage(const float &aDamage){
     }
 }
 
-// se debe llamar a esta funcion antes de todo para asignar el arma a usar.
 void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
     armament.assignWeapon(aTypeWeapon, this->directionLook);
+}
+
+void Worm::increaseImpulse() {
+    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
+        return;
+    }
+    this->armament.getWeaponCurrentPtr()->increaseImpulse();
+    if(this->armament.getWeaponCurrentPtr()->hasMaxImpulse() ){
+        attack();
+    }
+}
+
+void Worm::attack() {
+    if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
+        return;
+    }
+    if( this->armament.getWeaponCurrent() == BASEBALL_BAT){
+        this->typeMov = ATTACKING;
+        this->attackWithBat();
+    } else if ( this->armament.getWeaponCurrent() == BAZOOKA){
+        this->attackWithBazooka();
+    }
+    attacked = true;
+}
+
+void Worm::attackWithBazooka() {
+    Bazooka *bazooka = (Bazooka *) armament.getWeaponCurrentPtr();
+    bazooka->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook);
 }
 
 void Worm::attackWithBat(){
@@ -233,74 +286,8 @@ void Worm::attackWithBat(){
     aBat->resetRayCast();
 }
 
-TypeWeapon Worm::getWeaponCurrent() const {
-    return this->armament.getWeaponCurrent();
-}
-
 void Worm::teleportWorm(const float& posXTeleport, const float& posYTeleport){
     Teleport* teleport = (Teleport*) this->armament.getWeaponCurrentPtr();
     teleport->teleportIn(getBody(), posXTeleport, posYTeleport);
 }
-
-WeaponSightDTO Worm::getWeaponSightDTO() {
-    return armament.getWeaponSightDTO(this->body->GetWorldCenter(), directionLook);
-}
-
-void Worm::activaeInclinedBeam() {
-    this->onInclinedBeam = true;
-}
-
-void Worm::disableInclinedBeam() {
-    this->onInclinedBeam = false;
-}
-
-void Worm::upWorm() {
-    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
-        return;
-    }
-    // con esto obtenemos la arma actual por ej un bate y vamos al increaseAngle del bate.
-    this->armament.getWeaponCurrentPtr()->increaseAngle();
-}
-
-void Worm::downWorm() {
-    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
-        return;
-    }
-    this->armament.getWeaponCurrentPtr()->decreaseAngle();
-}
-
-void Worm::increaseImpulse() {
-    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
-        return;
-    }
-    this->armament.getWeaponCurrentPtr()->increaseImpulse();
-    if(this->armament.getWeaponCurrentPtr()->hasMaxImpulse() ){
-        attack();
-    }
-}
-
-void Worm::attack() {
-    if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
-        return;
-    }
-    //std::cout << "Valor de attacked" << attacked << "\n";
-    if( this->armament.getWeaponCurrent() == BASEBALL_BAT and (not attacked)){
-        this->typeMov = ATTACKING;
-        this->attackWithBat();
-    }
-    attacked = true;
-}
-
-ProjectilesDTO Worm::getProjectilesDTO() {
-    return armament.getProjectilesDTO();
-}
-
-void Worm::savePositionInAir(const float &positionXAir, const float &positionYAir) {
-    positionInAir = std::make_pair(positionXAir, positionYAir);
-}
-
-std::pair<float, float>  Worm::getPositionAir() const{
-    return positionInAir;
-}
-
 

@@ -801,7 +801,7 @@ void wormCollidesWithBeam(GameObject* worm, GameObject* beam){
     unWorm->savePositionInAir(positonWormInAir.x, positonWormInAir.y);
 }
 
-void beamCollideWithWorm(GameObject* beam, GameObject* worm){
+void beamCollidesWithWorm(GameObject* beam, GameObject* worm){
     //std::cout << "BEAM colisionar con el WORM\n";
     wormCollidesWithBeam(worm, beam);
 }
@@ -927,7 +927,7 @@ public:
     MyContactListener(b2World *world) {
         world->SetContactListener(this);
         collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_BEAM)] = &wormCollidesWithBeam;
-        collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM)] = &beamCollideWithWorm;
+        collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM)] = &beamCollidesWithWorm;
         collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_WATER)] = &wormCollidesWithWater;
         collisionsMap[std::make_pair(ENTITY_WATER, ENTITY_WORM)] = &waterCollidesWithWorm;
         collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_EDGE)] = &wormCollidesWithEdege;

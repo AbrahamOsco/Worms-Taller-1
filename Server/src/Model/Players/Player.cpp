@@ -54,7 +54,7 @@ size_t Player::getCurrentWormId() {
 
 void Player::updateStateWorms() {
     for(auto& pair : worms){
-        pair.second->stopIfUnmoving();
+        pair.second->updateState();
     }
 }
 

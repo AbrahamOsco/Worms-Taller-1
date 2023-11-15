@@ -39,9 +39,9 @@ void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD ){
         players.getCurrentWorm()->rightWorm();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_BACK_CMD){
-        players.getCurrentWorm()->jumpBackwards();
+        players.getCurrentWorm()->jump(JUMP_BACKWARDS);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_FORWARD_CMD){
-        players.getCurrentWorm()->jumpForwards();
+        players.getCurrentWorm()->jump(JUMP_FORWARDS);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BAT){
         players.getCurrentWorm()->assignWeapon(BASEBALL_BAT);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_TELEPORT){
