@@ -157,6 +157,8 @@ void Worm::upWorm() {
     if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
         return;
     }
+    // polimorfismo aca obtenemos el arma q tengamos actualmente e incrmentamos el angle si algunoas armas haran algo otras no.
+    // this->armament.getWeaponCurrentPtr() es remeplazada por el arma actual por ej bat y llama al increasAngle de bat.
     this->armament.getWeaponCurrentPtr()->increaseAngle();
 }
 

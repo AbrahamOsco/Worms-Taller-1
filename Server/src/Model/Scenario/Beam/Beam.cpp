@@ -40,7 +40,7 @@ void Beam::addToWorld(b2World *world) {
     defFixtureBeam.shape = &shapeBeam;
     float beamFriction = GameParameters::getBeamFriction(); // antes era 1.5f
     if(angle > GameParameters::getBeamMinimumScalableAngle() && angle <= GameParameters::getBeamMaximumUnscalableAngle()){
-        beamFriction = 0.0f;
+        beamFriction = 0.2f;  // beam friction @todo agregar en el gameParameters.
     }
     defFixtureBeam.friction = beamFriction;
     this->body->CreateFixture(&defFixtureBeam);

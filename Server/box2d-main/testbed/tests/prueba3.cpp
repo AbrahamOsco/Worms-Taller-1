@@ -98,7 +98,7 @@ public:
         defFixtureBeam.shape = &shapeBeam;
         float beamFriction = 5.0f; // antes era 1.5f
         if(angle > 45.0f && angle <= 170.0f ){
-            beamFriction = 0.0f;
+            beamFriction = 0.2f;
         }
         defFixtureBeam.friction = beamFriction;
         this->body->CreateFixture(&defFixtureBeam);
@@ -470,9 +470,16 @@ public:
     b2Vec2 getImpulseForWorm(const b2Vec2 &positionWorm, const b2Vec2 &positionMunition, float distanceWormToMunition) {
         b2Vec2 impulseDirection = positionWorm - positionMunition;
         impulseDirection.Normalize();
+        std::cout << "distanceWormToMunition :" << distanceWormToMunition << "\n";
         float impulseMagnitude = maxImpulseMagnitude * std::max(0.0f, 1.0f - sqrt(distanceWormToMunition) / maxRadio );
+        std::cout << "impulseMagnitude : " << impulseMagnitude;
+        std::cout << " impulseDirection.x: " << impulseDirection.x << "impulseDirection.y" << impulseDirection.y << "\n ";
         b2Vec2 impulseWorm = impulseMagnitude * impulseDirection;
         impulseWorm.y = abs(impulseWorm.x) * 0.7;
+        if(impulseDirection.x == 0){ // Si la normal en x es cero hizo un tiro a -90º sale volando para arriba.
+            impulseWorm.y = maxImpulseMagnitude;
+        }
+        std::cout << "impulseWorm.x" << impulseWorm.x << "impulseWorm.y" << impulseWorm.y << "\n";
         return impulseWorm;
     }
 
@@ -908,6 +915,7 @@ void beamEndContactWithWorm(GameObject* beam, GameObject* worm){
     Worm* unWorm = (Worm*) (worm);
     Beam* unaBeam = (Beam*) (beam);
     b2Vec2 positonWormInAir = worm->getBody()->GetWorldCenter();
+    std::cout << "Se guardan postions al salir de la viga : positonWormInAir.x:" << positonWormInAir.x << "positonWormInAir.y" << positonWormInAir.y ;
     unWorm->savePositionInAir(positonWormInAir.x, positonWormInAir.y);
 }
 

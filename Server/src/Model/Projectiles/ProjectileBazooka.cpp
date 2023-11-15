@@ -39,6 +39,9 @@ b2Vec2 ProjectileBazooka::getImpulseForWorm(const b2Vec2 &positionWorm, const b2
     float impulseMagnitude = maxImpulseExplosion * std::max(0.0f, 1.0f - sqrt(distanceWormToProjectile) / radio );
     b2Vec2 impulseWorm = impulseMagnitude * impulseDirection;
     //impulseWorm.y = abs(impulseWorm.x) * 0.7;  // todo seguramnte falta ajustar aca el eje y
+    if(impulseDirection.x == 0){ // Si la normal en x es cero hizo un tiro a -90º sale volando para arriba.
+        impulseWorm.y = maxImpulseExplosion;
+    }
     return impulseWorm;
 }
 
