@@ -18,10 +18,10 @@ GameInfo::GameInfo(PlayersInfo &players, WeaponInventory &weaponInventory, WindI
     }
 }
 
-void GameInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
-    m_players.draw(renderer, textureManager);
-    m_weaponInventory.draw(renderer, textureManager);
-    m_wind.draw(renderer, textureManager);
+void GameInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
+    m_players.draw(renderer, textureManager, camera);
+    m_weaponInventory.draw(renderer, textureManager, camera);
+    m_wind.draw(renderer, textureManager, camera);
 
     int fontSize = 22;
     SDL_Color textColor = {0, 0, 0, 255};
@@ -31,8 +31,8 @@ void GameInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) 
 
 }
 
-void GameInfo::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) {
-    m_weaponInventory.update(dt, input, queue);
+void GameInfo::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
+    m_weaponInventory.update(dt, input, queue, camera);
     if (m_isMyTurn) {
 
         if (input.getKeyDown(SDL_SCANCODE_RIGHT)) {

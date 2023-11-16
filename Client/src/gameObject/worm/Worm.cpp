@@ -64,7 +64,7 @@ Worm::Worm(int x, int y, const size_t &hpWorm, const Direction &direction, const
     m_animation.setProps(m_textureID, m_width, m_height, 14, 140);
 }
 
-void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
+void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     SDL_Color textColor = {225, 225, 225, 255};
     SDL_Color boxColor = {0, 0, 0, 255};
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
@@ -93,7 +93,7 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
     }
 }
 
-void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) {
+void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
     if (m_directionLook == Direction::RIGHT) {
         m_flip = SDL_FLIP_HORIZONTAL;
     }

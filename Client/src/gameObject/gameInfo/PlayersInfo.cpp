@@ -6,10 +6,10 @@
 
 PlayersInfo::PlayersInfo() : GameObject(LoaderParams(10, 140, 0, 0, " ")) {}
 
-void PlayersInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
+void PlayersInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     verticalAligned(10);
     for (PlayerInfo &player: m_players) {
-        player.draw(renderer, textureManager);
+        player.draw(renderer, textureManager, camera);
     }
 }
 

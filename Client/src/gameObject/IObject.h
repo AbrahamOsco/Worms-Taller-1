@@ -10,12 +10,13 @@
 #include "../command/Command.h"
 #include "../../../Common/Queue/Queue.h"
 #include "../inputs/Input.h"
+#include "../camera/Camera.h"
 
 class IObject {
 public:
-    virtual void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) = 0;
+    virtual void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) = 0;
 
-    virtual void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) = 0;
+    virtual void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) = 0;
 
     virtual ~IObject() = default;
 

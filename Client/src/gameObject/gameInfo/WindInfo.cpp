@@ -17,7 +17,7 @@ WindInfo::WindInfo(int velocity, Direction direction) : GameObject(LoaderParams(
     }
 }
 
-void WindInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
+void WindInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     int fontSize = 16;
     SDL_Color textColor = {0, 0, 0, 255};
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";

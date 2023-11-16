@@ -37,7 +37,7 @@ Weapon::Weapon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWe
     }
 }
 
-void Weapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
+void Weapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
     SDL_Color textColor = {0, 0, 0, 255};
     int fontSize = 16;
@@ -69,7 +69,7 @@ int Weapon::getHeight() {
     return m_height;
 }
 
-void Weapon::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) {
+void Weapon::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
     if (input.isMouseButtonDown()) {
         SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);
         SDL2pp::Point point(input.getMouseX(), input.getMouseY());

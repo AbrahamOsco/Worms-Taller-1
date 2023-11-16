@@ -7,17 +7,17 @@
 
 WeaponInventory::WeaponInventory() : GameObject(LoaderParams(WINDOW_WIDTH - 120, 40, 0, 0, " ")) {}
 
-void WeaponInventory::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
+void WeaponInventory::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     //verticalAligned(10);
     for (Weapon &weapon: m_weapons) {
-        weapon.draw(renderer, textureManager);
+        weapon.draw(renderer, textureManager, camera);
     }
 }
 
-void WeaponInventory::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) {
+void WeaponInventory::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
     verticalAligned(10);
     for (Weapon &weapon: m_weapons) {
-        weapon.update(dt, input, queue);
+        weapon.update(dt, input, queue, camera);
     }
 }
 

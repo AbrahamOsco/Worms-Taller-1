@@ -29,7 +29,7 @@ enum Angle : size_t {
     ANGLE_170 = 170
 };
 
-class Beam{
+class Beam {
 private:
     std::string m_textureID;
     int m_width, m_height;

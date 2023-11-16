@@ -29,9 +29,9 @@ public:
     explicit Worm(int x, int y, const size_t &hpWorm, const Direction &direction,
                   const TypeFocusWorm &focus, const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, int xCrosshair, int yCrosshair, const TypeSight &typeSight);
 
-    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override;
+    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 
-    void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) override;
+    void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) override;
 
     void animationState();
 

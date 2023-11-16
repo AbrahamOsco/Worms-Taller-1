@@ -23,9 +23,9 @@ public:
 
     explicit GameObject(const LoaderParams &params);
 
-    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override = 0;
+    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override = 0;
 
-    void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) override = 0;
+    void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) override = 0;
 };
 
 

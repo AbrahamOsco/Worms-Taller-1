@@ -12,13 +12,13 @@ Crosshair::Crosshair(int x, int y, const TypeSight &typeSight) : GameObject(Load
     m_animation.setProps(m_textureID, m_width, m_height, 32, 60);
 }
 
-void Crosshair::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
+void Crosshair::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     if (m_typeSight == TypeSight::SHOW_SIGHT) {
         m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_flip, renderer, textureManager);
     }
 }
 
-void Crosshair::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) {
+void Crosshair::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
     m_animation.update();
     if (m_typeSight == TypeSight::SHOW_SIGHT) {
         if (input.getKeyDown(SDL_SCANCODE_UP)) {

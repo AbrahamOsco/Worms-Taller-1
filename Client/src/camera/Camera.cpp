@@ -22,4 +22,14 @@ void Camera::setTarget(SDL2pp::Point &target) {
 
 void Camera::update() {
     m_viewBox.SetX(m_target.GetX() - WINDOW_WIDTH / 2);
+    m_viewBox.SetY(m_target.GetY() - WINDOW_HEIGHT / 2);
+
+    if (m_viewBox.GetX() < 0) {
+        m_viewBox.SetX(0);
+    }
+
+    if (m_viewBox.GetY() < 0) {
+        m_viewBox.SetY(0);
+    }
+
 }

@@ -33,7 +33,7 @@ void Engine::update() {
     float dt = m_timer.getDeltaTime();
     while (m_nbQueue.move_try_pop(m_gameObjects)) {}
     for (const auto &m_gameObject: m_gameObjects) {
-        m_gameObject->update(dt, m_input, m_bQueue);
+        m_gameObject->update(dt, m_input, m_bQueue, m_camera);
     }
 
 }
@@ -47,7 +47,7 @@ void Engine::render() {
     }
 
     for (const auto &m_gameObject: m_gameObjects) {
-        m_gameObject->draw(m_renderer, m_textureManager);
+        m_gameObject->draw(m_renderer, m_textureManager, m_camera);
     }
 
     m_renderer.Present();

@@ -10,7 +10,7 @@ PlayerInfo::PlayerInfo(int id, const std::string &name, int totalLife) : GameObj
                                                                          m_name(name),
                                                                          m_totalLife(totalLife) {}
 
-void PlayerInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
+void PlayerInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     int fontSize = 16;
     int padding = 20;
     SDL_Color textBoxColor = {225, 225, 225, 255};
