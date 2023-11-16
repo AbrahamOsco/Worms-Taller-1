@@ -5,6 +5,7 @@
 #include "Worm.h"
 #include "../../command/ChargeCmd.h"
 #include "../../command/FireCmd.h"
+#include "../../command/TeleportCmd.h"
 
 Worm::Worm(int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
            const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, int xCrosshair, int yCrosshair,
@@ -100,6 +101,15 @@ void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue
     if (m_weaponCurrent == TypeWeapon::BASEBALL_BAT) {
         if (input.getKeyDown(SDL_SCANCODE_SPACE)) {
             std::unique_ptr<Command> command(new FireCmd());
+            queue.move_push(std::move(command));
+        }
+    }
+
+    if (m_weaponCurrent == TypeWeapon::TELEPORT) {
+        if (input.isMouseButtonDown()) {
+            SDL2pp::Point point(input.getMouseX(), input.getMouseY());
+            std::cout << "send: " << point << std::endl;
+            std::unique_ptr<Command> command(new TeleportCmd(point.GetX(), point.GetY()));
             queue.move_push(std::move(command));
         }
     }

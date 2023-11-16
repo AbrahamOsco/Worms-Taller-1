@@ -28,16 +28,23 @@ enum TypeCommand {
     SELECT_TELEPORT,
     CHARGE_CMD,
     FIRE_CMD,
-    NONE
+    TELEPORT_MOVE,
+    NONE,
 };
 
 class CommandDTO : public DTO {
 private:
     TypeCommand m_typeCommand;
+    int m_x;
+    int m_y;
 public:
     CommandDTO();
     void setTypeCommand(const TypeCommand& typeCommand);
     TypeCommand getTypeCommand() const;
+    int getX() const;
+    int getY() const;
+    void setX(int x);
+    void setY(int y);
 };
 
 

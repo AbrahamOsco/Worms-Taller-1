@@ -160,6 +160,8 @@ void ClientProtocol::sendCommandDTO(const CommandDTO& commandDto) {
     unsigned int commandType = commandDto.getTypeCommand();
     sendANumberByte(operationType);
     sendANumberByte(commandType);
+    sendNum2Bytes(commandDto.getX());
+    sendNum2Bytes(commandDto.getY());
 }
 
 SnapShot ClientProtocol::recvASnapShot() {

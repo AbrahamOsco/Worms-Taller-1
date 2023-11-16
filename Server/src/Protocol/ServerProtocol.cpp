@@ -131,6 +131,10 @@ CommandDTO ServerProtocol::recvCommandDTO() {
     if (operationType == COMMAND) {
         TypeCommand commandType = static_cast<TypeCommand>( recvANumberByte()); // probar esto
         commandDto.setTypeCommand(commandType);
+        int x = recvNum2Bytes();
+        int y = recvNum2Bytes();
+        commandDto.setX(x);
+        commandDto.setY(y);
     }
     return commandDto;
 }
