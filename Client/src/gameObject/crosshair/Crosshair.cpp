@@ -37,11 +37,11 @@ void Crosshair::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &
             queue.move_push(std::move(command));
         }
 
-        if (input.getKeyUp(SDL_SCANCODE_SPACE) && !input.getPrevSpaceState()) {
+        /*if (input.getKeyUp(SDL_SCANCODE_SPACE) && input.getEvent().type == SDL_KEYUP && !input.getPrevSpaceState()) {
             std::cout << "disparo" << std::endl;
             std::unique_ptr<Command> command(new FireCmd());
             queue.move_push(std::move(command));
-        }
+        }*/
     }
 }
 

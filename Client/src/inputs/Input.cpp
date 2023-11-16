@@ -9,9 +9,9 @@ Input::Input() : m_quit(false), m_mouseButtonDown(false), m_mouseX(0), m_mouseY(
 }
 
 void Input::listen() {
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        switch (event.type) {
+    //SDL_Event event;
+    while (SDL_PollEvent(&m_event)) {
+        switch (m_event.type) {
             case SDL_QUIT:
                 m_quit = true;
                 break;
@@ -22,13 +22,13 @@ void Input::listen() {
                 keyUp();
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                mouseButtonDown(event);
+                mouseButtonDown(m_event);
                 break;
             case SDL_MOUSEBUTTONUP:
-                mouseButtonUp(event);
+                mouseButtonUp(m_event);
                 break;
             case SDL_MOUSEMOTION:
-                mouseMotion(event);
+                mouseMotion(m_event);
                 break;
                 // Puedes agregar más casos según sea necesario
         }
@@ -87,4 +87,8 @@ bool Input::getPrevSpaceState() {
 
 bool Input::getKeyUp(SDL_Scancode key) {
     return (m_keyStates[key] == 0);
+}
+
+SDL_Event Input::getEvent() {
+    return m_event;
 }
