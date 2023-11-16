@@ -28,6 +28,8 @@ private:
     std::vector<Beam> &m_beams;
     std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 
+    //Camera camera;
+
     Queue<std::unique_ptr<Command>> &m_bQueue;
     Queue<std::vector<std::unique_ptr<GameObject>>> &m_nbQueue;
 
