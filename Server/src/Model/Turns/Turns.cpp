@@ -25,7 +25,7 @@ void Turns::tryEndTurn(){
     // Lo mas facil pasaron 60 segundos entonces.  pasa el turno del sgt jugador.
     if(timeLeft <= 0){
         timeLeft = 15;
-        //startATurn();
+        startATurn();
     }
 }
 
