@@ -3,6 +3,8 @@
 //
 
 #include "TurnDTO.h"
+TurnDTO::TurnDTO() : DTO(OperationType::TURN_DTO){}
+
 
 TurnDTO::TurnDTO(const size_t &idPlayerCurrent, const std::string &textTurn, const size_t &timeLeft) : DTO(TURN_DTO),
                                             idPlayerCurrent(idPlayerCurrent), textTurn(textTurn), timeLeft(timeLeft){
@@ -31,8 +33,6 @@ size_t TurnDTO::getTimeLeft() const {
 void TurnDTO::setTimeLeft(const size_t &timeLeft) {
     this->timeLeft = timeLeft;
 }
-
-TurnDTO::TurnDTO() : DTO(OperationType::TURN_DTO){}
 
 
 
