@@ -17,6 +17,7 @@ private:
     int timeLeft;
     size_t idWormCurrent;
 public:
+
     explicit Turns(Players& players);
 
     void startATurn();
@@ -26,7 +27,7 @@ public:
 
     void tryEndTurn();
 
-    TurnDTO getTurnDTO();
+    TurnDTO getTurnDTO() const;
 };
 
 

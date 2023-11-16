@@ -6,6 +6,7 @@
 #include "../Protocol/ServerProtocol.h"
 #include "../../../Common/DTO/PlayersDTO.h"
 #include "../../../Common/DTO/ProjectilesDTO.h"
+#include "../../../Common/DTO/TurnDTO.h"
 
 //commandsQueueNB(UINT_MAX - 1)
 ClientConnection::ClientConnection(const size_t &idPlayer, Socket aSktPeer, Queue<std::unique_ptr<CommandDTO>> &aCommandQueueNB) :
@@ -57,7 +58,7 @@ void ClientConnection::stop() {
 
 void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, const PlayersDTO &playersDTO,
                                     const std::vector<WeaponsDTO> &vecWeaponsDTO, const WeaponSightDTO &weaponSightDTO,
-                                    const ProjectilesDTO &projectilesDTO) {
+                                    const ProjectilesDTO &projectilesDTO, TurnDTO turnDTO) {
     //aca en cada client connectio nago el unicast.
     WeaponsDTO selectWeaponsDTO;
     for(auto& aWeaponsDTO : vecWeaponsDTO){
@@ -66,7 +67,10 @@ void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, con
             break;
         }
     }
-    std::unique_ptr<SnapShot> aSnapShot = std::make_unique<SnapShot>(vecWormsDTO, playersDTO, selectWeaponsDTO, weaponSightDTO, projectilesDTO);
+    if(turnDTO.getIdPlayerCurrent() == this->idPlayer){
+        turnDTO.setTextTurn("Es tu turno\n");
+    }
+    std::unique_ptr<SnapShot> aSnapShot = std::make_unique<SnapShot>(vecWormsDTO, playersDTO, selectWeaponsDTO, weaponSightDTO, projectilesDTO, turnDTO);
     this->snapShotQueueB->move_push(std::move(aSnapShot));
 }
 

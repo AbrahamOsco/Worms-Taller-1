@@ -23,15 +23,16 @@ void Turns::subtractTime() {
 
 void Turns::tryEndTurn(){
     // Lo mas facil pasaron 60 segundos entonces.  pasa el turno del sgt jugador.
-    if(timeLeft <= 0.0){
+    if(timeLeft <= 0){
         timeLeft = 15;
-        startATurn();
+        //startATurn();
     }
 }
 
-TurnDTO Turns::getTurnDTO(){
+TurnDTO Turns::getTurnDTO() const {
     return TurnDTO(idPlayerCurrent, textTurn, timeLeft);
 }
+
 
 
 

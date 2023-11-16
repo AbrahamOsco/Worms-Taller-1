@@ -42,36 +42,44 @@ int Engine::addClient(Socket &socket, const std::string &playerName, const Opera
 }
 
 void Engine::run() {
-    std::string estadoPartida = std::to_string(currentPlayers) + "/" + std::to_string(numberPlayerReq)  + " Ha comenzado\n";
-    std::cout << "[Engine]: La partida  " + this->nameGameRoom  + " En el scenario: " + this->nameScenario + " Con : " + estadoPartida;
-    StageDTO stageDto = model.startAndGetStageDTO();
-    connections.start(stageDto);
-    std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now(), t2,t3;
-    std::chrono::duration<double> frameTime{}, sleepTime{}, timeUsed{}, target(gameParameters.getFPS()), sleepAdjustSeconds(0.0);
-    std::chrono::steady_clock::time_point lastTime = std::chrono::steady_clock::now(); // lastTime para el contador del tiempo.
+    try{
+        std::string estadoPartida =
+                std::to_string(currentPlayers) + "/" + std::to_string(numberPlayerReq) + " Ha comenzado\n";
+        std::cout << "[Engine]: La partida  " + this->nameGameRoom + " En el scenario: " + this->nameScenario +
+                     " Con : " + estadoPartida;
+        StageDTO stageDto = model.startAndGetStageDTO();
+        connections.start(stageDto);
+        std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now(), t2, t3;
+        std::chrono::duration<double> frameTime{}, sleepTime{}, timeUsed{}, target(
+                gameParameters.getFPS()), sleepAdjustSeconds(0.0);
+        std::chrono::steady_clock::time_point lastTime = std::chrono::steady_clock::now(); // lastTime para el contador del tiempo.
 
-    while(keepTalking){
-        t1 = std::chrono::steady_clock::now();
-        this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(), gameParameters.getPositionIterations()); // Hacemos un step en el world.
-        std::unique_ptr<CommandDTO> aCommanDTO;
-        if (commandsQueueNB.move_try_pop(aCommanDTO)){
-            this->model.execute(aCommanDTO);
-        }
-        connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
-                                 model.getWeaponSightDTO(), model.getProjectilesDTO());
-        std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
-        std::chrono::duration<double> elapsedSeconds = currentTime - lastTime;
-        if( elapsedSeconds.count() >= 1.0f){
-            model.subtractTime();
-            lastTime = currentTime;
-        }
-        model.update();
+        while (keepTalking) {
+            t1 = std::chrono::steady_clock::now();
+            this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(),
+                             gameParameters.getPositionIterations()); // Hacemos un step en el world.
+            std::unique_ptr<CommandDTO> aCommanDTO;
+            if (commandsQueueNB.move_try_pop(aCommanDTO)) {
+                this->model.execute(aCommanDTO);
+            }
+            connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
+                                     model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO());
+            std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
+            std::chrono::duration<double> elapsedSeconds = currentTime - lastTime;
+            if (elapsedSeconds.count() >= 1.0f) {
+                model.subtractTime();
+                lastTime = currentTime;
+            }
+            model.update();
 
-       adjustFPS(target, t1, t2, t3, timeUsed, sleepTime, frameTime, sleepAdjustSeconds);
+            adjustFPS(target, t1, t2, t3, timeUsed, sleepTime, frameTime, sleepAdjustSeconds);
+        }
+        this->connections.stop();
+        this->clearAll(); // Limpiamos las queues.
+        std::cerr << "[Engine]:run Terminando la ejecucion del juego \n";
+    } catch (std::exception &e) {
+        std::cerr << e.what() << "\n";
     }
-    this->connections.stop();
-    this->clearAll(); // Limpiamos las queues.
-    std::cerr << "[Engine]:run Terminando la ejecucion del juego \n";
 }
 
 void Engine::print() {
