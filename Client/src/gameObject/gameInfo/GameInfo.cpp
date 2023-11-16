@@ -10,12 +10,12 @@
 #include "../../utils/Constants.h"
 
 GameInfo::GameInfo(PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind,
-                   const std::string &currentTurn, int time,
-                   bool isMyTurn) : GameObject(LoaderParams(0, 10, 0, 0, "arrow_no")), m_players(players),
+                   const std::string &currentTurn, int time) : GameObject(LoaderParams(0, 10, 0, 0, "arrow_no")), m_players(players),
                                     m_weaponInventory(weaponInventory),
-                                    m_wind(wind), m_currentTurn(currentTurn), m_time(time), m_isMyTurn(isMyTurn) {
-    if (isMyTurn) {
-        m_currentTurn = "Tu turno";
+                                    m_wind(wind), m_currentTurn(currentTurn), m_time(time), m_isMyTurn(false) {
+    if(m_currentTurn == "Es tu turno") {
+        std::cout << "entro" << std::endl;
+        m_isMyTurn = true;
     }
 }
 
@@ -33,8 +33,8 @@ void GameInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) 
 }
 
 void GameInfo::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue) {
+    m_weaponInventory.update(dt, input, queue);
     if (m_isMyTurn) {
-        m_weaponInventory.update(dt, input, queue);
 
         if (input.getKeyDown(SDL_SCANCODE_RIGHT)) {
             std::unique_ptr<Command> command(new RightCmd());

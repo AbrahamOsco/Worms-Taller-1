@@ -68,7 +68,7 @@ void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, con
         }
     }
     if(turnDTO.getIdPlayerCurrent() == this->idPlayer){
-        turnDTO.setTextTurn("Es tu turno\n");
+        turnDTO.setTextTurn("Es tu turno");
     }
     std::unique_ptr<SnapShot> aSnapShot = std::make_unique<SnapShot>(vecWormsDTO, playersDTO, selectWeaponsDTO, weaponSightDTO, projectilesDTO, turnDTO);
     this->snapShotQueueB->move_push(std::move(aSnapShot));

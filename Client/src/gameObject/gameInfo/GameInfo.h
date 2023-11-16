@@ -22,7 +22,7 @@ private:
     bool m_isMyTurn;
 public:
     GameInfo(PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind,
-             const std::string &currentTurn, int time,bool isMyTurn);
+             const std::string &currentTurn, int time);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) override;
 

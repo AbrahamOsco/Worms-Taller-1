@@ -21,6 +21,8 @@ void ReceiverThread::run() {
         std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
         WeaponSightDTO weaponSightDto = snapShot.getWeaponSightDto();
         ProjectilesDTO projectilesDto = snapShot.getProjectilesDto();
+        TurnDTO turnDto = snapShot.getTurnDto();
+
 
         std::vector<ProjectileDTO> projectiles =  projectilesDto.getProjectilesDto();
         for(const ProjectileDTO &projectileDto : projectiles) {
@@ -59,9 +61,8 @@ void ReceiverThread::run() {
         }
 
         WindInfo wind(10, Direction::RIGHT);
-        std::string currentTurn = "Pepe";
         gameObjects.push_back(
-                std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, currentTurn, 10, true));
+                std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, turnDto.getTextTurn(), 10));
 
         std::unique_ptr<Crosshair> crosshair = std::make_unique<Crosshair>(static_cast<int>(weaponSightDto.getPositionXSight()), static_cast<int>(weaponSightDto.getPositionYSight()), weaponSightDto.getTypeSight());
         gameObjects.push_back(std::move(crosshair));
