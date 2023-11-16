@@ -21,7 +21,7 @@ enum TypeJump{
     JUMP_BACKWARDS, JUMP_FORWARDS
 };
 enum TypeCharge{
-    NONE_CHARGE, FIRST_CHARGE, MANY_CHARGE
+    NONE_CHARGE, MANY_CHARGE
 };
 
 
@@ -110,8 +110,6 @@ public:
 
     void downWorm();
 
-    void increaseImpulse();
-
     void attack();
 
     ProjectilesDTO getProjectilesDTO();
@@ -126,7 +124,7 @@ public:
 
     void execute(std::unique_ptr<CommandDTO> &aCommandDTO);
 
-    void tryAttack();
+    void tryAttackVariablePower();
 };
 
 

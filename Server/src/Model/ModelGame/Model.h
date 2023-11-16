@@ -59,7 +59,7 @@ public:
 
     TurnDTO getTurnDTO() const;
 
-    void tryAttack();
+    void tryAttackVariablePower();
 };
 
 

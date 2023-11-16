@@ -61,8 +61,8 @@ ProjectilesDTO Model::getProjectilesDTO(){
     return players.getCurrentWorm()->getProjectilesDTO();
 }
 
-void Model::tryAttack() {
-    players.getCurrentWorm()->tryAttack();
+void Model::tryAttackVariablePower() {
+    players.getCurrentWorm()->tryAttackVariablePower();
 }
 
 

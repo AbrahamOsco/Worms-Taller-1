@@ -61,8 +61,7 @@ void Engine::run() {
             if (commandsQueueNB.move_try_pop(aCommanDTO)) {
                 this->model.execute(aCommanDTO);
             } else {
-                std::cout << "No recibo comandos \n";
-                this->model.tryAttack();
+                this->model.tryAttackVariablePower();
             }
             connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
                                      model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO());

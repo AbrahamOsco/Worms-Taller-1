@@ -252,14 +252,11 @@ void Worm::attack() {
         this->typeMov = ATTACKING_WITH_BAT;
         this->attackWithBat();
         attacked = true;
-    } else if ( this->armament.getWeaponCurrent() == BAZOOKA){ // en un futuro pregunta si tiene un arma con potencia variable.
+    } else if ( this->armament.getWeaponCurrentPtr()->hasVariablePower()){ // en un futuro pregunta si tiene un arma con potencia variable.
         if(typeCharge == NONE_CHARGE){ // cargo por primera vez.
-            typeCharge = FIRST_CHARGE;
-            this->armament.getWeaponCurrentPtr()->increaseImpulse();
-        } else if ( typeCharge == FIRST_CHARGE) {
             typeCharge = MANY_CHARGE;
             this->armament.getWeaponCurrentPtr()->increaseImpulse();
-        } else if (typeCharge == MANY_CHARGE){
+        } else if ( typeCharge == MANY_CHARGE) {
             this->armament.getWeaponCurrentPtr()->increaseImpulse();
         }
     }
@@ -306,15 +303,6 @@ void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
     }
 }
 
-void Worm::increaseImpulse() {
-    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
-        return;
-    }
-    this->armament.getWeaponCurrentPtr()->increaseImpulse();
-    if(this->armament.getWeaponCurrentPtr()->hasMaxImpulse() ){
-        attack();
-    }
-}
 
 void Worm::endTurn() {
     typeFocus = NO_FOCUS;
@@ -343,18 +331,20 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
         this->upWorm();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::DOWN_CMD){
         this->downWorm();
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::CHARGE_CMD){
-        this->increaseImpulse();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::FIRE_CMD){
         this->attack();
     }
 
 }
 
-void Worm::tryAttack() {
-    // si entra aca es porque el chavon dejo de presonar space_tab
-    if(typeCharge == FIRST_CHARGE or typeCharge == MANY_CHARGE){
-        this->attackWithBazooka();
+void Worm::tryAttackVariablePower() {
+    // si entra aca es porque dejo de presionar space_bar y ademas tengo un arma con disparo de potencia variable.
+    if(typeCharge == MANY_CHARGE){
+        if(armament.getWeaponCurrent() == BAZOOKA){
+            attackWithBazooka();
+        } // agregar aca los otros tipos de arma con potencia variable
+
+
         armament.putWeaponOnStandByAndUnarmed(); // luego de atacar con la bazoka pasamos el arma a standB y nos desarmamos
         this->typeCharge = NONE_CHARGE;
         attacked = true;
