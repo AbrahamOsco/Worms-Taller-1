@@ -13,7 +13,7 @@ Turns::Turns(Players &players) : players(players) {
 void Turns::startATurn() {
     this->idPlayerCurrent = players.startAPlayerTurn();
     this->idWormCurrent = players.getCurrentPlayer().startAWormTurn();
-    this->textTurn = "Es turno del jugador: " + players.getCurrentPlayer().getPlayerName() + "  \n";
+    this->textTurn = players.getCurrentPlayer().getPlayerName();
 }
 
 void Turns::subtractTime() {
