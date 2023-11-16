@@ -62,7 +62,7 @@ void ReceiverThread::run() {
 
         WindInfo wind(10, Direction::RIGHT);
         gameObjects.push_back(
-                std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, turnDto.getTextTurn(), 10));
+                std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, turnDto.getTextTurn(), turnDto.getTimeLeft()));
 
         std::unique_ptr<Crosshair> crosshair = std::make_unique<Crosshair>(static_cast<int>(weaponSightDto.getPositionXSight()), static_cast<int>(weaponSightDto.getPositionYSight()), weaponSightDto.getTypeSight());
         gameObjects.push_back(std::move(crosshair));
