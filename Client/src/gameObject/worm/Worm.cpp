@@ -119,7 +119,8 @@ void Worm::animationState() {
         m_height = 60;
         m_animation.setProps("air", m_width, m_height, 36, 60, SDL_FLIP_NONE);
     }
-    if (m_moveWorm == MoveWorm::ATTACKING) {
+
+    if(m_moveWorm == MoveWorm::ATTACKING_WITH_BAT) {
         m_width = 60;
         m_height = 30;
         m_animation.setProps("bat_hit", m_width, m_height, 15, 30, SDL_FLIP_NONE);

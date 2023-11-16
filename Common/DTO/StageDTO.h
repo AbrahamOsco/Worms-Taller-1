@@ -13,6 +13,7 @@
 class StageDTO : public DTO {
 private:
     std::vector<BeamDTO> beams;
+    size_t idPlayer;
 public:
     StageDTO();
 
@@ -21,6 +22,10 @@ public:
     void setBeams(const std::vector<BeamDTO>& beams);
 
     std::vector<BeamDTO> getBeams() const;
+
+    size_t getIdPlayer() const;
+
+    void setIdPlayer(const size_t &idPlayer);
 
 };
 

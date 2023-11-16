@@ -6,10 +6,8 @@ background: Forest
 worms:
   - positionX: 10.0
     positionY: 4.0
-  - positionX: 20.0
+  - positionX: 13.0
     positionY: 5.0
-  - positionX: 10.0
-    positionY: 2.0
 
 beams:
   - x: 14.7

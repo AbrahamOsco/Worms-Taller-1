@@ -106,6 +106,7 @@ StageDTO ClientProtocol::recvStageDTO() {
             beams.push_back(recvBeamDTO());
         }
         stageDto.setBeams(beams);
+        stageDto.setIdPlayer( recvANumberByte() );
     }
     return stageDto;
 }

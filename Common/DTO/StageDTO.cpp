@@ -16,5 +16,13 @@ std::vector<BeamDTO> StageDTO::getBeams() const {
     return beams;
 }
 
+size_t StageDTO::getIdPlayer() const {
+    return idPlayer;
+}
+
+void StageDTO::setIdPlayer(const size_t &idPlayer) {
+    this->idPlayer = idPlayer;
+}
+
 
 

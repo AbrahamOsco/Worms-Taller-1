@@ -4,13 +4,12 @@
 
 #include "Input.h"
 
-Input::Input() : m_quit(false), m_mouseButtonDown(false), m_mouseX(0), m_mouseY(0), m_isPressed(false) {
+Input::Input() : m_quit(false), m_mouseButtonDown(false), m_mouseX(0), m_mouseY(0), m_prevSpaceState(false) {
     m_keyStates = SDL_GetKeyboardState(nullptr);
 }
 
 void Input::listen() {
     SDL_Event event;
-    m_isPressed = true;
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
             case SDL_QUIT:
@@ -20,7 +19,6 @@ void Input::listen() {
                 keyDown();
                 break;
             case SDL_KEYUP:
-                m_isPressed = false;
                 keyUp();
                 break;
             case SDL_MOUSEBUTTONDOWN:
@@ -35,6 +33,7 @@ void Input::listen() {
                 // Puedes agregar más casos según sea necesario
         }
     }
+    m_prevSpaceState = (m_keyStates[SDL_SCANCODE_SPACE] == 1);
 }
 
 void Input::keyUp() {
@@ -82,8 +81,8 @@ bool Input::closed() const {
     return m_quit;
 }
 
-bool Input::getIsPressed() const {
-    return m_isPressed;
+bool Input::getPrevSpaceState() {
+    return m_prevSpaceState;
 }
 
 bool Input::getKeyUp(SDL_Scancode key) {

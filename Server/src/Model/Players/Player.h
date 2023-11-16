@@ -35,7 +35,7 @@ public:
 
     WeaponsDTO getWeaponsDTO() const;
 
-    size_t getCurrentWormId();
+    size_t startAWormTurn();
 
     void assignWorm(const int &idWorm, const std::pair<float, float> &positionInitialWorm);
 
@@ -43,13 +43,14 @@ public:
 
     void addToTheWorld(b2World *world);
 
-    void updateStateWorms();
+    void update();
 
     PlayerDTO getPlayerDTO(const size_t &idCurrentPlayer) const;
 
     Worm *getCurrentWorm();
 
 
+    std::string getPlayerName() const;
 };
 
 

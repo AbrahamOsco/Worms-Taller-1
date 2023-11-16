@@ -209,59 +209,50 @@ WeaponSightDTO Worm::getWeaponSightDTO() {
 }
 
 ProjectilesDTO Worm::getProjectilesDTO() {
-    return armament.getProjectilesDTO();
+    //si ataque con el bate sigo teniendo el currentWeaponEnBate hasta q termine el turno en 3 seg.  @todo
+    if(typeMov == ATTACKING_WITH_BAT){
+        std::vector<ProjectileDTO> vecProjectileDTO;
+        return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
+    }
+    return armament.getProjectilesDTO(attacked);
 }
 
 void Worm::activateFocus() {
     this->typeFocus = TypeFocusWorm::FOCUS;
 }
 
-void Worm::updateState() {
+void Worm::update() {
     if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
-        if(this->typeMov == ATTACKING and iterationsForBatAttack > 0 ){
-            std::cout << "Iteracion para mostrar el ataque con el bate" << typeMov << "\n";
+        if(this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack > 0 ){  // el ATTACKING_WITH_BAT ES SOLO PARA BATE asi q no hay problemas.
             iterationsForBatAttack--;
-        } else if ( this->typeMov== ATTACKING and iterationsForBatAttack == 0){
+        } else if (this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack == 0){
             iterationsForBatAttack = 15;
             this->typeMov = STANDING;
+            armament.putWeaponOnStandByAndUnarmed(); // ya paso el frame del ataque con bate asi q lo desarmamos.
         } else{
             this->typeMov = STANDING;
         }
-        armament.getWeaponOnStandBy();
+        // @todo creo q luego de disparar volvemos a tener todo armaCurrent en none.
+        armament.getWeaponOnStandBy(attacked);
     }
-}
+    // si ataca vemos si los proyectiles chocaron al suelo los eliminamos del mundo.
+    if(attacked){
+        armament.tryCleanProjectiles(aWorld);
+    }
 
+
+}
 // weapons.
-void Worm::takeDamage(const float &aDamage){
-    this->hp -=aDamage;
-    if(hp <=0.0){
-        this->destroyBody();
-    }
-}
-
-void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
-    armament.assignWeapon(aTypeWeapon, this->directionLook);
-}
-
-void Worm::increaseImpulse() {
-    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
-        return;
-    }
-    this->armament.getWeaponCurrentPtr()->increaseImpulse();
-    if(this->armament.getWeaponCurrentPtr()->hasMaxImpulse() ){
-        attack();
-    }
-}
-
 void Worm::attack() {
     if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
         return;
     }
     if( this->armament.getWeaponCurrent() == BASEBALL_BAT){
-        this->typeMov = ATTACKING;
+        this->typeMov = ATTACKING_WITH_BAT;
         this->attackWithBat();
     } else if ( this->armament.getWeaponCurrent() == BAZOOKA){
         this->attackWithBazooka();
+        armament.putWeaponOnStandByAndUnarmed(); // luego de atacar con la bazoka pasamos el arma a standB y nos desarmamos
     }
     attacked = true;
 }
@@ -293,3 +284,26 @@ void Worm::teleportWorm(const float& posXTeleport, const float& posYTeleport){
     teleport->teleportIn(getBody(), posXTeleport, posYTeleport);
 }
 
+void Worm::takeDamage(const float &aDamage){
+    std::cout << "Se hace dañño al gusano de " <<  aDamage << "\n";
+    this->hp -=aDamage;
+    if(hp <=0.0){
+        this->destroyBody();
+    }
+}
+
+void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
+    if( not attacked){
+        armament.assignWeapon(aTypeWeapon, this->directionLook);
+    }
+}
+
+void Worm::increaseImpulse() {
+    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
+        return;
+    }
+    this->armament.getWeaponCurrentPtr()->increaseImpulse();
+    if(this->armament.getWeaponCurrentPtr()->hasMaxImpulse() ){
+        attack();
+    }
+}

@@ -855,7 +855,7 @@ void munitionBazookaCollidesWithWorm(GameObject* bazooka, GameObject* worm){
     wormSelect->takeDamage(50.0f);
 }
 
-void wormCollidesWithMunitionBazooka(GameObject* worm1, GameObject* bazooka){
+void wormCollidesWithProjectileBazooka(GameObject* worm1, GameObject* bazooka){
     std::cout << "wormCollidesWithMunitionBazooka\n";
     munitionBazookaCollidesWithWorm(bazooka, worm1);
 }
@@ -886,7 +886,7 @@ public:
 };
 
 
-void munitionBazookaCollideWithBeam(GameObject* munitionBazooka, GameObject* beam){
+void projectileBazookaCollideWithBeam(GameObject* munitionBazooka, GameObject* beam){
     std::cout << "munitionBazookaCollideWithBeam\n";
     b2Vec2 munitionPosition = munitionBazooka->getBody()->GetWorldCenter();
 
@@ -908,14 +908,12 @@ void munitionBazookaCollideWithBeam(GameObject* munitionBazooka, GameObject* bea
 
 void beamCollidesWithMunitionBazooka(GameObject* beam, GameObject* munitionBazooka){
     std::cout << "beamCollidesWithMunitionBazooka\n";
-    munitionBazookaCollideWithBeam(munitionBazooka, beam);
+    projectileBazookaCollideWithBeam(munitionBazooka, beam);
 }
 void beamEndContactWithWorm(GameObject* beam, GameObject* worm){
-    std::cout << "beamEndContactWithWorm\n";
     Worm* unWorm = (Worm*) (worm);
     Beam* unaBeam = (Beam*) (beam);
     b2Vec2 positonWormInAir = worm->getBody()->GetWorldCenter();
-    std::cout << "Se guardan postions al salir de la viga : positonWormInAir.x:" << positonWormInAir.x << "positonWormInAir.y" << positonWormInAir.y ;
     unWorm->savePositionInAir(positonWormInAir.x, positonWormInAir.y);
 }
 
@@ -941,8 +939,8 @@ public:
         collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_EDGE)] = &wormCollidesWithEdege;
         collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_WORM)] = &edgeCollidesWithWorm;
         collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_WORM)] = &wormCollidesWithWorm;
-        collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_MUNITION_BAZOOKA)] = &wormCollidesWithMunitionBazooka;
-        collisionsMap[std::make_pair(ENTITY_MUNITION_BAZOOKA, ENTITY_BEAM)] = &munitionBazookaCollideWithBeam;
+        collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_MUNITION_BAZOOKA)] = &wormCollidesWithProjectileBazooka;
+        collisionsMap[std::make_pair(ENTITY_MUNITION_BAZOOKA, ENTITY_BEAM)] = &projectileBazookaCollideWithBeam;
         collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_MUNITION_BAZOOKA )] = &beamCollidesWithMunitionBazooka;
 
         endContactMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM) ] = &beamEndContactWithWorm;

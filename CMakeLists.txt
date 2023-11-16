@@ -45,7 +45,7 @@ qt5_wrap_ui(UIS_HEADERS
 
 add_executable(worms-client ${UIS_HEADERS}  ${client_src} ${qt_src} ${common_src}
         Common/DTO/CommandDTO.cpp
-        Common/DTO/CommandDTO.h )
+        Common/DTO/CommandDTO.h)
 
 # Para el main mas externo: Server/main.cpp
 add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
@@ -104,8 +104,8 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Server/src/Model/GameContactListener/GameContactListener.cpp Server/src/Model/GameContactListener/GameContactListener.h Server/src/Model/QueriesToWorld/SaveWormsInAreaQuery.cpp Server/src/Model/QueriesToWorld/SaveWormsInAreaQuery.h
         Common/DTO/ProjectileDTO.cpp Common/DTO/ProjectileDTO.h
         Common/DTO/ProjectilesDTO.cpp Common/DTO/ProjectilesDTO.h
-
-        )
+        Server/src/Model/Turns/Turns.cpp Server/src/Model/Turns/Turns.h
+        Common/DTO/TurnDTO.cpp Common/DTO/TurnDTO.h)
 
 # para el editor
 include_directories(${PROJECT_SOURCE_DIR}/Editor/include)

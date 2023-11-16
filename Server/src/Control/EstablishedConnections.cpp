@@ -20,7 +20,7 @@ void EstablishedConnections::addConnection(const size_t &idPlayer, Socket sktPee
     clientConnections.emplace(idPlayer, ClientConnection(idPlayer, std::move(sktPeer), commandQueueNB) );
 }
 
-void EstablishedConnections::start(const StageDTO &stageDTO) {
+void EstablishedConnections::start(StageDTO &stageDTO) {
     for (auto &element : clientConnections) {   // Le digo a todos mis clientConnection start
         element.second.start(stageDTO);
     }

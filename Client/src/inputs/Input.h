@@ -11,7 +11,7 @@ class Input {
 private:
     const Uint8* m_keyStates;
     bool m_quit;
-    bool m_isPressed;
+    bool m_prevSpaceState;
 
     // Nuevas variables para el manejo del clic del mouse
     bool m_mouseButtonDown;
@@ -34,9 +34,9 @@ public:
     int getMouseX() const;
     int getMouseY() const;
 
-    bool getIsPressed() const;
-
     bool closed() const;
+
+    bool getPrevSpaceState();
 };
 
 #endif //WORMS_TALLER_1_INPUT_H

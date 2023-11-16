@@ -38,7 +38,7 @@ public:
 
     void runReceiver();
 
-    void start(const StageDTO &stageDTO);
+    void start(StageDTO &stageDTO);
 
     void stop();
 

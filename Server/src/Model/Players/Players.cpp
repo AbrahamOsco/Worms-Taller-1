@@ -60,7 +60,7 @@ void Players::assignWormsToPlayers() {
             idPlayersCopy.pop_back();
         }
     }
-
+    startAPlayerTurn();
 }
 
 std::vector<WormDTO> Players::getWormsDTO() const{
@@ -77,8 +77,8 @@ void Players::addToTheWorld(b2World *world) {
         aPlayer.second.addToTheWorld(world);
     }
 }
-
-size_t Players::getCurrentPlayerId() {
+//  Inicia el turno del jugador y nos escupe del nuevo id del jugador actual.
+size_t Players::startAPlayerTurn() {
     if (idCurrenPlayer == VALUE_INITIAL){
         playerIterator = players.begin();
         this->idCurrenPlayer = playerIterator->first;
@@ -92,14 +92,9 @@ size_t Players::getCurrentPlayerId() {
     return this->idCurrenPlayer;
 }
 
-std::pair<size_t, size_t> Players::getIdPlayerWormCurrent(){
-    size_t idPlayerCurrent = this->getCurrentPlayerId();
-    return std::make_pair(idPlayerCurrent, players.at(idPlayerCurrent).getCurrentWormId());
-}
-
-void Players::updateStateWorms() {
+void Players::update() {
     for(auto& aPlayer : players){
-        aPlayer.second.updateStateWorms();
+        aPlayer.second.update();
     }
 }
 
@@ -123,5 +118,7 @@ Worm * Players::getCurrentWorm() {
     return players.at(idCurrenPlayer).getCurrentWorm();
 }
 
-
+Player & Players::getCurrentPlayer(){
+    return this->players.at(idCurrenPlayer);
+}
 

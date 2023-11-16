@@ -61,5 +61,9 @@ void Weapon::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
     // no hago nada para las armas sin mira y armas q no lanzan projectiles
 }
 
+void Weapon::tryCleanProjectiles(b2World *aWorld) {
+ //no hago nada para las armas que ni lanzan projectiles ni las armas sin mira
+}
+
 
 

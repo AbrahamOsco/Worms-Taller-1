@@ -86,6 +86,7 @@ void ServerProtocol::sendStage(const StageDTO &stageDTO) {
     for(BeamDTO aBeamDTO : stageDTO.getBeams()){
         sendBeam(aBeamDTO);
     }
+    sendANumberByte(stageDTO.getIdPlayer());
 }
 
 void ServerProtocol::sendBeam(const BeamDTO &beamDTO) {

@@ -38,7 +38,7 @@ void Bazooka::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const 
     b2Vec2 impulseMuniBazooka = weaponSight.getImpulseForMuniBazooka(direction, impulseWeapon);
     //std::unique_ptr<ClientLogin> unCliente{new ClientLogin(std::move(sktPeer), games)}
     // creamos la munition de la bazooka
-    std::cout << "Atacamos con la bazooka\n";
+    std::cout << "Atacamos con la bazooka------------------------------------------------------\n";
     projectil = std::make_unique<ProjectileBazooka>(gameParameters);
     projectil->addToTheWorld(world, p2, impulseMuniBazooka);
 }
@@ -64,6 +64,13 @@ void Bazooka::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
 
 WeaponSightDTO Bazooka::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) {
     return weaponSight.getWeaponSightDTO(positionWorm, directionCurrent);
+}
+
+void Bazooka::tryCleanProjectiles(b2World *aWorld) {
+    if(projectil!= nullptr and  projectil->isDestroyedBody()){
+        aWorld->DestroyBody(projectil->getBody());
+        projectil = nullptr;
+    }
 }
 
 
