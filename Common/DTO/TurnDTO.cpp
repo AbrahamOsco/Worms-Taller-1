@@ -32,5 +32,7 @@ void TurnDTO::setTimeLeft(const size_t &timeLeft) {
     this->timeLeft = timeLeft;
 }
 
+TurnDTO::TurnDTO() : DTO(OperationType::TURN_DTO){}
+
 
 
