@@ -56,6 +56,8 @@ public:
     ProjectilesDTO getProjectilesDTO();
 
     void subtractTime();
+
+    TurnDTO getTurnDTO() const;
 };
 
 

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "ServerProtocol.h"
 #include "../../../Common/DTO/InitialStateDTO.h"
 #include "../../../Common/DTO/PlayerDTO.h"
@@ -135,8 +136,8 @@ CommandDTO ServerProtocol::recvCommandDTO() {
 }
 
 void ServerProtocol::sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot) {
-    sendANumberByte(OperationType::SNAP_SHOT);
-    sendANumberByte(aSnapShot->getWormsDto().size()); // enviamos la cantida de gusanos
+    sendANumberByte(aSnapShot->getOperationType());
+     sendANumberByte(aSnapShot->getWormsDto().size()); // enviamos la cantida de gusanos
     for(const auto& aWormDTO : aSnapShot->getWormsDto()){
         sendAWormDTO(aWormDTO);
     }
@@ -151,7 +152,18 @@ void ServerProtocol::sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot) {
 
     // enviamos el projectil
     sendProjectilesDTO(aSnapShot->getProjectilesDto());
+
+    //enviamos el turnoDTO
+    sendTurnDTO(aSnapShot->getTurnDto());
 }
+
+void ServerProtocol::sendTurnDTO(const TurnDTO& aTurnDTO){
+    sendANumberByte(aTurnDTO.getOperationType());
+    sendANumberByte(aTurnDTO.getIdPlayerCurrent());
+    sendString(aTurnDTO.getTextTurn());
+    sendANumberByte(aTurnDTO.getTimeLeft());
+}
+
 
 void ServerProtocol::sendProjectilesDTO(const ProjectilesDTO& projectilesDto){
     sendANumberByte(projectilesDto.getOperationType());

@@ -12,6 +12,7 @@
 #include "WeaponsDTO.h"
 #include "WeaponSightDTO.h"
 #include "ProjectilesDTO.h"
+#include "TurnDTO.h"
 
 class SnapShot : public DTO {
 private:
@@ -20,11 +21,10 @@ private:
     WeaponsDTO weaponsDTO;
     WeaponSightDTO weaponSightDTO;
     ProjectilesDTO projectilesDTO;
+    TurnDTO turnDto;
 public:
-    SnapShot();
-
     explicit SnapShot(const std::vector<WormDTO>& wormsDTO, const PlayersDTO &aPlayersDTO, const WeaponsDTO& weaponsDTO,
-                      const WeaponSightDTO &weaponSightDTO, const ProjectilesDTO &projectilesDTO );
+                      const WeaponSightDTO &weaponSightDTO, const ProjectilesDTO &projectilesDTO, const TurnDTO& turnDto );
 
     void setWormsDTO(const std::vector<WormDTO>& wormsDTO);
 
@@ -46,6 +46,9 @@ public:
 
     void setProjectilesDto(const ProjectilesDTO &projectilesDto);
 
+    TurnDTO getTurnDto() const;
+
+    void setTurnDto(const TurnDTO &turnDto);
 };
 
 

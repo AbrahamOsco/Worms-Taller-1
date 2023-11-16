@@ -4,13 +4,10 @@
 
 #include "SnapShot.h"
 //  @todo cuando haya tiempo eliminar este metodo de snapShot.
-SnapShot::SnapShot() : DTO(SNAP_SHOT) {
-
-}
 
 SnapShot::SnapShot(const std::vector<WormDTO> &wormsDTO, const PlayersDTO &aPlayersDTO,
-                   const WeaponsDTO& weaponsDTO, const WeaponSightDTO &weaponSightDTO, const ProjectilesDTO &projectilesDTO) : DTO(SNAP_SHOT),
-            wormsDTO(wormsDTO), playersDTO(aPlayersDTO), weaponsDTO(weaponsDTO), weaponSightDTO(weaponSightDTO), projectilesDTO(projectilesDTO){
+                   const WeaponsDTO& weaponsDTO, const WeaponSightDTO &weaponSightDTO, const ProjectilesDTO &projectilesDTO, const TurnDTO& turnDto) : DTO(SNAP_SHOT),
+            wormsDTO(wormsDTO), playersDTO(aPlayersDTO), weaponsDTO(weaponsDTO), weaponSightDTO(weaponSightDTO), projectilesDTO(projectilesDTO),turnDto(turnDto)  {
 }
 
 void SnapShot::setWormsDTO(const std::vector<WormDTO> &wormsDTO) {
@@ -51,6 +48,14 @@ ProjectilesDTO SnapShot::getProjectilesDto() const {
 
 void SnapShot::setProjectilesDto(const ProjectilesDTO &projectilesDto) {
     projectilesDTO = projectilesDto;
+}
+
+TurnDTO SnapShot::getTurnDto() const {
+    return turnDto;
+}
+
+void SnapShot::setTurnDto(const TurnDTO &turnDto) {
+    this->turnDto = turnDto;
 }
 
 

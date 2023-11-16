@@ -69,6 +69,9 @@ void Model::subtractTime(){
     turns.subtractTime();
 }
 
+TurnDTO Model::getTurnDTO() const {
+    return turns.getTurnDTO();
+}
 
 std::vector<WeaponsDTO> Model::getVecWeaponsDTO() const {
     return players.getVecWeaponsDTO();

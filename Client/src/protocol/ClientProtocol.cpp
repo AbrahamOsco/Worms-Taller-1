@@ -108,6 +108,7 @@ StageDTO ClientProtocol::recvStageDTO() {
         stageDto.setBeams(beams);
         stageDto.setIdPlayer( recvANumberByte() );
     }
+    //std::cout << "Se recibieron stage basuras\n";
     return stageDto;
 }
 
@@ -124,6 +125,7 @@ BeamDTO ClientProtocol::recvBeamDTO() {
         BeamDTO beamRecv(aTypeBeam, xCenter, yCenter, length, height, angle);
         return beamRecv;
     }
+    std::cout << "Se recibieron beams basuras\n";
     return beamDto;
 }
 PlayersDTO ClientProtocol::recvPlayersDTO() {
@@ -161,26 +163,31 @@ void ClientProtocol::sendCommandDTO(const CommandDTO& commandDto) {
 }
 
 SnapShot ClientProtocol::recvASnapShot() {
-    SnapShot aSnapShot;
     std::vector<WormDTO> vecWormsDTO;
-    size_t operationType = recvANumberByte();
+    int  operationType = recvANumberByte();
     if (operationType == SNAP_SHOT){
         size_t numbersWorms = recvANumberByte();
         for(size_t i = 0; i < numbersWorms; i++){
             vecWormsDTO.push_back(recvAWormDTO());
         }
-        aSnapShot.setWormsDTO(vecWormsDTO);
-        // recibimos todos los playersDTO
-        aSnapShot.setPlayersDto(recvPlayersDTO());
-
-        //ahora recibimos a WeaponsDTO.
-        aSnapShot.setWeaponsDto(recvWeaponsDTO());
-
-        aSnapShot.setWeaponSightDto(recvWeaponSightDTO());
-        aSnapShot.setProjectilesDto(recvProjectilesDTO());
+        std::cout << "Recibiendo snapShot Buenos\n";
+        return SnapShot(vecWormsDTO, recvPlayersDTO(), recvWeaponsDTO(), recvWeaponSightDTO(), recvProjectilesDTO(), recvTurnDTO() );
     }
-    return aSnapShot;
+    return SnapShot(vecWormsDTO, PlayersDTO(), WeaponsDTO(), WeaponSightDTO(), recvProjectilesDTO(), TurnDTO(0,"0",0) );
 }
+
+
+TurnDTO ClientProtocol::recvTurnDTO(){
+    int typeOperation = recvANumberByte();
+    if(typeOperation == TURN_DTO){
+        size_t idPlayerCurrent = recvANumberByte();
+        std::string textTurn = recvString();
+        size_t timeLeft = recvANumberByte();
+        return TurnDTO(idPlayerCurrent, textTurn, timeLeft);
+    }
+    return TurnDTO(0,"0",0);
+}
+
 ProjectilesDTO ClientProtocol::recvProjectilesDTO(){
     int typeOperation = recvANumberByte();
     std::vector<ProjectileDTO> vecProjectileDTO;

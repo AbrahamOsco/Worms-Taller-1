@@ -59,6 +59,8 @@ public:
     void sendProjectilesDTO(const ProjectilesDTO &projectilesDto);
 
     void sendAProjectileDTO(const ProjectileDTO &aProjectilDTO);
+
+    void sendTurnDTO(const TurnDTO &aTurnDTO);
 };
 
 

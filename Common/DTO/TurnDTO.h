@@ -16,6 +16,9 @@ private:
     std::string textTurn;
     size_t timeLeft;
 public:
+
+    TurnDTO();
+
     TurnDTO(const size_t& idPlayerCurrent, const std::string& textTurn, const size_t& timeLeft);
 
     size_t getIdPlayerCurrent() const;

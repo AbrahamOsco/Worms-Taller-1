@@ -4,6 +4,7 @@
 
 #include <stdexcept>
 #include "EstablishedConnections.h"
+#include "../../../Common/DTO/TurnDTO.h"
 
 
 EstablishedConnections::EstablishedConnections(Queue<std::unique_ptr<CommandDTO>> &aCommandQueueNB)
@@ -40,9 +41,9 @@ void EstablishedConnections::stop() {
 void EstablishedConnections::pushSnapShot(const std::vector<WormDTO> &vectorWormsDTO, const PlayersDTO &playersDTO,
                                           const std::vector<WeaponsDTO> &vecWeaponsDTO,
                                           const WeaponSightDTO &weaponSightDTO,
-                                          const ProjectilesDTO &projectilesDTO) {
+                                          const ProjectilesDTO &projectilesDTO, TurnDTO turnDTO) {
     for (auto &element : clientConnections) {
-        element.second.pushSnapShot(vectorWormsDTO, playersDTO, vecWeaponsDTO, weaponSightDTO, projectilesDTO);
+        element.second.pushSnapShot(vectorWormsDTO, playersDTO, vecWeaponsDTO, weaponSightDTO, projectilesDTO, turnDTO);
     }
 }
 
