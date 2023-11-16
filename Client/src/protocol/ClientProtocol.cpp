@@ -164,25 +164,20 @@ void ClientProtocol::sendCommandDTO(const CommandDTO& commandDto) {
 
 SnapShot ClientProtocol::recvASnapShot() {
     std::vector<WormDTO> vecWormsDTO;
-    PlayersDTO playersDto;
-    WeaponsDTO weaponsDto;
-    WeaponSightDTO weaponSightDto;
-    ProjectilesDTO projectilesDto;
-    TurnDTO turnDto;
     int  operationType = recvANumberByte();
     if (operationType == SNAP_SHOT){
         size_t numbersWorms = recvANumberByte();
         for(size_t i = 0; i < numbersWorms; i++){
             vecWormsDTO.push_back(recvAWormDTO());
         }
-
-        playersDto = recvPlayersDTO();
-        weaponsDto = recvWeaponsDTO();
-        weaponSightDto = recvWeaponSightDTO();
-        projectilesDto = recvProjectilesDTO();
-        turnDto = recvTurnDTO();
+        PlayersDTO playersDto = recvPlayersDTO();
+        WeaponsDTO weaponsDto = recvWeaponsDTO();
+        WeaponSightDTO weaponSightDto = recvWeaponSightDTO();
+        ProjectilesDTO projectilesDto = recvProjectilesDTO();
+        TurnDTO turnDto = recvTurnDTO();
+        return SnapShot(vecWormsDTO, playersDto, weaponsDto, weaponSightDto, projectilesDto, turnDto);
     }
-    return SnapShot(vecWormsDTO, playersDto, weaponsDto, weaponSightDto, projectilesDto, turnDto );
+    return SnapShot(vecWormsDTO, PlayersDTO(), WeaponsDTO(), WeaponSightDTO(), ProjectilesDTO(), TurnDTO());
 }
 
 

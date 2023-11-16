@@ -53,7 +53,6 @@ void Engine::run() {
         std::chrono::duration<double> frameTime{}, sleepTime{}, timeUsed{}, target(
                 gameParameters.getFPS()), sleepAdjustSeconds(0.0);
         std::chrono::steady_clock::time_point lastTime = std::chrono::steady_clock::now(); // lastTime para el contador del tiempo.
-
         while (keepTalking) {
             t1 = std::chrono::steady_clock::now();
             this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(),
@@ -78,6 +77,7 @@ void Engine::run() {
         this->clearAll(); // Limpiamos las queues.
         std::cerr << "[Engine]:run Terminando la ejecucion del juego \n";
     } catch (std::exception &e) {
+        std::cerr << "[Engine]:run Excepcion en el run  \n";
         std::cerr << e.what() << "\n";
     }
 }
