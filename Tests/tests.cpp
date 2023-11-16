@@ -55,7 +55,7 @@ TEST(TEST_MOCK_SOCKET,RECV_SOME){
     for(int i = 0;i<10;i++)    
         ASSERT_TRUE(data[i] == read[i]);
 }
-TEST(TEST_PROTOCOL_COMMON,sendANumberByte){
+TEST(TEST_PROTOCOL_COMMON_SEND,sendANumberByte){
     Socket skt;
     Protocol protocol(skt);
     uint8_t byte = 54;
@@ -63,15 +63,7 @@ TEST(TEST_PROTOCOL_COMMON,sendANumberByte){
     std::vector<char> buff = skt.getBuffer();
     ASSERT_TRUE(byte == buff[0]);
 }
-TEST(TEST_PROTOCOL_COMMON,recvANumberByte){
-    Socket skt;
-    Protocol protocol(skt);
-    uint8_t byte = 25;
-    protocol.sendANumberByte(byte);
-    uint8_t read = protocol.recvANumberByte();
-    ASSERT_TRUE(read == byte);
-}
-TEST(TEST_PROTOCOL_COMMON,sendNum2Bytes){
+TEST(TEST_PROTOCOL_COMMON_SEND,sendNum2Bytes){
     Socket skt;
     Protocol protocol(skt);
     uint16_t word = 2000;
@@ -82,7 +74,15 @@ TEST(TEST_PROTOCOL_COMMON,sendNum2Bytes){
     sent = ntohs(sent);
     ASSERT_TRUE(sent == word);
 }
-TEST(TEST_PROTOCOL_COMMON,recvNum2Bytes){
+TEST(TEST_PROTOCOL_COMMON_RECV,recvANumberByte){
+    Socket skt;
+    Protocol protocol(skt);
+    uint8_t byte = 25;
+    protocol.sendANumberByte(byte);
+    uint8_t read = protocol.recvANumberByte();
+    ASSERT_TRUE(read == byte);
+}
+TEST(TEST_PROTOCOL_COMMON_RECV,recvNum2Bytes){
     Socket skt;
     Protocol protocol(skt);
     std::vector<char> data;
@@ -91,7 +91,7 @@ TEST(TEST_PROTOCOL_COMMON,recvNum2Bytes){
     uint16_t read = protocol.recvNum2Bytes();
     ASSERT_TRUE(word == read);
 }
-TEST(TEST_PROTOCOL_CLIENT,sendInitialStateDTO){
+TEST(TEST_PROTOCOL_CLIENT_SEND,sendInitialStateDTO){
     Socket skt;
     ClientProtocol protocol(skt);
     std::string name("Pedro");
@@ -110,7 +110,7 @@ TEST(TEST_PROTOCOL_CLIENT,sendInitialStateDTO){
         ASSERT_TRUE(name[i] == buffer[i+offset]);
     }
 }
-TEST(TEST_PROTOCOL_CLIENT,sendResponseInitialStateDTO_Create_Game){
+TEST(TEST_PROTOCOL_CLIENT_SEND,sendResponseInitialStateDTO_Create_Game){
     Socket skt;
     ClientProtocol protocol(skt);
     std::string gameName("Mostaza");
@@ -141,7 +141,7 @@ TEST(TEST_PROTOCOL_CLIENT,sendResponseInitialStateDTO_Create_Game){
     offset = offset + scenarioName.size();
     ASSERT_TRUE(playersNumber == buffer[offset]);
 }
-TEST(TEST_PROTOCOL_CLIENT,sendResponseInitialStateDTO_Join_Game){
+TEST(TEST_PROTOCOL_CLIENT_SEND,sendResponseInitialStateDTO_Join_Game){
     Socket skt;
     ClientProtocol protocol(skt);
     std::string gameName("Mostaza");
@@ -160,7 +160,32 @@ TEST(TEST_PROTOCOL_CLIENT,sendResponseInitialStateDTO_Join_Game){
         ASSERT_TRUE(gameName[i] == buffer[i+offset]);
     }
 }
-
+TEST(TEST_PROTOCOL_CLIENT_SEND,sendCommandDTO){
+    Socket skt;
+    ClientProtocol protocol(skt);
+    CommandDTO dto;
+    dto.setTypeCommand(SELECT_HOLY_GRENADE);
+    int x,y;
+    x = 23747;
+    y = 9671;
+    dto.setX(x);
+    dto.setY(y);
+    protocol.sendCommandDTO(dto);
+    std::vector<char> buff = skt.getBuffer();
+    size_t offset = 0;
+    ASSERT_TRUE(COMMAND == buff[offset]);
+    offset++;
+    ASSERT_TRUE(SELECT_HOLY_GRENADE == buff[offset]);
+    offset++;
+    uint16_t word;
+    memcpy(&word,buff.data()+offset,2);
+    word = ntohs(word);
+    ASSERT_TRUE(x == word);
+    offset = offset + 2;
+    memcpy(&word,buff.data()+offset,2);
+    word = ntohs(word);
+    ASSERT_TRUE(y == word);
+}
 int main(int argc,char* argv[]){
     testing::InitGoogleTest(&argc,argv);
 
