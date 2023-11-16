@@ -291,8 +291,16 @@ void Worm::attackWithBat(){
 }
 
 void Worm::teleportWorm(const float& posXTeleport, const float& posYTeleport){
+    if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
+        return;
+    }
     Teleport* teleport = (Teleport*) this->armament.getWeaponCurrentPtr();
-    teleport->teleportIn(getBody(), posXTeleport, posYTeleport);
+    float posXInMeters = posXTeleport/60.0F;
+    float posYInMeters = (gameParameters.getMaxHeightPixel() - posYTeleport)/60.f;
+    teleport->teleportIn(getBody(), posXInMeters, posYInMeters);
+    armament.putWeaponOnStandByAndUnarmed(); // luego de atacar con la bazoka pasamos el arma a standB y nos desarmamos
+    std::cout << "Me teletransporto en " << posXInMeters << "  " << posYInMeters << "\n";
+    attacked = true;
 }
 
 void Worm::takeDamage(const float &aDamage){
@@ -339,6 +347,8 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
         this->downWorm();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::FIRE_CMD){
         this->attack();
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::TELEPORT_MOVE){
+        this->teleportWorm(aCommandDTO->getX(), aCommandDTO->getY());
     }
 
 }
