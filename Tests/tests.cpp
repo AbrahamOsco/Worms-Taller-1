@@ -66,11 +66,10 @@ TEST(TEST_PROTOCOL_COMMON,sendANumberByte){
 TEST(TEST_PROTOCOL_COMMON,recvANumberByte){
     Socket skt;
     Protocol protocol(skt);
-    std::vector<char> data;
-    data.push_back(27);
-    skt.setBuffer(data);
+    uint8_t byte = 25;
+    protocol.sendANumberByte(byte);
     uint8_t read = protocol.recvANumberByte();
-    ASSERT_TRUE(read == data[0]);
+    ASSERT_TRUE(read == byte);
 }
 TEST(TEST_PROTOCOL_COMMON,sendNum2Bytes){
     Socket skt;
@@ -88,11 +87,7 @@ TEST(TEST_PROTOCOL_COMMON,recvNum2Bytes){
     Protocol protocol(skt);
     std::vector<char> data;
     uint16_t word = 0x12AC;
-    uint8_t low = static_cast<uint8_t>(word & 0xFF);
-    uint8_t high = static_cast<uint8_t>(word>>8);
-    data.push_back(high);
-    data.push_back(low);
-    skt.setBuffer(data);
+    protocol.sendNum2Bytes(word);
     uint16_t read = protocol.recvNum2Bytes();
     ASSERT_TRUE(word == read);
 }
