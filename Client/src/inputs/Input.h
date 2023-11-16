@@ -13,8 +13,6 @@ private:
     bool m_quit;
     bool m_prevSpaceState;
 
-    SDL_Event m_event;
-
     // Nuevas variables para el manejo del clic del mouse
     bool m_mouseButtonDown;
     int m_mouseX;
@@ -39,8 +37,6 @@ public:
     bool closed() const;
 
     bool getPrevSpaceState();
-
-    SDL_Event getEvent();
 };
 
 #endif //WORMS_TALLER_1_INPUT_H

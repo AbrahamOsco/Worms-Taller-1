@@ -14,7 +14,6 @@ GameInfo::GameInfo(PlayersInfo &players, WeaponInventory &weaponInventory, WindI
                                     m_weaponInventory(weaponInventory),
                                     m_wind(wind), m_currentTurn(currentTurn), m_time(time), m_isMyTurn(false) {
     if(m_currentTurn == "Es tu turno") {
-        std::cout << "entro" << std::endl;
         m_isMyTurn = true;
     }
 }
