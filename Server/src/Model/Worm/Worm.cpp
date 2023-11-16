@@ -253,11 +253,17 @@ void Worm::attack() {
         this->attackWithBat();
         attacked = true;
     } else if ( this->armament.getWeaponCurrentPtr()->hasVariablePower()){ // en un futuro pregunta si tiene un arma con potencia variable.
+        bool reachMaxImpulse = false;
         if(typeCharge == NONE_CHARGE){ // cargo por primera vez.
             typeCharge = MANY_CHARGE;
-            this->armament.getWeaponCurrentPtr()->increaseImpulse();
+            reachMaxImpulse = this->armament.getWeaponCurrentPtr()->increaseImpulse();
         } else if ( typeCharge == MANY_CHARGE) {
-            this->armament.getWeaponCurrentPtr()->increaseImpulse();
+            reachMaxImpulse = this->armament.getWeaponCurrentPtr()->increaseImpulse();
+        }
+
+        if(reachMaxImpulse){
+            std::cout << "Llege al maximo impulso \n";
+            tryAttackVariablePower();
         }
     }
 }
@@ -343,8 +349,6 @@ void Worm::tryAttackVariablePower() {
         if(armament.getWeaponCurrent() == BAZOOKA){
             attackWithBazooka();
         } // agregar aca los otros tipos de arma con potencia variable
-
-
         armament.putWeaponOnStandByAndUnarmed(); // luego de atacar con la bazoka pasamos el arma a standB y nos desarmamos
         this->typeCharge = NONE_CHARGE;
         attacked = true;

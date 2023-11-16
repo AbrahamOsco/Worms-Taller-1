@@ -97,6 +97,12 @@ public:
     float getBazookaRayLength() const;
 
     ~GameParameters() = default;
+
+    float getBazookaMaxImpulseX() const;
+
+    float getBazookaMaxImpulseY() const;
+
+    float getIncreaseImpulseForFPS() const;
 };
 
 

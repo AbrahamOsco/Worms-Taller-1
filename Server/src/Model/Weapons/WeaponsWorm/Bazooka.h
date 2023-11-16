@@ -30,9 +30,9 @@ public:
 
     bool hasVariablePower() override;
 
-    void increaseImpulse() override;
+    bool increaseImpulse() override;
 
-    bool    launchesProjectiles() override;
+    bool launchesProjectiles() override;
 
     void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
 

@@ -53,7 +53,7 @@ public:
 
     virtual void tryCleanProjectiles(b2World* aWorld);
 
-    virtual void  increaseImpulse();
+    virtual bool increaseImpulse();
 
     virtual bool hasMaxImpulse();
 
