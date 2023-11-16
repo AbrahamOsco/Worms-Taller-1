@@ -34,9 +34,6 @@ private:
     std::atomic<bool> keepTalking;
     Queue<std::unique_ptr<CommandDTO>> commandsQueueNB;  // La queue para popear los comandos recibido por el cliente.
     EstablishedConnections connections;
-    //GameContactListener gameContactListener;
-    //std::map<size_t, ClientThread*> playersInRoom;
-    // ACA AGREGAR UN MONITOR DE LOS CLIENTES CONECTADOAS A ESTA PARTIDA.
     void sendStatusAnswer(Socket &sktPeer, const OperationType &operationType);
 public:
 
@@ -55,11 +52,6 @@ public:
     RoomDTO getRoomDTO() const;
 
     void clearAll();
-
-    void adjustFPS(const std::chrono::duration<double> &target, std::chrono::steady_clock::time_point &t1, std::chrono::steady_clock::time_point &t2,
-                   std::chrono::steady_clock::time_point &t3, std::chrono::duration<double> &timeUsed,
-                   std::chrono::duration<double> &sleepTime, std::chrono::duration<double> &frameTime,
-                   std::chrono::duration<double> &sleepAdjustSeconds);
 
 };
 

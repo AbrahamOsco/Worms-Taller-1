@@ -51,24 +51,30 @@ void Engine::run() {
                      " Con : " + estadoPartida;
         StageDTO stageDto = model.startAndGetStageDTO();
         connections.start(stageDto);
-
-        RateController frameRate(10);
+        RateController frameRate(20);
         frameRate.start();
+        std::chrono::steady_clock::time_point lastTime = std::chrono::steady_clock::now(); // lastTime para el contador del tiempo.
 
         while (keepTalking) {
-
-            this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(),
-                             gameParameters.getPositionIterations()); // Hacemos un step en el world.
+            this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(), gameParameters.getPositionIterations()); // Hacemos un step en el world.
             std::unique_ptr<CommandDTO> aCommanDTO;
             if (commandsQueueNB.move_try_pop(aCommanDTO)) {
                 this->model.execute(aCommanDTO);
+            } else {
+                std::cout << "No recibo comandos \n";
+                this->model.tryAttack();
             }
             connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
                                      model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO());
 
+            std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
+            std::chrono::duration<double> elapsedSeconds = currentTime - lastTime;
+            if (elapsedSeconds.count() >= 1.0f) {
+                model.subtractTime();
+                lastTime = currentTime;
+            }
 
             model.update();
-
             frameRate.finish();
         }
         this->connections.stop();
@@ -104,20 +110,3 @@ void Engine::stop() {
 void Engine::clearAll() {
     // Limpiaremos las queeus aca?
 }
-
-
-void Engine::adjustFPS(const std::chrono::duration<double> &target, std::chrono::steady_clock::time_point &t1, std::chrono::steady_clock::time_point &t2,
-                       std::chrono::steady_clock::time_point &t3, std::chrono::duration<double> &timeUsed,
-                       std::chrono::duration<double> &sleepTime, std::chrono::duration<double> &frameTime,
-                       std::chrono::duration<double> &sleepAdjustSeconds) {
-    t2 = std::chrono::steady_clock::now();
-    timeUsed = t2 - t1;
-    sleepTime = (target - timeUsed) + sleepAdjustSeconds;
-    if (sleepTime > std::chrono::duration<double>(0) ){
-        std::this_thread::sleep_for(sleepTime);
-    }
-    t3 = std::chrono::steady_clock::now();
-    frameTime = t3 - t1;
-    sleepAdjustSeconds = std::chrono::duration<double>(0.9 * sleepAdjustSeconds.count()) + std::chrono::duration<double>(0.1 * (target - frameTime).count());
-}
-

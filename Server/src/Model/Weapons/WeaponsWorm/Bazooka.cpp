@@ -9,8 +9,7 @@ Bazooka::Bazooka(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, co
                  const size_t &aMunition, const GameParameters &gameParameters) : Weapon(aTypeWeapon, damagePrincipal,
                  aTypeMunition, aMunition, gameParameters), weaponSight(gameParameters.getBazookaRayLength(),
                  gameParameters.getWeaponAngleInitial(), gameParameters){
-    impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(),
-                                   gameParameters.getBazookaImpulseYInitial());
+    impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
     maxImpulseWeapon = std::make_pair(1.0f, 1.0f);
     projectil = nullptr;
 }
@@ -42,6 +41,9 @@ void Bazooka::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const 
     std::cout << "Atacamos con la bazooka------------------------------------------------------\n";
     projectil = std::make_unique<ProjectileBazooka>(gameParameters);
     projectil->addToTheWorld(world, p2, impulseMuniBazooka);
+
+    // reseeteamos los impulsos luego de atacar.
+    impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
 }
 
 

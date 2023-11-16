@@ -36,7 +36,7 @@ void Game::run() {
     Engine engine(m_beams, bQueue, nbQueue);
     engine.init();
 
-    RateController frameRate(10);
+    RateController frameRate(20);
     frameRate.start();
 
     while (engine.running()) {
