@@ -30,8 +30,8 @@ find_package(Qt5Multimedia)
 include_directories(${PROJECT_SOURCE_DIR}/Client/ui/include)
 
 # Archivos Fuente Cliente @Ricardo
-file(GLOB_RECURSE client_src "Client/src/*.cpp" "Client/src/*.h" "Common/DTO/*.h" "Client/src/game/*.h"  "Client/src/command/*.h" "Client/src/gameObject/weapon/*.h")
-file(GLOB_RECURSE common_src "Common/*.cpp" "Common/*.h" "Common/DTO/*.cpp" "Client/src/game/*.cpp"  "Client/src/command/*.cpp"  "Client/src/gameObject/weapon/*.cpp")
+file(GLOB_RECURSE client_src "Client/src/*.cpp" "Client/src/*.h" "Common/DTO/*.h" "Client/src/game/*.h"  "Client/src/command/*.h" "Client/src/gameObject/*.h"  "Client/src/gameObject/weapon/*.h")
+file(GLOB_RECURSE common_src "Common/*.cpp" "Common/*.h" "Common/DTO/*.cpp" "Client/src/game/*.cpp"  "Client/src/command/*.cpp" "Client/src/gameObject/*.cpp"  "Client/src/gameObject/weapon/*.cpp")
 
 #File de girardi  @Girardi  # parte qt
 file(GLOB_RECURSE qt_src "Client/ui/*.cpp" "Client/ui/*.h")
@@ -107,7 +107,10 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Common/DTO/ProjectileDTO.cpp Common/DTO/ProjectileDTO.h
         Common/DTO/ProjectilesDTO.cpp Common/DTO/ProjectilesDTO.h
         Server/src/Model/Turns/Turns.cpp Server/src/Model/Turns/Turns.h
-        Common/DTO/TurnDTO.cpp Common/DTO/TurnDTO.h)
+        Common/DTO/TurnDTO.cpp Common/DTO/TurnDTO.h
+
+
+        )
 
 # para el editor
 include_directories(${PROJECT_SOURCE_DIR}/Editor/include)

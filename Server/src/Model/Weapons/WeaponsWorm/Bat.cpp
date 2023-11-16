@@ -46,3 +46,7 @@ WeaponSightDTO Bat::getWeaponSightDTO(const b2Vec2 &positionWorm, const Directio
 bool Bat::launchesProjectiles() {
     return false;
 }
+
+bool Bat::hasVariablePower() {
+    return false;
+}

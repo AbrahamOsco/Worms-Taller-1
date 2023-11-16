@@ -17,9 +17,11 @@ public:
 
     void teleportIn(b2Body *bodyWorm, const float &posXTeleport, const float &posYTeleport);
 
-    virtual bool hasAScope() override;
+    bool hasAScope() override;
 
-    virtual bool launchesProjectiles() override;
+    bool hasVariablePower() override;
+
+    bool launchesProjectiles() override;
 
 };
 

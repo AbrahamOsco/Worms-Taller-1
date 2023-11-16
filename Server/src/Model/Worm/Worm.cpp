@@ -19,6 +19,7 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     typeMov = STANDING;
     onInclinedBeam = false;
     attacked = false;
+    typeCharge = NONE_CHARGE;
     iterationsForBatAttack = 15;
     positionInAir= std::make_pair(0.0f, 0.0f);
 }
@@ -250,11 +251,18 @@ void Worm::attack() {
     if( this->armament.getWeaponCurrent() == BASEBALL_BAT){
         this->typeMov = ATTACKING_WITH_BAT;
         this->attackWithBat();
-    } else if ( this->armament.getWeaponCurrent() == BAZOOKA){
-        this->attackWithBazooka();
-        armament.putWeaponOnStandByAndUnarmed(); // luego de atacar con la bazoka pasamos el arma a standB y nos desarmamos
+        attacked = true;
+    } else if ( this->armament.getWeaponCurrent() == BAZOOKA){ // en un futuro pregunta si tiene un arma con potencia variable.
+        if(typeCharge == NONE_CHARGE){ // cargo por primera vez.
+            typeCharge = FIRST_CHARGE;
+            this->armament.getWeaponCurrentPtr()->increaseImpulse();
+        } else if ( typeCharge == FIRST_CHARGE) {
+            typeCharge = MANY_CHARGE;
+            this->armament.getWeaponCurrentPtr()->increaseImpulse();
+        } else if (typeCharge == MANY_CHARGE){
+            this->armament.getWeaponCurrentPtr()->increaseImpulse();
+        }
     }
-    attacked = true;
 }
 
 void Worm::attackWithBazooka() {
@@ -313,4 +321,42 @@ void Worm::endTurn() {
     typeMov = STANDING;
     attacked = false;
     armament.endTurn();
+}
+
+void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
+    std::cout << "Recibo comando " << aCommandDTO->getTypeCommand() << "\n";
+    if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
+        this->leftWorm();
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD ){
+        this->rightWorm();
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_BACK_CMD){
+        this->jump(JUMP_BACKWARDS);
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_FORWARD_CMD){
+        this->jump(JUMP_FORWARDS);
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BAT){
+        this->assignWeapon(BASEBALL_BAT);
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_TELEPORT){
+        this->assignWeapon(TELEPORT);
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BAZOOKA){
+        this->assignWeapon(BAZOOKA);
+    }else if (aCommandDTO->getTypeCommand() == TypeCommand::UP_CMD){
+        this->upWorm();
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::DOWN_CMD){
+        this->downWorm();
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::CHARGE_CMD){
+        this->increaseImpulse();
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::FIRE_CMD){
+        this->attack();
+    }
+
+}
+
+void Worm::tryAttack() {
+    // si entra aca es porque el chavon dejo de presonar space_tab
+    if(typeCharge == FIRST_CHARGE or typeCharge == MANY_CHARGE){
+        this->attackWithBazooka();
+        armament.putWeaponOnStandByAndUnarmed(); // luego de atacar con la bazoka pasamos el arma a standB y nos desarmamos
+        this->typeCharge = NONE_CHARGE;
+        attacked = true;
+    }
 }

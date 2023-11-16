@@ -24,4 +24,8 @@ bool Teleport::launchesProjectiles() {
     return false;
 }
 
+bool Teleport::hasVariablePower() {
+    return false;
+}
+
 

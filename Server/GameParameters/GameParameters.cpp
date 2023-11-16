@@ -94,6 +94,12 @@ float GameParameters::getMaxHeightPixelStatic() {
     return aNode["MAX_HEIGHT_PIXEL"].as<float>();
 }
 
+float GameParameters::getFPSStatic() {
+    YAML::Node aNode = getNodeInitial();
+    return aNode["FPS_GAME"].as<float>();
+}
+
+
 float GameParameters::getMaxHeightPixel() const {
     return parameters.at("MAX_HEIGHT_PIXEL");
 }
@@ -227,6 +233,7 @@ float GameParameters::getWormImpulseFactoScalingDown() const {
 float GameParameters::getWormImpulseFactorClimbingUp() const {
     return parameters.at("WORM_FACTOR_IMPULSE_CLIMBING_UP");
 }
+
 
 
 

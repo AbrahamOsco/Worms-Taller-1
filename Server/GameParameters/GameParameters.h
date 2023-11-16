@@ -20,6 +20,8 @@ public:
 
     float getFPS() const;
 
+    static float getFPSStatic();
+
     int getVelocityIterations() const;
 
     int getPositionIterations() const;

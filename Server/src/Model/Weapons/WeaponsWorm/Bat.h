@@ -36,6 +36,8 @@ public:
 
     bool hasAScope() override;
 
+    bool hasVariablePower() override;
+
     bool launchesProjectiles() override;
 
     //virtual void prepareWeapon(const Direction &aDirection) override;

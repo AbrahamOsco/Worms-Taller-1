@@ -28,6 +28,7 @@ bool Bazooka::hasAScope() {
 }
 
 void Bazooka::increaseImpulse() {
+    std::cout << "Incremento la potencia bazzoka\n";
     impulseWeapon.first += 0.01;
     impulseWeapon.second += 0.01;
 }
@@ -71,6 +72,10 @@ void Bazooka::tryCleanProjectiles(b2World *aWorld) {
         aWorld->DestroyBody(projectil->getBody());
         projectil = nullptr;
     }
+}
+
+bool Bazooka::hasVariablePower() {
+    return true;
 }
 
 

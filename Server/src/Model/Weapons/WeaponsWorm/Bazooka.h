@@ -28,6 +28,8 @@ public:
 
     bool hasAScope() override;
 
+    bool hasVariablePower() override;
+
     void increaseImpulse() override;
 
     bool    launchesProjectiles() override;

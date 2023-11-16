@@ -58,6 +58,8 @@ public:
     void subtractTime();
 
     TurnDTO getTurnDTO() const;
+
+    void tryAttack();
 };
 
 

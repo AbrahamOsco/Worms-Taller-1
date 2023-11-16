@@ -41,6 +41,8 @@ public:
 
     virtual bool hasAScope() = 0;
 
+    virtual bool hasVariablePower() = 0;
+
     virtual bool launchesProjectiles() = 0;
 
     // metodods para la mira

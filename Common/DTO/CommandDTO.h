@@ -27,7 +27,7 @@ enum TypeCommand {
     SELECT_AIR_ATTACK,
     SELECT_TELEPORT,
     CHARGE_CMD,
-    FIRE_CMD,
+    FIRE_CMD, // comando 17
     TELEPORT_MOVE,
     NONE,
 };

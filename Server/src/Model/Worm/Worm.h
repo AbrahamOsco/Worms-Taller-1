@@ -14,10 +14,14 @@
 #include "../Weapons/WeaponsWorm/Teleport.h"
 #include "../Weapons/WeaponsWorm/Bat.h"
 #include "../Weapons/WeaponsWorm/Bazooka.h"
+#include "../../../../Common/DTO/CommandDTO.h"
 
 #define LIFE_BONUS 25
 enum TypeJump{
     JUMP_BACKWARDS, JUMP_FORWARDS
+};
+enum TypeCharge{
+    NONE_CHARGE, FIRST_CHARGE, MANY_CHARGE
 };
 
 
@@ -41,6 +45,7 @@ class Worm : public GameObject {
     bool attacked;
     size_t iterationsForBatAttack;
     std::pair<float, float> positionInAir; // para que el gusano sufra daño en caidas mayores a 2m.
+    TypeCharge typeCharge;
 public:
 
     Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
@@ -118,6 +123,10 @@ public:
     void attackWithBazooka();
 
     void endTurn();
+
+    void execute(std::unique_ptr<CommandDTO> &aCommandDTO);
+
+    void tryAttack();
 };
 
 
