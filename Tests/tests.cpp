@@ -5,7 +5,7 @@
 #include <gmock/gmock.h> 
 
 TEST(TESTPROTOCOL,SENDSOME){
-    MockSocket skt;
+    Socket skt;
     std::vector<char> data;
     for(int i = 0;i<10;i++){
         data.push_back((char) i);
@@ -19,7 +19,7 @@ TEST(TESTPROTOCOL,SENDSOME){
         ASSERT_TRUE(data[i] == buff[i]);
 }
 TEST(TESTPROTOCOL,RECVSOME){
-    MockSocket skt;
+    Socket skt;
     std::vector<char> data;
     for(int i = 0;i<10;i++){
         data.push_back((char) i);
