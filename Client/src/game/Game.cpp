@@ -8,7 +8,7 @@
 #include "../command/Command.h"
 #include "../thread/ReceiverThread.h"
 #include "../thread/SenderThread.h"
-#include "../rateController/RateController.h"
+#include "../../../Common/rateController/RateController.h"
 
 Game::Game(Socket& skt) : m_protocol(skt){}
 
@@ -36,7 +36,7 @@ void Game::run() {
     Engine engine(m_beams, bQueue, nbQueue);
     engine.init();
 
-    RateController frameRate(60);
+    RateController frameRate(10);
     frameRate.start();
 
     while (engine.running()) {

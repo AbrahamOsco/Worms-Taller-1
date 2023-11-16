@@ -7,6 +7,8 @@
 #include "Engine.h"
 #include "../Protocol/ServerProtocol.h"
 #include "../../../Common/DTO/SnapShot.h"
+#include "../../../Common/rateController/RateController.h"
+
 #define VELOCITY_ITERATIONS 6
 #define POSITION_TIERATIONS 2
 #define SUCCESS 1
@@ -49,12 +51,12 @@ void Engine::run() {
                      " Con : " + estadoPartida;
         StageDTO stageDto = model.startAndGetStageDTO();
         connections.start(stageDto);
-        std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now(), t2, t3;
-        std::chrono::duration<double> frameTime{}, sleepTime{}, timeUsed{}, target(
-                gameParameters.getFPS()), sleepAdjustSeconds(0.0);
-        std::chrono::steady_clock::time_point lastTime = std::chrono::steady_clock::now(); // lastTime para el contador del tiempo.
+
+        RateController frameRate(10);
+        frameRate.start();
+
         while (keepTalking) {
-            t1 = std::chrono::steady_clock::now();
+
             this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(),
                              gameParameters.getPositionIterations()); // Hacemos un step en el world.
             std::unique_ptr<CommandDTO> aCommanDTO;
@@ -63,15 +65,11 @@ void Engine::run() {
             }
             connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
                                      model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO());
-            std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
-            std::chrono::duration<double> elapsedSeconds = currentTime - lastTime;
-            if (elapsedSeconds.count() >= 1.0f) {
-                model.subtractTime();
-                lastTime = currentTime;
-            }
+
+
             model.update();
 
-            adjustFPS(target, t1, t2, t3, timeUsed, sleepTime, frameTime, sleepAdjustSeconds);
+            frameRate.finish();
         }
         this->connections.stop();
         this->clearAll(); // Limpiamos las queues.

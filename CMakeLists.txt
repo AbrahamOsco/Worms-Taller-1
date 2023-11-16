@@ -78,6 +78,8 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Server/src/Control/ClientLogin.h Server/src/Control/ClientLogin.cpp
         Common/DTO/InitialStateDTO.h Common/DTO/InitialStateDTO.cpp
         # Nuevos
+        Common/rateController/RateController.cpp
+        Common/rateController/RateController.h
         Common/DTO/ResponseInitialStateDTO.h
         Common/DTO/ResponseInitialStateDTO.cpp
         Common/DTO/RoomDTO.h
