@@ -24,8 +24,8 @@ file(GLOB_RECURSE test_src
   "../Common/DTO/*.h"
   "../Server/src/Protocol/*.cpp"
   "../Server/src/Protocol/*.h"
-  "../Client/src/Protocol/*.cpp"
-  "../Client/src/Protocol/*.h")
+  "../Client/src/protocol/*.cpp"
+  "../Client/src/protocol/*.h")
 
 enable_testing()
 

@@ -1,5 +1,6 @@
 #ifndef MOCK_SOCKET_H
 #define MOCK_SOCKET_H
+#define TEST_MODE_ON
 #include <vector>
 #include <gmock/gmock.h>
 
