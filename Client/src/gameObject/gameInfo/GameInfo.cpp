@@ -26,8 +26,8 @@ void GameInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) 
     int fontSize = 22;
     SDL_Color textColor = {0, 0, 0, 255};
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
-    textureManager.drawText(m_currentTurn, 378, m_y, fontPath, fontSize, textColor, renderer);
-    textureManager.drawText("Time: " + std::to_string(m_time), 560, m_y, fontPath, fontSize, textColor, renderer);
+    textureManager.drawText(m_currentTurn, 200, m_y, fontPath, fontSize, textColor, renderer);
+    textureManager.drawText("Time: " + std::to_string(m_time), 750, m_y, fontPath, fontSize, textColor, renderer);
 
 }
 
