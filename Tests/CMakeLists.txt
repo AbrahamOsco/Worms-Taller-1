@@ -5,6 +5,8 @@ project(tests)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+option(TEST_MODE_ON "Test mode on" ON)
+
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -14,11 +16,23 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+file(GLOB_RECURSE test_src 
+  "Mock_Socket.h"
+  "../Common/Protocol/*.cpp"
+  "../Common/Protocol/*.h"
+  "../Common/DTO/*.cpp"
+  "../Common/DTO/*.h"
+  "../Server/src/Protocol/*.cpp"
+  "../Server/src/Protocol/*.h"
+  "../Client/src/Protocol/*.cpp"
+  "../Client/src/Protocol/*.h")
+
 enable_testing()
 
 add_executable(
   tests
   tests.cpp
+  ${test_src}
 )
 target_link_libraries(
   tests

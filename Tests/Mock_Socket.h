@@ -3,26 +3,26 @@
 #include <vector>
 #include <gmock/gmock.h>
 
-class MockSocket{
+class Socket{
     private:
     std::vector<char> buffer;
     unsigned int send;
     unsigned int recv;
 
     public:
-    MockSocket(){
+    Socket(){
         send = 0;
         recv = 0;
     }
-    explicit MockSocket(int skt){
+    explicit Socket(int skt){
         send = 0;
         recv = 0;
     }
-    MockSocket(const char* hostname, const char* servname){
+    Socket(const char* hostname, const char* servname){
         send = 0;
         recv = 0;
     }
-    explicit MockSocket(const char* servname){
+    explicit Socket(const char* servname){
         send = 0;
         recv = 0;
     }

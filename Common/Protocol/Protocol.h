@@ -1,7 +1,11 @@
 #ifndef WORMS_TALLER_1_PROTOCOL_H
 #define WORMS_TALLER_1_PROTOCOL_H
 
+#ifdef TEST_MODE_ON
+#include "../../Tests/Mock_Socket.h"
+#else
 #include "../Socket/Socket.h"
+#endif
 
 #include "../DTO/WormDTO.h"
 #include <vector>

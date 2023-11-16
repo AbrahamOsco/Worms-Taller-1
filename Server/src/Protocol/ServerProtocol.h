@@ -3,7 +3,6 @@
 
 #include <memory>
 #include "../../../Common/Protocol/Protocol.h"
-#include "../../../Common/Socket/Socket.h"
 #include "../../../Common/DTO/ResolverInitialDTO.h"
 #include "../../../Common/DTO/InitialStateDTO.h"
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
