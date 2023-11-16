@@ -58,19 +58,49 @@ TEST(TESTMOCKSOCKET,RECVSOME){
 TEST(TESTPROTOCOLCLIENT,sendInitialStateDTO){
     Socket skt;
     ClientProtocol protocol(skt);
-    std::vector<char> data;
     std::string name("Pedro");
-    InitialStateDTO send(SCENARIO_LIST_REQUEST,name);
-    protocol.sendInitialStateDTO(send);
+    InitialStateDTO dto(SCENARIO_LIST_REQUEST,name);
+    protocol.sendInitialStateDTO(dto);
     std::vector<char> buffer = skt.getBuffer();
     uint16_t size;
     memcpy(&size,buffer.data()+1,2);
     size = ntohs(size);
     ASSERT_TRUE(SCENARIO_LIST_REQUEST == buffer[0]);
-    ASSERT_TRUE(5 == size);
+    ASSERT_TRUE(name.size() == size);
     for(size_t i = 0;i< name.size();i++){
         ASSERT_TRUE(name[i] == buffer[i+3]);
     }
+}
+TEST(TESTPROTOCOLCLIENT,sendResponseInitialStateDTO_Create_Game){
+    Socket skt;
+    ClientProtocol protocol(skt);
+    std::string gameName("Mostaza");
+    std::string scenarioName("Ruinas");
+    size_t playersNumber = 5;
+    ResponseInitialStateDTO dto(FINAL_CREATE_GAME,gameName,scenarioName,playersNumber);
+    protocol.sendResponseInitialStateDTO(dto);
+    std::vector<char> buffer = skt.getBuffer();
+    size_t offset = 0;
+    ASSERT_TRUE(FINAL_CREATE_GAME == buffer[0]);
+    offset++;
+    uint16_t size;
+    memcpy(&size,buffer.data()+offset,2);
+    size = ntohs(size);
+    ASSERT_TRUE(gameName.size() == size);
+    offset = offset+2;
+    for(size_t i = 0;i< gameName.size();i++){
+        ASSERT_TRUE(gameName[i] == buffer[i+offset]);
+    }
+    offset = offset + gameName.size();
+    memcpy(&size,buffer.data()+offset,2);
+    size = ntohs(size);
+    ASSERT_TRUE(scenarioName.size() == size);
+    offset = offset+2;
+    for(size_t i = 0;i< scenarioName.size();i++){
+        ASSERT_TRUE(scenarioName[i] == buffer[i+offset]);
+    }
+    offset = offset + scenarioName.size();
+    ASSERT_TRUE(playersNumber == buffer[offset]);
 }
 
 int main(int argc,char* argv[]){
