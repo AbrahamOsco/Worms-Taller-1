@@ -28,7 +28,7 @@
 #include <arpa/inet.h>
 
 
-TEST(TESTMOCKSOCKET,SENDSOME){
+TEST(TEST_MOCK_SOCKET,SEND_SOME){
     Socket skt;
     std::vector<char> data;
     for(int i = 0;i<10;i++){
@@ -41,7 +41,7 @@ TEST(TESTMOCKSOCKET,SENDSOME){
     for(int i = 0;i<10;i++)    
         ASSERT_TRUE(data[i] == buff[i]);
 }
-TEST(TESTMOCKSOCKET,RECVSOME){
+TEST(TEST_MOCK_SOCKET,RECV_SOME){
     Socket skt;
     std::vector<char> data;
     for(int i = 0;i<10;i++){
@@ -55,7 +55,7 @@ TEST(TESTMOCKSOCKET,RECVSOME){
     for(int i = 0;i<10;i++)    
         ASSERT_TRUE(data[i] == read[i]);
 }
-TEST(TESTPROTOCOLCLIENT,sendInitialStateDTO){
+TEST(TEST_PROTOCOL_CLIENT,sendInitialStateDTO){
     Socket skt;
     ClientProtocol protocol(skt);
     std::string name("Pedro");
@@ -63,15 +63,18 @@ TEST(TESTPROTOCOLCLIENT,sendInitialStateDTO){
     protocol.sendInitialStateDTO(dto);
     std::vector<char> buffer = skt.getBuffer();
     uint16_t size;
-    memcpy(&size,buffer.data()+1,2);
+    size_t offset = 0;
+    ASSERT_TRUE(SCENARIO_LIST_REQUEST == buffer[offset]);
+    offset++;
+    memcpy(&size,buffer.data()+offset,2);
     size = ntohs(size);
-    ASSERT_TRUE(SCENARIO_LIST_REQUEST == buffer[0]);
     ASSERT_TRUE(name.size() == size);
+    offset = offset + 2;
     for(size_t i = 0;i< name.size();i++){
-        ASSERT_TRUE(name[i] == buffer[i+3]);
+        ASSERT_TRUE(name[i] == buffer[i+offset]);
     }
 }
-TEST(TESTPROTOCOLCLIENT,sendResponseInitialStateDTO_Create_Game){
+TEST(TEST_PROTOCOL_CLIENT,sendResponseInitialStateDTO_Create_Game){
     Socket skt;
     ClientProtocol protocol(skt);
     std::string gameName("Mostaza");
@@ -101,6 +104,25 @@ TEST(TESTPROTOCOLCLIENT,sendResponseInitialStateDTO_Create_Game){
     }
     offset = offset + scenarioName.size();
     ASSERT_TRUE(playersNumber == buffer[offset]);
+}
+TEST(TEST_PROTOCOL_CLIENT,sendResponseInitialStateDTO_Join_Game){
+    Socket skt;
+    ClientProtocol protocol(skt);
+    std::string gameName("Mostaza");
+    size_t offset = 0;
+    ResponseInitialStateDTO dto(FINAL_JOIN_GAME,gameName);
+    protocol.sendResponseInitialStateDTO(dto);
+    std::vector<char> buffer = skt.getBuffer();
+    ASSERT_TRUE(FINAL_JOIN_GAME == buffer[0]);
+    offset++;
+    uint16_t size;
+    memcpy(&size,buffer.data()+offset,2);
+    size = ntohs(size);
+    ASSERT_TRUE(gameName.size() == size);
+    offset = offset+2;
+    for(size_t i = 0;i< gameName.size();i++){
+        ASSERT_TRUE(gameName[i] == buffer[i+offset]);
+    }
 }
 
 int main(int argc,char* argv[]){
