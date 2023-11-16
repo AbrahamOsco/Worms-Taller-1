@@ -55,6 +55,47 @@ TEST(TEST_MOCK_SOCKET,RECV_SOME){
     for(int i = 0;i<10;i++)    
         ASSERT_TRUE(data[i] == read[i]);
 }
+TEST(TEST_PROTOCOL_COMMON,sendANumberByte){
+    Socket skt;
+    Protocol protocol(skt);
+    uint8_t byte = 54;
+    protocol.sendANumberByte(byte);
+    std::vector<char> buff = skt.getBuffer();
+    ASSERT_TRUE(byte == buff[0]);
+}
+TEST(TEST_PROTOCOL_COMMON,recvANumberByte){
+    Socket skt;
+    Protocol protocol(skt);
+    std::vector<char> data;
+    data.push_back(27);
+    skt.setBuffer(data);
+    uint8_t read = protocol.recvANumberByte();
+    ASSERT_TRUE(read == data[0]);
+}
+TEST(TEST_PROTOCOL_COMMON,sendNum2Bytes){
+    Socket skt;
+    Protocol protocol(skt);
+    uint16_t word = 2000;
+    protocol.sendNum2Bytes(word);
+    std::vector<char> buff = skt.getBuffer();
+    uint16_t sent;
+    memcpy(&sent,buff.data(),2);
+    sent = ntohs(sent);
+    ASSERT_TRUE(sent == word);
+}
+TEST(TEST_PROTOCOL_COMMON,recvNum2Bytes){
+    Socket skt;
+    Protocol protocol(skt);
+    std::vector<char> data;
+    uint16_t word = 0x12AC;
+    uint8_t low = static_cast<uint8_t>(word & 0xFF);
+    uint8_t high = static_cast<uint8_t>(word>>8);
+    data.push_back(high);
+    data.push_back(low);
+    skt.setBuffer(data);
+    uint16_t read = protocol.recvNum2Bytes();
+    ASSERT_TRUE(word == read);
+}
 TEST(TEST_PROTOCOL_CLIENT,sendInitialStateDTO){
     Socket skt;
     ClientProtocol protocol(skt);
