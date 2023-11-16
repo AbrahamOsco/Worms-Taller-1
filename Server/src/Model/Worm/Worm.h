@@ -117,6 +117,7 @@ public:
 
     void attackWithBazooka();
 
+    void endTurn();
 };
 
 

@@ -50,6 +50,8 @@ public:
     ProjectilesDTO getProjectilesDTO(const bool &attackedWorm);
 
     void tryCleanProjectiles(b2World *aWorld);
+
+    void endTurn();
 };
 
 

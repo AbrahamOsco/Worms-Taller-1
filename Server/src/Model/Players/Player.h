@@ -51,6 +51,8 @@ public:
 
 
     std::string getPlayerName() const;
+
+    void endTurn();
 };
 
 

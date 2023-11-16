@@ -307,3 +307,10 @@ void Worm::increaseImpulse() {
         attack();
     }
 }
+
+void Worm::endTurn() {
+    typeFocus = NO_FOCUS;
+    typeMov = STANDING;
+    attacked = false;
+    armament.endTurn();
+}

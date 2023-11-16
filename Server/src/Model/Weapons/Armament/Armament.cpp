@@ -120,4 +120,9 @@ void Armament::tryCleanProjectiles(b2World *aWorld) {
     }
 }
 
+void Armament::endTurn() {
+    this->currentWeapon = NONE_WEAPON;
+    this->weaponOnStandBy = NONE_WEAPON;
+}
+
 

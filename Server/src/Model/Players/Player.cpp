@@ -82,4 +82,8 @@ std::string Player::getPlayerName() const {
     return this->playerName;
 }
 
+void Player::endTurn() {
+    this->worms.at(idCurrentWorm)->endTurn();
+}
+
 

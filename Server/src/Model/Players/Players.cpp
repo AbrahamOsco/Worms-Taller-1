@@ -5,6 +5,7 @@
 #include "Players.h"
 #include "../../../GameParameters/GameParameters.h"
 #include <algorithm>
+#include <iostream>
 
 Players::Players(const std::map<size_t, std::pair<float, float>> &idsAndPositionsWorms, const GameParameters& parameters)
         : idsAndPositionsWorms(idsAndPositionsWorms), idCurrenPlayer(VALUE_INITIAL), gameParameters(parameters) {
@@ -84,7 +85,7 @@ size_t Players::startAPlayerTurn() {
         this->idCurrenPlayer = playerIterator->first;
         return idCurrenPlayer;
     }
-    idCurrenPlayer++;
+    playerIterator++;
     if ( playerIterator == players.end()){
         playerIterator = players.begin();
     }

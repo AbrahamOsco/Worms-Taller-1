@@ -14,6 +14,8 @@ void Turns::startATurn() {
     this->idPlayerCurrent = players.startAPlayerTurn();
     this->idWormCurrent = players.getCurrentPlayer().startAWormTurn();
     this->textTurn = players.getCurrentPlayer().getPlayerName();
+    std::cout << "Id del jugador actual es " << idPlayerCurrent << "\n";
+    std::cout << "Id del worm actual es " << idWormCurrent << "\n";
 }
 
 void Turns::subtractTime() {
@@ -25,6 +27,7 @@ void Turns::tryEndTurn(){
     // Lo mas facil pasaron 60 segundos entonces.  pasa el turno del sgt jugador.
     if(timeLeft <= 0){
         timeLeft = 15;
+        players.getCurrentPlayer().endTurn();
         startATurn();
     }
 }
