@@ -314,6 +314,7 @@ void Worm::takeDamage(const float &aDamage){
 }
 
 void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
+    std::cout << "attacked" << attacked << "\n";
     if( not attacked){
         armament.assignWeapon(aTypeWeapon, this->directionLook);
     }
@@ -338,6 +339,7 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     if(timeLeft <= 0){
         return;
     }
+    std::cout << "Se recibe operationType:" << aCommandDTO->getTypeCommand() << "\n";
     if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
         this->leftWorm();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD ){
@@ -359,6 +361,7 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::FIRE_CMD){
         this->attack();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::TELEPORT_MOVE){
+        std::cout << "Recibo : X: " << aCommandDTO->getX() << " Y:" << aCommandDTO->getY() << "\n";
         this->teleportWorm(aCommandDTO->getX(), aCommandDTO->getY());
     }
 
