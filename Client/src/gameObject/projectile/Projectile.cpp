@@ -13,5 +13,7 @@ Projectile::Projectile(int x, int y, const TypeProjectil &typeProjectile) : Game
 }
 
 void Projectile::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
-    textureManager.draw(m_textureID, m_x - m_width / 2, m_y - m_height / 2, m_width, m_height, renderer, SDL_FLIP_NONE);
+    int posX = m_x - m_width / 2 - camera.getPosition().GetX();
+    int posY = m_y - m_height / 2 - camera.getPosition().GetY();
+    textureManager.draw(m_textureID, posX, posY, m_width, m_height, renderer, SDL_FLIP_NONE);
 }
