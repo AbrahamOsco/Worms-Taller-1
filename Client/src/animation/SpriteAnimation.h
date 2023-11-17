@@ -13,7 +13,6 @@
 class SpriteAnimation : public Animation {
 private:
     int m_speed;
-    int m_spriteFrame;
     int m_frameCount;
     std::string m_textureID;
 
@@ -23,7 +22,7 @@ public:
     void update() override;
 
     void
-    draw(int x, int y, int spriteWidth, int spriteHeight, SDL2pp::Renderer &renderer, TextureManager &textureManager,
+    draw(int x, int y, int width, int height, SDL2pp::Renderer &renderer, TextureManager &textureManager,
          SDL_RendererFlip flip = SDL_FLIP_NONE, float xScale = 1, float yScale = 1);
 
     void setProps(const std::string &textureID, int frameCount, int animSpeed);
