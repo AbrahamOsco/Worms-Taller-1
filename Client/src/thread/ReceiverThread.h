@@ -15,10 +15,10 @@ class ReceiverThread : public Thread {
 private:
     Queue<std::vector<std::unique_ptr<GameObject>>>& m_queue;
     ClientProtocol& m_protocol;
-    std::atomic<bool> m_running;
+    std::atomic<bool>& m_running;
 
 public:
-    ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::unique_ptr<GameObject>>> &queue);
+    ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::unique_ptr<GameObject>>> &queue, std::atomic<bool>& running);
     void run() override;
     void stop() override;
 };

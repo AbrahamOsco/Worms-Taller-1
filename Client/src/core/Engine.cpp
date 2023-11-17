@@ -10,7 +10,7 @@
 #include "../command/LeftCmd.h"
 
 Engine::Engine(std::vector<Beam> &beams, Queue<std::unique_ptr<Command>> &bQueue,
-               Queue<std::vector<std::unique_ptr<GameObject>>> &nbQueue) : m_window("SDL2pp demo",
+               Queue<std::vector<std::unique_ptr<GameObject>>> &nbQueue, std::atomic<bool>& running) : m_window("SDL2pp demo",
                                                                                     SDL_WINDOWPOS_UNDEFINED,
                                                                                     SDL_WINDOWPOS_UNDEFINED,
                                                                                     WINDOW_WIDTH, WINDOW_HEIGHT,
@@ -18,9 +18,7 @@ Engine::Engine(std::vector<Beam> &beams, Queue<std::unique_ptr<Command>> &bQueue
                                                                            m_renderer(m_window, -1,
                                                                                       SDL_RENDERER_ACCELERATED),
                                                                            m_beams(beams), m_bQueue(bQueue),
-                                                                           m_nbQueue(nbQueue) {
-    m_running = true;
-}
+                                                                           m_nbQueue(nbQueue), m_running(running) {}
 
 void Engine::events() {
     m_input.listen();

@@ -10,7 +10,7 @@
 #include "../thread/SenderThread.h"
 #include "../../../Common/rateController/RateController.h"
 
-Game::Game(Socket& skt) : m_protocol(skt){}
+Game::Game(Socket& skt) : m_protocol(skt), m_running(true) {}
 
 void Game::loadMap() {
     StageDTO stageDto;
@@ -25,15 +25,15 @@ void Game::run() {
     Queue<std::vector<std::unique_ptr<GameObject>>> nbQueue;
     Queue<std::unique_ptr<Command>> bQueue;
 
-    ReceiverThread receiverThread(m_protocol, nbQueue);
-    SenderThread senderThread(m_protocol, bQueue);
+    ReceiverThread receiverThread(m_protocol, nbQueue, m_running);
+    SenderThread senderThread(m_protocol, bQueue, m_running);
 
     receiverThread.start();
     senderThread.start();
 
     SDL2pp::SDL sdl(SDL_INIT_VIDEO);
     SDL2pp::SDLTTF ttf;
-    Engine engine(m_beams, bQueue, nbQueue);
+    Engine engine(m_beams, bQueue, nbQueue, m_running);
     engine.init();
 
     RateController frameRate(20);

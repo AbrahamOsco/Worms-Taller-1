@@ -13,8 +13,8 @@
 class Game {
 private:
     ClientProtocol m_protocol;
-
     std::vector<Beam> m_beams;
+    std::atomic<bool> m_running;
 public:
     Game(Socket& skt);
     void loadMap();

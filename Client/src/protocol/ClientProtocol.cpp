@@ -2,6 +2,8 @@
 #include "ClientProtocol.h"
 
 #include "../../../Common/DTO/InitialStateDTO.h"
+#include "../exception/ClosedServer.h"
+
 #define SUCCESS 1
 #define ERROR 2
 
@@ -167,6 +169,9 @@ void ClientProtocol::sendCommandDTO(const CommandDTO& commandDto) {
 SnapShot ClientProtocol::recvASnapShot() {
     std::vector<WormDTO> vecWormsDTO;
     int  operationType = recvANumberByte();
+    if (operationType == CLOSED_CONNECTION) {
+        throw ClosedServer();
+    }
     if (operationType == SNAP_SHOT){
         size_t numbersWorms = recvANumberByte();
         for(size_t i = 0; i < numbersWorms; i++){

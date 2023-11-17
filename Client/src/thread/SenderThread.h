@@ -17,10 +17,10 @@ class SenderThread : public Thread {
 private:
     ClientProtocol& m_protocol;
     Queue<std::unique_ptr<Command>>& m_queue;
-    std::atomic<bool> m_isRunning;
+    std::atomic<bool>& m_running;
 
 public:
-    SenderThread(ClientProtocol& protocol, Queue<std::unique_ptr<Command>>& queue);
+    SenderThread(ClientProtocol& protocol, Queue<std::unique_ptr<Command>>& queue, std::atomic<bool>& running);
     void run() override;
     void stop();
 };

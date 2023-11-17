@@ -19,7 +19,7 @@
 class Engine {
 private:
     TextureManager m_textureManager;
-    bool m_running;
+    std::atomic<bool>& m_running;
     SDL2pp::Window m_window;
     SDL2pp::Renderer m_renderer;
     Input m_input;
@@ -35,7 +35,7 @@ private:
 
 public:
     Engine(std::vector<Beam> &beams, Queue<std::unique_ptr<Command>> &bQueue,
-           Queue<std::vector<std::unique_ptr<GameObject>>> &nbQueue);
+           Queue<std::vector<std::unique_ptr<GameObject>>> &nbQueue, std::atomic<bool>& running);
 
     ~Engine() = default;
 
