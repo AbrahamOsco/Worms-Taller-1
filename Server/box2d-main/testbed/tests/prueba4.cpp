@@ -261,6 +261,7 @@ public:
 class AirAttackMissile : public GameObject {
     float mainDamage = 40.0f;
     float maxRadio = 2.0f;
+    float maxImpulseMagnitude = 2.0f;
 
 public:
     AirAttackMissile() : GameObject(ENTITY_AIR_ATTACK_MISSILE) {}
@@ -287,6 +288,22 @@ public:
         searchArea.lowerBound = positionMissile - b2Vec2(2.0f, 2.0f);
         searchArea.upperBound = positionMissile + b2Vec2(2.0f, 2.0f);
         return searchArea;
+    }
+
+    b2Vec2 getImpulseForWorm(const b2Vec2 &positionWorm, const b2Vec2 &positionMissile, float distanceWormToMissile) {
+        b2Vec2 impulseDirection = positionWorm - positionMissile;
+        impulseDirection.Normalize();
+        std::cout << "distanceWormToMunition :" << distanceWormToMissile << "\n";
+        float impulseMagnitude = maxImpulseMagnitude * std::max(0.0f, 1.0f - sqrt(distanceWormToMissile) / maxRadio );
+        std::cout << "impulseMagnitude : " << impulseMagnitude;
+        std::cout << " impulseDirection.x: " << impulseDirection.x << "impulseDirection.y" << impulseDirection.y << "\n ";
+        b2Vec2 impulseWorm = impulseMagnitude * impulseDirection;
+        impulseWorm.y = abs(impulseWorm.x) * 0.7;
+        if(impulseDirection.x == 0){ // Si la normal en x es cero hizo un tiro a -90º sale volando para arriba.
+            impulseWorm.y = maxImpulseMagnitude;
+        }
+        std::cout << "impulseWorm.x" << impulseWorm.x << "impulseWorm.y" << impulseWorm.y << "\n";
+        return impulseWorm;
     }
 
     float getDamageForWorm(const float &wormDistance) const {
@@ -423,7 +440,9 @@ void airAttackMissileCollideWithBeam(GameObject* missile, GameObject* beam){
     beamSelected->getWorld()->QueryAABB(&savWormsinArea, missileSelect->getAreaForSearch(missilePosition));
     for(auto& aElement : savWormsinArea.getWormsAndDistSquar() ){
         Worm* aWormToTakeDamage = (Worm*)(aElement.first);
+        b2Vec2 impulseForWorm = missileSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(), missilePosition, aElement.second);
         float damageForWorm = missileSelect->getDamageForWorm(aElement.second);
+        aWormToTakeDamage->getBody()->ApplyLinearImpulse( impulseForWorm, aWormToTakeDamage->getBody()->GetWorldCenter(), true);
         aWormToTakeDamage->takeDamage(damageForWorm);
     }
     missileSelect->destroyBody();
@@ -436,7 +455,7 @@ void beamCollidesWithAirAttackMissile(GameObject* beam, GameObject* missile){
 
 
 void airAttackMissileCollidesWithWorm(GameObject* missile, GameObject* worm){
-    std::cout << "munitionBazookaCollidesWithWorm\n";
+    std::cout << "airAttackMissileCollidesWithWorm\n";
     if(missile == nullptr or worm == nullptr) return;
     b2Vec2 missilePosition = missile->getBody()->GetWorldCenter();
 
@@ -448,6 +467,8 @@ void airAttackMissileCollidesWithWorm(GameObject* missile, GameObject* worm){
     wormSelect->getWorld()->QueryAABB(&savWormsinArea, missileSelect->getAreaForSearch(missilePosition));
     for(auto& aElement : savWormsinArea.getWormsAndDistSquar() ){
         Worm* aWormToTakeDamage = (Worm*)(aElement.first);
+        b2Vec2 impulseForWorm = missileSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(), missilePosition, aElement.second);
+        aWormToTakeDamage->getBody()->ApplyLinearImpulse( impulseForWorm, aWormToTakeDamage->getBody()->GetWorldCenter(), true);
         if (aWormToTakeDamage != wormSelect) {
             float damageForWorm = missileSelect->getDamageForWorm(aElement.second);
             aWormToTakeDamage->takeDamage(damageForWorm);
@@ -459,7 +480,7 @@ void airAttackMissileCollidesWithWorm(GameObject* missile, GameObject* worm){
 }
 
 void wormCollidesWithAirAttackMissile(GameObject* worm1, GameObject* missile){
-    std::cout << "wormCollidesWithMunitionBazooka\n";
+    std::cout << "wormCollidesWithAirAttackMissile\n";
     airAttackMissileCollidesWithWorm(missile, worm1);
 }
 
@@ -515,7 +536,7 @@ public:
 
     void Keyboard(int key) override{
         if (key == GLFW_KEY_9){
-            vecWorms[0]->airAttack(7.5f,18.0f); // 18 es la altura del escenario
+            vecWorms[0]->airAttack(8.0f,18.0f); // 18 es la altura del escenario
         }
     }
 
