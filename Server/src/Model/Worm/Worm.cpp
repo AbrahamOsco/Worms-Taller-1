@@ -20,7 +20,7 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     onInclinedBeam = false;
     attacked = false;
     typeCharge = NONE_CHARGE;
-    iterationsForBatAttack = 15;
+    iterationsForBatAttack = gameParameters.getBatIterations();
     positionInAir= std::make_pair(0.0f, 0.0f);
     hpInitialTurn = hp;
     contatctsWithBeam = 0;
@@ -230,7 +230,7 @@ void Worm::update() {
         if(this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack > 0 ){  // el ATTACKING_WITH_BAT ES SOLO PARA BATE asi q no hay problemas.
             iterationsForBatAttack--;
         } else if (this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack == 0){
-            iterationsForBatAttack = 15;
+            iterationsForBatAttack = gameParameters.getBatIterations();
             this->typeMov = STANDING;
             armament.putWeaponOnStandByAndUnarmed(); // ya paso el frame del ataque con bate asi q lo desarmamos.
         } else{
@@ -297,8 +297,8 @@ void Worm::teleportWorm(const float& posXTeleport, const float& posYTeleport){
         return;
     }
     Teleport* teleport = (Teleport*) this->armament.getWeaponCurrentPtr();
-    float posXInMeters = posXTeleport/60.0F;
-    float posYInMeters = (gameParameters.getMaxHeightPixel() - posYTeleport)/60.f;
+    float posXInMeters = posXTeleport/gameParameters.getPositionAdjustment();
+    float posYInMeters = (gameParameters.getMaxHeightPixel() - posYTeleport)/gameParameters.getPositionAdjustment();
     teleport->teleportIn(getBody(), posXInMeters, posYInMeters);
     armament.putWeaponOnStandByAndUnarmed(); // luego de atacar con la bazoka pasamos el arma a standB y nos desarmamos
     std::cout << "Me teletransporto en " << posXInMeters << "  " << posYInMeters << "\n";

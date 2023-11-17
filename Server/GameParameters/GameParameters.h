@@ -103,6 +103,8 @@ public:
     float getBazookaMaxImpulseY() const;
 
     float getIncreaseImpulseForFPS() const;
+
+    float getBatIterations() const;
 };
 
 
