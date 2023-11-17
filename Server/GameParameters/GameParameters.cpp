@@ -97,6 +97,11 @@ float GameParameters::getPositionAdjustmentStatic() {
     return aNode["POSITION_ADJUSTMENT"].as<float>();
 }
 
+float GameParameters::getBeamFrictionSlipperyStatic(){
+    YAML::Node aNode = getNodeInitial();
+    return aNode["BEAM_SLIPPERY_FRICTION"].as<float>();
+}
+
 float GameParameters::getMaxHeightPixelStatic() {
     YAML::Node aNode = getNodeInitial();
     return aNode["MAX_HEIGHT_PIXEL"].as<float>();

@@ -38,6 +38,8 @@ public:
 
     static float getMaxHeightPixelStatic();
 
+    static float getBeamFrictionSlipperyStatic();
+
     float getMaxHeightPixel() const;
 
     static float getBeamFriction();
@@ -105,6 +107,7 @@ public:
     float getIncreaseImpulseForFPS() const;
 
     float getBatIterations() const;
+
 };
 
 
