@@ -82,7 +82,11 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Came
                                renderer, camera);
     if (m_weaponCurrent == TypeWeapon::DYNAMITE || m_weaponCurrent == TypeWeapon::AIR_ATTACK ||
         m_weaponCurrent == TypeWeapon::BASEBALL_BAT || m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
-        m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_width, m_height, camera, renderer, textureManager, m_flip);
+
+        int xCorrection = m_x - m_width / 2 - camera.getPosition().GetX();
+        int yCorrection = m_y - m_height / 2 - camera.getPosition().GetY();
+
+        m_animation.draw(xCorrection, yCorrection, m_width, m_height, renderer, textureManager, m_flip);
     } else {
         int frameCount = 30;
         int angle = calcularAngulo(m_x, m_y, m_xCrosshair, m_yCrosshair, m_directionLook);

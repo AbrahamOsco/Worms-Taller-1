@@ -22,9 +22,9 @@ public:
 
     void update() override;
 
-    void draw(int x, int y, int spriteWidth, int spriteHeight, Camera &camera, SDL2pp::Renderer &renderer,
-              TextureManager &textureManager, SDL_RendererFlip flip = SDL_FLIP_NONE, float xScale = 1,
-              float yScale = 1);
+    void
+    draw(int x, int y, int spriteWidth, int spriteHeight, SDL2pp::Renderer &renderer, TextureManager &textureManager,
+         SDL_RendererFlip flip = SDL_FLIP_NONE, float xScale = 1, float yScale = 1);
 
     void setProps(const std::string &textureID, int frameCount, int animSpeed);
 };
