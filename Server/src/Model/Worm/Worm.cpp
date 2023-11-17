@@ -135,6 +135,17 @@ bool Worm::isInContactWithAnotherWorm(){
     return false;
 }
 
+void Worm::walkWorm(const Direction& aDiretion){
+    if( armament.isUnarmed() ){
+        walk(aDiretion);
+    } else if ( not armament.isUnarmed() and this->directionLook == aDiretion ){
+        armament.putWeaponOnStandByAndUnarmed();
+        walk(aDiretion);
+    } else{             // no esta desarmando y estaba mirando a la derecha pasamos a que mire a la izquierda
+        this->directionLook = aDiretion;
+    }
+}
+
 void Worm::leftWorm() {
     if( armament.isUnarmed() ){
         walk(Direction::LEFT);
@@ -213,7 +224,6 @@ WeaponSightDTO Worm::getWeaponSightDTO() {
 }
 
 ProjectilesDTO Worm::getProjectilesDTO() {
-    //si ataque con el bate sigo teniendo el currentWeaponEnBate hasta q termine el turno en 3 seg.  @todo
     if(typeMov == ATTACKING_WITH_BAT){
         std::vector<ProjectileDTO> vecProjectileDTO;
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
@@ -239,7 +249,6 @@ void Worm::update() {
         // @todo creo q luego de disparar volvemos a tener todo armaCurrent en none.
         armament.getWeaponOnStandBy(attacked);
     }
-    // si ataca vemos si los proyectiles chocaron al suelo los eliminamos del mundo.
     if(attacked){
         armament.tryCleanProjectiles(aWorld);
     }
@@ -275,6 +284,10 @@ void Worm::attackWithBazooka() {
     bazooka->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook);
 }
 
+b2World* Worm::getWorld(){
+    return this->aWorld;
+}
+
 void Worm::attackWithBat(){
     Bat* aBat = (Bat*) this->armament.getWeaponCurrentPtr();
     GameObject* gameObject = aBat->getBodyCollidesWithRayCast(aWorld, this->getBody()->GetWorldCenter(), directionLook);
@@ -306,15 +319,17 @@ void Worm::teleportWorm(const float& posXTeleport, const float& posYTeleport){
 }
 
 void Worm::takeDamage(const float &aDamage){
-    std::cout << "Se hace dañño al gusano de " <<  aDamage << "\n";
+    std::cout << "Worm con id " << idWorm << " recibe daño de " <<  aDamage << "\n";
     this->hp -=aDamage;
     if(hp <=0.0){
         this->destroyBody();
     }
+    if(this->typeFocus == NO_FOCUS){
+        this->hpInitialTurn = hp;
+    }
 }
 
 void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
-    std::cout << "attacked" << attacked << "\n";
     if( not attacked){
         armament.assignWeapon(aTypeWeapon, this->directionLook);
     }
@@ -339,11 +354,10 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     if(timeLeft <= 0){
         return;
     }
-    std::cout << "Se recibe operationType:" << aCommandDTO->getTypeCommand() << "\n";
     if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
-        this->leftWorm();
+        this->walkWorm(LEFT);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD ){
-        this->rightWorm();
+        this->walkWorm(RIGHT);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_BACK_CMD){
         this->jump(JUMP_BACKWARDS);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_FORWARD_CMD){
@@ -361,7 +375,6 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::FIRE_CMD){
         this->attack();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::TELEPORT_MOVE){
-        std::cout << "Recibo : X: " << aCommandDTO->getX() << " Y:" << aCommandDTO->getY() << "\n";
         this->teleportWorm(aCommandDTO->getX(), aCommandDTO->getY());
     }
 

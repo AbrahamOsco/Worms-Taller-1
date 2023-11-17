@@ -7,8 +7,7 @@
 #include "box2d/b2_fixture.h"
 #include "box2d/b2_polygon_shape.h"
 #include "../../../../GameParameters/GameParameters.h"
-#define MINIMUM_SCALABLE_ANGLE 45
-#define MAXIMUM_UNSCALABLE_ANGLE 170
+
 
 Beam::Beam() : GameObject(ENTITY_BEAM){
 }
@@ -40,7 +39,7 @@ void Beam::addToWorld(b2World *world) {
     defFixtureBeam.shape = &shapeBeam;
     float beamFriction = GameParameters::getBeamFriction(); // antes era 1.5f
     if(angle > GameParameters::getBeamMinimumScalableAngle() && angle <= GameParameters::getBeamMaximumUnscalableAngle()){
-        beamFriction = GameParameters::getBeamFrictionSlipperyStatic();  // beam friction @todo agregar en el gameParameters.
+        beamFriction = GameParameters::getBeamFrictionSlipperyStatic();
     }
     defFixtureBeam.friction = beamFriction;
     this->body->CreateFixture(&defFixtureBeam);
