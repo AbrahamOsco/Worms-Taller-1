@@ -48,7 +48,7 @@ void TextureManager::drawBeam(const std::string &id, int x, int y, int width, in
             SDL2pp::Rect srcRect(0, 0, width, height);
 
             // Definir el rectángulo de destino (posición y tamaño en la ventana)
-            SDL2pp::Rect destRect(x - camera.getPosition().GetX(), y - camera.getPosition().GetX(), width, height);
+            SDL2pp::Rect destRect(x - camera.getPosition().GetX(), y - camera.getPosition().GetY(), width, height);
 
             // Dibujar la textura en el Renderer
             renderer.Copy(*texture, srcRect, destRect, 0.0, SDL2pp::NullOpt, flip);
@@ -99,6 +99,37 @@ void TextureManager::parseTexture(const std::string &yamlFileName, SDL2pp::Rende
 
 void TextureManager::drawTextBox(const std::string &text, int x, int y, const std::string &fontPath, int fontSize,
                                  SDL_Color textColor, SDL_Color boxColor, SDL2pp::Renderer &renderer) {
+    SDL2pp::Font font(fontPath, fontSize);
+    SDL2pp::Texture textTexture(renderer, font.RenderText_Blended(text, textColor));
+
+    int textWidth = textTexture.GetWidth();
+    int textHeight = textTexture.GetHeight();
+
+    // Calcular la posición del texto para que quede en el punto (x, y)
+    int textX = x;
+    int textY = y;
+
+    int padding = 2;
+
+    // Calcular la caja del texto basado en las dimensiones reales del texto
+    SDL_Rect textBoxRect = {x - padding, y - padding, textWidth + 2 * padding, textHeight + 2 * padding};
+
+    // Ajustar la posición de la caja si es necesario
+    // ... (puedes ajustar la posición o las dimensiones de la caja según lo desees)
+
+    // Renderizar la caja del texto
+    SDL_SetRenderDrawColor(renderer.Get(), boxColor.r, boxColor.g, boxColor.b, boxColor.a);
+    SDL_RenderFillRect(renderer.Get(), &textBoxRect);
+
+    // Dibujar el texto en las coordenadas calculadas
+    renderer.Copy(textTexture, SDL2pp::NullOpt, SDL2pp::Rect(textX, textY, textWidth, textHeight));
+}
+
+void TextureManager::drawLife(const std::string &text, int x, int y, const std::string &fontPath, int fontSize,
+                                 SDL_Color textColor, SDL_Color boxColor, SDL2pp::Renderer &renderer, Camera &camera) {
+    x = x - camera.getPosition().GetX();
+    y = y - camera.getPosition().GetY();
+
     SDL2pp::Font font(fontPath, fontSize);
     SDL2pp::Texture textTexture(renderer, font.RenderText_Blended(text, textColor));
 

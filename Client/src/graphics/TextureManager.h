@@ -43,6 +43,9 @@ public:
     drawBeam(const std::string &id, int x, int y, int width, int height, SDL2pp::Renderer &renderer,
              SDL_RendererFlip flip,
              Camera &camera);
+
+    void drawLife(const std::string &text, int x, int y, const std::string &fontPath, int fontSize, SDL_Color textColor,
+                  SDL_Color boxColor, SDL2pp::Renderer &renderer, Camera &camera);
 };
 
 

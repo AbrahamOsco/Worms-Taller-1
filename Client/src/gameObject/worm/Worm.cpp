@@ -77,8 +77,8 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Came
 
     int textWidth = textTexture.GetWidth();
 
-    textureManager.drawTextBox(text, m_x - textWidth / 2, m_y - 30, fontPath, fontSize, textColor, boxColor,
-                               renderer);
+    textureManager.drawLife(text, m_x - textWidth / 2, m_y - 30, fontPath, fontSize, textColor, boxColor,
+                               renderer, camera);
     if (m_weaponCurrent == TypeWeapon::DYNAMITE || m_weaponCurrent == TypeWeapon::AIR_ATTACK ||
         m_weaponCurrent == TypeWeapon::BASEBALL_BAT || m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
         m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_flip, renderer, textureManager, camera);
@@ -118,7 +118,7 @@ void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue
     m_animation.update();
 
     if(m_typeFocus == TypeFocusWorm::FOCUS) {
-        SDL2pp::Point point(m_x - m_width / 2, m_x - m_width / 2);
+        SDL2pp::Point point(m_x, m_y);
         camera.setTarget(point);
     }
 }

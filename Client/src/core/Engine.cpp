@@ -35,7 +35,7 @@ void Engine::update() {
     for (const auto &m_gameObject: m_gameObjects) {
         m_gameObject->update(dt, m_input, m_bQueue, m_camera);
     }
-    //m_camera.update();
+    m_camera.update();
 }
 
 void Engine::render() {
