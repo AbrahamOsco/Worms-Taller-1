@@ -14,7 +14,7 @@ Crosshair::Crosshair(int x, int y, const TypeSight &typeSight) : GameObject(Load
 
 void Crosshair::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     if (m_typeSight == TypeSight::SHOW_SIGHT) {
-        m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_flip, renderer, textureManager);
+        m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_flip, renderer, textureManager, camera);
     }
 }
 

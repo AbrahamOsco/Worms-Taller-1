@@ -35,7 +35,7 @@ void Engine::update() {
     for (const auto &m_gameObject: m_gameObjects) {
         m_gameObject->update(dt, m_input, m_bQueue, m_camera);
     }
-
+    //m_camera.update();
 }
 
 void Engine::render() {
@@ -43,7 +43,7 @@ void Engine::render() {
     m_textureManager.draw("bg", 0, 0, 1920, 1080, m_renderer, SDL_FLIP_NONE);
 
     for (Beam beams: m_beams) {
-        beams.draw(m_renderer, m_textureManager);
+        beams.draw(m_renderer, m_textureManager, m_camera);
     }
 
     for (const auto &m_gameObject: m_gameObjects) {

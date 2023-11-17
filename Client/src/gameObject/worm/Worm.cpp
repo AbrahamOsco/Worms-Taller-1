@@ -81,7 +81,7 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Came
                                renderer);
     if (m_weaponCurrent == TypeWeapon::DYNAMITE || m_weaponCurrent == TypeWeapon::AIR_ATTACK ||
         m_weaponCurrent == TypeWeapon::BASEBALL_BAT || m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
-        m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_flip, renderer, textureManager);
+        m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_flip, renderer, textureManager, camera);
     } else {
         int frameCount = 30;
         int angle = calcularAngulo(m_x, m_y, m_xCrosshair, m_yCrosshair, m_directionLook);
@@ -89,7 +89,7 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Came
         int rowIndex = static_cast<int>(((90 - angle) * frameCount) / 180);
 
         textureManager.drawFrame(m_textureID, m_x - m_width / 2, m_y - m_height / 2, m_width, m_height, rowIndex, 0,
-                                 renderer, m_flip);
+                                 renderer, m_flip, camera);
     }
 }
 
@@ -116,6 +116,11 @@ void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue
 
     animationState();
     m_animation.update();
+
+    if(m_typeFocus == TypeFocusWorm::FOCUS) {
+        SDL2pp::Point point(m_x - m_width / 2, m_x - m_width / 2);
+        camera.setTarget(point);
+    }
 }
 
 void Worm::animationState() {

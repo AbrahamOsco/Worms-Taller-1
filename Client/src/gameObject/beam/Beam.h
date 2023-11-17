@@ -38,7 +38,7 @@ private:
     Angle m_angle;
 public:
     Beam(int posCenterX, int posCenterY, Angle angle, TypeBeam type);
-    void draw(SDL2pp::Renderer& renderer, TextureManager& textureManager);
+    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera);
 };
 
 

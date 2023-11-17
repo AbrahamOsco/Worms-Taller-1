@@ -32,4 +32,5 @@ void Camera::update() {
         m_viewBox.SetY(0);
     }
 
+    m_position = SDL2pp::Point(m_viewBox.GetX(),m_viewBox.GetY());
 }

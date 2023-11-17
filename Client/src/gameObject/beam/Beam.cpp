@@ -78,6 +78,6 @@ Beam::Beam(int posCenterX, int posCenterY, Angle angle, TypeBeam type) {
     m_y = posCenterY - m_height/2;
 }
 
-void Beam::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager) {
-    textureManager.draw(m_textureID, m_x, m_y, m_width, m_height, renderer, SDL_FLIP_NONE);
+void Beam::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
+    textureManager.drawBeam(m_textureID, m_x, m_y, m_width, m_height, renderer, SDL_FLIP_NONE, camera);
 }

@@ -6,6 +6,7 @@
 #define WORMS_TALLER_1_TEXTUREMANAGER_H
 
 #include "SDL2pp/SDL2pp.hh"
+#include "../camera/Camera.h"
 #include <yaml-cpp/yaml.h>
 
 #include <map>
@@ -21,10 +22,11 @@ public:
     void load(const std::string &fileName, std::string &id, SDL2pp::Renderer &renderer);
 
     void
-    draw(const std::string &id, int x, int y, int width, int height, SDL2pp::Renderer &renderer, SDL_RendererFlip flip);
+    draw(const std::string &id, int x, int y, int width, int height, SDL2pp::Renderer &renderer,
+         SDL_RendererFlip flip);
 
     void drawFrame(const std::string &id, int x, int y, int width, int height, int currentRow, int currentCol,
-                   SDL2pp::Renderer &renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
+                   SDL2pp::Renderer &renderer, SDL_RendererFlip flip, Camera &camera);
 
     void
     drawTextBox(const std::string &text, int x, int y, const std::string &fontPath, int fontSize,
@@ -36,6 +38,11 @@ public:
     void setColorMod(const std::string &id, Uint8 r, Uint8 g, Uint8 b, Uint8 alpha);
 
     void resetColorMod(const std::string &id);
+
+    void
+    drawBeam(const std::string &id, int x, int y, int width, int height, SDL2pp::Renderer &renderer,
+             SDL_RendererFlip flip,
+             Camera &camera);
 };
 
 

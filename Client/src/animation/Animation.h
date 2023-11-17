@@ -20,7 +20,8 @@ private:
 public:
     Animation() {}
     void update();
-    void draw(int x, int y, SDL_RendererFlip flip, SDL2pp::Renderer &renderer, TextureManager &textureManager);
+    void draw(int x, int y, SDL_RendererFlip flip, SDL2pp::Renderer &renderer, TextureManager &textureManager,
+              Camera &camera);
     void setProps(const std::string &textureID, int spriteWidth, int spriteHeight, int frameCount, int animSpeed, SDL_RendererFlip flip = SDL_FLIP_NONE);
 };
 
