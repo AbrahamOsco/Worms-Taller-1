@@ -32,9 +32,9 @@ void GameInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, 
 }
 
 void GameInfo::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
-    m_weaponInventory.update(dt, input, queue, camera);
-    if (m_isMyTurn) {
 
+    if (m_isMyTurn) {
+        m_weaponInventory.update(dt, input, queue, camera);
         if (input.getKeyDown(SDL_SCANCODE_RIGHT)) {
             std::unique_ptr<Command> command(new RightCmd());
             queue.move_push(std::move(command));
