@@ -4,20 +4,20 @@
 
 #include "SpriteAnimation.h"
 
+SpriteAnimation::SpriteAnimation(bool repeat) : Animation(repeat) {}
+
 void SpriteAnimation::update() {
-    m_SpriteFrame = (int) (SDL_GetTicks() / m_AnimSpeed) % m_FrameCount;
+    m_currentFrame = (int) (SDL_GetTicks() / m_speed) % m_frameCount;
 }
 
 void SpriteAnimation::draw(int x, int y, int spriteWidth, int spriteHeight, Camera &camera, SDL2pp::Renderer &renderer,
                            TextureManager &textureManager, SDL_RendererFlip flip, float xScale, float yScale) {
-    textureManager.drawFrame(m_TextureID, x, y, spriteWidth, spriteHeight, m_SpriteFrame, 0, renderer, flip, camera);
+    textureManager.drawFrame(m_textureID, x, y, spriteWidth, spriteHeight, m_currentFrame, 0, renderer, flip, camera);
 }
 
 void SpriteAnimation::setProps(const std::string &textureID, int frameCount,
                                int animSpeed) {
-    m_TextureID = textureID;
-    m_FrameCount = frameCount;
-    m_AnimSpeed = animSpeed;
+    m_textureID = textureID;
+    m_frameCount = frameCount;
+    m_speed = animSpeed;
 }
-
-SpriteAnimation::SpriteAnimation(bool repeat) : Animation(repeat) {}
