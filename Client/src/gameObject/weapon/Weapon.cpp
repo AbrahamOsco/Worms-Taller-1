@@ -7,8 +7,9 @@
 #include "../../command/SelectBatCmd.h"
 #include "../../command/SelectBazookaCmd.h"
 
-Weapon::Weapon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon) : GameObject(LoaderParams(0, 0, 50, 55, " ")),
-                                                        m_typeWeapon(typeWeapon), m_ammoCount(ammoCount), m_isSelected(false) {
+Weapon::Weapon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon, bool isMyTurn)
+        : GameObject(LoaderParams(0, 0, 50, 55, " ")),
+          m_typeWeapon(typeWeapon), m_ammoCount(ammoCount), m_isSelected(false), m_isMyTurn(isMyTurn) {
 
     if (m_typeWeapon == currentWeapon) {
         m_isSelected = true;
@@ -70,19 +71,21 @@ int Weapon::getHeight() {
 }
 
 void Weapon::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
-    if (input.isMouseLeftButtonDown()) {
-        SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);
-        SDL2pp::Point point(input.getMouseX(), input.getMouseY());
-        if (SDL_PointInRect(&point, &shape) && !m_isSelected) {
-            if (m_typeWeapon == TypeWeapon::TELEPORT) {
-                std::unique_ptr<Command> command(new SelectTeleportCmd());
-                queue.move_push(std::move(command));
-            } else if (m_typeWeapon == TypeWeapon::BASEBALL_BAT) {
-                std::unique_ptr<Command> command(new SelectBatCmd());
-                queue.move_push(std::move(command));
-            } else if (m_typeWeapon == TypeWeapon::BAZOOKA) {
-                std::unique_ptr<Command> command(new SelectBazookaCmd());
-                queue.move_push(std::move(command));
+    if (m_isMyTurn) {
+        if (input.isMouseLeftButtonDown()) {
+            SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);
+            SDL2pp::Point point(input.getMouseX(), input.getMouseY());
+            if (SDL_PointInRect(&point, &shape) && !m_isSelected) {
+                if (m_typeWeapon == TypeWeapon::TELEPORT) {
+                    std::unique_ptr<Command> command(new SelectTeleportCmd());
+                    queue.move_push(std::move(command));
+                } else if (m_typeWeapon == TypeWeapon::BASEBALL_BAT) {
+                    std::unique_ptr<Command> command(new SelectBatCmd());
+                    queue.move_push(std::move(command));
+                } else if (m_typeWeapon == TypeWeapon::BAZOOKA) {
+                    std::unique_ptr<Command> command(new SelectBazookaCmd());
+                    queue.move_push(std::move(command));
+                }
             }
         }
     }

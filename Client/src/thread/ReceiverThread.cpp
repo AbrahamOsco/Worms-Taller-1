@@ -23,6 +23,11 @@ void ReceiverThread::run() {
         ProjectilesDTO projectilesDto = snapShot.getProjectilesDto();
         TurnDTO turnDto = snapShot.getTurnDto();
 
+        bool isMyTurn = false;
+        if (turnDto.getTextTurn() == "Es tu turno") {
+            isMyTurn = true;
+        }
+
 
         std::vector<ProjectileDTO> projectiles =  projectilesDto.getProjectilesDto();
         for(const ProjectileDTO &projectileDto : projectiles) {
@@ -48,7 +53,7 @@ void ReceiverThread::run() {
             if (weaponDto.getTypeMunition() == TypeMunition::NO_INFINITE) {
                 ammoCount = static_cast<int>(weaponDto.getMunition());
             }
-            Weapon weapon(weaponDto.getTypeWeapon(), ammoCount, weaponsDto.getWeaponCurrent());
+            Weapon weapon(weaponDto.getTypeWeapon(), ammoCount, weaponsDto.getWeaponCurrent(), isMyTurn);
             weaponInventory.addWeapon(weapon);
         }
 
