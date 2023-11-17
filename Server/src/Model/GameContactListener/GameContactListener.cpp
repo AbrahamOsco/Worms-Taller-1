@@ -9,12 +9,12 @@
 #include "../Scenario/Beam/Beam.h"
 
 // Clase de colisiones el listener:
-void wormCollidesWithBeam(GameObject* worm, GameObject* beam){
+void wormCollidesWithBeam(GameObject* worm, GameObject* beam, GameParameters *gameParameters){
     std::cout << "Worm colisionar con el BEAM\n";
     Worm* unWorm = (Worm*) (worm);
     unWorm->assigOnABeam();
     Beam* unaBeam = (Beam*) (beam);
-    if(unaBeam->getAngle() > 0.0f and unaBeam->getAngle() <= 45.0f){
+    if(unaBeam->getAngle() > 0.0f and unaBeam->getAngle() <= GameParameters::getBeamMinimumScalableAngle()){
         unWorm->activaeInclinedBeam();
     } else if ( unaBeam->getAngle() == 0 ){
         unWorm->disableInclinedBeam();
@@ -23,10 +23,10 @@ void wormCollidesWithBeam(GameObject* worm, GameObject* beam){
     float positionYInAirLast = unWorm->getPositionAir().second;
     float positionYCurrent = unWorm->getBody()->GetWorldCenter().y;
     float fallHeight = positionYInAirLast - positionYCurrent;
-    float thresholdFall = 2.0f; // sacar del archivo @ricardo. todo
+    float thresholdFall = gameParameters->getWormMaxResistanceToHeight();
     if (fallHeight > thresholdFall){
         fallHeight -= thresholdFall;
-        int damageForFall = (int) std::min(fallHeight, 25.0f);
+        int damageForFall = (int) std::min(fallHeight, gameParameters->getMaxFallDamage());
         unWorm->takeDamage(damageForFall);
     }
     //actualizamos la posicion en el aire gusano luego de caer.
@@ -34,25 +34,25 @@ void wormCollidesWithBeam(GameObject* worm, GameObject* beam){
     unWorm->savePositionInAir(positonWormInAir.x, positonWormInAir.y);
 }
 
-void beamCollidesWithWorm(GameObject* beam, GameObject* worm){
-    wormCollidesWithBeam(worm, beam);
+void beamCollidesWithWorm(GameObject* beam, GameObject* worm, GameParameters *gameParameters ){
+    wormCollidesWithBeam(worm, beam, gameParameters);
 }
 
-void wormCollidesWithWater(GameObject* worm, GameObject* water){
+void wormCollidesWithWater(GameObject* worm, GameObject* water, GameParameters *gameParameters){
     std::cout << "Worm colisionar con WATER\n";
     worm->destroyBody();
 }
-void waterCollidesWithWorm(GameObject* water, GameObject* worm){
-    wormCollidesWithWater(worm, water);
+void waterCollidesWithWorm(GameObject* water, GameObject* worm, GameParameters *gameParameters){
+    wormCollidesWithWater(worm, water, gameParameters);
 }
-void wormCollidesWithEdege(GameObject* worm, GameObject* edge){
+void wormCollidesWithEdege(GameObject* worm, GameObject* edge, GameParameters *gameParameters){
     std::cout << "Worm collisiona con el edge\n";
 }
-void edgeCollidesWithWorm(GameObject* edge, GameObject* worm){
+void edgeCollidesWithWorm(GameObject* edge, GameObject* worm, GameParameters *gameParameters){
     std::cout << "Edge collisiona con el worm\n";
 }
 
-void wormCollidesWithWorm(GameObject* worm1, GameObject* worm2){
+void wormCollidesWithWorm(GameObject* worm1, GameObject* worm2, GameParameters *gameParameters){
     Worm* aWorm1 = (Worm*) (worm1);
     Worm* aWorm2 = (Worm*) (worm2);
     aWorm1->assigNextToAWorm();
@@ -70,20 +70,20 @@ void wormCollidesWithWorm(GameObject* worm1, GameObject* worm2){
     }
 }
 
-void munitionBazookaCollidesWithWorm(GameObject* bazooka, GameObject* worm){
+void projectileBazookaCollidesWithWorm(GameObject* projectileBazooka, GameObject* worm, GameParameters *gameParameters){
     std::cout << "munitionBazookaCollidesWithWorm\n";
-    if(bazooka == nullptr or worm == nullptr) return;
+    if(projectileBazooka == nullptr or worm == nullptr) return;
     Worm* wormSelect = (Worm*) (worm);
-    bazooka->destroyBody();
-    wormSelect->takeDamage(50.0f);
+    projectileBazooka->destroyBody();
+    wormSelect->takeDamage(50.0f);  // todo queda pendiente ver esto y hacerlo en area.
     // aca aplicar el daño en area.
 }
 
-void wormCollidesWithProjectileBazooka(GameObject* worm1, GameObject* bazooka){
-    munitionBazookaCollidesWithWorm(bazooka, worm1);
+void wormCollidesWithProjectileBazooka(GameObject* worm1, GameObject* projectileBazooka, GameParameters *gameParameters){
+    projectileBazookaCollidesWithWorm(projectileBazooka, worm1, gameParameters);
 }
 
-void projectileBazookaCollideWithBeam(GameObject* munitionBazooka, GameObject* beam){
+void projectileBazookaCollideWithBeam(GameObject* munitionBazooka, GameObject* beam, GameParameters *gameParameters){
     std::cout << "munitionBazookaCollideWithBeam\n";
     b2Vec2 munitionPosition = munitionBazooka->getBody()->GetWorldCenter();
 
@@ -102,11 +102,11 @@ void projectileBazookaCollideWithBeam(GameObject* munitionBazooka, GameObject* b
     munitionBazooka->destroyBody();
 }
 
-void beamCollidesWithMunitionBazooka(GameObject* beam, GameObject* munitionBazooka){
-    projectileBazookaCollideWithBeam(munitionBazooka, beam);
+void beamCollidesWithMunitionBazooka(GameObject* beam, GameObject* munitionBazooka, GameParameters *gameParameters){
+    projectileBazookaCollideWithBeam(munitionBazooka, beam, gameParameters);
 }
 
-void beamEndContactWithWorm(GameObject* beam, GameObject* worm){
+void beamEndContactWithWorm(GameObject* beam, GameObject* worm, GameParameters *gameParameters){
     std::cout << "beamEndContactWithWorm\n";
     Worm* unWorm = (Worm*) (worm);
     unWorm->unAssingOnABeam();
@@ -115,11 +115,11 @@ void beamEndContactWithWorm(GameObject* beam, GameObject* worm){
     unWorm->savePositionInAir(positonWormInAir.x, positonWormInAir.y);
 }
 
-void wormEndContactWithBeam(GameObject* worm, GameObject* beam){
-    beamEndContactWithWorm(beam, worm);
+void wormEndContactWithBeam(GameObject* worm, GameObject* beam, GameParameters *gameParameters){
+    beamEndContactWithWorm(beam, worm, gameParameters);
 }
 
-void wormEndContactWithWorm(GameObject* worm, GameObject* wormTwo){
+void wormEndContactWithWorm(GameObject* worm, GameObject* wormTwo, GameParameters *gameParameters){
     Worm* aWorm1 = (Worm*) (worm);
     Worm* aWorm2 = (Worm*) (wormTwo);
     aWorm1->unAssignNextToAWorm();
@@ -127,8 +127,9 @@ void wormEndContactWithWorm(GameObject* worm, GameObject* wormTwo){
 }
 
 
-GameContactListener::GameContactListener(b2World *aWorld) {
-    aWorld->SetContactListener(this);
+GameContactListener::GameContactListener(b2World *world, GameParameters *gameParameters) {
+    world->SetContactListener(this);
+    this->gameParameters = (GameParameters *) gameParameters;
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_BEAM)] = &wormCollidesWithBeam;
     collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM)] = &beamCollidesWithWorm;
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_WATER)] = &wormCollidesWithWater;
@@ -156,7 +157,7 @@ void GameContactListener::BeginContact(b2Contact *contact) {
     if(iteratorElement != collisionsMap.end() ){
         auto hitFunction = iteratorElement->second;
         if(hitFunction){
-            hitFunction(gameObject, otroGameObject);
+            hitFunction(gameObject, otroGameObject, gameParameters);
         }
     }
 }
@@ -169,7 +170,7 @@ void GameContactListener::EndContact(b2Contact *contact) {
     if(iteratorElement != endContactMap.end() ){
         auto hitFunction = iteratorElement->second;
         if(hitFunction){
-            hitFunction(gameObject, otroGameObject);
+            hitFunction(gameObject, otroGameObject, gameParameters);
         }
     }
 }
