@@ -14,7 +14,8 @@ private:
     bool m_prevSpaceState;
 
     // Nuevas variables para el manejo del clic del mouse
-    bool m_mouseButtonDown;
+    bool m_mouseLeftButtonDown;
+    bool m_mouseRightButtonDown;
     int m_mouseX;
     int m_mouseY;
 
@@ -30,7 +31,8 @@ public:
     bool getKeyDown(SDL_Scancode key) const;
     bool getKeyUp(SDL_Scancode key);
 
-    bool isMouseButtonDown() const;
+    bool isMouseLeftButtonDown() const;
+    bool isMouseRightButtonDown() const;
     int getMouseX() const;
     int getMouseY() const;
 

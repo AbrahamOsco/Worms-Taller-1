@@ -106,10 +106,11 @@ void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue
     }
 
     if (m_weaponCurrent == TypeWeapon::TELEPORT) {
-        if (input.isMouseButtonDown()) {
+        if (input.isMouseRightButtonDown()) {
             SDL2pp::Point point(input.getMouseX(), input.getMouseY());
-            std::cout << "send: " << point << std::endl;
-            std::unique_ptr<Command> command(new TeleportCmd(point.GetX(), point.GetY()));
+            SDL2pp::Point newPoint = point + camera.getPosition();
+            std::cout << "send: " << newPoint << std::endl;
+            std::unique_ptr<Command> command(new TeleportCmd(newPoint.GetX(), newPoint.GetY()));
             queue.move_push(std::move(command));
         }
     }

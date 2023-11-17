@@ -70,7 +70,7 @@ int Weapon::getHeight() {
 }
 
 void Weapon::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
-    if (input.isMouseButtonDown()) {
+    if (input.isMouseLeftButtonDown()) {
         SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);
         SDL2pp::Point point(input.getMouseX(), input.getMouseY());
         if (SDL_PointInRect(&point, &shape) && !m_isSelected) {

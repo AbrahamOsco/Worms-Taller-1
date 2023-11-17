@@ -4,7 +4,7 @@
 
 #include "Input.h"
 
-Input::Input() : m_quit(false), m_mouseButtonDown(false), m_mouseX(0), m_mouseY(0), m_prevSpaceState(false) {
+Input::Input() : m_quit(false), m_mouseLeftButtonDown(false), m_mouseRightButtonDown(false), m_mouseX(0), m_mouseY(0), m_prevSpaceState(false) {
     m_keyStates = SDL_GetKeyboardState(nullptr);
 }
 
@@ -45,13 +45,21 @@ void Input::keyDown() {
 }
 
 void Input::mouseButtonDown(SDL_Event& event) {
-    m_mouseButtonDown = true;
+    if (event.button.button == SDL_BUTTON_LEFT) {
+        m_mouseLeftButtonDown = true;
+    } else if (event.button.button == SDL_BUTTON_RIGHT) {
+        m_mouseRightButtonDown = true;
+    }
     m_mouseX = event.button.x;
     m_mouseY = event.button.y;
 }
 
 void Input::mouseButtonUp(SDL_Event& event) {
-    m_mouseButtonDown = false;
+    if (event.button.button == SDL_BUTTON_LEFT) {
+        m_mouseLeftButtonDown = false;
+    } else if (event.button.button == SDL_BUTTON_RIGHT) {
+        m_mouseRightButtonDown = false;
+    }
     m_mouseX = event.button.x;
     m_mouseY = event.button.y;
 }
@@ -65,8 +73,12 @@ bool Input::getKeyDown(SDL_Scancode key) const{
     return (m_keyStates[key] == 1);
 }
 
-bool Input::isMouseButtonDown() const {
-    return m_mouseButtonDown;
+bool Input::isMouseLeftButtonDown() const {
+    return m_mouseLeftButtonDown;
+}
+
+bool Input::isMouseRightButtonDown() const {
+    return m_mouseRightButtonDown;
 }
 
 int Input::getMouseX() const {
