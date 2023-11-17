@@ -33,7 +33,10 @@ GameParameters::GameParameters() {
     parameters["WORM_FRICTION"] = nodeInitial["WORM_FRICTION"].as<float>();
     parameters["WORM_FACTOR_IMPULSE_SCALING_DOWN"] = nodeInitial["WORM_FACTOR_IMPULSE_SCALING_DOWN"].as<float>();
     parameters["WORM_FACTOR_IMPULSE_CLIMBING_UP"] = nodeInitial["WORM_FACTOR_IMPULSE_CLIMBING_UP"].as<float>();
+    parameters["WORM_MAX_FALL_DAMAGE"] = nodeInitial["WORM_MAX_FALL_DAMAGE"].as<float>();
+    parameters["WORM_RESISTANCE_TO_HEIGHT"] = nodeInitial["WORM_RESISTANCE_TO_HEIGHT"].as<float>();
 
+    //WORM_RESISTANCE_TO_HEIGHT
 
     // armas:
     parameters["WEAPON_ANGLE_INITIAL"] = nodeInitial["WEAPON_ANGLE_INITIAL"].as<float>();
@@ -61,6 +64,16 @@ GameParameters::GameParameters() {
     parameters["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"] = nodeInitial["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"].as<float>();
     parameters["BAZOOKA_MUNITION"] = nodeInitial["BAZOOKA_MUNITION"].as<float>();
     parameters["BAZOOKA_RAY_LENGTH"] = nodeInitial["BAZOOKA_RAY_LENGTH"].as<float>();
+}
+
+//WORM_RESISTANCE_TO_HEIGHT
+float GameParameters::getWormMaxResistanceToHeight() const{
+    return this->parameters.at("WORM_RESISTANCE_TO_HEIGHT");
+}
+
+
+float GameParameters::getMaxFallDamage() const{
+    return this->parameters.at("WORM_MAX_FALL_DAMAGE");
 }
 
 float GameParameters::getBatIterations() const{

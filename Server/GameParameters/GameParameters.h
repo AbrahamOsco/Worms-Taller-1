@@ -108,6 +108,9 @@ public:
 
     float getBatIterations() const;
 
+    float getMaxFallDamage() const;
+
+    float getWormMaxResistanceToHeight() const;
 };
 
 
