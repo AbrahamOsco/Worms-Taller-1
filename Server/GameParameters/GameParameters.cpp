@@ -51,6 +51,12 @@ GameParameters::GameParameters() {
     parameters["BAZOOKA_PROJECTILE_DAMAGE_MAX"] = nodeInitial["BAZOOKA_PROJECTILE_DAMAGE_MAX"].as<float>();
     parameters["BAZOOKA_IMPULSE_X_INITIAL"] = nodeInitial["BAZOOKA_IMPULSE_X_INITIAL"].as<float>();
     parameters["BAZOOKA_IMPULSE_Y_INITIAL"] = nodeInitial["BAZOOKA_IMPULSE_Y_INITIAL"].as<float>();
+
+    parameters["BAZOOKA_MAX_IMPULSE_X"] = nodeInitial["BAZOOKA_MAX_IMPULSE_X"].as<float>();
+    parameters["BAZOOKA_MAX_IMPULSE_Y"] = nodeInitial["BAZOOKA_MAX_IMPULSE_Y"].as<float>();
+    parameters["INCREASE_IMPULSE_FOR_FPS"] = nodeInitial["INCREASE_IMPULSE_FOR_FPS"].as<float>();
+
+
     parameters["BAZOOKA_PROJECTILE_RADIO"] = nodeInitial["BAZOOKA_PROJECTILE_RADIO"].as<float>();
     parameters["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"] = nodeInitial["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"].as<float>();
     parameters["BAZOOKA_MUNITION"] = nodeInitial["BAZOOKA_MUNITION"].as<float>();
@@ -199,6 +205,18 @@ float GameParameters::getBazookaImpulseXInitial() const {
 
 float GameParameters::getBazookaImpulseYInitial() const {
     return parameters.at("BAZOOKA_IMPULSE_Y_INITIAL");
+}
+
+float GameParameters::getBazookaMaxImpulseX() const{
+    return parameters.at("BAZOOKA_MAX_IMPULSE_X");
+}
+
+float GameParameters::getBazookaMaxImpulseY() const{
+    return parameters.at("BAZOOKA_MAX_IMPULSE_Y");
+}
+
+float GameParameters::getIncreaseImpulseForFPS() const{
+    return parameters.at("INCREASE_IMPULSE_FOR_FPS");
 }
 
 float GameParameters::getBazookaProjectileDamageMax() const {

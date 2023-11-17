@@ -123,3 +123,13 @@ Player & Players::getCurrentPlayer(){
     return this->players.at(idCurrenPlayer);
 }
 
+bool Players::allWormsAreUnmoveAndNotExistsProjectiles() {
+    for(auto& mapPlayers : players){
+        if(not mapPlayers.second.allWormsAreUnmoveAndNotExistsProjectiles()){
+            return false;
+        }
+    }
+    std::cout << "Dio true \n";
+    return true;
+}
+

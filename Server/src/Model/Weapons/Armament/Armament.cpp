@@ -66,6 +66,7 @@ void Armament::putWeaponOnStandByAndUnarmed() {
     }
 }
 
+
 void Armament::getWeaponOnStandBy(const bool &attacked) {
     if(weaponOnStandBy != NONE_WEAPON  and not attacked){
         this->currentWeapon = weaponOnStandBy;
@@ -123,6 +124,14 @@ void Armament::tryCleanProjectiles(b2World *aWorld) {
 void Armament::endTurn() {
     this->currentWeapon = NONE_WEAPON;
     this->weaponOnStandBy = NONE_WEAPON;
+}
+
+bool Armament::thereAreProjectiles() {
+    return armament.at(weaponOnStandBy)->thereAreProjectiles();
+}
+
+bool Armament::weaponStandByLaunchesProjectiles() {
+    return armament.at(weaponOnStandBy)->launchesProjectiles();
 }
 
 

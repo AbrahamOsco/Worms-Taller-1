@@ -49,8 +49,9 @@ WeaponSightDTO Weapon::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direc
     return WeaponSightDTO(NO_SHOW_SIGHT, 0, 0);
 }
 
-void Weapon::increaseImpulse() {
-    // no hago nada para algunas armas y las armas sin mira.
+// devuelve true si llega al maximo falso si no.
+bool Weapon::increaseImpulse() {
+    return false; // devuelvo false nunca llega al maximo porque no tiene /  no hago nada para algunas armas y las armas sin mira.
 }
 
 bool Weapon::hasMaxImpulse() {
@@ -63,6 +64,11 @@ void Weapon::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
 
 void Weapon::tryCleanProjectiles(b2World *aWorld) {
  //no hago nada para las armas que ni lanzan projectiles ni las armas sin mira
+}
+
+// no respondo nada util segun el arma en standabye que tengo respondo
+bool Weapon::thereAreProjectiles() {
+    return false;
 }
 
 

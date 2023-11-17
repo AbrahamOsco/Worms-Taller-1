@@ -44,6 +44,9 @@ public:
     Worm *getCurrentWorm();
 
     Player & getCurrentPlayer();
+
+    bool allWormsAreUnmoveAndNotExistsProjectiles();
+
 };
 
 

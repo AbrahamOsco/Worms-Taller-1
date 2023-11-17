@@ -22,6 +22,9 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     typeCharge = NONE_CHARGE;
     iterationsForBatAttack = 15;
     positionInAir= std::make_pair(0.0f, 0.0f);
+    hpInitialTurn = hp;
+    contatctsWithBeam = 0;
+    contactsWithWorms = 0;
 }
 
 void Worm::savePositionInAir(const float &positionXAir, const float &positionYAir) {
@@ -253,11 +256,16 @@ void Worm::attack() {
         this->attackWithBat();
         attacked = true;
     } else if ( this->armament.getWeaponCurrentPtr()->hasVariablePower()){ // en un futuro pregunta si tiene un arma con potencia variable.
+        bool reachMaxImpulse = false;
         if(typeCharge == NONE_CHARGE){ // cargo por primera vez.
             typeCharge = MANY_CHARGE;
-            this->armament.getWeaponCurrentPtr()->increaseImpulse();
+            reachMaxImpulse = this->armament.getWeaponCurrentPtr()->increaseImpulse();
         } else if ( typeCharge == MANY_CHARGE) {
-            this->armament.getWeaponCurrentPtr()->increaseImpulse();
+            reachMaxImpulse = this->armament.getWeaponCurrentPtr()->increaseImpulse();
+        }
+        if(reachMaxImpulse){
+            std::cout << "Llege al maximo impulso \n";
+            tryAttackVariablePower();
         }
     }
 }
@@ -285,8 +293,16 @@ void Worm::attackWithBat(){
 }
 
 void Worm::teleportWorm(const float& posXTeleport, const float& posYTeleport){
+    if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
+        return;
+    }
     Teleport* teleport = (Teleport*) this->armament.getWeaponCurrentPtr();
-    teleport->teleportIn(getBody(), posXTeleport, posYTeleport);
+    float posXInMeters = posXTeleport/60.0F;
+    float posYInMeters = (gameParameters.getMaxHeightPixel() - posYTeleport)/60.f;
+    teleport->teleportIn(getBody(), posXInMeters, posYInMeters);
+    armament.putWeaponOnStandByAndUnarmed(); // luego de atacar con la bazoka pasamos el arma a standB y nos desarmamos
+    std::cout << "Me teletransporto en " << posXInMeters << "  " << posYInMeters << "\n";
+    attacked = true;
 }
 
 void Worm::takeDamage(const float &aDamage){
@@ -303,16 +319,25 @@ void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
     }
 }
 
-
 void Worm::endTurn() {
     typeFocus = NO_FOCUS;
     typeMov = STANDING;
     attacked = false;
     armament.endTurn();
+    hpInitialTurn = hp;
+}
+bool Worm::wasDamaged() const{
+    return hpInitialTurn != hp;
 }
 
-void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
-    std::cout << "Recibo comando " << aCommandDTO->getTypeCommand() << "\n";
+bool Worm::alreadyAttack() const{
+    return attacked;
+}
+
+void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft) {
+    if(timeLeft <= 0){
+        return;
+    }
     if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
         this->leftWorm();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD ){
@@ -333,6 +358,8 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
         this->downWorm();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::FIRE_CMD){
         this->attack();
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::TELEPORT_MOVE){
+        this->teleportWorm(aCommandDTO->getX(), aCommandDTO->getY());
     }
 
 }
@@ -343,10 +370,43 @@ void Worm::tryAttackVariablePower() {
         if(armament.getWeaponCurrent() == BAZOOKA){
             attackWithBazooka();
         } // agregar aca los otros tipos de arma con potencia variable
-
-
         armament.putWeaponOnStandByAndUnarmed(); // luego de atacar con la bazoka pasamos el arma a standB y nos desarmamos
         this->typeCharge = NONE_CHARGE;
         attacked = true;
     }
+}
+bool Worm::thereAreProjectiles(){
+    if(not attacked ){
+        return false;
+    }
+    if(attacked and armament.weaponStandByLaunchesProjectiles()){
+        return armament.thereAreProjectiles(); // pregunto si la arma en standBy (con la q dispare tiene algun projectil todavia).
+    }
+    return false;
+}
+
+bool Worm::isUnmoveAndNotExistsPojectiles() {
+    bool unMovedOnABeam = body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and (contatctsWithBeam > 0);
+    bool unMovedOnAWorm = false;
+    if(contatctsWithBeam == 0 and (contactsWithWorms > 0) ){ // si no esta sobre una viga pero esta sobre un gusano entonces esta inmobil.
+        unMovedOnAWorm =  true;
+    }
+    // si esta cargando el arma tampoco debe acabar el turno asi que pedimos que sea de tipo de carga NONE_CHARGE.
+    return ((unMovedOnABeam or unMovedOnAWorm) and (not thereAreProjectiles()) and (this->typeCharge == NONE_CHARGE)  );
+}
+
+void Worm::assigOnABeam() {
+    contatctsWithBeam++;
+}
+
+void Worm::unAssingOnABeam(){
+    contatctsWithBeam--;
+}
+
+void Worm::unAssignNextToAWorm() {
+    contactsWithWorms--;
+}
+
+void Worm::assigNextToAWorm() {
+    contactsWithWorms++;
 }

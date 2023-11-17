@@ -52,6 +52,10 @@ public:
     void tryCleanProjectiles(b2World *aWorld);
 
     void endTurn();
+
+    bool thereAreProjectiles();
+
+    bool weaponStandByLaunchesProjectiles();
 };
 
 

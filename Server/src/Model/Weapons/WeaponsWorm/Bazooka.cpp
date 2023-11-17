@@ -10,7 +10,7 @@ Bazooka::Bazooka(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, co
                  aTypeMunition, aMunition, gameParameters), weaponSight(gameParameters.getBazookaRayLength(),
                  gameParameters.getWeaponAngleInitial(), gameParameters){
     impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
-    maxImpulseWeapon = std::make_pair(1.0f, 1.0f);
+    maxImpulseWeapon = std::make_pair(gameParameters.getBazookaMaxImpulseX(), gameParameters.getBazookaMaxImpulseY());
     projectil = nullptr;
 }
 
@@ -26,10 +26,16 @@ bool Bazooka::hasAScope() {
     return true;
 }
 
-void Bazooka::increaseImpulse() {
+bool Bazooka::increaseImpulse() {
     std::cout << "Incremento la potencia bazzoka\n";
-    impulseWeapon.first += 0.01;
-    impulseWeapon.second += 0.01;
+    impulseWeapon.first += gameParameters.getIncreaseImpulseForFPS();
+    impulseWeapon.second += gameParameters.getIncreaseImpulseForFPS();
+
+    // para comprar floats necesitamos comprar las restas con un epsilon.
+    float tolerance = 0.0001;
+    bool isMaxImpulse = std::abs(impulseWeapon.first - maxImpulseWeapon.first) < tolerance and
+                        std::abs(impulseWeapon.second - maxImpulseWeapon.second) < tolerance;
+    return isMaxImpulse;
 }
 
 
@@ -78,6 +84,10 @@ void Bazooka::tryCleanProjectiles(b2World *aWorld) {
 
 bool Bazooka::hasVariablePower() {
     return true;
+}
+
+bool Bazooka::thereAreProjectiles() {
+    return (projectil != nullptr);
 }
 
 

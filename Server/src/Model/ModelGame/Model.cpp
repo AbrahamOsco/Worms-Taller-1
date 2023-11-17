@@ -34,8 +34,8 @@ StageDTO Model::startAndGetStageDTO() {
     return this->getStageDTO();
 }
 
-void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
-    players.getCurrentWorm()->execute(aCommandDTO);
+void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft) {
+    players.getCurrentWorm()->execute(aCommandDTO, timeLeft);
 }
 
 void Model::update() {
@@ -63,6 +63,10 @@ ProjectilesDTO Model::getProjectilesDTO(){
 
 void Model::tryAttackVariablePower() {
     players.getCurrentWorm()->tryAttackVariablePower();
+}
+
+int Model::getTimeLeft() const {
+    return turns.getTimeLeft();
 }
 
 

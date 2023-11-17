@@ -49,6 +49,7 @@ public:
 
     Worm *getCurrentWorm();
 
+    bool allWormsAreUnmoveAndNotExistsProjectiles();
 
     std::string getPlayerName() const;
 
