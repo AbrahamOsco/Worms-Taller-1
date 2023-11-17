@@ -41,11 +41,14 @@ class Worm : public GameObject {
     const GameParameters& gameParameters;
     b2World* aWorld;
     Armament& armament;
+    bool onABeam;
     bool onInclinedBeam;
+    bool nextToAnotherWorm;
     bool attacked;
     size_t iterationsForBatAttack;
     std::pair<float, float> positionInAir; // para que el gusano sufra daño en caidas mayores a 2m.
     TypeCharge typeCharge;
+    float hpInitialTurn;
 public:
 
     Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
@@ -60,9 +63,17 @@ public:
 
     float getPositionY();
 
+    void assigOnABeam();
+
+    void unAssingOnABeam();
+
     void activaeInclinedBeam();
 
     void disableInclinedBeam();
+
+    void assigNextToAWorm();
+
+    void unAssignNextToAWorm();
 
     TypeFocusWorm getTypeFocusWorm() const;
 
@@ -125,6 +136,14 @@ public:
     void execute(std::unique_ptr<CommandDTO> &aCommandDTO);
 
     void tryAttackVariablePower();
+
+    bool wasDamaged() const;
+
+    bool alreadyAttack() const;
+
+    bool isUnmoveAndNotExistsPojectiles();
+
+    bool thereAreProjectiles();
 };
 
 

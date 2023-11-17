@@ -34,6 +34,8 @@ public:
 
     bool launchesProjectiles() override;
 
+    bool thereAreProjectiles() override;
+
     void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
 
     void shootProjectile(b2World *world, const b2Vec2& positionWorm, const Direction& direction);

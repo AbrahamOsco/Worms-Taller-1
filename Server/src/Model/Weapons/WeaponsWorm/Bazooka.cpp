@@ -86,6 +86,10 @@ bool Bazooka::hasVariablePower() {
     return true;
 }
 
+bool Bazooka::thereAreProjectiles() {
+    return (projectil != nullptr);
+}
+
 
 
 

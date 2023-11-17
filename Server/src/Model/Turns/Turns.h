@@ -16,6 +16,8 @@ private:
     std::string textTurn;
     int timeLeft;
     size_t idWormCurrent;
+    bool damageRecognized;
+    bool attackRecognized;
 public:
 
     explicit Turns(Players& players);

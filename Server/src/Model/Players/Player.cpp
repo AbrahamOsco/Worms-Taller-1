@@ -86,4 +86,13 @@ void Player::endTurn() {
     this->worms.at(idCurrentWorm)->endTurn();
 }
 
+bool Player::allWormsAreUnmoveAndNotExistsProjectiles() {
+    for(auto& aWorm : worms){
+        if(not aWorm.second.get()->isUnmoveAndNotExistsPojectiles()){
+            return false;
+        }
+    }
+    return true;
+}
+
 

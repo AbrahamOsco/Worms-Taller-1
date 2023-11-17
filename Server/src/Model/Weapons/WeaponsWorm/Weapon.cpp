@@ -66,5 +66,10 @@ void Weapon::tryCleanProjectiles(b2World *aWorld) {
  //no hago nada para las armas que ni lanzan projectiles ni las armas sin mira
 }
 
+// no respondo nada util segun el arma en standabye que tengo respondo
+bool Weapon::thereAreProjectiles() {
+    return false;
+}
+
 
 

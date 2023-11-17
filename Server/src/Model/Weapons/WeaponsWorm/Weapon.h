@@ -45,6 +45,8 @@ public:
 
     virtual bool launchesProjectiles() = 0;
 
+    virtual bool thereAreProjectiles(); // metodo polimorfo contesto segun el tipo de weapon stand bye q tenga .
+
     // metodods para la mira
 
     virtual void increaseAngle();
@@ -60,7 +62,6 @@ public:
     virtual void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO);
 
     virtual WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent);
-
 };
 
 

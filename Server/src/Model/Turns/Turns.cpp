@@ -5,28 +5,37 @@
 #include <iostream>
 #include "Turns.h"
 #include "../../../../Common/DTO/TurnDTO.h"
-
-Turns::Turns(Players &players) : players(players) {
-    timeLeft = 15;
+#define TIME_FOR_TURN 10
+Turns::Turns(Players &players) : players(players), timeLeft(TIME_FOR_TURN), damageRecognized(false), attackRecognized(false) {
 }
 
 void Turns::startATurn() {
     this->idPlayerCurrent = players.startAPlayerTurn();
     this->idWormCurrent = players.getCurrentPlayer().startAWormTurn();
     this->textTurn = players.getCurrentPlayer().getPlayerName();
-    std::cout << "Id del jugador actual es " << idPlayerCurrent << "\n";
-    std::cout << "Id del worm actual es " << idWormCurrent << "\n";
+    damageRecognized = false;
+    attackRecognized = false;
 }
 
 void Turns::subtractTime() {
-    timeLeft --;
+    if( timeLeft >= 1){
+        timeLeft -=1;
+    }
     std::cout << "Time left " << timeLeft << "\n";
 }
 
 void Turns::tryEndTurn(){
     // Lo mas facil pasaron 60 segundos entonces.  pasa el turno del sgt jugador.
-    if(timeLeft <= 0){
-        timeLeft = 15;
+    if(players.getCurrentPlayer().getCurrentWorm()->wasDamaged() and not damageRecognized ){
+        timeLeft = 0;
+        damageRecognized = true;
+    } else if (players.getCurrentPlayer().getCurrentWorm()->alreadyAttack() and not attackRecognized){
+        if(timeLeft > 3){
+            timeLeft = 3;
+        }
+        attackRecognized = true;
+    }else if(timeLeft <= 0 and players.allWormsAreUnmoveAndNotExistsProjectiles() ){
+        timeLeft = TIME_FOR_TURN;
         players.getCurrentPlayer().endTurn();
         startATurn();
     }

@@ -12,6 +12,7 @@
 void wormCollidesWithBeam(GameObject* worm, GameObject* beam){
     std::cout << "Worm colisionar con el BEAM\n";
     Worm* unWorm = (Worm*) (worm);
+    unWorm->assigOnABeam();
     Beam* unaBeam = (Beam*) (beam);
     if(unaBeam->getAngle() > 0.0f and unaBeam->getAngle() <= 45.0f){
         unWorm->activaeInclinedBeam();
@@ -22,7 +23,7 @@ void wormCollidesWithBeam(GameObject* worm, GameObject* beam){
     float positionYInAirLast = unWorm->getPositionAir().second;
     float positionYCurrent = unWorm->getBody()->GetWorldCenter().y;
     float fallHeight = positionYInAirLast - positionYCurrent;
-    float thresholdFall = 2.0f; // sacar del archivo @ricardo.
+    float thresholdFall = 2.0f; // sacar del archivo @ricardo. todo
     if (fallHeight > thresholdFall){
         fallHeight -= thresholdFall;
         int damageForFall = (int) std::min(fallHeight, 25.0f);
@@ -54,6 +55,8 @@ void edgeCollidesWithWorm(GameObject* edge, GameObject* worm){
 void wormCollidesWithWorm(GameObject* worm1, GameObject* worm2){
     Worm* aWorm1 = (Worm*) (worm1);
     Worm* aWorm2 = (Worm*) (worm2);
+    aWorm1->assigNextToAWorm();
+    aWorm2->assigNextToAWorm();
     if (aWorm1->getBody()->GetLinearVelocity().x > 0 ){
         std::cerr << "Worm 1 choco con velocidad a Worm 2 asi que le reducimos a cero para q no lo empuje\n";
         b2Vec2 velocity = aWorm1->getBody()->GetLinearVelocity();
@@ -106,6 +109,7 @@ void beamCollidesWithMunitionBazooka(GameObject* beam, GameObject* munitionBazoo
 void beamEndContactWithWorm(GameObject* beam, GameObject* worm){
     std::cout << "beamEndContactWithWorm\n";
     Worm* unWorm = (Worm*) (worm);
+    unWorm->unAssingOnABeam();
     Beam* unaBeam = (Beam*) (beam);
     b2Vec2 positonWormInAir = worm->getBody()->GetWorldCenter();
     unWorm->savePositionInAir(positonWormInAir.x, positonWormInAir.y);
@@ -113,6 +117,12 @@ void beamEndContactWithWorm(GameObject* beam, GameObject* worm){
 
 void wormEndContactWithBeam(GameObject* worm, GameObject* beam){
     beamEndContactWithWorm(beam, worm);
+}
+void wormEndContactWithWorm(GameObject* worm, GameObject* wormTwo){
+    Worm* aWorm1 = (Worm*) (worm);
+    Worm* aWorm2 = (Worm*) (wormTwo);
+    aWorm1->unAssignNextToAWorm();
+    aWorm2->unAssignNextToAWorm();
 }
 
 
@@ -130,6 +140,8 @@ GameContactListener::GameContactListener(b2World *aWorld) {
     collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_BAZOOKA_PROJECTILE )] = &beamCollidesWithMunitionBazooka;
     endContactMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM) ] = &beamEndContactWithWorm;
     endContactMap[std::make_pair(ENTITY_WORM, ENTITY_BEAM) ] = &wormEndContactWithBeam;
+    endContactMap[std::make_pair(ENTITY_WORM, ENTITY_WORM) ] = &wormEndContactWithWorm;
+
 }
 
 

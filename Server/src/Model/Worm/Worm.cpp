@@ -22,6 +22,9 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     typeCharge = NONE_CHARGE;
     iterationsForBatAttack = 15;
     positionInAir= std::make_pair(0.0f, 0.0f);
+    hpInitialTurn = hp;
+    onABeam = false;
+    nextToAnotherWorm = false;
 }
 
 void Worm::savePositionInAir(const float &positionXAir, const float &positionYAir) {
@@ -260,7 +263,6 @@ void Worm::attack() {
         } else if ( typeCharge == MANY_CHARGE) {
             reachMaxImpulse = this->armament.getWeaponCurrentPtr()->increaseImpulse();
         }
-
         if(reachMaxImpulse){
             std::cout << "Llege al maximo impulso \n";
             tryAttackVariablePower();
@@ -317,16 +319,22 @@ void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
     }
 }
 
-
 void Worm::endTurn() {
     typeFocus = NO_FOCUS;
     typeMov = STANDING;
     attacked = false;
     armament.endTurn();
+    hpInitialTurn = hp;
+}
+bool Worm::wasDamaged() const{
+    return hpInitialTurn != hp;
+}
+
+bool Worm::alreadyAttack() const{
+    return attacked;
 }
 
 void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
-    std::cout << "Recibo comando " << aCommandDTO->getTypeCommand() << "\n";
     if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
         this->leftWorm();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD ){
@@ -363,4 +371,39 @@ void Worm::tryAttackVariablePower() {
         this->typeCharge = NONE_CHARGE;
         attacked = true;
     }
+}
+bool Worm::thereAreProjectiles(){
+    if(not attacked ){
+        return false;
+    }
+    if(attacked and armament.weaponStandByLaunchesProjectiles()){
+        return armament.thereAreProjectiles(); // pregunto si la arma en standBy (con la q dispare tiene algun projectil todavia).
+    }
+    return false;
+}
+
+bool Worm::isUnmoveAndNotExistsPojectiles() {
+    bool unMovedOnABeam = body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and onABeam;
+    bool unMovedOnAWorm = false;
+    if(not onABeam and nextToAnotherWorm ){ // si no esta sobre una viga pero esta sobre un gusano entonces esta inmobil.
+        unMovedOnAWorm =  true;
+    }
+    // si esta cargando el arma tampoco debe acabar el turno asi que pedimos que sea de tipo de carga NONE_CHARGE.
+    return ((unMovedOnABeam or unMovedOnAWorm) and (not thereAreProjectiles()) and (this->typeCharge == NONE_CHARGE)  );
+}
+
+void Worm::assigOnABeam() {
+    this->onABeam = true;
+}
+
+void Worm::unAssingOnABeam(){
+    this->onABeam = false;
+}
+
+void Worm::unAssignNextToAWorm() {
+    this->nextToAnotherWorm = false;
+}
+
+void Worm::assigNextToAWorm() {
+    this->nextToAnotherWorm = true;
 }
