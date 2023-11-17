@@ -110,7 +110,7 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
         Common/DTO/TurnDTO.cpp Common/DTO/TurnDTO.h
 
 
-        )
+        Server/src/Model/TimeTurn/TimeTurn.cpp Server/src/Model/TimeTurn/TimeTurn.h)
 
 # para el editor
 include_directories(${PROJECT_SOURCE_DIR}/Editor/include)

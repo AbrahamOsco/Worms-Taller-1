@@ -8,6 +8,7 @@
 #include "../Protocol/ServerProtocol.h"
 #include "../../../Common/DTO/SnapShot.h"
 #include "../../../Common/rateController/RateController.h"
+#include "../Model/TimeTurn/TimeTurn.h"
 
 #define VELOCITY_ITERATIONS 6
 #define POSITION_TIERATIONS 2
@@ -53,8 +54,8 @@ void Engine::run() {
         connections.start(stageDto);
         RateController frameRate(20);
         frameRate.start();
-        std::chrono::steady_clock::time_point lastTime = std::chrono::steady_clock::now(); // lastTime para el contador del tiempo.
-
+        TimeTurn timeTurn;
+        timeTurn.startTurn();
         while (keepTalking) {
             this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(), gameParameters.getPositionIterations()); // Hacemos un step en el world.
             std::unique_ptr<CommandDTO> aCommanDTO;
@@ -65,14 +66,10 @@ void Engine::run() {
             }
             connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
                                      model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO());
-
-            std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
-            std::chrono::duration<double> elapsedSeconds = currentTime - lastTime;
-            if (elapsedSeconds.count() >= 1.0f) {
+            if (timeTurn.hasItBeenASecond()) {
                 model.subtractTime();
-                lastTime = currentTime;
+                timeTurn.updateTime();
             }
-
             model.update();
             frameRate.finish();
         }
