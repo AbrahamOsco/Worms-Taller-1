@@ -59,7 +59,7 @@ void Engine::run() {
             this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(), gameParameters.getPositionIterations()); // Hacemos un step en el world.
             std::unique_ptr<CommandDTO> aCommanDTO;
             if (commandsQueueNB.move_try_pop(aCommanDTO)) {
-                this->model.execute(aCommanDTO);
+                this->model.execute(aCommanDTO, model.getTimeLeft());
             } else {
                 this->model.tryAttackVariablePower();
             }

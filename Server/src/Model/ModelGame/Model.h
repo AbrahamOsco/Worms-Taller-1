@@ -47,7 +47,7 @@ public:
 
     StageDTO startAndGetStageDTO();
 
-    void execute(std::unique_ptr<CommandDTO> &aCommandDTO);
+    void execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft);
 
     void update();
 
@@ -60,6 +60,8 @@ public:
     TurnDTO getTurnDTO() const;
 
     void tryAttackVariablePower();
+
+    int getTimeLeft() const;
 };
 
 

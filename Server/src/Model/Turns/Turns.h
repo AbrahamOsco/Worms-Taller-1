@@ -30,6 +30,8 @@ public:
     void tryEndTurn();
 
     TurnDTO getTurnDTO() const;
+
+    int getTimeLeft() const;
 };
 
 

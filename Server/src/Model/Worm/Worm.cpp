@@ -23,8 +23,8 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     iterationsForBatAttack = 15;
     positionInAir= std::make_pair(0.0f, 0.0f);
     hpInitialTurn = hp;
-    onABeam = false;
-    nextToAnotherWorm = false;
+    contatctsWithBeam = 0;
+    contactsWithWorms = 0;
 }
 
 void Worm::savePositionInAir(const float &positionXAir, const float &positionYAir) {
@@ -334,7 +334,10 @@ bool Worm::alreadyAttack() const{
     return attacked;
 }
 
-void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO) {
+void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft) {
+    if(timeLeft <= 0){
+        return;
+    }
     if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
         this->leftWorm();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD ){
@@ -383,9 +386,9 @@ bool Worm::thereAreProjectiles(){
 }
 
 bool Worm::isUnmoveAndNotExistsPojectiles() {
-    bool unMovedOnABeam = body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and onABeam;
+    bool unMovedOnABeam = body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and (contatctsWithBeam > 0);
     bool unMovedOnAWorm = false;
-    if(not onABeam and nextToAnotherWorm ){ // si no esta sobre una viga pero esta sobre un gusano entonces esta inmobil.
+    if(contatctsWithBeam == 0 and (contactsWithWorms > 0) ){ // si no esta sobre una viga pero esta sobre un gusano entonces esta inmobil.
         unMovedOnAWorm =  true;
     }
     // si esta cargando el arma tampoco debe acabar el turno asi que pedimos que sea de tipo de carga NONE_CHARGE.
@@ -393,17 +396,17 @@ bool Worm::isUnmoveAndNotExistsPojectiles() {
 }
 
 void Worm::assigOnABeam() {
-    this->onABeam = true;
+    contatctsWithBeam++;
 }
 
 void Worm::unAssingOnABeam(){
-    this->onABeam = false;
+    contatctsWithBeam--;
 }
 
 void Worm::unAssignNextToAWorm() {
-    this->nextToAnotherWorm = false;
+    contactsWithWorms--;
 }
 
 void Worm::assigNextToAWorm() {
-    this->nextToAnotherWorm = true;
+    contactsWithWorms++;
 }

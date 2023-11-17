@@ -15,6 +15,12 @@ void Turns::startATurn() {
     this->textTurn = players.getCurrentPlayer().getPlayerName();
     damageRecognized = false;
     attackRecognized = false;
+    std::cout << "Id Player actual:" << idPlayerCurrent << "\n";
+    std::cout << "Id Current worm: :" << idWormCurrent << "\n";
+
+}
+int Turns::getTimeLeft() const{
+    return this->timeLeft;
 }
 
 void Turns::subtractTime() {

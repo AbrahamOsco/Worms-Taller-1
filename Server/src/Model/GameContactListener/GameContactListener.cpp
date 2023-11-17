@@ -118,6 +118,7 @@ void beamEndContactWithWorm(GameObject* beam, GameObject* worm){
 void wormEndContactWithBeam(GameObject* worm, GameObject* beam){
     beamEndContactWithWorm(beam, worm);
 }
+
 void wormEndContactWithWorm(GameObject* worm, GameObject* wormTwo){
     Worm* aWorm1 = (Worm*) (worm);
     Worm* aWorm2 = (Worm*) (wormTwo);
@@ -138,6 +139,8 @@ GameContactListener::GameContactListener(b2World *aWorld) {
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_BAZOOKA_PROJECTILE)] = &wormCollidesWithProjectileBazooka;
     collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_BEAM)] = &projectileBazookaCollideWithBeam;
     collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_BAZOOKA_PROJECTILE )] = &beamCollidesWithMunitionBazooka;
+
+
     endContactMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM) ] = &beamEndContactWithWorm;
     endContactMap[std::make_pair(ENTITY_WORM, ENTITY_BEAM) ] = &wormEndContactWithBeam;
     endContactMap[std::make_pair(ENTITY_WORM, ENTITY_WORM) ] = &wormEndContactWithWorm;

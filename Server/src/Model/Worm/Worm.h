@@ -41,9 +41,9 @@ class Worm : public GameObject {
     const GameParameters& gameParameters;
     b2World* aWorld;
     Armament& armament;
-    bool onABeam;
+    size_t contatctsWithBeam;
     bool onInclinedBeam;
-    bool nextToAnotherWorm;
+    size_t contactsWithWorms;
     bool attacked;
     size_t iterationsForBatAttack;
     std::pair<float, float> positionInAir; // para que el gusano sufra daño en caidas mayores a 2m.
@@ -133,7 +133,7 @@ public:
 
     void endTurn();
 
-    void execute(std::unique_ptr<CommandDTO> &aCommandDTO);
+    void execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft);
 
     void tryAttackVariablePower();
 
