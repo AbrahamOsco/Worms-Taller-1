@@ -6,15 +6,15 @@
 #include "ProjectileBazooka.h"
 
 ProjectileBazooka::ProjectileBazooka(const GameParameters& gameParameters) : GameObject(ENTITY_BAZOOKA_PROJECTILE) , gameParameters(gameParameters) {
-    this->mainDamage = 50.0f;
-    this->radio = 2.0f;
-    this->maxImpulseExplosion = 2.0f;
+    this->mainDamage = gameParameters.getBazookaProjectileDamageMax();
+    this->radio = gameParameters.getBazookProjectileRadio();
+    this->maxImpulseExplosion = gameParameters.getBazookaProjectilMaxImpulseExplosion();
 }
 
 b2AABB ProjectileBazooka::getAreaForSearch(const b2Vec2 &positionMunition) const {
     b2AABB searchArea;
-    searchArea.lowerBound = positionMunition - b2Vec2(2.0f, 2.0f);
-    searchArea.upperBound = positionMunition + b2Vec2(2.0f, 2.0f);
+    searchArea.lowerBound = positionMunition - b2Vec2(radio, radio);
+    searchArea.upperBound = positionMunition + b2Vec2(radio, radio);
     return searchArea;
 }
 
@@ -43,7 +43,6 @@ b2Vec2 ProjectileBazooka::getImpulseForWorm(const b2Vec2 &positionWorm, const b2
     std::cout << "distanceWormToProjectile :" << distanceWormToProjectile << "\n";
     float impulseMagnitude = maxImpulseExplosion * std::max(0.0f, 1.0f - sqrt(distanceWormToProjectile) / radio );
     b2Vec2 impulseWorm = impulseMagnitude * impulseDirection;
-    //impulseWorm.y = abs(impulseWorm.x) * 0.7;  // todo seguramnte falta ajustar aca el eje y
     if(impulseDirection.x == 0){ // Si la normal en x es cero hizo un tiro a -90º sale volando para arriba.
         impulseWorm.y = maxImpulseExplosion;
     }

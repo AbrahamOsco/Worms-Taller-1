@@ -42,8 +42,8 @@ GameParameters::GameParameters() {
     parameters["BAT_IMPULSE_X"] = nodeInitial["BAT_IMPULSE_X"].as<float>();
     parameters["BAT_IMPULSE_Y"] = nodeInitial["BAT_IMPULSE_Y"].as<float>();
     parameters["BAT_MUNITION"] = nodeInitial["BAT_MUNITION"].as<float>();
-    parameters["BAY_RAY_LENGTH"] = nodeInitial["BAY_RAY_LENGTH"].as<float>();
-
+    parameters["BAT_RAY_LENGTH"] = nodeInitial["BAT_RAY_LENGTH"].as<float>();
+    parameters["BAT_ITERATIONS"] = nodeInitial["BAT_ITERATIONS"].as<float>();
     parameters["TELEPORT_DAMAGE"] = nodeInitial["TELEPORT_DAMAGE"].as<float>();
     parameters["TELEPORT_MUNITION"] = nodeInitial["TELEPORT_MUNITION"].as<float>();
 
@@ -63,7 +63,9 @@ GameParameters::GameParameters() {
     parameters["BAZOOKA_RAY_LENGTH"] = nodeInitial["BAZOOKA_RAY_LENGTH"].as<float>();
 }
 
-
+float GameParameters::getBatIterations() const{
+    return this->parameters.at("BAT_ITERATIONS");
+}
 
 float GameParameters::getFPS() const{
     return this->parameters.at("FPS_GAME");
@@ -93,6 +95,11 @@ YAML::Node GameParameters::getNodeInitial() {
 float GameParameters::getPositionAdjustmentStatic() {
     YAML::Node aNode = getNodeInitial();
     return aNode["POSITION_ADJUSTMENT"].as<float>();
+}
+
+float GameParameters::getBeamFrictionSlipperyStatic(){
+    YAML::Node aNode = getNodeInitial();
+    return aNode["BEAM_SLIPPERY_FRICTION"].as<float>();
 }
 
 float GameParameters::getMaxHeightPixelStatic() {
@@ -188,7 +195,7 @@ float GameParameters::getBatMunition() const {
 }
 
 float GameParameters::getBatRayLength() const {
-    return parameters.at("BAY_RAY_LENGTH");
+    return parameters.at("BAT_RAY_LENGTH");
 }
 
 float GameParameters::getTeleportDamage() const {
