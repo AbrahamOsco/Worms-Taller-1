@@ -144,6 +144,10 @@ public:
     bool isUnmoveAndNotExistsPojectiles();
 
     bool thereAreProjectiles();
+
+    void walkWorm(const Direction &aDiretion);
+
+    b2World *getWorld();
 };
 
 

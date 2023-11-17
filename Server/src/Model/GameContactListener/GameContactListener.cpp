@@ -73,33 +73,43 @@ void wormCollidesWithWorm(GameObject* worm1, GameObject* worm2, GameParameters *
 void projectileBazookaCollidesWithWorm(GameObject* projectileBazooka, GameObject* worm, GameParameters *gameParameters){
     std::cout << "munitionBazookaCollidesWithWorm\n";
     if(projectileBazooka == nullptr or worm == nullptr) return;
-    Worm* wormSelect = (Worm*) (worm);
+    b2Vec2 projectilePosition = projectileBazooka->getBody()->GetWorldCenter();
+
+    ProjectileBazooka* projectilSelect = (ProjectileBazooka*)  projectileBazooka;
+    SaveWormsInAreaQuery saveWormsinArea(projectilePosition);
+    Worm* wormSelect = (Worm*) worm;
+    wormSelect->getWorld()->QueryAABB(&saveWormsinArea, projectilSelect->getAreaForSearch(projectilePosition) );
+    for(auto& aElement : saveWormsinArea.getWormsAndDistSquared() ){
+        Worm* aWormToTakeDamage = (Worm*)(aElement.first);
+        b2Vec2 impulseForWorm = projectilSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(), projectilePosition, aElement.second);
+        float damageForWorm = projectilSelect->getDamageForWorm(aElement.second);
+        aWormToTakeDamage->getBody()->ApplyLinearImpulse( impulseForWorm, aWormToTakeDamage->getBody()->GetWorldCenter(), true);
+        aWormToTakeDamage->takeDamage(damageForWorm);
+    }
     projectileBazooka->destroyBody();
-    wormSelect->takeDamage(50.0f);  // todo queda pendiente ver esto y hacerlo en area.
-    // aca aplicar el daño en area.
 }
 
 void wormCollidesWithProjectileBazooka(GameObject* worm1, GameObject* projectileBazooka, GameParameters *gameParameters){
     projectileBazookaCollidesWithWorm(projectileBazooka, worm1, gameParameters);
 }
 
-void projectileBazookaCollideWithBeam(GameObject* munitionBazooka, GameObject* beam, GameParameters *gameParameters){
+void projectileBazookaCollideWithBeam(GameObject* projectileBazooka, GameObject* beam, GameParameters *gameParameters){
     std::cout << "munitionBazookaCollideWithBeam\n";
-    b2Vec2 munitionPosition = munitionBazooka->getBody()->GetWorldCenter();
+    b2Vec2 projectilePosition = projectileBazooka->getBody()->GetWorldCenter();
 
-    ProjectileBazooka* munitionSelect = (ProjectileBazooka*)  munitionBazooka;
-    SaveWormsInAreaQuery savWormsinArea(munitionPosition);     // Función de devolución de llamada para la búsqueda
+    ProjectileBazooka* projectilSelect = (ProjectileBazooka*)  projectileBazooka;
+    SaveWormsInAreaQuery saveWormsinArea(projectilePosition);     // Función de devolución de llamada para la búsqueda
 
     Beam * beamSelected = (Beam*) beam;
-    beamSelected->getWorld()->QueryAABB(&savWormsinArea, munitionSelect->getAreaForSearch(munitionPosition));
-    for(auto& aElement : savWormsinArea.getWormsAndDistSquared() ){
+    beamSelected->getWorld()->QueryAABB(&saveWormsinArea, projectilSelect->getAreaForSearch(projectilePosition));
+    for(auto& aElement : saveWormsinArea.getWormsAndDistSquared() ){
         Worm* aWormToTakeDamage = (Worm*)(aElement.first);
-        b2Vec2 impulseForWorm = munitionSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(), munitionPosition, aElement.second);
-        float damageForWorm = munitionSelect->getDamageForWorm(aElement.second);
+        b2Vec2 impulseForWorm = projectilSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(), projectilePosition, aElement.second);
+        float damageForWorm = projectilSelect->getDamageForWorm(aElement.second);
         aWormToTakeDamage->getBody()->ApplyLinearImpulse( impulseForWorm, aWormToTakeDamage->getBody()->GetWorldCenter(), true);
         aWormToTakeDamage->takeDamage(damageForWorm);
     }
-    munitionBazooka->destroyBody();
+    projectileBazooka->destroyBody();
 }
 
 void beamCollidesWithMunitionBazooka(GameObject* beam, GameObject* munitionBazooka, GameParameters *gameParameters){

@@ -19,18 +19,18 @@ b2AABB ProjectileBazooka::getAreaForSearch(const b2Vec2 &positionMunition) const
 }
 
 void ProjectileBazooka::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const b2Vec2 &impulseProjectile) {
-    b2BodyDef munitBazoDef;
-    munitBazoDef.type = b2_dynamicBody;
-    munitBazoDef.fixedRotation = true;
-    munitBazoDef.position.Set(positionP2.x, positionP2.y );
-    munitBazoDef.userData.pointer = (uintptr_t) this;
-    this->body = aWorld->CreateBody(&munitBazoDef);
-    b2CircleShape munitBazoForm;
-    munitBazoForm.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
-    munitBazoForm.m_radius = 0.1f;
+    b2BodyDef projBazoDef;
+    projBazoDef.type = b2_dynamicBody;
+    projBazoDef.fixedRotation = true;
+    projBazoDef.position.Set(positionP2.x, positionP2.y );
+    projBazoDef.userData.pointer = (uintptr_t) this;
+    this->body = aWorld->CreateBody(&projBazoDef);
+    b2CircleShape projBazoShape;
+    projBazoShape.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
+    projBazoShape.m_radius = 0.1f;
 
     b2FixtureDef defFixMuniBazooka;
-    defFixMuniBazooka.shape = &munitBazoForm;
+    defFixMuniBazooka.shape = &projBazoShape;
     defFixMuniBazooka.density = 1.0f; // ver el tema del aire luego.
     this->body->CreateFixture(&defFixMuniBazooka);
     body->ApplyLinearImpulse( impulseProjectile, body->GetWorldCenter(), true);
@@ -56,6 +56,5 @@ float ProjectileBazooka::getDamageForWorm(const float &wormDistanceSquared) {
     std::cout << "damageForWorm: " << damageForWorm << "\n";
     return damageForWorm;
 }
-
 
 
