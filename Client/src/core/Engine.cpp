@@ -30,11 +30,11 @@ void Engine::events() {
 void Engine::update() {
     float dt = m_timer.getDeltaTime();
     while (m_nbQueue.move_try_pop(m_gameObjects)) {}
-    m_camera.update();
+    //m_camera.update();
     for (const auto &m_gameObject: m_gameObjects) {
         m_gameObject->update(dt, m_input, m_bQueue, m_camera);
     }
-
+    m_camera.update();
 }
 
 void Engine::render() {
