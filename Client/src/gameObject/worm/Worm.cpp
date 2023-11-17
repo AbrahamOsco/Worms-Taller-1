@@ -89,8 +89,11 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Came
         angle = std::max(-90, std::min(90, angle));
         int rowIndex = static_cast<int>(((90 - angle) * frameCount) / 180);
 
-        textureManager.drawFrame(m_textureID, m_x - m_width / 2, m_y - m_height / 2, m_width, m_height, rowIndex, 0,
-                                 renderer, m_flip, camera);
+        int xCorrection = m_x - m_width / 2 - camera.getPosition().GetX();
+        int yCorrection = m_y - m_height / 2 - camera.getPosition().GetY();
+
+        textureManager.drawFrame(m_textureID, xCorrection, yCorrection, m_width, m_height, rowIndex, 0,
+                                 renderer, m_flip);
     }
 }
 

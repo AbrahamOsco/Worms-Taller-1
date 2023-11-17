@@ -26,7 +26,7 @@ public:
          SDL_RendererFlip flip);
 
     void drawFrame(const std::string &id, int x, int y, int width, int height, int currentRow, int currentCol,
-                   SDL2pp::Renderer &renderer, SDL_RendererFlip flip, Camera &camera);
+                   SDL2pp::Renderer &renderer, SDL_RendererFlip flip);
 
     void
     drawTextBox(const std::string &text, int x, int y, const std::string &fontPath, int fontSize,

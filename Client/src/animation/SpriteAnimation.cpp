@@ -12,7 +12,9 @@ void SpriteAnimation::update() {
 
 void SpriteAnimation::draw(int x, int y, int spriteWidth, int spriteHeight, Camera &camera, SDL2pp::Renderer &renderer,
                            TextureManager &textureManager, SDL_RendererFlip flip, float xScale, float yScale) {
-    textureManager.drawFrame(m_textureID, x, y, spriteWidth, spriteHeight, m_currentFrame, 0, renderer, flip, camera);
+    int xCorrection = x - camera.getPosition().GetX();
+    int yCorrection = y - camera.getPosition().GetY();
+    textureManager.drawFrame(m_textureID, xCorrection, yCorrection, spriteWidth, spriteHeight, m_currentFrame, 0, renderer, flip);
 }
 
 void SpriteAnimation::setProps(const std::string &textureID, int frameCount,
