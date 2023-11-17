@@ -12,7 +12,8 @@ Worm::Worm(int x, int y, const size_t &hpWorm, const Direction &direction, const
            const TypeSight &typeSight) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_hpWorm(hpWorm),
                                          m_directionLook(direction),
                                          m_typeFocus(focus), m_moveWorm(moveWorm), m_weaponCurrent(weaponCurrent),
-                                         m_xCrosshair(xCrosshair), m_yCrosshair(yCrosshair), m_typeSight(typeSight) {
+                                         m_xCrosshair(xCrosshair), m_yCrosshair(yCrosshair), m_typeSight(typeSight),
+                                         m_animation(true) {
     m_flip = SDL_FLIP_NONE;
     if (m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
         m_width = 60;
@@ -61,7 +62,7 @@ Worm::Worm(int x, int y, const size_t &hpWorm, const Direction &direction, const
     } else {
         std::cout << "weapon not found" << std::endl;
     }
-    m_animation.setProps(m_textureID, m_width, m_height, 14, 140);
+    m_animation.setProps(m_textureID, 14, 140);
 }
 
 void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
@@ -81,7 +82,7 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Came
                                renderer, camera);
     if (m_weaponCurrent == TypeWeapon::DYNAMITE || m_weaponCurrent == TypeWeapon::AIR_ATTACK ||
         m_weaponCurrent == TypeWeapon::BASEBALL_BAT || m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
-        m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_flip, renderer, textureManager, camera);
+        m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_width, m_height, camera, renderer, textureManager, m_flip);
     } else {
         int frameCount = 30;
         int angle = calcularAngulo(m_x, m_y, m_xCrosshair, m_yCrosshair, m_directionLook);
@@ -128,18 +129,18 @@ void Worm::animationState() {
     if (m_moveWorm == MoveWorm::WALKING) {
         m_width = 30;
         m_height = 30;
-        m_animation.setProps("walk", m_width, m_height, 14, 54, SDL_FLIP_NONE);
+        m_animation.setProps("walk",14, 54);
     }
     if (m_moveWorm == MoveWorm::JUMPING) {
         m_width = 60;
         m_height = 60;
-        m_animation.setProps("air", m_width, m_height, 36, 60, SDL_FLIP_NONE);
+        m_animation.setProps("air",36, 60);
     }
 
     if(m_moveWorm == MoveWorm::ATTACKING_WITH_BAT) {
         m_width = 60;
         m_height = 30;
-        m_animation.setProps("bat_hit", m_width, m_height, 15, 30, SDL_FLIP_NONE);
+        m_animation.setProps("bat_hit", 15, 30);
     }
 }
 

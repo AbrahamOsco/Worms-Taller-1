@@ -6,6 +6,6 @@
 
 Animation::Animation(bool repeat) : m_repeat(repeat), m_isEnded(false), m_currentFrame(0) {}
 
-bool Animation::isEnded() {
+bool Animation::isEnded() const {
     return m_isEnded;
 }

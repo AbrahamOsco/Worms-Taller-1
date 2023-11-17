@@ -8,13 +8,14 @@
 #include "../../command/UpCmd.h"
 #include "../../command/DownCmd.h"
 
-Crosshair::Crosshair(int x, int y, const TypeSight &typeSight) : GameObject(LoaderParams(x, y, 60, 60, "crosshair")), m_typeSight(typeSight) {
-    m_animation.setProps(m_textureID, m_width, m_height, 32, 60);
+Crosshair::Crosshair(int x, int y, const TypeSight &typeSight) : GameObject(LoaderParams(x, y, 60, 60, "crosshair")), m_typeSight(typeSight),
+                                                                 m_animation(true) {
+    m_animation.setProps(m_textureID, 32, 60);
 }
 
 void Crosshair::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     if (m_typeSight == TypeSight::SHOW_SIGHT) {
-        m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_flip, renderer, textureManager, camera);
+        m_animation.draw(m_x - m_width / 2, m_y - m_height / 2, m_width, m_height,camera, renderer, textureManager);
     }
 }
 

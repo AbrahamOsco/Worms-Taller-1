@@ -12,10 +12,10 @@ protected:
     bool m_isEnded;
     int m_currentFrame;
 
-private:
-    Animation(bool repeat = true);
-    virtual void update(float dt) = 0;
-    bool isEnded();
+public:
+    explicit Animation(bool repeat = true);
+    virtual void update() = 0;
+    bool isEnded() const;
 };
 
 

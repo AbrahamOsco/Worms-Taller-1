@@ -7,22 +7,26 @@
 
 #include "SDL2pp/SDL2pp.hh"
 #include "../graphics/TextureManager.h"
+#include "Animation.h"
 #include <string>
 
-class SpriteAnimation {
+class SpriteAnimation : public Animation {
 private:
-    int m_spriteWidth, m_spriteHeight;
+    //int m_spriteWidth, m_spriteHeight;
     int m_SpriteFrame;
     int m_AnimSpeed, m_FrameCount;
     std::string m_TextureID;
-    SDL_RendererFlip m_Flip;
 
 public:
-    SpriteAnimation() {}
-    void update();
-    void draw(int x, int y, SDL_RendererFlip flip, SDL2pp::Renderer &renderer, TextureManager &textureManager,
-              Camera &camera);
-    void setProps(const std::string &textureID, int spriteWidth, int spriteHeight, int frameCount, int animSpeed, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    explicit SpriteAnimation(bool repeat = true);
+
+    void update() override;
+
+    void draw(int x, int y, int spriteWidth, int spriteHeight, Camera &camera, SDL2pp::Renderer &renderer,
+              TextureManager &textureManager, SDL_RendererFlip flip = SDL_FLIP_NONE, float xScale = 1,
+              float yScale = 1);
+
+    void setProps(const std::string &textureID, int frameCount, int animSpeed);
 };
 
 
