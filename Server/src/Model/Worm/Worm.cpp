@@ -54,7 +54,6 @@ void Worm::addToTheWorld(b2World *world) {
     wormDef.position.Set(positionInitialX, positionInitialY);
     wormDef.userData.pointer = (uintptr_t) this;
     this->body = world->CreateBody(&wormDef);
-
     b2CircleShape wormShape;
     wormShape.m_p.Set(0.0f, 1.0f);
     wormShape.m_radius = gameParameters.getHalfHeightWorm();
@@ -224,10 +223,13 @@ WeaponSightDTO Worm::getWeaponSightDTO() {
 }
 
 ProjectilesDTO Worm::getProjectilesDTO() {
+    std::cout << "iterationsForBatAttack" <<    iterationsForBatAttack << "\n";
     if(typeMov == ATTACKING_WITH_BAT){
-        std::vector<ProjectileDTO> vecProjectileDTO;
+         std::vector<ProjectileDTO> vecProjectileDTO;
+        std::cout << "Si  entro al IF\n";
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
     }
+    std::cout << "TipeMov is " << typeMov;
     return armament.getProjectilesDTO(attacked);
 }
 
@@ -236,23 +238,26 @@ void Worm::activateFocus() {
 }
 
 void Worm::update() {
-    if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
-        if(this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack > 0 ){  // el ATTACKING_WITH_BAT ES SOLO PARA BATE asi q no hay problemas.
-            iterationsForBatAttack--;
-        } else if (this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack == 0){
-            iterationsForBatAttack = gameParameters.getBatIterations();
-            this->typeMov = STANDING;
-            armament.putWeaponOnStandByAndUnarmed(); // ya paso el frame del ataque con bate asi q lo desarmamos.
-        } else{
-            this->typeMov = STANDING;
+    try{
+        if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
+            if(this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack > 0 ){  // el ATTACKING_WITH_BAT ES SOLO PARA BATE asi q no hay problemas.
+                iterationsForBatAttack--;
+            } else if (this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack == 0){
+                iterationsForBatAttack = gameParameters.getBatIterations();
+                this->typeMov = STANDING;
+                armament.putWeaponOnStandByAndUnarmed(); // ya paso el frame del ataque con bate asi q lo desarmamos.
+            } else{
+                this->typeMov = STANDING;
+            }
+            // @todo creo q luego de disparar volvemos a tener todo armaCurrent en none.
+            armament.getWeaponOnStandBy(attacked);
         }
-        // @todo creo q luego de disparar volvemos a tener todo armaCurrent en none.
-        armament.getWeaponOnStandBy(attacked);
+        if(attacked){
+            armament.tryCleanProjectiles(aWorld);
+        }
+    }catch(std::exception& e ){
+        std::cerr<< e.what() << " PROBLEMA EN [worm]:Update\n";
     }
-    if(attacked){
-        armament.tryCleanProjectiles(aWorld);
-    }
-
 
 }
 // weapons.
@@ -263,6 +268,7 @@ void Worm::attack() {
     if( this->armament.getWeaponCurrent() == BASEBALL_BAT){
         this->typeMov = ATTACKING_WITH_BAT;
         this->attackWithBat();
+        armament.putWeaponOnStandByAndUnarmed(); // luego de atacar con la bazoka pasamos el arma a standB y nos desarmamos
         attacked = true;
     } else if ( this->armament.getWeaponCurrentPtr()->hasVariablePower()){ // en un futuro pregunta si tiene un arma con potencia variable.
         bool reachMaxImpulse = false;
@@ -319,7 +325,7 @@ void Worm::teleportWorm(const float& posXTeleport, const float& posYTeleport){
 }
 
 void Worm::takeDamage(const float &aDamage){
-    std::cout << "Worm con id " << idWorm << " recibe daño de " <<  aDamage << "\n";
+    std::cout << "PlayerID: :" << idPlayer << "Con WormID: " << idWorm << " recibe daño de " <<  aDamage << "\n";
     this->hp -=aDamage;
     if(hp <=0.0){
         this->destroyBody();
@@ -395,10 +401,11 @@ bool Worm::thereAreProjectiles(){
     if(not attacked ){
         return false;
     }
-    if(attacked and armament.weaponStandByLaunchesProjectiles()){
+    if (attacked and armament.weaponStandByLaunchesProjectiles()) {
         return armament.thereAreProjectiles(); // pregunto si la arma en standBy (con la q dispare tiene algun projectil todavia).
     }
     return false;
+
 }
 
 bool Worm::isUnmoveAndNotExistsPojectiles() {
@@ -409,6 +416,7 @@ bool Worm::isUnmoveAndNotExistsPojectiles() {
     }
     // si esta cargando el arma tampoco debe acabar el turno asi que pedimos que sea de tipo de carga NONE_CHARGE.
     return ((unMovedOnABeam or unMovedOnAWorm) and (not thereAreProjectiles()) and (this->typeCharge == NONE_CHARGE)  );
+
 }
 
 void Worm::assigOnABeam() {

@@ -2,6 +2,7 @@
 // Created by abraham on 26/10/23.
 //
 
+#include <iostream>
 #include "Player.h"
 #include "../../../GameParameters/GameParameters.h"
 

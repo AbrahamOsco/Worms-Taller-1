@@ -32,7 +32,7 @@ private:
     b2World world;
     Model model;
     std::atomic<bool> keepTalking;
-    Queue<std::unique_ptr<CommandDTO>> commandsQueueNB;  // La queue para popear los comandos recibido por el cliente.
+    Queue<std::unique_ptr<CommandDTO>> commandsQueueNB;  // La queue para popear los comandos recibido por el cliente. Solo tenemos una queue para popear comandos. y N queures para enviar.
     EstablishedConnections connections;
     void sendStatusAnswer(Socket &sktPeer, const OperationType &operationType);
 public:

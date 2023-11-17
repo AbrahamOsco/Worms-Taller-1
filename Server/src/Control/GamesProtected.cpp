@@ -70,9 +70,12 @@ std::vector<RoomDTO> GamesProtected::getAvailableRooms() {
     }
     return roomsGames;
 }
-
+// hacemos join a todos los engine que fueron creado.
 void GamesProtected::stop() {
-    // deterner todos los client connect ACA.
+    for(auto& Agames : games){
+        Agames.second->stop();
+        Agames.second->join();
+    }
 }
 
 std::vector<std::size_t> GamesProtected::getMaxNumbersWorms() {
