@@ -7,11 +7,11 @@
 
 
 #include "../GameObject.h"
-#include "../../animation/Animation.h"
+#include "../../animation/SpriteAnimation.h"
 
 class Crosshair : public GameObject {
     TypeSight m_typeSight;
-    Animation m_animation;
+    SpriteAnimation m_animation;
 
 public:
     Crosshair(int x, int y, const TypeSight &typeSight);

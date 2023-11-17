@@ -2,14 +2,14 @@
 // Created by riclui on 25/10/23.
 //
 
-#ifndef WORMS_TALLER_1_ANIMATION_H
-#define WORMS_TALLER_1_ANIMATION_H
+#ifndef WORMS_TALLER_1_SPRITEANIMATION_H
+#define WORMS_TALLER_1_SPRITEANIMATION_H
 
 #include "SDL2pp/SDL2pp.hh"
 #include "../graphics/TextureManager.h"
 #include <string>
 
-class Animation {
+class SpriteAnimation {
 private:
     int m_spriteWidth, m_spriteHeight;
     int m_SpriteFrame;
@@ -18,7 +18,7 @@ private:
     SDL_RendererFlip m_Flip;
 
 public:
-    Animation() {}
+    SpriteAnimation() {}
     void update();
     void draw(int x, int y, SDL_RendererFlip flip, SDL2pp::Renderer &renderer, TextureManager &textureManager,
               Camera &camera);
@@ -26,4 +26,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_ANIMATION_H
+#endif //WORMS_TALLER_1_SPRITEANIMATION_H

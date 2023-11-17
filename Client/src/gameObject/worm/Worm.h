@@ -8,7 +8,7 @@
 
 #include "../GameObject.h"
 #include "../../loaderParams/LoaderParams.h"
-#include "../../animation/Animation.h"
+#include "../../animation/SpriteAnimation.h"
 #include <cmath>
 
 class Worm : public GameObject {
@@ -23,7 +23,7 @@ private:
     int m_yCrosshair;
     TypeSight m_typeSight;
 
-    Animation m_animation;
+    SpriteAnimation m_animation;
 
 public:
     explicit Worm(int x, int y, const size_t &hpWorm, const Direction &direction,
