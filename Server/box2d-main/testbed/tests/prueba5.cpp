@@ -17,6 +17,7 @@
 #define DEGRATORADIANS (b2_pi/180.0f)
 #define RADIANSTODEGREE (180/b2_pi)
 const float SPEED_WORM = 6.5f;
+#include <chrono>
 
 #define FR 20
 
@@ -266,15 +267,16 @@ class Dynamite : public GameObject {
     float maxRadio = 4.0f;
     float maxImpulseMagnitude = 2.0f;
 
-    int waitTime;
-    float timePassed;
+    std::chrono::steady_clock::time_point startTime, time;
+    std::chrono::duration<float> waitTime;
     bool exploded;
 
 public:
-    explicit Dynamite(int wait) : GameObject(ENTITY_DYNAMITE), waitTime(wait), timePassed(0),
+    explicit Dynamite(int wait) : GameObject(ENTITY_DYNAMITE), waitTime(wait),
                                     exploded(false) {}
 
     void addToTheWorld(b2World* aWorld, b2Vec2 position) {
+        startTime = std::chrono::steady_clock::now();
         b2BodyDef dynamiteDef;
         dynamiteDef.type = b2_dynamicBody;
         dynamiteDef.fixedRotation = true;
@@ -293,10 +295,10 @@ public:
     }
 
     void passTime() {
-        timePassed += 1.0/FR;
-        if (timePassed >= (waitTime - 1.0/FR) && !exploded)
+        time = std::chrono::steady_clock::now();
+
+        if (time - startTime >= waitTime && !exploded)
             explode();
-        std::cout << "time: " << timePassed << "\n";
     }
 
     void explode() {
