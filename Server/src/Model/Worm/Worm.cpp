@@ -17,7 +17,7 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     distancesJumpBack = std::make_pair(gameParameter.getDistXBackJump(), gameParameter.getDistYBackJump());
     typeFocus = NO_FOCUS;
     typeMov = STANDING;
-    onInclinedBeam = false;
+    onInclinedBeam = false;         // posiblemente cambiar por un size_t en un futuro pendiente @todo
     attacked = false;
     typeCharge = NONE_CHARGE;
     iterationsForBatAttack = gameParameters.getBatIterations();
@@ -69,7 +69,7 @@ void Worm::addToTheWorld(b2World *world) {
 // for worm moves.
 
 void Worm::jump(const TypeJump& typeJump){
-    if( not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ){
+    if( contactsWithWorms == 0  and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ){
         armament.putWeaponOnStandByAndUnarmed(); // guardamos el arma actual y nos desarmamos
         float distanceX = distancesJumpForward.first;
         float distanceY = distancesJumpForward.second;
@@ -80,8 +80,7 @@ void Worm::jump(const TypeJump& typeJump){
         this->typeMov = JUMPING;
         float angleTita = atan(4.0f * distanceY / distanceX);       //  (4 *hmax)/distMaxHorizontal.
         float initialSpeed = sqrt(distanceX * (gameParameters.getGravity() * -1) / (sin(2 * angleTita))); // el 1.0f hace referencia distancia horizontal de 1.0m;
-        float speedX = initialSpeed * cos(angleTita), speedY = initialSpeed * sin(angleTita);
-        float impulseX = body->GetMass() * speedX, impulseY = body->GetMass() * speedY;
+        float impulseX = body->GetMass() * initialSpeed * cos(angleTita), impulseY = body->GetMass() * initialSpeed * sin(angleTita);
 
         if( typeJump == JUMP_BACKWARDS){
             if (directionLook == RIGHT) {
@@ -101,13 +100,11 @@ void Worm::jump(const TypeJump& typeJump){
 }
 
 void Worm::walk(Direction aDirection) {
-    if(not isInContactWithAnotherWorm() and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ) {
+    if( contactsWithWorms == 0  and this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ) {
         this->typeMov = MoveWorm::WALKING;
         directionLook = aDirection;
         float acceleration = getBody()->GetFixtureList()[0].GetFriction() * (gameParameters.getGravity() * -1); // aceleracion es la froz = u.N , las masas se cancelan queda mu * g.
-        float speed = sqrt(2.0f * acceleration * dragSpeed); // la velocidad la sacamos como 2 * aceleracion * distancia.
-        float impulseX = body->GetMass() * speed ;
-        float impulseY = 0;
+        float impulseX = body->GetMass() * sqrt(2.0f * acceleration * dragSpeed), impulseY = 0.0;               // la velocidad la sacamos como 2 * aceleracion * distancia.
         if (directionLook == Direction::LEFT ) {
             impulseX *=-1;
         }
@@ -118,12 +115,12 @@ void Worm::walk(Direction aDirection) {
                 impulseY = impulseX;
             }
         }
-        //std::cout << "Impulse x: " << impulseX << " Impulse y:  " << impulseY << "\n";
         b2Vec2 impulseSpeed(impulseX, impulseY); //  por la gravedad
         body->ApplyLinearImpulse(impulseSpeed, body->GetWorldCenter(), true);
     }
 }
 
+// borrar esto @todo
 bool Worm::isInContactWithAnotherWorm(){
     for(b2ContactEdge* ce = body->GetContactList(); ce; ce = ce->next){ // iterar sobre todos los contactos de un cuerpo:
         GameObject* aGameObj = (GameObject*) ce->contact->GetFixtureA()->GetBody()->GetUserData().pointer;
@@ -141,12 +138,13 @@ void Worm::walkWorm(const Direction& aDiretion){
     } else if ( not armament.isUnarmed() and this->directionLook == aDiretion ){
         armament.putWeaponOnStandByAndUnarmed();
         walk(aDiretion);
-    } else{             // no esta desarmando y estaba mirando a la derecha pasamos a que mire a la izquierda
+    } else{
         this->directionLook = aDiretion;
     }
 }
+
 void Worm::upWorm() {
-    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
+    if(armament.isUnarmed()){
         return;
     }
     // polimorfismo aca obtenemos el arma q tengamos actualmente e incrmentamos el angle si algunoas armas haran algo otras no.
@@ -155,35 +153,13 @@ void Worm::upWorm() {
 }
 
 void Worm::downWorm() {
-    if(this->armament.getWeaponCurrent()  == NONE_WEAPON){
+    if(armament.isUnarmed()){
         return;
     }
     this->armament.getWeaponCurrentPtr()->decreaseAngle();
 }
 
-// geters.
-MoveWorm Worm::getTypeMov() const {
-    return typeMov;
-}
-
-TypeFocusWorm Worm::getTypeFocusWorm() const {
-    return this->typeFocus;
-}
-
-Direction Worm::getDirectionLook() const {
-    return this->directionLook;
-}
-
-float Worm::getPositionX() const {
-    return this->body->GetWorldCenter().x;
-}
-
-float Worm::getPositionY() {
-    return this->body->GetWorldCenter().y;
-}
-TypeWeapon Worm::getWeaponCurrent() const {
-    return this->armament.getWeaponCurrent();
-}
+//getters
 
 float Worm::getHP() const {
     return this->hp;
@@ -191,6 +167,7 @@ float Worm::getHP() const {
 bool Worm::wasDestroyedWorm() const{
     return this->wasDestroyed;
 }
+
 // DTOS.
 WormDTO Worm::getWormDTO() const {
     TypeWeapon typeWeapon = armament.getWeaponCurrent();
@@ -297,7 +274,7 @@ void Worm::attackWithBat(){
     aBat->resetRayCast();
 }
 
-void Worm::teleportWorm(const float& posXTeleport, const float& posYTeleport){
+void Worm::teleportWorm(const int &posXTeleport, const int &posYTeleport){
     if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
         return;
     }
@@ -342,7 +319,7 @@ bool Worm::alreadyAttack() const{
 }
 
 void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft, size_t idCurrentWorm) {
-    if(timeLeft <= 0 or this->idWorm != idCurrentWorm){
+    if(timeLeft <= 0 or this->idWorm != idCurrentWorm){ // no le pongo el and not wasDestroyed porque nunca sera el turno del worm destruido.
         return;
     }
     if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
@@ -391,6 +368,9 @@ bool Worm::thereAreProjectiles(){
 }
 
 bool Worm::isUnmoveAndNotExistsPojectiles() {
+    if(this->wasDestroyedWorm()){ // si el gusano fue destruido no existe movimiento ni proyectiles q pueda lanzar.
+        return true;
+    }
     bool unMovedOnABeam = body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and (contatctsWithBeam > 0);
     bool unMovedOnAWorm = false;
     if(contatctsWithBeam == 0 and (contactsWithWorms > 0) ){ // si no esta sobre una viga pero esta sobre un gusano entonces esta inmobil.

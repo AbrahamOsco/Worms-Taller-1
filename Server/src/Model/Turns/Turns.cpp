@@ -39,7 +39,7 @@ void Turns::tryEndTurn(){
             timeLeft = 3;
         }
         attackRecognized = true;
-    } else if (timeLeft <= 0 and players.allWormsAreUnmoveAndNotExistsProjectiles()) {
+    } else if (timeLeft <= 0 and players.allWormsAreUnmoveAndNotExistsProjectiles()) { // solo acabara el turno cuando todos los worms estan quietos y no existan projectiles
         timeLeft = TIME_FOR_TURN;
         players.getCurrentPlayer().endTurn();
         startATurn();

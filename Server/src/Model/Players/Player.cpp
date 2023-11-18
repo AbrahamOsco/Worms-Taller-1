@@ -73,7 +73,7 @@ void Player::update() {
     }
 }
 
-// lo enviamos no importa si el player perdio o no no tiene info relevante.
+// lo enviamos no importa si el player perdio o no,  tiene info que se debe mostrar hasta el final..
 PlayerDTO Player::getPlayerDTO(const size_t &idCurrentPlayer) const {
     TurnType aTurnType = TurnType::NOT_IS_MY_TURN;
     if(this->idPlayer == idCurrentPlayer ){
@@ -103,11 +103,8 @@ void Player::endTurn() {
 }
 
 bool Player::allWormsAreUnmoveAndNotExistsProjectiles() {
-    for(auto& aWorm : worms){
-        if(aWorm.second->wasDestroyedWorm()){  //Si el gusano fue destruido entonces no se mueve porque no existe. todo
-            return true;
-        }
-        else if(not aWorm.second->isUnmoveAndNotExistsPojectiles()){
+    for (auto &aWorm: worms) {
+        if (not aWorm.second->isUnmoveAndNotExistsPojectiles()) {
             return false;
         }
     }

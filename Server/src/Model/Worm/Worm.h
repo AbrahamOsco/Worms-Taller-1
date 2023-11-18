@@ -57,13 +57,6 @@ public:
 
     float getHP() const;
 
-    // Posibles getters que si no se usan se eliminaran en un futuro todo
-    Direction getDirectionLook() const;
-
-    float getPositionX() const;
-
-    float getPositionY();
-
     void assigOnABeam();
 
     void unAssingOnABeam();
@@ -75,12 +68,6 @@ public:
     void assigNextToAWorm();
 
     void unAssignNextToAWorm();
-
-    TypeFocusWorm getTypeFocusWorm() const;
-
-    MoveWorm getTypeMov() const;
-
-    TypeWeapon getWeaponCurrent() const;
 
     WormDTO getWormDTO() const;
 
@@ -106,7 +93,7 @@ public:
 
     void assignWeapon(const TypeWeapon &aTypeWeapon);
 
-    void teleportWorm(const float &posXTeleport, const float &posYTeleport);
+    void teleportWorm(const int &posXTeleport, const int &posYTeleport);
 
     void upWorm();
 

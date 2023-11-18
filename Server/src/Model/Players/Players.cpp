@@ -25,11 +25,9 @@ void Players::assignWormsToPlayers() {
     for (auto it = idsAndPositionsWorms.begin(); it != idsAndPositionsWorms.end(); it++) {
         idWormsOrig.push_back(it->first);
     }
-
     for (auto it = players.begin(); it != players.end(); it++) {
         idPlayersOrig.push_back(it->first);
     }
-
     std::random_shuffle(idWormsOrig.begin(), idWormsOrig.end());
     std::random_shuffle(idPlayersOrig.begin(), idPlayersOrig.end());
     // tenemos las copias y las originales, (asignamos la copia a la original nuevamente cuando la copia esta vacia).
@@ -52,7 +50,7 @@ void Players::assignWormsToPlayers() {
             idWormsCopy.pop_back();
             idPlayersCopy.pop_back();
         }
-        // Si ya no hay guasnos y hay jugadores que tienen menos gusanos (por q les falto repartir en esta vuelta) les damos la bonificacion de puntos.
+        // Si ya no hay gusanos y hay jugadores que tienen menos gusanos (por q les falto repartir en esta vuelta) les damos la bonificacion de puntos.
         while ( not idPlayersCopy.empty()){
             players.at(idPlayersCopy.back()).assignBonusLife();
             idPlayersCopy.pop_back();
@@ -103,8 +101,7 @@ size_t Players::startAPlayerTurn() {
 
 void Players::update() {
     for(auto& aPlayer : players) {
-         // no actualizao a los jugadores q perdieron todos sus worms
-            aPlayer.second.update();
+        aPlayer.second.update();        //actualizamos a todos los player pero muy a fonod los worms destruidos no seran actualizados
     }
 }
 
