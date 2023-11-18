@@ -106,37 +106,6 @@ void TextureManager::drawTextBox(const std::string &text, int x, int y, const st
     renderer.Copy(textTexture, SDL2pp::NullOpt, SDL2pp::Rect(textX, textY, textWidth, textHeight));
 }
 
-void TextureManager::drawLife(const std::string &text, int x, int y, const std::string &fontPath, int fontSize,
-                                 SDL_Color textColor, SDL_Color boxColor, SDL2pp::Renderer &renderer, Camera &camera) {
-    x = x - camera.getPosition().GetX();
-    y = y - camera.getPosition().GetY();
-
-    SDL2pp::Font font(fontPath, fontSize);
-    SDL2pp::Texture textTexture(renderer, font.RenderText_Blended(text, textColor));
-
-    int textWidth = textTexture.GetWidth();
-    int textHeight = textTexture.GetHeight();
-
-    // Calcular la posición del texto para que quede en el punto (x, y)
-    int textX = x;
-    int textY = y;
-
-    int padding = 2;
-
-    // Calcular la caja del texto basado en las dimensiones reales del texto
-    SDL_Rect textBoxRect = {x - padding, y - padding, textWidth + 2 * padding, textHeight + 2 * padding};
-
-    // Ajustar la posición de la caja si es necesario
-    // ... (puedes ajustar la posición o las dimensiones de la caja según lo desees)
-
-    // Renderizar la caja del texto
-    SDL_SetRenderDrawColor(renderer.Get(), boxColor.r, boxColor.g, boxColor.b, boxColor.a);
-    SDL_RenderFillRect(renderer.Get(), &textBoxRect);
-
-    // Dibujar el texto en las coordenadas calculadas
-    renderer.Copy(textTexture, SDL2pp::NullOpt, SDL2pp::Rect(textX, textY, textWidth, textHeight));
-}
-
 void TextureManager::drawText(const std::string &text, int x, int y, const std::string &fontPath, int fontSize,
                               SDL_Color textColor, SDL2pp::Renderer &renderer) {
     SDL2pp::Font font(fontPath, fontSize);
@@ -153,7 +122,7 @@ void TextureManager::setColorMod(const std::string &id, Uint8 r, Uint8 g, Uint8 
     if (it != m_textureMap.end()) {
         SDL2pp::Texture *texture = it->second.get();
         if (texture) {
-            texture->SetColorMod(r,g,b);
+            texture->SetColorMod(r, g, b);
             texture->SetAlphaMod(alpha);
         }
     }
@@ -164,7 +133,7 @@ void TextureManager::resetColorMod(const std::string &id) {
     if (it != m_textureMap.end()) {
         SDL2pp::Texture *texture = it->second.get();
         if (texture) {
-            texture->SetColorMod(255,255,255);
+            texture->SetColorMod(255, 255, 255);
             texture->SetAlphaMod(255);
         }
     }

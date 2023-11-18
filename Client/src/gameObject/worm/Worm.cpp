@@ -70,6 +70,9 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Came
     SDL_Color boxColor = {0, 0, 0, 255};
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
 
+    int xCorrection;
+    int yCorrection;
+
     std::string text = std::to_string(m_hpWorm);
     int fontSize = 11;
 
@@ -78,13 +81,16 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Came
 
     int textWidth = textTexture.GetWidth();
 
-    textureManager.drawLife(text, m_x - textWidth / 2, m_y - 30, fontPath, fontSize, textColor, boxColor,
-                               renderer, camera);
+    xCorrection = m_x - textWidth / 2 - camera.getPosition().GetX();
+    yCorrection = m_y - 30 - camera.getPosition().GetY();
+
+    textureManager.drawTextBox(text, xCorrection, yCorrection, fontPath, fontSize, textColor, boxColor,
+                               renderer);
     if (m_weaponCurrent == TypeWeapon::DYNAMITE || m_weaponCurrent == TypeWeapon::AIR_ATTACK ||
         m_weaponCurrent == TypeWeapon::BASEBALL_BAT || m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
 
-        int xCorrection = m_x - m_width / 2 - camera.getPosition().GetX();
-        int yCorrection = m_y - m_height / 2 - camera.getPosition().GetY();
+        xCorrection = m_x - m_width / 2 - camera.getPosition().GetX();
+        yCorrection = m_y - m_height / 2 - camera.getPosition().GetY();
 
         m_animation.draw(xCorrection, yCorrection, m_width, m_height, renderer, textureManager, m_flip);
     } else {
@@ -93,8 +99,8 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Came
         angle = std::max(-90, std::min(90, angle));
         int rowIndex = static_cast<int>(((90 - angle) * frameCount) / 180);
 
-        int xCorrection = m_x - m_width / 2 - camera.getPosition().GetX();
-        int yCorrection = m_y - m_height / 2 - camera.getPosition().GetY();
+        xCorrection = m_x - m_width / 2 - camera.getPosition().GetX();
+        yCorrection = m_y - m_height / 2 - camera.getPosition().GetY();
 
         textureManager.drawFrame(m_textureID, xCorrection, yCorrection, m_width, m_height, rowIndex, 0,
                                  renderer, m_flip);
@@ -126,7 +132,7 @@ void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue
     animationState();
     m_animation.update();
 
-    if(m_typeFocus == TypeFocusWorm::FOCUS) {
+    if (m_typeFocus == TypeFocusWorm::FOCUS) {
         SDL2pp::Point point(m_x, m_y);
         camera.setTarget(point);
     }
@@ -136,15 +142,15 @@ void Worm::animationState() {
     if (m_moveWorm == MoveWorm::WALKING) {
         m_width = 30;
         m_height = 30;
-        m_animation.setProps("walk",14, 54);
+        m_animation.setProps("walk", 14, 54);
     }
     if (m_moveWorm == MoveWorm::JUMPING) {
         m_width = 60;
         m_height = 60;
-        m_animation.setProps("air",36, 60);
+        m_animation.setProps("air", 36, 60);
     }
 
-    if(m_moveWorm == MoveWorm::ATTACKING_WITH_BAT) {
+    if (m_moveWorm == MoveWorm::ATTACKING_WITH_BAT) {
         m_width = 60;
         m_height = 30;
         m_animation.setProps("bat_hit", 15, 30);

@@ -38,9 +38,6 @@ public:
     void setColorMod(const std::string &id, Uint8 r, Uint8 g, Uint8 b, Uint8 alpha);
 
     void resetColorMod(const std::string &id);
-
-    void drawLife(const std::string &text, int x, int y, const std::string &fontPath, int fontSize, SDL_Color textColor,
-                  SDL_Color boxColor, SDL2pp::Renderer &renderer, Camera &camera);
 };
 
 
