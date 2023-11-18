@@ -42,6 +42,7 @@ class Worm : public GameObject {
     b2World* aWorld;
     Armament& armament;
     size_t contatctsWithBeam;
+    size_t contactsWithEdge;
     bool onInclinedBeam;
     size_t contactsWithWorms;
     bool attacked;
@@ -95,10 +96,6 @@ public:
 
     void teleportWorm(const int &posXTeleport, const int &posYTeleport);
 
-    void upWorm();
-
-    void downWorm();
-
     void attack();
 
     ProjectilesDTO getProjectilesDTO();
@@ -128,6 +125,16 @@ public:
     b2World *getWorld();
 
     bool wasDestroyedWorm() const;
+
+    void chargeWeaponWithVariablePower();
+
+    void changeAngle(const Direction &direction);
+
+    void endAttack();
+
+    void aContactWithEdge();
+
+    void lessContactWithEdge();
 };
 
 

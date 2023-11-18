@@ -47,9 +47,12 @@ void waterCollidesWithWorm(GameObject* water, GameObject* worm, GameParameters *
 }
 void wormCollidesWithEdege(GameObject* worm, GameObject* edge, GameParameters *gameParameters){
     std::cout << "Worm collisiona con el edge\n";
+    Worm* wormSelect = (Worm*) worm;
+    wormSelect->aContactWithEdge();
 }
 void edgeCollidesWithWorm(GameObject* edge, GameObject* worm, GameParameters *gameParameters){
     std::cout << "Edge collisiona con el worm\n";
+    wormCollidesWithEdege(worm, edge, gameParameters);
 }
 
 void wormCollidesWithWorm(GameObject* worm1, GameObject* worm2, GameParameters *gameParameters){
@@ -168,6 +171,16 @@ void waterCollidesWithProjectileBazooka(GameObject* water, GameObject* projectil
     projectileBazookaCollidesWithWater(projectileBazooka, water, gameParameters);
 }
 
+void wormEndContactWithEdge(GameObject* worm, GameObject* edge, GameParameters *gameParameters){
+    std::cout << "wormEndContactWithEdge\n";
+    Worm* wormSelect = (Worm*) worm;
+    wormSelect->lessContactWithEdge();
+}
+
+void edgeEndContactWithWorm(GameObject* edge, GameObject* worm, GameParameters *gameParameters){
+    std::cout << "edgeEndContactWithWorm\n";
+    wormEndContactWithEdge(worm, edge, gameParameters);
+}
 
 GameContactListener::GameContactListener(b2World *world, GameParameters *gameParameters) {
     world->SetContactListener(this);
@@ -197,6 +210,10 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
     endContactMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM) ] = &beamEndContactWithWorm;
     endContactMap[std::make_pair(ENTITY_WORM, ENTITY_BEAM) ] = &wormEndContactWithBeam;
     endContactMap[std::make_pair(ENTITY_WORM, ENTITY_WORM) ] = &wormEndContactWithWorm;
+
+    endContactMap[std::make_pair(ENTITY_WORM, ENTITY_EDGE) ] = &wormEndContactWithEdge;
+    endContactMap[std::make_pair(ENTITY_EDGE, ENTITY_WORM) ] = &edgeEndContactWithWorm;
+
 
 }
 

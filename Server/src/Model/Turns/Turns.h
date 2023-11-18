@@ -11,6 +11,7 @@
 
 class Turns {
 private:
+    GameParameters gameParameters;
     Players& players;
     size_t idPlayerCurrent;
     std::string textTurn;
@@ -20,7 +21,7 @@ private:
     bool attackRecognized;
 public:
 
-    explicit Turns(Players& players);
+    explicit Turns(Players &players, const GameParameters& parameters);
 
     void startATurn();
 

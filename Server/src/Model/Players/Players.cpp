@@ -73,7 +73,12 @@ bool Players::onlyExistsOnePlayer(){
             playerLoser++;
         }
     }
-    return (playerLoser == (this->players.size() -1) );
+    if(this->players.size() == 1 and playerLoser == 0 ){ // soy un unico jugador-Test pero aun no perdi todo mis gusano quiero jugar solo.
+        return false;
+    } else if (this->players.size() == 1 and playerLoser == 1 ){ // si era un unico jugador y perdi mi  worm entonces salgo.
+        return true;
+    }
+    return (playerLoser == (this->players.size() -1) ); // este ultimo and agrego para seguir jugando cn 1 jugadro.
 }
 
 void Players::addToTheWorld(b2World *world) {

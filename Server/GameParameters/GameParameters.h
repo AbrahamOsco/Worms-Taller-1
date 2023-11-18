@@ -40,6 +40,8 @@ public:
 
     static float getBeamFrictionSlipperyStatic();
 
+    static float getOffsetEdgeTop();
+
     float getMaxHeightPixel() const;
 
     static float getBeamFriction();
@@ -111,6 +113,10 @@ public:
     float getMaxFallDamage() const;
 
     float getWormMaxResistanceToHeight() const;
+
+    int getTimeForTurn() const;
+
+    int getTimeExtraAfterAttack() const;
 };
 
 

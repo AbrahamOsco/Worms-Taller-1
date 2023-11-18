@@ -5,8 +5,8 @@
 #include <iostream>
 #include "Turns.h"
 #include "../../../../Common/DTO/TurnDTO.h"
-#define TIME_FOR_TURN 10
-Turns::Turns(Players &players) : players(players), timeLeft(TIME_FOR_TURN), damageRecognized(false), attackRecognized(false) {
+Turns::Turns(Players &players, const GameParameters& parameters)
+        : gameParameters(parameters), players(players), timeLeft(parameters.getTimeForTurn()), damageRecognized(false), attackRecognized(false) {
 }
 
 void Turns::startATurn() {
@@ -35,12 +35,12 @@ void Turns::tryEndTurn(){
         timeLeft = 0;
         damageRecognized = true;
     } else if (players.getCurrentPlayer().getCurrentWorm()->alreadyAttack() and not attackRecognized) {
-        if (timeLeft > 3) {
-            timeLeft = 3;
+        if (timeLeft > gameParameters.getTimeExtraAfterAttack()) {
+            timeLeft = gameParameters.getTimeExtraAfterAttack();
         }
         attackRecognized = true;
     } else if (timeLeft <= 0 and players.allWormsAreUnmoveAndNotExistsProjectiles()) { // solo acabara el turno cuando todos los worms estan quietos y no existan projectiles
-        timeLeft = TIME_FOR_TURN;
+        timeLeft = gameParameters.getTimeForTurn();
         players.getCurrentPlayer().endTurn();
         startATurn();
     }
