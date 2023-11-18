@@ -79,5 +79,7 @@ Beam::Beam(int posCenterX, int posCenterY, Angle angle, TypeBeam type) {
 }
 
 void Beam::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
-    textureManager.drawBeam(m_textureID, m_x, m_y, m_width, m_height, renderer, SDL_FLIP_NONE, camera);
+    int xCorrection = m_x - camera.getPosition().GetX();
+    int yCorrection = m_y - camera.getPosition().GetY();
+    textureManager.draw(m_textureID, xCorrection, yCorrection, m_width, m_height, renderer, SDL_FLIP_NONE);
 }

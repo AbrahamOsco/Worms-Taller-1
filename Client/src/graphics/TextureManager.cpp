@@ -37,25 +37,6 @@ void TextureManager::draw(const std::string &id, int x, int y, int width, int he
     }
 }
 
-void TextureManager::drawBeam(const std::string &id, int x, int y, int width, int height, SDL2pp::Renderer &renderer,
-                          SDL_RendererFlip flip, Camera& camera) {
-    // Buscar la textura por su ID
-    auto it = m_textureMap.find(id);
-    if (it != m_textureMap.end()) {
-        SDL2pp::Texture *texture = it->second.get();
-        if (texture) {
-            // Definir el rectángulo de origen (la textura completa)
-            SDL2pp::Rect srcRect(0, 0, width, height);
-
-            // Definir el rectángulo de destino (posición y tamaño en la ventana)
-            SDL2pp::Rect destRect(x - camera.getPosition().GetX(), y - camera.getPosition().GetY(), width, height);
-
-            // Dibujar la textura en el Renderer
-            renderer.Copy(*texture, srcRect, destRect, 0.0, SDL2pp::NullOpt, flip);
-        }
-    }
-}
-
 void
 TextureManager::drawFrame(const std::string &id, int x, int y, int width, int height, int currentRow, int currentCol,
                           SDL2pp::Renderer &renderer, SDL_RendererFlip flip) {
