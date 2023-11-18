@@ -14,7 +14,7 @@ class SpriteAnimation : public Animation {
 private:
     int m_speed;
     int m_frameCount;
-    std::string m_textureID;
+    std::string m_textureId;
 
 public:
     explicit SpriteAnimation(bool repeat = true);
