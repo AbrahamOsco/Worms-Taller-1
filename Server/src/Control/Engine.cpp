@@ -57,15 +57,15 @@ void Engine::run() {
         TimeTurn timeTurn;
         timeTurn.startTurn();
         while (keepTalking) {
-            this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(), gameParameters.getPositionIterations()); // Hacemos un step en el world.
+            this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(),
+                             gameParameters.getPositionIterations()); // Hacemos un step en el world.
             std::unique_ptr<CommandDTO> aCommanDTO;
             if (commandsQueueNB.move_try_pop(aCommanDTO)) {
                 this->model.execute(aCommanDTO, model.getTimeLeft());
             } else {
                 this->model.tryAttackVariablePower();
             }
-            connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
-                                     model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO());
+            connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(), model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO());
             if (timeTurn.hasItBeenASecond()) {
                 model.subtractTime();
                 timeTurn.updateTime();
@@ -73,13 +73,12 @@ void Engine::run() {
             model.update();
             frameRate.finish();
         }
-        this->connections.stop();
-        this->clearAll(); // Limpiamos las queues.
-        std::cerr << "[Engine]:run Terminando la ejecucion del juego \n";
     } catch (std::exception &e) {
-        std::cerr << "[Engine]:run Excepcion en el run  \n";
-        std::cerr << e.what() << "\n";
+        std::cerr << "[Engine]:run Terminando la ejecucion del juego \n";
+        std::cerr << "[Engine] EXcpecion del tipo : :"  <<e.what() << "\n";
+        this->connections.stop(); //[Por ahora lo comento no quiero cerrar todo quiero debgauar luego descomentar esto.
     }
+
 }
 
 void Engine::print() {

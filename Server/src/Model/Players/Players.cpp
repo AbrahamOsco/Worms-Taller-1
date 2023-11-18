@@ -32,28 +32,25 @@ void Players::assignWormsToPlayers() {
 
     std::random_shuffle(idWormsOrig.begin(), idWormsOrig.end());
     std::random_shuffle(idPlayersOrig.begin(), idPlayersOrig.end());
-    idWormsCopy = idWormsOrig;
-    idPlayersCopy = idPlayersOrig;
     // tenemos las copias y las originales, (asignamos la copia a la original nuevamente cuando la copia esta vacia).
     size_t i = 0;
     while( i < iterations){
+        idWormsCopy = idWormsOrig;
+        idPlayersCopy = idPlayersOrig;
         while( not idWormsCopy.empty() and not idPlayersCopy.empty() ){
             players.at(idPlayersCopy.back()).assignWorm(idWormsCopy.back(), idsAndPositionsWorms[idWormsCopy.back()]);
             idPlayersCopy.pop_back();
             idWormsCopy.pop_back();
         }
-        idWormsCopy = idWormsOrig;
-        idPlayersCopy = idPlayersOrig;
         i++;
     }
-    // si la division entre el numero de gusanos y los jugadores no es exacta entonces falta gusanos para repartir.
+    // si la division entre el numero de gusanos y los jugadores no es exacta entonces falta gusanos para repartir que quedaron  OJO.
     if ( (numberWorms % numberPlayers) != 0){
         idPlayersCopy = idPlayersOrig;
-        idWormsCopy = idWormsOrig;
         while( not idWormsCopy.empty()){
             players.at(idPlayersCopy.back()).assignWorm(idWormsCopy.back(), idsAndPositionsWorms[idWormsCopy.back()] );
             idWormsCopy.pop_back();
-            idPlayersCopy.back();
+            idPlayersCopy.pop_back();
         }
         // Si ya no hay guasnos y hay jugadores que tienen menos gusanos (por q les falto repartir en esta vuelta) les damos la bonificacion de puntos.
         while ( not idPlayersCopy.empty()){
@@ -61,7 +58,6 @@ void Players::assignWormsToPlayers() {
             idPlayersCopy.pop_back();
         }
     }
-    startAPlayerTurn();
 }
 
 std::vector<WormDTO> Players::getWormsDTO() const{

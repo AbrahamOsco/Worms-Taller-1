@@ -3,6 +3,7 @@
 //
 
 #include <string>
+#include <iostream>
 #include "Model.h"
 #include "../../../../Common/DTO/PlayersDTO.h"
 
@@ -15,15 +16,30 @@ void Model::addPlayer(const std::string &playerName, const size_t &idPlayer) {
 }
 
 StageDTO Model::getStageDTO() const {
+
     return stage.getStageDTO();
+
+
 }
 
 std::vector<WormDTO> Model::getWormsDTO() const {
-    return players.getWormsDTO();
+    try{
+
+        return players.getWormsDTO();
+    }catch(std::exception& e){
+        std::cerr << "Excepcion dentro  de getWormsDTO" << e.what() << "\n";
+    }
+
 }
 
 PlayersDTO Model::getPlayersDTO() const {
-    return players.getPlayersDTO();
+
+    try{
+
+        return players.getPlayersDTO();
+    }catch(std::exception& e){
+        std::cerr << "Excepcion dentro de getPlayersDTO" << e.what() << "\n";
+    }
 }
 
 StageDTO Model::startAndGetStageDTO() {
@@ -35,7 +51,7 @@ StageDTO Model::startAndGetStageDTO() {
 }
 
 void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft) {
-    players.getCurrentWorm()->execute(aCommandDTO, timeLeft);
+    players.getCurrentPlayer().execute(aCommandDTO, timeLeft);
 }
 
 void Model::update() {
@@ -47,18 +63,42 @@ void Model::subtractTime(){
 }
 
 TurnDTO Model::getTurnDTO() const {
-    return turns.getTurnDTO();
+    try{
+
+        return turns.getTurnDTO();
+    }catch(std::exception& e){
+        std::cerr << "Excepcion dentro de TURNOS DTO" << e.what() << "\n";
+    }
+
+
 }
 
 std::vector<WeaponsDTO> Model::getVecWeaponsDTO() const {
-    return players.getVecWeaponsDTO();
+    try{
+
+        return players.getVecWeaponsDTO();
+    }catch(std::exception& e){
+        std::cerr << "Excepcion dentro de weaponsDTO" << e.what() << "\n";
+    }
 }
 
 WeaponSightDTO Model::getWeaponSightDTO() {
-    return players.getCurrentWorm()->getWeaponSightDTO();
+    try{
+
+        return players.getCurrentWorm()->getWeaponSightDTO();
+    }catch(std::exception& e){
+        std::cerr << "Excepcion dentro de WEAPONSSIGHT DTO" << e.what() << "\n";
+    }
+
 }
 ProjectilesDTO Model::getProjectilesDTO(){
-    return players.getCurrentWorm()->getProjectilesDTO();
+    try{
+
+        return players.getCurrentWorm()->getProjectilesDTO();
+    }catch(std::exception& e){
+        std::cerr << "Excepcion dentro PROJECTILESDTO de" << e.what() << "\n";
+    }
+
 }
 
 void Model::tryAttackVariablePower() {

@@ -179,5 +179,7 @@ public:
 
     //  Destructor
     ~Socket();
+
+    bool isClosed() const;
 };
 #endif

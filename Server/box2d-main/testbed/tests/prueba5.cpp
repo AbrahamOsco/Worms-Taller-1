@@ -380,8 +380,7 @@ public:
         directionLook = Direction::RIGHT;
         hp = 100.0f;
         dragSpeed = 0.2f;
-        waitTime = 1;  // Supuesto: si el usuario no presiona nada el tiempo de espera
-                       // predeterminado es 1s.
+        waitTime = 5;
     }
 
     void assignBonusLife() {
@@ -459,6 +458,7 @@ public:
         else
             posX += 0.5f;
         dynamiteHolder.placeDynamite(world,waitTime,b2Vec2(posX,posY));
+        waitTime = 5; // back to default
     }
 
     b2World* getWorld(){

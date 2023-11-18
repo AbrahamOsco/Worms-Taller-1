@@ -106,10 +106,10 @@ ProjectilesDTO Armament::getProjectilesDTO(const bool &attackedWorm) {
     if ( attackedWorm and  ( (weaponOnStandBy!= NONE_WEAPON) and not this->armament.at(weaponOnStandBy)->launchesProjectiles() ) ){
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
     }
-    // si el arma en standby si ataca con projectiles lo muestro.
     armament.at(weaponOnStandBy)->getProjectilesDTO(vecProjectileDTO);
     TypeShowProjectiles typeShowProj = NO_SHOW_PROJECTILES;
-    if (vecProjectileDTO.size() > 0){
+    if (vecProjectileDTO.size() > 0) {
+        std::cout << "Se Obtiene q existe almenos un projectil\n";
         typeShowProj = SHOW_PROJECTILES;
     }
     return ProjectilesDTO(typeShowProj, vecProjectileDTO);
@@ -127,10 +127,16 @@ void Armament::endTurn() {
 }
 
 bool Armament::thereAreProjectiles() {
+    if(weaponOnStandBy == NONE_WEAPON){
+        return false;
+    }
     return armament.at(weaponOnStandBy)->thereAreProjectiles();
 }
 
 bool Armament::weaponStandByLaunchesProjectiles() {
+    if(weaponOnStandBy == NONE_WEAPON){
+        return false;
+    }
     return armament.at(weaponOnStandBy)->launchesProjectiles();
 }
 

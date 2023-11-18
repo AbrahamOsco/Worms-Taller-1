@@ -2,6 +2,7 @@
 // Created by abraham on 28/10/23.
 //
 
+#include <iostream>
 #include "ClientConnection.h"
 #include "../Protocol/ServerProtocol.h"
 #include "../../../Common/DTO/PlayersDTO.h"
@@ -26,8 +27,11 @@ void ClientConnection::start(StageDTO &stageDTO) {        //Lanzo los threads se
 }
 
 void ClientConnection::join() {
+    std::cerr << " [Thread Client]: Se entra a joinear los threads sender y receiver de : " << idPlayer << "\n";
     sender.join();
+    std::cerr << " [Thread Client]: Join thread Sender "<< idPlayer << "\n" ;
     receiver.join();
+    std::cerr << " [Thread Client]: Join thread Receiver" << idPlayer << "\n";
 }
 
 // enviamos snapShots al cliente (actualizaciones del mundo)
@@ -39,21 +43,40 @@ void ClientConnection::runSender() {
             serverProtocol.sendSnapShot(aSnapShot);
         }
     }catch (const std::exception& e ){
+        std::cerr << " [Thread Sender]: Excpecion catcheada: "<< idPlayer << "" << e.what() << "Se procede a cerrar el socket peer \n";
         sktPeer.totalClosure();
-        sktPeer.close();
+        std::cerr << " [Thread Sender]: Se cerro el socket peer. "<< idPlayer << " Termino Thread Sender \n";
     }
 }
 
 void ClientConnection::runReceiver() {
-    ServerProtocol serverProtocol(sktPeer);
-    while(serverProtocol.isAvailable()){
-        std::unique_ptr<CommandDTO> aCommandDTO = std::make_unique<CommandDTO>(serverProtocol.recvCommandDTO());
-        commandQueueNB.move_try_push(std::move(aCommandDTO));  // usamos una cola no bloqueante es -> try_push
+    try{
+        ServerProtocol serverProtocol(sktPeer);
+        while(serverProtocol.isAvailable()){
+            std::unique_ptr<CommandDTO> aCommandDTO = std::make_unique<CommandDTO>(serverProtocol.recvCommandDTO());
+            commandQueueNB.move_try_push(std::move(aCommandDTO));  // usamos una cola no bloqueante es -> try_push
+        }
+        std::cerr<< "[Thread Receiver]  id: "<< idPlayer << "  Detecto cierre del socket asi que se hace el close de CommandQueue\n";
+        commandQueueNB.close();
+        //snapShotQueueB->close();
+        std::cerr << "[Thread Receiver] "<< idPlayer << "   Termino thread receiver \n";
+    }catch(const std::exception& e ){
+        // Si entro aca es porque otro cliente se desconecto y necesitamos cerrar todos los clientes
+        std::cerr << "[Thread Receiver] Se cerro la queue de un cliente que estaba dispuesto a recibir mensajes" << idPlayer << " Pero otro cliente se desconecto\n";
     }
 }
 
 void ClientConnection::stop() {
-    snapShotQueueB->close();
+    std::cout << " [Thread cliente]  " << idPlayer << " STOP";
+    if(sktPeer.isClosed()){
+        std::cout << "[Thread cliente] el socket esta cerrado procedo a cerrar el snapShotQueue y hacerle un totalClouse al skt\n";
+        snapShotQueueB->close();
+        sktPeer.totalClosure();
+    } else {
+        //Solo tenemos una queue para popear comandos cierro la queue que envia snapshots
+        snapShotQueueB->close();
+        sktPeer.totalClosure();
+    }
 }
 
 void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, const PlayersDTO &playersDTO,

@@ -54,6 +54,8 @@ public:
     std::string getPlayerName() const;
 
     void endTurn();
+
+    void execute(std::unique_ptr<CommandDTO> &uniquePtr, const int &timeLeft);
 };
 
 

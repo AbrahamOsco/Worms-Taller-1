@@ -417,6 +417,9 @@ void Socket::shutdown(int how) {
         throw LibError(errno, "socket shutdown failed");
     }
 }
+bool Socket::isClosed() const{
+    return this->closed;
+}
 
 int Socket::close() {
     chk_skt_or_fail();

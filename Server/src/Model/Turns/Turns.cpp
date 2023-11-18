@@ -32,15 +32,15 @@ void Turns::subtractTime() {
 
 void Turns::tryEndTurn(){
     // Lo mas facil pasaron 60 segundos entonces.  pasa el turno del sgt jugador.
-    if(players.getCurrentPlayer().getCurrentWorm()->wasDamaged() and not damageRecognized ){
+    if (players.getCurrentPlayer().getCurrentWorm()->wasDamaged() and not damageRecognized) {
         timeLeft = 0;
         damageRecognized = true;
-    } else if (players.getCurrentPlayer().getCurrentWorm()->alreadyAttack() and not attackRecognized){
-        if(timeLeft > 3){
+    } else if (players.getCurrentPlayer().getCurrentWorm()->alreadyAttack() and not attackRecognized) {
+        if (timeLeft > 3) {
             timeLeft = 3;
         }
         attackRecognized = true;
-    }else if(timeLeft <= 0 and players.allWormsAreUnmoveAndNotExistsProjectiles() ){
+    } else if (timeLeft <= 0 and players.allWormsAreUnmoveAndNotExistsProjectiles()) {
         timeLeft = TIME_FOR_TURN;
         players.getCurrentPlayer().endTurn();
         startATurn();

@@ -2,6 +2,7 @@
 // Created by abraham on 26/10/23.
 //
 
+#include <iostream>
 #include "Player.h"
 #include "../../../GameParameters/GameParameters.h"
 
@@ -93,6 +94,10 @@ bool Player::allWormsAreUnmoveAndNotExistsProjectiles() {
         }
     }
     return true;
+}
+
+void Player::execute(std::unique_ptr<CommandDTO> &uniquePtr, const int &timeLeft) {
+    this->worms.at(idCurrentWorm)->execute(uniquePtr, timeLeft, idCurrentWorm);
 }
 
 

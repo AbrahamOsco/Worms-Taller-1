@@ -136,6 +136,38 @@ void wormEndContactWithWorm(GameObject* worm, GameObject* wormTwo, GameParameter
     aWorm2->unAssignNextToAWorm();
 }
 
+void projectileBazookaCollidesWithEdge(GameObject* projectileBazooka, GameObject* edge, GameParameters *gameParameters){
+    std::cout << "projectileBazookaCollidesWithEdge\n";
+
+    b2Vec2 projectilePosition = projectileBazooka->getBody()->GetWorldCenter();
+    ProjectileBazooka* projectilSelect = (ProjectileBazooka*)  projectileBazooka;
+    SaveWormsInAreaQuery saveWormsinArea(projectilePosition);     // Función de devolución de llamada para la búsqueda
+    projectilSelect->getWorld()->QueryAABB(&saveWormsinArea, projectilSelect->getAreaForSearch(projectilePosition));
+    for(auto& aElement : saveWormsinArea.getWormsAndDistSquared() ){
+        Worm* aWormToTakeDamage = (Worm*)(aElement.first);
+        b2Vec2 impulseForWorm = projectilSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(), projectilePosition, aElement.second);
+        float damageForWorm = projectilSelect->getDamageForWorm(aElement.second);
+        aWormToTakeDamage->getBody()->ApplyLinearImpulse( impulseForWorm, aWormToTakeDamage->getBody()->GetWorldCenter(), true);
+        aWormToTakeDamage->takeDamage(damageForWorm);
+    }
+    projectileBazooka->destroyBody();
+}
+
+void edgeCollidesWithProjectileBazooka(GameObject* edge, GameObject* projectileBazooka, GameParameters *gameParameters){
+    std::cout << "edgeCollidesWithProjectileBazooka\n";
+    projectileBazookaCollidesWithEdge(projectileBazooka, edge, gameParameters);
+}
+
+void projectileBazookaCollidesWithWater(GameObject* projectileBazooka, GameObject* water, GameParameters *gameParameters){
+    std::cout << "projectileBazookaCollidesWithWater\n";
+    projectileBazooka->destroyBody();
+}
+
+void waterCollidesWithProjectileBazooka(GameObject* water, GameObject* projectileBazooka, GameParameters *gameParameters){
+    std::cout << "waterCollidesWithProjectileBazooka\n";
+    projectileBazookaCollidesWithWater(projectileBazooka, water, gameParameters);
+}
+
 
 GameContactListener::GameContactListener(b2World *world, GameParameters *gameParameters) {
     world->SetContactListener(this);
@@ -147,9 +179,19 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_EDGE)] = &wormCollidesWithEdege;
     collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_WORM)] = &edgeCollidesWithWorm;
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_WORM)] = &wormCollidesWithWorm;
+
+    collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_WORM )] = &projectileBazookaCollidesWithWorm;
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_BAZOOKA_PROJECTILE)] = &wormCollidesWithProjectileBazooka;
     collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_BEAM)] = &projectileBazookaCollideWithBeam;
     collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_BAZOOKA_PROJECTILE )] = &beamCollidesWithMunitionBazooka;
+
+    // Estos 4 obligatorio crear para todo tipo de proyectiles @todo
+    collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_EDGE)] = &projectileBazookaCollidesWithEdge;
+    collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_BAZOOKA_PROJECTILE )] = &edgeCollidesWithProjectileBazooka;
+
+    collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_WATER)] = &projectileBazookaCollidesWithWater;
+    collisionsMap[std::make_pair(ENTITY_WATER, ENTITY_BAZOOKA_PROJECTILE )] = &waterCollidesWithProjectileBazooka;
+
 
 
     endContactMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM) ] = &beamEndContactWithWorm;

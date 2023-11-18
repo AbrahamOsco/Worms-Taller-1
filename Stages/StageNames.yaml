@@ -1,4 +1,5 @@
 namesScenarios:
+  - name: MapManyWorms
   - name: MapForTestWeapon
   - name: Jaula Maldita
   - name: MapaFor2Players
