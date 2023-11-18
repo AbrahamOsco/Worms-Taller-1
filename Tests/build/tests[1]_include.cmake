@@ -1,5 +1,0 @@
-if(EXISTS "/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Tests/build/tests[1]_tests.cmake")
-  include("/home/abraham/Escritorio/Taller/TPS-Taller-20232C/Worms-Taller-1/Tests/build/tests[1]_tests.cmake")
-else()
-  add_test(tests_NOT_BUILT tests_NOT_BUILT)
-endif()
