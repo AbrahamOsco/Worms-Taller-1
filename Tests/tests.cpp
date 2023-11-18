@@ -1,8 +1,9 @@
-#include <iostream>
+#include <gmock/gmock.h>
+#include <arpa/inet.h>
 #include <gtest/gtest.h>
+#include <iostream>
 #include "Mock_Socket.h"
 #include <vector>
-#include <gmock/gmock.h>
 #include "../Common/Protocol/Protocol.h"
 #include "../Client/src/protocol/ClientProtocol.h"
 #include "../Server/src/Protocol/ServerProtocol.h"
@@ -25,8 +26,6 @@
 #include "../Common/DTO/WeaponSightDTO.h"
 #include "../Common/DTO/WormDTO.h"
 #include <cstring>
-#include <arpa/inet.h>
-
 
 TEST(TEST_MOCK_SOCKET, SEND_SOME) {
     Socket skt;
@@ -173,7 +172,7 @@ TEST(TEST_PROTOCOL_CLIENT_SEND, sendResponseInitialStateDTO_Join_Game) {
     size = ntohs(size);
     ASSERT_TRUE(gameName.size() == size);
     offset = offset+2;
-    std::string aux(buffer.data()+offset,size);
+    std::string aux(buffer.data()+offset, size);
     ASSERT_TRUE(gameName == aux);
 }
 TEST(TEST_PROTOCOL_CLIENT_SEND, sendCommandDTO) {
@@ -223,7 +222,6 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_INI_CREATE_GAME) {
     scenarios.push_back("Cascadas");
     maxPlayers.push_back(14);
     amount++;
-    
     ResolverInitialDTO dto(RESPONSE_INITIAL_CREATE_GAME, scenarios, maxPlayers);
     protocol.sendResolverInitialDTO(dto);
     buffer = skt.getBuffer();
