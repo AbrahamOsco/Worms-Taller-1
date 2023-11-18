@@ -1,12 +1,12 @@
-#ifndef THREAD_H_
+#ifndef THREAD_H_  // NOLINT
 #define THREAD_H_
 
-#include <thread>
+#include <thread>  // NOLINT
 #include <iostream>
 #include <atomic>
 
 class Runnable {
-    public:
+ public:
         virtual void start() = 0;
         virtual void join() = 0;
         virtual void stop() = 0;
@@ -16,17 +16,17 @@ class Runnable {
 };
 
 class Thread : public Runnable {
-    private:
+ private:
         std::thread thread;
 
-    protected:
+ protected:
         // Subclasses that inherit from Thread will have access to these
         // flags, mostly to control how Thread::run() will behave
         std::atomic<bool> _keep_running;
         std::atomic<bool> _is_alive;
 
-    public:
-        Thread () : _keep_running(true), _is_alive(false) {}
+ public:
+        Thread() : _keep_running(true), _is_alive(false) {}
 
         void start() override {
             _is_alive = true;
@@ -71,4 +71,4 @@ class Thread : public Runnable {
         Thread& operator=(Thread&& other) = delete;
 };
 
-#endif
+#endif  // NOLINT

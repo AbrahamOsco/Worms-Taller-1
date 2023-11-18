@@ -2,6 +2,7 @@
 #include <arpa/inet.h>
 #include <gtest/gtest.h>
 #include <iostream>
+#include <cstring>
 #include "Mock_Socket.h"
 #include <vector>
 #include "../Common/Protocol/Protocol.h"
@@ -25,7 +26,6 @@
 #include "../Common/DTO/WeaponsDTO.h"
 #include "../Common/DTO/WeaponSightDTO.h"
 #include "../Common/DTO/WormDTO.h"
-#include <cstring>
 
 TEST(TEST_MOCK_SOCKET, SEND_SOME) {
     Socket skt;

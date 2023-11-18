@@ -1,4 +1,4 @@
-#ifndef RESOLVER_H
+#ifndef RESOLVER_H  // NOLINT
 #define RESOLVER_H
 
 #include <sys/socket.h>
@@ -12,7 +12,7 @@
  * en direcciones IPv4 para TCP.
  * */
 class Resolver {
-    private:
+ private:
     struct addrinfo *result;
     struct addrinfo *_next;
 
@@ -31,7 +31,7 @@ class Resolver {
      * */
     void chk_addr_or_fail() const;
 
-    public:
+ public:
 /* Crea el objeto y resuelve el dado nombre del host y servicio.
  *
  * Si `is_passive` es `true` y `hostname` es `nullptr`,
@@ -80,4 +80,4 @@ struct addrinfo* next();
  * */
 ~Resolver();
 };
-#endif
+#endif  // NOLINT

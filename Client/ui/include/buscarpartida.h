@@ -2,8 +2,9 @@
 #define BUSCARPARTIDA_H
 
 #include <QWidget>
-#include "socket.h"
+#include <vector>
 #include <string>
+#include "../../../Common/Socket/Socket.h"
 #include "lobby.h"
 #include "../../../Common/DTO/RoomDTO.h"
 
@@ -15,15 +16,15 @@ struct Partida{
 };
 
 class BuscarPartida : public QWidget {
-private:
+ private:
     Socket* skt;
     std::vector<Partida> partidas;
     std::vector<RoomDTO> gameRooms;
     Lobby lobby;
-public:
-    explicit BuscarPartida(QWidget *parent = 0,Socket* socket = 0);
+ public:
+    explicit BuscarPartida(QWidget *parent = 0, Socket* socket = 0);
     void buscar(const std::vector<RoomDTO> &gameRooms);
-private:
+ private:
     void unirse();
     void mostrar();
     void salir();

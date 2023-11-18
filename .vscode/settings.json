@@ -70,5 +70,6 @@
         "any": "cpp",
         "codecvt": "cpp",
         "forward_list": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
