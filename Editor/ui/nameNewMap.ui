@@ -70,38 +70,9 @@
     <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="goBackBtn">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>31</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>←</string>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections>
-  <connection>
-   <sender>goBackBtn</sender>
-   <signal>clicked()</signal>
-   <receiver>NameNewMap</receiver>
-   <slot>onGoBackBtnClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>60</x>
-     <y>33</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>120</x>
-     <y>602</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>confirmBtn</sender>
    <signal>clicked()</signal>
@@ -120,7 +91,6 @@
   </connection>
  </connections>
  <slots>
-  <slot>onGoBackBtnClicked()</slot>
   <slot>onConfirmBtnClicked()</slot>
  </slots>
 </ui>

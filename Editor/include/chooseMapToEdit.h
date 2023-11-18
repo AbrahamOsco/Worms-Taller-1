@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "editingWindow.h"
+#include "ui_chooseMapToEdit.h"
 
 namespace Ui {
 class ChooseMapToEdit;
@@ -12,17 +13,15 @@ class ChooseMapToEdit : public QWidget {
     Q_OBJECT
 
  public:
-    explicit ChooseMapToEdit(QWidget *parent = nullptr);
-    void setPrev(QWidget* prev);
-    ~ChooseMapToEdit();
+    explicit ChooseMapToEdit(QWidget *parent);
+    ~ChooseMapToEdit() override;
 
  private slots:
-    void onGoBackBtnClicked();
     void onConfirmBtnClicked();
 
  private:
-    Ui::ChooseMapToEdit *ui;
-    QWidget* prev;
+    Ui::ChooseMapToEdit ui;
+    std::unique_ptr<EditingWindow> ew;
 };
 
 #endif  // CHOOSEMAPTOEDIT_H

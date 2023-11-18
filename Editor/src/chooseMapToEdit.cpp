@@ -5,38 +5,25 @@
 
 ChooseMapToEdit::ChooseMapToEdit(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ChooseMapToEdit) {
-    ui->setupUi(this);
+    ui() {
+    ui.setupUi(this);
     move(screen()->geometry().center() - frameGeometry().center());
-    this->setAttribute(Qt::WA_DeleteOnClose);
 
     YAML::Node node = YAML::LoadFile("../Stages/StageNames.yaml");
     for (YAML::const_iterator it = node["namesScenarios"].begin();
                         it != node["namesScenarios"].end(); ++it) {
         const YAML::Node& map  = *it;
         auto name = map["name"].as<std::string>();
-        ui->mapNameList->addItem(name.c_str());
+        ui.mapNameList->addItem(name.c_str());
     }
 }
 
-void ChooseMapToEdit::setPrev(QWidget *prev_) {
-    this->prev = prev_;
-}
-
-ChooseMapToEdit::~ChooseMapToEdit() {
-    delete ui;
-}
-
-void ChooseMapToEdit::onGoBackBtnClicked() {
-    this->close();
-    prev->show();
-}
+ChooseMapToEdit::~ChooseMapToEdit() = default;
 
 void ChooseMapToEdit::onConfirmBtnClicked() {
     this->hide();
-    std::string text(ui->mapNameList->currentItem()->text().toStdString());
-    auto  *ew  = new EditingWindow(nullptr, text);
-    ew->setPrev(this);
+    std::string text(ui.mapNameList->currentItem()->text().toStdString());
+    ew = std::unique_ptr<EditingWindow>(new EditingWindow(nullptr, text));
     ew->loadMapToEdit();
     ew->show();
 }

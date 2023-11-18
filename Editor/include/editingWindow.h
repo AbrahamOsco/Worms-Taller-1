@@ -7,6 +7,7 @@
 #include <vector>
 #include  <string>
 #include "../include/zoom.h"
+#include "ui_editingWindow.h"
 
 namespace Ui {
 class EditingWindow;
@@ -16,8 +17,6 @@ class EditingWindow : public QWidget {
     Q_OBJECT
 
  private slots:
-    void onGoBackBtnClicked();
-
     void onAddWormBtnClicked();
 
     void onAddBeamBtnClicked();
@@ -34,14 +33,12 @@ class EditingWindow : public QWidget {
  public:
     explicit EditingWindow(QWidget *parent = nullptr,
                            const std::string& mapName = "");
-    void setPrev(QWidget* prev);
     void loadMapToEdit();
     ~EditingWindow() override;
 
  private:
-    Ui::EditingWindow *ui;
+    Ui::EditingWindow ui;
     Zoom* zoom;
-    QWidget* prev;
     QGraphicsScene *scene;
     QGraphicsPixmapItem *bg;
     std::vector<QGraphicsPixmapItem*> worms;

@@ -24,35 +24,30 @@
 
 EditingWindow::EditingWindow(QWidget *parent, const std::string& mapName) :
     QWidget(parent),
-    ui(new Ui::EditingWindow),
+    ui(),
     scene(nullptr),
     newBeamLengthImg(LONG_BEAM_IMG),
     mapName(mapName),
     zoom(nullptr) {
-    ui->setupUi(this);
+    ui.setupUi(this);
     move(screen()->geometry().center() - frameGeometry().center());
-    this->setAttribute(Qt::WA_DeleteOnClose);
 
-    ui->label->setText(mapName.c_str());
+    ui.label->setText(mapName.c_str());
     getFileName(mapName);
 
     scene  =  new QGraphicsScene;
-    ui->graphicsView->setScene(scene);
-    std::string bgImg("../Editor/resources/" + ui->bgComboBox->currentText().toStdString() + ".png");
+    ui.graphicsView->setScene(scene);
+    std::string bgImg("../Editor/resources/" + ui.bgComboBox->currentText().toStdString() + ".png");
     bg = scene->addPixmap(QPixmap(bgImg.c_str()));
 
-    zoom = new Zoom(ui->graphicsView);
-}
-
-void EditingWindow::setPrev(QWidget* prev_) {
-    this->prev = prev_;
+    zoom = new Zoom(ui.graphicsView);
 }
 
 void EditingWindow::loadMapToEdit() {
     YAML::Node mapNode = YAML::LoadFile("../Stages/" +  mapFileName);
     auto bgName = mapNode["background"].as<std::string>();
     std::string bgImg("../Editor/resources/" + bgName + ".png");
-    ui->bgComboBox->setCurrentText(bgName.c_str());
+    ui.bgComboBox->setCurrentText(bgName.c_str());
     bg->setPixmap(QPixmap(bgImg.c_str()));
     bg->setPixmap(QPixmap(bgImg.c_str()));
     auto height = mapNode["height"].as<double>();
@@ -214,11 +209,6 @@ void EditingWindow::closeEvent(QCloseEvent *event) {
     }
 }
 
-void EditingWindow::onGoBackBtnClicked() {
-    this->close();
-    prev->show();
-}
-
 void EditingWindow::onSaveBtnClicked() {
     removeItemsOutsideBounds();
     if (hasOverlappingWorms()) {
@@ -258,7 +248,7 @@ void EditingWindow::onSaveBtnClicked() {
         node["width"] = WORLD_WIDTH;
     }
 
-    node["background"] = ui->bgComboBox->currentText().toStdString();
+    node["background"] = ui.bgComboBox->currentText().toStdString();
 
     for (auto & worm : worms) {
         YAML::Node wormNode;
@@ -291,8 +281,8 @@ void EditingWindow::onAddWormBtnClicked() {
     QGraphicsPixmapItem* worm = scene->addPixmap(QPixmap(wormImg.c_str()));
     worm->setFlag(QGraphicsItem::ItemIsMovable);
     worm->setFlag(QGraphicsItem::ItemIsSelectable);
-    worm->setPos(ui->graphicsView->mapToScene(
-            ui->graphicsView->viewport()->rect().center()));
+    worm->setPos(ui.graphicsView->mapToScene(
+            ui.graphicsView->viewport()->rect().center()));
     worms.push_back(worm);
 }
 
@@ -300,23 +290,23 @@ void EditingWindow::onAddWormBtnClicked() {
 void EditingWindow::onAddBeamBtnClicked() {
     GetSelectedBeamLength();
     std::string beamImg("../Editor/resources/" + newBeamLengthImg +
-                    std::to_string(ui->spinBox->value()) + ".png");
+                    std::to_string(ui.spinBox->value()) + ".png");
     QGraphicsPixmapItem* beam = scene->addPixmap(QPixmap(beamImg.c_str()));
     beam->setFlag(QGraphicsItem::ItemIsMovable);
     beam->setFlag(QGraphicsItem::ItemIsSelectable);
-    beam->setData(ANGLE_KEY, ui->spinBox->value());
+    beam->setData(ANGLE_KEY, ui.spinBox->value());
     beam->setData(LENGTH_KEY, newBeamLengthInt);
-    beam->setPos(ui->graphicsView->mapToScene(
-            ui->graphicsView->viewport()->rect().center()));
+    beam->setPos(ui.graphicsView->mapToScene(
+            ui.graphicsView->viewport()->rect().center()));
     beams.push_back(beam);
 }
 
 
 void EditingWindow::GetSelectedBeamLength() {
-    if (ui->lenComboBox->currentText() == "Short") {
+    if (ui.lenComboBox->currentText() == "Short") {
         newBeamLengthImg  = SHORT_BEAM_IMG;
         newBeamLengthInt = SHORT_BEAM;
-    } else if (ui->lenComboBox->currentText() == "Long") {
+    } else if (ui.lenComboBox->currentText() == "Long") {
         newBeamLengthImg  = LONG_BEAM_IMG;
         newBeamLengthInt = LONG_BEAM;
     }
@@ -336,21 +326,20 @@ void EditingWindow::onDeleteBtnClicked() {
 }
 
 void EditingWindow::onSpinBoxEdited() {
-    int value = ui->spinBox->value();
+    int value = ui.spinBox->value();
     if (value%10 != 0) {
-        ui->spinBox->setValue((value/10)*10);
+        ui.spinBox->setValue((value/10)*10);
     }
 }
 
 void EditingWindow::onBgComboBoxChanged() {
     std::string bgImg("../Editor/resources/" +
-                ui->bgComboBox->currentText().toStdString() + ".png");
+                ui.bgComboBox->currentText().toStdString() + ".png");
     bg->setPixmap(QPixmap(bgImg.c_str()));
 }
 
 
 EditingWindow::~EditingWindow() {
-    delete ui;
     for (auto & worm : worms) {
         delete worm;
     }

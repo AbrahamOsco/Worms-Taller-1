@@ -20,25 +20,6 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="goBackBtn">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>50</width>
-         <height>25</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Go Back</string>
-       </property>
-       <property name="text">
-        <string>←</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <spacer name="horizontalSpacer_5">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -626,22 +607,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>goBackBtn</sender>
-   <signal>clicked()</signal>
-   <receiver>EditingWindow</receiver>
-   <slot>onGoBackBtnClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>40</x>
-     <y>34</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>149</x>
-     <y>492</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>spinBox</sender>
    <signal>editingFinished()</signal>
    <receiver>EditingWindow</receiver>
@@ -675,7 +640,6 @@
   </connection>
  </connections>
  <slots>
-  <slot>onGoBackBtnClicked()</slot>
   <slot>onAddWormBtnClicked()</slot>
   <slot>onAddBeamBtnClicked()</slot>
   <slot>onChangeLenBtnClicked()</slot>
