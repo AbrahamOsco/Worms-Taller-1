@@ -7,11 +7,11 @@
 
 
 #include "../GameObject.h"
-#include "../weapon/Weapon.h"
+#include "../weaponIcon/WeaponIcon.h"
 
 class WeaponInventory : GameObject {
 private:
-    std::vector<Weapon> m_weapons;
+    std::vector<WeaponIcon> m_weapons;
 public:
     WeaponInventory();
 
@@ -19,7 +19,7 @@ public:
 
     void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) override;
 
-    void addWeapon(Weapon &weapon);
+    void addWeapon(WeaponIcon &weapon);
 
     void verticalAligned(int verticalSpacing);
 

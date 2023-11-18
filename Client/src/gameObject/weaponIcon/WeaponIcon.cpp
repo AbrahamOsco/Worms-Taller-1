@@ -2,12 +2,12 @@
 // Created by riclui on 09/11/23.
 //
 
-#include "Weapon.h"
+#include "WeaponIcon.h"
 #include "../../command/SelectTeleportCmd.h"
 #include "../../command/SelectBatCmd.h"
 #include "../../command/SelectBazookaCmd.h"
 
-Weapon::Weapon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon, bool isMyTurn)
+WeaponIcon::WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon, bool isMyTurn)
         : GameObject(LoaderParams(0, 0, 50, 55, " ")),
           m_typeWeapon(typeWeapon), m_ammoCount(ammoCount), m_isSelected(false), m_isMyTurn(isMyTurn) {
 
@@ -38,7 +38,7 @@ Weapon::Weapon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWe
     }
 }
 
-void Weapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
+void WeaponIcon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
     SDL_Color textColor = {0, 0, 0, 255};
     int fontSize = 16;
@@ -61,16 +61,16 @@ void Weapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Ca
                             renderer);
 }
 
-void Weapon::setParams(int x, int y) {
+void WeaponIcon::setParams(int x, int y) {
     m_x = x;
     m_y = y;
 }
 
-int Weapon::getHeight() {
+int WeaponIcon::getHeight() {
     return m_height;
 }
 
-void Weapon::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
+void WeaponIcon::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
     if (m_isMyTurn) {
         if (input.isMouseLeftButtonDown()) {
             SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);

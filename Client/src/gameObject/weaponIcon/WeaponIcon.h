@@ -2,20 +2,20 @@
 // Created by riclui on 09/11/23.
 //
 
-#ifndef WORMS_TALLER_1_WEAPON_H
-#define WORMS_TALLER_1_WEAPON_H
+#ifndef WORMS_TALLER_1_WEAPONICON_H
+#define WORMS_TALLER_1_WEAPONICON_H
 
 
 #include "../GameObject.h"
 
-class Weapon : public GameObject {
+class WeaponIcon : public GameObject {
 private:
     TypeWeapon m_typeWeapon;
     int m_ammoCount;
     bool m_isSelected;
     bool m_isMyTurn;
 public:
-    Weapon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon, bool isMyTurn);
+    WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon, bool isMyTurn);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 
@@ -27,4 +27,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_WEAPON_H
+#endif //WORMS_TALLER_1_WEAPONICON_H

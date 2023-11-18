@@ -54,8 +54,8 @@ void ReceiverThread::run() {
                 if (weaponDto.getTypeMunition() == TypeMunition::NO_INFINITE) {
                     ammoCount = static_cast<int>(weaponDto.getMunition());
                 }
-                Weapon weapon(weaponDto.getTypeWeapon(), ammoCount, weaponsDto.getWeaponCurrent(), isMyTurn);
-                weaponInventory.addWeapon(weapon);
+                WeaponIcon weaponIcon(weaponDto.getTypeWeapon(), ammoCount, weaponsDto.getWeaponCurrent(), isMyTurn);
+                weaponInventory.addWeapon(weaponIcon);
             }
 
             PlayersInfo playersInfo;
