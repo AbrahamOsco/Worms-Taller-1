@@ -139,7 +139,7 @@ void EditingWindow::removeItemsOutsideBounds() {
         }
     }
     for (auto & worm : wormsOutsideBounds) {
-        worms.erase(std::remove(worms.begin(), worms.end(),worm),
+        worms.erase(std::remove(worms.begin(), worms.end(), worm),
                         worms.end());
         delete worm;
     }
@@ -152,7 +152,7 @@ void EditingWindow::removeItemsOutsideBounds() {
     }
 
     for (auto & beam : beamsOutsideBounds) {
-        beams.erase(std::remove(beams.begin(), beams.end(),beam),
+        beams.erase(std::remove(beams.begin(), beams.end(), beam),
                         beams.end());
         delete beam;
     }
@@ -179,7 +179,7 @@ bool EditingWindow::hasOverlappingWorms() {
 }
 
 void EditingWindow::manageOverlappingWorms() {
-    unsigned long wormsNum = worms.size();
+    uint64_t wormsNum = worms.size();
     int start = 0;
     for (int i = 0; i < wormsNum && start < wormsNum; i++) {
         QGraphicsPixmapItem* collidingWorm = nullptr;
@@ -221,7 +221,7 @@ void EditingWindow::onGoBackBtnClicked() {
 
 void EditingWindow::onSaveBtnClicked() {
     removeItemsOutsideBounds();
-    if (hasOverlappingWorms()){
+    if (hasOverlappingWorms()) {
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "Warning: Your worms overlap!",
                                       "Any worms that overlap beams\n"
@@ -234,7 +234,7 @@ void EditingWindow::onSaveBtnClicked() {
     }
     manageOverlappingWorms();
     if (!hasAtLeastOneWorm()) {
-        QMessageBox::critical(nullptr,"Not enough worms","Add at least one worm to save.");
+        QMessageBox::critical(nullptr, "Not enough worms", "Add at least one worm to save.");
         return;
     }
 
@@ -269,19 +269,17 @@ void EditingWindow::onSaveBtnClicked() {
                                     (pos.y()/PIX_PER_M);
 
         node["worms"].push_back(wormNode);
-
     }
 
     for (auto & beam : beams) {
         YAML::Node beamNode;
-        QPointF pos = translatedPos(beam->pos(),beam,
+        QPointF pos = translatedPos(beam->pos(), beam,
                                     VERTEX_TO_CENTER);
         beamNode["x"] = pos.x()/PIX_PER_M;
         beamNode["y"] = node["height"].as<float>() - (pos.y()/PIX_PER_M);
         beamNode["angle"] = beam->data(ANGLE_KEY).toInt();
         beamNode["length"] = beam->data(LENGTH_KEY).toInt();
         node["beams"].push_back(beamNode);
-
     }
 
     std::ofstream fout("../Stages/" + mapFileName);
@@ -306,7 +304,7 @@ void EditingWindow::onAddBeamBtnClicked() {
     QGraphicsPixmapItem* beam = scene->addPixmap(QPixmap(beamImg.c_str()));
     beam->setFlag(QGraphicsItem::ItemIsMovable);
     beam->setFlag(QGraphicsItem::ItemIsSelectable);
-    beam->setData(ANGLE_KEY,ui->spinBox->value());
+    beam->setData(ANGLE_KEY, ui->spinBox->value());
     beam->setData(LENGTH_KEY, newBeamLengthInt);
     beam->setPos(ui->graphicsView->mapToScene(
             ui->graphicsView->viewport()->rect().center()));
@@ -328,10 +326,10 @@ void EditingWindow::GetSelectedBeamLength() {
 void EditingWindow::onDeleteBtnClicked() {
     auto list  = scene->selectedItems();
     for (int i = 0; i < list.count(); i++) {
-        if(worms.erase(std::remove(worms.begin(), worms.end(),list[i])
-                       ,worms.end()) == worms.end()) {
-            beams.erase(std::remove(beams.begin(), beams.end(),list[i])
-                    ,beams.end());
+        if (worms.erase(std::remove(worms.begin(), worms.end(), list[i])
+                       , worms.end()) == worms.end()) {
+            beams.erase(std::remove(beams.begin(), beams.end(), list[i])
+                    , beams.end());
         }
         delete list[i];
     }

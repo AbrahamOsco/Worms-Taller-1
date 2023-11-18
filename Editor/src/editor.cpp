@@ -1,6 +1,7 @@
 #include "../include/editor.h"
-#include "./ui_editor.h"
 #include <QScreen>
+#include "./ui_editor.h"
+
 
 Editor::Editor(QWidget *parent)
     : QWidget(parent)

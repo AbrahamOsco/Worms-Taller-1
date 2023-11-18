@@ -52,7 +52,7 @@ void NameNewMap::onConfirmBtnClicked() {
     if (nameIsAvailable) {
         this->hide();
         const std::string& text(newName);
-        auto* ew  =new EditingWindow(nullptr, text);
+        auto* ew  = new EditingWindow(nullptr, text);
         ew->setPrev(this);
         ew->show();
     }
