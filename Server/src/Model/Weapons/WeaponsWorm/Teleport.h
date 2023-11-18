@@ -15,7 +15,7 @@ private:
 public:
     Teleport(const TypeWeapon& aTypeWeapon, const float &mainDamage, const TypeMunition& aTypeMunition, const size_t& aMunition, const GameParameters& gameParameters);
 
-    void teleportIn(b2Body *bodyWorm, const float &posXTeleport, const float &posYTeleport);
+    void teleportIn(b2Body *bodyWorm, const float &posXTeleportPix, const float &posYTeleportPix, b2World *aWorld);
 
     bool hasAScope() override;
 
@@ -23,6 +23,11 @@ public:
 
     bool launchesProjectiles() override;
 
+    bool isAObjectInPosition();
+
+    bool isAObjectInPosition(const b2Vec2 &positionToTeleport);
+
+    bool isPositionFree(const b2Vec2 &positionToTeleport, b2World *aWorld);
 };
 
 

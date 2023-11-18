@@ -49,6 +49,7 @@ class Worm : public GameObject {
     std::pair<float, float> positionInAir; // para que el gusano sufra daño en caidas mayores a 2m.
     TypeCharge typeCharge;
     float hpInitialTurn;
+    bool wasDestroyed;
 public:
 
     Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
@@ -95,17 +96,7 @@ public:
 
     WeaponSightDTO getWeaponSightDTO();
 
-    //void startContact();
-
-    //void endContact();
-
-    //void render();
-
     void activateFocus();
-
-    void leftWorm();
-
-    void rightWorm();
 
     void update();
 
@@ -148,6 +139,8 @@ public:
     void walkWorm(const Direction &aDiretion);
 
     b2World *getWorld();
+
+    bool wasDestroyedWorm() const;
 };
 
 

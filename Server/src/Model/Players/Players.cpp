@@ -68,6 +68,15 @@ std::vector<WormDTO> Players::getWormsDTO() const{
     }
     return wormsDTOCompl;
 }
+bool Players::onlyExistsOnePlayer(){
+    size_t playerLoser = 0;
+    for(auto& element: players){
+        if(element.second.lostAllWorms()){
+            playerLoser++;
+        }
+    }
+    return (playerLoser == (this->players.size() -1) );
+}
 
 void Players::addToTheWorld(b2World *world) {
     for(auto& aPlayer : players){
@@ -82,6 +91,9 @@ size_t Players::startAPlayerTurn() {
         return idCurrenPlayer;
     }
     playerIterator++;
+    if( playerIterator != players.end() and playerIterator->second.lostAllWorms() ){ // si ese jugador perdio todo sus gusanos que pase al sgt turno.
+        playerIterator++;
+    }
     if ( playerIterator == players.end()){
         playerIterator = players.begin();
     }
@@ -90,8 +102,9 @@ size_t Players::startAPlayerTurn() {
 }
 
 void Players::update() {
-    for(auto& aPlayer : players){
-        aPlayer.second.update();
+    for(auto& aPlayer : players) {
+         // no actualizao a los jugadores q perdieron todos sus worms
+            aPlayer.second.update();
     }
 }
 
@@ -125,7 +138,6 @@ bool Players::allWormsAreUnmoveAndNotExistsProjectiles() {
             return false;
         }
     }
-    std::cout << "Dio true \n";
     return true;
 }
 

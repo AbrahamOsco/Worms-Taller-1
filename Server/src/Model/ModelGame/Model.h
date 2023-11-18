@@ -62,6 +62,8 @@ public:
     void tryAttackVariablePower();
 
     int getTimeLeft() const;
+
+    bool onlyOnePlayerExits();
 };
 
 

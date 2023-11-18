@@ -56,6 +56,8 @@ public:
     void endTurn();
 
     void execute(std::unique_ptr<CommandDTO> &uniquePtr, const int &timeLeft);
+
+    bool lostAllWorms();
 };
 
 

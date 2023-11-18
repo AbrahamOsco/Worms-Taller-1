@@ -46,40 +46,48 @@ int Engine::addClient(Socket &socket, const std::string &playerName, const Opera
 
 void Engine::run() {
     try{
-        std::string estadoPartida =
-                std::to_string(currentPlayers) + "/" + std::to_string(numberPlayerReq) + " Ha comenzado\n";
-        std::cout << "[Engine]: La partida  " + this->nameGameRoom + " En el scenario: " + this->nameScenario +
-                     " Con : " + estadoPartida;
+        std::cout  << "[Engine]: La partida  " + this->nameGameRoom + " En el scenario: " + this->nameScenario + " Con : " +  std::to_string(currentPlayers) + "/" + std::to_string(numberPlayerReq) + " Ha comenzado\n";
         StageDTO stageDto = model.startAndGetStageDTO();
         connections.start(stageDto);
-        RateController frameRate(20);
-        frameRate.start();
-        TimeTurn timeTurn;
-        timeTurn.startTurn();
+        RateController frameRate(20);// el start esta encapsulado en el constructor. OJO @
+        TimeTurn timeTurn;  // en el constructor ya arranca el turn.
         while (keepTalking) {
-            this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(),
-                             gameParameters.getPositionIterations()); // Hacemos un step en el world.
-            std::unique_ptr<CommandDTO> aCommanDTO;
-            if (commandsQueueNB.move_try_pop(aCommanDTO)) {
-                this->model.execute(aCommanDTO, model.getTimeLeft());
-            } else {
-                this->model.tryAttackVariablePower();
+            if(model.onlyOnePlayerExits()){
+                keepTalking = false;
+                break;
             }
-            connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(), model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO());
-            if (timeTurn.hasItBeenASecond()) {
-                model.subtractTime();
-                timeTurn.updateTime();
-            }
-            model.update();
-            frameRate.finish();
+            stepWorldAndExecuteCommand();
+            pushUpdatesAndUpdateModel(timeTurn, frameRate);
         }
     } catch (std::exception &e) {
-        std::cerr << "[Engine]:run Terminando la ejecucion del juego \n";
-        std::cerr << "[Engine] EXcpecion del tipo : :"  <<e.what() << "\n";
+        std::cerr << "[Engine] Excpecion del tipo : :"  <<e.what() << "\n";
         this->connections.stop(); //[Por ahora lo comento no quiero cerrar todo quiero debgauar luego descomentar esto.
+        return;
     }
-
+    std::cerr<< "Felicidades acabaste el juego de forma exitosa !!! \n";
+    this->connections.stop();
 }
+
+void Engine::stepWorldAndExecuteCommand() {
+    std::unique_ptr<CommandDTO> aCommanDTO;
+    this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(), gameParameters.getPositionIterations()); // Hacemos un step en el world.
+    if (commandsQueueNB.move_try_pop(aCommanDTO)) {
+        this->model.execute(aCommanDTO, model.getTimeLeft());
+    } else {
+        this->model.tryAttackVariablePower();
+    }
+}
+
+void Engine::pushUpdatesAndUpdateModel(TimeTurn& timeTurn, RateController& frameRate){
+    connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(), model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO());
+    if (timeTurn.hasItBeenASecond()) {
+        model.subtractTime();
+        timeTurn.updateTime();
+    }
+    model.update();
+    frameRate.finish();
+}
+
 
 void Engine::print() {
     std::cout << "Scenario: " << nameScenario << "|" << currentPlayers << "/" << numberPlayerReq << "\n";

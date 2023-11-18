@@ -15,7 +15,7 @@ void Turns::startATurn() {
     this->textTurn = players.getCurrentPlayer().getPlayerName();
     damageRecognized = false;
     attackRecognized = false;
-    std::cout << "Id Player actual:" << idPlayerCurrent << "\n";
+    std::cout << " [New Turn] Id Player actual:" << idPlayerCurrent << "\n";
     std::cout << "Id Current worm: :" << idWormCurrent << "\n";
 
 }
@@ -27,7 +27,6 @@ void Turns::subtractTime() {
     if( timeLeft >= 1){
         timeLeft -=1;
     }
-    std::cout << "Time left " << timeLeft << "\n";
 }
 
 void Turns::tryEndTurn(){

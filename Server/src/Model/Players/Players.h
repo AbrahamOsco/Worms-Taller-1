@@ -47,6 +47,7 @@ public:
 
     bool allWormsAreUnmoveAndNotExistsProjectiles();
 
+    bool onlyExistsOnePlayer();
 };
 
 
