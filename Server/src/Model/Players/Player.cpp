@@ -96,4 +96,8 @@ bool Player::allWormsAreUnmoveAndNotExistsProjectiles() {
     return true;
 }
 
+void Player::execute(std::unique_ptr<CommandDTO> &uniquePtr, const int &timeLeft) {
+    this->worms.at(idCurrentWorm)->execute(uniquePtr, timeLeft, idCurrentWorm);
+}
+
 

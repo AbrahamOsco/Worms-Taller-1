@@ -133,7 +133,7 @@ public:
 
     void endTurn();
 
-    void execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft);
+    void execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft, size_t idCurrentWorm);
 
     void tryAttackVariablePower();
 

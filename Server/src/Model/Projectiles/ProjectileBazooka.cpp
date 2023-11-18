@@ -34,6 +34,10 @@ void ProjectileBazooka::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const 
     defFixMuniBazooka.density = 1.0f; // ver el tema del aire luego.
     this->body->CreateFixture(&defFixMuniBazooka);
     body->ApplyLinearImpulse( impulseProjectile, body->GetWorldCenter(), true);
+    this->aWorld = aWorld;
+}
+b2World* ProjectileBazooka::getWorld(){
+    return this->aWorld;
 }
 
 b2Vec2 ProjectileBazooka::getImpulseForWorm(const b2Vec2 &positionWorm, const b2Vec2 &positionProjectile,

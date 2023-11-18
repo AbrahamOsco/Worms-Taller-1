@@ -51,7 +51,7 @@ StageDTO Model::startAndGetStageDTO() {
 }
 
 void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft) {
-    players.getCurrentWorm()->execute(aCommandDTO, timeLeft);
+    players.getCurrentPlayer().execute(aCommandDTO, timeLeft);
 }
 
 void Model::update() {

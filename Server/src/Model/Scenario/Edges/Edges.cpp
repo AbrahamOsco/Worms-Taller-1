@@ -24,4 +24,5 @@ Edges::Edges(b2World *world, const float &height, const float &width) : GameObje
 }
 
 Edges::Edges() : GameObject(ENTITY_EDGE) {
+
 }

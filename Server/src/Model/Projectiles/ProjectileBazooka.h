@@ -17,6 +17,7 @@ private:
     float radio;
     float maxImpulseExplosion;
     const GameParameters& gameParameters;
+    b2World* aWorld;
 public:
 
     explicit ProjectileBazooka(const GameParameters &gameParameters);
@@ -30,6 +31,7 @@ public:
     float getDamageForWorm(const float &wormDistanceSquared);
 
 
+    b2World *getWorld();
 };
 
 

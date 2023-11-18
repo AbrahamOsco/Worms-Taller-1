@@ -213,23 +213,27 @@ float Worm::getHP() const {
 
 // DTOS.
 WormDTO Worm::getWormDTO() const {
+    TypeWeapon typeWeapon = armament.getWeaponCurrent();
+    if(this->typeFocus == NO_FOCUS){
+        typeWeapon = NONE_WEAPON;
+    }
     return WormDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
                    gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()),
-                   this->idPlayer, this->hp, this->directionLook, this->typeFocus, this->typeMov, this->armament.getWeaponCurrent() );
+                   this->idPlayer, this->hp, this->directionLook, this->typeFocus, this->typeMov, typeWeapon );
 
 }
 WeaponSightDTO Worm::getWeaponSightDTO() {
+    if(typeFocus == NO_FOCUS){
+        return WeaponSightDTO(NO_SHOW_SIGHT, 0, 0);
+    }
     return armament.getWeaponSightDTO(this->body->GetWorldCenter(), directionLook);
 }
 
 ProjectilesDTO Worm::getProjectilesDTO() {
-    std::cout << "iterationsForBatAttack" <<    iterationsForBatAttack << "\n";
     if(typeMov == ATTACKING_WITH_BAT){
          std::vector<ProjectileDTO> vecProjectileDTO;
-        std::cout << "Si  entro al IF\n";
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
     }
-    std::cout << "TipeMov is " << typeMov;
     return armament.getProjectilesDTO(attacked);
 }
 
@@ -239,7 +243,7 @@ void Worm::activateFocus() {
 
 void Worm::update() {
     try{
-        if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f)){
+        if(this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and this->typeFocus == FOCUS){
             if(this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack > 0 ){  // el ATTACKING_WITH_BAT ES SOLO PARA BATE asi q no hay problemas.
                 iterationsForBatAttack--;
             } else if (this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack == 0){
@@ -252,7 +256,7 @@ void Worm::update() {
             // @todo creo q luego de disparar volvemos a tener todo armaCurrent en none.
             armament.getWeaponOnStandBy(attacked);
         }
-        if(attacked){
+        if(attacked and this->typeFocus == FOCUS){
             armament.tryCleanProjectiles(aWorld);
         }
     }catch(std::exception& e ){
@@ -356,10 +360,11 @@ bool Worm::alreadyAttack() const{
     return attacked;
 }
 
-void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft) {
-    if(timeLeft <= 0){
+void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft, size_t idCurrentWorm) {
+    if(timeLeft <= 0 or this->idWorm != idCurrentWorm){
         return;
     }
+    std::cout << "Ejecutando comando para \n";
     if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
         this->walkWorm(LEFT);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD ){

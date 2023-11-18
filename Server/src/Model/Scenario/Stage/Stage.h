@@ -8,6 +8,7 @@
 
 #include <string>
 #include <map>
+#include <memory>
 #include "../../../../../Common/DTO/StageDTO.h"
 #include "../Beam/Beam.h"
 #include "box2d/b2_world.h"
@@ -21,8 +22,8 @@ private:
     float length;
     std::vector<Beam> beams;
     std::map<size_t, std::pair<float, float>> idsAndPositionsWorms;
-    Edges edges;
-    Water water;
+    std::unique_ptr<Edges> edges;
+    std::unique_ptr<Water> water;
 public:
 
     Stage(const std::string& name);
