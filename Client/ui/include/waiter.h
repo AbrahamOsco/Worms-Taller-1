@@ -2,8 +2,8 @@
 #define WAITER_H
 #include "../../../Common/Queue/Queue.h"
 #include "../../../Common/DTO/ResolverInitialDTO.h"
-#include "./thread.h"
-#include "./socket.h"
+#include "../../../Common/Thread/Thread.h"
+#include "../../../Common/Socket/Socket.h"
 class Waiter: public Thread{
  private:
     Queue<ResolverInitialDTO>* my_queue;
