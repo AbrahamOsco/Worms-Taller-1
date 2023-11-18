@@ -6,19 +6,36 @@
 #include "Turns.h"
 #include "../../../../Common/DTO/TurnDTO.h"
 Turns::Turns(Players &players, const GameParameters& parameters)
-        : gameParameters(parameters), players(players), timeLeft(parameters.getTimeForTurn()), damageRecognized(false), attackRecognized(false) {
+        : gameParameters(parameters), players(players), timeLeft(parameters.getTimeForTurn()), damageRecognized(false), attackRecognized(false), valueWind(0.0f) {
+}
+
+float Turns::getWindValueForPhysics(){
+    valueWind = (rand() % 99) + 2;  // genero numeros aleatorios del 2 hasta el 100 .  rand %99 me genera numeros entre 0 y el 98 y le sumo 2 -> 2 y 100
+    int randomNumber = rand() % 101;
+    if(randomNumber % 2 == 0 ){
+        typeWind = WIND_RIGHT;
+    } else {
+        typeWind = WIND_LEFT;
+    }
+    float aWindValue = static_cast<float>(valueWind) / 10.0f;
+    if(typeWind == WIND_LEFT){
+        aWindValue *=-1;
+    }
+    return aWindValue;
 }
 
 void Turns::startATurn() {
     this->idPlayerCurrent = players.startAPlayerTurn();
+    players.getCurrentPlayer().assignWindValue(getWindValueForPhysics());
     this->idWormCurrent = players.getCurrentPlayer().startAWormTurn();
     this->textTurn = players.getCurrentPlayer().getPlayerName();
     damageRecognized = false;
     attackRecognized = false;
     std::cout << " [New Turn] Id Player actual:" << idPlayerCurrent << "\n";
     std::cout << "Id Current worm: :" << idWormCurrent << "\n";
-
+    std::cout << "Value Wind " << valueWind/10.0f << " Direction: " << typeWind << "\n";
 }
+
 int Turns::getTimeLeft() const{
     return this->timeLeft;
 }
@@ -47,7 +64,7 @@ void Turns::tryEndTurn(){
 }
 
 TurnDTO Turns::getTurnDTO() const {
-    return TurnDTO(idPlayerCurrent, textTurn, timeLeft);
+    return TurnDTO(idPlayerCurrent, textTurn, timeLeft, valueWind, typeWind);
 }
 
 

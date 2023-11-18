@@ -124,4 +124,10 @@ bool Armament::weaponStandByLaunchesProjectiles() {
     return armament.at(weaponOnStandBy)->launchesProjectiles();
 }
 
+void Armament::assignWindValue(const float &aWindValue) {
+    for(auto& mapWeapons: armament){
+        mapWeapons.second.get()->assignWindValue(aWindValue);
+    }
+}
+
 

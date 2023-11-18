@@ -9,17 +9,22 @@
 #include <cstddef>
 #include <string>
 #include "DTO.h"
+enum TypeWind{
+    WIND_LEFT, WIND_RIGHT
+};
 
 class TurnDTO : public DTO {
 private:
     size_t idPlayerCurrent;
     std::string textTurn;
     size_t timeLeft;
+    size_t valueWind;
+    TypeWind typeWind;
 public:
 
     TurnDTO();
 
-    TurnDTO(const size_t& idPlayerCurrent, const std::string& textTurn, const size_t& timeLeft);
+    TurnDTO(const size_t& idPlayerCurrent, const std::string& textTurn, const size_t& timeLeft, const size_t &valueWind, const TypeWind& typeWind);
 
     size_t getIdPlayerCurrent() const;
 
@@ -33,7 +38,13 @@ public:
 
     void setTimeLeft(const size_t &timeLeft);
 
+    size_t getValueWind() const;
 
+    void setValueWind(const size_t &valueWind);
+
+    TypeWind getTypeWind() const;
+
+    void setTypeWind(const TypeWind &typeWind);
 
 };
 

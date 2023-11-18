@@ -19,6 +19,8 @@ private:
     size_t idWormCurrent;
     bool damageRecognized;
     bool attackRecognized;
+    int valueWind; // valor del viento multiplicado por 10  ej si valueWind= 100-> valorVientoReal = 10.
+    TypeWind typeWind;
 public:
 
     explicit Turns(Players &players, const GameParameters& parameters);
@@ -33,6 +35,8 @@ public:
     TurnDTO getTurnDTO() const;
 
     int getTimeLeft() const;
+
+    float getWindValueForPhysics();
 };
 
 

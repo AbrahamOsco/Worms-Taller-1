@@ -166,6 +166,8 @@ void ServerProtocol::sendTurnDTO(const TurnDTO& aTurnDTO){
     sendANumberByte(aTurnDTO.getIdPlayerCurrent());
     sendString(aTurnDTO.getTextTurn());
     sendANumberByte(aTurnDTO.getTimeLeft());
+    sendANumberByte(aTurnDTO.getValueWind());
+    sendANumberByte(aTurnDTO.getTypeWind());
 }
 
 

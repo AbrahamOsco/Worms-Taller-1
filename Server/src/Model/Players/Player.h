@@ -58,6 +58,8 @@ public:
     void execute(std::unique_ptr<CommandDTO> &uniquePtr, const int &timeLeft);
 
     bool lostAllWorms();
+
+    void assignWindValue(const float &aWindValue);
 };
 
 

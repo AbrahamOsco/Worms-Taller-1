@@ -115,4 +115,8 @@ void Player::execute(std::unique_ptr<CommandDTO> &uniquePtr, const int &timeLeft
     this->worms.at(idCurrentWorm)->execute(uniquePtr, timeLeft, idCurrentWorm);
 }
 
+void Player::assignWindValue(const float &aWindValue) {
+    this->armament.assignWindValue(aWindValue);
+}
+
 

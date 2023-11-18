@@ -18,7 +18,8 @@ b2AABB ProjectileBazooka::getAreaForSearch(const b2Vec2 &positionMunition) const
     return searchArea;
 }
 
-void ProjectileBazooka::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const b2Vec2 &impulseProjectile) {
+void
+ProjectileBazooka::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const b2Vec2 &impulseProjectile, const float &windValue) {
     b2BodyDef projBazoDef;
     projBazoDef.type = b2_dynamicBody;
     projBazoDef.fixedRotation = true;
@@ -33,6 +34,9 @@ void ProjectileBazooka::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const 
     defFixMuniBazooka.shape = &projBazoShape;
     defFixMuniBazooka.density = 1.0f; // ver el tema del aire luego.
     this->body->CreateFixture(&defFixMuniBazooka);
+    float windValueSelect = windValue/ this->body->GetMass();
+    b2Vec2 vectorWind(windValueSelect, 0.0f);
+    this->body->ApplyForceToCenter(vectorWind, true); // Aplicamos el vector del viento en todo momento al projectil de la bazooka
     body->ApplyLinearImpulse( impulseProjectile, body->GetWorldCenter(), true);
     this->aWorld = aWorld;
 }

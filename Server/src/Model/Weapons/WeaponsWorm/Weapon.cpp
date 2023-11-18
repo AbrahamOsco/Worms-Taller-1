@@ -71,5 +71,8 @@ bool Weapon::thereAreProjectiles() {
     return false;
 }
 
+void Weapon::assignWindValue(const float &aWindValue) {
+    this->windValue = aWindValue;
+}
 
 

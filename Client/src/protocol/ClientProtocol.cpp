@@ -194,9 +194,11 @@ TurnDTO ClientProtocol::recvTurnDTO(){
         size_t idPlayerCurrent = recvANumberByte();
         std::string textTurn = recvString();
         size_t timeLeft = recvANumberByte();
-        return TurnDTO(idPlayerCurrent, textTurn, timeLeft);
+        size_t valueWind = recvANumberByte();
+        TypeWind typeWind = static_cast<TypeWind>( recvANumberByte() );
+        return TurnDTO(idPlayerCurrent, textTurn, timeLeft, valueWind, typeWind);
     }
-    return TurnDTO(0,"0",0);
+    return TurnDTO(0, "0", 0, 0, WIND_LEFT);
 }
 
 ProjectilesDTO ClientProtocol::recvProjectilesDTO(){
