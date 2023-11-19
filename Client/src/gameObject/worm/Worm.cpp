@@ -6,6 +6,7 @@
 #include "../../command/ChargeCmd.h"
 #include "../../command/FireCmd.h"
 #include "../../command/TeleportCmd.h"
+#include "../../utils/ColorDefinitions.h"
 
 Worm::Worm(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
            const MoveWorm &moveWorm) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_id(id), m_hpWorm(hpWorm),
@@ -17,7 +18,7 @@ Worm::Worm(int id, int x, int y, const size_t &hpWorm, const Direction &directio
 
 void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     SDL_Color textColor = {225, 225, 225, 255};
-    SDL_Color boxColor = {0, 0, 0, 255};
+    SDL_Color boxColor = colorMap[static_cast<ColorID>(m_id)];
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
 
     int xCorrection;
