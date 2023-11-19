@@ -2,9 +2,9 @@
 // Created by riclui on 18/11/23.
 //
 
-#include "WormGuidedWeapon.h"
+#include "WormRangedWeapon.h"
 
-WormGuidedWeapon::WormGuidedWeapon(int x, int y, const size_t &hpWorm, const Direction &direction,
+WormRangedWeapon::WormRangedWeapon(int x, int y, const size_t &hpWorm, const Direction &direction,
                                    const TypeFocusWorm &focus, const MoveWorm &moveWorm,
                                    const TypeWeapon &weaponCurrent, int xCrossHair, int yCrossHair,
                                    const TypeSight &typeSight) : Worm(x, y, hpWorm, direction, focus, moveWorm),
@@ -18,11 +18,9 @@ WormGuidedWeapon::WormGuidedWeapon(int x, int y, const size_t &hpWorm, const Dir
     } else {
         std::cerr << "weapon not found" << std::endl;
     }
-
-
 }
 
-void WormGuidedWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
+void WormRangedWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     Worm::draw(renderer, textureManager, camera);
     int frameCount = 30;
     int angle = calculateAngle(m_x, m_y, m_directionLook);
@@ -36,11 +34,11 @@ void WormGuidedWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureM
                              renderer, m_flip);
 }
 
-void WormGuidedWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
+void WormRangedWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
     Worm::update(input, queue, camera);
 }
 
-int WormGuidedWeapon::calculateAngle(int x, int y, Direction direction) const {
+int WormRangedWeapon::calculateAngle(int x, int y, Direction direction) const {
     int dx = m_xCrossHair - x;
     int dy = m_yCrossHair - y;
 

@@ -10,9 +10,11 @@
 #include "../gameObject/projectile/Projectile.h"
 #include "../exception/ClosedServer.h"
 #include "../gameObject/worm/WormNoWeapon.h"
-#include "../gameObject/worm/WormGuidedWeapon.h"
+#include "../gameObject/worm/WormRangedWeapon.h"
+#include "../gameObject/worm/WormMeleeWeapon.h"
 
-ReceiverThread::ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::unique_ptr<GameObject>>> &queue, std::atomic<bool>& running)
+ReceiverThread::ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::unique_ptr<GameObject>>> &queue,
+                               std::atomic<bool> &running)
         : m_protocol(protocol), m_queue(queue), m_running(running) {}
 
 void ReceiverThread::run() {
@@ -32,9 +34,11 @@ void ReceiverThread::run() {
             }
 
 
-            std::vector<ProjectileDTO> projectiles =  projectilesDto.getProjectilesDto();
-            for(const ProjectileDTO &projectileDto : projectiles) {
-                std::unique_ptr<Projectile> projectile = std::make_unique<Projectile>(projectileDto.getPositionX(), projectileDto.getPositionY(), projectileDto.getTypeProjectil());
+            std::vector<ProjectileDTO> projectiles = projectilesDto.getProjectilesDto();
+            for (const ProjectileDTO &projectileDto: projectiles) {
+                std::unique_ptr<Projectile> projectile = std::make_unique<Projectile>(projectileDto.getPositionX(),
+                                                                                      projectileDto.getPositionY(),
+                                                                                      projectileDto.getTypeProjectil());
                 gameObjects.push_back(std::move(projectile));
             }
 
@@ -46,15 +50,26 @@ void ReceiverThread::run() {
             for (const WormDTO &wormDto: wormsDto) {
 
                 if (wormDto.getWeaponCurrent() == TypeWeapon::NONE_WEAPON) {
-                    std::unique_ptr<WormNoWeapon> worm = std::make_unique<WormNoWeapon>(static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(),
-                                                                        wormDto.getDirectionLook(), wormDto.getTypeFocus(),
-                                                                        wormDto.getMoveWorm());
+                    std::unique_ptr<WormNoWeapon> worm = std::make_unique<WormNoWeapon>(
+                            static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
+                            wormDto.getHpWorm(),
+                            wormDto.getDirectionLook(), wormDto.getTypeFocus(), wormDto.getMoveWorm());
                     gameObjects.push_back(std::move(worm));
                 } else if (wormDto.getWeaponCurrent() == TypeWeapon::BAZOOKA) {
-                    std::unique_ptr<WormGuidedWeapon> wormGuideWeapon = std::make_unique<WormGuidedWeapon>(static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(),
-                                                                        wormDto.getDirectionLook(), wormDto.getTypeFocus(),
-                                                                        wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), weaponSightDto.getPositionXSight(), weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight());
-                    gameObjects.push_back(std::move(wormGuideWeapon));
+                    std::unique_ptr<WormRangedWeapon> worm = std::make_unique<WormRangedWeapon>(
+                            static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
+                            wormDto.getHpWorm(),
+                            wormDto.getDirectionLook(), wormDto.getTypeFocus(),
+                            wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), weaponSightDto.getPositionXSight(),
+                            weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight());
+                    gameObjects.push_back(std::move(worm));
+                } else if (wormDto.getWeaponCurrent() == TypeWeapon::BASEBALL_BAT) {
+                    std::unique_ptr<WormMeleeWeapon> worm = std::make_unique<WormMeleeWeapon>(
+                            static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
+                            wormDto.getHpWorm(),
+                            wormDto.getDirectionLook(), wormDto.getTypeFocus(),
+                            wormDto.getMoveWorm(), wormDto.getWeaponCurrent());
+                    gameObjects.push_back(std::move(worm));
                 }
 
             }
@@ -73,19 +88,23 @@ void ReceiverThread::run() {
             PlayersDTO playersDto = snapShot.getPlayersDto();
             std::vector<PlayerDTO> players = playersDto.getPlayersDTO();
             for (const PlayerDTO &playerDto: players) {
-                PlayerInfo playerInfo(static_cast<int>(playerDto.getIdPlayer()), playerDto.getNamePlayer(), static_cast<int>(playerDto.getTotalHpWorms()));
+                PlayerInfo playerInfo(static_cast<int>(playerDto.getIdPlayer()), playerDto.getNamePlayer(),
+                                      static_cast<int>(playerDto.getTotalHpWorms()));
                 playersInfo.addPlayer(playerInfo);
             }
 
             WindInfo wind(10, Direction::RIGHT);
             gameObjects.push_back(
-                    std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, turnDto.getTextTurn(), turnDto.getTimeLeft()));
+                    std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, turnDto.getTextTurn(),
+                                               turnDto.getTimeLeft()));
 
-            std::unique_ptr<Crosshair> crosshair = std::make_unique<Crosshair>(static_cast<int>(weaponSightDto.getPositionXSight()), static_cast<int>(weaponSightDto.getPositionYSight()), weaponSightDto.getTypeSight());
+            std::unique_ptr<Crosshair> crosshair = std::make_unique<Crosshair>(
+                    static_cast<int>(weaponSightDto.getPositionXSight()),
+                    static_cast<int>(weaponSightDto.getPositionYSight()), weaponSightDto.getTypeSight());
             gameObjects.push_back(std::move(crosshair));
 
             m_queue.move_try_push(std::move(gameObjects));
-        } catch (const ClosedServer& closedServer) {
+        } catch (const ClosedServer &closedServer) {
             m_running = false;
         }
     }

@@ -2,18 +2,18 @@
 // Created by riclui on 18/11/23.
 //
 
-#ifndef WORMS_TALLER_1_WORMGUIDEDWEAPON_H
-#define WORMS_TALLER_1_WORMGUIDEDWEAPON_H
+#ifndef WORMS_TALLER_1_WORMRANGEDWEAPON_H
+#define WORMS_TALLER_1_WORMRANGEDWEAPON_H
 
 #include "Worm.h"
 
-class WormGuidedWeapon : public Worm {
+class WormRangedWeapon : public Worm {
     TypeWeapon m_weaponCurrent;
     int m_xCrossHair;
     int m_yCrossHair;
     TypeSight m_typeSight;
 public:
-    WormGuidedWeapon(int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
+    WormRangedWeapon(int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
                      const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, int xCrossHair, int yCrossHair,
                      const TypeSight &typeSight);
 
@@ -25,4 +25,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_WORMGUIDEDWEAPON_H
+#endif //WORMS_TALLER_1_WORMRANGEDWEAPON_H
