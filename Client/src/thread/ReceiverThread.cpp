@@ -12,6 +12,7 @@
 #include "../gameObject/worm/WormNoWeapon.h"
 #include "../gameObject/worm/WormRangedWeapon.h"
 #include "../gameObject/worm/WormMeleeWeapon.h"
+#include "../gameObject/worm/WormGuidedWeapon.h"
 
 ReceiverThread::ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::unique_ptr<GameObject>>> &queue,
                                std::atomic<bool> &running)
@@ -65,6 +66,13 @@ void ReceiverThread::run() {
                     gameObjects.push_back(std::move(worm));
                 } else if (wormDto.getWeaponCurrent() == TypeWeapon::BASEBALL_BAT) {
                     std::unique_ptr<WormMeleeWeapon> worm = std::make_unique<WormMeleeWeapon>(
+                            static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
+                            wormDto.getHpWorm(),
+                            wormDto.getDirectionLook(), wormDto.getTypeFocus(),
+                            wormDto.getMoveWorm(), wormDto.getWeaponCurrent());
+                    gameObjects.push_back(std::move(worm));
+                } else if (wormDto.getWeaponCurrent() == TypeWeapon::TELEPORT) {
+                    std::unique_ptr<WormGuidedWeapon> worm = std::make_unique<WormGuidedWeapon>(
                             static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
                             wormDto.getHpWorm(),
                             wormDto.getDirectionLook(), wormDto.getTypeFocus(),

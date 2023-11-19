@@ -11,6 +11,7 @@
 class WormMeleeWeapon : public Worm {
 private:
     TypeWeapon m_weaponCurrent;
+
 public:
     WormMeleeWeapon(int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus, const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent);
 
