@@ -37,7 +37,7 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Came
     textureManager.drawTextBox(text, xCorrection, yCorrection, fontPath, fontSize, textColor, boxColor, renderer);
 }
 
-void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
+void Worm::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
     if (m_directionLook == Direction::RIGHT) {
         m_flip = SDL_FLIP_HORIZONTAL;
     }

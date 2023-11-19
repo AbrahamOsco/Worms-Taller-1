@@ -32,7 +32,7 @@ void Engine::update() {
     while (m_nbQueue.move_try_pop(m_gameObjects)) {}
     //m_camera.update();
     for (const auto &m_gameObject: m_gameObjects) {
-        m_gameObject->update(dt, m_input, m_bQueue, m_camera);
+        m_gameObject->update(m_input, m_bQueue, m_camera);
     }
     m_camera.update();
 }

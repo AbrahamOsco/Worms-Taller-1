@@ -21,7 +21,7 @@ void Crosshair::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager,
     }
 }
 
-void Crosshair::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
+void Crosshair::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
     m_animation.update();
     if (m_typeSight == TypeSight::SHOW_SIGHT) {
         if (input.getKeyDown(SDL_SCANCODE_UP)) {

@@ -16,7 +16,7 @@ class IObject {
 public:
     virtual void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) = 0;
 
-    virtual void update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) = 0;
+    virtual void update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) = 0;
 
     virtual ~IObject() = default;
 

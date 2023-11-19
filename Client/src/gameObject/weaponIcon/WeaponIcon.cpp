@@ -70,7 +70,7 @@ int WeaponIcon::getHeight() {
     return m_height;
 }
 
-void WeaponIcon::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
+void WeaponIcon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
     if (m_isMyTurn) {
         if (input.isMouseLeftButtonDown()) {
             SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);

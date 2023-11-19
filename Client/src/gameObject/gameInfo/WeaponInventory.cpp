@@ -14,10 +14,10 @@ void WeaponInventory::draw(SDL2pp::Renderer &renderer, TextureManager &textureMa
     }
 }
 
-void WeaponInventory::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
+void WeaponInventory::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
     verticalAligned(10);
     for (WeaponIcon &weapon: m_weapons) {
-        weapon.update(dt, input, queue, camera);
+        weapon.update(input, queue, camera);
     }
 }
 

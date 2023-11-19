@@ -17,6 +17,6 @@ void WormNoWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManag
     m_animation.draw(xCorrection, yCorrection, m_width, m_height, renderer, textureManager, m_flip);
 }
 
-void WormNoWeapon::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
-    Worm::update(dt, input, queue, camera);
+void WormNoWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
+    Worm::update(input, queue, camera);
 }
