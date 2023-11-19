@@ -8,60 +8,10 @@
 #include "../../command/TeleportCmd.h"
 
 Worm::Worm(int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
-           const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, int xCrosshair, int yCrosshair,
-           const TypeSight &typeSight) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_hpWorm(hpWorm),
-                                         m_directionLook(direction),
-                                         m_typeFocus(focus), m_moveWorm(moveWorm), m_weaponCurrent(weaponCurrent),
-                                         m_xCrosshair(xCrosshair), m_yCrosshair(yCrosshair), m_typeSight(typeSight),
-                                         m_animation(true) {
+           const MoveWorm &moveWorm) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_hpWorm(hpWorm),
+                                       m_directionLook(direction), m_typeFocus(focus), m_moveWorm(moveWorm),
+                                       m_animation(true) {
     m_flip = SDL_FLIP_NONE;
-    if (m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
-        m_width = 60;
-        m_height = 60;
-        m_textureID = "player";
-    } else if (m_weaponCurrent == TypeWeapon::BAZOOKA) {
-        m_width = 30;
-        m_height = 30;
-        m_textureID = "bazooka";
-    } else if (m_weaponCurrent == TypeWeapon::MORTAR) {
-        m_width = 30;
-        m_height = 30;
-        m_textureID = "mortar";
-    } else if (m_weaponCurrent == TypeWeapon::RED_GRENADE) {
-        m_width = 30;
-        m_height = 30;
-        m_textureID = "red_grenade";
-    } else if (m_weaponCurrent == TypeWeapon::GREEN_GRENADE) {
-        m_width = 30;
-        m_height = 30;
-        m_textureID = "green_grenade";
-    } else if (m_weaponCurrent == TypeWeapon::BANANA) {
-        m_width = 30;
-        m_height = 30;
-        m_textureID = "banana";
-    } else if (m_weaponCurrent == TypeWeapon::HOLY_GRENADE) {
-        m_width = 30;
-        m_height = 30;
-        m_textureID = "holy_grenade";
-    } else if (m_weaponCurrent == TypeWeapon::DYNAMITE) {
-        m_width = 30;
-        m_height = 30;
-        m_textureID = "dynamite";
-    } else if (m_weaponCurrent == TypeWeapon::BASEBALL_BAT) {
-        m_width = 40;
-        m_height = 30;
-        m_textureID = "bat";
-    } else if (m_weaponCurrent == TypeWeapon::AIR_ATTACK) {
-        m_width = 30;
-        m_height = 30;
-        m_textureID = "air_attack";
-    } else if (m_weaponCurrent == TypeWeapon::TELEPORT) {
-        m_width = 30;
-        m_height = 30;
-        m_textureID = "teleportation";
-    } else {
-        std::cout << "weapon not found" << std::endl;
-    }
     m_animation.setProps(m_textureID, 14, 140);
 }
 
@@ -84,49 +34,12 @@ void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Came
     xCorrection = m_x - textWidth / 2 - camera.getPosition().GetX();
     yCorrection = m_y - 30 - camera.getPosition().GetY();
 
-    textureManager.drawTextBox(text, xCorrection, yCorrection, fontPath, fontSize, textColor, boxColor,
-                               renderer);
-    if (m_weaponCurrent == TypeWeapon::DYNAMITE || m_weaponCurrent == TypeWeapon::AIR_ATTACK ||
-        m_weaponCurrent == TypeWeapon::BASEBALL_BAT || m_weaponCurrent == TypeWeapon::NONE_WEAPON) {
-
-        xCorrection = m_x - m_width / 2 - camera.getPosition().GetX();
-        yCorrection = m_y - m_height / 2 - camera.getPosition().GetY();
-
-        m_animation.draw(xCorrection, yCorrection, m_width, m_height, renderer, textureManager, m_flip);
-    } else {
-        int frameCount = 30;
-        int angle = calcularAngulo(m_x, m_y, m_xCrosshair, m_yCrosshair, m_directionLook);
-        angle = std::max(-90, std::min(90, angle));
-        int rowIndex = static_cast<int>(((90 - angle) * frameCount) / 180);
-
-        xCorrection = m_x - m_width / 2 - camera.getPosition().GetX();
-        yCorrection = m_y - m_height / 2 - camera.getPosition().GetY();
-
-        textureManager.drawFrame(m_textureID, xCorrection, yCorrection, m_width, m_height, rowIndex, 0,
-                                 renderer, m_flip);
-    }
+    textureManager.drawTextBox(text, xCorrection, yCorrection, fontPath, fontSize, textColor, boxColor, renderer);
 }
 
 void Worm::update(float dt, Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
     if (m_directionLook == Direction::RIGHT) {
         m_flip = SDL_FLIP_HORIZONTAL;
-    }
-
-    if (m_weaponCurrent == TypeWeapon::BASEBALL_BAT) {
-        if (input.getKeyDown(SDL_SCANCODE_SPACE)) {
-            std::unique_ptr<Command> command(new FireCmd());
-            queue.move_push(std::move(command));
-        }
-    }
-
-    if (m_weaponCurrent == TypeWeapon::TELEPORT) {
-        if (input.isMouseRightButtonDown()) {
-            SDL2pp::Point point(input.getMouseX(), input.getMouseY());
-            SDL2pp::Point newPoint = point + camera.getPosition();
-            std::cout << "send: " << newPoint << std::endl;
-            std::unique_ptr<Command> command(new TeleportCmd(newPoint.GetX(), newPoint.GetY()));
-            queue.move_push(std::move(command));
-        }
     }
 
     animationState();
@@ -155,21 +68,4 @@ void Worm::animationState() {
         m_height = 30;
         m_animation.setProps("bat_hit", 15, 30);
     }
-}
-
-int Worm::calcularAngulo(int x, int y, int xCrosshair, int yCrosshair, const Direction &direction) {
-    int dx = xCrosshair - x;
-    int dy = yCrosshair - y;
-
-    double radianes;
-
-    if (direction == Direction::RIGHT) {
-        radianes = std::atan2(dy, dx);
-    } else {
-        radianes = std::atan2(dy, -dx);
-    }
-
-    int grados = static_cast<int>(radianes * (180.0 / M_PI));
-
-    return grados;
 }

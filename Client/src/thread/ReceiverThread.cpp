@@ -9,6 +9,7 @@
 #include "../gameObject/crosshair/Crosshair.h"
 #include "../gameObject/projectile/Projectile.h"
 #include "../exception/ClosedServer.h"
+#include "../gameObject/worm/WormNoWeapon.h"
 
 ReceiverThread::ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::unique_ptr<GameObject>>> &queue, std::atomic<bool>& running)
         : m_protocol(protocol), m_queue(queue), m_running(running) {}
@@ -42,10 +43,14 @@ void ReceiverThread::run() {
             std::vector<WeaponDTO> weapons = weaponsDto.getWeapons();
 
             for (const WormDTO &wormDto: wormsDto) {
-                std::unique_ptr<Worm> worm = std::make_unique<Worm>(static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(),
-                                                                    wormDto.getDirectionLook(), wormDto.getTypeFocus(),
-                                                                    wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), weaponSightDto.getPositionXSight(), weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight());
-                gameObjects.push_back(std::move(worm));
+
+                if (wormDto.getWeaponCurrent() == TypeWeapon::NONE_WEAPON) {
+                    std::unique_ptr<WormNoWeapon> worm = std::make_unique<WormNoWeapon>(static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(),
+                                                                        wormDto.getDirectionLook(), wormDto.getTypeFocus(),
+                                                                        wormDto.getMoveWorm());
+                    gameObjects.push_back(std::move(worm));
+                }
+
             }
 
 
