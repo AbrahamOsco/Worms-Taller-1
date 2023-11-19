@@ -94,7 +94,7 @@ size_t Players::startAPlayerTurn() {
         return idCurrenPlayer;
     }
     playerIterator++;
-    if( playerIterator != players.end() and playerIterator->second.lostAllWorms() ){ // si ese jugador perdio todo sus gusanos que pase al sgt turno.
+    if( playerIterator != players.end() and playerIterator->second.lostAllWorms() ){ // si este jugador perdio todo sus gusanos que pase al sgt jugador.
         playerIterator++;
     }
     if ( playerIterator == players.end()){
