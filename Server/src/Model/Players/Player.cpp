@@ -7,7 +7,6 @@
 #include "../../../GameParameters/GameParameters.h"
 
 
-
 Player::Player(const std::string &playerName, const size_t &idPlayer, const GameParameters& gameParameters) : playerName(playerName),
                 idPlayer(idPlayer), idCurrentWorm(VALUE_INITIAL), gameParameters(gameParameters), armament(idPlayer, gameParameters){
 }
@@ -117,6 +116,13 @@ void Player::execute(std::unique_ptr<CommandDTO> &uniquePtr, const int &timeLeft
 
 void Player::assignWindValue(const float &aWindValue) {
     this->armament.assignWindValue(aWindValue);
+}
+
+EndGameDTO Player::getEndGameDTO() {
+    if(this->lostAllWorms()){
+        return EndGameDTO(LOST_THE_GAME);
+    }
+    return EndGameDTO(WON_THE_GAME);
 }
 
 

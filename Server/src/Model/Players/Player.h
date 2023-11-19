@@ -15,6 +15,7 @@
 #include "../../../../Common/DTO/WeaponsDTO.h"
 #include "../Weapons/Armament/Armament.h"
 #include "../Worm/Worm.h"
+#include "../../../../Common/DTO/EndGameDTO.h"
 
 #define VALUE_INITIAL 1000
 
@@ -60,6 +61,8 @@ public:
     bool lostAllWorms();
 
     void assignWindValue(const float &aWindValue);
+
+    EndGameDTO getEndGameDTO();
 };
 
 

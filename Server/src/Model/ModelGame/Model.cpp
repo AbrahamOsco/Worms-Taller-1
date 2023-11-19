@@ -75,6 +75,10 @@ bool Model::onlyOnePlayerExits() {
     return players.onlyExistsOnePlayer();
 }
 
+std::vector<EndGameDTO> Model::getVecEndGameDTO() {
+    return players.getVecEndGameDTO();
+}
+
 
 
 

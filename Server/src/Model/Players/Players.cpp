@@ -78,7 +78,7 @@ bool Players::onlyExistsOnePlayer(){
     } else if (this->players.size() == 1 and playerLoser == 1 ){ // si era un unico jugador y perdi mi  worm entonces salgo.
         return true;
     }
-    return (playerLoser == (this->players.size() -1) ); // este ultimo and agrego para seguir jugando cn 1 jugadro.
+    return (playerLoser == (this->players.size() -1) ); // este ultima respt es para los juegos normalees  +2 de jugadores.
 }
 
 void Players::addToTheWorld(b2World *world) {
@@ -142,4 +142,13 @@ bool Players::allWormsAreUnmoveAndNotExistsProjectiles() {
     }
     return true;
 }
+
+std::vector<EndGameDTO> Players::getVecEndGameDTO() {
+    std::vector<EndGameDTO> vecEndGameDTO;
+    for(auto& mapPlayers: players){
+        vecEndGameDTO.push_back(mapPlayers.second.getEndGameDTO()) ;
+    }
+    return vecEndGameDTO;
+}
+
 

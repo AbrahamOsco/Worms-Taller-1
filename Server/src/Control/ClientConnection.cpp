@@ -97,3 +97,9 @@ void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, con
     this->snapShotQueueB->move_push(std::move(aSnapShot));
 }
 
+void ClientConnection::pushVecEndGame(const std::vector<EndGameDTO> &vecEndGameDTO) {
+    std::unique_ptr<SnapShot> aSnapShot = std::make_unique<SnapShot>(vecEndGameDTO);
+    this->snapShotQueueB->move_push(std::move(aSnapShot));
+
+}
+

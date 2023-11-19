@@ -13,8 +13,16 @@
 #include "WeaponSightDTO.h"
 #include "ProjectilesDTO.h"
 #include "TurnDTO.h"
+#include "EndGameDTO.h"
+
+enum TypeSnapShot{
+    GAME_PROGRESS, GAME_END
+};
+
 
 class SnapShot : public DTO {
+private:
+    TypeSnapShot typeSnapShot;
 private:
     std::vector<WormDTO> wormsDTO;
     PlayersDTO playersDTO;
@@ -22,7 +30,14 @@ private:
     WeaponSightDTO weaponSightDTO;
     ProjectilesDTO projectilesDTO;
     TurnDTO turnDto;
+    std::vector<EndGameDTO> vecEndGamesDTO;
 public:
+    std::vector<EndGameDTO> getVecEndGamesDto() const;
+
+public:
+
+    explicit SnapShot(const std::vector<EndGameDTO>& vecEndGameDTO);
+
     explicit SnapShot(const std::vector<WormDTO>& wormsDTO, const PlayersDTO &aPlayersDTO, const WeaponsDTO& weaponsDTO,
                       const WeaponSightDTO &weaponSightDTO, const ProjectilesDTO &projectilesDTO, const TurnDTO& turnDto );
 
@@ -49,6 +64,9 @@ public:
     TurnDTO getTurnDto() const;
 
     void setTurnDto(const TurnDTO &turnDto);
+
+    TypeSnapShot getTypeSnapShot() const;
+
 };
 
 

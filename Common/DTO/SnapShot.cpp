@@ -3,12 +3,17 @@
 //
 
 #include "SnapShot.h"
-//  @todo cuando haya tiempo eliminar este metodo de snapShot.
+
+SnapShot::SnapShot(const std::vector<EndGameDTO> &vecEndGameDTO) : DTO(SNAP_SHOT) , typeSnapShot(GAME_END), vecEndGamesDTO(vecEndGameDTO) {
+
+}
+
 
 SnapShot::SnapShot(const std::vector<WormDTO> &wormsDTO, const PlayersDTO &aPlayersDTO,
                    const WeaponsDTO& weaponsDTO, const WeaponSightDTO &weaponSightDTO, const ProjectilesDTO &projectilesDTO, const TurnDTO& turnDto) : DTO(SNAP_SHOT),
-            wormsDTO(wormsDTO), playersDTO(aPlayersDTO), weaponsDTO(weaponsDTO), weaponSightDTO(weaponSightDTO), projectilesDTO(projectilesDTO),turnDto(turnDto)  {
+            typeSnapShot(GAME_PROGRESS), wormsDTO(wormsDTO), playersDTO(aPlayersDTO), weaponsDTO(weaponsDTO), weaponSightDTO(weaponSightDTO), projectilesDTO(projectilesDTO),turnDto(turnDto)  {
 }
+
 
 void SnapShot::setWormsDTO(const std::vector<WormDTO> &wormsDTO) {
     this->wormsDTO = wormsDTO;
@@ -56,6 +61,14 @@ TurnDTO SnapShot::getTurnDto() const {
 
 void SnapShot::setTurnDto(const TurnDTO &turnDto) {
     this->turnDto = turnDto;
+}
+
+TypeSnapShot SnapShot::getTypeSnapShot() const {
+    return typeSnapShot;
+}
+
+std::vector<EndGameDTO> SnapShot::getVecEndGamesDto() const {
+    return vecEndGamesDTO;
 }
 
 

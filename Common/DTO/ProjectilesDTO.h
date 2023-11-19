@@ -18,9 +18,9 @@ private:
     TypeShowProjectiles typeShowProjectiles;
     std::vector<ProjectileDTO> projectilesDTO;
 public:
-    explicit ProjectilesDTO(const TypeShowProjectiles& typeShowProjectiles, const std::vector<ProjectileDTO>& projectilesDTO);
-
     ProjectilesDTO();
+
+    explicit ProjectilesDTO(const TypeShowProjectiles& typeShowProjectiles, const std::vector<ProjectileDTO>& projectilesDTO);
 
     std::vector<ProjectileDTO> getProjectilesDto() const;
 

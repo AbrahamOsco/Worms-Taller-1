@@ -64,6 +64,8 @@ void Engine::run() {
         this->connections.stop(); //[Por ahora lo comento no quiero cerrar todo quiero debgauar luego descomentar esto.
         return;
     }
+    // obtenemos el ultimo DTO para enviar.
+    connections.pushVecEndGame(model.getVecEndGameDTO()); // en un futuro cambiarle el nombre si no se pushea mas a lastPusshSnaShop
     std::cerr<< "Felicidades acabaste el juego de forma exitosa !!! \n";
     this->connections.stop();
 }

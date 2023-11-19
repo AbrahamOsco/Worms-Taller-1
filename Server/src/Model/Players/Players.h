@@ -13,6 +13,7 @@
 #include "../../../../Common/DTO/PlayerDTO.h"
 #include "../../../../Common/DTO/PlayersDTO.h"
 #include "../../../../Common/DTO/WeaponsDTO.h"
+#include "../../../../Common/DTO/EndGameDTO.h"
 
 class Players {
 private:
@@ -48,6 +49,8 @@ public:
     bool allWormsAreUnmoveAndNotExistsProjectiles();
 
     bool onlyExistsOnePlayer();
+
+    std::vector<EndGameDTO> getVecEndGameDTO();
 };
 
 

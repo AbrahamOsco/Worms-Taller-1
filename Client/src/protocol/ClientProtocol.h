@@ -53,6 +53,8 @@ public:
     ProjectilesDTO recvProjectilesDTO();
 
     TurnDTO recvTurnDTO();
+
+    EndGameDTO recvEndGameDTO();
 };
 
 

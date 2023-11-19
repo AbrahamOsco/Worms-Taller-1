@@ -173,20 +173,38 @@ SnapShot ClientProtocol::recvASnapShot() {
         throw ClosedServer();
     }
     if (operationType == SNAP_SHOT){
-        size_t numbersWorms = recvANumberByte();
-        for(size_t i = 0; i < numbersWorms; i++){
-            vecWormsDTO.push_back(recvAWormDTO());
+        TypeSnapShot typeSnapShot = static_cast<TypeSnapShot>(recvANumberByte());
+        if(typeSnapShot == GAME_PROGRESS){
+            size_t numbersWorms = recvANumberByte();
+            for(size_t i = 0; i < numbersWorms; i++){
+                vecWormsDTO.push_back(recvAWormDTO());
+            }
+            PlayersDTO playersDto = recvPlayersDTO();
+            WeaponsDTO weaponsDto = recvWeaponsDTO();
+            WeaponSightDTO weaponSightDto = recvWeaponSightDTO();
+            ProjectilesDTO projectilesDto = recvProjectilesDTO();
+            TurnDTO turnDto = recvTurnDTO();
+            return SnapShot(vecWormsDTO, playersDto, weaponsDto, weaponSightDto, projectilesDto, turnDto);
         }
-        PlayersDTO playersDto = recvPlayersDTO();
-        WeaponsDTO weaponsDto = recvWeaponsDTO();
-        WeaponSightDTO weaponSightDto = recvWeaponSightDTO();
-        ProjectilesDTO projectilesDto = recvProjectilesDTO();
-        TurnDTO turnDto = recvTurnDTO();
-        return SnapShot(vecWormsDTO, playersDto, weaponsDto, weaponSightDto, projectilesDto, turnDto);
+        else if (typeSnapShot == GAME_END){
+            std::vector<EndGameDTO> vecEndGameDTO;
+            size_t numberEndGame = recvANumberByte();
+            for(size_t i = 0; i < numberEndGame; i++){
+                vecEndGameDTO.push_back(recvEndGameDTO());
+            }
+            return SnapShot(vecEndGameDTO);
+        }
     }
     return SnapShot(vecWormsDTO, PlayersDTO(), WeaponsDTO(), WeaponSightDTO(), ProjectilesDTO(), TurnDTO());
 }
-
+EndGameDTO ClientProtocol::recvEndGameDTO(){
+    int typeOperation =  recvANumberByte();
+    if(typeOperation == END_DTO){
+        TypeResult typeResult = static_cast<TypeResult>(recvANumberByte());
+        return EndGameDTO(typeResult);
+    }
+    return EndGameDTO();
+}
 
 TurnDTO ClientProtocol::recvTurnDTO(){
     int typeOperation = recvANumberByte();
