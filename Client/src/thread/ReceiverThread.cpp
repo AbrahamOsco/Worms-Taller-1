@@ -10,6 +10,7 @@
 #include "../gameObject/projectile/Projectile.h"
 #include "../exception/ClosedServer.h"
 #include "../gameObject/worm/WormNoWeapon.h"
+#include "../gameObject/worm/WormGuidedWeapon.h"
 
 ReceiverThread::ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::unique_ptr<GameObject>>> &queue, std::atomic<bool>& running)
         : m_protocol(protocol), m_queue(queue), m_running(running) {}
@@ -49,6 +50,11 @@ void ReceiverThread::run() {
                                                                         wormDto.getDirectionLook(), wormDto.getTypeFocus(),
                                                                         wormDto.getMoveWorm());
                     gameObjects.push_back(std::move(worm));
+                } else if (wormDto.getWeaponCurrent() == TypeWeapon::BAZOOKA) {
+                    std::unique_ptr<WormGuidedWeapon> wormGuideWeapon = std::make_unique<WormGuidedWeapon>(static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(),
+                                                                        wormDto.getDirectionLook(), wormDto.getTypeFocus(),
+                                                                        wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), weaponSightDto.getPositionXSight(), weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight());
+                    gameObjects.push_back(std::move(wormGuideWeapon));
                 }
 
             }
