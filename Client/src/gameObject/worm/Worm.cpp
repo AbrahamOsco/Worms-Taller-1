@@ -7,8 +7,8 @@
 #include "../../command/FireCmd.h"
 #include "../../command/TeleportCmd.h"
 
-Worm::Worm(int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
-           const MoveWorm &moveWorm) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_hpWorm(hpWorm),
+Worm::Worm(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
+           const MoveWorm &moveWorm) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_id(id), m_hpWorm(hpWorm),
                                        m_directionLook(direction), m_typeFocus(focus), m_moveWorm(moveWorm),
                                        m_animation(true) {
     m_flip = SDL_FLIP_NONE;

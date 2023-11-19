@@ -5,9 +5,9 @@
 #include "WormGuidedWeapon.h"
 #include "../../command/TeleportCmd.h"
 
-WormGuidedWeapon::WormGuidedWeapon(int x, int y, const size_t &hpWorm, const Direction &direction,
+WormGuidedWeapon::WormGuidedWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction,
                                    const TypeFocusWorm &focus, const MoveWorm &moveWorm,
-                                   const TypeWeapon &weaponCurrent) : Worm(x, y, hpWorm, direction,
+                                   const TypeWeapon &weaponCurrent) : Worm(id, x, y, hpWorm, direction,
                                                                            focus, moveWorm), m_weaponCurrent(weaponCurrent) {
     if (m_weaponCurrent == TypeWeapon::TELEPORT) {
         m_width = 30;

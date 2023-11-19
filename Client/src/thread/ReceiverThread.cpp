@@ -51,13 +51,13 @@ void ReceiverThread::run() {
             for (const WormDTO &wormDto: wormsDto) {
 
                 if (wormDto.getWeaponCurrent() == TypeWeapon::NONE_WEAPON) {
-                    std::unique_ptr<WormNoWeapon> worm = std::make_unique<WormNoWeapon>(
+                    std::unique_ptr<WormNoWeapon> worm = std::make_unique<WormNoWeapon>(static_cast<int>(wormDto.getIdPlayer()),
                             static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
                             wormDto.getHpWorm(),
                             wormDto.getDirectionLook(), wormDto.getTypeFocus(), wormDto.getMoveWorm());
                     gameObjects.push_back(std::move(worm));
                 } else if (wormDto.getWeaponCurrent() == TypeWeapon::BAZOOKA) {
-                    std::unique_ptr<WormRangedWeapon> worm = std::make_unique<WormRangedWeapon>(
+                    std::unique_ptr<WormRangedWeapon> worm = std::make_unique<WormRangedWeapon>(static_cast<int>(wormDto.getIdPlayer()),
                             static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
                             wormDto.getHpWorm(),
                             wormDto.getDirectionLook(), wormDto.getTypeFocus(),
@@ -65,14 +65,14 @@ void ReceiverThread::run() {
                             weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight());
                     gameObjects.push_back(std::move(worm));
                 } else if (wormDto.getWeaponCurrent() == TypeWeapon::BASEBALL_BAT) {
-                    std::unique_ptr<WormMeleeWeapon> worm = std::make_unique<WormMeleeWeapon>(
+                    std::unique_ptr<WormMeleeWeapon> worm = std::make_unique<WormMeleeWeapon>(static_cast<int>(wormDto.getIdPlayer()),
                             static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
                             wormDto.getHpWorm(),
                             wormDto.getDirectionLook(), wormDto.getTypeFocus(),
                             wormDto.getMoveWorm(), wormDto.getWeaponCurrent());
                     gameObjects.push_back(std::move(worm));
                 } else if (wormDto.getWeaponCurrent() == TypeWeapon::TELEPORT) {
-                    std::unique_ptr<WormGuidedWeapon> worm = std::make_unique<WormGuidedWeapon>(
+                    std::unique_ptr<WormGuidedWeapon> worm = std::make_unique<WormGuidedWeapon>(static_cast<int>(wormDto.getIdPlayer()),
                             static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
                             wormDto.getHpWorm(),
                             wormDto.getDirectionLook(), wormDto.getTypeFocus(),

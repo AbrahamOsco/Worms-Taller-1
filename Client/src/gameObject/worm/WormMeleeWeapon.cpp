@@ -5,8 +5,8 @@
 #include "WormMeleeWeapon.h"
 #include "../../command/FireCmd.h"
 
-WormMeleeWeapon::WormMeleeWeapon(int x, int y, const size_t &hpWorm, const Direction &direction,
-                                 const TypeFocusWorm &focus, const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent) : Worm(x, y, hpWorm, direction,
+WormMeleeWeapon::WormMeleeWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction,
+                                 const TypeFocusWorm &focus, const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent) : Worm(id, x, y, hpWorm, direction,
                                                                                               focus, moveWorm), m_weaponCurrent(weaponCurrent) {
     if (m_weaponCurrent == TypeWeapon::BASEBALL_BAT) {
         m_width = 40;
