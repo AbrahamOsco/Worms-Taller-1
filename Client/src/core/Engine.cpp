@@ -8,6 +8,7 @@
 #include "../gameObject/beam/Beam.h"
 #include "../command/RightCmd.h"
 #include "../command/LeftCmd.h"
+#include "../command/CloseCmd.h"
 
 Engine::Engine(std::vector<Beam> &beams, Queue<std::unique_ptr<Command>> &bQueue,
                Queue<std::vector<std::unique_ptr<GameObject>>> &nbQueue, std::atomic<bool>& running) : m_window("SDL2pp demo",
@@ -23,14 +24,15 @@ Engine::Engine(std::vector<Beam> &beams, Queue<std::unique_ptr<Command>> &bQueue
 void Engine::events() {
     m_input.listen();
     if (m_input.closed()) {
+        std::cout << "send: CLOSE_GAME" << std::endl;
+        std::unique_ptr<Command> command(new CloseCmd());
+        m_bQueue.move_push(std::move(command));
         m_running = false;
     }
 }
 
 void Engine::update() {
-    float dt = m_timer.getDeltaTime();
     while (m_nbQueue.move_try_pop(m_gameObjects)) {}
-    //m_camera.update();
     for (const auto &m_gameObject: m_gameObjects) {
         m_gameObject->update(m_input, m_bQueue, m_camera);
     }
