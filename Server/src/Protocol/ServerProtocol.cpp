@@ -164,17 +164,14 @@ void ServerProtocol::sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot) {
         sendTurnDTO(aSnapShot->getTurnDto());
     }
     else if (aSnapShot->getTypeSnapShot() == GAME_END){
-        sendANumberByte(aSnapShot->getVecEndGamesDto().size()); // enviamos la cantidad de endGames.
-        for(auto& aEndGame : aSnapShot->getVecEndGamesDto()){
-            sendEndGameDTO(aEndGame);
-        }
+        sendEndGameDTO(aSnapShot->getEndGameDto());
     }
 }
 
 void ServerProtocol::sendEndGameDTO(const EndGameDTO& endGameDto){
     sendANumberByte(endGameDto.getOperationType());
+    sendANumberByte(endGameDto.getIdPlayer());
     sendANumberByte(endGameDto.getTypeResult());
-
 }
 
 void ServerProtocol::sendTurnDTO(const TurnDTO& aTurnDTO){

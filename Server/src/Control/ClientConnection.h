@@ -50,7 +50,7 @@ public:
                       const std::vector<WeaponsDTO> &vecWeaponsDTO, const WeaponSightDTO &weaponSightDTO,
                       const ProjectilesDTO &projectilesDTO, TurnDTO turnDTO);
 
-    void pushVecEndGame(const std::vector<EndGameDTO> &vecEndGameDTO);
+    void pushEndGame(const std::vector<EndGameDTO> &vecEndGameDTO);
 };
 
 

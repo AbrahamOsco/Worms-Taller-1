@@ -66,7 +66,16 @@ void Engine::run() {
     }
     // obtenemos el ultimo DTO para enviar.
     connections.pushVecEndGame(model.getVecEndGameDTO()); // en un futuro cambiarle el nombre si no se pushea mas a lastPusshSnaShop
-    std::cerr<< "Felicidades acabaste el juego de forma exitosa !!! \n";
+    /*
+    std::unique_ptr<CommandDTO> aCommanDTO;
+    if(commandsQueueNB.move_try_pop(aCommanDTO)){
+
+        if(aCommanDTO->getOperationType() == CLOSE_GAME){
+            this->connections.stop();
+            std::cerr<< "Felicidades Se cerro el game de forma exitosa !!! \n";
+        }
+    }
+    */
     this->connections.stop();
 }
 

@@ -111,7 +111,7 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
 
 
         Server/src/Model/TimeTurn/TimeTurn.cpp Server/src/Model/TimeTurn/TimeTurn.h
-        Server/src/Model/QueriesToWorld/PositionInAreaisFreeQuery.cpp Server/src/Model/QueriesToWorld/PositionInAreaisFreeQuery.h Common/DTO/EndGameDTO.cpp Common/DTO/EndGameDTO.h)
+        Server/src/Model/QueriesToWorld/PositionInAreaisFreeQuery.cpp Server/src/Model/QueriesToWorld/PositionInAreaisFreeQuery.h Common/DTO/EndGameDTO.cpp Common/DTO/EndGameDTO.h Server/src/Model/Provision/Provision.cpp Server/src/Model/Provision/Provision.h Common/DTO/ProvisionDTO.cpp Common/DTO/ProvisionDTO.h)
 
 # para el editor
 include_directories(${PROJECT_SOURCE_DIR}/Editor/include)

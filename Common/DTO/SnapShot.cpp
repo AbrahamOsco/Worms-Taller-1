@@ -4,7 +4,7 @@
 
 #include "SnapShot.h"
 
-SnapShot::SnapShot(const std::vector<EndGameDTO> &vecEndGameDTO) : DTO(SNAP_SHOT) , typeSnapShot(GAME_END), vecEndGamesDTO(vecEndGameDTO) {
+SnapShot::SnapShot(const EndGameDTO &aEndGameDTO) : DTO(SNAP_SHOT) , typeSnapShot(GAME_END), endGameDTO(aEndGameDTO) {
 
 }
 
@@ -67,9 +67,6 @@ TypeSnapShot SnapShot::getTypeSnapShot() const {
     return typeSnapShot;
 }
 
-std::vector<EndGameDTO> SnapShot::getVecEndGamesDto() const {
-    return vecEndGamesDTO;
+EndGameDTO SnapShot::getEndGameDto() const {
+    return this->endGameDTO;
 }
-
-
-

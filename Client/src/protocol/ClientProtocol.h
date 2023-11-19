@@ -36,7 +36,7 @@ public:
 
     void sendCommandDTO(const CommandDTO& commandDto);
 
-    SnapShot recvASnapShot();
+    SnapShot recvSnapShot();
 
     WormDTO recvAWormDTO();
 

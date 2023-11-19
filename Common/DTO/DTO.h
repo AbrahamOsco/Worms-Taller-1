@@ -29,7 +29,8 @@ enum OperationType {
     PROJECTILE_DTO = 38,
     PROJECTILES_DTO = 39,
     TURN_DTO = 40,
-    END_DTO = 41
+    END_DTO = 41,
+    PROVISION_DTO = 42
 };
 
 class DTO {

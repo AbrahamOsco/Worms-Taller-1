@@ -166,7 +166,7 @@ void ClientProtocol::sendCommandDTO(const CommandDTO& commandDto) {
     sendNum2Bytes(commandDto.getY());
 }
 
-SnapShot ClientProtocol::recvASnapShot() {
+SnapShot ClientProtocol::recvSnapShot() {
     std::vector<WormDTO> vecWormsDTO;
     int  operationType = recvANumberByte();
     if (operationType == CLOSED_CONNECTION) {
@@ -187,12 +187,8 @@ SnapShot ClientProtocol::recvASnapShot() {
             return SnapShot(vecWormsDTO, playersDto, weaponsDto, weaponSightDto, projectilesDto, turnDto);
         }
         else if (typeSnapShot == GAME_END){
-            std::vector<EndGameDTO> vecEndGameDTO;
-            size_t numberEndGame = recvANumberByte();
-            for(size_t i = 0; i < numberEndGame; i++){
-                vecEndGameDTO.push_back(recvEndGameDTO());
-            }
-            return SnapShot(vecEndGameDTO);
+            EndGameDTO endGameDto = recvEndGameDTO();
+            return SnapShot(endGameDto);
         }
     }
     return SnapShot(vecWormsDTO, PlayersDTO(), WeaponsDTO(), WeaponSightDTO(), ProjectilesDTO(), TurnDTO());
@@ -200,8 +196,9 @@ SnapShot ClientProtocol::recvASnapShot() {
 EndGameDTO ClientProtocol::recvEndGameDTO(){
     int typeOperation =  recvANumberByte();
     if(typeOperation == END_DTO){
+        size_t idPlayer =recvANumberByte();
         TypeResult typeResult = static_cast<TypeResult>(recvANumberByte());
-        return EndGameDTO(typeResult);
+        return EndGameDTO(idPlayer, typeResult);
     }
     return EndGameDTO();
 }

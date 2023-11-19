@@ -5,6 +5,7 @@
 #ifndef WORMS_TALLER_1_ENDGAMEDTO_H
 #define WORMS_TALLER_1_ENDGAMEDTO_H
 
+#include <cstddef>
 #include "DTO.h"
 
 enum TypeResult{
@@ -13,16 +14,19 @@ enum TypeResult{
 
 class EndGameDTO : public DTO {
 private:
+    size_t idPlayer;
     TypeResult typeResult;
 
 public:
-    EndGameDTO(const TypeResult& typeResult);
+    EndGameDTO();
+
+    EndGameDTO(const size_t& idPlayer, const TypeResult& typeResult);
 
     TypeResult getTypeResult() const;
 
-    void setTypeResult(TypeResult typeResult);
+    size_t getIdPlayer() const;
 
-    EndGameDTO();
+    void setTypeResult(TypeResult typeResult);
 };
 
 

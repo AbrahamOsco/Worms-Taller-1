@@ -23,6 +23,7 @@ ProjectileBazooka::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const b2Vec
     b2BodyDef projBazoDef;
     projBazoDef.type = b2_dynamicBody;
     projBazoDef.fixedRotation = true;
+    projBazoDef.bullet = true;
     projBazoDef.position.Set(positionP2.x, positionP2.y );
     projBazoDef.userData.pointer = (uintptr_t) this;
     this->body = aWorld->CreateBody(&projBazoDef);

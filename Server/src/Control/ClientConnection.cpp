@@ -97,9 +97,16 @@ void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, con
     this->snapShotQueueB->move_push(std::move(aSnapShot));
 }
 
-void ClientConnection::pushVecEndGame(const std::vector<EndGameDTO> &vecEndGameDTO) {
-    std::unique_ptr<SnapShot> aSnapShot = std::make_unique<SnapShot>(vecEndGameDTO);
+void ClientConnection::pushEndGame(const std::vector<EndGameDTO> &vecEndGameDTO) {
+    // unicast enviamos para cada jugador su correspondiente EndGameDTO para ver si perdio o gano el game.
+    EndGameDTO selectEndGameDTO;
+    for(auto& aEndGame: vecEndGameDTO){
+        if(aEndGame.getIdPlayer() == this->idPlayer){
+            selectEndGameDTO = aEndGame;
+        }
+    }
+    std::unique_ptr<SnapShot> aSnapShot = std::make_unique<SnapShot>(selectEndGameDTO);
     this->snapShotQueueB->move_push(std::move(aSnapShot));
-
 }
+
 

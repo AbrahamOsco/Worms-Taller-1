@@ -49,7 +49,7 @@ void EstablishedConnections::pushSnapShot(const std::vector<WormDTO> &vectorWorm
 
 void EstablishedConnections::pushVecEndGame(const std::vector<EndGameDTO> &vecEndGameDTO) {
     for (auto &element : clientConnections) {
-        element.second.pushVecEndGame(vecEndGameDTO);
+        element.second.pushEndGame(vecEndGameDTO);
     }
 }
 

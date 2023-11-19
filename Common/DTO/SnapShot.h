@@ -23,20 +23,16 @@ enum TypeSnapShot{
 class SnapShot : public DTO {
 private:
     TypeSnapShot typeSnapShot;
-private:
     std::vector<WormDTO> wormsDTO;
     PlayersDTO playersDTO;
     WeaponsDTO weaponsDTO;
     WeaponSightDTO weaponSightDTO;
     ProjectilesDTO projectilesDTO;
     TurnDTO turnDto;
-    std::vector<EndGameDTO> vecEndGamesDTO;
-public:
-    std::vector<EndGameDTO> getVecEndGamesDto() const;
-
+    EndGameDTO endGameDTO;
 public:
 
-    explicit SnapShot(const std::vector<EndGameDTO>& vecEndGameDTO);
+    explicit SnapShot(const EndGameDTO& endGameDTO);
 
     explicit SnapShot(const std::vector<WormDTO>& wormsDTO, const PlayersDTO &aPlayersDTO, const WeaponsDTO& weaponsDTO,
                       const WeaponSightDTO &weaponSightDTO, const ProjectilesDTO &projectilesDTO, const TurnDTO& turnDto );
@@ -67,6 +63,7 @@ public:
 
     TypeSnapShot getTypeSnapShot() const;
 
+    EndGameDTO getEndGameDto() const;
 };
 
 

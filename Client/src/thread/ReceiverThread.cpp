@@ -23,7 +23,7 @@ void ReceiverThread::run() {
     while (m_running) {
         try {
             std::vector<std::unique_ptr<GameObject>> gameObjects;
-            SnapShot snapShot = m_protocol.recvASnapShot();
+            SnapShot snapShot = m_protocol.recvSnapShot();
             std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
             WeaponSightDTO weaponSightDto = snapShot.getWeaponSightDto();
             ProjectilesDTO projectilesDto = snapShot.getProjectilesDto();

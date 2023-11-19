@@ -123,9 +123,8 @@ void Player::assignWindValue(const float &aWindValue) {
 
 EndGameDTO Player::getEndGameDTO() {
     if(this->lostAllWorms()){
-        return EndGameDTO(LOST_THE_GAME);
+        return EndGameDTO(this->idPlayer, LOST_THE_GAME);
     }
-    return EndGameDTO(WON_THE_GAME);
+    return EndGameDTO(this->idPlayer, WON_THE_GAME);
 }
-
 
