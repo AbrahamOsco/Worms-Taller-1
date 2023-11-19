@@ -25,11 +25,9 @@ void Players::assignWormsToPlayers() {
     for (auto it = idsAndPositionsWorms.begin(); it != idsAndPositionsWorms.end(); it++) {
         idWormsOrig.push_back(it->first);
     }
-
     for (auto it = players.begin(); it != players.end(); it++) {
         idPlayersOrig.push_back(it->first);
     }
-
     std::random_shuffle(idWormsOrig.begin(), idWormsOrig.end());
     std::random_shuffle(idPlayersOrig.begin(), idPlayersOrig.end());
     // tenemos las copias y las originales, (asignamos la copia a la original nuevamente cuando la copia esta vacia).
@@ -52,7 +50,7 @@ void Players::assignWormsToPlayers() {
             idWormsCopy.pop_back();
             idPlayersCopy.pop_back();
         }
-        // Si ya no hay guasnos y hay jugadores que tienen menos gusanos (por q les falto repartir en esta vuelta) les damos la bonificacion de puntos.
+        // Si ya no hay gusanos y hay jugadores que tienen menos gusanos (por q les falto repartir en esta vuelta) les damos la bonificacion de puntos.
         while ( not idPlayersCopy.empty()){
             players.at(idPlayersCopy.back()).assignBonusLife();
             idPlayersCopy.pop_back();
@@ -68,6 +66,20 @@ std::vector<WormDTO> Players::getWormsDTO() const{
     }
     return wormsDTOCompl;
 }
+bool Players::onlyExistsOnePlayer(){
+    size_t playerLoser = 0;
+    for(auto& element: players){
+        if(element.second.lostAllWorms()){
+            playerLoser++;
+        }
+    }
+    if(this->players.size() == 1 and playerLoser == 0 ){ // soy un unico jugador-Test pero aun no perdi todo mis gusano quiero jugar solo.
+        return false;
+    } else if (this->players.size() == 1 and playerLoser == 1 ){ // si era un unico jugador y perdi mi  worm entonces salgo.
+        return true;
+    }
+    return (playerLoser == (this->players.size() -1) ); // este ultima respt es para los juegos normalees  +2 de jugadores.
+}
 
 void Players::addToTheWorld(b2World *world) {
     for(auto& aPlayer : players){
@@ -82,6 +94,9 @@ size_t Players::startAPlayerTurn() {
         return idCurrenPlayer;
     }
     playerIterator++;
+    if( playerIterator != players.end() and playerIterator->second.lostAllWorms() ){ // si este jugador perdio todo sus gusanos que pase al sgt jugador.
+        playerIterator++;
+    }
     if ( playerIterator == players.end()){
         playerIterator = players.begin();
     }
@@ -90,8 +105,8 @@ size_t Players::startAPlayerTurn() {
 }
 
 void Players::update() {
-    for(auto& aPlayer : players){
-        aPlayer.second.update();
+    for(auto& aPlayer : players) {
+        aPlayer.second.update();        //actualizamos a todos los player pero muy a fonod los worms destruidos no seran actualizados
     }
 }
 
@@ -125,7 +140,15 @@ bool Players::allWormsAreUnmoveAndNotExistsProjectiles() {
             return false;
         }
     }
-    std::cout << "Dio true \n";
     return true;
 }
+
+std::vector<EndGameDTO> Players::getVecEndGameDTO() {
+    std::vector<EndGameDTO> vecEndGameDTO;
+    for(auto& mapPlayers: players){
+        vecEndGameDTO.push_back(mapPlayers.second.getEndGameDTO()) ;
+    }
+    return vecEndGameDTO;
+}
+
 

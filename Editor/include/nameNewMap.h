@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "editingWindow.h"
+#include "ui_nameNewMap.h"
 
 namespace Ui {
 class NameNewMap;
@@ -12,17 +13,15 @@ class NameNewMap : public QWidget {
     Q_OBJECT
 
  public:
-    explicit NameNewMap(QWidget *parent = nullptr);
-    void setPrev(QWidget *prev);
-    ~NameNewMap();
+    explicit NameNewMap(QWidget *parent);
+    ~NameNewMap() override;
 
  private slots:
-    void onGoBackBtnClicked();
     void onConfirmBtnClicked();
 
  private:
-    Ui::NameNewMap *ui;
-    QWidget *prev;
+    Ui::NameNewMap ui;
+    std::unique_ptr<EditingWindow> ew;
 };
 
 #endif  // NAMENEWMAP_H

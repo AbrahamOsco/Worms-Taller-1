@@ -1,21 +1,22 @@
-#ifndef LOGIN_H
+#ifndef LOGIN_H  // NOLINT
 #define LOGIN_H
 
+
 #include <QWidget>
-#include <memory>
-#include "mainmenu.h"
 #include <QKeyEvent>
+#include <memory>
+#include "./mainmenu.h"
 
 class Login : public QWidget {
-    private:
+ private:
     std::unique_ptr<MainMenu> mainmenu;
-public:
+ public:
     explicit Login(QWidget *parent = 0);
-private:
+ private:
     void updateLogin();
     void connectEvents();
     void exit();
     void keyPressEvent(QKeyEvent *event) override;
     void resizeEvent(QResizeEvent* event) override;
 };
-#endif 
+#endif  // NOLINT

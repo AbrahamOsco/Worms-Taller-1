@@ -4,7 +4,9 @@
 
 #include "RateController.h"
 
-RateController::RateController(int rate1) : rate(rate1) {}
+RateController::RateController(int rate1) : rate(rate1) {
+    this->start();
+}
 
 RateController::~RateController() {
 }

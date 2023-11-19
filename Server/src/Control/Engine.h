@@ -17,6 +17,8 @@
 #include "../../../Common/DTO/SnapShot.h"
 #include "../../../Common/Thread/Thread.h"
 #include "../../../Common/DTO/CommandDTO.h"
+#include "../Model/TimeTurn/TimeTurn.h"
+#include "../../../Common/rateController/RateController.h"
 
 /*
 Entidad que sera el motor del juego en el server tendra el loop del box2d para iterar la fisica.
@@ -53,6 +55,9 @@ public:
 
     void clearAll();
 
+    void stepWorldAndExecuteCommand();
+
+    void pushUpdatesAndUpdateModel(TimeTurn &timeTurn, RateController &frameRate);
 };
 
 

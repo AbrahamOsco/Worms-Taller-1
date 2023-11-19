@@ -4,29 +4,16 @@
 #include <yaml-cpp/yaml.h>
 
 NameNewMap::NameNewMap(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::NameNewMap) {
-    ui->setupUi(this);
+    QWidget(parent), ui() {
+    ui.setupUi(this);
     move(screen()->geometry().center() - frameGeometry().center());
-    this->setAttribute(Qt::WA_DeleteOnClose);
 }
 
-void NameNewMap::setPrev(QWidget *prev_) {
-    this->prev = prev_;
-}
-
-NameNewMap::~NameNewMap() {
-    delete ui;
-}
-
-void NameNewMap::onGoBackBtnClicked() {
-    this->close();
-    prev->show();
-}
+NameNewMap::~NameNewMap() = default;
 
 void NameNewMap::onConfirmBtnClicked() {
     // check if name is available
-    std::string newName = ui->mapNameInput->text().toStdString();
+    std::string newName = ui.mapNameInput->text().toStdString();
     std::string newNameNoSpaces(newName);
     newNameNoSpaces.erase(std::remove(newNameNoSpaces.begin(),
                                    newNameNoSpaces.end(), ' '),
@@ -42,7 +29,7 @@ void NameNewMap::onConfirmBtnClicked() {
                                        nameNoSpaces.end(), ' '),
                                         nameNoSpaces.end());
         if (newNameNoSpaces == nameNoSpaces) {
-            ui->mapNameFailLable->setText("A map already exists with this name."
+            ui.mapNameFailLable->setText("A map already exists with this name."
                                           "\nPlease pick a different one.");
             nameIsAvailable = false;
             break;
@@ -52,8 +39,7 @@ void NameNewMap::onConfirmBtnClicked() {
     if (nameIsAvailable) {
         this->hide();
         const std::string& text(newName);
-        auto* ew  =new EditingWindow(nullptr, text);
-        ew->setPrev(this);
+        ew  = std::unique_ptr<EditingWindow>(new EditingWindow(nullptr, text));
         ew->show();
     }
 }

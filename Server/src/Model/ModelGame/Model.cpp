@@ -8,7 +8,7 @@
 #include "../../../../Common/DTO/PlayersDTO.h"
 
 Model::Model(const std::string &scenarioName, b2World &aWorld, GameParameters& parameters)
-        : stage(scenarioName), players(stage.getIdsAndPositionsWorms(), parameters), world(aWorld), gameContactListener(&aWorld, &parameters), turns(players){
+        : stage(scenarioName), players(stage.getIdsAndPositionsWorms(), parameters), world(aWorld), gameContactListener(&aWorld, &parameters), turns(players, parameters){
 }
 
 void Model::addPlayer(const std::string &playerName, const size_t &idPlayer) {
@@ -16,30 +16,15 @@ void Model::addPlayer(const std::string &playerName, const size_t &idPlayer) {
 }
 
 StageDTO Model::getStageDTO() const {
-
     return stage.getStageDTO();
-
-
 }
 
 std::vector<WormDTO> Model::getWormsDTO() const {
-    try{
-
-        return players.getWormsDTO();
-    }catch(std::exception& e){
-        std::cerr << "Excepcion dentro  de getWormsDTO" << e.what() << "\n";
-    }
-
+    return players.getWormsDTO();
 }
 
 PlayersDTO Model::getPlayersDTO() const {
-
-    try{
-
-        return players.getPlayersDTO();
-    }catch(std::exception& e){
-        std::cerr << "Excepcion dentro de getPlayersDTO" << e.what() << "\n";
-    }
+    return players.getPlayersDTO();
 }
 
 StageDTO Model::startAndGetStageDTO() {
@@ -58,47 +43,24 @@ void Model::update() {
     players.update();
     turns.tryEndTurn();
 }
+
 void Model::subtractTime(){
     turns.subtractTime();
 }
 
 TurnDTO Model::getTurnDTO() const {
-    try{
-
-        return turns.getTurnDTO();
-    }catch(std::exception& e){
-        std::cerr << "Excepcion dentro de TURNOS DTO" << e.what() << "\n";
-    }
-
-
+    return turns.getTurnDTO();
 }
 
 std::vector<WeaponsDTO> Model::getVecWeaponsDTO() const {
-    try{
-
-        return players.getVecWeaponsDTO();
-    }catch(std::exception& e){
-        std::cerr << "Excepcion dentro de weaponsDTO" << e.what() << "\n";
-    }
+    return players.getVecWeaponsDTO();
 }
 
 WeaponSightDTO Model::getWeaponSightDTO() {
-    try{
-
-        return players.getCurrentWorm()->getWeaponSightDTO();
-    }catch(std::exception& e){
-        std::cerr << "Excepcion dentro de WEAPONSSIGHT DTO" << e.what() << "\n";
-    }
-
+    return players.getCurrentWorm()->getWeaponSightDTO();
 }
 ProjectilesDTO Model::getProjectilesDTO(){
-    try{
-
-        return players.getCurrentWorm()->getProjectilesDTO();
-    }catch(std::exception& e){
-        std::cerr << "Excepcion dentro PROJECTILESDTO de" << e.what() << "\n";
-    }
-
+    return players.getCurrentWorm()->getProjectilesDTO();
 }
 
 void Model::tryAttackVariablePower() {
@@ -107,6 +69,14 @@ void Model::tryAttackVariablePower() {
 
 int Model::getTimeLeft() const {
     return turns.getTimeLeft();
+}
+
+bool Model::onlyOnePlayerExits() {
+    return players.onlyExistsOnePlayer();
+}
+
+std::vector<EndGameDTO> Model::getVecEndGameDTO() {
+    return players.getVecEndGameDTO();
 }
 
 

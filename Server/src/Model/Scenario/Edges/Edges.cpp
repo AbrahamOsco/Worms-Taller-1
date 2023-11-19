@@ -4,6 +4,7 @@
 
 #include "Edges.h"
 #include "box2d/box2d.h"
+#include "../../../../GameParameters/GameParameters.h"
 
 Edges::Edges(b2World *world, const float &height, const float &width) : GameObject(ENTITY_EDGE) {
     // deberian ser 4 bodys y cada uno con su fixture probarlo y ver q onda porq q aca un body tiene 4 fixture
@@ -11,15 +12,15 @@ Edges::Edges(b2World *world, const float &height, const float &width) : GameObje
     b2BodyDef bd;
     bd.userData.pointer = (uintptr_t) this;
     body = world->CreateBody(&bd);
-
     b2EdgeShape shape;
-    shape.SetTwoSided(b2Vec2(0.0f, height), b2Vec2(width, height));
+    float heightOffset = height + GameParameters::getOffsetEdgeTop();
+    shape.SetTwoSided(b2Vec2(0.0f, heightOffset), b2Vec2(width, heightOffset));
     body->CreateFixture(&shape, 0.0f);
 
-    shape.SetTwoSided(b2Vec2(0.0f, 0.0f), b2Vec2(0.0f, height));
+    shape.SetTwoSided(b2Vec2(0.0f, 0.0f), b2Vec2(0.0f, heightOffset));
     body->CreateFixture(&shape, 0.0f);
 
-    shape.SetTwoSided(b2Vec2(width, 0.0f), b2Vec2(width, height));
+    shape.SetTwoSided(b2Vec2(width, 0.0f), b2Vec2(width, heightOffset));
     body->CreateFixture(&shape, 0.0f);
 }
 

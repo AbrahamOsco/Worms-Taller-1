@@ -36,19 +36,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="goBackBtn">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>31</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>←</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="confirmBtn">
    <property name="geometry">
     <rect>
@@ -69,22 +56,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>goBackBtn</sender>
-   <signal>clicked()</signal>
-   <receiver>ChooseMapToEdit</receiver>
-   <slot>onGoBackBtnClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>60</x>
-     <y>34</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>85</x>
-     <y>605</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>confirmBtn</sender>
    <signal>clicked()</signal>
    <receiver>ChooseMapToEdit</receiver>
@@ -102,7 +73,6 @@
   </connection>
  </connections>
  <slots>
-  <slot>onGoBackBtnClicked()</slot>
   <slot>onConfirmBtnClicked()</slot>
  </slots>
 </ui>

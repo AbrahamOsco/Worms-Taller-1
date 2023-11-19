@@ -1,31 +1,28 @@
 #include "../include/editor.h"
-#include "./ui_editor.h"
 #include <QScreen>
+#include "./ui_editor.h"
+
 
 Editor::Editor(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::Editor) {
-    ui->setupUi(this);
+    , ui() {
+    ui.setupUi(this);
     move(screen()->geometry().center() - frameGeometry().center());
 }
 
-Editor::~Editor() {
-    delete ui;
-}
+Editor::~Editor() = default;
 
 
 void Editor::on_createMapBtn_clicked() {
     this->hide();
-    auto* nnm  = new NameNewMap;
-    nnm->setPrev(this);
+    nnm =  std::unique_ptr<NameNewMap>(new NameNewMap(nullptr));
     nnm->show();
 }
 
 
 void Editor::on_editMapBtn_clicked() {
     this->hide();
-    auto* cmte = new ChooseMapToEdit;
-    cmte->setPrev(this);
+    cmte = std::unique_ptr<ChooseMapToEdit>(new ChooseMapToEdit(nullptr));
     cmte->show();
 }
 

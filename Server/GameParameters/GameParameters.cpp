@@ -23,6 +23,10 @@ GameParameters::GameParameters() {
     parameters["WORM_INITIAL_HP"] = nodeInitial["WORM_INITIAL_HP"].as<float>();
     parameters["WORM_BONUS_HP"] = nodeInitial["WORM_BONUS_HP"].as<float>();
 
+    parameters["TIME_FOR_TURN"] = nodeInitial["TIME_FOR_TURN"].as<float>();
+    parameters["TIME_EXTRA_AFTER_ATTACK"] = nodeInitial["TIME_EXTRA_AFTER_ATTACK"].as<float>();
+
+
     parameters["WORM_DISTANCEX_FORWARD_JUMP"] = nodeInitial["WORM_DISTANCEX_FORWARD_JUMP"].as<float>();
     parameters["WORM_DISTANCEY_FORWARD_JUMP"] = nodeInitial["WORM_DISTANCEY_FORWARD_JUMP"].as<float>();
 
@@ -84,6 +88,14 @@ float GameParameters::getFPS() const{
     return this->parameters.at("FPS_GAME");
 }
 
+int GameParameters::getTimeForTurn() const{
+    return this->parameters.at("TIME_FOR_TURN");
+}
+
+int GameParameters::getTimeExtraAfterAttack() const{
+    return this->parameters.at("TIME_EXTRA_AFTER_ATTACK");
+}
+
 int GameParameters::getVelocityIterations() const {
     return (int) parameters.at("VELOCITY_ITERATIONS");
 }
@@ -108,6 +120,11 @@ YAML::Node GameParameters::getNodeInitial() {
 float GameParameters::getPositionAdjustmentStatic() {
     YAML::Node aNode = getNodeInitial();
     return aNode["POSITION_ADJUSTMENT"].as<float>();
+}
+
+float GameParameters::getOffsetEdgeTop() {
+    YAML::Node aNode = getNodeInitial();
+    return aNode["OFFSET_EDGE_TOP"].as<float>();
 }
 
 float GameParameters::getBeamFrictionSlipperyStatic(){

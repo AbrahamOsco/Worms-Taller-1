@@ -2,6 +2,7 @@
 #include "ServerProtocol.h"
 #include "../../../Common/DTO/InitialStateDTO.h"
 #include "../../../Common/DTO/PlayerDTO.h"
+#include "../../../Common/DTO/EndGameDTO.h"
 
 ServerProtocol::ServerProtocol(Socket& skt) :
         Protocol(skt){}
@@ -141,24 +142,39 @@ CommandDTO ServerProtocol::recvCommandDTO() {
 
 void ServerProtocol::sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot) {
     sendANumberByte(aSnapShot->getOperationType());
-     sendANumberByte(aSnapShot->getWormsDto().size()); // enviamos la cantida de gusanos
-    for(const auto& aWormDTO : aSnapShot->getWormsDto()){
-        sendAWormDTO(aWormDTO);
+    sendANumberByte(aSnapShot->getTypeSnapShot());
+    if(aSnapShot->getTypeSnapShot() == GAME_PROGRESS){
+        sendANumberByte(aSnapShot->getWormsDto().size()); // enviamos la cantida de gusanos
+        for(const auto& aWormDTO : aSnapShot->getWormsDto()){
+            sendAWormDTO(aWormDTO);
+        }
+        // Ahora enviamos a los playersDTO 1 sola linea.
+        sendPlayersDTO(aSnapShot->getPlayersDto());
+
+        //ahora enviamos a WeaponsDTO.
+        sendWeaponsDTO(aSnapShot->getWeaponsDto());
+
+        // enviamos la mira
+        sendWeaponSightDTO(aSnapShot->getWeaponSightDto());
+
+        // enviamos el projectil
+        sendProjectilesDTO(aSnapShot->getProjectilesDto());
+
+        //enviamos el turnoDTO
+        sendTurnDTO(aSnapShot->getTurnDto());
     }
-    // Ahora enviamos a los playersDTO 1 sola linea.
-    sendPlayersDTO(aSnapShot->getPlayersDto());
+    else if (aSnapShot->getTypeSnapShot() == GAME_END){
+        sendANumberByte(aSnapShot->getVecEndGamesDto().size()); // enviamos la cantidad de endGames.
+        for(auto& aEndGame : aSnapShot->getVecEndGamesDto()){
+            sendEndGameDTO(aEndGame);
+        }
+    }
+}
 
-    //ahora enviamos a WeaponsDTO.
-    sendWeaponsDTO(aSnapShot->getWeaponsDto());
+void ServerProtocol::sendEndGameDTO(const EndGameDTO& endGameDto){
+    sendANumberByte(endGameDto.getOperationType());
+    sendANumberByte(endGameDto.getTypeResult());
 
-    // enviamos la mira
-    sendWeaponSightDTO(aSnapShot->getWeaponSightDto());
-
-    // enviamos el projectil
-    sendProjectilesDTO(aSnapShot->getProjectilesDto());
-
-    //enviamos el turnoDTO
-    sendTurnDTO(aSnapShot->getTurnDto());
 }
 
 void ServerProtocol::sendTurnDTO(const TurnDTO& aTurnDTO){
@@ -166,6 +182,8 @@ void ServerProtocol::sendTurnDTO(const TurnDTO& aTurnDTO){
     sendANumberByte(aTurnDTO.getIdPlayerCurrent());
     sendString(aTurnDTO.getTextTurn());
     sendANumberByte(aTurnDTO.getTimeLeft());
+    sendANumberByte(aTurnDTO.getValueWind());
+    sendANumberByte(aTurnDTO.getTypeWind());
 }
 
 

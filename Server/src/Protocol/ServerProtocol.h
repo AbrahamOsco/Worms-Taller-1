@@ -13,6 +13,7 @@
 #include "../../../Common/DTO/SnapShot.h"
 #include "../../../Common/DTO/WeaponsDTO.h"
 #include "../../../Common/DTO/WeaponSightDTO.h"
+#include "../../../Common/DTO/EndGameDTO.h"
 
 #define BYTE_DISCONNECT 0
 #define STATUS_ERROR 2
@@ -60,6 +61,8 @@ public:
     void sendAProjectileDTO(const ProjectileDTO &aProjectilDTO);
 
     void sendTurnDTO(const TurnDTO &aTurnDTO);
+
+    void sendEndGameDTO(const EndGameDTO &endGameDto);
 };
 
 

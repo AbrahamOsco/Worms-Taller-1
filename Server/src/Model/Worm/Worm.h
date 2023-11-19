@@ -42,6 +42,7 @@ class Worm : public GameObject {
     b2World* aWorld;
     Armament& armament;
     size_t contatctsWithBeam;
+    size_t contactsWithEdge;
     bool onInclinedBeam;
     size_t contactsWithWorms;
     bool attacked;
@@ -49,19 +50,13 @@ class Worm : public GameObject {
     std::pair<float, float> positionInAir; // para que el gusano sufra daño en caidas mayores a 2m.
     TypeCharge typeCharge;
     float hpInitialTurn;
+    bool wasDestroyed;
 public:
 
     Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
          Armament& armament);
 
     float getHP() const;
-
-    // Posibles getters que si no se usan se eliminaran en un futuro todo
-    Direction getDirectionLook() const;
-
-    float getPositionX() const;
-
-    float getPositionY();
 
     void assigOnABeam();
 
@@ -74,12 +69,6 @@ public:
     void assigNextToAWorm();
 
     void unAssignNextToAWorm();
-
-    TypeFocusWorm getTypeFocusWorm() const;
-
-    MoveWorm getTypeMov() const;
-
-    TypeWeapon getWeaponCurrent() const;
 
     WormDTO getWormDTO() const;
 
@@ -95,17 +84,7 @@ public:
 
     WeaponSightDTO getWeaponSightDTO();
 
-    //void startContact();
-
-    //void endContact();
-
-    //void render();
-
     void activateFocus();
-
-    void leftWorm();
-
-    void rightWorm();
 
     void update();
 
@@ -115,11 +94,7 @@ public:
 
     void assignWeapon(const TypeWeapon &aTypeWeapon);
 
-    void teleportWorm(const float &posXTeleport, const float &posYTeleport);
-
-    void upWorm();
-
-    void downWorm();
+    void teleportWorm(const int &posXTeleport, const int &posYTeleport);
 
     void attack();
 
@@ -148,6 +123,18 @@ public:
     void walkWorm(const Direction &aDiretion);
 
     b2World *getWorld();
+
+    bool wasDestroyedWorm() const;
+
+    void chargeWeaponWithVariablePower();
+
+    void changeAngle(const Direction &direction);
+
+    void endAttack();
+
+    void aContactWithEdge();
+
+    void lessContactWithEdge();
 };
 
 

@@ -1,4 +1,4 @@
-#ifndef LIB_ERROR_H
+#ifndef LIB_ERROR_H  // NOLINT
 #define LIB_ERROR_H
 
 #include <exception>
@@ -11,7 +11,7 @@
 class LibError : public std::exception {
     char msg_error[256];
 
-    public:
+ public:
     /*
      * Dado que `errno` es una variable global y puede ser modificada por
      * cualquier función, hay que hacer una copia apenas se haya detectado
@@ -33,4 +33,4 @@ class LibError : public std::exception {
     virtual ~LibError();
 };
 
-#endif
+#endif  // NOLINT

@@ -5,6 +5,7 @@
 #include "TimeTurn.h"
 
 TimeTurn::TimeTurn() {
+    this->startTurn();
 }
 
 void TimeTurn::startTurn() {

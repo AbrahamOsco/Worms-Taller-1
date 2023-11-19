@@ -46,7 +46,7 @@ void Bazooka::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const 
     // creamos la munition de la bazooka
     std::cout << "Atacamos con la bazooka------------------------------------------------------\n";
     projectil = std::make_unique<ProjectileBazooka>(gameParameters);
-    projectil->addToTheWorld(world, p2, impulseMuniBazooka);
+    projectil->addToTheWorld(world, p2, impulseMuniBazooka, windValue);
 
     // reseeteamos los impulsos luego de atacar.
     impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());

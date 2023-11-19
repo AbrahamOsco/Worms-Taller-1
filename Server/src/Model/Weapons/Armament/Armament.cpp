@@ -46,19 +46,6 @@ bool Armament::hasAScoped() {
     return this->armament.at(currentWeapon)->hasAScope();
 }
 
-/*
-// quizas lo saquemos?
-void Armament::changeDirection(const Direction &direction) {
-    if(this->currentWeapon == NONE_WEAPON){
-        // en el caso de que estamos desarmado no hacemos nada.
-        std::cerr << "Error: [changeDirection] estas intentado acceder a un arma pero la arma actual es NONE_WEAPN \n";
-        return;
-
-    }
-    return this->armament.at(currentWeapon)->changeDirection(direction);
-}
-*/
-
 void Armament::putWeaponOnStandByAndUnarmed() {
     if(currentWeapon != NONE_WEAPON){
         this->weaponOnStandBy = currentWeapon;
@@ -99,16 +86,13 @@ WeaponSightDTO Armament::getWeaponSightDTO(const b2Vec2 &positionWorm, const Dir
 
 ProjectilesDTO Armament::getProjectilesDTO(const bool &attackedWorm) {
     std::vector<ProjectileDTO> vecProjectileDTO;
-    if( (currentWeapon == NONE_WEAPON and weaponOnStandBy == NONE_WEAPON)  or not attackedWorm ){
-        return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
-    }
-    // si ataco (entonces el currenWeapon sera none) y la arma con la q ataco pasa a standBy si esta no lanza projectiles no  muestro nada
-    if ( attackedWorm and  ( (weaponOnStandBy!= NONE_WEAPON) and not this->armament.at(weaponOnStandBy)->launchesProjectiles() ) ){
+//  si ataco (entonces el currenWeapon sera none) y la arma con la q ataco pasa a standBy si esta no lanza projectiles no  muestro nada
+    if( (currentWeapon == NONE_WEAPON and weaponOnStandBy == NONE_WEAPON)  or (not attackedWorm) or (attackedWorm and not weaponStandByLaunchesProjectiles()) ){
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
     }
     armament.at(weaponOnStandBy)->getProjectilesDTO(vecProjectileDTO);
     TypeShowProjectiles typeShowProj = NO_SHOW_PROJECTILES;
-    if (vecProjectileDTO.size() > 0) {
+    if ( not vecProjectileDTO.empty()) {
         std::cout << "Se Obtiene q existe almenos un projectil\n";
         typeShowProj = SHOW_PROJECTILES;
     }
@@ -138,6 +122,12 @@ bool Armament::weaponStandByLaunchesProjectiles() {
         return false;
     }
     return armament.at(weaponOnStandBy)->launchesProjectiles();
+}
+
+void Armament::assignWindValue(const float &aWindValue) {
+    for(auto& mapWeapons: armament){
+        mapWeapons.second.get()->assignWindValue(aWindValue);
+    }
 }
 
 

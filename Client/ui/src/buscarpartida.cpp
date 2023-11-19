@@ -1,16 +1,16 @@
-#include "buscarpartida.h"
-#include "ui_buscarpartida.h"
-#include <string>
-#include <iostream>
-#include "lobby.h"
-#include "../../src/protocol/ClientProtocol.h"
+#include "../include/buscarpartida.h"
 #include <QPixmap>
 #include <QDesktopWidget>
 #include <QResizeEvent>
+#include <string>
+#include <iostream>
+#include "ui_buscarpartida.h"  // NOLINT
+#include "../include/lobby.h"
+#include "../../src/protocol/ClientProtocol.h"
 
 
-BuscarPartida::BuscarPartida(QWidget *parent,Socket* socket) :  QWidget(parent),
-                                                                lobby(nullptr,socket){
+BuscarPartida::BuscarPartida(QWidget *parent, Socket* socket) :  QWidget(parent),
+                                                                lobby(nullptr, socket) {
     skt = socket;
     Ui::BuscarPartida buscar;
     buscar.setupUi(this);
@@ -25,14 +25,13 @@ void BuscarPartida::unirse() {
     ResponseInitialStateDTO responseJoinGame(FINAL_JOIN_GAME, qGameName.toStdString());
     clientProtocol.sendResponseInitialStateDTO(responseJoinGame);
     std::cout << "Se envia con exito el ResponseInitialStateDTO \n";
-
     ResolverInitialDTO answerServer = clientProtocol.recvResolverInitialDTO();
-    if(answerServer.getStatusAnswer() == SUCCESS_STATUS ){
+    if (answerServer.getStatusAnswer() == SUCCESS_STATUS) {
         std::cout << "Se recibio con exito el SUCCESS_STATUS \n";
         this->hide();
         lobby.start();
         lobby.show();
-    } else if ( answerServer.getStatusAnswer() == ERROR_STATUS){
+    } else if (answerServer.getStatusAnswer() == ERROR_STATUS) {
         std::cout << "Se recibio un ERROR  el ERROR_STATUS \n";
         // limpiamos los rooms q tenemos (Desactualizado) y ademas del error obtenemos los nuevos rooms disponibles.
         gameRooms.clear();
@@ -42,7 +41,6 @@ void BuscarPartida::unirse() {
         QString update = QString("No se pudo unir a la partida, vuelva a intentar");
         labelResultado->setText(update);
     }
-
 }
 void BuscarPartida::mostrar() {
     QComboBox* gameList = findChild<QComboBox*>("listaPartidas");
@@ -64,21 +62,21 @@ void BuscarPartida::salir() {
     this->close();
 }
 
-void BuscarPartida::buscar(const std::vector<RoomDTO> &gameRooms){
+void BuscarPartida::buscar(const std::vector<RoomDTO> &gameRooms) {
     QComboBox* gameList = findChild<QComboBox*>("listaPartidas");
     gameList->clear();
     this->gameRooms = gameRooms;
 
-    for(size_t i = 0; i<gameRooms.size(); i++){
+    for (size_t i = 0; i < gameRooms.size(); i++) {
         QString qGameName = QString::fromStdString(gameRooms[i].getGameName());
         gameList->addItem(qGameName);
     }
 }
-void BuscarPartida::resizeEvent(QResizeEvent* event){
+void BuscarPartida::resizeEvent(QResizeEvent* event) {
     QPixmap pixmap("../Client/ui/resources/create-search.jpg");
-    pixmap = pixmap.scaled(event->size(),Qt::IgnoreAspectRatio);
+    pixmap = pixmap.scaled(event->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
-    palette.setBrush(QPalette::Window,pixmap);
+    palette.setBrush(QPalette::Window, pixmap);
     this->setPalette(palette);
 }
 void BuscarPartida::connectEvents() {
@@ -95,5 +93,5 @@ void BuscarPartida::connectEvents() {
     QRect screenGeometry = QApplication::desktop()->availableGeometry(this);
     int x = (screenGeometry.width() - this->width()) / 2;
     int y = (screenGeometry.height() - this->height()) / 2;
-    this->move(x, y);  
+    this->move(x, y);
 }

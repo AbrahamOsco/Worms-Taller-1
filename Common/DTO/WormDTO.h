@@ -6,7 +6,7 @@
 #include "WeaponDTO.h"
 
 enum Direction{
-    RIGHT = 1, LEFT = 2
+    RIGHT = 1, LEFT = 2, DOWN = 3, UP = 4
 };
 enum TypeFocusWorm{
     FOCUS = 1, NO_FOCUS = 2

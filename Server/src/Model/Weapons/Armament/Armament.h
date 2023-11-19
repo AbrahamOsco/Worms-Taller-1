@@ -56,6 +56,8 @@ public:
     bool thereAreProjectiles();
 
     bool weaponStandByLaunchesProjectiles();
+
+    void assignWindValue(const float &aWindValue);
 };
 
 

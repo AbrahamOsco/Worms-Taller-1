@@ -1,4 +1,4 @@
-#ifndef SOCKET_H
+#ifndef SOCKET_H  // NOLINT
 #define SOCKET_H
 
 /*
@@ -7,7 +7,7 @@
  * en sockets IPv4 para TCP.
  * */
 class Socket {
-    private:
+ private:
     int skt;
     bool closed;
 
@@ -41,7 +41,7 @@ class Socket {
      * */
     void chk_skt_or_fail() const;
 
-    public:
+ public:
 /*
  * Constructores para `Socket` tanto para conectarse a un servidor
  * (`Socket::Socket(const char*, const char*)`) como para ser usado
@@ -180,5 +180,5 @@ int close();
  * */
 ~Socket();
 };
-#endif
+#endif  // NOLINT
 

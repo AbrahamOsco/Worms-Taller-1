@@ -7,15 +7,25 @@
 #include "../../../GameParameters/GameParameters.h"
 
 
-
 Player::Player(const std::string &playerName, const size_t &idPlayer, const GameParameters& gameParameters) : playerName(playerName),
-                idPlayer(idPlayer), idCurrentWorm(VALUE_INITIAL), gameParameters(gameParameters), armament(idPlayer, gameParameters) {
+                idPlayer(idPlayer), idCurrentWorm(VALUE_INITIAL), gameParameters(gameParameters), armament(idPlayer, gameParameters){
+}
+bool Player::lostAllWorms(){
+    size_t lostWorms = 0;
+    for(auto& aElement: worms){
+        if(aElement.second->wasDestroyedWorm()){
+            lostWorms++;
+        }
+    }
+   return (lostWorms == this->worms.size());
 }
 
 std::vector<WormDTO> Player::getWormsDTO() const {
     std::vector<WormDTO> vecWormsDTO;
     for(auto& aWormElem: worms){
-        vecWormsDTO.push_back(aWormElem.second->getWormDTO());
+        if(not aWormElem.second->wasDestroyedWorm()){       //  Pusheamos los worms que NO fueron destruidos.
+            vecWormsDTO.push_back(aWormElem.second->getWormDTO());
+        }
     }
     return vecWormsDTO;
 }
@@ -45,8 +55,14 @@ size_t Player::startAWormTurn() {
         return idCurrentWorm;
     }
     wormIterator++; // avanzamos al iterador.
+     if(wormIterator != worms.end() and worms.at(wormIterator->first)->wasDestroyedWorm() ){ // si el prox gusano de jugador a jugar esta muerto pasamos al sgt gusano.
+        wormIterator++;
+    }
     if (wormIterator == worms.end()){
         wormIterator = worms.begin();
+        if(worms.at(wormIterator->first)->wasDestroyedWorm()){
+            wormIterator++;
+        }
     }
     this->idCurrentWorm = wormIterator->first;
     worms[idCurrentWorm]->activateFocus();
@@ -59,6 +75,7 @@ void Player::update() {
     }
 }
 
+// lo enviamos no importa si el player perdio o no,  tiene info que se debe mostrar hasta el final..
 PlayerDTO Player::getPlayerDTO(const size_t &idCurrentPlayer) const {
     TurnType aTurnType = TurnType::NOT_IS_MY_TURN;
     if(this->idPlayer == idCurrentPlayer ){
@@ -88,8 +105,8 @@ void Player::endTurn() {
 }
 
 bool Player::allWormsAreUnmoveAndNotExistsProjectiles() {
-    for(auto& aWorm : worms){
-        if(not aWorm.second.get()->isUnmoveAndNotExistsPojectiles()){
+    for (auto &aWorm: worms) {
+        if (not aWorm.second->isUnmoveAndNotExistsPojectiles()) {
             return false;
         }
     }
@@ -98,6 +115,17 @@ bool Player::allWormsAreUnmoveAndNotExistsProjectiles() {
 
 void Player::execute(std::unique_ptr<CommandDTO> &uniquePtr, const int &timeLeft) {
     this->worms.at(idCurrentWorm)->execute(uniquePtr, timeLeft, idCurrentWorm);
+}
+
+void Player::assignWindValue(const float &aWindValue) {
+    this->armament.assignWindValue(aWindValue);
+}
+
+EndGameDTO Player::getEndGameDTO() {
+    if(this->lostAllWorms()){
+        return EndGameDTO(LOST_THE_GAME);
+    }
+    return EndGameDTO(WON_THE_GAME);
 }
 
 

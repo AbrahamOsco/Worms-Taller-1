@@ -18,6 +18,8 @@
 #include "../../../Common/DTO/WeaponSightDTO.h"
 #include "../../../Common/DTO/ProjectilesDTO.h"
 #include "../../../Common/DTO/TurnDTO.h"
+#include "../../../Common/DTO/EndGameDTO.h"
+
 
 class EstablishedConnections {
 private:
@@ -38,6 +40,7 @@ public:
                       const ProjectilesDTO &projectilesDTO, TurnDTO turnDTO);
 
 
+    void pushVecEndGame(const std::vector<EndGameDTO> &vecEndGameDTO);
 };
 
 

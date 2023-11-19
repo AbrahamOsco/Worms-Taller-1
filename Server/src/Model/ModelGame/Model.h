@@ -62,6 +62,10 @@ public:
     void tryAttackVariablePower();
 
     int getTimeLeft() const;
+
+    bool onlyOnePlayerExits();
+
+    std::vector<EndGameDTO> getVecEndGameDTO();
 };
 
 

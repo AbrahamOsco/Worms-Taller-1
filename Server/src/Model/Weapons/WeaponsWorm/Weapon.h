@@ -24,7 +24,7 @@ public:
     TypeMunition typeMunition;
     size_t munition;
     const GameParameters& gameParameters;
-
+    float windValue;
 public:
     explicit Weapon(const TypeWeapon& aTypeWeapon, const float &mainDamage, const TypeMunition& aTypeMunition,
                     const size_t& aMunition, const GameParameters& gameParameters);
@@ -62,6 +62,8 @@ public:
     virtual void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO);
 
     virtual WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent);
+
+    void assignWindValue(const float &aWindValue);
 };
 
 
