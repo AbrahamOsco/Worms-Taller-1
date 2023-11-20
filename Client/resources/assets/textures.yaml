@@ -140,4 +140,4 @@ textures:
   - name: defeat
     source: "../Client/resources/screens/defeat.png"
   - name: box
-    source: "../Client/resources/assets/box/box.jpg"
+    source: "../Client/resources/assets/box/box.png"
