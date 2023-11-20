@@ -8,7 +8,7 @@
 #include "../../command/TeleportCmd.h"
 #include "../../utils/ColorDefinitions.h"
 
-Worm::Worm(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
+Worm::Worm(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocus &focus,
            const MoveWorm &moveWorm, bool isMyTurn) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_id(id), m_hpWorm(hpWorm),
                                        m_directionLook(direction), m_typeFocus(focus), m_moveWorm(moveWorm),
                                        m_animation(true), m_isMyTurn(isMyTurn) {
@@ -62,7 +62,7 @@ void Worm::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &
 
     m_animation.update();
 
-    if (m_typeFocus == TypeFocusWorm::FOCUS) {
+    if (m_typeFocus == TypeFocus::FOCUS) {
         SDL2pp::Point point(m_x, m_y);
         camera.setTarget(point);
     }

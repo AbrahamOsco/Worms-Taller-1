@@ -11,8 +11,8 @@ Turns::Turns(Players &players, const GameParameters &parameters, b2World *world)
 }
 
 float Turns::getWindValueForPhysics(){
-    valueWind = (rand() % 99) + 2;  // genero numeros aleatorios del 2 hasta el 100 .  rand %99 me genera numeros entre 0 y el 98 y le sumo 2 -> 2 y 100
-    int randomNumber = rand() % 101;
+    valueWind = (rand() % (gameParameters.getMaxValueWind() -1) ) + 2;  // genero numeros aleatorios del 2 hasta el 100 .  rand %99 me genera numeros entre 0 y el 98 y le sumo 2 -> 2 y 100
+    int randomNumber = rand() % gameParameters.getMaxValueWind();
     if(randomNumber % 2 == 0 ){
         typeWind = WIND_RIGHT;
     } else {

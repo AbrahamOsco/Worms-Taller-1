@@ -253,9 +253,10 @@ ProjectileDTO ClientProtocol::recvAProjectileDTO(){
         TypeProjectil aTypeProj = static_cast<TypeProjectil>(recvANumberByte());
         size_t positionX = recvNum2Bytes();
         size_t postionY = recvNum2Bytes();
-        return ProjectileDTO(aTypeProj, positionX, postionY);
+        TypeFocus typeFocus = static_cast<TypeFocus>(recvANumberByte());
+        return ProjectileDTO(aTypeProj, positionX, postionY, typeFocus);
     }
-    return ProjectileDTO(NONE_PROJECTILE, 0, 0);
+    return ProjectileDTO(NONE_PROJECTILE, 0, 0, NO_FOCUS);
 }
 
 WormDTO ClientProtocol::recvAWormDTO() {
@@ -268,7 +269,7 @@ WormDTO ClientProtocol::recvAWormDTO() {
         size_t hpWorm = recvANumberByte();
         Direction aDirection = static_cast<Direction>( recvANumberByte() ) ;
         MoveWorm aMoveWorm = static_cast<MoveWorm>( recvANumberByte());
-        TypeFocusWorm typeFocusWorm = static_cast<TypeFocusWorm>(  recvANumberByte());
+        TypeFocus typeFocusWorm = static_cast<TypeFocus>(  recvANumberByte());
         TypeWeapon typeWeapon = static_cast<TypeWeapon> (recvANumberByte() );
         WormDTO otherWormDTO(positionX, positionY, idPlayer, hpWorm, aDirection, typeFocusWorm, aMoveWorm, typeWeapon);
         return otherWormDTO;

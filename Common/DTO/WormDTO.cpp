@@ -3,9 +3,9 @@ WormDTO::WormDTO() : DTO(WORM) {
 }
 
 
-WormDTO::WormDTO(const size_t &positionX, const size_t &positionY, const size_t& idPlayer,  const size_t &hpWorm, const Direction &aDirection,
-                 const TypeFocusWorm &aTypeFocus, const MoveWorm &aMoveWorm, const TypeWeapon& weaponCurrent) : DTO(WORM), positionX(positionX), positionY(positionY),
-                 idPlayer(idPlayer), hpWorm(hpWorm), directionLook(aDirection), moveWorm(aMoveWorm), typeFocus(aTypeFocus), weaponCurrent(weaponCurrent) {
+WormDTO::WormDTO(const size_t &positionX, const size_t &positionY, const size_t& idPlayer, const size_t &hpWorm, const Direction &aDirection,
+                 const TypeFocus &aTypeFocus, const MoveWorm &aMoveWorm, const TypeWeapon& weaponCurrent) : DTO(WORM), positionX(positionX), positionY(positionY),
+                                                                                                            idPlayer(idPlayer), hpWorm(hpWorm), directionLook(aDirection), moveWorm(aMoveWorm), typeFocus(aTypeFocus), weaponCurrent(weaponCurrent) {
 }
 
 
@@ -26,7 +26,7 @@ Direction WormDTO::getDirectionLook() const {
     return directionLook;
 }
 
-TypeFocusWorm WormDTO::getTypeFocus() const {
+TypeFocus WormDTO::getTypeFocus() const {
     return typeFocus;
 }
 
@@ -58,7 +58,7 @@ void WormDTO::setDirectionLook(const Direction &directionLook) {
     this->directionLook = directionLook;
 }
 
-void WormDTO::setTypeFocus(const TypeFocusWorm &typeFocus) {
+void WormDTO::setTypeFocus(const TypeFocus &typeFocus) {
     this->typeFocus = typeFocus;
 }
 

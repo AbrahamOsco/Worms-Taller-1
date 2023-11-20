@@ -5,11 +5,13 @@
 #include <iostream>
 #include "ProjectileBazooka.h"
 
-ProjectileBazooka::ProjectileBazooka(const GameParameters& gameParameters) : GameObject(ENTITY_BAZOOKA_PROJECTILE) , gameParameters(gameParameters) {
+ProjectileBazooka::ProjectileBazooka(const GameParameters& gameParameters, const TypeFocus& typeFocus) : GameObject(ENTITY_BAZOOKA_PROJECTILE) , gameParameters(gameParameters) {
     this->mainDamage = gameParameters.getBazookaProjectileDamageMax();
     this->radio = gameParameters.getBazookProjectileRadio();
     this->maxImpulseExplosion = gameParameters.getBazookaProjectilMaxImpulseExplosion();
+    this->typeFocus = typeFocus;
 }
+
 
 b2AABB ProjectileBazooka::getAreaForSearch(const b2Vec2 &positionMunition) const {
     b2AABB searchArea;
@@ -28,7 +30,7 @@ ProjectileBazooka::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const b2Vec
     projBazoDef.userData.pointer = (uintptr_t) this;
     this->body = aWorld->CreateBody(&projBazoDef);
     b2CircleShape projBazoShape;
-    projBazoShape.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
+    projBazoShape.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia.
     projBazoShape.m_radius = 0.1f;
 
     b2FixtureDef defFixMuniBazooka;
@@ -66,4 +68,9 @@ float ProjectileBazooka::getDamageForWorm(const float &wormDistanceSquared) {
     return damageForWorm;
 }
 
+ProjectileDTO ProjectileBazooka::getProjectilDTO(){
+    return ProjectileDTO(BAZOOKA_PROJECTILE, this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
+                         gameParameters.getMaxHeightPixel() -this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(), this->typeFocus);
+
+}
 

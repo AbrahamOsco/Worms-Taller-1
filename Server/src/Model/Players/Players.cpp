@@ -32,8 +32,11 @@ void Players::assignWormsToPlayers() {
     std::random_shuffle(idPlayersOrig.begin(), idPlayersOrig.end());
     // tenemos las copias y las originales, (asignamos la copia a la original nuevamente cuando la copia esta vacia).
     size_t i = 0;
+    // tenemos 2 gusano  y 1 jugador. -> 1 jugador con los 2 gusanos.
+    // tenemos 4 gusanos y 2 jugadores -> J:0 -> id = 1. J:1 -> id = 2 ,  J:0 -> id = 0  J:1 ->  id = 3.
+    idPlayersCopy = idPlayersOrig;
+    idWormsCopy = idWormsOrig;
     while( i < iterations){
-        idWormsCopy = idWormsOrig;
         idPlayersCopy = idPlayersOrig;
         while( not idWormsCopy.empty() and not idPlayersCopy.empty() ){
             players.at(idPlayersCopy.back()).assignWorm(idWormsCopy.back(), idsAndPositionsWorms[idWormsCopy.back()]);

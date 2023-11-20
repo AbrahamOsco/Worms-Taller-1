@@ -122,6 +122,7 @@ public:
         std::string stgNamNoSpace = aStageName;
         stgNamNoSpace.erase(std::remove(stgNamNoSpace.begin(), stgNamNoSpace.end(), ' '), stgNamNoSpace.end());
         std::string fullPath(startPath + "/Stages/"+ stgNamNoSpace + ".yaml");
+        std::cout << fullPath << "\n";
         YAML::Node node = YAML::LoadFile(fullPath);
         std::map<size_t, std::pair<float, float>> idPosInitialWorms;
         YAML::Node wormsNode = node["worms"];
@@ -524,6 +525,7 @@ public:
 
     Prueba4() {
          // Todo variable q esta aca dentro y queramos que perdure debemos usar el heap .
+         std::cout << "prueba 4 comeinza \n";
         stage = std::unique_ptr<Stage>{new Stage("Jaula Maldita")};
         stage->addToTheWorld(m_world);
         //    std::map<size_t, std::pair<float, float>> idsAndPositionsWorms;

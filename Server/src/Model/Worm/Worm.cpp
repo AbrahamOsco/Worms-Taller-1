@@ -26,6 +26,7 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     contatctsWithBeam = 0;
     contactsWithWorms = 0;
     wasDestroyed = false;
+    waitingToGetFocus = false;
 }
 
 void Worm::savePositionInAir(const float &positionXAir, const float &positionYAir) {
@@ -235,11 +236,14 @@ ProjectilesDTO Worm::getProjectilesDTO() {
          std::vector<ProjectileDTO> vecProjectileDTO;
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
     }
+    if(armament.getProjectilesDTO(attacked).getProjectilesDto().empty() and waitingToGetFocus ){
+        this->typeFocus = FOCUS;
+    }
     return armament.getProjectilesDTO(attacked);
 }
 
 void Worm::activateFocus() {
-    this->typeFocus = TypeFocusWorm::FOCUS;
+    this->typeFocus = TypeFocus::FOCUS;
 }
 
 void Worm::update() {
@@ -261,7 +265,8 @@ void Worm::update() {
         armament.getWeaponOnStandBy(attacked);
     }
     // limpiamos las projectiles si se puede
-    if (attacked and this->typeFocus == FOCUS and not wasDestroyed) {
+    // and (this->typeFocus == NO_FOCUS and this->waitingToGetFocus) antes estaba esto.
+    if (attacked and not wasDestroyed) {
         armament.tryCleanProjectiles(aWorld);
     }
 }
@@ -323,7 +328,9 @@ void Worm::tryAttackVariablePower() {
 
 void Worm::attackWithBazooka() {
     Bazooka *bazooka = (Bazooka *) armament.getWeaponCurrentPtr();
-    bazooka->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook);
+    bazooka->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook, typeFocus);
+    this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
+    waitingToGetFocus = true;
 }
 
 
@@ -358,6 +365,7 @@ void Worm::endTurn() {
     typeFocus = NO_FOCUS;
     typeMov = STANDING;
     attacked = false;
+    waitingToGetFocus = false;
     armament.endTurn();
     hpInitialTurn = hp;
 }

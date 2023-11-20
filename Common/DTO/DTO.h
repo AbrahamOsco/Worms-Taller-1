@@ -33,6 +33,9 @@ enum OperationType {
     PROVISION_DTO = 42
 };
 
+enum TypeFocus{
+    FOCUS = 1, NO_FOCUS = 2
+};
 class DTO {
 protected:
     OperationType opType;

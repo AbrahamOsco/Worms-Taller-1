@@ -36,7 +36,7 @@ class Worm : public GameObject {
     std::pair<float, float> distancesJumpForward;
     std::pair<float, float> distancesJumpBack;
     size_t numberContacts;
-    TypeFocusWorm typeFocus; // 1 Si esta siendo focus , 2 sino.
+    TypeFocus typeFocus; // 1 Si esta siendo focus , 2 sino.
     MoveWorm typeMov;
     const GameParameters& gameParameters;
     b2World* aWorld;
@@ -51,6 +51,7 @@ class Worm : public GameObject {
     TypeCharge typeCharge;
     float hpInitialTurn;
     bool wasDestroyed;
+    bool waitingToGetFocus;
 public:
 
     Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,

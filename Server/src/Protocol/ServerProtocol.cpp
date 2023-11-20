@@ -212,6 +212,7 @@ void ServerProtocol::sendAProjectileDTO(const ProjectileDTO& aProjectilDTO){
     sendANumberByte(aProjectilDTO.getTypeProjectil());
     sendNum2Bytes(aProjectilDTO.getPositionX());
     sendNum2Bytes(aProjectilDTO.getPositionY());
+    sendANumberByte(aProjectilDTO.getTypeFocus());
 }
 
 void ServerProtocol::sendAWormDTO(const WormDTO &aWormDTO) {

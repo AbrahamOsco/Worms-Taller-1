@@ -25,6 +25,8 @@ GameParameters::GameParameters() {
 
     parameters["TIME_FOR_TURN"] = nodeInitial["TIME_FOR_TURN"].as<float>();
     parameters["TIME_EXTRA_AFTER_ATTACK"] = nodeInitial["TIME_EXTRA_AFTER_ATTACK"].as<float>();
+    parameters["MAX_VALUE_WIND"] = nodeInitial["MAX_VALUE_WIND"].as<float>();
+
 
 
     parameters["PROVISION_POSITION_Y_TO_INVOKE"] = nodeInitial["PROVISION_POSITION_Y_TO_INVOKE"].as<float>();
@@ -79,6 +81,11 @@ GameParameters::GameParameters() {
     parameters["BAZOOKA_MUNITION"] = nodeInitial["BAZOOKA_MUNITION"].as<float>();
     parameters["BAZOOKA_RAY_LENGTH"] = nodeInitial["BAZOOKA_RAY_LENGTH"].as<float>();
 }
+
+int GameParameters::getMaxValueWind() const{
+    return static_cast<int>(this->parameters.at("MAX_VALUE_WIND"));
+}
+
 
 float GameParameters::getProvisionHalfHeight() const{
     return this->parameters.at("PROVISION_HALF_HEIGHT");

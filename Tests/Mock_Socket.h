@@ -29,7 +29,7 @@ class Socket{
     }
     int sendsome(const void* data, unsigned int sz, bool* was_closed) {
         char* cdata = nullptr;
-        cdata = reinterpret_cast<char*> data;
+        cdata = (char*) data;
         if (cdata != nullptr) {
             for (unsigned int i = 0; i < sz; i++) {
                 buffer.push_back(cdata[i]);
@@ -42,7 +42,7 @@ class Socket{
     }
     int recvsome(void* data, unsigned int sz, bool* was_closed) {
         char* cdata = nullptr;
-        cdata = reinterpret_cast<char*> data;
+        cdata = (char*) data;
         if (cdata != nullptr) {
             for (unsigned int i = 0; i < sz; i++) {
                 cdata[i] = buffer[recv];

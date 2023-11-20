@@ -5,7 +5,7 @@
 #include "WormRangedWeapon.h"
 
 WormRangedWeapon::WormRangedWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction,
-                                   const TypeFocusWorm &focus, const MoveWorm &moveWorm,
+                                   const TypeFocus &focus, const MoveWorm &moveWorm,
                                    const TypeWeapon &weaponCurrent, int xCrossHair, int yCrossHair,
                                    const TypeSight &typeSight, bool isMyTurn) : Worm(id, x, y, hpWorm, direction, focus, moveWorm, isMyTurn),
                                                                  m_weaponCurrent(weaponCurrent),

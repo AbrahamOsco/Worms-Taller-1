@@ -34,7 +34,7 @@ TEST(TEST_MOCK_SOCKET, SEND_SOME) {
     std::vector<char> buff;
 
     for (int i = 0; i < 10; i++) {
-        data.push_back(static_cast<char> i+60);
+        data.push_back((char) i+60);
     }
     skt.sendall(data.data(), 5, &closed);
     skt.sendall(data.data()+5, 5, &closed);
@@ -50,7 +50,7 @@ TEST(TEST_MOCK_SOCKET, RECV_SOME) {
     std::vector<char> read(10);
 
     for (int i = 0; i < 10; i++) {
-        data.push_back(static_cast<char> i);
+        data.push_back((char) i);
     }
     skt.setBuffer(data);
     skt.recvall(read.data(), 4, &closed);
@@ -212,7 +212,6 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_INI_CREATE_GAME) {
     uint8_t amount = 0;
     uint16_t word;
     std::string aux;
-
     scenarios.push_back("Ruinas");
     maxPlayers.push_back(3);
     amount++;
@@ -250,7 +249,104 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_FIN_CREATE_GAME) {
     ASSERT_EQ(1, buffer[1]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_INI_JOIN_GAME) {
-    ASSERT_TRUE(true);
+    Socket skt;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    ResolverInitialDTO dto;
+    size_t offset = 0;
+    uint16_t word;
+    dto.setOperationType(RESPONSE_INITIAL_JOIN_GAME);
+    std::vector<RoomDTO> games;
+    std::vector<std::string> names;
+    std::vector<std::string> scenarios;
+    std::vector<size_t> currentPlayers;
+    std::vector<size_t> maxPlayers;
+    names.push_back("mi partida");
+    names.push_back("partida adsgsdsd");
+    scenarios.push_back("mapa pequeño");
+    scenarios.push_back("mapa definitivo mortal xd");
+    currentPlayers.push_back(1);
+    currentPlayers.push_back(3);
+    maxPlayers.push_back(5);
+    maxPlayers.push_back(9);
+    games.push_back(RoomDTO(names[0], scenarios[0], currentPlayers[0], maxPlayers[0]));
+    games.push_back(RoomDTO(names[1], scenarios[1], currentPlayers[1], maxPlayers[1]));
+    dto.setGameRooms(games);
+    protocol.sendResolverInitialDTO(dto);
+    buffer = skt.getBuffer();
+    ASSERT_TRUE(RESPONSE_INITIAL_JOIN_GAME == buffer[offset]);
+    offset++;
+    ASSERT_TRUE(games.size() == buffer[offset]);
+    offset++;
+    for (size_t i = 0; i < games.size(); i++) {
+        ASSERT_TRUE(ROOM_GAME == buffer[offset]);
+        offset++;
+        memcpy(&word, buffer.data()+offset, 2);
+        word = ntohs(word);
+        ASSERT_TRUE(names[i].size() == word);
+        offset = offset + 2;
+        std::string aux1(buffer.data()+offset, word);
+        ASSERT_TRUE(names[i] == aux1);
+        offset = offset + word;
+        memcpy(&word, buffer.data()+offset, 2);
+        word = ntohs(word);
+        ASSERT_TRUE(scenarios[i].size() == word);
+        offset = offset + 2;
+        std::string aux2(buffer.data()+offset, word);
+        ASSERT_TRUE(scenarios[i] == aux2);
+        offset = offset + word;
+        ASSERT_TRUE(currentPlayers[i] == buffer[offset]);
+        offset++;
+        ASSERT_TRUE(maxPlayers[i] == buffer[offset]);
+        offset++;
+    }
+}
+TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_FIN_JOIN_GAME) {
+    Socket skt;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    ResolverInitialDTO dto(RESPONSE_FINAL_JOIN_GAME, 1);
+    protocol.sendResolverInitialDTO(dto);
+    buffer = skt.getBuffer();
+    ASSERT_TRUE(RESPONSE_FINAL_JOIN_GAME == buffer[0]);
+    ASSERT_EQ(1, buffer[1]);
+}
+TEST(TEST_PROTOCOL_SERVER_SEND, sendStage) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    std::vector<BeamDTO> beams;
+    beams.push_back(BeamDTO(SHORT_BEAM, 23, 74, 29, 63, 70));
+    StageDTO dto(beams);
+    dto.setIdPlayer(15);
+    protocol.sendStage(dto);
+    buffer = skt.getBuffer();
+    ASSERT_TRUE(STAGE == buffer[offset]);
+    offset++;
+    ASSERT_EQ(1, buffer[offset]);
+    offset++;
+    ASSERT_EQ(BEAM, buffer[offset]);
+    offset++;
+    ASSERT_EQ(SHORT_BEAM, buffer[offset]);
+    offset++;
+    memcpy(&word, buffer.data()+offset, 2);
+    word = ntohs(word);
+    ASSERT_EQ(23, word);
+    offset = offset + 2;
+    memcpy(&word, buffer.data()+offset, 2);
+    word = ntohs(word);
+    ASSERT_EQ(74, word);
+    offset = offset + 2;
+    ASSERT_EQ(70, buffer[offset]);
+    offset++;
+    ASSERT_EQ(29, buffer[offset]);
+    offset++;
+    ASSERT_EQ(63, buffer[offset]);
+}
+TEST(TEST_PROTOCOL_SERVER_SEND, sendPlayersDTO) {
+
 }
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
