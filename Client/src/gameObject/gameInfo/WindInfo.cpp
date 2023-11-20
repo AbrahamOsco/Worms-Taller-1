@@ -4,14 +4,14 @@
 
 #include "WindInfo.h"
 
-WindInfo::WindInfo(int velocity, Direction direction) : GameObject(LoaderParams(10, 40, 34, 18, "arrow_no")),
+WindInfo::WindInfo(int velocity, TypeWind direction) : GameObject(LoaderParams(10, 40, 34, 18, "arrow_no")),
                                                                                     m_velocity(velocity),
                                                                                     m_direction(direction) {
-    if (m_direction == Direction::RIGHT) {
+    if (m_direction == TypeWind::WIND_RIGHT) {
         m_textureID = "arrow_right";
         m_width = 50;
     }
-    if (m_direction == Direction::LEFT) {
+    if (m_direction == TypeWind::WIND_LEFT) {
         m_width = 50;
         m_textureID = "arrow_left";
     }

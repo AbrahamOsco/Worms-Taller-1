@@ -12,9 +12,9 @@
 class WindInfo : public GameObject {
 private:
     int m_velocity;
-    Direction m_direction;
+    TypeWind m_direction;
 public:
-    WindInfo(int velocity, Direction direction);
+    WindInfo(int velocity, TypeWind direction);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 

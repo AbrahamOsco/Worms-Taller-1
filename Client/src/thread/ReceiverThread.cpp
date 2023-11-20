@@ -102,7 +102,7 @@ void ReceiverThread::run() {
                 playersInfo.addPlayer(playerInfo);
             }
 
-            WindInfo wind(10, Direction::RIGHT);
+            WindInfo wind(static_cast<int>(snapShot.getTurnDto().getValueWind()), snapShot.getTurnDto().getTypeWind());
             gameObjects.push_back(
                     std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, turnDto.getTextTurn(),
                                                turnDto.getTimeLeft()));
