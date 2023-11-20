@@ -15,10 +15,12 @@
 #include "../command/Command.h"
 #include "../../../Common/Queue/Queue.h"
 #include "../inputs/Input.h"
+#include "../soundManager/SoundManager.h"
 
 class Engine {
 private:
     TextureManager m_textureManager;
+    SoundManager m_soundManager;
     std::atomic<bool>& m_running;
     SDL2pp::Window m_window;
     SDL2pp::Renderer m_renderer;

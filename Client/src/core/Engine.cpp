@@ -56,6 +56,10 @@ void Engine::render() {
 
 void Engine::init() {
     m_textureManager.parseTexture("../Client/resources/assets/textures.yaml", m_renderer);
+    m_soundManager.LoadMusic("bg-sound", "../Client/resources/sounds/BackgroundMusic.mp3");
+    m_soundManager.LoadEffect("jump", "../Client/resources/sounds/misc/Jump.wav");
+
+    m_soundManager.playMusic("bg-sound");
 }
 
 bool Engine::running() const {
