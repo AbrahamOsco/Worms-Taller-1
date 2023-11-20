@@ -64,6 +64,8 @@ public:
     virtual WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent);
 
     void assignWindValue(const float &aWindValue);
+
+    void giveExtraMunition(const size_t &extraMunition);
 };
 
 

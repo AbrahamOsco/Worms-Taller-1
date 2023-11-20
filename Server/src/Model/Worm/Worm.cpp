@@ -413,3 +413,13 @@ bool Worm::isUnmoveAndNotExistsPojectiles() {
     return ((unMovedOnABeam or unMovedOnAWorm or unMovedOnEdge) and (not thereAreProjectiles()) and (this->typeCharge == NONE_CHARGE)  );
 
 }
+
+void Worm::giveExtraHP(const float &extraHP) {
+    if( (this->hp + extraHP) <= 200){
+        this->hp +=extraHP;
+    }
+}
+
+void Worm::giveExtraMunition(const size_t &extraMunition) {
+    this->armament.giveExtraMunition(extraMunition);
+}

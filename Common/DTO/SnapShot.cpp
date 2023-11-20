@@ -9,9 +9,10 @@ SnapShot::SnapShot(const EndGameDTO &aEndGameDTO) : DTO(SNAP_SHOT) , typeSnapSho
 }
 
 
-SnapShot::SnapShot(const std::vector<WormDTO> &wormsDTO, const PlayersDTO &aPlayersDTO,
-                   const WeaponsDTO& weaponsDTO, const WeaponSightDTO &weaponSightDTO, const ProjectilesDTO &projectilesDTO, const TurnDTO& turnDto) : DTO(SNAP_SHOT),
-            typeSnapShot(GAME_PROGRESS), wormsDTO(wormsDTO), playersDTO(aPlayersDTO), weaponsDTO(weaponsDTO), weaponSightDTO(weaponSightDTO), projectilesDTO(projectilesDTO),turnDto(turnDto)  {
+SnapShot::SnapShot(const std::vector<WormDTO> &wormsDTO, const PlayersDTO &aPlayersDTO, const WeaponsDTO& weaponsDTO, const WeaponSightDTO &weaponSightDTO,
+                   const ProjectilesDTO &projectilesDTO, const TurnDTO& turnDto, const std::vector<ProvisionDTO> &vecProvisionDTO) : DTO(SNAP_SHOT),
+            typeSnapShot(GAME_PROGRESS), wormsDTO(wormsDTO), playersDTO(aPlayersDTO), weaponsDTO(weaponsDTO),
+            weaponSightDTO(weaponSightDTO), projectilesDTO(projectilesDTO),turnDto(turnDto), vecProvisionDTO(vecProvisionDTO) {
 }
 
 
@@ -69,4 +70,8 @@ GameState SnapShot::getTypeSnapShot() const {
 
 EndGameDTO SnapShot::getEndGameDto() const {
     return this->endGameDTO;
+}
+
+std::vector<ProvisionDTO> SnapShot::getVecProvisionDto() const {
+    return vecProvisionDTO;
 }

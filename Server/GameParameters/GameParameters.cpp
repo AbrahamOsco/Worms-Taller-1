@@ -25,7 +25,7 @@ GameParameters::GameParameters() {
 
     parameters["TIME_FOR_TURN"] = nodeInitial["TIME_FOR_TURN"].as<float>();
     parameters["TIME_EXTRA_AFTER_ATTACK"] = nodeInitial["TIME_EXTRA_AFTER_ATTACK"].as<float>();
-
+    parameters["POSITION_Y_TO_INVOKE_BOXES"] = nodeInitial["POSITION_Y_TO_INVOKE_BOXES"].as<float>();
 
     parameters["WORM_DISTANCEX_FORWARD_JUMP"] = nodeInitial["WORM_DISTANCEX_FORWARD_JUMP"].as<float>();
     parameters["WORM_DISTANCEY_FORWARD_JUMP"] = nodeInitial["WORM_DISTANCEY_FORWARD_JUMP"].as<float>();
@@ -68,6 +68,10 @@ GameParameters::GameParameters() {
     parameters["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"] = nodeInitial["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"].as<float>();
     parameters["BAZOOKA_MUNITION"] = nodeInitial["BAZOOKA_MUNITION"].as<float>();
     parameters["BAZOOKA_RAY_LENGTH"] = nodeInitial["BAZOOKA_RAY_LENGTH"].as<float>();
+}
+
+float GameParameters::getPositionYForBoxes() const{
+    return this->parameters.at("POSITION_Y_TO_INVOKE_BOXES");
 }
 
 //WORM_RESISTANCE_TO_HEIGHT

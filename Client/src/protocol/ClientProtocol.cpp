@@ -168,6 +168,7 @@ void ClientProtocol::sendCommandDTO(const CommandDTO& commandDto) {
 
 SnapShot ClientProtocol::recvSnapShot() {
     std::vector<WormDTO> vecWormsDTO;
+    std::vector<ProvisionDTO> vecProvisionDTO;
     int  operationType = recvANumberByte();
     if (operationType == CLOSED_CONNECTION) {
         throw ClosedServer();
@@ -184,15 +185,31 @@ SnapShot ClientProtocol::recvSnapShot() {
             WeaponSightDTO weaponSightDto = recvWeaponSightDTO();
             ProjectilesDTO projectilesDto = recvProjectilesDTO();
             TurnDTO turnDto = recvTurnDTO();
-            return SnapShot(vecWormsDTO, playersDto, weaponsDto, weaponSightDto, projectilesDto, turnDto);
+            size_t numberProvision = recvANumberByte();
+            for(size_t i = 0; i < numberProvision; i++){
+                vecProvisionDTO.push_back( recvAProvisionDTO());
+            }
+            return SnapShot(vecWormsDTO, playersDto, weaponsDto, weaponSightDto, projectilesDto, turnDto, vecProvisionDTO);
         }
         else if (typeSnapShot == GAME_END){
             EndGameDTO endGameDto = recvEndGameDTO();
             return SnapShot(endGameDto);
         }
     }
-    return SnapShot(vecWormsDTO, PlayersDTO(), WeaponsDTO(), WeaponSightDTO(), ProjectilesDTO(), TurnDTO());
+    return SnapShot(vecWormsDTO, PlayersDTO(), WeaponsDTO(), WeaponSightDTO(), ProjectilesDTO(), TurnDTO(), vecProvisionDTO);
 }
+
+ProvisionDTO ClientProtocol::recvAProvisionDTO(){
+    int typeOperation = recvANumberByte();
+    if(typeOperation == PROVISION_DTO){
+        size_t positionX = recvNum2Bytes();
+        size_t positionY = recvNum2Bytes();
+        TypeEffect typeEffect = static_cast<TypeEffect>(recvANumberByte());
+        return ProvisionDTO(positionX, positionY, typeEffect);
+    }
+    return ProvisionDTO();
+}
+
 EndGameDTO ClientProtocol::recvEndGameDTO(){
     int typeOperation =  recvANumberByte();
     if(typeOperation == END_DTO){

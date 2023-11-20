@@ -58,6 +58,8 @@ public:
     void stepWorldAndExecuteCommand();
 
     void pushUpdatesAndUpdateModel(TimeTurn &timeTurn, RateController &frameRate);
+
+    void executeLastCommand();
 };
 
 

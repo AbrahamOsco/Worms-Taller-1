@@ -41,9 +41,11 @@ void EstablishedConnections::stop() {
 void EstablishedConnections::pushSnapShot(const std::vector<WormDTO> &vectorWormsDTO, const PlayersDTO &playersDTO,
                                           const std::vector<WeaponsDTO> &vecWeaponsDTO,
                                           const WeaponSightDTO &weaponSightDTO,
-                                          const ProjectilesDTO &projectilesDTO, TurnDTO turnDTO) {
+                                          const ProjectilesDTO &projectilesDTO, TurnDTO turnDTO,
+                                          const std::vector<ProvisionDTO> &vecProvisionDTO) {
     for (auto &element : clientConnections) {
-        element.second.pushSnapShot(vectorWormsDTO, playersDTO, vecWeaponsDTO, weaponSightDTO, projectilesDTO, turnDTO);
+        element.second.pushSnapShot(vectorWormsDTO, playersDTO, vecWeaponsDTO, weaponSightDTO, projectilesDTO, turnDTO,
+                                    vecProvisionDTO);
     }
 }
 

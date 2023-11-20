@@ -25,6 +25,9 @@ private:
     TypeEffect typeEffect;
 
 public:
+
+    ProvisionDTO();
+
     ProvisionDTO(const size_t& positionX, const size_t& positionY, const TypeEffect& typeEffect);
     size_t getPositionX() const;
 

@@ -135,6 +135,10 @@ public:
     void aContactWithEdge();
 
     void lessContactWithEdge();
+
+    void giveExtraHP(const float &extraHP);
+
+    void giveExtraMunition(const size_t &extraMunition);
 };
 
 

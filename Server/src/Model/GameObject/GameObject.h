@@ -12,7 +12,7 @@ enum Entity{
     ENTITY_EDGE = 2,
     ENTITY_WORM = 3,
     ENTITY_BAZOOKA_PROJECTILE = 4,
-
+    ENTITY_PROVISION = 15
 };
 
 

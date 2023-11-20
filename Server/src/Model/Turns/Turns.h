@@ -8,6 +8,7 @@
 
 #include "../Players/Players.h"
 #include "../../../../Common/DTO/TurnDTO.h"
+#include "../Provision/Provision.h"
 
 class Turns {
 private:
@@ -21,9 +22,11 @@ private:
     bool attackRecognized;
     int valueWind; // valor del viento multiplicado por 10  ej si valueWind= 100-> valorVientoReal = 10.
     TypeWind typeWind;
+    b2World* world;
+    std::vector<std::unique_ptr<Provision>> provisionBoxes;
 public:
 
-    explicit Turns(Players &players, const GameParameters& parameters);
+    explicit Turns(Players &players, const GameParameters &parameters, b2World *world);
 
     void startATurn();
 
@@ -37,6 +40,13 @@ public:
     int getTimeLeft() const;
 
     float getWindValueForPhysics();
+
+    void addProvisionToWorld();
+
+    void cleanProvisionsDestroyed();
+
+    std::vector<ProvisionDTO> getVecProvisionDTO();
+
 };
 
 

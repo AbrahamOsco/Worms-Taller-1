@@ -130,4 +130,10 @@ void Armament::assignWindValue(const float &aWindValue) {
     }
 }
 
+void Armament::giveExtraMunition(const size_t &extraMunition) {
+    for(auto& mapWeapons: armament){
+        mapWeapons.second->giveExtraMunition(extraMunition);
+    }
+}
+
 

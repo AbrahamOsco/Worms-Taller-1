@@ -162,10 +162,23 @@ void ServerProtocol::sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot) {
 
         //enviamos el turnoDTO
         sendTurnDTO(aSnapShot->getTurnDto());
+
+        // enviamos las provisiones
+        sendANumberByte(aSnapShot->getVecProvisionDto().size());
+        for(auto& aProvision : aSnapShot->getVecProvisionDto()){
+            sendAProvisionDTO(aProvision);
+        }
     }
     else if (aSnapShot->getTypeSnapShot() == GAME_END){
         sendEndGameDTO(aSnapShot->getEndGameDto());
     }
+}
+
+void ServerProtocol::sendAProvisionDTO(const ProvisionDTO& provisionDto){
+    sendANumberByte(provisionDto.getOperationType());
+    sendNum2Bytes(provisionDto.getPositionX());
+    sendNum2Bytes(provisionDto.getPositionY());
+    sendANumberByte(provisionDto.getTypeEffect());
 }
 
 void ServerProtocol::sendEndGameDTO(const EndGameDTO& endGameDto){

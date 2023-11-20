@@ -66,6 +66,8 @@ public:
     bool onlyOnePlayerExits();
 
     std::vector<EndGameDTO> getVecEndGameDTO();
+
+    std::vector<ProvisionDTO> getVecProvisionDTO();
 };
 
 

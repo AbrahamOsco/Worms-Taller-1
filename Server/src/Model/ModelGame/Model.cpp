@@ -8,7 +8,7 @@
 #include "../../../../Common/DTO/PlayersDTO.h"
 
 Model::Model(const std::string &scenarioName, b2World &aWorld, GameParameters& parameters)
-        : stage(scenarioName), players(stage.getIdsAndPositionsWorms(), parameters), world(aWorld), gameContactListener(&aWorld, &parameters), turns(players, parameters){
+        : stage(scenarioName), players(stage.getIdsAndPositionsWorms(), parameters), world(aWorld), gameContactListener(&aWorld, &parameters), turns(players, parameters, &world){
 }
 
 void Model::addPlayer(const std::string &playerName, const size_t &idPlayer) {
@@ -62,6 +62,11 @@ WeaponSightDTO Model::getWeaponSightDTO() {
 ProjectilesDTO Model::getProjectilesDTO(){
     return players.getCurrentWorm()->getProjectilesDTO();
 }
+
+std::vector<ProvisionDTO> Model::getVecProvisionDTO(){
+    return this->turns.getVecProvisionDTO();
+}
+
 
 void Model::tryAttackVariablePower() {
     players.getCurrentWorm()->tryAttackVariablePower();
