@@ -993,7 +993,7 @@ enum ImGuiCol_
     ImGuiCol_PopupBg,               // Background of popups, menus, tooltips windows
     ImGuiCol_Border,
     ImGuiCol_BorderShadow,
-    ImGuiCol_FrameBg,               // Background of checkbox, radio button, plot, slider, text input
+    ImGuiCol_FrameBg,               // Background of checkbox, maxRadio button, plot, slider, text input
     ImGuiCol_FrameBgHovered,
     ImGuiCol_FrameBgActive,
     ImGuiCol_TitleBg,

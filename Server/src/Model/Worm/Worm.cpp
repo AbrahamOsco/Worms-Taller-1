@@ -6,6 +6,7 @@
 #include <iostream>
 #include "Worm.h"
 #include "../../../GameParameters/GameParameters.h"
+#include "../Weapons/WeaponsWorm/AirAttackDetonator.h"
 
 Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
            Armament& armament) : GameObject(ENTITY_WORM), idWorm(idWorm), idPlayer(idPlayer),
@@ -352,6 +353,16 @@ void Worm::teleportWorm(const int &posXTeleport, const int &posYTeleport){
     Teleport* teleport = (Teleport*) this->armament.getWeaponCurrentPtr();
     teleport->teleportIn(getBody(), posXTeleport, posYTeleport, aWorld);
     this->endAttack();
+}
+
+void Worm::attackWithAirAttack(const int &posXAttack, const int &posYAttack){
+    if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
+        return;
+    }
+    AirAttackDetonator* airAttackDetonator = (AirAttackDetonator*) this->armament.getWeaponCurrentPtr();
+    airAttackDetonator->detonate(posXAttack, posYAttack, aWorld, this->typeFocus);
+    this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
+    waitingToGetFocus = true;
 }
 
 

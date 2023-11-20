@@ -15,8 +15,8 @@
 class ProjectileBazooka : public GameObject {
 private:
     float mainDamage;
-    float radio;
-    float maxImpulseExplosion;
+    float maxRadio;
+    float maxImpulseMagnitude;
     const GameParameters& gameParameters;
     b2World* aWorld;
     TypeFocus typeFocus;
@@ -24,9 +24,9 @@ public:
 
     explicit ProjectileBazooka(const GameParameters &gameParameters, const TypeFocus& typeFocus);
 
-    b2AABB getAreaForSearch(const b2Vec2& positionMunition) const;
-
     void addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const b2Vec2 &impulseProjectile, const float &windValue);
+
+    b2AABB getAreaForSearch(const b2Vec2& positionProjectile) const;
 
     b2Vec2 getImpulseForWorm(const b2Vec2 &positionWorm, const b2Vec2 &positionProjectile, const float &distanceWormToProjectile);
 

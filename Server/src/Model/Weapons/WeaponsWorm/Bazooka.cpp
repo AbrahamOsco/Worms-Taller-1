@@ -41,7 +41,7 @@ bool Bazooka::increaseImpulse() {
 
 void Bazooka::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const Direction &direction, const TypeFocus &focus) {
     b2Vec2 p2 = weaponSight.getPositionP2RayCast(positionWorm, direction);
-    b2Vec2 impulseMuniBazooka = weaponSight.getImpulseForMuniBazooka(direction, impulseWeapon);
+    b2Vec2 impulseMuniBazooka = weaponSight.getImpulseForProjectileBazooka(direction, impulseWeapon);
     //std::unique_ptr<ClientLogin> unCliente{new ClientLogin(std::move(sktPeer), games)}
     // creamos la munition de la bazooka
     std::cout << "Atacamos con la bazooka------------------------------------------------------\n";

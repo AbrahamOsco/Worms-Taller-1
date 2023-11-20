@@ -142,6 +142,8 @@ public:
     void giveExtraMunition(const size_t &extraMunition);
 
     Direction getDirection();
+
+    void attackWithAirAttack(const int &posXAttack, const int &posYAttack);
 };
 
 

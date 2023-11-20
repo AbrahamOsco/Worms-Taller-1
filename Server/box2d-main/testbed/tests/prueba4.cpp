@@ -275,7 +275,7 @@ public:
         airAttackMissileDef.userData.pointer = (uintptr_t) this;
         this->body = aWorld->CreateBody(&airAttackMissileDef);
         b2CircleShape airAttackMissileForm;
-        airAttackMissileForm.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
+        airAttackMissileForm.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el maxRadio de 1m empuja en 1 al origen de la circuferencia..
         airAttackMissileForm.m_radius = 0.1f;
 
         b2FixtureDef defFixAirAttackMis;
@@ -294,10 +294,7 @@ public:
     b2Vec2 getImpulseForWorm(const b2Vec2 &positionWorm, const b2Vec2 &positionMissile, float distanceWormToMissile) {
         b2Vec2 impulseDirection = positionWorm - positionMissile;
         impulseDirection.Normalize();
-        std::cout << "distanceWormToMunition :" << distanceWormToMissile << "\n";
         float impulseMagnitude = maxImpulseMagnitude * std::max(0.0f, 1.0f - sqrt(distanceWormToMissile) / maxRadio );
-        std::cout << "impulseMagnitude : " << impulseMagnitude;
-        std::cout << " impulseDirection.x: " << impulseDirection.x << "impulseDirection.y" << impulseDirection.y << "\n ";
         b2Vec2 impulseWorm = impulseMagnitude * impulseDirection;
         impulseWorm.y = abs(impulseWorm.x) * 0.7;
         if(impulseDirection.x == 0){ // Si la normal en x es cero hizo un tiro a -90º sale volando para arriba.
@@ -364,7 +361,7 @@ public:
 
         //  creamos la forma del gusano.
         b2CircleShape wormShape;
-        wormShape.m_p.Set(0.0f, 1.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
+        wormShape.m_p.Set(0.0f, 1.0f); // offset de la posicion inicial va en (0,1) e 1 por q el maxRadio de 1m empuja en 1 al origen de la circuferencia..
         wormShape.m_radius = 0.2f;
 
         b2FixtureDef defFixtureWorm;

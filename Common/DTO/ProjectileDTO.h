@@ -11,7 +11,7 @@
 enum TypeProjectil{
     NONE_PROJECTILE,
     BAZOOKA_PROJECTILE,
-
+    AIR_ATTACK_MISSILE
 };
 
 class ProjectileDTO : public DTO {

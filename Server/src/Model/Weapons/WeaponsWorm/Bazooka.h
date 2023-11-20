@@ -38,17 +38,13 @@ public:
 
     void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
 
-    void shootProjectile(b2World *world, const b2Vec2 &positionWorm, const Direction &direction, const TypeFocus &focus);
-
-    std::unique_ptr<ProjectileBazooka> * getProjectile();
-
-    // ambos metodos son para toda arma con mira
-
     void tryCleanProjectiles(b2World* aWorld) override;
-
 
     WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) override;
 
+    void shootProjectile(b2World *world, const b2Vec2 &positionWorm, const Direction &direction, const TypeFocus &focus);
+
+    std::unique_ptr<ProjectileBazooka> * getProjectile();
 };
 
 

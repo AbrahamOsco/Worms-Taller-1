@@ -9,10 +9,50 @@ AirAttackDetonator::AirAttackDetonator(const TypeWeapon &aTypeWeapon, const floa
     offsets = {-0.5f,0.5f,-1.5f,1.5f,-2.5f,2.5f};
 }
 
-void AirAttackDetonator::detonate(const int &posXAttack, const int &posYAttack, b2World *world) {
-
+void AirAttackDetonator::detonate(const int &posXAttack, const int &posYAttack, b2World *world, const TypeFocus& typeFocus) {
+    for (auto & offset : offsets) {
+        std::unique_ptr<AirAttackMissile> missile{new AirAttackMissile(gameParameters, typeFocus)};
+        missile.get()->addToTheWorld(world, b2Vec2(posXAttack + offset, posYAttack), windValue );
+        missiles.push_back(std::move(missile));
+    }
 }
 
+bool AirAttackDetonator::hasAScope() {
+    return false;
+}
 
+bool AirAttackDetonator::hasVariablePower() {
+    return false;
+}
+
+bool AirAttackDetonator::launchesProjectiles() {
+    return true;
+}
+
+bool AirAttackDetonator::thereAreProjectiles() {
+    for(auto& aMissile: missiles){
+        if(aMissile != nullptr ){
+            return true;
+        }
+    }
+    return false;
+}
+
+void AirAttackDetonator::tryCleanProjectiles(b2World *aWorld) {
+    for(auto& aMissile: missiles){
+        if(aMissile!= nullptr and aMissile->isDestroyedBody()){
+            aWorld->DestroyBody(aMissile->getBody());
+            aMissile = nullptr;
+        }
+    }
+}
+
+void AirAttackDetonator::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
+    for(auto& aMissile : missiles){
+        if( aMissile != nullptr and not aMissile->isDestroyedBody()){
+            vecProjectileDTO.push_back(aMissile->getProjectilDTO());
+        }
+    }
+}
 
 

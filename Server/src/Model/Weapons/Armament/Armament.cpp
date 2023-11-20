@@ -8,6 +8,7 @@
 #include "../WeaponsWorm/Bat.h"
 #include "../../../../../Common/DTO/ProjectilesDTO.h"
 #include "../WeaponsWorm/Bazooka.h"
+#include "../WeaponsWorm/AirAttackDetonator.h"
 
 
 Armament::Armament(const size_t &idPlayer, const GameParameters& gameParameters)
@@ -15,7 +16,8 @@ Armament::Armament(const size_t &idPlayer, const GameParameters& gameParameters)
     armament.emplace(BASEBALL_BAT, std::make_unique<Bat>(BASEBALL_BAT, gameParameters.getBatDamage(), INFINITE, gameParameters.getBatMunition(), gameParameters) );
     armament.emplace(TELEPORT, std::make_unique<Teleport>(TELEPORT, gameParameters.getTeleportDamage(), INFINITE, gameParameters.getTeleportMunition(), gameParameters));
     armament.emplace(BAZOOKA, std::make_unique<Bazooka>(BAZOOKA, gameParameters.getBazookaProjectileDamageMax(), INFINITE, gameParameters.getBazookaMunition(), gameParameters));
-
+    // NEW WEAPON aca las nuevas armas @todo
+    armament.emplace(AIR_ATTACK, std::make_unique<AirAttackDetonator>(AIR_ATTACK, 50.0f, NO_INFINITE, 2, gameParameters));
 
 }
 
@@ -30,9 +32,11 @@ TypeWeapon Armament::getWeaponCurrent() const {
 
 void Armament::assignWeapon(const TypeWeapon &weapon, const Direction &direction) {
     this->currentWeapon = weapon;
+    /*
     if (armament.at(currentWeapon)->hasAScope()){
         //armament.at(currentWeapon)->prepareWeapon(direction);
     }
+    */
 }
 
 Weapon * Armament::getWeaponCurrentPtr() {
