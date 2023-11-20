@@ -10,8 +10,7 @@ set (TESTBED_SOURCE_FILES
 	settings.cpp
 	test.cpp
 	test.h
-	tests/prueba3.cpp
-		tests/prueba4.cpp)
+	tests/prueba4.cpp)
 
 add_executable(testbed ${TESTBED_SOURCE_FILES})
 target_include_directories(testbed PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
