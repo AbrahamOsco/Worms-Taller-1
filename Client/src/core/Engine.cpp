@@ -24,7 +24,6 @@ Engine::Engine(std::vector<Beam> &beams, Queue<std::unique_ptr<Command>> &bQueue
 void Engine::events() {
     m_input.listen();
     if (m_input.closed()) {
-        std::cout << "send: CLOSE_GAME" << std::endl;
         std::unique_ptr<Command> command(new CloseCmd());
         m_bQueue.move_push(std::move(command));
         m_running = false;
@@ -56,10 +55,11 @@ void Engine::render() {
 
 void Engine::init() {
     m_textureManager.parseTexture("../Client/resources/assets/textures.yaml", m_renderer);
-    m_soundManager.LoadMusic("bg-sound", "../Client/resources/sounds/BackgroundMusic.mp3");
-    m_soundManager.LoadEffect("jump", "../Client/resources/sounds/misc/Jump.wav");
+    m_soundManager.parseSounds("../Client/resources/sounds/sounds.yaml");
+    //m_soundManager.loadMusic("bg-sound", "../Client/resources/sounds/BackgroundMusic.mp3");
+    //m_soundManager.loadEffect("jump", "../Client/resources/sounds/misc/Jump.wav");
 
-    m_soundManager.playMusic("bg-sound");
+    m_soundManager.playMusic("background_music");
 }
 
 bool Engine::running() const {

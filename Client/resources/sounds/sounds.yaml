@@ -1,0 +1,8 @@
+sounds:
+  music:
+    - id: "background_music"
+      source: "../Client/resources/sounds/BackgroundMusic.mp3"
+
+  effects:
+    - id: "jump"
+      source: "../Client/resources/sounds/misc/Jump.wav"
