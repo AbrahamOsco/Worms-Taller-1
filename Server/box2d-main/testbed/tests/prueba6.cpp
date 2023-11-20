@@ -29,6 +29,7 @@ enum Entity{
     ENTITY_MUNITION_BAZOOKA = 6,
     ENTITY_AIR_ATTACK_MISSILE = 7,
     ENTITY_DYNAMITE = 8,
+    ENTITY_GRENADE = 9,
 };
 #define GRAVITY_GAME 10.0f  // AGREGAR
 
@@ -262,66 +263,176 @@ public:
     }
 };
 
-class Dynamite : public GameObject {
-    float mainDamage = 50.0f;
-    float maxRadio = 4.0f;
+enum Direction{
+    RIGHT = 1, LEFT = 2
+};
+
+class MyFirstRayCastCallback : public b2RayCastCallback{
+private:
+    b2Body* body;
+    b2Vec2 point;
+    b2Vec2 normal;
+    float fraction;
+public:
+    MyFirstRayCastCallback(){}
+
+    float ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float fraction) override{
+        std::cout << "Entre a reportFixture Esto signfica que colisone con algo y hay que reportarlo \n";
+        std::cout << "Colisiono a  un" << fraction*100 << " % de la trayectura total \n";
+        GameObject* gameObject = (GameObject*) fixture->GetBody()->GetUserData().pointer;
+        this->body = fixture->GetBody();
+        this->point = point;
+        this->normal = normal;
+        this->fraction = fraction;
+        return fraction;
+    }
+    b2Body* getBody(){
+        return body;
+    }
+    float getFraction() const{
+        return fraction;
+    }
+    void resetRayCast(){  //No olvidar invocar el resestRayCast luego de un rayCast.
+        this->body = nullptr;
+        this->fraction = 0.0f;
+        this->point = this->normal = b2Vec2(0.0, 0.0f);
+    }
+
+    ~MyFirstRayCastCallback() = default;
+};
+
+class WeaponSight{
+private:
+    MyFirstRayCastCallback myRayCast;
+    float rayLength;
+    float rayAngle; // esta en grados.
+    Direction direction; //posiblemnte elminarla ya que lo usamos dentro de un metodo y como que no mas por ej ataques
+
+public:
+    WeaponSight(float rayLength, float rayAngle) : rayLength(rayLength), rayAngle(rayAngle){
+    }
+
+    void resetRayCast() {
+        this->myRayCast.resetRayCast();
+    }
+
+    void upMira() {
+        rayAngle += 10.0f;
+        if(rayAngle > 90.1f){
+            rayAngle -= 10.0f;
+        }
+        std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
+    }
+
+    void downMira() {
+        rayAngle -= 10.0f;
+        if (rayAngle < -90.1f){
+            rayAngle += 10.0f;
+        }
+        std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
+    }
+
+    // posiblemente sacarlo en un futuro  pasar directamnte la direccion al momento de hacer el raycast para obtener el curpo colisionado.
+    void changeDirectiond(Direction direction) {
+        this->direction = direction;
+    }
+
+    GameObject* getBodyCollidesWithRayCast(b2World *world, const b2Vec2& vec2, const Direction &directionCurrent) {
+        b2Vec2 p1 = vec2;
+        int factor = 1;
+        this->direction = directionCurrent;
+        if (this->direction == LEFT) factor = -1;
+        b2Vec2 p2 = p1 + rayLength * b2Vec2(factor* cosf(rayAngle * DEGRATORADIANS), sinf(rayAngle * DEGRATORADIANS));
+        world->RayCast(&myRayCast, p1, p2);
+        std::cout << "myFirstRayCast->getFraction(): " << myRayCast.getFraction() << "\n";
+        if ( myRayCast.getFraction() <= 0.001f ){
+            std::cout << "Practicamente no colisione con nada ni recorri el 1% de la trayectoria asi que salgo\n";
+            return nullptr;
+        }
+        GameObject* gameObject = (GameObject*) myRayCast.getBody()->GetUserData().pointer;
+        if ( gameObject != nullptr and gameObject->getEntityType() == ENTITY_WORM){
+            std::cout << "colisione con un gusano ahora le bajo la vida a punta de un golpe \n";
+            return gameObject;
+        }
+        return nullptr;
+    }
+
+    // metodo de la clase weapon sight
+    b2Vec2 getPositionP2RayCast(b2World *world, const b2Vec2& vec2, Direction direction) {
+        b2Vec2 p1 = vec2;
+        int factor = 1;
+        this->direction = direction;
+        if( direction == LEFT) {
+            factor = -1;
+        }
+        b2Vec2 p2 = p1 + rayLength * b2Vec2( factor * cosf(rayAngle * DEGRATORADIANS), sinf(rayAngle * DEGRATORADIANS));
+        std::cout << "Ray angle degr:" << rayAngle;
+        std::cout << " |    p2.x : " << p2.x << " p2 .y : " << p2.y << " \n ";
+        return p2;
+    }
+
+    b2Vec2 getImpulse(Direction direction, std::pair<float, float> impulse){
+        int factor = 1, factorAngle = 1;
+        if ( direction == LEFT){
+            factor = -1;
+        }
+        // este if solo para la bazooka porque hace mov parabolico el misil. para darle efecto parabolico cuando los angulos son negativos nada mas
+        if (rayAngle < 0.0f){
+            factorAngle = -1; // OK !
+        }
+        return b2Vec2(factor * impulse.first , impulse.second * factorAngle);
+    }
+};
+
+
+class Grenade : public GameObject {
+protected:
+    float mainDamage;
+    float maxRadio;
+    float restitution;
+    bool fixedRotation;
     float maxImpulseMagnitude = 2.0f;
 
     std::chrono::steady_clock::time_point startTime, time;
     std::chrono::duration<float> waitTime;
+    bool collided;
     bool exploded;
 
 public:
-    explicit Dynamite(int wait) : GameObject(ENTITY_DYNAMITE), waitTime(wait),
-                                    exploded(false) {}
+    explicit Grenade(int wait) : GameObject(ENTITY_GRENADE), waitTime(wait),
+                                    exploded(false), collided(false) {}
 
-    void addToTheWorld(b2World* aWorld, b2Vec2 position) {
-        startTime = std::chrono::steady_clock::now();
-        b2BodyDef dynamiteDef;
-        dynamiteDef.type = b2_dynamicBody;
-        dynamiteDef.fixedRotation = true;
-        dynamiteDef.position.Set(position.x, position.y );
-        dynamiteDef.userData.pointer = (uintptr_t) this;
-        this->body = aWorld->CreateBody(&dynamiteDef);
-        b2CircleShape dynamiteForm;
-        dynamiteForm.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
-        dynamiteForm.m_radius = 0.1f;
-
-        b2FixtureDef defFixDynamite;
-        defFixDynamite.shape = &dynamiteForm;
-        defFixDynamite.friction = 20.0f;
-        defFixDynamite.density = 1.0f; // ver el tema del aire luego.
-        this->body->CreateFixture(&defFixDynamite);
-    }
-
-    void passTime() {
-        time = std::chrono::steady_clock::now();
-
-        if (time - startTime >= waitTime && !exploded)
-            explode();
-    }
-
-    void explode() {
-        exploded = true;
-        body->ApplyLinearImpulse(b2Vec2(0.0f,0.03f),body->GetWorldCenter(),true); // para que se despegue y vuelva a chocar con la viga.
-    }
-
-    bool hasExploded() const {
-        return exploded;
-    }
-
-    b2AABB getAreaForSearch(const b2Vec2& positionDynamite) const {
+    b2AABB getAreaForSearch(const b2Vec2& positionMunition) const {
         b2AABB searchArea;
-        searchArea.lowerBound = positionDynamite - b2Vec2(maxRadio, maxRadio);
-        searchArea.upperBound = positionDynamite+ b2Vec2(maxRadio, maxRadio);
+        searchArea.lowerBound = positionMunition - b2Vec2(maxRadio, maxRadio);
+        searchArea.upperBound = positionMunition + b2Vec2(maxRadio, maxRadio);
         return searchArea;
     }
 
-    b2Vec2 getImpulseForWorm(const b2Vec2 &positionWorm, const b2Vec2 &positionDynamite, float distanceWormToDynamite) {
-        b2Vec2 impulseDirection = positionWorm - positionDynamite;
+    void addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impulseGrenade){
+
+        b2BodyDef grenadeDef;
+        grenadeDef.type = b2_dynamicBody;
+        grenadeDef.fixedRotation = fixedRotation;
+        grenadeDef.position.Set(positionOrigen.x, positionOrigen.y );
+        grenadeDef.userData.pointer = (uintptr_t) this;
+        this->body = aWorld->CreateBody(&grenadeDef);
+        b2CircleShape grenadeForm;
+        grenadeForm.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
+        grenadeForm.m_radius = 0.1f;
+
+        b2FixtureDef defFixGrenade;
+        defFixGrenade.shape = &grenadeForm;
+        defFixGrenade.density = 1.0f; // ver el tema del aire luego.
+        defFixGrenade.restitution = restitution;
+        this->body->CreateFixture(&defFixGrenade);
+        body->ApplyLinearImpulse( impulseGrenade, body->GetWorldCenter(), true);
+    }
+
+    b2Vec2 getImpulseForWorm(const b2Vec2 &positionWorm, const b2Vec2 &positionGrenade, float distanceWormToGrenade) {
+        b2Vec2 impulseDirection = positionWorm - positionGrenade;
         impulseDirection.Normalize();
-        std::cout << "distanceWormToMunition :" << distanceWormToDynamite << "\n";
-        float impulseMagnitude = maxImpulseMagnitude * std::max(0.0f, 1.0f - sqrt(distanceWormToDynamite) / maxRadio );
+        float impulseMagnitude = maxImpulseMagnitude * std::max(0.0f, 1.0f - sqrt(distanceWormToGrenade) / maxRadio );
         std::cout << "impulseMagnitude : " << impulseMagnitude;
         std::cout << " impulseDirection.x: " << impulseDirection.x << "impulseDirection.y" << impulseDirection.y << "\n ";
         b2Vec2 impulseWorm = impulseMagnitude * impulseDirection;
@@ -333,33 +444,187 @@ public:
         return impulseWorm;
     }
 
-    float getDamageForWorm(const float &wormDistance) const {
+    float getDamageForWorm(const float &wormDistance) {
         float damageForWorm = mainDamage * std::max(0.0f, 1.0f - sqrt(wormDistance) / maxRadio);
         return damageForWorm;
     }
 
+    void collide() {
+        if (!collided) {
+            collided = true;
+            startTime = std::chrono::steady_clock::now();
+        }
+    }
+
+    void passTime() {
+        if (collided) {
+            time = std::chrono::steady_clock::now();
+
+            if (time - startTime >= waitTime && !exploded)
+                explode();
+        }
+    }
+
+    void explode() {
+        exploded = true;
+        body->ApplyLinearImpulse(b2Vec2(0.0f,0.03f),body->GetWorldCenter(),true); // para que se despegue y vuelva a chocar con la viga.
+    }
+
+    bool hasExploded() const {
+        return exploded;
+    }
+
+    virtual void throwFragments(std::vector<std::unique_ptr<Grenade>>* grenades) {}
+
+    virtual ~Grenade() = default;
+
 };
 
-class DynamiteHolder {
-    std::vector<std::unique_ptr<Dynamite>> dynamites;
+class GrenadeFragment : public Grenade {
+public:
+    GrenadeFragment(float radio, float damage) : Grenade(0) {
+        maxRadio = radio;
+        mainDamage = damage;
+        fixedRotation = true;
+        restitution = 0.0f;
+    }
+
+    void throwFragments(std::vector<std::unique_ptr<Grenade>>* grenades) override {}
+
+    ~GrenadeFragment() override = default;
+};
+
+class GreenGrenade : public Grenade {
+public:
+    explicit GreenGrenade(int wait) : Grenade(wait) {
+        maxRadio = 2.0f;
+        mainDamage = 30.0f;
+        fixedRotation = true;
+        restitution = 0.0f;
+    }
+
+    void throwFragments(std::vector<std::unique_ptr<Grenade>>* grenades) override {}
+
+    ~GreenGrenade() override = default;
+};
+
+class RedGrenade : public Grenade {
+    std::vector<b2Vec2> fragmentImpulses;
+    std::vector<b2Vec2> fragmentPosOffset;
+public:
+    explicit RedGrenade(int wait) : Grenade(wait),
+    fragmentImpulses({b2Vec2(-0.1f,0.1f), b2Vec2(-0.137f,0.027f), b2Vec2(0.137f,0.027f),
+                      b2Vec2(0.1f,0.1f), b2Vec2(0.027f,0.137f), b2Vec2(-0.027f,0.137f)}) {
+        maxRadio = 2.0f;
+        mainDamage = 30.0f;
+        fixedRotation = true;
+        restitution = 0.0f;
+    }
+
+    void throwFragments(std::vector<std::unique_ptr<Grenade>>* grenades) override {
+        for (auto & impulse : fragmentImpulses) {
+            std::unique_ptr<Grenade> grenade{new GrenadeFragment(2.0f,10.0f)};
+            grenade->addToTheWorld(body->GetWorld(),
+                                   body->GetWorldCenter() + impulse, impulse);
+            grenades->push_back(std::move(grenade));
+        }
+    }
+
+    ~RedGrenade() override = default;
+};
+
+class Banana : public Grenade {
+public:
+    explicit Banana(int wait) : Grenade(wait) {
+        maxRadio = 4.0f;
+        mainDamage = 70.0f;
+        fixedRotation = false;
+        restitution = 0.9f;
+    }
+
+    void throwFragments(std::vector<std::unique_ptr<Grenade>>* grenades) override {}
+
+    ~Banana() override = default;
+};
+
+class SaintGrenade : public Grenade {
+public:
+    explicit SaintGrenade(int wait) : Grenade(wait) {
+        maxRadio = 8.0f;
+        mainDamage = 110.0f;
+        fixedRotation = true;
+        restitution = 0.0f;
+    }
+
+    void throwFragments(std::vector<std::unique_ptr<Grenade>>* grenades) override {}
+
+    ~SaintGrenade() override = default;
+};
+
+
+class GrenadeHolder {
+    std::pair<float, float> impulseWeapon; // impulse x, impulse y
+    WeaponSight weaponSight;
+    std::vector<std::unique_ptr<Grenade>> grenades;
 
 public:
-    DynamiteHolder() = default;
-
-    void placeDynamite(b2World *world, int wait, b2Vec2 pos) {
-        std::unique_ptr<Dynamite> dynamite{new Dynamite(wait)};
-        dynamite->addToTheWorld(world, pos);
-        dynamites.push_back(std::move(dynamite));
+    GrenadeHolder() : weaponSight(0.5f, 0.0) {
+        impulseWeapon.first = 0.1f;
+        impulseWeapon.second = 0.1f;
     }
 
-    std::vector<std::unique_ptr<Dynamite>>* getDynamites(){
-        return &dynamites;
+    void resetRayCast() {
+        weaponSight.resetRayCast();
     }
 
-};
+    void upMira() {
+        weaponSight.upMira();
+    }
 
-enum Direction{
-    RIGHT = 1, LEFT = 2
+    void downMira() {
+        weaponSight.downMira();
+    }
+
+    void throwGreenGrenade(b2World *world, int wait, b2Vec2 pos, Direction direction) {
+        b2Vec2 p2 = weaponSight.getPositionP2RayCast(world, pos, direction);
+        b2Vec2 impulse = weaponSight.getImpulse(direction, impulseWeapon);
+
+        std::unique_ptr<Grenade> grenade{new GreenGrenade(wait)};
+        grenade->addToTheWorld(world, p2, impulse);
+        grenades.push_back(std::move(grenade));
+    }
+
+    void throwRedGrenade(b2World *world, int wait, b2Vec2 pos, Direction direction) {
+        b2Vec2 p2 = weaponSight.getPositionP2RayCast(world, pos, direction);
+        b2Vec2 impulse = weaponSight.getImpulse(direction, impulseWeapon);
+
+        std::unique_ptr<Grenade> grenade{new RedGrenade(wait)};
+        grenade->addToTheWorld(world, p2, impulse);
+        grenades.push_back(std::move(grenade));
+    }
+
+    void throwBanana(b2World *world, int wait, b2Vec2 pos, Direction direction) {
+        b2Vec2 p2 = weaponSight.getPositionP2RayCast(world, pos, direction);
+        b2Vec2 impulse = weaponSight.getImpulse(direction, impulseWeapon);
+
+        std::unique_ptr<Grenade> grenade{new Banana(wait)};
+        grenade->addToTheWorld(world, p2, impulse);
+        grenades.push_back(std::move(grenade));
+    }
+
+    void throwSaintGrenade(b2World *world, int wait, b2Vec2 pos, Direction direction) {
+        b2Vec2 p2 = weaponSight.getPositionP2RayCast(world, pos, direction);
+        b2Vec2 impulse = weaponSight.getImpulse(direction, impulseWeapon);
+
+        std::unique_ptr<Grenade> grenade{new SaintGrenade(wait)};
+        grenade->addToTheWorld(world, p2, impulse);
+        grenades.push_back(std::move(grenade));
+    }
+
+    std::vector<std::unique_ptr<Grenade>>* getGrenades(){
+        return &grenades;
+    }
+
 };
 
 class Worm : public GameObject {
@@ -370,7 +635,7 @@ class Worm : public GameObject {
     float positionInitialX;
     float positionInitialY;
     b2World* world;
-    DynamiteHolder dynamiteHolder;
+    GrenadeHolder grenadeHolder;
     int waitTime;
 
 public:
@@ -380,7 +645,8 @@ public:
         directionLook = Direction::RIGHT;
         hp = 100.0f;
         dragSpeed = 0.2f;
-        waitTime = 5;
+        waitTime = 1;  // Supuesto: si el usuario no presiona nada el tiempo de espera
+                       // predeterminado es 1s.
     }
 
     void assignBonusLife() {
@@ -450,23 +716,40 @@ public:
 
     }
 
-    void placeDynamite(){
-        float posY = body->GetWorldCenter().y;
-        float posX = body->GetWorldCenter().x;
-        if (directionLook == LEFT)
-            posX -= 0.5f;
-        else
-            posX += 0.5f;
-        dynamiteHolder.placeDynamite(world,waitTime,b2Vec2(posX,posY));
-        waitTime = 5; // back to default
+    void upMira(){
+        grenadeHolder.upMira();
+    }
+
+    void downMira(){
+        grenadeHolder.downMira();
+    }
+
+    void throwGreenGrenade(){
+        grenadeHolder.throwGreenGrenade(world,waitTime,body->GetWorldCenter(),directionLook);
+        grenadeHolder.resetRayCast();
+    }
+
+    void throwRedGrenade(){
+        grenadeHolder.throwRedGrenade(world,waitTime,body->GetWorldCenter(),directionLook);
+        grenadeHolder.resetRayCast();
+    }
+
+    void throwBanana(){
+        grenadeHolder.throwBanana(world,waitTime,body->GetWorldCenter(),directionLook);
+        grenadeHolder.resetRayCast();
+    }
+
+    void throwSaintGrenade(){
+        grenadeHolder.throwSaintGrenade(world,waitTime,body->GetWorldCenter(),directionLook);
+        grenadeHolder.resetRayCast();
     }
 
     b2World* getWorld(){
         return world;
     }
 
-    std::vector<std::unique_ptr<Dynamite>>* getDynamites(){
-        return this->dynamiteHolder.getDynamites();
+    std::vector<std::unique_ptr<Grenade>>* getGrenades(){
+        return this->grenadeHolder.getGrenades();
     }
 
     void setWaitTime(int time) {
@@ -500,43 +783,65 @@ public:
     };
 };
 
-void dynamiteCollideWithBeam(GameObject* dynamite, GameObject* beam){
-    std::cout << "dynamiteCollideWithBeam\n";
-    b2Vec2 dynamitePosition = dynamite->getBody()->GetWorldCenter();
+void grenadeCollideWithBeam(GameObject* grenade, GameObject* beam){
+    std::cout << "grenadeCollideWithBeam\n";
+    b2Vec2 grenadePosition = grenade->getBody()->GetWorldCenter();
+    Beam *beamSelected = (Beam *) beam;
 
-    Dynamite* dynamiteSelect = (Dynamite*)  dynamite;
+    Grenade* grenadeSelect = (Grenade*)  grenade;
 
-    if (dynamiteSelect->hasExploded()) {
+    grenadeSelect->collide();
+    if (grenadeSelect->hasExploded()) {
         std::cout << "boom\n";
-        SaveWormsInAreaQueryTest savWormsinArea(
-                dynamitePosition);     // Función de devolución de llamada para la búsqueda
-        Beam *beamSelected = (Beam *) beam;
-        beamSelected->getWorld()->QueryAABB(&savWormsinArea, dynamiteSelect->getAreaForSearch(dynamitePosition));
+        SaveWormsInAreaQueryTest savWormsinArea(grenadePosition);     // Función de devolución de llamada para la búsqueda
+        beamSelected->getWorld()->QueryAABB(&savWormsinArea, grenadeSelect->getAreaForSearch(grenadePosition));
         for (auto &aElement: savWormsinArea.getWormsAndDistSquar()) {
             Worm *aWormToTakeDamage = (Worm *) (aElement.first);
-            b2Vec2 impulseForWorm = dynamiteSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(),
-                                                                      dynamitePosition, aElement.second);
-            float damageForWorm = dynamiteSelect->getDamageForWorm(aElement.second);
+            b2Vec2 impulseForWorm = grenadeSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(),
+                                                                      grenadePosition, aElement.second);
+            float damageForWorm = grenadeSelect->getDamageForWorm(aElement.second);
             aWormToTakeDamage->getBody()->ApplyLinearImpulse(impulseForWorm,
                                                              aWormToTakeDamage->getBody()->GetWorldCenter(), true);
             aWormToTakeDamage->takeDamage(damageForWorm);
         }
-        dynamiteSelect->destroyBody();
+        grenadeSelect->destroyBody();
     }
 }
 
-void beamCollidesWithDynamite(GameObject* beam, GameObject* dynamite){
-    std::cout << "beamCollidesWithDynamite\n";
-    dynamiteCollideWithBeam(dynamite, beam);
+void beamCollidesWithGrenade(GameObject* beam, GameObject* grenade){
+    std::cout << "beamCollidesWithGrenade\n";
+    grenadeCollideWithBeam(grenade, beam);
 }
 
 
-void dynamiteCollidesWithWorm(GameObject* dynamite, GameObject* worm){
-    std::cout << "dynamiteCollidesWithWorm\n";
+void grenadeCollidesWithWorm(GameObject* grenade, GameObject* worm){
+    std::cout << "grenadeCollidesWithWorm\n";
+    b2Vec2 grenadePosition = grenade->getBody()->GetWorldCenter();
+    Worm* wormSelect = (Worm*) worm;
+
+    Grenade* grenadeSelect = (Grenade*)  grenade;
+
+    grenadeSelect->collide();
+    if (grenadeSelect->hasExploded()) {
+        std::cout << "boom\n";
+        SaveWormsInAreaQueryTest savWormsinArea(grenadePosition);     // Función de devolución de llamada para la búsqueda
+        wormSelect->getWorld()->QueryAABB(&savWormsinArea, grenadeSelect->getAreaForSearch(grenadePosition));
+        for (auto &aElement: savWormsinArea.getWormsAndDistSquar()) {
+            Worm *aWormToTakeDamage = (Worm *) (aElement.first);
+            b2Vec2 impulseForWorm = grenadeSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(),
+                                                                     grenadePosition, aElement.second);
+            float damageForWorm = grenadeSelect->getDamageForWorm(aElement.second);
+            aWormToTakeDamage->getBody()->ApplyLinearImpulse(impulseForWorm,
+                                                             aWormToTakeDamage->getBody()->GetWorldCenter(), true);
+            aWormToTakeDamage->takeDamage(damageForWorm);
+        }
+        grenadeSelect->destroyBody();
+    }
 }
 
-void wormCollidesWithDynamite(GameObject* worm1, GameObject* missile){
-    std::cout << "wormCollidesWithDynamite\n";
+void wormCollidesWithGrenade(GameObject* worm1, GameObject* grenade){
+    std::cout << "wormCollidesWithGrenade\n";
+    grenadeCollidesWithWorm(grenade,worm1);
 }
 
 class MyContactListener : public b2ContactListener {
@@ -549,10 +854,10 @@ private:
 public:
     MyContactListener(b2World *world) {
         world->SetContactListener(this);
-        collisionsMap[std::make_pair(ENTITY_DYNAMITE, ENTITY_BEAM)] = &dynamiteCollideWithBeam;
-        collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_DYNAMITE )] = &beamCollidesWithDynamite;
-        collisionsMap[std::make_pair(ENTITY_DYNAMITE, ENTITY_WORM)] = &dynamiteCollidesWithWorm;
-        collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_DYNAMITE)] = &wormCollidesWithDynamite;
+        collisionsMap[std::make_pair(ENTITY_GRENADE, ENTITY_BEAM)] = &grenadeCollideWithBeam;
+        collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_GRENADE )] = &beamCollidesWithGrenade;
+        collisionsMap[std::make_pair(ENTITY_GRENADE, ENTITY_WORM)] = &grenadeCollidesWithWorm;
+        collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_GRENADE)] = &wormCollidesWithGrenade;
     }
 
     void BeginContact(b2Contact* contact) override{
@@ -590,8 +895,14 @@ public:
     }
 
     void Keyboard(int key) override{
-        if (key == GLFW_KEY_0){
-            vecWorms[0]->placeDynamite();
+        if (key == GLFW_KEY_8){
+            vecWorms[0]->throwGreenGrenade();
+        } else if (key == GLFW_KEY_9){
+            vecWorms[0]->throwRedGrenade();
+        } else if (key == GLFW_KEY_7){
+            vecWorms[0]->throwBanana();
+        } else if (key == GLFW_KEY_6){
+            vecWorms[0]->throwSaintGrenade();
         } else if (key == GLFW_KEY_1){
             vecWorms[0]->setWaitTime(1);
         } else if (key == GLFW_KEY_2){
@@ -606,20 +917,29 @@ public:
             vecWorms[0]->walk(RIGHT);
         } else if (key == GLFW_KEY_H ){
             vecWorms[0]->walk(LEFT);
+        } else if (key == GLFW_KEY_T){
+            vecWorms[0]->upMira();
+        } else if (key == GLFW_KEY_G){
+            vecWorms[0]->downMira();
         }
     }
 
     void update() {
-        std::vector<std::unique_ptr<Dynamite>>* dynamites = vecWorms[0]->getDynamites();
-        auto it = dynamites->begin();
-        while (it != dynamites->end()) {
+        std::vector<std::unique_ptr<Grenade>>* grenades = vecWorms[0]->getGrenades();
+        std::vector<std::unique_ptr<Grenade>> fragments;
+        auto it = grenades->begin();
+        while (it != grenades->end()) {
             if ((*it)->isDestroyedBody()) {
+                (*it)->throwFragments(&fragments);
                 m_world->DestroyBody((*it)->getBody()); // Destruimos el cuerpo
-                it = dynamites->erase(it);       // Eliminar el elemento del vector usando el iterador
+                it = grenades->erase(it);       // Eliminar el elemento del vector usando el iterador
             } else {
                 (*it)->passTime();
                 ++it;                 // Avanzar al siguiente elemento si no se elimina
             }
+        }
+        for (auto & fragment : fragments) {
+            grenades->push_back(std::move(fragment));
         }
     }
 
@@ -628,12 +948,6 @@ public:
         g_debugDraw.DrawString(5, m_textLine, "Keys: (d) dynamic, (s) static, (k) kinematic");
         m_textLine += m_textIncrement;
         if(vecWorms[0] != nullptr){
-            b2Vec2 posicion = vecWorms[0]->getBody()->GetWorldCenter();
-            b2Vec2 posicion2 = vecWorms[1]->getBody()->GetWorldCenter();
-            std::string dateGusano1 = "X: " + std::to_string(posicion.x)  + " Y: " + std::to_string(posicion.y) +" HP: " +  std::to_string(vecWorms[0]->getHp()) + " \n";
-            std::string dateGusano2 = "\nX: " + std::to_string(posicion2.x)  + " Y: " + std::to_string(posicion2.y) +" HP: " +  std::to_string(vecWorms[1]->getHp()) + " \n";
-            std::string textFinal =  "\n" + dateGusano1 + "\n" + dateGusano2 + "\n";
-            g_debugDraw.DrawString(5, m_textLine, textFinal.data());
             update();
         }
     }
