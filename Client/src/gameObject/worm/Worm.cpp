@@ -14,6 +14,23 @@ Worm::Worm(int id, int x, int y, const size_t &hpWorm, const Direction &directio
                                        m_animation(true) {
     m_flip = SDL_FLIP_NONE;
     m_animation.setProps(m_textureID, 14, 140);
+
+    if (m_moveWorm == MoveWorm::WALKING) {
+        m_width = 30;
+        m_height = 30;
+        m_animation.setProps("walk", 14, 54);
+    }
+    if (m_moveWorm == MoveWorm::JUMPING) {
+        m_width = 60;
+        m_height = 60;
+        m_animation.setProps("air", 36, 60);
+    }
+
+    if (m_moveWorm == MoveWorm::ATTACKING_WITH_BAT) {
+        m_width = 60;
+        m_height = 30;
+        m_animation.setProps("bat_hit", 15, 30);
+    }
 }
 
 void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
@@ -43,30 +60,10 @@ void Worm::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &
         m_flip = SDL_FLIP_HORIZONTAL;
     }
 
-    animationState();
     m_animation.update();
 
     if (m_typeFocus == TypeFocusWorm::FOCUS) {
         SDL2pp::Point point(m_x, m_y);
         camera.setTarget(point);
-    }
-}
-
-void Worm::animationState() {
-    if (m_moveWorm == MoveWorm::WALKING) {
-        m_width = 30;
-        m_height = 30;
-        m_animation.setProps("walk", 14, 54);
-    }
-    if (m_moveWorm == MoveWorm::JUMPING) {
-        m_width = 60;
-        m_height = 60;
-        m_animation.setProps("air", 36, 60);
-    }
-
-    if (m_moveWorm == MoveWorm::ATTACKING_WITH_BAT) {
-        m_width = 60;
-        m_height = 30;
-        m_animation.setProps("bat_hit", 15, 30);
     }
 }
