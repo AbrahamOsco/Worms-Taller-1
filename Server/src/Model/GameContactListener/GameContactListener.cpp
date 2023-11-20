@@ -178,8 +178,19 @@ void wormCollidesWithProvision(GameObject* worm, GameObject* provision, GamePara
     Worm* wormSelect = (Worm*) worm;
     provisionSelect->applyEffect(wormSelect);
     provisionSelect->destroyBody();
-
 }
+
+void provisionCollideWithProjectileBazooka(GameObject* provision, GameObject* projectileBazooka, GameParameters *gameParameters){
+    std::cout << "provisionCollideWithProjectileBazooka\n";
+    projectileBazooka->destroyBody();
+}
+
+
+void projectileBazookaCollidesWithProvision(GameObject* projectileBazooka, GameObject* provision, GameParameters *gameParameters){
+    std::cout << "projectileBazookaCollidesWithProvision\n";
+    provisionCollideWithProjectileBazooka(provision, projectileBazooka, gameParameters);
+}
+
 
 
 void provisionCollidesWithWorm(GameObject* provision, GameObject* worm, GameParameters* gameParameters){
@@ -214,6 +225,7 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
     collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_WORM)] = &edgeCollidesWithWorm;
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_WORM)] = &wormCollidesWithWorm;
 
+    // colision con la baooka projectile
     collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_WORM )] = &projectileBazookaCollidesWithWorm;
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_BAZOOKA_PROJECTILE)] = &wormCollidesWithProjectileBazooka;
     collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_BEAM)] = &projectileBazookaCollideWithBeam;
@@ -230,7 +242,8 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
     //Colisiones con las provisiones:
     collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_WORM)] = &provisionCollidesWithWorm;
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_PROVISION )] = &wormCollidesWithProvision;
-
+    collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_BAZOOKA_PROJECTILE)] = &provisionCollideWithProjectileBazooka;
+    collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_PROVISION )] = &projectileBazookaCollidesWithProvision;
 
 
     endContactMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM) ] = &beamEndContactWithWorm;

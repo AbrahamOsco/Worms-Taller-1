@@ -131,6 +131,8 @@ public:
     float getProvisionImpulseExplosionX() const;
 
     float getProvisionImpulseExplosionY() const;
+
+    int getMaxValueWind() const;
 };
 
 
