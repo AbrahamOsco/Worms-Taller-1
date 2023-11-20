@@ -6,12 +6,13 @@
 #define WORMS_TALLER_1_WORMRANGEDWEAPON_H
 
 #include "Worm.h"
+#include "../crosshair/Crosshair.h"
 
 class WormRangedWeapon : public Worm {
     TypeWeapon m_weaponCurrent;
+    Crosshair m_crossHair;
     int m_xCrossHair;
     int m_yCrossHair;
-    TypeSight m_typeSight;
 public:
     WormRangedWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
                      const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, int xCrossHair, int yCrossHair,

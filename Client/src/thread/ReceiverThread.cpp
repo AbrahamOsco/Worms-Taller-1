@@ -113,11 +113,6 @@ void ReceiverThread::run() {
                         std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, gameState, typeResult,turnDto.getTextTurn(),
                                                    turnDto.getTimeLeft()));
 
-                std::unique_ptr<Crosshair> crosshair = std::make_unique<Crosshair>(
-                        static_cast<int>(weaponSightDto.getPositionXSight()),
-                        static_cast<int>(weaponSightDto.getPositionYSight()), weaponSightDto.getTypeSight());
-                gameObjects.push_back(std::move(crosshair));
-
                 std::vector<ProvisionDTO> provisions = snapShot.getVecProvisionDto();
                 for (const ProvisionDTO &provisionDto: provisions) {
                     gameObjects.push_back(std::make_unique<Provision>(static_cast<int>(provisionDto.getPositionX()), static_cast<int>(provisionDto.getPositionY()), provisionDto.getTypeEffect()));

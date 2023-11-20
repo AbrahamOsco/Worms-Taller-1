@@ -10,7 +10,7 @@ WormRangedWeapon::WormRangedWeapon(int id, int x, int y, const size_t &hpWorm, c
                                    const TypeSight &typeSight) : Worm(id, x, y, hpWorm, direction, focus, moveWorm),
                                                                  m_weaponCurrent(weaponCurrent),
                                                                  m_xCrossHair(xCrossHair), m_yCrossHair(yCrossHair),
-                                                                 m_typeSight(typeSight) {
+                                                                 m_crossHair(xCrossHair, yCrossHair, typeSight) {
     if (m_weaponCurrent == TypeWeapon::BAZOOKA) {
         m_width = 30;
         m_height = 30;
@@ -22,6 +22,9 @@ WormRangedWeapon::WormRangedWeapon(int id, int x, int y, const size_t &hpWorm, c
 
 void WormRangedWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     Worm::draw(renderer, textureManager, camera);
+
+    m_crossHair.draw(renderer, textureManager, camera);
+
     int frameCount = 30;
     int angle = calculateAngle(m_x, m_y, m_directionLook);
     angle = std::max(-90, std::min(90, angle));
@@ -37,6 +40,7 @@ void WormRangedWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureM
 void WormRangedWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera,
                               SoundManager &soundManager) {
     Worm::update(input, queue, camera, soundManager);
+    m_crossHair.update(input, queue, camera,soundManager);
 }
 
 int WormRangedWeapon::calculateAngle(int x, int y, Direction direction) const {
