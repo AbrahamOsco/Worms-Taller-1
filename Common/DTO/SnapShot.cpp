@@ -39,7 +39,7 @@ void SnapShot::setWeaponsDto(const WeaponsDTO &weaponsDto) {
     this->weaponsDTO = weaponsDto;
 }
 
-const WeaponSightDTO &SnapShot::getWeaponSightDto() const {
+WeaponSightDTO SnapShot::getWeaponSightDto() const {
     return weaponSightDTO;
 }
 

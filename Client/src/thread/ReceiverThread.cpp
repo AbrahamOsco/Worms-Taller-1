@@ -23,10 +23,12 @@ void ReceiverThread::run() {
     while (m_running) {
         try {
             std::vector<std::unique_ptr<GameObject>> gameObjects;
+
             SnapShot snapShot = m_protocol.recvSnapShot();
             std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
             WeaponSightDTO weaponSightDto = snapShot.getWeaponSightDto();
             ProjectilesDTO projectilesDto = snapShot.getProjectilesDto();
+            WeaponsDTO weaponsDto = snapShot.getWeaponsDto();
             TurnDTO turnDto = snapShot.getTurnDto();
 
             bool isMyTurn = false;
@@ -45,7 +47,6 @@ void ReceiverThread::run() {
 
 
             WeaponInventory weaponInventory;
-            WeaponsDTO weaponsDto = snapShot.getWeaponsDto();
             std::vector<WeaponDTO> weapons = weaponsDto.getWeapons();
 
             for (const WormDTO &wormDto: wormsDto) {

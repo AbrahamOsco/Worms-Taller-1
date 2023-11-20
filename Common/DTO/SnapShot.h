@@ -49,7 +49,7 @@ public:
 
     void setWeaponsDto(const WeaponsDTO &weaponsDto);
 
-    const WeaponSightDTO &getWeaponSightDto() const;
+    WeaponSightDTO getWeaponSightDto() const;
 
     void setWeaponSightDto(const WeaponSightDTO &weaponSightDto);
 
