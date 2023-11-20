@@ -2,6 +2,8 @@
 // Created by riclui on 31/10/23.
 //
 
+#include <SDL_mixer.h>
+#include <SDL2pp/Chunk.hh>
 #include "Game.h"
 #include "../core/Engine.h"
 #include "../../../Common/Queue/Queue.h"
@@ -32,9 +34,21 @@ void Game::run() {
     senderThread.start();
 
     SDL2pp::SDL sdl(SDL_INIT_VIDEO);
+
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        std::cerr << "Error al inicializar SDL_mixer: " << Mix_GetError() << std::endl;
+        return;
+    }
+
     SDL2pp::SDLTTF ttf;
     Engine engine(m_beams, bQueue, nbQueue, m_running);
     engine.init();
+
+    SDL2pp::Chunk soundChunk("../Client/resources/sounds/BackgroundMusic.mp3");
+    if (!soundChunk.Get()) {
+        std::cerr << "Error al cargar el sonido: " << Mix_GetError() << std::endl;
+    }
+    Mix_PlayChannel(-1, soundChunk.Get(), 0);
 
     RateController frameRate(19);  // el start esta encapsulado en el constructor. OJO @ricardo
     while (engine.running()) {

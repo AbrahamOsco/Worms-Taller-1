@@ -4,7 +4,7 @@ project(Worms-Taller-1)
 
 # set up SDL2DelRuso library
 set(SDL2PP_WITH_IMAGE YES)
-set(SDL2PP_WITH_TTF YES)
+set(SDL2PP_WITH_MIXER YES)
 set(SDL2PP_WITH_TTF YES)
 
 add_subdirectory(Client/libs/SDL2pp)
