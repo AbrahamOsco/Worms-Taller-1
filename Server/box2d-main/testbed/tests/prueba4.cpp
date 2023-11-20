@@ -319,7 +319,7 @@ class AirAttackDetonator {
     std::vector<float> offsets;
 
 public:
-    AirAttackDetonator() : offsets({-0.5f,0.5f,-1.5f,1.5f,-2.5f,2.5f}){}
+    AirAttackDetonator() : offsets({-0.5f,0.5f,-1.5f,1.5f,-2.5f,2.5f}) {}
 
     void detonate(b2World *world, float posXAttack, float posYAttack) {
         for (auto & offset : offsets) {
