@@ -13,6 +13,7 @@
 #include "../gameObject/worm/WormMeleeWeapon.h"
 #include "../gameObject/worm/WormGuidedWeapon.h"
 #include "../gameObject/gameState/PlayerState.h"
+#include "../gameObject/provision/Provision.h"
 
 ReceiverThread::ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::unique_ptr<GameObject>>> &queue,
                                std::atomic<bool> &running)
@@ -116,10 +117,17 @@ void ReceiverThread::run() {
                         static_cast<int>(weaponSightDto.getPositionXSight()),
                         static_cast<int>(weaponSightDto.getPositionYSight()), weaponSightDto.getTypeSight());
                 gameObjects.push_back(std::move(crosshair));
+
+                std::vector<ProvisionDTO> provisions = snapShot.getVecProvisionDto();
+                for (const ProvisionDTO &provisionDto: provisions) {
+                    std::cout << '(' << static_cast<int>(provisionDto.getPositionX()) << ',' << static_cast<int>(provisionDto.getPositionY()) << ')' << std::endl;
+                    gameObjects.push_back(std::make_unique<Provision>(static_cast<int>(provisionDto.getPositionX()), static_cast<int>(provisionDto.getPositionY()), provisionDto.getTypeEffect()));
+                }
+
+
             } else {
                 GameState gameState = snapShot.getTypeSnapShot();
                 TypeResult typeResult = snapShot.getEndGameDto().getTypeResult();
-                std::cout << gameState << ',' << typeResult << std::endl;
                 std::unique_ptr<PlayerState> playerState = std::make_unique<PlayerState>(gameState, typeResult);
                 gameObjects.push_back(std::move(playerState));
             }
