@@ -9,18 +9,20 @@
 #include "../../../GameParameters/GameParameters.h"
 #include "box2d/box2d.h"
 #include "../GameObject/GameObject.h"
+#include "../../../../Common/DTO/DTO.h"
+#include "../../../../Common/DTO/ProjectileDTO.h"
 
 class ProjectileBazooka : public GameObject {
 private:
-
     float mainDamage;
     float radio;
     float maxImpulseExplosion;
     const GameParameters& gameParameters;
     b2World* aWorld;
+    TypeFocus typeFocus;
 public:
 
-    explicit ProjectileBazooka(const GameParameters &gameParameters);
+    explicit ProjectileBazooka(const GameParameters &gameParameters, const TypeFocus& typeFocus);
 
     b2AABB getAreaForSearch(const b2Vec2& positionMunition) const;
 
@@ -30,8 +32,9 @@ public:
 
     float getDamageForWorm(const float &wormDistanceSquared);
 
-
     b2World *getWorld();
+
+    ProjectileDTO getProjectilDTO();
 };
 
 

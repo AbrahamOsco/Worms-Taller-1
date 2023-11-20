@@ -8,9 +8,6 @@
 enum Direction{
     RIGHT = 1, LEFT = 2, DOWN = 3, UP = 4
 };
-enum TypeFocusWorm{
-    FOCUS = 1, NO_FOCUS = 2
-};
 enum MoveWorm{
     STANDING = 1, WALKING = 2, JUMPING = 3, ATTACKING_WITH_BAT = 4
 };
@@ -23,13 +20,13 @@ private:
     size_t hpWorm;
     Direction directionLook;
     MoveWorm moveWorm;
-    TypeFocusWorm typeFocus;
+    TypeFocus typeFocus;
     TypeWeapon weaponCurrent;
 public:
     WormDTO();
 
     WormDTO(const size_t& positionX, const size_t& positionY, const size_t& idPlayer, const size_t& hpWorm, const Direction& aDirection,
-            const TypeFocusWorm& aTypeFocus, const MoveWorm& aMoveWorm, const TypeWeapon& weaponCurrent);
+            const TypeFocus& aTypeFocus, const MoveWorm& aMoveWorm, const TypeWeapon& weaponCurrent);
 
     size_t getIdWorm() const;
 
@@ -41,7 +38,7 @@ public:
 
     Direction getDirectionLook() const;
 
-    TypeFocusWorm getTypeFocus() const;
+    TypeFocus getTypeFocus() const;
 
     MoveWorm getMoveWorm() const;
 
@@ -58,7 +55,7 @@ public:
 
     void setDirectionLook(const Direction &directionLook);
 
-    void setTypeFocus(const TypeFocusWorm &typeFocus);
+    void setTypeFocus(const TypeFocus &typeFocus);
 
     void setMoveWorm(const MoveWorm &moveWorm);
 

@@ -19,9 +19,12 @@ private:
     TypeProjectil typeProjectil;
     size_t positionX;
     size_t positionY;
-
+    TypeFocus typeFocus;
 public:
-    ProjectileDTO(const TypeProjectil& typeProjectil, const size_t& positionX, const size_t& positionY);
+    ProjectileDTO();
+
+    ProjectileDTO(const TypeProjectil &typeProjectil, const size_t &positionX, const size_t &positionY,
+                  const TypeFocus &typeFocus);
 
     TypeProjectil getTypeProjectil() const;
 
@@ -35,6 +38,7 @@ public:
 
     void setPositionY(const size_t &positionY);
 
+    TypeFocus getTypeFocus() const;
 };
 
 

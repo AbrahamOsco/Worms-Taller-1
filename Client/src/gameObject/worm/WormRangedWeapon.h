@@ -14,7 +14,7 @@ class WormRangedWeapon : public Worm {
     int m_xCrossHair;
     int m_yCrossHair;
 public:
-    WormRangedWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
+    WormRangedWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocus &focus,
                      const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, int xCrossHair, int yCrossHair,
                      const TypeSight &typeSight);
 

@@ -4,10 +4,14 @@
 
 #include "ProjectileDTO.h"
 
-ProjectileDTO::ProjectileDTO(const TypeProjectil &typeProjectil, const size_t &positionX, const size_t &positionY) :
-                DTO(PROJECTILE_DTO), typeProjectil(typeProjectil), positionX(positionX), positionY(positionY){
+ProjectileDTO::ProjectileDTO() : DTO(PROJECTILE_DTO) {
+
 }
 
+ProjectileDTO::ProjectileDTO(const TypeProjectil &typeProjectil, const size_t &positionX, const size_t &positionY,
+                             const TypeFocus &typeFocus) :
+                DTO(PROJECTILE_DTO), typeProjectil(typeProjectil), positionX(positionX), positionY(positionY), typeFocus(typeFocus){
+}
 
 TypeProjectil ProjectileDTO::getTypeProjectil() const {
     return typeProjectil;
@@ -32,4 +36,9 @@ size_t ProjectileDTO::getPositionY() const {
 void ProjectileDTO::setPositionY(const size_t &positionY) {
     this->positionY = positionY;
 }
+
+TypeFocus ProjectileDTO::getTypeFocus() const {
+    return typeFocus;
+}
+
 

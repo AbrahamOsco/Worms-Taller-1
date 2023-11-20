@@ -75,7 +75,7 @@ void wormCollidesWithWorm(GameObject* worm1, GameObject* worm2, GameParameters *
 }
 
 void projectileBazookaCollidesWithWorm(GameObject* projectileBazooka, GameObject* worm, GameParameters *gameParameters){
-    std::cout << "munitionBazookaCollidesWithWorm\n";
+    std::cout << "projectileBazookaCollidesWithWorm\n";
     if(projectileBazooka == nullptr or worm == nullptr) return;
     b2Vec2 projectilePosition = projectileBazooka->getBody()->GetWorldCenter();
 
@@ -98,9 +98,8 @@ void wormCollidesWithProjectileBazooka(GameObject* worm1, GameObject* projectile
 }
 
 void projectileBazookaCollideWithBeam(GameObject* projectileBazooka, GameObject* beam, GameParameters *gameParameters){
-    std::cout << "munitionBazookaCollideWithBeam\n";
+    std::cout << "projectileBazookaCollideWithBeam\n";
     b2Vec2 projectilePosition = projectileBazooka->getBody()->GetWorldCenter();
-
     ProjectileBazooka* projectilSelect = (ProjectileBazooka*)  projectileBazooka;
     SaveWormsInAreaQuery saveWormsinArea(projectilePosition);     // Función de devolución de llamada para la búsqueda
 
@@ -117,6 +116,7 @@ void projectileBazookaCollideWithBeam(GameObject* projectileBazooka, GameObject*
 }
 
 void beamCollidesWithMunitionBazooka(GameObject* beam, GameObject* munitionBazooka, GameParameters *gameParameters){
+    std::cout << "beamCollidesWithMunitionBazooka\n";
     projectileBazookaCollideWithBeam(munitionBazooka, beam, gameParameters);
 }
 
