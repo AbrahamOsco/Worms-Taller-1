@@ -254,6 +254,7 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_INI_JOIN_GAME) {
     std::vector<char> buffer;
     ResolverInitialDTO dto;
     size_t offset = 0;
+    uint16_t word;
     dto.setOperationType(RESPONSE_INITIAL_JOIN_GAME);
     std::vector<RoomDTO> games;
     std::vector<std::string> names;
@@ -278,7 +279,26 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_INI_JOIN_GAME) {
     ASSERT_TRUE(games.size() == buffer[offset]);
     offset++;
     for (size_t i = 0; i < games.size(); i++) {
-        ASSERT_TRUE(true);
+        ASSERT_TRUE(ROOM_GAME == buffer[offset]);
+        offset++;
+        memcpy(&word, buffer.data()+offset, 2);
+        word = ntohs(word);
+        ASSERT_TRUE(names[i].size() == word);
+        offset = offset + 2;
+        std::string aux1(buffer.data()+offset, word);
+        ASSERT_TRUE(names[i] == aux1);
+        offset = offset + word;
+        memcpy(&word, buffer.data()+offset, 2);
+        word = ntohs(word);
+        ASSERT_TRUE(scenarios[i].size() == word);
+        offset = offset + 2;
+        std::string aux2(buffer.data()+offset, word);
+        ASSERT_TRUE(scenarios[i] == aux2);
+        offset = offset + word;
+        ASSERT_TRUE(currentPlayers[i] == buffer[offset]);
+        offset++;
+        ASSERT_TRUE(maxPlayers[i] == buffer[offset]);
+        offset++;
     }
 }
 int main(int argc, char* argv[]) {
