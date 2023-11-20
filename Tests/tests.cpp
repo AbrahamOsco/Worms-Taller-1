@@ -311,6 +311,40 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_FIN_JOIN_GAME) {
     ASSERT_TRUE(RESPONSE_FINAL_JOIN_GAME == buffer[0]);
     ASSERT_EQ(1, buffer[1]);
 }
+TEST(TEST_PROTOCOL_SERVER_SEND, sendStage) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    std::vector<BeamDTO> beams;
+    beams.push_back(BeamDTO(SHORT_BEAM, 23, 74, 29, 63, 70));
+    StageDTO dto(beams);
+    dto.setIdPlayer(15);
+    protocol.sendStage(dto);
+    buffer = skt.getBuffer();
+    ASSERT_TRUE(STAGE == buffer[offset]);
+    offset++;
+    ASSERT_EQ(1, buffer[offset]);
+    offset++;
+    ASSERT_EQ(BEAM, buffer[offset]);
+    offset++;
+    ASSERT_EQ(SHORT_BEAM, buffer[offset]);
+    offset++;
+    memcpy(&word, buffer.data()+offset, 2);
+    word = ntohs(word);
+    ASSERT_EQ(23, word);
+    offset = offset + 2;
+    memcpy(&word, buffer.data()+offset, 2);
+    word = ntohs(word);
+    ASSERT_EQ(74, word);
+    offset = offset + 2;
+    ASSERT_EQ(70, buffer[offset]);
+    offset++;
+    ASSERT_EQ(29, buffer[offset]);
+    offset++;
+    ASSERT_EQ(63, buffer[offset]);
+}
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 
