@@ -35,7 +35,7 @@ void Crosshair::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Cam
         }
 
         if (input.getKeyDown(SDL_SCANCODE_SPACE)) {
-            std::cout << "disparo" << std::endl;
+            //std::cout << "disparo" << std::endl;
             std::unique_ptr<Command> command(new FireCmd());
             queue.move_push(std::move(command));
         }

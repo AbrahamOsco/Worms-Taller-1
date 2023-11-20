@@ -28,15 +28,6 @@ void GameInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, 
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
     textureManager.drawText(m_currentTurn, 200, m_y, fontPath, fontSize, textColor, renderer);
     textureManager.drawText("Time: " + std::to_string(m_time), 750, m_y, fontPath, fontSize, textColor, renderer);
-
-    if (m_gameState == GameState::GAME_END) {
-        if (m_typeResult == TypeResult::WON_THE_GAME) {
-            textureManager.draw("victory", 100, 100, 1876, 1208, renderer);
-        } else {
-            textureManager.draw("defect", 100, 100, 1800, 1142, renderer);
-        }
-    }
-
 }
 
 void GameInfo::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {

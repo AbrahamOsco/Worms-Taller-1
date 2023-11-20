@@ -48,7 +48,7 @@ void Game::run() {
     if (!soundChunk.Get()) {
         std::cerr << "Error al cargar el sonido: " << Mix_GetError() << std::endl;
     }
-    Mix_PlayChannel(-1, soundChunk.Get(), 0);
+    //Mix_PlayChannel(-1, soundChunk.Get(), 0);
 
     RateController frameRate(19);  // el start esta encapsulado en el constructor. OJO @ricardo
     while (engine.running()) {
