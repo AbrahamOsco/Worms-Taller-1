@@ -7,6 +7,7 @@
 
 
 #include "../GameObject.h"
+#include "../../soundManager/SoundManager.h"
 
 class PlayerState : public GameObject {
     GameState m_gameState;
@@ -16,7 +17,8 @@ public:
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 
-    void update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) override {}
+    void
+    update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera, SoundManager &soundManager) override {}
 };
 
 

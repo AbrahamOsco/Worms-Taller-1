@@ -26,8 +26,9 @@ void WormMeleeWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureMa
     m_animation.draw(xCorrection, yCorrection, m_width, m_height, renderer, textureManager, m_flip);
 }
 
-void WormMeleeWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
-    Worm::update(input, queue, camera);
+void WormMeleeWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera,
+                             SoundManager &soundManager) {
+    Worm::update(input, queue, camera, soundManager);
     if (input.getKeyDown(SDL_SCANCODE_SPACE)) {
         std::unique_ptr<Command> command(new FireCmd());
         queue.move_push(std::move(command));

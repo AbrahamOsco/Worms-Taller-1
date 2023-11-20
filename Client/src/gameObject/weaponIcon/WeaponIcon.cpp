@@ -6,6 +6,7 @@
 #include "../../command/SelectTeleportCmd.h"
 #include "../../command/SelectBatCmd.h"
 #include "../../command/SelectBazookaCmd.h"
+#include "../../soundManager/SoundManager.h"
 
 WeaponIcon::WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon, bool isMyTurn)
         : GameObject(LoaderParams(0, 0, 50, 55, " ")),
@@ -70,7 +71,8 @@ int WeaponIcon::getHeight() {
     return m_height;
 }
 
-void WeaponIcon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
+void
+WeaponIcon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera, SoundManager &soundManager) {
     if (m_isMyTurn) {
         if (input.isMouseLeftButtonDown()) {
             SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);

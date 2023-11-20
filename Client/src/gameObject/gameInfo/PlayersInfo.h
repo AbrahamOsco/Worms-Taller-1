@@ -7,6 +7,7 @@
 
 
 #include "PlayerInfo.h"
+#include "../../soundManager/SoundManager.h"
 
 class PlayersInfo : public GameObject {
 private:
@@ -16,7 +17,8 @@ public:
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 
-    void update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) override {}
+    void
+    update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera, SoundManager &soundManager) override {}
 
     void addPlayer(PlayerInfo &player);
 

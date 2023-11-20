@@ -4,6 +4,7 @@
 
 #include "WormGuidedWeapon.h"
 #include "../../command/TeleportCmd.h"
+#include "../../soundManager/SoundManager.h"
 
 WormGuidedWeapon::WormGuidedWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction,
                                    const TypeFocusWorm &focus, const MoveWorm &moveWorm,
@@ -27,8 +28,9 @@ void WormGuidedWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureM
     m_animation.draw(xCorrection, yCorrection, m_width, m_height, renderer, textureManager, m_flip);
 }
 
-void WormGuidedWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
-    Worm::update(input, queue, camera);
+void WormGuidedWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera,
+                              SoundManager &soundManager) {
+    Worm::update(input, queue, camera, soundManager);
     if (input.isMouseRightButtonDown()) {
         SDL2pp::Point point(input.getMouseX(), input.getMouseY());
         SDL2pp::Point newPoint = point + camera.getPosition();

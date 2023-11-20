@@ -19,7 +19,8 @@ public:
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 
-    void update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) override;
+    void
+    update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera, SoundManager &soundManager) override;
 
     void setParams(int x, int y);
 

@@ -34,8 +34,9 @@ void WormRangedWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureM
                              renderer, m_flip);
 }
 
-void WormRangedWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) {
-    Worm::update(input, queue, camera);
+void WormRangedWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera,
+                              SoundManager &soundManager) {
+    Worm::update(input, queue, camera, soundManager);
 }
 
 int WormRangedWeapon::calculateAngle(int x, int y, Direction direction) const {

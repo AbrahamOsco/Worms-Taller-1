@@ -10,6 +10,7 @@
 #include "../loaderParams/LoaderParams.h"
 #include "../command/Command.h"
 #include "../../../Common/Queue/Queue.h"
+#include "../soundManager/SoundManager.h"
 
 class GameObject : public IObject {
 protected:
@@ -25,7 +26,8 @@ public:
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override = 0;
 
-    void update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera) override = 0;
+    void
+    update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera, SoundManager &soundManager) override = 0;
 };
 
 

@@ -44,12 +44,6 @@ void Game::run() {
     Engine engine(m_beams, bQueue, nbQueue, m_running);
     engine.init();
 
-    /*SDL2pp::Chunk soundChunk("../Client/resources/sounds/BackgroundMusic.mp3");
-    if (!soundChunk.Get()) {
-        std::cerr << "Error al cargar el sonido: " << Mix_GetError() << std::endl;
-    }
-    Mix_PlayChannel(-1, soundChunk.Get(), 0);*/
-
     RateController frameRate(19);  // el start esta encapsulado en el constructor. OJO @ricardo
     while (engine.running()) {
         engine.events();
