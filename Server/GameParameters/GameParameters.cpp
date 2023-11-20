@@ -25,7 +25,16 @@ GameParameters::GameParameters() {
 
     parameters["TIME_FOR_TURN"] = nodeInitial["TIME_FOR_TURN"].as<float>();
     parameters["TIME_EXTRA_AFTER_ATTACK"] = nodeInitial["TIME_EXTRA_AFTER_ATTACK"].as<float>();
-    parameters["POSITION_Y_TO_INVOKE_BOXES"] = nodeInitial["POSITION_Y_TO_INVOKE_BOXES"].as<float>();
+
+
+    parameters["PROVISION_POSITION_Y_TO_INVOKE"] = nodeInitial["PROVISION_POSITION_Y_TO_INVOKE"].as<float>();
+    parameters["PROVISION_HALF_HEIGHT"] = nodeInitial["PROVISION_HALF_HEIGHT"].as<float>();
+    parameters["PROVISION_EXTRA_HP"] = nodeInitial["PROVISION_EXTRA_HP"].as<float>();
+    parameters["PROVISION_EXTRA_MUNITION"] = nodeInitial["PROVISION_EXTRA_MUNITION"].as<float>();
+    parameters["PROVISION_DAMAGE_EXPLOSION"] = nodeInitial["PROVISION_DAMAGE_EXPLOSION"].as<float>();
+    parameters["PROVISION_IMPULSE_EXPLOSION"] = nodeInitial["PROVISION_IMPULSE_EXPLOSION"].as<float>();
+
+
 
     parameters["WORM_DISTANCEX_FORWARD_JUMP"] = nodeInitial["WORM_DISTANCEX_FORWARD_JUMP"].as<float>();
     parameters["WORM_DISTANCEY_FORWARD_JUMP"] = nodeInitial["WORM_DISTANCEY_FORWARD_JUMP"].as<float>();
@@ -70,8 +79,30 @@ GameParameters::GameParameters() {
     parameters["BAZOOKA_RAY_LENGTH"] = nodeInitial["BAZOOKA_RAY_LENGTH"].as<float>();
 }
 
+float GameParameters::getProvisionHalfHeight() const{
+    return this->parameters.at("PROVISION_HALF_HEIGHT");
+}
+
+float GameParameters::getProvisionExtraHP() const{
+    return this->parameters.at("PROVISION_EXTRA_HP");
+}
+
+float GameParameters::getProvisionExtraMunition() const{
+    return this->parameters.at("PROVISION_EXTRA_MUNITION");
+}
+
+float GameParameters::getProvisionDamageExplosion() const{
+    return this->parameters.at("PROVISION_DAMAGE_EXPLOSION");
+}
+
+float GameParameters::getProvisionImpulseExplosion() const{
+    return this->parameters.at("PROVISION_IMPULSE_EXPLOSION");
+}
+
+
+
 float GameParameters::getPositionYForBoxes() const{
-    return this->parameters.at("POSITION_Y_TO_INVOKE_BOXES");
+    return this->parameters.at("PROVISION_POSITION_Y_TO_INVOKE");
 }
 
 //WORM_RESISTANCE_TO_HEIGHT

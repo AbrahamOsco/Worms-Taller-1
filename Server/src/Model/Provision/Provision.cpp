@@ -19,7 +19,7 @@ void Provision::addToTheWorld(b2World *world) {
     this->body = world->CreateBody(&boxProvDef);
 
     b2PolygonShape boxShape;
-    boxShape.SetAsBox(0.25, 0.25f);
+    boxShape.SetAsBox(gameParameters.getProvisionHalfHeight(), gameParameters.getProvisionHalfHeight());
     b2FixtureDef boxDefFixture;
     boxDefFixture.shape = &boxShape;
     boxDefFixture.friction = 1.0f;
@@ -36,15 +36,15 @@ ProvisionDTO Provision::getProvisionDTO() const {
 
 void Provision::applyEffect(Worm *wormSelect) {
     if(typeEffect == MEDICAL_KIT){
-        wormSelect->giveExtraHP(25.0f);
+        wormSelect->giveExtraHP(gameParameters.getProvisionExtraHP());
     } else if (typeEffect == MUNITIONS){
-        wormSelect->giveExtraMunition(10);
+        wormSelect->giveExtraMunition(gameParameters.getProvisionExtraMunition());
     } else if ( typeEffect == EXPLOSION){
         b2Vec2 directionExplosion = this->getBody()->GetWorldCenter() - wormSelect->getBody()->GetWorldCenter();
         directionExplosion.Normalize();
-        float impulseExplosion = 0.5f;
+        float impulseExplosion = gameParameters.getProvisionImpulseExplosion();
         wormSelect->getBody()->ApplyLinearImpulse(impulseExplosion * directionExplosion, wormSelect->getBody()->GetWorldCenter(), true);
-        float damageExplosion = 15.0f;
+        float damageExplosion = gameParameters.getProvisionDamageExplosion();
         wormSelect->takeDamage(damageExplosion);
         this->destroyBody();
     }

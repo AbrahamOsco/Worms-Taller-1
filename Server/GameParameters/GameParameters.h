@@ -119,6 +119,16 @@ public:
     int getTimeExtraAfterAttack() const;
 
     float getPositionYForBoxes() const;
+
+    float getProvisionHalfHeight() const;
+
+    float getProvisionExtraHP() const;
+
+    float getProvisionExtraMunition() const;
+
+    float getProvisionDamageExplosion() const;
+
+    float getProvisionImpulseExplosion() const;
 };
 
 
