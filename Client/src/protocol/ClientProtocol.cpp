@@ -173,7 +173,7 @@ SnapShot ClientProtocol::recvSnapShot() {
         throw ClosedServer();
     }
     if (operationType == SNAP_SHOT){
-        TypeSnapShot typeSnapShot = static_cast<TypeSnapShot>(recvANumberByte());
+        GameState typeSnapShot = static_cast<GameState>(recvANumberByte());
         if(typeSnapShot == GAME_PROGRESS){
             size_t numbersWorms = recvANumberByte();
             for(size_t i = 0; i < numbersWorms; i++){

@@ -5,7 +5,6 @@
 #include "ReceiverThread.h"
 #include "../gameObject/worm/Worm.h"
 #include "../gameObject/gameInfo/GameInfo.h"
-#include "../utils/Constants.h"
 #include "../gameObject/crosshair/Crosshair.h"
 #include "../gameObject/projectile/Projectile.h"
 #include "../exception/ClosedServer.h"
@@ -102,9 +101,13 @@ void ReceiverThread::run() {
                 playersInfo.addPlayer(playerInfo);
             }
 
+            GameState gameState = snapShot.getTypeSnapShot();
+            TypeResult typeResult = snapShot.getEndGameDto().getTypeResult();
+
             WindInfo wind(static_cast<int>(snapShot.getTurnDto().getValueWind()), snapShot.getTurnDto().getTypeWind());
+
             gameObjects.push_back(
-                    std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, turnDto.getTextTurn(),
+                    std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, gameState, typeResult,turnDto.getTextTurn(),
                                                turnDto.getTimeLeft()));
 
             std::unique_ptr<Crosshair> crosshair = std::make_unique<Crosshair>(

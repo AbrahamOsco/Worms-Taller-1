@@ -63,7 +63,7 @@ void SnapShot::setTurnDto(const TurnDTO &turnDto) {
     this->turnDto = turnDto;
 }
 
-TypeSnapShot SnapShot::getTypeSnapShot() const {
+GameState SnapShot::getTypeSnapShot() const {
     return typeSnapShot;
 }
 

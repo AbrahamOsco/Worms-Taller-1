@@ -23,7 +23,7 @@ public:
 
     void
     draw(const std::string &id, int x, int y, int width, int height, SDL2pp::Renderer &renderer,
-         SDL_RendererFlip flip);
+         SDL_RendererFlip flip = SDL_FLIP_NONE);
 
     void drawFrame(const std::string &id, int x, int y, int width, int height, int currentRow, int currentCol,
                    SDL2pp::Renderer &renderer, SDL_RendererFlip flip);

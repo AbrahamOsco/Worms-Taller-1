@@ -20,8 +20,11 @@ private:
     std::string m_currentTurn;
     int m_time;
     bool m_isMyTurn;
+    GameState m_gameState;
+    TypeResult m_typeResult;
+
 public:
-    GameInfo(PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind,
+    GameInfo(PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind, GameState &gameState, TypeResult &typeResult,
              const std::string &currentTurn, int time);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;

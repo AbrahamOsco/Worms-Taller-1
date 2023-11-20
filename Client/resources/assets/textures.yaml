@@ -135,3 +135,7 @@ textures:
     source: "../Client/resources/assets/bullets/Mortar.png"
   - name: bazooka_init
     source: "../Client/resources/assets/worms/wbazlnk.png"
+  - name: victory
+    source: "../Client/resources/screens/victory.png"
+  - name: defeat
+    source: "../Client/resources/screens/defeat.png"

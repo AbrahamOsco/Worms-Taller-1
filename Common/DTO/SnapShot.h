@@ -15,14 +15,14 @@
 #include "TurnDTO.h"
 #include "EndGameDTO.h"
 
-enum TypeSnapShot{
+enum GameState{
     GAME_PROGRESS, GAME_END
 };
 
 
 class SnapShot : public DTO {
 private:
-    TypeSnapShot typeSnapShot;
+    GameState typeSnapShot;
     std::vector<WormDTO> wormsDTO;
     PlayersDTO playersDTO;
     WeaponsDTO weaponsDTO;
@@ -61,7 +61,7 @@ public:
 
     void setTurnDto(const TurnDTO &turnDto);
 
-    TypeSnapShot getTypeSnapShot() const;
+    GameState getTypeSnapShot() const;
 
     EndGameDTO getEndGameDto() const;
 };
