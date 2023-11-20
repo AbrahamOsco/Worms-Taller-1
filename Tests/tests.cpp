@@ -345,6 +345,9 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendStage) {
     offset++;
     ASSERT_EQ(63, buffer[offset]);
 }
+TEST(TEST_PROTOCOL_SERVER_SEND, sendPlayersDTO) {
+
+}
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 
