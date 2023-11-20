@@ -33,22 +33,4 @@ void GameInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, 
 void
 GameInfo::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera, SoundManager &soundManager) {
     m_weaponInventory.update(input, queue, camera, soundManager);
-    if (m_isMyTurn) {
-        //m_weaponInventory.update(dt, input, queue, camera);
-        if (input.getKeyDown(SDL_SCANCODE_RIGHT)) {
-            std::unique_ptr<Command> command(new RightCmd());
-            queue.move_push(std::move(command));
-        } else if (input.getKeyDown(SDL_SCANCODE_LEFT)) {
-            std::unique_ptr<Command> command(new LeftCmd());
-            queue.move_push(std::move(command));
-        } else if (input.getKeyDown(SDL_SCANCODE_RETURN)) {
-            soundManager.playEffect("jump");
-            std::unique_ptr<Command> command(new JumpForwardCmd());
-            queue.move_push(std::move(command));
-        } else if (input.getKeyDown(SDL_SCANCODE_BACKSPACE)) {
-            soundManager.playEffect("jump");
-            std::unique_ptr<Command> command(new JumpBackwardCmd());
-            queue.move_push(std::move(command));
-        }
-    }
 }
