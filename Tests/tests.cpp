@@ -301,6 +301,16 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_INI_JOIN_GAME) {
         offset++;
     }
 }
+TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_FIN_JOIN_GAME) {
+    Socket skt;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    ResolverInitialDTO dto(RESPONSE_FINAL_JOIN_GAME, 1);
+    protocol.sendResolverInitialDTO(dto);
+    buffer = skt.getBuffer();
+    ASSERT_TRUE(RESPONSE_FINAL_JOIN_GAME == buffer[0]);
+    ASSERT_EQ(1, buffer[1]);
+}
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 
