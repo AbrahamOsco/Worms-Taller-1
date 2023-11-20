@@ -6,8 +6,20 @@
 #include "../../command/FireCmd.h"
 
 WormMeleeWeapon::WormMeleeWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction,
-                                 const TypeFocusWorm &focus, const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, bool isMyTurn) : Worm(id, x, y, hpWorm, direction,
-                                                                                              focus, moveWorm, isMyTurn), m_weaponCurrent(weaponCurrent) {
+                                 const TypeFocusWorm &focus, const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent,
+                                 int xCrossHair, int yCrossHair, const TypeSight &typeSight, bool isMyTurn) : Worm(id,
+                                                                                                                   x, y,
+                                                                                                                   hpWorm,
+                                                                                                                   direction,
+                                                                                                                   focus,
+                                                                                                                   moveWorm,
+                                                                                                                   isMyTurn),
+                                                                                                              m_weaponCurrent(
+                                                                                                                      weaponCurrent),
+                                                                                                              m_crossHair(
+                                                                                                                      xCrossHair,
+                                                                                                                      yCrossHair,
+                                                                                                                      typeSight) {
     if (m_weaponCurrent == TypeWeapon::BASEBALL_BAT) {
         m_width = 40;
         m_height = 30;
@@ -20,6 +32,9 @@ WormMeleeWeapon::WormMeleeWeapon(int id, int x, int y, const size_t &hpWorm, con
 
 void WormMeleeWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     Worm::draw(renderer, textureManager, camera);
+
+    m_crossHair.draw(renderer, textureManager, camera);
+
     int xCorrection = m_x - m_width / 2 - camera.getPosition().GetX();
     int yCorrection = m_y - m_height / 2 - camera.getPosition().GetY();
 
@@ -29,6 +44,8 @@ void WormMeleeWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureMa
 void WormMeleeWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera,
                              SoundManager &soundManager) {
     Worm::update(input, queue, camera, soundManager);
+    m_crossHair.update(input, queue, camera,soundManager);
+
     if (input.getKeyDown(SDL_SCANCODE_SPACE)) {
         std::unique_ptr<Command> command(new FireCmd());
         queue.move_push(std::move(command));
