@@ -35,6 +35,7 @@ void Turns::addProvisionToWorld(){
     }
     float posXRandom = (float)  ((rand() % 17) +8); // numero random entre  0 y 16 -> +8 -> 8 y 24m
     provisionBoxes.push_back(std::make_unique<Provision>(posXRandom, gameParameters.getPositionYForBoxes(), typeEffect, gameParameters));
+    std::cout << "Se lanza provision en: " << posXRandom << ", " << gameParameters.getPositionYForBoxes() << " ) \n";
     provisionBoxes.back()->addToTheWorld(world);
 }
 
@@ -60,10 +61,15 @@ void Turns::subtractTime() {
         timeLeft -=1;
     }
 }
+
 void Turns::cleanProvisionsDestroyed(){
     provisionBoxes.erase(std::remove_if(provisionBoxes.begin(), provisionBoxes.end(),
-        []( const std::unique_ptr<Provision>& aProvison) {
-        return aProvison->isDestroyedBody();
+        [this]( std::unique_ptr<Provision>& aProvison) {
+        if(aProvison->isDestroyedBody()){
+            world->DestroyBody(aProvison->getBody());
+            return true;
+        }
+        return false;
     }) ,provisionBoxes.end());
 
 }
@@ -93,7 +99,6 @@ TurnDTO Turns::getTurnDTO() const {
 
 std::vector<ProvisionDTO> Turns::getVecProvisionDTO() {
     std::vector<ProvisionDTO> vecProvisions;
-
     for(auto& aProvision : provisionBoxes ){
         if(not aProvision->isDestroyedBody()){
             vecProvisions.push_back(aProvision->getProvisionDTO());

@@ -7,7 +7,8 @@
 ProvisionDTO::ProvisionDTO() : DTO(PROVISION_DTO) {
 }
 
-ProvisionDTO::ProvisionDTO(const size_t &positionX, const size_t &positionY, const TypeEffect &typeEffect) : DTO(PROVISION_DTO) {
+ProvisionDTO::ProvisionDTO(const size_t &positionX, const size_t &positionY, const TypeEffect &typeEffect) : DTO(PROVISION_DTO),
+    positionX(positionX), positionY(positionY), typeEffect(typeEffect) {
 
 }
 

@@ -128,7 +128,9 @@ public:
 
     float getProvisionDamageExplosion() const;
 
-    float getProvisionImpulseExplosion() const;
+    float getProvisionImpulseExplosionX() const;
+
+    float getProvisionImpulseExplosionY() const;
 };
 
 

@@ -177,6 +177,8 @@ void wormCollidesWithProvision(GameObject* worm, GameObject* provision, GamePara
     Provision* provisionSelect = (Provision*) provision;
     Worm* wormSelect = (Worm*) worm;
     provisionSelect->applyEffect(wormSelect);
+    provisionSelect->destroyBody();
+
 }
 
 
@@ -226,8 +228,8 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
 
 
     //Colisiones con las provisiones:
-    collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_WORM)] = &projectileBazookaCollidesWithWater;
-    collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_PROVISION )] = &waterCollidesWithProjectileBazooka;
+    collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_WORM)] = &provisionCollidesWithWorm;
+    collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_PROVISION )] = &wormCollidesWithProvision;
 
 
 

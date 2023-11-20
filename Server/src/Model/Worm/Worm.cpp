@@ -423,3 +423,7 @@ void Worm::giveExtraHP(const float &extraHP) {
 void Worm::giveExtraMunition(const size_t &extraMunition) {
     this->armament.giveExtraMunition(extraMunition);
 }
+
+Direction Worm::getDirection() {
+    return this->directionLook;
+}
