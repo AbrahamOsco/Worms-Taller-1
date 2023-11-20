@@ -571,13 +571,13 @@ public:
 };
 
 
-class Prueba4 : public Test{
+class Prueba5 : public Test{
 public:
     std::unique_ptr<Stage>  stage;
     std::vector<std::unique_ptr<Worm>> vecWorms;
     std::unique_ptr<MyContactListener> myContactListener;
 
-    Prueba4() {
+    Prueba5() {
          // Todo variable q esta aca dentro y queramos que perdure debemos usar el heap .
         stage = std::unique_ptr<Stage>{new Stage("Jaula Maldita")};
         stage->addToTheWorld(m_world);
@@ -639,10 +639,10 @@ public:
     }
 
     static Test* Create(){
-        return new Prueba4;
+        return new Prueba5;
     }
 
-    ~Prueba4() override = default;
+    ~Prueba5() override = default;
 };
 
-static int testIndex = RegisterTest("Examples", "Prueba 4", Prueba4::Create);
+static int testIndex = RegisterTest("Examples", "Prueba 5", Prueba5::Create);
