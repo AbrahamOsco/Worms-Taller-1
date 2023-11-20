@@ -78,11 +78,12 @@ void Worm::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &
         } else if (input.getKeyDown(SDL_SCANCODE_LEFT)) {
             std::unique_ptr<Command> command(new LeftCmd());
             queue.move_push(std::move(command));
-        } else if (input.getKeyDown(SDL_SCANCODE_RETURN)) {
+        } else if (input.getKeyDown(SDL_SCANCODE_RETURN) && m_moveWorm == MoveWorm::STANDING) {
+            std::cout << "salta:" << m_id << std::endl;
             soundManager.playEffect("jump");
             std::unique_ptr<Command> command(new JumpForwardCmd());
             queue.move_push(std::move(command));
-        } else if (input.getKeyDown(SDL_SCANCODE_BACKSPACE)) {
+        } else if (input.getKeyDown(SDL_SCANCODE_BACKSPACE) && m_moveWorm == MoveWorm::STANDING) {
             soundManager.playEffect("jump");
             std::unique_ptr<Command> command(new JumpBackwardCmd());
             queue.move_push(std::move(command));
