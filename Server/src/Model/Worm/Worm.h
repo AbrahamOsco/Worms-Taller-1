@@ -139,6 +139,8 @@ public:
     void giveExtraHP(const float &extraHP);
 
     void giveExtraMunition(const size_t &extraMunition);
+
+    Direction getDirection();
 };
 
 

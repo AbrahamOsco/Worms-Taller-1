@@ -32,7 +32,8 @@ GameParameters::GameParameters() {
     parameters["PROVISION_EXTRA_HP"] = nodeInitial["PROVISION_EXTRA_HP"].as<float>();
     parameters["PROVISION_EXTRA_MUNITION"] = nodeInitial["PROVISION_EXTRA_MUNITION"].as<float>();
     parameters["PROVISION_DAMAGE_EXPLOSION"] = nodeInitial["PROVISION_DAMAGE_EXPLOSION"].as<float>();
-    parameters["PROVISION_IMPULSE_EXPLOSION"] = nodeInitial["PROVISION_IMPULSE_EXPLOSION"].as<float>();
+    parameters["PROVISION_IMPULSE_EXPLOSION_X"] = nodeInitial["PROVISION_IMPULSE_EXPLOSION_X"].as<float>();
+    parameters["PROVISION_IMPULSE_EXPLOSION_Y"] = nodeInitial["PROVISION_IMPULSE_EXPLOSION_Y"].as<float>();
 
 
 
@@ -95,10 +96,13 @@ float GameParameters::getProvisionDamageExplosion() const{
     return this->parameters.at("PROVISION_DAMAGE_EXPLOSION");
 }
 
-float GameParameters::getProvisionImpulseExplosion() const{
-    return this->parameters.at("PROVISION_IMPULSE_EXPLOSION");
+float GameParameters::getProvisionImpulseExplosionX() const{
+    return this->parameters.at("PROVISION_IMPULSE_EXPLOSION_X");
 }
 
+float GameParameters::getProvisionImpulseExplosionY() const{
+    return this->parameters.at("PROVISION_IMPULSE_EXPLOSION_Y");
+}
 
 
 float GameParameters::getPositionYForBoxes() const{

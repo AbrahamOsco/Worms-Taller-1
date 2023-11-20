@@ -2,6 +2,7 @@
 // Created by abraham on 19/11/23.
 //
 
+#include <iostream>
 #include "Provision.h"
 #include "../Worm/Worm.h"
 
@@ -12,7 +13,7 @@ Provision::Provision(const float &positionX, const float &positionY, const TypeE
 
 void Provision::addToTheWorld(b2World *world) {
     b2BodyDef boxProvDef;
-    boxProvDef.type = b2_staticBody;
+    boxProvDef.type = b2_dynamicBody;
     boxProvDef.fixedRotation = true;
     boxProvDef.position.Set(position.first, position.second);
     boxProvDef.userData.pointer = (uintptr_t) this;
@@ -37,16 +38,21 @@ ProvisionDTO Provision::getProvisionDTO() const {
 void Provision::applyEffect(Worm *wormSelect) {
     if(typeEffect == MEDICAL_KIT){
         wormSelect->giveExtraHP(gameParameters.getProvisionExtraHP());
+        std::cout << "Worm  with giveExtraHP\n";
     } else if (typeEffect == MUNITIONS){
         wormSelect->giveExtraMunition(gameParameters.getProvisionExtraMunition());
+        std::cout << "Worm  with giveExtraMunition\n";
     } else if ( typeEffect == EXPLOSION){
-        b2Vec2 directionExplosion = this->getBody()->GetWorldCenter() - wormSelect->getBody()->GetWorldCenter();
-        directionExplosion.Normalize();
-        float impulseExplosion = gameParameters.getProvisionImpulseExplosion();
-        wormSelect->getBody()->ApplyLinearImpulse(impulseExplosion * directionExplosion, wormSelect->getBody()->GetWorldCenter(), true);
+        b2Vec2 impulseExplosion(gameParameters.getProvisionImpulseExplosionX(), gameParameters.getProvisionImpulseExplosionY());
+        if(wormSelect->getDirection() == RIGHT){
+            impulseExplosion.x *=(-1);
+        }
+        wormSelect->getBody()->ApplyLinearImpulse( impulseExplosion, wormSelect->getBody()->GetWorldCenter(), true);
         float damageExplosion = gameParameters.getProvisionDamageExplosion();
         wormSelect->takeDamage(damageExplosion);
-        this->destroyBody();
+        std::cout << "Worm  with explosion\n";
     }
+    // destroyed the provision
+    this->destroyBody();
 }
 
