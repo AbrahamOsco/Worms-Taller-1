@@ -57,7 +57,7 @@ void ReceiverThread::run() {
                         std::unique_ptr<WormNoWeapon> worm = std::make_unique<WormNoWeapon>(static_cast<int>(wormDto.getIdPlayer()),
                                                                                             static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
                                                                                             wormDto.getHpWorm(),
-                                                                                            wormDto.getDirectionLook(), wormDto.getTypeFocus(), wormDto.getMoveWorm());
+                                                                                            wormDto.getDirectionLook(), wormDto.getTypeFocus(), wormDto.getMoveWorm(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
                     } else if (wormDto.getWeaponCurrent() == TypeWeapon::BAZOOKA) {
                         std::unique_ptr<WormRangedWeapon> worm = std::make_unique<WormRangedWeapon>(static_cast<int>(wormDto.getIdPlayer()),
@@ -65,21 +65,21 @@ void ReceiverThread::run() {
                                                                                                     wormDto.getHpWorm(),
                                                                                                     wormDto.getDirectionLook(), wormDto.getTypeFocus(),
                                                                                                     wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), weaponSightDto.getPositionXSight(),
-                                                                                                    weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight());
+                                                                                                    weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
                     } else if (wormDto.getWeaponCurrent() == TypeWeapon::BASEBALL_BAT) {
                         std::unique_ptr<WormMeleeWeapon> worm = std::make_unique<WormMeleeWeapon>(static_cast<int>(wormDto.getIdPlayer()),
                                                                                                   static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
                                                                                                   wormDto.getHpWorm(),
                                                                                                   wormDto.getDirectionLook(), wormDto.getTypeFocus(),
-                                                                                                  wormDto.getMoveWorm(), wormDto.getWeaponCurrent());
+                                                                                                  wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
                     } else if (wormDto.getWeaponCurrent() == TypeWeapon::TELEPORT) {
                         std::unique_ptr<WormGuidedWeapon> worm = std::make_unique<WormGuidedWeapon>(static_cast<int>(wormDto.getIdPlayer()),
                                                                                                     static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
                                                                                                     wormDto.getHpWorm(),
                                                                                                     wormDto.getDirectionLook(), wormDto.getTypeFocus(),
-                                                                                                    wormDto.getMoveWorm(), wormDto.getWeaponCurrent());
+                                                                                                    wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
                     }
 

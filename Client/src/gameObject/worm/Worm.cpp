@@ -9,9 +9,9 @@
 #include "../../utils/ColorDefinitions.h"
 
 Worm::Worm(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
-           const MoveWorm &moveWorm) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_id(id), m_hpWorm(hpWorm),
+           const MoveWorm &moveWorm, bool isMyTurn) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_id(id), m_hpWorm(hpWorm),
                                        m_directionLook(direction), m_typeFocus(focus), m_moveWorm(moveWorm),
-                                       m_animation(true) {
+                                       m_animation(true), m_isMyTurn(isMyTurn) {
     m_flip = SDL_FLIP_NONE;
     m_animation.setProps(m_textureID, 14, 140);
 

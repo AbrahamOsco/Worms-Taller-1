@@ -5,7 +5,7 @@
 #include "WormNoWeapon.h"
 
 WormNoWeapon::WormNoWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
-                           const MoveWorm &moveWorm) : Worm(id, x, y, hpWorm, direction, focus, moveWorm) {
+                           const MoveWorm &moveWorm, bool isMyTurn) : Worm(id, x, y, hpWorm, direction, focus, moveWorm, isMyTurn) {
 
 }
 

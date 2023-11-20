@@ -6,8 +6,8 @@
 #include "../../command/FireCmd.h"
 
 WormMeleeWeapon::WormMeleeWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction,
-                                 const TypeFocusWorm &focus, const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent) : Worm(id, x, y, hpWorm, direction,
-                                                                                              focus, moveWorm), m_weaponCurrent(weaponCurrent) {
+                                 const TypeFocusWorm &focus, const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, bool isMyTurn) : Worm(id, x, y, hpWorm, direction,
+                                                                                              focus, moveWorm, isMyTurn), m_weaponCurrent(weaponCurrent) {
     if (m_weaponCurrent == TypeWeapon::BASEBALL_BAT) {
         m_width = 40;
         m_height = 30;

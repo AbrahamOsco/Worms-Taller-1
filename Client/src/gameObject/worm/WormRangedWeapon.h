@@ -16,7 +16,7 @@ class WormRangedWeapon : public Worm {
 public:
     WormRangedWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
                      const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, int xCrossHair, int yCrossHair,
-                     const TypeSight &typeSight);
+                     const TypeSight &typeSight, bool isMyTurn);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 

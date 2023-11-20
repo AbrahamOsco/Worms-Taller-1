@@ -20,9 +20,10 @@ protected:
     MoveWorm m_moveWorm;
     TypeFocusWorm m_typeFocus;
     SpriteAnimation m_animation;
+    bool m_isMyTurn;
 
 public:
-    explicit Worm(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus, const MoveWorm &moveWorm);
+    explicit Worm(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus, const MoveWorm &moveWorm, bool isMyTurn);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 

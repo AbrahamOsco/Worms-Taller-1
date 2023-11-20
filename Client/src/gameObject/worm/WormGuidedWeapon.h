@@ -14,7 +14,7 @@ private:
 
 public:
     WormGuidedWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocusWorm &focus,
-                     const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent);
+                     const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, bool isMyTurn);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 
