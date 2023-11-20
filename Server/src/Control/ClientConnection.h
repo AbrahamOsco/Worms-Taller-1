@@ -20,6 +20,7 @@
 #include "../../../Common/DTO/ProjectilesDTO.h"
 #include "../../../Common/DTO/TurnDTO.h"
 #include "../../../Common/DTO/EndGameDTO.h"
+#include "../../../Common/DTO/ProvisionDTO.h"
 
 class ClientConnection {
 private:
@@ -48,7 +49,7 @@ public:
 
     void pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, const PlayersDTO &playersDTO,
                       const std::vector<WeaponsDTO> &vecWeaponsDTO, const WeaponSightDTO &weaponSightDTO,
-                      const ProjectilesDTO &projectilesDTO, TurnDTO turnDTO);
+                      const ProjectilesDTO &projectilesDTO, TurnDTO turnDTO, const std::vector<ProvisionDTO> &vecProvisionDTO);
 
     void pushEndGame(const std::vector<EndGameDTO> &vecEndGameDTO);
 };

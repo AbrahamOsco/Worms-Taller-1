@@ -81,7 +81,8 @@ void ClientConnection::stop() {
 
 void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, const PlayersDTO &playersDTO,
                                     const std::vector<WeaponsDTO> &vecWeaponsDTO, const WeaponSightDTO &weaponSightDTO,
-                                    const ProjectilesDTO &projectilesDTO, TurnDTO turnDTO) {
+                                    const ProjectilesDTO &projectilesDTO, TurnDTO turnDTO,
+                                    const std::vector<ProvisionDTO> &vecProvisionDTO) {
     //aca en cada client connectio nago el unicast.
     WeaponsDTO selectWeaponsDTO;
     for(auto& aWeaponsDTO : vecWeaponsDTO){
@@ -93,7 +94,7 @@ void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, con
     if(turnDTO.getIdPlayerCurrent() == this->idPlayer){
         turnDTO.setTextTurn("Es tu turno");
     }
-    std::unique_ptr<SnapShot> aSnapShot = std::make_unique<SnapShot>(vecWormsDTO, playersDTO, selectWeaponsDTO, weaponSightDTO, projectilesDTO, turnDTO);
+    std::unique_ptr<SnapShot> aSnapShot = std::make_unique<SnapShot>(vecWormsDTO, playersDTO, selectWeaponsDTO, weaponSightDTO, projectilesDTO, turnDTO, vecProvisionDTO);
     this->snapShotQueueB->move_push(std::move(aSnapShot));
 }
 

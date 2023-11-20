@@ -58,6 +58,8 @@ public:
     bool weaponStandByLaunchesProjectiles();
 
     void assignWindValue(const float &aWindValue);
+
+    void giveExtraMunition(const size_t &extraMunition);
 };
 
 

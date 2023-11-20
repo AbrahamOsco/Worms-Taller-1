@@ -63,6 +63,8 @@ public:
     void sendTurnDTO(const TurnDTO &aTurnDTO);
 
     void sendEndGameDTO(const EndGameDTO &endGameDto);
+
+    void sendAProvisionDTO(const ProvisionDTO &provisionDto);
 };
 
 

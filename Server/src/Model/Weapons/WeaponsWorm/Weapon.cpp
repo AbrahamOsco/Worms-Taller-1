@@ -75,4 +75,10 @@ void Weapon::assignWindValue(const float &aWindValue) {
     this->windValue = aWindValue;
 }
 
+void Weapon::giveExtraMunition(const size_t &extraMunition) {
+    if(munition + extraMunition <= 200){
+        munition +=extraMunition;
+    }
+}
+
 

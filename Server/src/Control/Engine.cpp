@@ -53,30 +53,32 @@ void Engine::run() {
         TimeTurn timeTurn;  // en el constructor ya arranca el turn.
         while (keepTalking) {
             if(model.onlyOnePlayerExits()){
-                keepTalking = false;
                 break;
             }
             stepWorldAndExecuteCommand();
             pushUpdatesAndUpdateModel(timeTurn, frameRate);
         }
     } catch (std::exception &e) {
-        std::cerr << "[Engine] Excpecion del tipo : :"  <<e.what() << "\n";
-        this->connections.stop(); //[Por ahora lo comento no quiero cerrar todo quiero debgauar luego descomentar esto.
+        std::cerr << "[Engine] Excpecion  :"  <<e.what() << "\n";
+        this->connections.stop();
         return;
     }
-    // obtenemos el ultimo DTO para enviar.
-    connections.pushVecEndGame(model.getVecEndGameDTO()); // en un futuro cambiarle el nombre si no se pushea mas a lastPusshSnaShop
-    /*
-    std::unique_ptr<CommandDTO> aCommanDTO;
-    if(commandsQueueNB.move_try_pop(aCommanDTO)){
+    executeLastCommand();
+}
 
-        if(aCommanDTO->getOperationType() == CLOSE_GAME){
-            this->connections.stop();
-            std::cerr<< "Felicidades Se cerro el game de forma exitosa !!! \n";
+void Engine::executeLastCommand(){
+    RateController frameRate(20);// el start esta encapsulado en el constructor. OJO @
+    connections.pushVecEndGame(model.getVecEndGameDTO()); // en un futuro cambiarle el nombre si no se pushea mas a lastPusshSnaShop
+    while(keepTalking){
+        std::unique_ptr<CommandDTO> aCommanDTO;
+        if(commandsQueueNB.move_try_pop(aCommanDTO)){
+            if(aCommanDTO->getTypeCommand() == CLOSE_GAME){
+                this->connections.stop();
+                keepTalking = false;
+                std::cerr<< "Felicidades Se cerro el game de forma exitosa !!! \n";
+            }
         }
     }
-    */
-    this->connections.stop();
 }
 
 void Engine::stepWorldAndExecuteCommand() {
@@ -90,7 +92,9 @@ void Engine::stepWorldAndExecuteCommand() {
 }
 
 void Engine::pushUpdatesAndUpdateModel(TimeTurn& timeTurn, RateController& frameRate){
-    connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(), model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO());
+    connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
+                             model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO(),
+                             model.getVecProvisionDTO());
     if (timeTurn.hasItBeenASecond()) {
         model.subtractTime();
         timeTurn.updateTime();

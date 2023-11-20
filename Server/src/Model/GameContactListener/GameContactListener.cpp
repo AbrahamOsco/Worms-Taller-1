@@ -7,6 +7,7 @@
 #include "../Worm/Worm.h"
 #include "../QueriesToWorld/SaveWormsInAreaQuery.h"
 #include "../Scenario/Beam/Beam.h"
+#include "../Provision/Provision.h"
 
 // Clase de colisiones el listener:
 void wormCollidesWithBeam(GameObject* worm, GameObject* beam, GameParameters *gameParameters){
@@ -171,6 +172,21 @@ void waterCollidesWithProjectileBazooka(GameObject* water, GameObject* projectil
     projectileBazookaCollidesWithWater(projectileBazooka, water, gameParameters);
 }
 
+void wormCollidesWithProvision(GameObject* worm, GameObject* provision, GameParameters* gameParameters){
+    std::cout << "wormCollidesWithProvision\n";
+    Provision* provisionSelect = (Provision*) provision;
+    Worm* wormSelect = (Worm*) worm;
+    provisionSelect->applyEffect(wormSelect);
+}
+
+
+void provisionCollidesWithWorm(GameObject* provision, GameObject* worm, GameParameters* gameParameters){
+    std::cout << "provisionCollidesWithWorm\n";
+    wormCollidesWithProvision(worm, provision, gameParameters);
+}
+
+
+
 void wormEndContactWithEdge(GameObject* worm, GameObject* edge, GameParameters *gameParameters){
     std::cout << "wormEndContactWithEdge\n";
     Worm* wormSelect = (Worm*) worm;
@@ -181,6 +197,9 @@ void edgeEndContactWithWorm(GameObject* edge, GameObject* worm, GameParameters *
     std::cout << "edgeEndContactWithWorm\n";
     wormEndContactWithEdge(worm, edge, gameParameters);
 }
+
+
+
 
 GameContactListener::GameContactListener(b2World *world, GameParameters *gameParameters) {
     world->SetContactListener(this);
@@ -204,6 +223,11 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
 
     collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_WATER)] = &projectileBazookaCollidesWithWater;
     collisionsMap[std::make_pair(ENTITY_WATER, ENTITY_BAZOOKA_PROJECTILE )] = &waterCollidesWithProjectileBazooka;
+
+
+    //Colisiones con las provisiones:
+    collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_WORM)] = &projectileBazookaCollidesWithWater;
+    collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_PROVISION )] = &waterCollidesWithProjectileBazooka;
 
 
 

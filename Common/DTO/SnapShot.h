@@ -14,11 +14,11 @@
 #include "ProjectilesDTO.h"
 #include "TurnDTO.h"
 #include "EndGameDTO.h"
+#include "ProvisionDTO.h"
 
 enum GameState{
     GAME_PROGRESS, GAME_END
 };
-
 
 class SnapShot : public DTO {
 private:
@@ -30,12 +30,13 @@ private:
     ProjectilesDTO projectilesDTO;
     TurnDTO turnDto;
     EndGameDTO endGameDTO;
+    std::vector<ProvisionDTO> vecProvisionDTO;
 public:
 
     explicit SnapShot(const EndGameDTO& endGameDTO);
 
     explicit SnapShot(const std::vector<WormDTO>& wormsDTO, const PlayersDTO &aPlayersDTO, const WeaponsDTO& weaponsDTO,
-                      const WeaponSightDTO &weaponSightDTO, const ProjectilesDTO &projectilesDTO, const TurnDTO& turnDto );
+                      const WeaponSightDTO &weaponSightDTO, const ProjectilesDTO &projectilesDTO, const TurnDTO& turnDto, const std::vector<ProvisionDTO> &vecProvisionDTO );
 
     void setWormsDTO(const std::vector<WormDTO>& wormsDTO);
 
@@ -64,6 +65,9 @@ public:
     GameState getTypeSnapShot() const;
 
     EndGameDTO getEndGameDto() const;
+
+    std::vector<ProvisionDTO> getVecProvisionDto() const;
+
 };
 
 

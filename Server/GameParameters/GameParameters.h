@@ -117,6 +117,8 @@ public:
     int getTimeForTurn() const;
 
     int getTimeExtraAfterAttack() const;
+
+    float getPositionYForBoxes() const;
 };
 
 

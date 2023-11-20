@@ -55,6 +55,8 @@ public:
     TurnDTO recvTurnDTO();
 
     EndGameDTO recvEndGameDTO();
+
+    ProvisionDTO recvAProvisionDTO();
 };
 
 
