@@ -7,6 +7,7 @@
 #include "../../command/SelectBatCmd.h"
 #include "../../command/SelectBazookaCmd.h"
 #include "../../soundManager/SoundManager.h"
+#include "../../command/SelectAirAttackCmd.h"
 
 WeaponIcon::WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon, bool isMyTurn)
         : GameObject(LoaderParams(0, 0, 50, 55, " ")),
@@ -86,6 +87,10 @@ WeaponIcon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera 
                     queue.move_push(std::move(command));
                 } else if (m_typeWeapon == TypeWeapon::BAZOOKA) {
                     std::unique_ptr<Command> command(new SelectBazookaCmd());
+                    queue.move_push(std::move(command));
+                } else if (m_typeWeapon == TypeWeapon::AIR_ATTACK) {
+                    std::cout << "send: SelectAirAttackCmd" << std::endl;
+                    std::unique_ptr<Command> command(new SelectAirAttackCmd());
                     queue.move_push(std::move(command));
                 }
             }

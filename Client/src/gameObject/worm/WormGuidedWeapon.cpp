@@ -14,10 +14,14 @@ WormGuidedWeapon::WormGuidedWeapon(int id, int x, int y, const size_t &hpWorm, c
         m_width = 30;
         m_height = 30;
         m_textureID = "teleportation";
+    } else if (m_weaponCurrent == TypeWeapon::AIR_ATTACK) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "air_attack";
     } else {
         std::cerr << "weapon not found" << std::endl;
     }
-    m_animation.setProps(m_textureID, 14, 140);
+    m_animation.setProps(m_textureID, 31, 60);
 }
 
 void WormGuidedWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
@@ -35,7 +39,14 @@ void WormGuidedWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &que
         SDL2pp::Point point(input.getMouseX(), input.getMouseY());
         SDL2pp::Point newPoint = point + camera.getPosition();
         std::cout << "send: " << newPoint << std::endl;
-        std::unique_ptr<Command> command(new TeleportCmd(newPoint.GetX(), newPoint.GetY()));
-        queue.move_push(std::move(command));
+        if (m_weaponCurrent == TypeWeapon::TELEPORT) {
+            std::unique_ptr<Command> command(new TeleportCmd(newPoint.GetX(), newPoint.GetY()));
+            queue.move_push(std::move(command));
+        } else if (m_weaponCurrent == TypeWeapon::AIR_ATTACK) {
+            std::unique_ptr<Command> command(new TeleportCmd(newPoint.GetX(), newPoint.GetY()));
+            queue.move_push(std::move(command));
+        }
+
+
     }
 }

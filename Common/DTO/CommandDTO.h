@@ -29,6 +29,7 @@ enum TypeCommand {
     CHARGE_CMD,
     FIRE_CMD, // comando 17
     TELEPORT_MOVE,
+    AIR_ATTACK_POINT,
     CLOSE_GAME,
     NONE
 };
