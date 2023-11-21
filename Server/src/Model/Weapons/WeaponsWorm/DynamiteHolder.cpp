@@ -48,5 +48,11 @@ void DynamiteHolder::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectile
     }
 }
 
+void DynamiteHolder::passTime() {
+    if(dynamite != nullptr){
+        dynamite->passTime();
+    }
+}
+
 
 

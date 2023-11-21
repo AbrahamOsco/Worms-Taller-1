@@ -69,6 +69,8 @@ public:
 
     virtual WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent);
 
+    // para todas las armas con cuenta regresiva;
+    virtual void passTime();
 
     void assignWindValue(const float &aWindValue);
 

@@ -257,7 +257,9 @@ void beamCollidesWithAirAttackMissile(GameObject* beam, GameObject* airAttackMis
 void dynamiteCollidesWithEdge(GameObject* dynamite, GameObject* edge, GameParameters *gameParameters){
     std::cout << "dynamiteCollidesWithEdge\n";
     Dynamite* dynamiteSelect = (Dynamite*) dynamite;
-    dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+    if(dynamiteSelect->hasExploded()){
+        dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+    }
 }
 
 void edgeCollidesWithDynamite(GameObject* edge, GameObject* dynamite, GameParameters *gameParameters){
@@ -268,7 +270,9 @@ void edgeCollidesWithDynamite(GameObject* edge, GameObject* dynamite, GameParame
 void dynamiteCollidesWithWater(GameObject* dynamite, GameObject* water, GameParameters *gameParameters){
     std::cout << "dynamiteCollidesWithWater\n";
     Dynamite* dynamiteSelect = (Dynamite*) dynamite;
-    dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+    if(dynamiteSelect->hasExploded()){
+        dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+    }
 }
 
 void waterCollidesWithDynamite(GameObject* water, GameObject* dynamite, GameParameters *gameParameters){
@@ -279,7 +283,9 @@ void waterCollidesWithDynamite(GameObject* water, GameObject* dynamite, GamePara
 void dynamiteCollidesWithProvision(GameObject* dynamite, GameObject* provision, GameParameters *gameParameters){
     std::cout << "dynamiteCollidesWithProvision\n";
     Dynamite* dynamiteSelect = (Dynamite*) dynamite;
-    dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+    if(dynamiteSelect->hasExploded()){
+        dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+    }
 }
 
 void provisionCollideWithDynamite(GameObject* provision, GameObject* dynamite, GameParameters *gameParameters){
@@ -290,7 +296,9 @@ void provisionCollideWithDynamite(GameObject* provision, GameObject* dynamite, G
 void dynamiteCollidesWithWorm(GameObject* dynamite, GameObject* worm, GameParameters *gameParameters){
     std::cout << "dynamiteCollidesWithWorm\n";
     Dynamite* dynamiteSelect = (Dynamite*) dynamite;
-    dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+    if(dynamiteSelect->hasExploded()){
+        dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+    }
 }
 
 void wormCollidesWithDynamite(GameObject* worm, GameObject* dynamite, GameParameters *gameParameters){
@@ -301,7 +309,9 @@ void wormCollidesWithDynamite(GameObject* worm, GameObject* dynamite, GameParame
 void dynamiteCollideWithBeam(GameObject* dynamite, GameObject* beam, GameParameters *gameParameters){
     std::cout << "dynamiteCollideWithBeam\n";
     Dynamite* dynamiteSelect = (Dynamite*) dynamite;
-    dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+    if(dynamiteSelect->hasExploded()){
+        dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+    }
 }
 
 void beamCollidesWithDynamite(GameObject* beam, GameObject* dynamite, GameParameters *gameParameters){

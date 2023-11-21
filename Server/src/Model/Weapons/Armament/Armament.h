@@ -60,6 +60,8 @@ public:
     void assignWindValue(const float &aWindValue);
 
     void giveExtraMunition(const size_t &extraMunition);
+
+    void updateTime(const bool &attacked);
 };
 
 

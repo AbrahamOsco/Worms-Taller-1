@@ -34,6 +34,8 @@ public:
 
     void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
 
+    void passTime() override;
+
 };
 
 

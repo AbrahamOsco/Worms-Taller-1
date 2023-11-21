@@ -139,4 +139,10 @@ void Armament::giveExtraMunition(const size_t &extraMunition) {
     }
 }
 
+void Armament::updateTime(const bool &attacked) {
+    if(attacked and weaponOnStandBy!= NONE_WEAPON){
+        this->armament.at(weaponOnStandBy)->passTime();
+    }
+}
+
 

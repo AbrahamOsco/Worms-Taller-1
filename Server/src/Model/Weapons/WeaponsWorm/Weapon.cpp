@@ -81,4 +81,8 @@ void Weapon::giveExtraMunition(const size_t &extraMunition) {
     }
 }
 
+void Weapon::passTime() {
+    // NO hago nada para las armas que no tienen uan cuenta regresiva.
+}
+
 

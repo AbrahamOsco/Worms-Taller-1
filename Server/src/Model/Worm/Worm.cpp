@@ -261,6 +261,7 @@ void Worm::activateFocus() {
 
 void Worm::update() {
     armament.tryCleanProjectiles(aWorld);
+    armament.updateTime(attacked); // update para las armas en standby que esperan a exploar hacemos q pase el tiempo para ellas.
     if (this->isDestroyedBody() and not wasDestroyed) {     // Si el gusano fue destrouido lo destruimos del mundoo. Ademas no lo actualizamos;
         aWorld->DestroyBody(this->getBody());
         this->wasDestroyed = true;
