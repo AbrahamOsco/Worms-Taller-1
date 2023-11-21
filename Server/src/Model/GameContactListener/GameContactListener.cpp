@@ -9,6 +9,7 @@
 #include "../Scenario/Beam/Beam.h"
 #include "../Provision/Provision.h"
 #include "../Projectiles/AirAttackMissile.h"
+#include "../Projectiles/Dynamite.h"
 
 // Clase de colisiones el listener:
 void wormCollidesWithBeam(GameObject* worm, GameObject* beam, GameParameters *gameParameters){
@@ -251,6 +252,65 @@ void beamCollidesWithAirAttackMissile(GameObject* beam, GameObject* airAttackMis
     airAttackMissileCollideWithBeam(airAttackMissile, beam, gameParameters);
 }
 
+// ---- Dynamite metodos
+
+void dynamiteCollidesWithEdge(GameObject* dynamite, GameObject* edge, GameParameters *gameParameters){
+    std::cout << "dynamiteCollidesWithEdge\n";
+    Dynamite* dynamiteSelect = (Dynamite*) dynamite;
+    dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+}
+
+void edgeCollidesWithDynamite(GameObject* edge, GameObject* dynamite, GameParameters *gameParameters){
+    std::cout << "edgeCollidesWithDynamite\n";
+    dynamiteCollidesWithEdge(dynamite, edge, gameParameters);
+}
+
+void dynamiteCollidesWithWater(GameObject* dynamite, GameObject* water, GameParameters *gameParameters){
+    std::cout << "dynamiteCollidesWithWater\n";
+    Dynamite* dynamiteSelect = (Dynamite*) dynamite;
+    dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+}
+
+void waterCollidesWithDynamite(GameObject* water, GameObject* dynamite, GameParameters *gameParameters){
+    std::cout << "waterCollidesWithDynamite\n";
+    dynamiteCollidesWithWater(dynamite, water, gameParameters);
+}
+
+void dynamiteCollidesWithProvision(GameObject* dynamite, GameObject* provision, GameParameters *gameParameters){
+    std::cout << "dynamiteCollidesWithProvision\n";
+    Dynamite* dynamiteSelect = (Dynamite*) dynamite;
+    dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+}
+
+void provisionCollideWithDynamite(GameObject* provision, GameObject* dynamite, GameParameters *gameParameters){
+    std::cout << "provisionCollideWithDynamite\n";
+    dynamiteCollidesWithProvision(dynamite, provision, gameParameters);
+}
+
+void dynamiteCollidesWithWorm(GameObject* dynamite, GameObject* worm, GameParameters *gameParameters){
+    std::cout << "dynamiteCollidesWithWorm\n";
+    Dynamite* dynamiteSelect = (Dynamite*) dynamite;
+    dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+}
+
+void wormCollidesWithDynamite(GameObject* worm, GameObject* dynamite, GameParameters *gameParameters){
+    std::cout << "wormCollidesWithDynamite\n";
+    dynamiteCollidesWithWorm(dynamite, worm, gameParameters);
+}
+
+void dynamiteCollideWithBeam(GameObject* dynamite, GameObject* beam, GameParameters *gameParameters){
+    std::cout << "dynamiteCollideWithBeam\n";
+    Dynamite* dynamiteSelect = (Dynamite*) dynamite;
+    dynamiteSelect->searchWormAndCollide( dynamiteSelect->getBody()->GetWorldCenter());
+}
+
+void beamCollidesWithDynamite(GameObject* beam, GameObject* dynamite, GameParameters *gameParameters){
+    std::cout << "beamCollidesWithDynamite\n";
+    dynamiteCollideWithBeam(dynamite, beam, gameParameters);
+}
+
+
+
 GameContactListener::GameContactListener(b2World *world, GameParameters *gameParameters) {
     world->SetContactListener(this);
     this->gameParameters = (GameParameters *) gameParameters;
@@ -296,11 +356,25 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
     collisionsMap[std::make_pair(ENTITY_AIR_ATTACK_MISSILE, ENTITY_BEAM)] = &airAttackMissileCollideWithBeam;
     collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_AIR_ATTACK_MISSILE )] = &beamCollidesWithAirAttackMissile;
 
+    // Dynamite collisions
+    collisionsMap[std::make_pair(ENTITY_DYNAMITE, ENTITY_EDGE)] = &dynamiteCollidesWithEdge;
+    collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_DYNAMITE)] = &edgeCollidesWithDynamite;
+
+    collisionsMap[std::make_pair(ENTITY_DYNAMITE, ENTITY_WATER)] = &dynamiteCollidesWithWater;
+    collisionsMap[std::make_pair(ENTITY_WATER, ENTITY_DYNAMITE )] = &waterCollidesWithDynamite;
+
+    collisionsMap[std::make_pair(ENTITY_DYNAMITE, ENTITY_PROVISION )] = &dynamiteCollidesWithProvision;
+    collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_DYNAMITE)] = &provisionCollideWithDynamite;
+
+    collisionsMap[std::make_pair(ENTITY_DYNAMITE, ENTITY_WORM )] = &dynamiteCollidesWithWorm;
+    collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_DYNAMITE)] = &wormCollidesWithDynamite;
+
+    collisionsMap[std::make_pair(ENTITY_DYNAMITE, ENTITY_BEAM)] = &dynamiteCollideWithBeam;
+    collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_DYNAMITE )] = &beamCollidesWithDynamite;
 
     //Colisiones con las provisiones Worms:
     collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_WORM)] = &provisionCollidesWithWorm;
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_PROVISION )] = &wormCollidesWithProvision;
-
 
     endContactMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM) ] = &beamEndContactWithWorm;
     endContactMap[std::make_pair(ENTITY_WORM, ENTITY_BEAM) ] = &wormEndContactWithBeam;

@@ -9,9 +9,6 @@
 
 ProjectileBazooka::ProjectileBazooka(const GameParameters& gameParameters, const TypeFocus& typeFocus) : GameObject(ENTITY_BAZOOKA_PROJECTILE) , gameParameters(gameParameters),
             explodable(gameParameters.getBazookaProjectileDamageMax(), gameParameters.getBazookProjectileRadio(), gameParameters.getBazookProjectileRadio() ){
-    this->mainDamage = gameParameters.getBazookaProjectileDamageMax();
-    this->maxRadio = gameParameters.getBazookProjectileRadio();
-    this->maxImpulseMagnitude = gameParameters.getBazookaProjectilMaxImpulseExplosion();
     this->typeFocus = typeFocus;
 }
 

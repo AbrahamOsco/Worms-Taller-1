@@ -52,6 +52,7 @@ class Worm : public GameObject {
     float hpInitialTurn;
     bool wasDestroyed;
     bool waitingToGetFocus;
+    int waitTime;
 public:
 
     Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
@@ -144,6 +145,8 @@ public:
     Direction getDirection();
 
     void attackWithAirAttack(const int &posXAttack);
+
+    void attackWithDynamiteHolder();
 };
 
 

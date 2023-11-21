@@ -135,6 +135,14 @@ public:
     int getMaxValueWind() const;
 
     float airAttackGetPositionY() const;
+
+    float airAttackMissileGetDamage() const;
+
+    float airAttackGetMunitionInitial() const;
+
+    float airAttackMissleGetMaxRadio() const;
+
+    float airAttackMissileImpulseMax() const;
 };
 
 

@@ -15,10 +15,6 @@
 
 class ProjectileBazooka : public GameObject {
 private:
-    // sacar estos 3 atributos en el futuro
-    float mainDamage;
-    float maxRadio;
-    float maxImpulseMagnitude;
     const GameParameters& gameParameters;
     b2World* aWorld;
     TypeFocus typeFocus;

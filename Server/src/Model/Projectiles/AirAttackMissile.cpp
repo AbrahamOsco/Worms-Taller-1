@@ -7,7 +7,8 @@
 
 // @todo falta borrar numeros magicos aca
 AirAttackMissile::AirAttackMissile(const GameParameters &gameParameters, const TypeFocus& typeFocus) : GameObject(ENTITY_AIR_ATTACK_MISSILE),
-                    gameParameters(gameParameters), typeFocus(typeFocus), explodable( 40.0, 2.0f, 2.0f ){
+                    gameParameters(gameParameters), typeFocus(typeFocus),
+                    explodable(gameParameters.airAttackMissileGetDamage(), gameParameters.airAttackMissleGetMaxRadio() , gameParameters.airAttackMissileImpulseMax() ){
 
 }
 
@@ -23,8 +24,7 @@ void AirAttackMissile::addToTheWorld(b2World *aWorld, const b2Vec2 &positionMiss
     airAttackMissileForm.m_radius = 0.1f;
     b2FixtureDef defFixAirAttackMis;
     defFixAirAttackMis.shape = &airAttackMissileForm;
-    defFixAirAttackMis.density = 1.0f; // ver el tema del aire luego.
-
+    defFixAirAttackMis.density = 1.0f;
     this->body->CreateFixture(&defFixAirAttackMis); // Inmediatamente luego de ajustar los fixture crearlo en el cuerpo sino no tendra masa hasta ahora el cuerpo MUY Impotante.
     float windValueSelect = (windValue/ this->body->GetMass());
     b2Vec2 vectorWind(windValueSelect, 0.0f);

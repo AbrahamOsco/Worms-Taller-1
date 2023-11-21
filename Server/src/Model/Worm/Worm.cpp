@@ -7,6 +7,7 @@
 #include "Worm.h"
 #include "../../../GameParameters/GameParameters.h"
 #include "../Weapons/WeaponsWorm/AirAttackDetonator.h"
+#include "../Weapons/WeaponsWorm/DynamiteHolder.h"
 
 Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
            Armament& armament) : GameObject(ENTITY_WORM), idWorm(idWorm), idPlayer(idPlayer),
@@ -28,6 +29,7 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     contactsWithWorms = 0;
     wasDestroyed = false;
     waitingToGetFocus = false;
+    waitTime = 5;
 }
 
 void Worm::savePositionInAir(const float &positionXAir, const float &positionYAir) {
@@ -193,6 +195,16 @@ void Worm::takeDamage(const float &aDamage){
     }
 }
 
+void Worm::giveExtraHP(const float &extraHP) {
+    if( (this->hp + extraHP) <= 200){
+        this->hp +=extraHP;
+    }
+}
+
+void Worm::giveExtraMunition(const size_t &extraMunition) {
+    this->armament.giveExtraMunition(extraMunition);
+}
+
 //getters
 
 float Worm::getHP() const {
@@ -210,8 +222,8 @@ bool Worm::alreadyAttack() const{
     return attacked;
 }
 
-b2World* Worm::getWorld(){
-    return this->aWorld;
+Direction Worm::getDirection() {
+    return this->directionLook;
 }
 
 // DTOS.
@@ -273,6 +285,12 @@ void Worm::update() {
 
 // weapons.- Attacks
 
+void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
+    if( not attacked and this->typeFocus == FOCUS){ // SOLO asigno un arma si no ataque y si tengo el focus.
+        armament.assignWeapon(aTypeWeapon, this->directionLook);
+    }
+}
+
 void Worm::attackWithBat(){
     this->typeMov = ATTACKING_WITH_BAT;
     Bat* aBat = (Bat*) this->armament.getWeaponCurrentPtr();
@@ -332,7 +350,6 @@ void Worm::attackWithBazooka() {
     waitingToGetFocus = true;
 }
 
-
 void Worm::attack() {
     if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
         return;
@@ -341,6 +358,8 @@ void Worm::attack() {
         this->attackWithBat();
     } else if ( this->armament.getWeaponCurrentPtr()->hasVariablePower()){ // en un futuro pregunta si tiene un arma con potencia variable.
         this->chargeWeaponWithVariablePower();
+    } else if (this->armament.getWeaponCurrent() == DYNAMITE_HOLDER){
+        this->attackWithDynamiteHolder();
     }
 }
 
@@ -366,11 +385,6 @@ void Worm::attackWithAirAttack(const int &posXAttack) {
 }
 
 
-void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
-    if( not attacked and this->typeFocus == FOCUS){ // SOLO asigno un arma si no ataque y si tengo el focus.
-        armament.assignWeapon(aTypeWeapon, this->directionLook);
-    }
-}
 
 void Worm::endTurn() {
     typeFocus = NO_FOCUS;
@@ -394,12 +408,14 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_FORWARD_CMD){
         this->jump(JUMP_FORWARDS);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BAT){
-        this->assignWeapon(BASEBALL_BAT);
+        this->assignWeapon(BASEBALL_BAT); // BASEBALL_BAT
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_TELEPORT){
         this->assignWeapon(TELEPORT);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BAZOOKA){
         this->assignWeapon(BAZOOKA);
-    }else if (aCommandDTO->getTypeCommand() == TypeCommand::UP_CMD){
+    }  else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_DYNAMITE){
+        this->assignWeapon(DYNAMITE_HOLDER);
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::UP_CMD){
         this->changeAngle(UP);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::DOWN_CMD){
         this->changeAngle(DOWN);
@@ -412,7 +428,6 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::AIR_ATTACK_POINT ){
         this->attackWithAirAttack(aCommandDTO->getX());
     }
-
 }
 
 bool Worm::thereAreProjectiles(){
@@ -434,19 +449,15 @@ bool Worm::isUnmoveAndNotExistsPojectiles() {
     }
     // si esta cargando el arma tampoco debe acabar el turno asi que pedimos que sea de tipo de carga NONE_CHARGE.
     return ((unMovedOnABeam or unMovedOnAWorm or unMovedOnEdge) and (not thereAreProjectiles()) and (this->typeCharge == NONE_CHARGE)  );
-
 }
 
-void Worm::giveExtraHP(const float &extraHP) {
-    if( (this->hp + extraHP) <= 200){
-        this->hp +=extraHP;
+void Worm::attackWithDynamiteHolder() {
+    b2Vec2 positionDynamite = body->GetWorldCenter();
+    positionDynamite.x -=0.5f;
+    if (directionLook == RIGHT){
+        positionDynamite.x +=1.0;
     }
-}
-
-void Worm::giveExtraMunition(const size_t &extraMunition) {
-    this->armament.giveExtraMunition(extraMunition);
-}
-
-Direction Worm::getDirection() {
-    return this->directionLook;
+    DynamiteHolder* dynamiteHolder = (DynamiteHolder*) armament.getWeaponCurrentPtr();
+    dynamiteHolder->placeDynamite(waitTime, positionDynamite, aWorld, typeFocus);
+    this->waitTime = 5;
 }

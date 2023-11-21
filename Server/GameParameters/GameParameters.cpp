@@ -81,9 +81,29 @@ GameParameters::GameParameters() {
     parameters["BAZOOKA_MUNITION"] = nodeInitial["BAZOOKA_MUNITION"].as<float>();
     parameters["BAZOOKA_RAY_LENGTH"] = nodeInitial["BAZOOKA_RAY_LENGTH"].as<float>();
 
+    parameters["AIR_ATTACK_DAMAGE_MAIN_MISSILE"] = nodeInitial["AIR_ATTACK_DAMAGE_MAIN_MISSILE"].as<float>();
+    parameters["AIR_ATTACK_MUNITION_INITIAL"] = nodeInitial["AIR_ATTACK_MUNITION_INITIAL"].as<float>();
+    parameters["AIR_ATTACK_MISSILE_MAX_RADIO"] = nodeInitial["AIR_ATTACK_MISSILE_MAX_RADIO"].as<float>();
+    parameters["AIR_ATTACK_MISSILE_IMPULSE_MAX"] = nodeInitial["AIR_ATTACK_MISSILE_IMPULSE_MAX"].as<float>();
 
     parameters["AIR_ATTACK_POSITION_Y_TO_INVOKE"] = nodeInitial["AIR_ATTACK_POSITION_Y_TO_INVOKE"].as<float>();
 
+}
+
+float GameParameters::airAttackMissileGetDamage() const{
+    return this->parameters.at("AIR_ATTACK_DAMAGE_MAIN_MISSILE");
+}
+
+float GameParameters::airAttackGetMunitionInitial() const{
+    return this->parameters.at("AIR_ATTACK_MUNITION_INITIAL");
+}
+
+float GameParameters::airAttackMissleGetMaxRadio() const{
+    return this->parameters.at("AIR_ATTACK_MISSILE_MAX_RADIO");
+}
+
+float GameParameters::airAttackMissileImpulseMax() const{
+    return this->parameters.at("AIR_ATTACK_MISSILE_IMPULSE_MAX");
 }
 
 float GameParameters::airAttackGetPositionY() const{
@@ -312,12 +332,7 @@ float GameParameters::getIncreaseImpulseForFPS() const{
 }
 
 float GameParameters::getBazookaProjectileDamageMax() const {
-    try{
-        return parameters.at("BAZOOKA_PROJECTILE_DAMAGE_MAX");
-    } catch (std::exception& e ){
-        std::cerr << e.what() << "\n";
-        return 50.0f;
-    }
+    return parameters.at("BAZOOKA_PROJECTILE_DAMAGE_MAX");
 }
 
 float GameParameters::getBazookProjectileRadio() const {
