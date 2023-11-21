@@ -346,7 +346,40 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendStage) {
     ASSERT_EQ(63, buffer[offset]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendPlayersDTO) {
-
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    std::vector<PlayerDTO> players;
+    players.push_back(PlayerDTO(15, "fede", MY_TURN, 100));
+    players.push_back(PlayerDTO(42, "pepe", NOT_IS_MY_TURN, 125));
+    PlayersDTO dto(players);
+    protocol.sendPlayersDTO(dto);
+    buffer = skt.getBuffer();
+    ASSERT_TRUE(PLAYERS_TOTAL == buffer[offset]);
+    offset++;
+    ASSERT_EQ(players.size(), buffer[offset]);
+    offset++;
+    for (size_t i = 0; i < players.size(); i++) {
+        ASSERT_TRUE(PLAYER == buffer[offset]);
+        offset++;
+        ASSERT_TRUE(players[i].getIdPlayer() == buffer[offset]);
+        offset++;
+        memcpy(&word, buffer.data()+offset, 2);
+        word = ntohs(word);
+        ASSERT_TRUE(players[i].getNamePlayer().size() == word);
+        offset = offset + 2;
+        std::string aux(buffer.data()+offset, word);
+        ASSERT_TRUE(players[i].getNamePlayer() == aux);
+        offset = offset + word;
+        ASSERT_TRUE(players[i].getTurnType() == buffer[offset]);
+        offset++;
+        memcpy(&word, buffer.data()+offset, 2);
+        word = ntohs(word);
+        ASSERT_TRUE(players[i].getTotalHpWorms() == word);
+        offset = offset + 2;
+    }
 }
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
