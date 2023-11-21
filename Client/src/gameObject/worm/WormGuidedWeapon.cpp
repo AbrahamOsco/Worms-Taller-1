@@ -5,6 +5,7 @@
 #include "WormGuidedWeapon.h"
 #include "../../command/TeleportCmd.h"
 #include "../../soundManager/SoundManager.h"
+#include "../../command/AirAttackCmd.h"
 
 WormGuidedWeapon::WormGuidedWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction,
                                    const TypeFocus &focus, const MoveWorm &moveWorm,
@@ -43,7 +44,7 @@ void WormGuidedWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &que
             std::unique_ptr<Command> command(new TeleportCmd(newPoint.GetX(), newPoint.GetY()));
             queue.move_push(std::move(command));
         } else if (m_weaponCurrent == TypeWeapon::AIR_ATTACK) {
-            std::unique_ptr<Command> command(new TeleportCmd(newPoint.GetX(), newPoint.GetY()));
+            std::unique_ptr<Command> command(new AirAttackCmd(newPoint.GetX(), newPoint.GetY()));
             queue.move_push(std::move(command));
         }
 
