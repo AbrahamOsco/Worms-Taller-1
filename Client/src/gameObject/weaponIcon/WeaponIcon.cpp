@@ -8,6 +8,11 @@
 #include "../../command/SelectBazookaCmd.h"
 #include "../../soundManager/SoundManager.h"
 #include "../../command/SelectAirAttackCmd.h"
+#include "../../command/SelectMortarCmd.h"
+#include "../../command/SelectGreenGrenadeCmd.h"
+#include "../../command/SelectRedGrenadeCmd.h"
+#include "../../command/SelectHolyGrenadeCmd.h"
+#include "../../command/SelectBananaCmd.h"
 
 WeaponIcon::WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon, bool isMyTurn)
         : GameObject(LoaderParams(0, 0, 50, 55, " ")),
@@ -90,6 +95,21 @@ WeaponIcon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera 
                     queue.move_push(std::move(command));
                 } else if (m_typeWeapon == TypeWeapon::AIR_ATTACK) {
                     std::unique_ptr<Command> command(new SelectAirAttackCmd());
+                    queue.move_push(std::move(command));
+                } else if (m_typeWeapon == TypeWeapon::MORTAR) {
+                    std::unique_ptr<Command> command(new SelectMortarCmd());
+                    queue.move_push(std::move(command));
+                } else if (m_typeWeapon == TypeWeapon::GREEN_GRENADE) {
+                    std::unique_ptr<Command> command(new SelectGreenGrenadeCmd());
+                    queue.move_push(std::move(command));
+                } else if (m_typeWeapon == TypeWeapon::RED_GRENADE) {
+                    std::unique_ptr<Command> command(new SelectRedGrenadeCmd());
+                    queue.move_push(std::move(command));
+                } else if (m_typeWeapon == TypeWeapon::HOLY_GRENADE) {
+                    std::unique_ptr<Command> command(new SelectHolyGrenadeCmd());
+                    queue.move_push(std::move(command));
+                } else if (m_typeWeapon == TypeWeapon::BANANA) {
+                    std::unique_ptr<Command> command(new SelectBananaCmd());
                     queue.move_push(std::move(command));
                 }
             }

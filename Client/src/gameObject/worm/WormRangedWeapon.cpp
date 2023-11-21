@@ -15,6 +15,26 @@ WormRangedWeapon::WormRangedWeapon(int id, int x, int y, const size_t &hpWorm, c
         m_width = 30;
         m_height = 30;
         m_textureID = "bazooka";
+    } else if (m_weaponCurrent == TypeWeapon::MORTAR) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "mortar";
+    } else if (m_weaponCurrent == TypeWeapon::GREEN_GRENADE) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "green_grenade";
+    } else if (m_weaponCurrent == TypeWeapon::RED_GRENADE) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "red_grenade";
+    } else if (m_weaponCurrent == TypeWeapon::HOLY_GRENADE) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "holy_grenade";
+    } else if (m_weaponCurrent == TypeWeapon::BANANA) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "banana";
     } else {
         std::cerr << "weapon not found" << std::endl;
     }
