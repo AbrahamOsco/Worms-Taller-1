@@ -4,9 +4,12 @@
 
 #include "Projectile.h"
 
-Projectile::Projectile(int x, int y, const TypeProjectil &typeProjectile) : GameObject(LoaderParams(x, y, 15, 15, " ")), m_typeProjectile(typeProjectile){
+Projectile::Projectile(int x, int y, const TypeProjectil &typeProjectile) : GameObject(LoaderParams(x, y, 15, 15, " ")),
+                                                                            m_typeProjectile(typeProjectile) {
     if (m_typeProjectile == TypeProjectil::BAZOOKA_PROJECTILE) {
         m_textureID = "bazooka_projectile";
+    } else if (m_typeProjectile == TypeProjectil::AIR_ATTACK_MISSILE) {
+        m_textureID = "air_attack_projectile";
     } else {
         m_textureID = "mortar_projectile";
     }

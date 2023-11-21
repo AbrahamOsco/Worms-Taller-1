@@ -133,6 +133,8 @@ textures:
     source: "../Client/resources/assets/bullets/Bazooka.png"
   - name: mortar_projectile
     source: "../Client/resources/assets/bullets/Mortar.png"
+  - name: air_attack_projectile
+    source: "../Client/resources/assets/bullets/AirAttackMissile.png"
   - name: bazooka_init
     source: "../Client/resources/assets/worms/wbazlnk.png"
   - name: victory
