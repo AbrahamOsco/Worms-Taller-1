@@ -23,10 +23,11 @@ private:
     bool m_isMyTurn;
     GameState m_gameState;
     TypeResult m_typeResult;
+    bool m_deathWorm;
 
 public:
     GameInfo(PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind, GameState &gameState, TypeResult &typeResult,
-             const std::string &currentTurn, int time);
+             const std::string &currentTurn, int time, bool deathWorm);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 

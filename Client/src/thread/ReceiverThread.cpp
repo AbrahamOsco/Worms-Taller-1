@@ -20,7 +20,8 @@ ReceiverThread::ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::
         : m_protocol(protocol), m_queue(queue), m_running(running) {}
 
 void ReceiverThread::run() {
-
+    size_t pastCountWorm = 0;
+    size_t currentCountWorm = 0;
     while (m_running) {
         try {
             std::vector<std::unique_ptr<GameObject>> gameObjects;
@@ -38,6 +39,11 @@ void ReceiverThread::run() {
                     isMyTurn = true;
                 }
 
+                currentCountWorm = wormsDto.size();
+                bool death = false;
+                if (currentCountWorm != pastCountWorm && pastCountWorm != 0) {
+                    death = true;
+                }
 
                 std::vector<ProjectileDTO> projectiles = projectilesDto.getProjectilesDto();
                 for (const ProjectileDTO &projectileDto: projectiles) {
@@ -164,13 +170,14 @@ void ReceiverThread::run() {
 
                 gameObjects.push_back(
                         std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, gameState, typeResult,turnDto.getTextTurn(),
-                                                   turnDto.getTimeLeft()));
+                                                   turnDto.getTimeLeft(), death));
 
                 std::vector<ProvisionDTO> provisions = snapShot.getVecProvisionDto();
                 for (const ProvisionDTO &provisionDto: provisions) {
                     gameObjects.push_back(std::make_unique<Provision>(static_cast<int>(provisionDto.getPositionX()), static_cast<int>(provisionDto.getPositionY()), provisionDto.getTypeEffect()));
                 }
 
+                pastCountWorm = wormsDto.size();
 
             } else {
                 GameState gameState = snapShot.getTypeSnapShot();
