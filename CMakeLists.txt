@@ -111,7 +111,7 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
 
 
         Server/src/Model/TimeTurn/TimeTurn.cpp Server/src/Model/TimeTurn/TimeTurn.h
-        Server/src/Model/QueriesToWorld/PositionInAreaisFreeQuery.cpp Server/src/Model/QueriesToWorld/PositionInAreaisFreeQuery.h Common/DTO/EndGameDTO.cpp Common/DTO/EndGameDTO.h Server/src/Model/Provision/Provision.cpp Server/src/Model/Provision/Provision.h Common/DTO/ProvisionDTO.cpp Common/DTO/ProvisionDTO.h Server/src/Model/Weapons/WeaponsWorm/AirAttackDetonator.cpp Server/src/Model/Weapons/WeaponsWorm/AirAttackDetonator.h Server/src/Model/Projectiles/AirAttackMissile.cpp Server/src/Model/Projectiles/AirAttackMissile.h)
+        Server/src/Model/QueriesToWorld/PositionInAreaisFreeQuery.cpp Server/src/Model/QueriesToWorld/PositionInAreaisFreeQuery.h Common/DTO/EndGameDTO.cpp Common/DTO/EndGameDTO.h Server/src/Model/Provision/Provision.cpp Server/src/Model/Provision/Provision.h Common/DTO/ProvisionDTO.cpp Common/DTO/ProvisionDTO.h Server/src/Model/Weapons/WeaponsWorm/AirAttackDetonator.cpp Server/src/Model/Weapons/WeaponsWorm/AirAttackDetonator.h Server/src/Model/Projectiles/AirAttackMissile.cpp Server/src/Model/Projectiles/AirAttackMissile.h Server/src/Model/Projectiles/Explodable/Explodable.cpp Server/src/Model/Projectiles/Explodable/Explodable.h)
 
 # para el editor
 include_directories(${PROJECT_SOURCE_DIR}/Editor/include)

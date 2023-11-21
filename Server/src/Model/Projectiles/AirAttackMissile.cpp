@@ -5,8 +5,9 @@
 #include <iostream>
 #include "AirAttackMissile.h"
 
+// @todo falta borrar numeros magicos aca
 AirAttackMissile::AirAttackMissile(const GameParameters &gameParameters, const TypeFocus& typeFocus) : GameObject(ENTITY_AIR_ATTACK_MISSILE),
-                    gameParameters(gameParameters), typeFocus(typeFocus){
+                    gameParameters(gameParameters), typeFocus(typeFocus), explodable( 40.0, 2.0f, 2.0f ){
 
 }
 
@@ -32,36 +33,15 @@ void AirAttackMissile::addToTheWorld(b2World *aWorld, const b2Vec2 &positionMiss
     this->body->CreateFixture(&defFixAirAttackMis);
     this->aWorld = aWorld;
 }
-// todos los metodos de abajo en un futuro pasarlo a una clase y delegar directamente a esa clase.
-b2AABB AirAttackMissile::getAreaForSearch(const b2Vec2& positionMissile) const {
-    b2AABB searchArea;
-    searchArea.lowerBound = positionMissile - b2Vec2(2.0f, 2.0f);
-    searchArea.upperBound = positionMissile + b2Vec2(2.0f, 2.0f);
-    return searchArea;
-}
 
 
-b2Vec2 AirAttackMissile::getImpulseForWorm(const b2Vec2 &positionWorm, const b2Vec2 &positionProjectile,
-                                            const float &distanceWormToProjectile) {
-    b2Vec2 impulseDirection = positionWorm - positionProjectile;
-    impulseDirection.Normalize();
-    float impulseMagnitude = maxImpulseMagnitude * std::max(0.0f, 1.0f - sqrt(distanceWormToProjectile) / maxRadio );
-    b2Vec2 impulseWorm = impulseMagnitude * impulseDirection;
-    if(impulseDirection.x == 0){ // Si la normal en x es cero hizo un tiro a -90º sale volando para arriba.
-        impulseWorm.y = maxImpulseMagnitude;
-    }
-    return impulseWorm;
+void AirAttackMissile::searchWormAndCollide(const b2Vec2 &projectilePosition){
+    explodable.searchWormAndCollide(projectilePosition, aWorld);
+    this->destroyBody();
 }
 
-float AirAttackMissile::getDamageForWorm(const float &wormDistanceSquared) {
-    return mainDamage * std::max(0.0f, 1.0f - sqrt(wormDistanceSquared) / maxRadio);
-}
 
 ProjectileDTO AirAttackMissile::getProjectilDTO(){
     return ProjectileDTO(AIR_ATTACK_MISSILE, this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
                          gameParameters.getMaxHeightPixel() -this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(), this->typeFocus);
-}
-
-b2World* AirAttackMissile::getWorld(){
-    return this->aWorld;
 }

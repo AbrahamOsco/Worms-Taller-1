@@ -8,6 +8,7 @@
 #include "../QueriesToWorld/SaveWormsInAreaQuery.h"
 #include "../Scenario/Beam/Beam.h"
 #include "../Provision/Provision.h"
+#include "../Projectiles/AirAttackMissile.h"
 
 // Clase de colisiones el listener:
 void wormCollidesWithBeam(GameObject* worm, GameObject* beam, GameParameters *gameParameters){
@@ -80,17 +81,8 @@ void projectileBazookaCollidesWithWorm(GameObject* projectileBazooka, GameObject
     b2Vec2 projectilePosition = projectileBazooka->getBody()->GetWorldCenter();
 
     ProjectileBazooka* projectilSelect = (ProjectileBazooka*)  projectileBazooka;
-    SaveWormsInAreaQuery saveWormsinArea(projectilePosition);
-    Worm* wormSelect = (Worm*) worm;
-    wormSelect->getWorld()->QueryAABB(&saveWormsinArea, projectilSelect->getAreaForSearch(projectilePosition) );
-    for(auto& aElement : saveWormsinArea.getWormsAndDistSquared() ){
-        Worm* aWormToTakeDamage = (Worm*)(aElement.first);
-        b2Vec2 impulseForWorm = projectilSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(), projectilePosition, aElement.second);
-        float damageForWorm = projectilSelect->getDamageForWorm(aElement.second);
-        aWormToTakeDamage->getBody()->ApplyLinearImpulse( impulseForWorm, aWormToTakeDamage->getBody()->GetWorldCenter(), true);
-        aWormToTakeDamage->takeDamage(damageForWorm);
-    }
-    projectileBazooka->destroyBody();
+    projectilSelect->searchWormAndCollide(projectilePosition);
+
 }
 
 void wormCollidesWithProjectileBazooka(GameObject* worm1, GameObject* projectileBazooka, GameParameters *gameParameters){
@@ -101,22 +93,11 @@ void projectileBazookaCollideWithBeam(GameObject* projectileBazooka, GameObject*
     std::cout << "projectileBazookaCollideWithBeam\n";
     b2Vec2 projectilePosition = projectileBazooka->getBody()->GetWorldCenter();
     ProjectileBazooka* projectilSelect = (ProjectileBazooka*)  projectileBazooka;
-    SaveWormsInAreaQuery saveWormsinArea(projectilePosition);     // Función de devolución de llamada para la búsqueda
-
-    Beam * beamSelected = (Beam*) beam;
-    beamSelected->getWorld()->QueryAABB(&saveWormsinArea, projectilSelect->getAreaForSearch(projectilePosition));
-    for(auto& aElement : saveWormsinArea.getWormsAndDistSquared() ){
-        Worm* aWormToTakeDamage = (Worm*)(aElement.first);
-        b2Vec2 impulseForWorm = projectilSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(), projectilePosition, aElement.second);
-        float damageForWorm = projectilSelect->getDamageForWorm(aElement.second);
-        aWormToTakeDamage->getBody()->ApplyLinearImpulse( impulseForWorm, aWormToTakeDamage->getBody()->GetWorldCenter(), true);
-        aWormToTakeDamage->takeDamage(damageForWorm);
-    }
-    projectileBazooka->destroyBody();
+    projectilSelect->searchWormAndCollide(projectilePosition);
 }
 
-void beamCollidesWithMunitionBazooka(GameObject* beam, GameObject* munitionBazooka, GameParameters *gameParameters){
-    std::cout << "beamCollidesWithMunitionBazooka\n";
+void beamCollidesWithProjectileBazooka(GameObject* beam, GameObject* munitionBazooka, GameParameters *gameParameters){
+    std::cout << "beamCollidesWithProjectileBazooka\n";
     projectileBazookaCollideWithBeam(munitionBazooka, beam, gameParameters);
 }
 
@@ -143,18 +124,9 @@ void wormEndContactWithWorm(GameObject* worm, GameObject* wormTwo, GameParameter
 void projectileBazookaCollidesWithEdge(GameObject* projectileBazooka, GameObject* edge, GameParameters *gameParameters){
     std::cout << "projectileBazookaCollidesWithEdge\n";
 
-    b2Vec2 projectilePosition = projectileBazooka->getBody()->GetWorldCenter();
     ProjectileBazooka* projectilSelect = (ProjectileBazooka*)  projectileBazooka;
-    SaveWormsInAreaQuery saveWormsinArea(projectilePosition);     // Función de devolución de llamada para la búsqueda
-    projectilSelect->getWorld()->QueryAABB(&saveWormsinArea, projectilSelect->getAreaForSearch(projectilePosition));
-    for(auto& aElement : saveWormsinArea.getWormsAndDistSquared() ){
-        Worm* aWormToTakeDamage = (Worm*)(aElement.first);
-        b2Vec2 impulseForWorm = projectilSelect->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(), projectilePosition, aElement.second);
-        float damageForWorm = projectilSelect->getDamageForWorm(aElement.second);
-        aWormToTakeDamage->getBody()->ApplyLinearImpulse( impulseForWorm, aWormToTakeDamage->getBody()->GetWorldCenter(), true);
-        aWormToTakeDamage->takeDamage(damageForWorm);
-    }
-    projectileBazooka->destroyBody();
+    b2Vec2 projectilePosition = projectileBazooka->getBody()->GetWorldCenter();
+    projectilSelect->searchWormAndCollide(projectilePosition);
 }
 
 void edgeCollidesWithProjectileBazooka(GameObject* edge, GameObject* projectileBazooka, GameParameters *gameParameters){
@@ -212,7 +184,72 @@ void edgeEndContactWithWorm(GameObject* edge, GameObject* worm, GameParameters *
 }
 
 
+// -- metodos para el airattack missile.  los 10 metodos.
 
+void airAttackMissileCollidesWithEdge(GameObject* airAttackMissile, GameObject* edge, GameParameters *gameParameters){
+    std::cout << "airAttackMissileCollidesWithEdge\n";
+    //wormEndContactWithEdge(worm, edge, gameParameters);
+    AirAttackMissile* missileSelect = (AirAttackMissile*) airAttackMissile;
+    b2Vec2 missilePosition = missileSelect->getBody()->GetWorldCenter();
+    missileSelect->searchWormAndCollide(missilePosition);
+}
+
+void edgeCollidesWithAirAttackMissile(GameObject* edge, GameObject* airAttackMissile, GameParameters *gameParameters){
+    std::cout << "edgeCollidesWithAirAttackMissile\n";
+    airAttackMissileCollidesWithEdge(airAttackMissile, edge, gameParameters);
+}
+
+void airAttackMissileCollidesWithWater(GameObject* airAttackMissile, GameObject* water, GameParameters *gameParameters){
+    std::cout << "airAttackMissileCollidesWithWater\n";
+    //wormEndContactWithEdge(worm, edge, gameParameters);
+    AirAttackMissile* missileSelect = (AirAttackMissile*) airAttackMissile;
+    missileSelect->destroyBody();
+}
+
+void waterCollidesWithAirAttackMissile(GameObject* water, GameObject* airAttackMissile, GameParameters *gameParameters){
+    std::cout << "waterCollidesWithAirAttackMissile\n";
+    airAttackMissileCollidesWithWater(airAttackMissile, water, gameParameters);
+}
+
+
+
+void airAttackMissileCollidesWithProvision(GameObject* airAttackMissile, GameObject* provision, GameParameters *gameParameters){
+    std::cout << "airAttackMissileCollidesWithProvision\n";
+
+    AirAttackMissile* missileSelect = (AirAttackMissile*) airAttackMissile;
+    b2Vec2 missilePosition = missileSelect->getBody()->GetWorldCenter();
+    missileSelect->searchWormAndCollide(missilePosition);
+}
+
+void provisionCollideWithAirAttackMissile(GameObject* provision, GameObject* airAttackMissile, GameParameters *gameParameters){
+    std::cout << "provisionCollideWithAirAttackMissile\n";
+    airAttackMissileCollidesWithProvision(airAttackMissile, provision, gameParameters);
+}
+
+
+void airAttackMissileCollidesWithWorm(GameObject* airAttackMissile, GameObject* worm, GameParameters *gameParameters){
+    std::cout << "airAttackMissileCollidesWithWorm\n";
+    AirAttackMissile* missileSelect = (AirAttackMissile*) airAttackMissile;
+    b2Vec2 missilePosition = missileSelect->getBody()->GetWorldCenter();
+    missileSelect->searchWormAndCollide(missilePosition);
+}
+
+void wormCollidesWithAirAttackMissile(GameObject* worm, GameObject* airAttackMissile, GameParameters *gameParameters){
+    std::cout << "wormCollidesWithAirAttackMissile\n";
+    airAttackMissileCollidesWithWorm(airAttackMissile, worm, gameParameters);
+}
+
+void airAttackMissileCollideWithBeam(GameObject* airAttackMissile, GameObject* beam, GameParameters *gameParameters){
+    std::cout << "airAttackMissileCollideWithBeam\n";
+    AirAttackMissile* missileSelect = (AirAttackMissile*) airAttackMissile;
+    b2Vec2 missilePosition = missileSelect->getBody()->GetWorldCenter();
+    missileSelect->searchWormAndCollide(missilePosition);
+}
+
+void beamCollidesWithAirAttackMissile(GameObject* beam, GameObject* airAttackMissile, GameParameters *gameParameters){
+    std::cout << "beamCollidesWithAirAttackMissile\n";
+    airAttackMissileCollideWithBeam(airAttackMissile, beam, gameParameters);
+}
 
 GameContactListener::GameContactListener(b2World *world, GameParameters *gameParameters) {
     world->SetContactListener(this);
@@ -225,25 +262,44 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
     collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_WORM)] = &edgeCollidesWithWorm;
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_WORM)] = &wormCollidesWithWorm;
 
-    // colision con la baooka projectile
-    collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_WORM )] = &projectileBazookaCollidesWithWorm;
-    collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_BAZOOKA_PROJECTILE)] = &wormCollidesWithProjectileBazooka;
-    collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_BEAM)] = &projectileBazookaCollideWithBeam;
-    collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_BAZOOKA_PROJECTILE )] = &beamCollidesWithMunitionBazooka;
 
-    // Estos 4 obligatorio crear para todo tipo de proyectiles @todo
+    // ProjectileBazooka Estos 10 obligatorio crear para todo tipo de proyectiles @todo bordes/water/provisiones worm/beam
     collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_EDGE)] = &projectileBazookaCollidesWithEdge;
     collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_BAZOOKA_PROJECTILE )] = &edgeCollidesWithProjectileBazooka;
 
     collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_WATER)] = &projectileBazookaCollidesWithWater;
     collisionsMap[std::make_pair(ENTITY_WATER, ENTITY_BAZOOKA_PROJECTILE )] = &waterCollidesWithProjectileBazooka;
 
-
-    //Colisiones con las provisiones:
-    collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_WORM)] = &provisionCollidesWithWorm;
-    collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_PROVISION )] = &wormCollidesWithProvision;
     collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_BAZOOKA_PROJECTILE)] = &provisionCollideWithProjectileBazooka;
     collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_PROVISION )] = &projectileBazookaCollidesWithProvision;
+
+    collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_WORM )] = &projectileBazookaCollidesWithWorm;
+    collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_BAZOOKA_PROJECTILE)] = &wormCollidesWithProjectileBazooka;
+
+    collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_BEAM)] = &projectileBazookaCollideWithBeam;
+    collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_BAZOOKA_PROJECTILE )] = &beamCollidesWithProjectileBazooka;
+
+    // Air Attack Missile.
+    collisionsMap[std::make_pair(ENTITY_AIR_ATTACK_MISSILE, ENTITY_EDGE)] = &airAttackMissileCollidesWithEdge;
+    collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_AIR_ATTACK_MISSILE)] = &edgeCollidesWithAirAttackMissile;
+
+    collisionsMap[std::make_pair(ENTITY_AIR_ATTACK_MISSILE, ENTITY_WATER)] = &airAttackMissileCollidesWithWater;
+    collisionsMap[std::make_pair(ENTITY_WATER, ENTITY_AIR_ATTACK_MISSILE )] = &waterCollidesWithAirAttackMissile;
+
+
+    collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_AIR_ATTACK_MISSILE)] = &provisionCollideWithAirAttackMissile;
+    collisionsMap[std::make_pair(ENTITY_AIR_ATTACK_MISSILE, ENTITY_PROVISION )] = &airAttackMissileCollidesWithProvision;
+
+    collisionsMap[std::make_pair(ENTITY_AIR_ATTACK_MISSILE, ENTITY_WORM )] = &airAttackMissileCollidesWithWorm;
+    collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_AIR_ATTACK_MISSILE)] = &wormCollidesWithAirAttackMissile;
+
+    collisionsMap[std::make_pair(ENTITY_AIR_ATTACK_MISSILE, ENTITY_BEAM)] = &airAttackMissileCollideWithBeam;
+    collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_AIR_ATTACK_MISSILE )] = &beamCollidesWithAirAttackMissile;
+
+
+    //Colisiones con las provisiones Worms:
+    collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_WORM)] = &provisionCollidesWithWorm;
+    collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_PROVISION )] = &wormCollidesWithProvision;
 
 
     endContactMap[std::make_pair(ENTITY_BEAM, ENTITY_WORM) ] = &beamEndContactWithWorm;
@@ -252,8 +308,6 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
 
     endContactMap[std::make_pair(ENTITY_WORM, ENTITY_EDGE) ] = &wormEndContactWithEdge;
     endContactMap[std::make_pair(ENTITY_EDGE, ENTITY_WORM) ] = &edgeEndContactWithWorm;
-
-
 }
 
 

@@ -11,6 +11,7 @@
 #include "../../../GameParameters/GameParameters.h"
 #include "../../../../Common/DTO/DTO.h"
 #include "../../../../Common/DTO/ProjectileDTO.h"
+#include "Explodable/Explodable.h"
 
 class AirAttackMissile : public GameObject {
 private:
@@ -20,6 +21,7 @@ private:
     const GameParameters& gameParameters;
     b2World* aWorld;
     TypeFocus typeFocus;
+    Explodable explodable;
 public:
 
     AirAttackMissile(const GameParameters &gameParameters, const TypeFocus& typeFocus);
@@ -28,17 +30,7 @@ public:
 
     ProjectileDTO getProjectilDTO();
 
-    // pasar a una clase y delegarlo.
-
-    b2AABB getAreaForSearch(const b2Vec2 &positionMissile) const;
-
-    b2Vec2
-    getImpulseForWorm(const b2Vec2 &positionWorm, const b2Vec2 &positionProjectile,
-                      const float &distanceWormToProjectile);
-
-    float getDamageForWorm(const float &wormDistanceSquared);
-
-    b2World *getWorld();
+    void searchWormAndCollide(const b2Vec2 &projectilePosition);
 };
 
 

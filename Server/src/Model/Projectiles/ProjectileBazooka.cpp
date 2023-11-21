@@ -4,8 +4,11 @@
 
 #include <iostream>
 #include "ProjectileBazooka.h"
+#include "../QueriesToWorld/SaveWormsInAreaQuery.h"
+#include "../Worm/Worm.h"
 
-ProjectileBazooka::ProjectileBazooka(const GameParameters& gameParameters, const TypeFocus& typeFocus) : GameObject(ENTITY_BAZOOKA_PROJECTILE) , gameParameters(gameParameters) {
+ProjectileBazooka::ProjectileBazooka(const GameParameters& gameParameters, const TypeFocus& typeFocus) : GameObject(ENTITY_BAZOOKA_PROJECTILE) , gameParameters(gameParameters),
+            explodable(gameParameters.getBazookaProjectileDamageMax(), gameParameters.getBazookProjectileRadio(), gameParameters.getBazookProjectileRadio() ){
     this->mainDamage = gameParameters.getBazookaProjectileDamageMax();
     this->maxRadio = gameParameters.getBazookProjectileRadio();
     this->maxImpulseMagnitude = gameParameters.getBazookaProjectilMaxImpulseExplosion();
@@ -36,35 +39,13 @@ void ProjectileBazooka::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const 
     body->ApplyLinearImpulse( impulseProjectile, body->GetWorldCenter(), true);
     this->aWorld = aWorld;
 }
-b2World* ProjectileBazooka::getWorld(){
-    return this->aWorld;
-}
-
-b2AABB ProjectileBazooka::getAreaForSearch(const b2Vec2 &positionProjectile) const {
-    b2AABB searchArea;
-    searchArea.lowerBound = positionProjectile - b2Vec2(maxRadio, maxRadio);
-    searchArea.upperBound = positionProjectile + b2Vec2(maxRadio, maxRadio);
-    return searchArea;
-}
-
-b2Vec2 ProjectileBazooka::getImpulseForWorm(const b2Vec2 &positionWorm, const b2Vec2 &positionProjectile,
-                                            const float &distanceWormToProjectile) {
-    b2Vec2 impulseDirection = positionWorm - positionProjectile;
-    impulseDirection.Normalize();
-    float impulseMagnitude = maxImpulseMagnitude * std::max(0.0f, 1.0f - sqrt(distanceWormToProjectile) / maxRadio );
-    b2Vec2 impulseWorm = impulseMagnitude * impulseDirection;
-    if(impulseDirection.x == 0){ // Si la normal en x es cero hizo un tiro a -90º sale volando para arriba.
-        impulseWorm.y = maxImpulseMagnitude;
-    }
-    return impulseWorm;
-}
-
-float ProjectileBazooka::getDamageForWorm(const float &wormDistanceSquared) {
-    return mainDamage * std::max(0.0f, 1.0f - sqrt(wormDistanceSquared) / maxRadio);
-}
 
 ProjectileDTO ProjectileBazooka::getProjectilDTO(){
     return ProjectileDTO(AIR_ATTACK_MISSILE, this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
                          gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()), this->typeFocus);
 }
 
+void ProjectileBazooka::searchWormAndCollide(const b2Vec2 &projectilePosition){
+    explodable.searchWormAndCollide(projectilePosition, aWorld);
+    this->destroyBody();
+}
