@@ -25,10 +25,16 @@ WormMeleeWeapon::WormMeleeWeapon(int id, int x, int y, const size_t &hpWorm, con
         m_width = 40;
         m_height = 30;
         m_textureID = "bat";
+        m_animation.setProps(m_textureID, 31, 140);
+    } else if (m_weaponCurrent == TypeWeapon::DYNAMITE) {
+        m_width = 30;
+        m_height = 30;
+        m_textureID = "dynamite";
+        m_animation.setProps(m_textureID, 31, 60);
     } else {
         std::cerr << "weapon not found" << std::endl;
     }
-    m_animation.setProps(m_textureID, 31, 140);
+
 }
 
 void WormMeleeWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
@@ -45,7 +51,7 @@ void WormMeleeWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureMa
 void WormMeleeWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera,
                              SoundManager &soundManager) {
     Worm::update(input, queue, camera, soundManager);
-    m_crossHair.update(input, queue, camera,soundManager);
+    m_crossHair.update(input, queue, camera, soundManager);
 
     if (input.getKeyDown(SDL_SCANCODE_SPACE) && m_isMyTurn) {
         soundManager.playEffect("bat");
