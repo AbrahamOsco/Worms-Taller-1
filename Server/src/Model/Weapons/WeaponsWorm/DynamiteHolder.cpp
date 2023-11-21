@@ -9,8 +9,12 @@ DynamiteHolder::DynamiteHolder(const TypeWeapon &aTypeWeapon, const float &mainD
               dynamite(nullptr) {
 }
 
-void DynamiteHolder::placeDynamite(const int &waitTime, const b2Vec2 &positionDynamite, b2World *world,
-                                   const TypeFocus &typeFocus) {
+void DynamiteHolder::placeDynamite(const int &waitTime, const b2Vec2 &positionWorm, const Direction &aDirectionWorm,b2World *world,const TypeFocus &typeFocus) {
+    float offset = -0.5f;
+    if (aDirectionWorm == RIGHT){
+        offset = 1.0;
+    }
+    b2Vec2 positionDynamite(positionWorm.x + offset, positionWorm.y);
     dynamite = std::make_unique<Dynamite>(waitTime, gameParameters, typeFocus);
     dynamite->addToTheWorld(world, positionDynamite);
 }

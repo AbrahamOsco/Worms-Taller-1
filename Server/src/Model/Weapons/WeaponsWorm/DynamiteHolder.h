@@ -17,7 +17,7 @@ public:
                    const TypeMunition &aTypeMunition, const size_t &aMunition,
                    const GameParameters &gameParameters);
 
-    void placeDynamite(const int &waitTime, const b2Vec2 &positionDynamite, b2World *world,
+    void placeDynamite(const int &waitTime, const b2Vec2 &positionWorm, const Direction &aDirectionWorm, b2World *world,
                        const TypeFocus &typeFocus);
 
     bool hasAScope() override;
