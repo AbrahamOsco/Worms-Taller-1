@@ -49,7 +49,5 @@ void WormGuidedWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &que
             std::unique_ptr<Command> command(new AirAttackCmd(newPoint.GetX(), newPoint.GetY()));
             queue.move_push(std::move(command));
         }
-
-
     }
 }

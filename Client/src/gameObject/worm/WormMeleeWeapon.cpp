@@ -47,7 +47,8 @@ void WormMeleeWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queu
     Worm::update(input, queue, camera, soundManager);
     m_crossHair.update(input, queue, camera,soundManager);
 
-    if (input.getKeyDown(SDL_SCANCODE_SPACE)) {
+    if (input.getKeyDown(SDL_SCANCODE_SPACE) && m_isMyTurn) {
+        soundManager.playEffect("bat");
         std::unique_ptr<Command> command(new FireCmd());
         queue.move_push(std::move(command));
     }
