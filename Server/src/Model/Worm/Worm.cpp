@@ -279,8 +279,6 @@ void Worm::update() {
         }
         armament.getWeaponOnStandBy(attacked);
     }
-    // limpiamos las projectiles si se puede
-    // and (this->typeFocus == NO_FOCUS and this->waitingToGetFocus) antes estaba esto.
 }
 
 
