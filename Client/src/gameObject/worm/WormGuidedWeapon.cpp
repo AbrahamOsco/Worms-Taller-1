@@ -36,14 +36,16 @@ void WormGuidedWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureM
 void WormGuidedWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera,
                               SoundManager &soundManager) {
     Worm::update(input, queue, camera, soundManager);
-    if (input.isMouseRightButtonDown()) {
+    if (input.isMouseRightButtonDown() && m_isMyTurn) {
+        m_isMyTurn = false;
         SDL2pp::Point point(input.getMouseX(), input.getMouseY());
         SDL2pp::Point newPoint = point + camera.getPosition();
-        std::cout << "send: " << newPoint << std::endl;
         if (m_weaponCurrent == TypeWeapon::TELEPORT) {
+            soundManager.playEffect("teleport");
             std::unique_ptr<Command> command(new TeleportCmd(newPoint.GetX(), newPoint.GetY()));
             queue.move_push(std::move(command));
         } else if (m_weaponCurrent == TypeWeapon::AIR_ATTACK) {
+            soundManager.playEffect("air-attack");
             std::unique_ptr<Command> command(new AirAttackCmd(newPoint.GetX(), newPoint.GetY()));
             queue.move_push(std::move(command));
         }
