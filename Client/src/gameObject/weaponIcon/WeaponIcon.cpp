@@ -13,6 +13,7 @@
 #include "../../command/SelectRedGrenadeCmd.h"
 #include "../../command/SelectHolyGrenadeCmd.h"
 #include "../../command/SelectBananaCmd.h"
+#include "../../command/SelectDynamiteCmd.h"
 
 WeaponIcon::WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon, bool isMyTurn)
         : GameObject(LoaderParams(0, 0, 50, 55, " ")),
@@ -110,6 +111,9 @@ WeaponIcon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera 
                     queue.move_push(std::move(command));
                 } else if (m_typeWeapon == TypeWeapon::BANANA) {
                     std::unique_ptr<Command> command(new SelectBananaCmd());
+                    queue.move_push(std::move(command));
+                } else if (m_typeWeapon == TypeWeapon::DYNAMITE_HOLDER) {
+                    std::unique_ptr<Command> command(new SelectDynamiteCmd());
                     queue.move_push(std::move(command));
                 }
             }
