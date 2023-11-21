@@ -96,12 +96,14 @@ size_t Players::startAPlayerTurn() {
         this->idCurrenPlayer = playerIterator->first;
         return idCurrenPlayer;
     }
-    playerIterator++;
-    if( playerIterator != players.end() and playerIterator->second.lostAllWorms() ){ // si este jugador perdio todo sus gusanos que pase al sgt jugador.
+    while( playerIterator != players.end() ){
         playerIterator++;
-    }
-    if ( playerIterator == players.end()){
-        playerIterator = players.begin();
+        if(playerIterator == players.end()){
+            playerIterator = players.begin();
+        }
+        if( not players.at(playerIterator->first).lostAllWorms() ){
+            break;
+        }
     }
     this->idCurrenPlayer = playerIterator->first;
     return this->idCurrenPlayer;

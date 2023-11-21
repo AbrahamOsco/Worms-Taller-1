@@ -9,13 +9,11 @@ AirAttackDetonator::AirAttackDetonator(const TypeWeapon &aTypeWeapon, const floa
     offsets = {-0.5f,0.5f,-1.5f,1.5f,-2.5f,2.5f};
 }
 
-void AirAttackDetonator::detonate(const int &posXAttack, const int &posYAttack, b2World *world, const TypeFocus& typeFocus) {
+void AirAttackDetonator::detonate(const int &posXAttack, b2World *world, const TypeFocus &typeFocus) {
     float posXInMeters =  (float) posXAttack / gameParameters.getPositionAdjustment();
-    float posYInMeters = ((gameParameters.getMaxHeightPixel() - ((float) posYAttack)) / gameParameters.getPositionAdjustment());
-
     for (auto & offset : offsets) {
         std::unique_ptr<AirAttackMissile> missile{new AirAttackMissile(gameParameters, typeFocus)};
-        missile.get()->addToTheWorld(world, b2Vec2(posXInMeters + offset, posYInMeters), windValue );
+        missile.get()->addToTheWorld(world, b2Vec2(posXInMeters + offset, gameParameters.airAttackGetPositionY()), windValue );
         missiles.push_back(std::move(missile));
     }
 }

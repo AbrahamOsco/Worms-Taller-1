@@ -20,7 +20,7 @@ public:
     AirAttackDetonator(const TypeWeapon &aTypeWeapon, const float &mainDamage, const TypeMunition &aTypeMunition,
                        const size_t &aMunition, const GameParameters &gameParameters);
 
-    void detonate(const int &posXAttack, const int &posYAttack, b2World *world, const TypeFocus &typeFocus);
+    void detonate(const int &posXAttack, b2World *world, const TypeFocus &typeFocus);
 
     // metodos necesarios a overridear
     bool hasAScope() override;

@@ -133,6 +133,8 @@ public:
     float getProvisionImpulseExplosionY() const;
 
     int getMaxValueWind() const;
+
+    float airAttackGetPositionY() const;
 };
 
 

@@ -292,7 +292,7 @@ void Worm::attackWithBat(){
     }
     wormForAttack->getBody()->ApplyLinearImpulse(b2Vec2(factor * aBat->getImpulseX(), aBat->getImpulseY()), wormForAttack->getBody()->GetWorldCenter(), true);
     aBat->resetRayCast();
-    this->endAttack();
+    attacked = true;
 }
 
 // Desarmo el arma que tengo y seteo que ya ataque
@@ -355,12 +355,13 @@ void Worm::teleportWorm(const int &posXTeleport, const int &posYTeleport){
     this->endAttack();
 }
 
-void Worm::attackWithAirAttack(const int &posXAttack, const int &posYAttack){
+void Worm::attackWithAirAttack(const int &posXAttack) {
     if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
         return;
     }
+    gameParameters.getPositionYForBoxes();
     AirAttackDetonator* airAttackDetonator = (AirAttackDetonator*) this->armament.getWeaponCurrentPtr();
-    airAttackDetonator->detonate(posXAttack, posYAttack, aWorld, this->typeFocus);
+    airAttackDetonator->detonate(posXAttack, aWorld, this->typeFocus);
     this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
     waitingToGetFocus = true;
     this->endAttack();
@@ -411,7 +412,7 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_AIR_ATTACK ){
         this->assignWeapon(AIR_ATTACK);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::AIR_ATTACK_POINT ){
-        this->attackWithAirAttack(aCommandDTO->getX(), aCommandDTO->getY());
+        this->attackWithAirAttack(aCommandDTO->getX());
     }
 
 }

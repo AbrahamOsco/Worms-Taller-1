@@ -80,7 +80,16 @@ GameParameters::GameParameters() {
     parameters["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"] = nodeInitial["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"].as<float>();
     parameters["BAZOOKA_MUNITION"] = nodeInitial["BAZOOKA_MUNITION"].as<float>();
     parameters["BAZOOKA_RAY_LENGTH"] = nodeInitial["BAZOOKA_RAY_LENGTH"].as<float>();
+
+
+    parameters["AIR_ATTACK_POSITION_Y_TO_INVOKE"] = nodeInitial["AIR_ATTACK_POSITION_Y_TO_INVOKE"].as<float>();
+
 }
+
+float GameParameters::airAttackGetPositionY() const{
+    return this->parameters.at("AIR_ATTACK_POSITION_Y_TO_INVOKE");
+}
+
 
 int GameParameters::getMaxValueWind() const{
     return static_cast<int>(this->parameters.at("MAX_VALUE_WIND"));

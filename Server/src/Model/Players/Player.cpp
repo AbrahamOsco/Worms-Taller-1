@@ -54,14 +54,13 @@ size_t Player::startAWormTurn() {
         worms[idCurrentWorm]->activateFocus();
         return idCurrentWorm;
     }
-    wormIterator++; // avanzamos al iterador.
-     if(wormIterator != worms.end() and worms.at(wormIterator->first)->wasDestroyedWorm() ){ // si el prox gusano de jugador a jugar esta muerto pasamos al sgt gusano.
+    while( wormIterator != worms.end() ){
         wormIterator++;
-    }
-    if (wormIterator == worms.end()){
-        wormIterator = worms.begin();
-        if(worms.at(wormIterator->first)->wasDestroyedWorm()){
-            wormIterator++;
+        if(wormIterator == worms.end()){
+            wormIterator = worms.begin();
+        }
+        if( not worms.at(wormIterator->first)->wasDestroyedWorm() ){
+            break;
         }
     }
     this->idCurrentWorm = wormIterator->first;

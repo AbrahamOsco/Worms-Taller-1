@@ -143,7 +143,7 @@ public:
 
     Direction getDirection();
 
-    void attackWithAirAttack(const int &posXAttack, const int &posYAttack);
+    void attackWithAirAttack(const int &posXAttack);
 };
 
 
