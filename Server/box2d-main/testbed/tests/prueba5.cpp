@@ -10,6 +10,8 @@
 #include <cstdlib>
 #include <linux/limits.h>
 #include "imgui/imgui.h"
+#include "../../../../Common/DTO/WeaponDTO.h"
+#include "../../../GameParameters/GameParameters.h"
 
 #include <GL/gl.h> // Incluir la biblioteca principal de OpenGL
 //#include <GL/glu.h> // Incluir la biblioteca de utilidades de GLUT
@@ -272,8 +274,8 @@ class Dynamite : public GameObject {
     bool exploded;
 
 public:
-    explicit Dynamite(int wait) : GameObject(ENTITY_DYNAMITE), waitTime(wait),
-                                    exploded(false) {}
+    explicit Dynamite(const int &wait) : GameObject(ENTITY_DYNAMITE), waitTime(wait),
+                                         exploded(false) {}
 
     void addToTheWorld(b2World* aWorld, b2Vec2 position) {
         startTime = std::chrono::steady_clock::now();
@@ -344,11 +346,13 @@ class DynamiteHolder {
     std::vector<std::unique_ptr<Dynamite>> dynamites;
 
 public:
-    DynamiteHolder() = default;
+    DynamiteHolder(){
 
-    void placeDynamite(b2World *world, int wait, b2Vec2 pos) {
-        std::unique_ptr<Dynamite> dynamite{new Dynamite(wait)};
-        dynamite->addToTheWorld(world, pos);
+    }
+
+     void placeDynamite(const int &waitTime, const b2Vec2 &positionDynamite, b2World *world) {
+        std::unique_ptr<Dynamite> dynamite{new Dynamite(waitTime)};
+        dynamite->addToTheWorld(world, positionDynamite);
         dynamites.push_back(std::move(dynamite));
     }
 
@@ -375,7 +379,7 @@ class Worm : public GameObject {
 
 public:
     Worm(const size_t &idWorm, const float &posIniX, const float &posIniY) : GameObject(ENTITY_WORM), positionInitialX(posIniX),
-        positionInitialY(posIniY) {
+                                                                             positionInitialY(posIniY){
         this->idWorm = idWorm;
         directionLook = Direction::RIGHT;
         hp = 100.0f;
@@ -457,7 +461,7 @@ public:
             posX -= 0.5f;
         else
             posX += 0.5f;
-        dynamiteHolder.placeDynamite(world,waitTime,b2Vec2(posX,posY));
+        dynamiteHolder.placeDynamite(waitTime, b2Vec2(posX, posY), world);
         waitTime = 5; // back to default
     }
 

@@ -16,7 +16,7 @@ enum TypeWeapon{
     GREEN_GRENADE,
     BANANA,
     HOLY_GRENADE,
-    DYNAMITE,
+    DYNAMITE_HOLDER,
     BASEBALL_BAT,
     AIR_ATTACK,
     TELEPORT

@@ -22,12 +22,14 @@ public:
 
     void detonate(const int &posXAttack, b2World *world, const TypeFocus &typeFocus);
 
-    // metodos necesarios a overridear
+    // Estos 3 override obligatoriamente
     bool hasAScope() override;
 
     bool hasVariablePower() override;
 
     bool launchesProjectiles() override;
+
+    // esto 3 para las armas que lanzan proyectiles overridear obligatorioriamente.
 
     bool thereAreProjectiles() override;
 

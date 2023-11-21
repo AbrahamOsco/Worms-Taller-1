@@ -45,23 +45,30 @@ public:
 
     virtual bool launchesProjectiles() = 0;
 
-    virtual bool thereAreProjectiles(); // metodo polimorfo contesto segun el tipo de weapon stand bye q tenga .
+    // Estos 3 para toda arma que lanza proyectiles.
 
-    // metodods para la mira
-
-    virtual void increaseAngle();
-
-    virtual void decreaseAngle();
+    virtual bool thereAreProjectiles();
 
     virtual void tryCleanProjectiles(b2World* aWorld);
+
+    virtual void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO);
+
+
+    // estos 2 metodos armas con potencia variable.
 
     virtual bool increaseImpulse();
 
     virtual bool hasMaxImpulse();
 
-    virtual void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO);
+
+
+    // metodods para la mira estos 3
+    virtual void increaseAngle();
+
+    virtual void decreaseAngle();
 
     virtual WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent);
+
 
     void assignWindValue(const float &aWindValue);
 

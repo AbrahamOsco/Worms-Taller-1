@@ -24,7 +24,7 @@ WeaponIcon::WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &c
 
     if (m_typeWeapon == TypeWeapon::AIR_ATTACK) {
         m_textureID = "air_attack_icon";
-    } else if (m_typeWeapon == TypeWeapon::DYNAMITE) {
+    } else if (m_typeWeapon == TypeWeapon::DYNAMITE_HOLDER) {
         m_textureID = "dynamite_icon";
     } else if (m_typeWeapon == TypeWeapon::RED_GRENADE) {
         m_textureID = "red_grenade_icon";
