@@ -11,6 +11,7 @@
 #include "../../command/LeftCmd.h"
 #include "../../command/JumpForwardCmd.h"
 #include "../../command/JumpBackwardCmd.h"
+#include "../../command/CountdownCmd.h"
 
 Worm::Worm(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocus &focus,
            const MoveWorm &moveWorm, bool isMyTurn) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_id(id), m_hpWorm(hpWorm),
@@ -87,6 +88,21 @@ void Worm::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &
             m_moveWorm = MoveWorm::WALKING;
             soundManager.playEffect("jump");
             std::unique_ptr<Command> command(new JumpBackwardCmd());
+            queue.move_push(std::move(command));
+        } else if (input.getKeyDown(SDL_SCANCODE_1)) {
+            std::unique_ptr<Command> command(new CountdownCmd(1));
+            queue.move_push(std::move(command));
+        } else if (input.getKeyDown(SDL_SCANCODE_2)) {
+            std::unique_ptr<Command> command(new CountdownCmd(2));
+            queue.move_push(std::move(command));
+        } else if (input.getKeyDown(SDL_SCANCODE_3)) {
+            std::unique_ptr<Command> command(new CountdownCmd(3));
+            queue.move_push(std::move(command));
+        } else if (input.getKeyDown(SDL_SCANCODE_4)) {
+            std::unique_ptr<Command> command(new CountdownCmd(4));
+            queue.move_push(std::move(command));
+        } else if (input.getKeyDown(SDL_SCANCODE_5)) {
+            std::unique_ptr<Command> command(new CountdownCmd(5));
             queue.move_push(std::move(command));
         }
     }

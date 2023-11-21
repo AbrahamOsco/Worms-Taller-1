@@ -31,6 +31,7 @@ enum TypeCommand {
     TELEPORT_MOVE,
     AIR_ATTACK_POINT,
     CLOSE_GAME,
+    COUNTDOWN,
     NONE
 };
 
