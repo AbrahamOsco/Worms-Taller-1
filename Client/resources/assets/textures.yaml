@@ -135,6 +135,20 @@ textures:
     source: "../Client/resources/assets/bullets/Mortar.png"
   - name: air_attack_projectile
     source: "../Client/resources/assets/bullets/AirAttackMissile.png"
+  - name: dynamite_projectile
+    source: "../Client/resources/assets/bullets/Dynamite.png"
+  - name: banana_projectile
+    source: "../Client/resources/assets/bullets/Banana.png"
+  - name: green_grenade_projectile
+    source: "../Client/resources/assets/bullets/GreenGrenade.png"
+  - name: holy_grenade_projectile
+    source: "../Client/resources/assets/bullets/HolyGrenade.png"
+  - name: red_grenade_projectile
+    source: "../Client/resources/assets/bullets/RedGrenade.png"
+  - name: red_grenade_fragment_projectile
+    source: "../Client/resources/assets/bullets/RedGrenadeFragment.png"
+  - name: mortar_fragment_projectile
+    source: "..Client/resources/assets/bullets/MortarFragment.png"
   - name: bazooka_init
     source: "../Client/resources/assets/worms/wbazlnk.png"
   - name: victory

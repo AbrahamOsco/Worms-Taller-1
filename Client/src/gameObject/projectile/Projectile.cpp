@@ -10,6 +10,8 @@ Projectile::Projectile(int x, int y, const TypeProjectil &typeProjectile, const 
         m_textureID = "bazooka_projectile";
     } else if (m_typeProjectile == TypeProjectil::AIR_ATTACK_MISSILE) {
         m_textureID = "air_attack_projectile";
+    } else if (m_typeProjectile == TypeProjectil::DYNAMITE) {
+        m_textureID = "dynamite_projectile";
     } else {
         m_textureID = "mortar_projectile";
     }
