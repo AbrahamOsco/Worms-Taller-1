@@ -248,6 +248,7 @@ void Worm::activateFocus() {
 }
 
 void Worm::update() {
+    armament.tryCleanProjectiles(aWorld);
     if (this->isDestroyedBody() and not wasDestroyed) {     // Si el gusano fue destrouido lo destruimos del mundoo. Ademas no lo actualizamos;
         aWorld->DestroyBody(this->getBody());
         this->wasDestroyed = true;
@@ -267,9 +268,6 @@ void Worm::update() {
     }
     // limpiamos las projectiles si se puede
     // and (this->typeFocus == NO_FOCUS and this->waitingToGetFocus) antes estaba esto.
-    if (attacked and not wasDestroyed) {
-        armament.tryCleanProjectiles(aWorld);
-    }
 }
 
 
