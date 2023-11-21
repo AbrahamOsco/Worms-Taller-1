@@ -140,7 +140,7 @@ void ReceiverThread::run() {
                                 wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), weaponSightDto.getPositionXSight(),
                                 weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
-                    } else if (wormDto.getWeaponCurrent() == TypeWeapon::DYNAMITE) {
+                    } else if (wormDto.getWeaponCurrent() == TypeWeapon::DYNAMITE_HOLDER) {
                         std::unique_ptr<WormMeleeWeapon> worm = std::make_unique<WormMeleeWeapon>(static_cast<int>(wormDto.getIdPlayer()),
                                                                                                   static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
                                                                                                   wormDto.getHpWorm(),

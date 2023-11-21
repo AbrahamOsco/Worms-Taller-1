@@ -26,7 +26,7 @@ WormMeleeWeapon::WormMeleeWeapon(int id, int x, int y, const size_t &hpWorm, con
         m_height = 30;
         m_textureID = "bat";
         m_animation.setProps(m_textureID, 31, 140);
-    } else if (m_weaponCurrent == TypeWeapon::DYNAMITE) {
+    } else if (m_weaponCurrent == TypeWeapon::DYNAMITE_HOLDER) {
         m_width = 30;
         m_height = 30;
         m_textureID = "dynamite";
