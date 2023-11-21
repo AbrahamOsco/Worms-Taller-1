@@ -31,7 +31,8 @@ void ProjectileBazooka::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const 
     defFixMuniBazooka.shape = &projBazoShape;
     defFixMuniBazooka.density = 1.0f; // ver el tema del aire luego.
     this->body->CreateFixture(&defFixMuniBazooka);
-    // aplicamos el efecto del viento.
+
+    // aplicamos el efecto del viento LUEGO DE CREAR EL FIXTURE OJO.
     float windValueSelect = windValue/ this->body->GetMass();
     b2Vec2 vectorWind(windValueSelect, 0.0f);
     this->body->ApplyForceToCenter(vectorWind, true); // Aplicamos el vector del viento en todo momento al projectil de la bazooka
@@ -41,7 +42,7 @@ void ProjectileBazooka::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const 
 }
 
 ProjectileDTO ProjectileBazooka::getProjectilDTO(){
-    return ProjectileDTO(AIR_ATTACK_MISSILE, this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
+    return ProjectileDTO(BAZOOKA_PROJECTILE, this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
                          gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()), this->typeFocus);
 }
 

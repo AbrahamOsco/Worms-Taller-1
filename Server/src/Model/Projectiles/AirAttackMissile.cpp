@@ -25,12 +25,10 @@ void AirAttackMissile::addToTheWorld(b2World *aWorld, const b2Vec2 &positionMiss
     defFixAirAttackMis.shape = &airAttackMissileForm;
     defFixAirAttackMis.density = 1.0f; // ver el tema del aire luego.
 
-    // aplicamos el efecto del viento.
-    float windValueSelect = windValue/ this->body->GetMass();
+    this->body->CreateFixture(&defFixAirAttackMis); // Inmediatamente luego de ajustar los fixture crearlo en el cuerpo sino no tendra masa hasta ahora el cuerpo MUY Impotante.
+    float windValueSelect = (windValue/ this->body->GetMass());
     b2Vec2 vectorWind(windValueSelect, 0.0f);
     this->body->ApplyForceToCenter(vectorWind, true); // Aplicamos el vector del viento en todo momento al projectil de la bazooka
-
-    this->body->CreateFixture(&defFixAirAttackMis);
     this->aWorld = aWorld;
 }
 

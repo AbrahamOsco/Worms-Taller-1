@@ -2,6 +2,7 @@
 // Created by abraham on 20/11/23.
 //
 
+#include <iostream>
 #include "Explodable.h"
 #include "../../QueriesToWorld/SaveWormsInAreaQuery.h"
 #include "../../Worm/Worm.h"
