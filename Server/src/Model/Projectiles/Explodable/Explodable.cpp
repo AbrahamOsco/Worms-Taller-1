@@ -2,6 +2,7 @@
 // Created by abraham on 20/11/23.
 //
 
+#include <iostream>
 #include "Explodable.h"
 #include "../../QueriesToWorld/SaveWormsInAreaQuery.h"
 #include "../../Worm/Worm.h"
@@ -42,6 +43,7 @@ void Explodable::searchWormAndCollide(const b2Vec2 &projectilePosition, b2World 
         b2Vec2 impulseForWorm = this->getImpulseForWorm(aWormToTakeDamage->getBody()->GetWorldCenter(), projectilePosition, aElement.second);
         float damageForWorm = this->getDamageForWorm(aElement.second);
         aWormToTakeDamage->getBody()->ApplyLinearImpulse( impulseForWorm, aWormToTakeDamage->getBody()->GetWorldCenter(), true);
+        std::cout << "Haciendo un daño  al worm de : " << damageForWorm;
         aWormToTakeDamage->takeDamage(damageForWorm);
     }
 }

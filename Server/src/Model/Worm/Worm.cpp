@@ -86,8 +86,8 @@ void Worm::addToTheWorld(b2World *world) {
     defFixtureWorm.shape = &wormShape;
     defFixtureWorm.friction = gameParameters.getFrictionWorm();
     defFixtureWorm.density = 1.0f;
-    this->aWorld = world;
     this->body->CreateFixture(&defFixtureWorm);
+    this->aWorld = world;
 }
 
 // for worm moves.
@@ -363,6 +363,7 @@ void Worm::attackWithAirAttack(const int &posXAttack, const int &posYAttack){
     airAttackDetonator->detonate(posXAttack, posYAttack, aWorld, this->typeFocus);
     this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
     waitingToGetFocus = true;
+    this->endAttack();
 }
 
 

@@ -23,9 +23,8 @@ bool Teleport::isPositionFree(const b2Vec2& positionToTeleport, b2World* aWorld)
 
 
 void Teleport::teleportIn(b2Body *bodyWorm, const int &posXPix, const int &posYPix, b2World *aWorld) {
-    float PosYAjust = (float) posYPix;
     float posXInMeters =  (float) posXPix / gameParameters.getPositionAdjustment();
-    float posYInMeters = ((gameParameters.getMaxHeightPixel() - PosYAjust) / gameParameters.getPositionAdjustment());
+    float posYInMeters = ((gameParameters.getMaxHeightPixel() - ((float) posYPix)) / gameParameters.getPositionAdjustment());
     // Si hay un objeto donde nos queremos teletransportar NO lo hacemos entonces.
     b2Vec2 positionToTp(posXInMeters, posYInMeters);
     std::cout << "Posición en píxeles: " << posXPix << ", " << posYPix << std::endl;
