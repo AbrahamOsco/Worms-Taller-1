@@ -5,6 +5,7 @@
 #include <cstring>
 #include "Mock_Socket.h"
 #include <vector>
+#include <memory>
 #include "../Common/Protocol/Protocol.h"
 #include "../Client/src/protocol/ClientProtocol.h"
 #include "../Server/src/Protocol/ServerProtocol.h"
@@ -413,22 +414,186 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendAWormDTO) {
     ASSERT_EQ(dto.getWeaponCurrent(), buffer[offset]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendWeaponsDTO) {
-    ASSERT_TRUE(true);
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    std::vector<WeaponDTO> weapons;
+    weapons.push_back(WeaponDTO(BANANA, NO_INFINITE, 100));
+    weapons.push_back(WeaponDTO(HOLY_GRENADE, NO_INFINITE, 5));
+    weapons.push_back(WeaponDTO(MORTAR, NO_INFINITE, 1));
+    WeaponsDTO dto(25, weapons, BANANA);
+    protocol.sendWeaponsDTO(dto);
+    buffer = skt.getBuffer();
+    ASSERT_EQ(dto.getOperationType(), buffer[offset]);
+    offset++;
+    ASSERT_EQ(dto.getIdPlayer(), buffer[offset]);
+    offset++;
+    ASSERT_EQ(dto.getWeaponCurrent(), buffer[offset]);
+    offset++;
+    ASSERT_EQ(weapons.size(), buffer[offset]);
+    offset++;
+    for (size_t i = 0; i < weapons.size(); i++) {
+        ASSERT_EQ(weapons[i].getOperationType(), buffer[offset]);
+        offset++;
+        ASSERT_EQ(weapons[i].getTypeWeapon(), buffer[offset]);
+        offset++;
+        ASSERT_EQ(weapons[i].getTypeMunition(), buffer[offset]);
+        offset++;
+        ASSERT_EQ(weapons[i].getMunition(), buffer[offset]);
+        offset++;
+    }
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendWeaponSightDTO) {
-    ASSERT_TRUE(true);
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    WeaponSightDTO dto(NO_SHOW_SIGHT, 1, 0);
+    protocol.sendWeaponSightDTO(dto);
+    buffer = skt.getBuffer();
+    ASSERT_EQ(WEAPON_SIGHT, buffer[offset]);
+    offset++;
+    ASSERT_EQ(NO_SHOW_SIGHT, buffer[offset]);
+    offset++;
+    memcpy(&word, buffer.data()+offset, 2);
+    word = ntohs(word);
+    ASSERT_EQ(1, word);
+    offset = offset + 2;
+    memcpy(&word, buffer.data()+offset, 2);
+    word = ntohs(word);
+    ASSERT_EQ(0, word);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendProjectilesDTO) {
-    ASSERT_TRUE(true);
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    std::vector<ProjectileDTO> projectiles;
+    projectiles.push_back(ProjectileDTO(BAZOOKA_PROJECTILE, 25, 33, NO_FOCUS));
+    projectiles.push_back(ProjectileDTO(NONE_PROJECTILE, 96, 123, FOCUS));
+    projectiles.push_back(ProjectileDTO(AIR_ATTACK_MISSILE, 6582, 8743, FOCUS));
+    ProjectilesDTO dto(SHOW_PROJECTILES, projectiles);
+    protocol.sendProjectilesDTO(dto);
+    buffer = skt.getBuffer();
+    ASSERT_EQ(dto.getOperationType(), buffer[offset]);
+    offset++;
+    ASSERT_EQ(dto.getTypeShowProjectiles(), buffer[offset]);
+    offset++;
+    ASSERT_EQ(projectiles.size(), buffer[offset]);
+    offset++;
+    for (size_t i = 0; i < projectiles.size(); i++) {
+        ASSERT_EQ(projectiles[i].getOperationType(), buffer[offset]);
+        offset++;
+        ASSERT_EQ(projectiles[i].getTypeProjectil(), buffer[offset]);
+        offset++;
+        memcpy(&word, buffer.data()+offset, 2);
+        word = ntohs(word);
+        ASSERT_EQ(projectiles[i].getPositionX(), word);
+        offset = offset + 2;
+        memcpy(&word, buffer.data()+offset, 2);
+        word = ntohs(word);
+        ASSERT_EQ(projectiles[i].getPositionY(), word);
+        offset = offset + 2;
+        ASSERT_EQ(projectiles[i].getTypeFocus(), buffer[offset]);
+        offset++;
+    }
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendTurnDTO) {
-    ASSERT_TRUE(true);
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    TurnDTO dto(120, "texto", 10, 5, WIND_RIGHT);
+    protocol.sendTurnDTO(dto);
+    buffer = skt.getBuffer();
+    ASSERT_EQ(dto.getOperationType(), buffer[offset]);
+    offset++;
+    ASSERT_EQ(120, buffer[offset]);
+    offset++;
+    memcpy(&word, buffer.data()+offset, 2);
+    word = ntohs(word);
+    ASSERT_TRUE(dto.getTextTurn().size() == word);
+    offset = offset + 2;
+    std::string aux(buffer.data()+offset, word);
+    ASSERT_TRUE(dto.getTextTurn() == aux);
+    offset = offset + word;
+    ASSERT_EQ(dto.getTimeLeft(), buffer[offset]);
+    offset++;
+    ASSERT_EQ(dto.getValueWind(), buffer[offset]);
+    offset++;
+    ASSERT_EQ(dto.getTypeWind(), buffer[offset]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendAProvisionDTO) {
-    ASSERT_TRUE(true);
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    ProvisionDTO dto(23, 97, MEDICAL_KIT);
+    protocol.sendAProvisionDTO(dto);
+    buffer = skt.getBuffer();
+    ASSERT_EQ(PROVISION_DTO, buffer[offset]);
+    offset++;
+    memcpy(&word, buffer.data()+offset, 2);
+    word = ntohs(word);
+    ASSERT_EQ(23, word);
+    offset = offset + 2;
+    memcpy(&word, buffer.data()+offset, 2);
+    word = ntohs(word);
+    ASSERT_EQ(97, word);
+    offset = offset + 2;
+    ASSERT_EQ(MEDICAL_KIT, buffer[offset]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendEndGameDTO) {
-    ASSERT_TRUE(true);
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    EndGameDTO dto(113, WON_THE_GAME);
+    protocol.sendEndGameDTO(dto);
+    buffer = skt.getBuffer();
+    ASSERT_EQ(END_DTO, buffer[offset]);
+    offset++;
+    ASSERT_EQ(113, buffer[offset]);
+    offset++;
+    ASSERT_EQ(WON_THE_GAME, buffer[offset]);
+}
+TEST(TEST_PROTOCOL_SERVER_SEND, sendSnapShot_GAME_PROGRESS) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    std::vector<WormDTO> worms;
+    worms.push_back(WormDTO(50, 75, 69, 125, LEFT, NO_FOCUS, WALKING, RED_GRENADE));
+    std::vector<PlayerDTO> player;
+    player.push_back(PlayerDTO(15, "fede", NOT_IS_MY_TURN, 100));
+    PlayersDTO players(player);
+    std::vector<WeaponDTO> weapon;
+    weapon.push_back(WeaponDTO(BANANA, NO_INFINITE, 100));
+    WeaponsDTO weapons(12, weapon, BANANA);
+    WeaponSightDTO sight(NO_SHOW_SIGHT, 1, 0);
+    std::vector<ProjectileDTO> projectile;
+    projectile.push_back(ProjectileDTO(BAZOOKA_PROJECTILE, 25, 33, NO_FOCUS));
+    ProjectilesDTO projectiles(SHOW_PROJECTILES, projectile);
+    TurnDTO turn(120, "texto", 10, 5, WIND_RIGHT);
+    std::vector<ProvisionDTO> provisions;
+    provisions.push_back(ProvisionDTO(23, 97, MEDICAL_KIT));
+    std::unique_ptr<SnapShot> dto = std::unique_ptr<SnapShot>
+                (new SnapShot(worms, players, weapons, sight, projectiles, turn, provisions));
+    protocol.sendSnapShot(dto);
+    buffer = skt.getBuffer();
+    ASSERT_EQ(SNAP_SHOT, buffer[offset]);
+    offset++;
+    ASSERT_EQ(GAME_PROGRESS, buffer[offset]);
+    offset++;
+    ASSERT_EQ(1, buffer[offset]);
 }
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
