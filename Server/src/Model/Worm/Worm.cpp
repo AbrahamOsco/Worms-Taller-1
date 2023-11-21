@@ -407,6 +407,10 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
         this->attack();
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::TELEPORT_MOVE){
         this->teleportWorm(aCommandDTO->getX(), aCommandDTO->getY());
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_AIR_ATTACK ){
+        this->assignWeapon(AIR_ATTACK);
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::AIR_ATTACK_POINT ){
+        this->attackWithAirAttack(aCommandDTO->getX(), aCommandDTO->getY());
     }
 
 }

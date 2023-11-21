@@ -11,30 +11,27 @@
 #include "../GameObject/GameObject.h"
 #include "../../../../Common/DTO/DTO.h"
 #include "../../../../Common/DTO/ProjectileDTO.h"
+#include "Explodable/Explodable.h"
 
 class ProjectileBazooka : public GameObject {
 private:
+    // sacar estos 3 atributos en el futuro
     float mainDamage;
     float maxRadio;
     float maxImpulseMagnitude;
     const GameParameters& gameParameters;
     b2World* aWorld;
     TypeFocus typeFocus;
+    Explodable explodable;
 public:
 
     explicit ProjectileBazooka(const GameParameters &gameParameters, const TypeFocus& typeFocus);
 
     void addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const b2Vec2 &impulseProjectile, const float &windValue);
 
-    b2AABB getAreaForSearch(const b2Vec2& positionProjectile) const;
-
-    b2Vec2 getImpulseForWorm(const b2Vec2 &positionWorm, const b2Vec2 &positionProjectile, const float &distanceWormToProjectile);
-
-    float getDamageForWorm(const float &wormDistanceSquared);
-
-    b2World *getWorld();
-
     ProjectileDTO getProjectilDTO();
+
+    void searchWormAndCollide(const b2Vec2 &projectilePosition);
 };
 
 
