@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "Bat.h"
+#include "../../Worm/Worm.h"
 
 Bat::Bat(const TypeWeapon &aTypeWeapon, const float &mainDamage, const TypeMunition &aTypeMunition,
          const size_t &aMunition, const GameParameters& gameParameters) : Weapon(aTypeWeapon, mainDamage, aTypeMunition, aMunition, gameParameters),
@@ -11,13 +12,6 @@ Bat::Bat(const TypeWeapon &aTypeWeapon, const float &mainDamage, const TypeMunit
     impulseWeapon = std::make_pair(gameParameters.getBatImpulseX(), gameParameters.getBatImpulseY());
 }
 
-float Bat::getImpulseX() const {
-    return impulseWeapon.first;
-}
-
-float Bat::getImpulseY() const {
-    return impulseWeapon.second;
-}
 
 void Bat::increaseAngle() {
     weaponSight.increaseAngle();
@@ -31,12 +25,20 @@ bool Bat::hasAScope(){
     return true;
 }
 
-void Bat::resetRayCast(){
-    this->weaponSight.resetRayCast();
-}
-
-GameObject *Bat::getBodyCollidesWithRayCast(b2World *world, const b2Vec2 &positionWorm, const Direction &directionCurrent) {
-    return weaponSight.getBodyCollidesWithRayCast(world, positionWorm, directionCurrent);
+void Bat::searchWormAndAttack(b2World *world, const b2Vec2 &positionWorm, const Direction &directionCurrent){
+    GameObject* gameObject = weaponSight.getBodyCollidesWithRayCast(world, positionWorm, directionCurrent);
+    if ( gameObject == nullptr){
+        std::cout << "No se golpeo a ningun worm \n";         // signfica que no alcanza a nadie nuestro ataque o golpeamos a algo que no es un worm  por ej una viga
+        return;
+    }
+    Worm* wormForAttack = (Worm*) gameObject;
+    wormForAttack->takeDamage(getMainDamage());
+    float factor = 1.0f;
+    if(directionCurrent == LEFT){
+        factor = -1.0f;
+    }
+    wormForAttack->getBody()->ApplyLinearImpulse(b2Vec2(factor * impulseWeapon.first, impulseWeapon.second), wormForAttack->getBody()->GetWorldCenter(), true);
+    weaponSight.resetRayCast();
 }
 
 WeaponSightDTO Bat::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent){

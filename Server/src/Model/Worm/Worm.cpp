@@ -294,21 +294,8 @@ void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
 void Worm::attackWithBat(){
     this->typeMov = ATTACKING_WITH_BAT;
     Bat* aBat = (Bat*) this->armament.getWeaponCurrentPtr();
-    GameObject* gameObject = aBat->getBodyCollidesWithRayCast(aWorld, this->getBody()->GetWorldCenter(), directionLook);
-    if ( gameObject == nullptr){
-        std::cout << "No se golpeo a ningun worm \n";         // signfica que no alcanza a nadie nuestro ataque o golpeamos a algo que no es un worm  por ej una viga
-        endAttack();
-        return;
-    }
-    Worm* wormForAttack = (Worm*) gameObject;
-    wormForAttack->takeDamage(aBat->getMainDamage());
-    float factor = 1.0f;
-    if(directionLook == LEFT){
-        factor = -1.0f;
-    }
-    wormForAttack->getBody()->ApplyLinearImpulse(b2Vec2(factor * aBat->getImpulseX(), aBat->getImpulseY()), wormForAttack->getBody()->GetWorldCenter(), true);
-    aBat->resetRayCast();
-    attacked = true;
+    aBat->searchWormAndAttack(aWorld, this->body->GetWorldCenter(), directionLook);
+    endAttack();
 }
 
 // Desarmo el arma que tengo y seteo que ya ataque
@@ -354,7 +341,8 @@ void Worm::attack() {
     if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
         return;
     }
-    if( this->armament.getWeaponCurrent() == BASEBALL_BAT){
+
+    else if( this->armament.getWeaponCurrent() == BASEBALL_BAT){
         this->attackWithBat();
     } else if ( this->armament.getWeaponCurrentPtr()->hasVariablePower()){ // en un futuro pregunta si tiene un arma con potencia variable.
         this->chargeWeaponWithVariablePower();
@@ -376,15 +364,12 @@ void Worm::attackWithAirAttack(const int &posXAttack) {
     if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
         return;
     }
-    gameParameters.getPositionYForBoxes();
     AirAttackDetonator* airAttackDetonator = (AirAttackDetonator*) this->armament.getWeaponCurrentPtr();
     airAttackDetonator->detonate(posXAttack, aWorld, this->typeFocus);
     this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
     waitingToGetFocus = true;
     this->endAttack();
 }
-
-
 
 void Worm::endTurn() {
     typeFocus = NO_FOCUS;
@@ -442,22 +427,16 @@ bool Worm::isUnmoveAndNotExistsPojectiles() {
         return true;
     }
     bool unMovedOnABeam = body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and (contatctsWithBeam > 0);
-    bool unMovedOnEdge = body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and (contactsWithEdge > 0);
+    //bool unMovedOnEdge = body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and (contactsWithEdge > 0);
     bool unMovedOnAWorm = false;
     if(contatctsWithBeam == 0 and (contactsWithWorms > 0) ){ // si no esta sobre una viga pero esta sobre un gusano entonces esta inmobil.
         unMovedOnAWorm =  true;
     }
     // si esta cargando el arma tampoco debe acabar el turno asi que pedimos que sea de tipo de carga NONE_CHARGE.
-    return ((unMovedOnABeam or unMovedOnAWorm or unMovedOnEdge) and (not thereAreProjectiles()) and (this->typeCharge == NONE_CHARGE)  );
+    return ((unMovedOnABeam or unMovedOnAWorm ) and (not thereAreProjectiles()) and (this->typeCharge == NONE_CHARGE)  );
 }
 
 void Worm::attackWithDynamiteHolder() {
-    b2Vec2 positionDynamite = body->GetWorldCenter();
-    positionDynamite.x -=0.5f;
-    if (directionLook == RIGHT){
-        positionDynamite.x +=1.0;
-    }
     DynamiteHolder* dynamiteHolder = (DynamiteHolder*) armament.getWeaponCurrentPtr();
-    dynamiteHolder->placeDynamite(waitTime, positionDynamite, aWorld, typeFocus);
-    this->waitTime = 5;
+    dynamiteHolder->placeDynamite(waitTime, body->GetWorldCenter(), directionLook, aWorld, typeFocus);
 }

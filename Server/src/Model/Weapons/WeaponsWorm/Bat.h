@@ -20,15 +20,7 @@ public:
     Bat(const TypeWeapon &aTypeWeapon, const float &mainDamage, const TypeMunition &aTypeMunition,
         const size_t &aMunition, const GameParameters& gameParameters);
 
-    GameObject *getBodyCollidesWithRayCast(b2World *world, const b2Vec2 &positionWorm, const Direction &directionCurrent);
-
     WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) override;
-
-    float getImpulseX() const;
-
-    float getImpulseY() const;
-
-    void resetRayCast();
 
     void increaseAngle() override;
 
@@ -41,6 +33,7 @@ public:
     bool launchesProjectiles() override;
 
     //virtual void prepareWeapon(const Direction &aDirection) override;
+    void searchWormAndAttack(b2World *world, const b2Vec2 &positionWorm, const Direction &directionCurrent);
 };
 
 
