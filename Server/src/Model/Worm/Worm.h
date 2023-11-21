@@ -98,7 +98,7 @@ public:
 
     void teleportWorm(const int &posXTeleport, const int &posYTeleport);
 
-    void attack();
+    void attack(std::unique_ptr<CommandDTO> &aCommand);
 
     ProjectilesDTO getProjectilesDTO();
 
