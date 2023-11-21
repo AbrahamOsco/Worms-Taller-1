@@ -82,6 +82,13 @@ void ReceiverThread::run() {
                                                                                                     wormDto.getDirectionLook(), wormDto.getTypeFocus(),
                                                                                                     wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
+                    } else if (wormDto.getWeaponCurrent() == TypeWeapon::AIR_ATTACK) {
+                        std::unique_ptr<WormGuidedWeapon> worm = std::make_unique<WormGuidedWeapon>(static_cast<int>(wormDto.getIdPlayer()),
+                                                                                                    static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
+                                                                                                    wormDto.getHpWorm(),
+                                                                                                    wormDto.getDirectionLook(), wormDto.getTypeFocus(),
+                                                                                                    wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), isMyTurn);
+                        gameObjects.push_back(std::move(worm));
                     }
 
                 }

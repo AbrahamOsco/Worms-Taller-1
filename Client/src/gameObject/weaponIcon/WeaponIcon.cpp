@@ -89,7 +89,6 @@ WeaponIcon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera 
                     std::unique_ptr<Command> command(new SelectBazookaCmd());
                     queue.move_push(std::move(command));
                 } else if (m_typeWeapon == TypeWeapon::AIR_ATTACK) {
-                    std::cout << "send: SelectAirAttackCmd" << std::endl;
                     std::unique_ptr<Command> command(new SelectAirAttackCmd());
                     queue.move_push(std::move(command));
                 }
