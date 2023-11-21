@@ -425,6 +425,8 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
         this->assignWeapon(AIR_ATTACK);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::AIR_ATTACK_POINT ){
         this->attack(aCommandDTO);
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::COUNTDOWN){
+        this->waitTime = aCommandDTO->getX();
     }
 }
 
