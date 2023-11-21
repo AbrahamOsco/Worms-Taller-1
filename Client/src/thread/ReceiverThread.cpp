@@ -47,6 +47,9 @@ void ReceiverThread::run() {
 
                 std::vector<ProjectileDTO> projectiles = projectilesDto.getProjectilesDto();
                 for (const ProjectileDTO &projectileDto: projectiles) {
+
+                    std::cout << '(' << projectileDto.getPositionX() << ',' << projectileDto.getPositionY() << ") " << projectileDto.getTypeProjectil() << std::endl;
+
                     std::unique_ptr<Projectile> projectile = std::make_unique<Projectile>(projectileDto.getPositionX(),
                                                                                           projectileDto.getPositionY(),
                                                                                           projectileDto.getTypeProjectil(), projectileDto.getTypeFocus());

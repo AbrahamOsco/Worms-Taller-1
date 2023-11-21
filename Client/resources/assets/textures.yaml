@@ -148,7 +148,7 @@ textures:
   - name: red_grenade_fragment_projectile
     source: "../Client/resources/assets/bullets/RedGrenadeFragment.png"
   - name: mortar_fragment_projectile
-    source: "..Client/resources/assets/bullets/MortarFragment.png"
+    source: "../Client/resources/assets/bullets/MortarFragment.png"
   - name: bazooka_init
     source: "../Client/resources/assets/worms/wbazlnk.png"
   - name: victory
