@@ -41,7 +41,7 @@ Projectile::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera 
         camera.setTarget(point);
     }
 
-    if (m_typeProjectile == TypeProjectil::NONE_PROJECTILE) {
+    if (m_typeExplode == TypeExplode::EXPLODE_SOUND) {
         soundManager.playEffect("explosion");
     }
 }

@@ -16,7 +16,7 @@ enum TypeProjectil{
 };
 
 enum TypeExplode{
-    EXPLODE, NO_EXPLODE
+    EXPLODE, NO_EXPLODE, EXPLODE_SOUND
 };
 
 class ProjectileDTO : public DTO {
