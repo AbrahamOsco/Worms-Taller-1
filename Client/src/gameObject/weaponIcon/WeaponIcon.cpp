@@ -85,6 +85,8 @@ WeaponIcon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera 
             SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);
             SDL2pp::Point point(input.getMouseX(), input.getMouseY());
             if (SDL_PointInRect(&point, &shape) && !m_isSelected) {
+                m_isSelected = true;
+                soundManager.playEffect("select_weapon");
                 if (m_typeWeapon == TypeWeapon::TELEPORT) {
                     std::unique_ptr<Command> command(new SelectTeleportCmd());
                     queue.move_push(std::move(command));
