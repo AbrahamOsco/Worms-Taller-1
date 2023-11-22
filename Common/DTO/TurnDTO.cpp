@@ -50,6 +50,13 @@ void TurnDTO::setTypeWind(const TypeWind &typeWind) {
     this->typeWind = typeWind;
 }
 
-
+bool TurnDTO::operator==(const TurnDTO& other) const {
+    return  this->opType == other.opType &&
+            this->idPlayerCurrent == other.idPlayerCurrent &&
+            this->textTurn == other.textTurn &&
+            this->timeLeft == other.timeLeft &&
+            this->valueWind == other.valueWind &&
+            this->typeWind == other.typeWind;
+}
 
 

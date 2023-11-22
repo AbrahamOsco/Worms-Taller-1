@@ -9,6 +9,7 @@
 Provision::Provision(const float &positionX, const float &positionY, const TypeEffect &typeEffect,
                      const GameParameters &parameters) : GameObject(ENTITY_PROVISION), typeEffect(typeEffect), gameParameters(parameters) {
     position = std::make_pair(positionX, positionY);
+    animationIterations = 15;
 }
 
 void Provision::addToTheWorld(b2World *world) {
@@ -27,21 +28,18 @@ void Provision::addToTheWorld(b2World *world) {
     boxDefFixture.density = 1.0f;
     this->world = world;
     this->body->CreateFixture(&boxDefFixture);
-    inContact = false;
+    animationIterations = 15;
 }
 
 void Provision::getProvisionDTO(std::vector<ProvisionDTO> &vecProvisionDTO) {
     ProvisionDTO aProvisionDTO = ProvisionDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
                                               this->gameParameters.getMaxHeightPixel() - this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(),
                                               typeEffect, NO_CONTACT);
-    if(this->isDestroyedBody() and inContact ) {
-        inContact = false;
+    if(this->isDestroyedBody() and animationIterations > 0  ) {
         aProvisionDTO.setTypeContact(CONTACT);
-        for(int i = 0 ; i < 15 ; i++){      //@todo loopeo para hacer la animacion le mando 15 veces la provisionDTO.
-            vecProvisionDTO.push_back(aProvisionDTO);
-        }
-    }
-    else if (not this->isDestroyedBody()){
+        vecProvisionDTO.push_back(aProvisionDTO);
+        animationIterations--;
+    } else if (not this->isDestroyedBody()){
         vecProvisionDTO.push_back(aProvisionDTO);
     }
 }
@@ -65,6 +63,9 @@ void Provision::applyEffect(Worm *wormSelect) {
     }
     // destroyed the provision
     this->destroyBody();
-    inContact = true;
+    animationIterations = 15;
 }
 
+bool Provision::hasIterations() const{
+    return (this->animationIterations >0);
+}

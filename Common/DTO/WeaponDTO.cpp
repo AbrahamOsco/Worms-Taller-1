@@ -34,8 +34,13 @@ void WeaponDTO::setATypeMunition(const TypeMunition &aTypeMunition) {
     this->typeMunition = aTypeMunition;
 }
 
-bool WeaponDTO::getIsSelected() const{
+bool WeaponDTO::getIsSelected() const {
     return false;
 }
 
-
+bool WeaponDTO::operator==(const WeaponDTO& other) const {
+    return  this->opType == other.opType &&
+            this->munition == other.munition &&
+            this->typeMunition == other.typeMunition &&
+            this->typeWeapon == other.typeWeapon;
+}

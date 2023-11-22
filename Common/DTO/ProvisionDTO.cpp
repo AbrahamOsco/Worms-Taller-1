@@ -31,3 +31,10 @@ void ProvisionDTO::setTypeContact(const TypeContact &typeContact) {
     this->typeContact = typeContact;
 }
 
+bool ProvisionDTO::operator==(const ProvisionDTO& other) const {
+    return  this->opType == other.opType &&
+            this->positionX == other.positionX &&
+            this->positionY == other.positionY &&
+            this->typeEffect == other.typeEffect &&
+            this->typeContact == other.typeContact;
+}

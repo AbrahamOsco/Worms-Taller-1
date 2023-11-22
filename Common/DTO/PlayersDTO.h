@@ -7,22 +7,23 @@
 
 
 #include "PlayerDTO.h"
+#include <vector>
 
 class PlayersDTO : public DTO {
-private:
+ private:
     std::vector<PlayerDTO> playersDTO;
 
-public:
+ public:
     PlayersDTO();
 
-    PlayersDTO(const std::vector<PlayerDTO>& aPlayersDTO);
+    explicit PlayersDTO(const std::vector<PlayerDTO>& aPlayersDTO);
 
     std::vector<PlayerDTO> getPlayersDTO() const;
 
     void setPlayersIniDTO(const std::vector<PlayerDTO>& aPlayersDTO);
 
-
+    bool operator==(const PlayersDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_PLAYERSDTO_H
+#endif  // WORMS_TALLER_1_PLAYERSDTO_H

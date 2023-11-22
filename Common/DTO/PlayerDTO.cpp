@@ -46,4 +46,10 @@ void PlayerDTO::setTotalHpWorms(const size_t &totalHpWorms) {
     this->totalHPWorms = totalHpWorms;
 }
 
-
+bool PlayerDTO::operator==(const PlayerDTO& other) const {
+    return  this->opType == other.opType &&
+            this->idPlayer == other.idPlayer &&
+            this->namePlayer == other.namePlayer &&
+            this->turnType == other.turnType &&
+            this->totalHPWorms == other.totalHPWorms;
+}

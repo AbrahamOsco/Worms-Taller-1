@@ -13,7 +13,6 @@ enum TypeProjectil{
     BAZOOKA_PROJECTILE,
     AIR_ATTACK_MISSILE,
     DYNAMITE,
-
 };
 
 enum TypeExplode{
@@ -21,13 +20,14 @@ enum TypeExplode{
 };
 
 class ProjectileDTO : public DTO {
-private:
+ private:
     TypeProjectil typeProjectil;
     size_t positionX;
     size_t positionY;
     TypeFocus typeFocus;
     TypeExplode typeExplode;
-public:
+
+ public:
     ProjectileDTO();
 
     ProjectileDTO(const TypeProjectil &typeProjectil, const size_t &positionX, const size_t &positionY,
@@ -51,7 +51,8 @@ public:
 
     void setTypeExplode(const TypeExplode &typeExplode);
 
+    bool operator==(const ProjectileDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_PROJECTILEDTO_H
+#endif  // WORMS_TALLER_1_PROJECTILEDTO_H

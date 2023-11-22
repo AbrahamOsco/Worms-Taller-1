@@ -11,13 +11,14 @@
 #include "BeamDTO.h"
 
 class StageDTO : public DTO {
-private:
+ private:
     std::vector<BeamDTO> beams;
     size_t idPlayer;
-public:
+
+ public:
     StageDTO();
 
-    StageDTO(const std::vector<BeamDTO>& beams);
+    explicit StageDTO(const std::vector<BeamDTO>& beams);
 
     void setBeams(const std::vector<BeamDTO>& beams);
 
@@ -27,7 +28,8 @@ public:
 
     void setIdPlayer(const size_t &idPlayer);
 
+    bool operator==(const StageDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_STAGEDTO_H
+#endif  // WORMS_TALLER_1_STAGEDTO_H

@@ -16,15 +16,17 @@ enum TurnType{
 };
 
 class PlayerDTO : public DTO {
-private:
+ private:
     size_t idPlayer;
     std::string namePlayer;
     TurnType turnType;
     size_t totalHPWorms;
-public:
+
+ public:
     PlayerDTO();
 
-    PlayerDTO(const size_t& idPlayer, const std::string& aNamePlayer, const TurnType& aTurnType, const size_t& aTotalHPWorms);
+    PlayerDTO(const size_t& idPlayer, const std::string& aNamePlayer,
+            const TurnType& aTurnType, const size_t& aTotalHPWorms);
 
 
     size_t getIdPlayer() const;
@@ -43,7 +45,8 @@ public:
 
     void setTotalHpWorms(const size_t &totalHpWorms);
 
+    bool operator==(const PlayerDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_PLAYERDTO_H
+#endif  // WORMS_TALLER_1_PLAYERDTO_H

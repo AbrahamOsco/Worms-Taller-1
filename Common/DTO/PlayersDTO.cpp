@@ -20,4 +20,7 @@ void PlayersDTO::setPlayersIniDTO(const std::vector<PlayerDTO> &aPlayersDTO) {
     this->playersDTO = aPlayersDTO;
 }
 
-
+bool PlayersDTO::operator==(const PlayersDTO& other) const {
+    return  this->opType == other.opType &&
+            this->playersDTO == other.playersDTO;
+}

@@ -12,16 +12,17 @@
 #include "RoomDTO.h"
 
 class ResolverInitialDTO : public DTO {
-private:
+ private:
     std::vector<std::string> scenariosNames;
     std::vector<size_t> vecMaxNumbersWorms;
     size_t statusAnswer;
     std::vector<RoomDTO> gameRooms;
 
-public:
+ public:
     ResolverInitialDTO();
 
-    ResolverInitialDTO(const OperationType& operationType, const std::vector<std::string>& aScenariosNames, const std::vector<size_t>& vecMaxNumbersWorms );
+    ResolverInitialDTO(const OperationType& operationType, const std::vector<std::string>& aScenariosNames,
+                        const std::vector<size_t>& vecMaxNumbersWorms);
 
     ResolverInitialDTO(const OperationType& operationType, const std::vector<RoomDTO>& aGameRooms);
 
@@ -43,7 +44,8 @@ public:
 
     void setVecMaxNumbersWorms(const std::vector<size_t> &vecMaxNumbersWorms);
 
+    bool operator==(const ResolverInitialDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_RESOLVERINITIALDTO_H
+#endif  // WORMS_TALLER_1_RESOLVERINITIALDTO_H

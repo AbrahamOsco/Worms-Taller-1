@@ -19,6 +19,7 @@ private:
     b2World* aWorld;
     TypeFocus typeFocus;
     Explodable explodable;
+    int explosionIterations;
 public:
 
     AirAttackMissile(const GameParameters &gameParameters, const TypeFocus& typeFocus);
@@ -28,6 +29,11 @@ public:
     ProjectileDTO getProjectilDTO();
 
     void searchWormAndCollide(const b2Vec2 &projectilePosition);
+
+    bool hasExplosionIterations() const;
+
+    void removeAIteration();
+
 };
 
 

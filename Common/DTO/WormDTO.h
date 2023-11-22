@@ -13,7 +13,7 @@ enum MoveWorm{
 };
 
 class WormDTO : public DTO {
-private:
+ private:
     size_t positionX;
     size_t positionY;
     size_t idPlayer;
@@ -22,11 +22,13 @@ private:
     MoveWorm moveWorm;
     TypeFocus typeFocus;
     TypeWeapon weaponCurrent;
-public:
+
+ public:
     WormDTO();
 
-    WormDTO(const size_t& positionX, const size_t& positionY, const size_t& idPlayer, const size_t& hpWorm, const Direction& aDirection,
-            const TypeFocus& aTypeFocus, const MoveWorm& aMoveWorm, const TypeWeapon& weaponCurrent);
+    WormDTO(const size_t& positionX, const size_t& positionY, const size_t& idPlayer, const size_t& hpWorm,
+            const Direction& aDirection, const TypeFocus& aTypeFocus, const MoveWorm& aMoveWorm,
+            const TypeWeapon& weaponCurrent);
 
     size_t getIdWorm() const;
 
@@ -63,10 +65,10 @@ public:
 
     void setIdPlayer(size_t idPlayer);
 
+    bool operator==(const WormDTO& other) const;
 
     ~WormDTO() = default;
-
 };
 
 
-#endif //PROTOCOLO_COMMON_WORMDTO_H
+#endif  // PROTOCOLO_COMMON_WORMDTO_H

@@ -14,17 +14,18 @@ enum TypeWind{
 };
 
 class TurnDTO : public DTO {
-private:
+ private:
     size_t idPlayerCurrent;
     std::string textTurn;
     size_t timeLeft;
     size_t valueWind;
     TypeWind typeWind;
-public:
 
+ public:
     TurnDTO();
 
-    TurnDTO(const size_t& idPlayerCurrent, const std::string& textTurn, const size_t& timeLeft, const size_t &valueWind, const TypeWind& typeWind);
+    TurnDTO(const size_t& idPlayerCurrent, const std::string& textTurn,
+            const size_t& timeLeft, const size_t &valueWind, const TypeWind& typeWind);
 
     size_t getIdPlayerCurrent() const;
 
@@ -46,7 +47,8 @@ public:
 
     void setTypeWind(const TypeWind &typeWind);
 
+    bool operator==(const TurnDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_TURNDTO_H
+#endif  // WORMS_TALLER_1_TURNDTO_H

@@ -24,5 +24,9 @@ void StageDTO::setIdPlayer(const size_t &idPlayer) {
     this->idPlayer = idPlayer;
 }
 
-
+bool StageDTO::operator==(const StageDTO& other) const {
+    return  this->opType == other.opType  &&
+            this->beams == other.beams  &&
+            this->idPlayer == other.idPlayer;
+}
 

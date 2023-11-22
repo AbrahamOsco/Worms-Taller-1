@@ -75,3 +75,16 @@ EndGameDTO SnapShot::getEndGameDto() const {
 std::vector<ProvisionDTO> SnapShot::getVecProvisionDto() const {
     return vecProvisionDTO;
 }
+
+bool SnapShot::operator==(const SnapShot& other) const {
+    return  this->opType == other.opType &&
+            this->typeSnapShot == other.typeSnapShot &&
+            this->wormsDTO == other.wormsDTO &&
+            this->playersDTO == other.playersDTO &&
+            this->weaponsDTO == other.weaponsDTO &&
+            this->weaponSightDTO == other.weaponSightDTO &&
+            this->projectilesDTO == other.projectilesDTO &&
+            this->turnDto == other.turnDto &&
+            this->endGameDTO == other.endGameDTO &&
+            this->vecProvisionDTO == other.vecProvisionDTO;
+}

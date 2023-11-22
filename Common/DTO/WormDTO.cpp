@@ -74,4 +74,14 @@ void WormDTO::setIdPlayer(size_t idPlayer) {
     this->idPlayer = idPlayer;
 }
 
-
+bool WormDTO::operator==(const WormDTO& other) const {
+    return  this->opType == other.opType &&
+            this->positionX == other.positionX &&
+            this->positionY == other.positionY &&
+            this->idPlayer == other.idPlayer &&
+            this->hpWorm == other.hpWorm &&
+            this->directionLook == other.directionLook &&
+            this->moveWorm == other.moveWorm &&
+            this->typeFocus == other.typeFocus &&
+            this->weaponCurrent == other.weaponCurrent;
+}

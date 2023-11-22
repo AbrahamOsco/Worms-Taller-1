@@ -42,10 +42,7 @@ bool AirAttackDetonator::thereAreProjectiles() {
 
 void AirAttackDetonator::tryCleanProjectiles(b2World *aWorld) {
     for(auto& aMissile: missiles){
-        if(aMissile!= nullptr and aMissile->isDestroyedBody()){
-            ProjectileDTO aProjectileDTO =  aMissile->getProjectilDTO();
-            aProjectileDTO.setTypeExplode(EXPLODE);
-            lastProjectilesDTO.push_back(aProjectileDTO);
+        if(aMissile!= nullptr and aMissile->isDestroyedBody() and not aMissile->hasExplosionIterations() ){
             aWorld->DestroyBody(aMissile->getBody());
             aMissile = nullptr;
         }
@@ -53,15 +50,14 @@ void AirAttackDetonator::tryCleanProjectiles(b2World *aWorld) {
 }
 
 void AirAttackDetonator::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
-    for(auto& missilesDestroyed: lastProjectilesDTO){
-        for(int i = 0 ; i < 15 ; i++) {         // @todo lopeo 15 veces para mandar la animacion del misil del air attack.
-            vecProjectileDTO.push_back(missilesDestroyed);
-        }
-    }
-    lastProjectilesDTO.clear(); // limpiamos el vector ya enviamos los misiles destruidos .
-    //ahora enviamos los q no estan destruidos.
     for(auto& aMissile : missiles){
-        if( aMissile != nullptr and not aMissile->isDestroyedBody()){
+        if(aMissile != nullptr and aMissile->isDestroyedBody() and aMissile->hasExplosionIterations()){
+            ProjectileDTO aProjectilDto = aMissile->getProjectilDTO();
+            aProjectilDto.setTypeExplode(EXPLODE);
+            vecProjectileDTO.push_back(aProjectilDto);
+            aMissile->removeAIteration();
+        }
+        else if( aMissile != nullptr and not aMissile->isDestroyedBody() ){
             vecProjectileDTO.push_back(aMissile->getProjectilDTO());
         }
     }

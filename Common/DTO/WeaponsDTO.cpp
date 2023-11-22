@@ -36,4 +36,9 @@ void WeaponsDTO::setWeaponCurrent(const TypeWeapon &weaponCurrent) {
     this->weaponCurrent = weaponCurrent;
 }
 
-
+bool WeaponsDTO::operator==(const WeaponsDTO& other) const {
+    return  this->opType == other.opType &&
+            this->idPlayer == other.idPlayer &&
+            this->weapons == other.weapons &&
+            this->weaponCurrent == other.weaponCurrent;
+}
