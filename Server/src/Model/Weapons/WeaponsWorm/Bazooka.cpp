@@ -65,6 +65,7 @@ bool Bazooka::launchesProjectiles() {
 
 void Bazooka::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
     if( projectil!= nullptr and  projectil->isDestroyedBody() and iteratorExplosion > 0  ){ // si entra aca es porque atacamos con la bazooka y este exploto solo entraremos 1 vez aca.
+        std::cout << "Entro a Bazooka::getProjectilesDTO iteration " << iteratorExplosion << "\n";
         ProjectileDTO projectileDto = projectil->getProjectilDTO();
         projectileDto.setTypeExplode(EXPLODE);
         vecProjectileDTO.push_back(projectileDto);
