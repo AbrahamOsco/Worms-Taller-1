@@ -178,7 +178,7 @@ void ReceiverThread::run() {
 
                 std::vector<ProvisionDTO> provisions = snapShot.getVecProvisionDto();
                 for (const ProvisionDTO &provisionDto: provisions) {
-                    gameObjects.push_back(std::make_unique<Provision>(static_cast<int>(provisionDto.getPositionX()), static_cast<int>(provisionDto.getPositionY()), provisionDto.getTypeEffect()));
+                    gameObjects.push_back(std::make_unique<Provision>(static_cast<int>(provisionDto.getPositionX()), static_cast<int>(provisionDto.getPositionY()), provisionDto.getTypeEffect(), provisionDto.getTypeContact()));
                 }
 
                 pastCountWorm = wormsDto.size();

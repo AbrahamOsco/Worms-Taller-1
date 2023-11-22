@@ -10,8 +10,9 @@
 
 class Provision : public GameObject{
     TypeEffect m_typeEffect;
+    TypeContact m_typeContact;
 public:
-    Provision(int x, int y, const TypeEffect &typeEffect);
+    Provision(int x, int y, const TypeEffect &typeEffect, const TypeContact &typeContact);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 
