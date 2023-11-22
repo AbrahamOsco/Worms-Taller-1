@@ -48,7 +48,9 @@ void DynamiteHolder::tryCleanProjectiles(b2World *aWorld) {
 
 void DynamiteHolder::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
     if(dynamite == nullptr and not sendLastDTO){
-        vecProjectileDTO.push_back(lastProjectilDTO);
+        for(int i = 0; i < 15 ; i++){   // @todo loopeo 15 veces para la animacion de la explosion de la dinamita
+            vecProjectileDTO.push_back(lastProjectilDTO);
+        }
         sendLastDTO = true;
         return;
     }

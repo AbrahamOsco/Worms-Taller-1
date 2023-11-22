@@ -65,7 +65,9 @@ bool Bazooka::launchesProjectiles() {
 
 void Bazooka::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
     if(projectil == nullptr and not sendLastDTO){ // si entra aca es porque atacamos con la bazooka y este exploto solo entraremos 1 vez aca.
-        vecProjectileDTO.push_back(lastProjectilDTO);
+        for(int i = 0; i < 15 ; i++){  // @todo loopeo 15 veces para enviar el projectil de la bazooka
+            vecProjectileDTO.push_back(lastProjectilDTO);
+        }
         sendLastDTO = true;
         return;
     } else if(projectil == nullptr){

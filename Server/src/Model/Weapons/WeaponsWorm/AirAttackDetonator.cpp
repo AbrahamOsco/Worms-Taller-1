@@ -54,10 +54,11 @@ void AirAttackDetonator::tryCleanProjectiles(b2World *aWorld) {
 
 void AirAttackDetonator::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
     for(auto& missilesDestroyed: lastProjectilesDTO){
-        vecProjectileDTO.push_back(missilesDestroyed);
+        for(int i = 0 ; i < 15 ; i++) {         // @todo lopeo 15 veces para mandar la animacion del misil del air attack.
+            vecProjectileDTO.push_back(missilesDestroyed);
+        }
     }
     lastProjectilesDTO.clear(); // limpiamos el vector ya enviamos los misiles destruidos .
-
     //ahora enviamos los q no estan destruidos.
     for(auto& aMissile : missiles){
         if( aMissile != nullptr and not aMissile->isDestroyedBody()){

@@ -37,7 +37,9 @@ void Provision::getProvisionDTO(std::vector<ProvisionDTO> &vecProvisionDTO) {
     if(this->isDestroyedBody() and inContact ) {
         inContact = false;
         aProvisionDTO.setTypeContact(CONTACT);
-        vecProvisionDTO.push_back(aProvisionDTO);
+        for(int i = 0 ; i < 15 ; i++){      //@todo loopeo para hacer la animacion le mando 15 veces la provisionDTO.
+            vecProvisionDTO.push_back(aProvisionDTO);
+        }
     }
     else if (not this->isDestroyedBody()){
         vecProvisionDTO.push_back(aProvisionDTO);
