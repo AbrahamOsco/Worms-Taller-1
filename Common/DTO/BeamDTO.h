@@ -14,18 +14,19 @@ enum TypeBeam {
 };
 
 class BeamDTO : public DTO {
-private:
+ private:
     TypeBeam typeBeam;
     int xCenter;
     int yCenter;
     size_t length;
     size_t height;
     size_t angle;
-public:
 
+ public:
     BeamDTO();
 
-    BeamDTO(const TypeBeam& aTypeBeam, const size_t& aXcenter, const size_t& aYCenter, const size_t& aLength, const size_t& aHeight, const size_t& aAngle);
+    BeamDTO(const TypeBeam& aTypeBeam, const size_t& aXcenter, const size_t& aYCenter,
+           const size_t& aLength, const size_t& aHeight, const size_t& aAngle);
 
     void setTypeBeam(const TypeBeam& aTypeBeam);
 
@@ -51,7 +52,7 @@ public:
 
     size_t getAngle() const;
 
+    bool operator==(const BeamDTO& other) const;
 };
 
-
-#endif //WORMS_TALLER_1_BEAMDTO_H
+#endif  // WORMS_TALLER_1_BEAMDTO_H

@@ -13,6 +13,7 @@ OperationType DTO::getOperationType() const {
 void DTO::setOperationType(const OperationType &anOpType) {
     this->opType = anOpType;
 }
+
 bool DTO::operator==(const DTO& other) const {
     return this->opType == other.opType;
 }

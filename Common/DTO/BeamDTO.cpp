@@ -28,7 +28,7 @@ void BeamDTO::setLength(const size_t &aLength) {
 }
 
 void BeamDTO::setHeight(const size_t &aHeight) {
-    this->height =aHeight;
+    this->height = aHeight;
 }
 
 void BeamDTO::setAngle(const size_t &aAngle) {
@@ -59,3 +59,12 @@ TypeBeam BeamDTO::getTypeBeam() const {
     return typeBeam;
 }
 
+bool BeamDTO::operator==(const BeamDTO& other) const {
+    return *this == other &&
+            this->typeBeam == other.typeBeam &&
+            this->xCenter == other.xCenter &&
+            this->yCenter == other.yCenter &&
+            this->length == other.length &&
+            this->height == other.height &&
+            this->angle == other.angle;
+}
