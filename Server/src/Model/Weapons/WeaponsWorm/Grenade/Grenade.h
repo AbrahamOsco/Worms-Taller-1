@@ -23,8 +23,6 @@ protected:
     bool exploded;
     GameParameters gameParameters;
     WeaponSight weaponSight;
-    Explodable explodable;
-
 public:
     explicit Grenade(const GameParameters &gameParameters, const TypeFocus& typeFocus, int timeWait);
 

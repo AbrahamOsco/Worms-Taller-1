@@ -20,7 +20,8 @@ private:
     TypeEffect typeEffect;
     GameParameters gameParameters;
     b2World* world;
-    bool inContact;
+    int animationIterations;
+
 public:
     Provision(const float &positionX, const float &positionY, const TypeEffect &typeEffect, const GameParameters& parameters);
 
@@ -29,6 +30,8 @@ public:
     void getProvisionDTO(std::vector<ProvisionDTO> &vecProvisionDTO);
 
     void applyEffect(Worm *wormSelect);
+
+    bool hasIterations() const;
 };
 
 

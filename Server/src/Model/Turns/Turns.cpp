@@ -65,7 +65,7 @@ void Turns::subtractTime() {
 void Turns::cleanProvisionsDestroyed(){
     provisionBoxes.erase(std::remove_if(provisionBoxes.begin(), provisionBoxes.end(),
         [this]( std::unique_ptr<Provision>& aProvison) {
-        if(aProvison->isDestroyedBody()){
+        if(aProvison->isDestroyedBody() and not aProvison->hasIterations() ){
             world->DestroyBody(aProvison->getBody());
             return true;
         }

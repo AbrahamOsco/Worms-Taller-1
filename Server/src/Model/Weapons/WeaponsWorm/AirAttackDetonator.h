@@ -15,7 +15,6 @@ private:
     std::vector<float> offsets;
     b2World* world;
     TypeFocus typeFocus;
-    std::vector<ProjectileDTO> lastProjectilesDTO;
 public:
     AirAttackDetonator(const TypeWeapon &aTypeWeapon, const float &mainDamage, const TypeMunition &aTypeMunition,
                        const size_t &aMunition, const GameParameters &gameParameters);

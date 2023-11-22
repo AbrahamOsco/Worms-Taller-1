@@ -12,8 +12,7 @@ Bazooka::Bazooka(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, co
     impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
     maxImpulseWeapon = std::make_pair(gameParameters.getBazookaMaxImpulseX(), gameParameters.getBazookaMaxImpulseY());
     projectil = nullptr;
-    sendLastDTO = false;
-    iteratorExplosion = 15;
+    explosionIterations = 15;
 }
 
 void Bazooka::increaseAngle() {
@@ -49,9 +48,9 @@ void Bazooka::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const 
     std::cout << "Atacamos con la bazooka------------------------------------------------------\n";
     projectil = std::make_unique<ProjectileBazooka>(gameParameters, focus);
     projectil->addToTheWorld(world, p2, impulseMuniBazooka, windValue);
-    nowIsAExplosion = false;
     // reseeteamos los impulsos luego de atacar.
     impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
+    explosionIterations = 15;
 }
 
 
@@ -64,17 +63,16 @@ bool Bazooka::launchesProjectiles() {
 }
 
 void Bazooka::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
-    if( projectil!= nullptr and  projectil->isDestroyedBody() and iteratorExplosion > 0  ){ // si entra aca es porque atacamos con la bazooka y este exploto solo entraremos 1 vez aca.
-        std::cout << "Entro a Bazooka::getProjectilesDTO iteration " << iteratorExplosion << "\n";
+    if( projectil!= nullptr and projectil->isDestroyedBody() and explosionIterations > 0){ // si entra aca es porque atacamos con la bazooka y este exploto solo entraremos 1 vez aca.
         ProjectileDTO projectileDto = projectil->getProjectilDTO();
         projectileDto.setTypeExplode(EXPLODE);
         vecProjectileDTO.push_back(projectileDto);
-        iteratorExplosion--;
-        return;
-    } else if(projectil == nullptr){
-        return;
+        explosionIterations--;
+    } else if(projectil != nullptr and not projectil->isDestroyedBody()){
+        // si el projectil esta en vuelo.
+        vecProjectileDTO.push_back(projectil->getProjectilDTO());
     }
-    vecProjectileDTO.push_back(projectil->getProjectilDTO());
+
 }
 
 WeaponSightDTO Bazooka::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) {
@@ -82,10 +80,9 @@ WeaponSightDTO Bazooka::getWeaponSightDTO(const b2Vec2 &positionWorm, const Dire
 }
 
 void Bazooka::tryCleanProjectiles(b2World *aWorld) {
-    if(projectil!= nullptr and  projectil->isDestroyedBody() and iteratorExplosion <= 0 ){
+    if(projectil!= nullptr and projectil->isDestroyedBody() and explosionIterations <= 0){
         aWorld->DestroyBody(projectil->getBody());
         projectil = nullptr;
-        iteratorExplosion = 15;
     }
 }
 
