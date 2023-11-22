@@ -15,12 +15,11 @@ void Provision::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager,
         if (m_typeEffect == TypeEffect::EXPLOSION) {
             textureManager.drawFrame("explosion", xCorrection, yCorrection, 60, 60, 0, 0,renderer,SDL_FLIP_NONE);
         } else if (m_typeEffect == TypeEffect::MEDICAL_KIT) {
-            textureManager.drawFrame("medicine", xCorrection, yCorrection, 60, 60, 0, 0,renderer,SDL_FLIP_NONE);
+            textureManager.drawFrame("medicine", xCorrection, yCorrection, 30, 30, 0, 0,renderer,SDL_FLIP_NONE);
         } else if (m_typeEffect == TypeEffect::MUNITIONS) {
-            textureManager.drawFrame("munition", xCorrection, yCorrection, 60, 60, 0, 0,renderer,SDL_FLIP_NONE);
+            textureManager.drawFrame("munition", xCorrection, yCorrection, 37, 42, 0, 0,renderer,SDL_FLIP_NONE);
         }
     }
-
 }
 
 void
