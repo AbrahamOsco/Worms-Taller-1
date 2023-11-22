@@ -54,6 +54,9 @@ void AirAttackDetonator::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjec
         if(aMissile != nullptr and aMissile->isDestroyedBody() and aMissile->hasExplosionIterations()){
             ProjectileDTO aProjectilDto = aMissile->getProjectilDTO();
             aProjectilDto.setTypeExplode(EXPLODE);
+            if(aMissile->getNumberIterations() == 15){
+                aProjectilDto.setTypeExplode(EXPLODE_SOUND);
+            }
             vecProjectileDTO.push_back(aProjectilDto);
             aMissile->removeAIteration();
         }

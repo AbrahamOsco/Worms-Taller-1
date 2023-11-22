@@ -12,7 +12,7 @@ enum TypeEffect{
     MUNITIONS, MEDICAL_KIT, EXPLOSION
 };
 enum TypeContact{
-    NO_CONTACT, CONTACT
+    NO_CONTACT, CONTACT, CONTACT_SOUND
 };
 
 /* //enum  probar primero sin el enum de visibilidad

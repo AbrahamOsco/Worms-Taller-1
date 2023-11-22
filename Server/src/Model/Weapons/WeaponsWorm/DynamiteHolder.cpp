@@ -42,6 +42,9 @@ void DynamiteHolder::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectile
     if(dynamite != nullptr and dynamite->isDestroyedBody() and explosionIterations > 0 ){
         ProjectileDTO aProjectilDto = dynamite->getProjectilDTO();
         aProjectilDto.setTypeExplode(EXPLODE);
+        if(explosionIterations == 15 ){
+            aProjectilDto.setTypeExplode(EXPLODE_SOUND);
+        }
         vecProjectileDTO.push_back(aProjectilDto);
         explosionIterations--;
     }
