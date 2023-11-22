@@ -158,7 +158,6 @@ void ReceiverThread::run() {
                     if (weaponDto.getTypeMunition() == TypeMunition::NO_INFINITE) {
                         ammoCount = static_cast<int>(weaponDto.getMunition());
                     }
-                    std::cout << weaponDto.getTypeWeapon() << ": " << ammoCount << std::endl;
                     WeaponIcon weaponIcon(weaponDto.getTypeWeapon(), ammoCount, weaponsDto.getWeaponCurrent(), isMyTurn);
                     weaponInventory.addWeapon(weaponIcon);
                 }
