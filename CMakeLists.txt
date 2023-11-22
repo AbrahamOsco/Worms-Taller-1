@@ -47,7 +47,7 @@ qt5_wrap_ui(UIS_HEADERS
 
 add_executable(worms-client ${UIS_HEADERS}  ${client_src} ${qt_src} ${common_src}
         Common/DTO/CommandDTO.cpp
-        Common/DTO/CommandDTO.h Server/src/Model/Weapons/WeaponsWorm/Grenade/Grenade.cpp Server/src/Model/Weapons/WeaponsWorm/Grenade/Grenade.h)
+        Common/DTO/CommandDTO.h)
 
 # Para el main mas externo: Server/main.cpp
 add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
@@ -113,7 +113,11 @@ add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
 
 
         Server/src/Model/TimeTurn/TimeTurn.cpp Server/src/Model/TimeTurn/TimeTurn.h
-        Server/src/Model/QueriesToWorld/PositionInAreaisFreeQuery.cpp Server/src/Model/QueriesToWorld/PositionInAreaisFreeQuery.h Common/DTO/EndGameDTO.cpp Common/DTO/EndGameDTO.h Server/src/Model/Provision/Provision.cpp Server/src/Model/Provision/Provision.h Common/DTO/ProvisionDTO.cpp Common/DTO/ProvisionDTO.h Server/src/Model/Weapons/WeaponsWorm/AirAttackDetonator.cpp Server/src/Model/Weapons/WeaponsWorm/AirAttackDetonator.h Server/src/Model/Projectiles/AirAttackMissile.cpp Server/src/Model/Projectiles/AirAttackMissile.h Server/src/Model/Projectiles/Explodable/Explodable.cpp Server/src/Model/Projectiles/Explodable/Explodable.h Server/src/Model/Projectiles/Dynamite.cpp Server/src/Model/Projectiles/Dynamite.h Server/src/Model/Weapons/WeaponsWorm/DynamiteHolder.cpp Server/src/Model/Weapons/WeaponsWorm/DynamiteHolder.h)
+        Server/src/Model/QueriesToWorld/PositionInAreaisFreeQuery.cpp Server/src/Model/QueriesToWorld/PositionInAreaisFreeQuery.h Common/DTO/EndGameDTO.cpp Common/DTO/EndGameDTO.h Server/src/Model/Provision/Provision.cpp Server/src/Model/Provision/Provision.h Common/DTO/ProvisionDTO.cpp Common/DTO/ProvisionDTO.h Server/src/Model/Weapons/WeaponsWorm/AirAttackDetonator.cpp Server/src/Model/Weapons/WeaponsWorm/AirAttackDetonator.h Server/src/Model/Projectiles/AirAttackMissile.cpp Server/src/Model/Projectiles/AirAttackMissile.h Server/src/Model/Projectiles/Explodable/Explodable.cpp Server/src/Model/Projectiles/Explodable/Explodable.h Server/src/Model/Projectiles/Dynamite.cpp Server/src/Model/Projectiles/Dynamite.h Server/src/Model/Weapons/WeaponsWorm/DynamiteHolder.cpp Server/src/Model/Weapons/WeaponsWorm/DynamiteHolder.h
+
+        Server/src/Model/Weapons/WeaponsWorm/Grenade/Grenade.cpp Server/src/Model/Weapons/WeaponsWorm/Grenade/Grenade.h
+
+)
 
 # para el editor
 include_directories(${PROJECT_SOURCE_DIR}/Editor/include)
