@@ -4,6 +4,7 @@
 
 #include "Water.h"
 #include "box2d/box2d.h"
+#include "../../../../GameParameters/GameParameters.h"
 
 Water::Water() : GameObject(ENTITY_WATER) {
 
@@ -15,7 +16,7 @@ Water::Water(b2World *world, const float &height, const float &width) : GameObje
     body = world->CreateBody(&bd);
 
     b2EdgeShape shape;
-    float widthOffset = width + 8.0f;
+    float widthOffset = width + GameParameters::getOffsetWidth();
     shape.SetTwoSided(b2Vec2(0.0f, 0.0f), b2Vec2(widthOffset, 0.0f));
     body->CreateFixture(&shape, 0.0f);
 }

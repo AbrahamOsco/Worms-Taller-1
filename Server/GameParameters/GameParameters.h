@@ -42,6 +42,8 @@ public:
 
     static float getOffsetEdgeTop();
 
+    static float getOffsetWidth();
+
     float getMaxHeightPixel() const;
 
     static float getBeamFriction();
@@ -143,6 +145,7 @@ public:
     float airAttackMissleGetMaxRadio() const;
 
     float airAttackMissileImpulseMax() const;
+
 };
 
 

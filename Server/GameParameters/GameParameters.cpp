@@ -202,6 +202,12 @@ float GameParameters::getOffsetEdgeTop() {
     return aNode["OFFSET_EDGE_TOP"].as<float>();
 }
 
+float GameParameters::getOffsetWidth() {
+    YAML::Node aNode = getNodeInitial();
+    return aNode["OFFSET_EDGE_WIDTH"].as<float>();
+}
+
+
 float GameParameters::getBeamFrictionSlipperyStatic(){
     YAML::Node aNode = getNodeInitial();
     return aNode["BEAM_SLIPPERY_FRICTION"].as<float>();
