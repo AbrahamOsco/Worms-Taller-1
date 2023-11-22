@@ -12,9 +12,10 @@
 class Projectile : public GameObject {
     TypeProjectil m_typeProjectile;
     TypeFocus m_typeFocus;
+    TypeExplode m_typeExplode;
 
 public:
-    Projectile(int x, int y, const TypeProjectil &typeProjectile, const TypeFocus &typeFocus);
+    Projectile(int x, int y, const TypeProjectil &typeProjectile, const TypeFocus &typeFocus, const TypeExplode &typeExplode);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 

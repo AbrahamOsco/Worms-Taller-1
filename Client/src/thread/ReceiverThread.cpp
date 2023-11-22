@@ -52,7 +52,7 @@ void ReceiverThread::run() {
 
                     std::unique_ptr<Projectile> projectile = std::make_unique<Projectile>(projectileDto.getPositionX(),
                                                                                           projectileDto.getPositionY(),
-                                                                                          projectileDto.getTypeProjectil(), projectileDto.getTypeFocus());
+                                                                                          projectileDto.getTypeProjectil(), projectileDto.getTypeFocus(), projectileDto.getTypeExplode());
                     gameObjects.push_back(std::move(projectile));
                 }
 
