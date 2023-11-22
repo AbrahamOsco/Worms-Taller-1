@@ -80,47 +80,46 @@ int WeaponIcon::getHeight() {
 
 void
 WeaponIcon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera, SoundManager &soundManager) {
-    if (m_isMyTurn) {
-        if (input.isMouseLeftButtonDown()) {
-            SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);
-            SDL2pp::Point point(input.getMouseX(), input.getMouseY());
-            if (SDL_PointInRect(&point, &shape) && !m_isSelected) {
-                m_isSelected = true;
-                soundManager.playEffect("select_weapon");
-                if (m_typeWeapon == TypeWeapon::TELEPORT) {
-                    std::unique_ptr<Command> command(new SelectTeleportCmd());
-                    queue.move_push(std::move(command));
-                } else if (m_typeWeapon == TypeWeapon::BASEBALL_BAT) {
-                    std::unique_ptr<Command> command(new SelectBatCmd());
-                    queue.move_push(std::move(command));
-                } else if (m_typeWeapon == TypeWeapon::BAZOOKA) {
-                    std::unique_ptr<Command> command(new SelectBazookaCmd());
-                    queue.move_push(std::move(command));
-                } else if (m_typeWeapon == TypeWeapon::AIR_ATTACK) {
-                    std::unique_ptr<Command> command(new SelectAirAttackCmd());
-                    queue.move_push(std::move(command));
-                } else if (m_typeWeapon == TypeWeapon::MORTAR) {
-                    std::unique_ptr<Command> command(new SelectMortarCmd());
-                    queue.move_push(std::move(command));
-                } else if (m_typeWeapon == TypeWeapon::GREEN_GRENADE) {
-                    std::unique_ptr<Command> command(new SelectGreenGrenadeCmd());
-                    queue.move_push(std::move(command));
-                } else if (m_typeWeapon == TypeWeapon::RED_GRENADE) {
-                    std::unique_ptr<Command> command(new SelectRedGrenadeCmd());
-                    queue.move_push(std::move(command));
-                } else if (m_typeWeapon == TypeWeapon::HOLY_GRENADE) {
-                    std::unique_ptr<Command> command(new SelectHolyGrenadeCmd());
-                    queue.move_push(std::move(command));
-                } else if (m_typeWeapon == TypeWeapon::BANANA) {
-                    std::unique_ptr<Command> command(new SelectBananaCmd());
-                    queue.move_push(std::move(command));
-                } else if (m_typeWeapon == TypeWeapon::DYNAMITE_HOLDER) {
-                    std::unique_ptr<Command> command(new SelectDynamiteCmd());
-                    queue.move_push(std::move(command));
-                }
+    if (input.isMouseLeftButtonDown() && m_isMyTurn && m_ammoCount > 0) {
+        SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);
+        SDL2pp::Point point(input.getMouseX(), input.getMouseY());
+        if (SDL_PointInRect(&point, &shape) && !m_isSelected) {
+            m_isSelected = true;
+            soundManager.playEffect("select_weapon");
+            if (m_typeWeapon == TypeWeapon::TELEPORT) {
+                std::unique_ptr<Command> command(new SelectTeleportCmd());
+                queue.move_push(std::move(command));
+            } else if (m_typeWeapon == TypeWeapon::BASEBALL_BAT) {
+                std::unique_ptr<Command> command(new SelectBatCmd());
+                queue.move_push(std::move(command));
+            } else if (m_typeWeapon == TypeWeapon::BAZOOKA) {
+                std::unique_ptr<Command> command(new SelectBazookaCmd());
+                queue.move_push(std::move(command));
+            } else if (m_typeWeapon == TypeWeapon::AIR_ATTACK) {
+                std::unique_ptr<Command> command(new SelectAirAttackCmd());
+                queue.move_push(std::move(command));
+            } else if (m_typeWeapon == TypeWeapon::MORTAR) {
+                std::unique_ptr<Command> command(new SelectMortarCmd());
+                queue.move_push(std::move(command));
+            } else if (m_typeWeapon == TypeWeapon::GREEN_GRENADE) {
+                std::unique_ptr<Command> command(new SelectGreenGrenadeCmd());
+                queue.move_push(std::move(command));
+            } else if (m_typeWeapon == TypeWeapon::RED_GRENADE) {
+                std::unique_ptr<Command> command(new SelectRedGrenadeCmd());
+                queue.move_push(std::move(command));
+            } else if (m_typeWeapon == TypeWeapon::HOLY_GRENADE) {
+                std::unique_ptr<Command> command(new SelectHolyGrenadeCmd());
+                queue.move_push(std::move(command));
+            } else if (m_typeWeapon == TypeWeapon::BANANA) {
+                std::unique_ptr<Command> command(new SelectBananaCmd());
+                queue.move_push(std::move(command));
+            } else if (m_typeWeapon == TypeWeapon::DYNAMITE_HOLDER) {
+                std::unique_ptr<Command> command(new SelectDynamiteCmd());
+                queue.move_push(std::move(command));
             }
         }
     }
 }
+
 
 
