@@ -204,7 +204,8 @@ void airAttackMissileCollidesWithWater(GameObject* airAttackMissile, GameObject*
     std::cout << "airAttackMissileCollidesWithWater\n";
     //wormEndContactWithEdge(worm, edge, gameParameters);
     AirAttackMissile* missileSelect = (AirAttackMissile*) airAttackMissile;
-    missileSelect->destroyBody();
+    b2Vec2 missilePosition = missileSelect->getBody()->GetWorldCenter();
+    missileSelect->searchWormAndCollide(missilePosition);
 }
 
 void waterCollidesWithAirAttackMissile(GameObject* water, GameObject* airAttackMissile, GameParameters *gameParameters){
@@ -250,6 +251,18 @@ void airAttackMissileCollideWithBeam(GameObject* airAttackMissile, GameObject* b
 void beamCollidesWithAirAttackMissile(GameObject* beam, GameObject* airAttackMissile, GameParameters *gameParameters){
     std::cout << "beamCollidesWithAirAttackMissile\n";
     airAttackMissileCollideWithBeam(airAttackMissile, beam, gameParameters);
+}
+
+void airAttackMissileCollidesWithAirAttackMissile(GameObject* airAttackMissile, GameObject* airAttackMissil2,  GameParameters *gameParameters){
+    std::cout << "airAttackMissileCollidesWithAirAttackMissile\n";
+
+    AirAttackMissile* missileSelect = (AirAttackMissile*) airAttackMissile;
+    b2Vec2 missilePosition = missileSelect->getBody()->GetWorldCenter();
+    missileSelect->searchWormAndCollide(missilePosition);
+
+    AirAttackMissile* missileSelect2 = (AirAttackMissile*) airAttackMissil2;
+    b2Vec2 missilePosition2 = missileSelect2->getBody()->GetWorldCenter();
+    missileSelect->searchWormAndCollide(missilePosition2);
 }
 
 // ---- Dynamite metodos
@@ -336,6 +349,7 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
     collisionsMap[std::make_pair(ENTITY_AIR_ATTACK_MISSILE, ENTITY_WATER)] = &airAttackMissileCollidesWithWater;
     collisionsMap[std::make_pair(ENTITY_WATER, ENTITY_AIR_ATTACK_MISSILE )] = &waterCollidesWithAirAttackMissile;
 
+    collisionsMap[std::make_pair(ENTITY_AIR_ATTACK_MISSILE, ENTITY_AIR_ATTACK_MISSILE)] = &airAttackMissileCollidesWithAirAttackMissile;
 
     collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_AIR_ATTACK_MISSILE)] = &provisionCollideWithAirAttackMissile;
     collisionsMap[std::make_pair(ENTITY_AIR_ATTACK_MISSILE, ENTITY_PROVISION )] = &airAttackMissileCollidesWithProvision;

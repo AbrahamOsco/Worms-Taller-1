@@ -16,6 +16,7 @@ void AirAttackDetonator::detonate(const int &posXAttack, b2World *world, const T
         missile.get()->addToTheWorld(world, b2Vec2(posXInMeters + offset, gameParameters.airAttackGetPositionY()), windValue );
         missiles.push_back(std::move(missile));
     }
+    this->munition--;
 }
 
 bool AirAttackDetonator::hasAScope() {
@@ -63,6 +64,10 @@ void AirAttackDetonator::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjec
             vecProjectileDTO.push_back(aMissile->getProjectilDTO());
         }
     }
+}
+
+bool AirAttackDetonator::hasMunition() const {
+    return (this->munition >0);
 }
 
 

@@ -72,6 +72,9 @@ public:
     // para todas las armas con cuenta regresiva;
     virtual void passTime();
 
+    // para las armas con municioness:
+    virtual bool hasMunition() const;
+
     void assignWindValue(const float &aWindValue);
 
     void giveExtraMunition(const size_t &extraMunition);

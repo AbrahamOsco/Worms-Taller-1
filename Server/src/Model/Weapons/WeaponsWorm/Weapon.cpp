@@ -86,3 +86,6 @@ void Weapon::passTime() {
 }
 
 
+bool Weapon::hasMunition() const {
+    return true;
+}

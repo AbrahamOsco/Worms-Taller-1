@@ -324,6 +324,7 @@ void Worm::tryAttackVariablePower() {
 }
 
 void Worm::attack(std::unique_ptr<CommandDTO> &aCommand) {
+    bool couldAttack = true; // para todas las armas sin municiones, si usa un arma q aplca municiones este valor puede cambiar. sino tiene municiones.
     if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
         return;
     } else if ( this->armament.getWeaponCurrentPtr()->hasVariablePower()){ // en un futuro pregunta si tiene un arma con potencia variable.
@@ -334,11 +335,15 @@ void Worm::attack(std::unique_ptr<CommandDTO> &aCommand) {
     } else if (this->armament.getWeaponCurrent() == TELEPORT){
         this->teleportWorm(aCommand->getX(), aCommand->getY());
     } else if ( this->armament.getWeaponCurrent() == AIR_ATTACK){
-        this->attackWithAirAttack(aCommand->getX());
+        couldAttack = this->attackWithAirAttack(aCommand->getX());
     } else if (this->armament.getWeaponCurrent() == DYNAMITE_HOLDER){
-        this->attackWithDynamiteHolder();
+        couldAttack = this->attackWithDynamiteHolder();
     }
-    this->endAttack();
+
+    if(couldAttack){
+        this->endAttack();
+    }
+
 }
 
 // WEAPONS without potencia variable
@@ -360,16 +365,24 @@ void Worm::teleportWorm(const int &posXTeleport, const int &posYTeleport){
     teleport->teleportIn(getBody(), posXTeleport, posYTeleport, aWorld);
 }
 
-void Worm::attackWithAirAttack(const int &posXAttack) {
+bool Worm::attackWithAirAttack(const int &posXAttack) {
+    if(not this->armament.hasMunition()){
+        return false;
+    }
     AirAttackDetonator* airAttackDetonator = (AirAttackDetonator*) this->armament.getWeaponCurrentPtr();
     airAttackDetonator->detonate(posXAttack, aWorld, this->typeFocus);
     this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
     waitingToGetFocus = true;
+    return true;
 }
 
-void Worm::attackWithDynamiteHolder() {
+bool Worm::attackWithDynamiteHolder() {
+    if(not this->armament.hasMunition()){
+        return false;
+    }
     DynamiteHolder* dynamiteHolder = (DynamiteHolder*) armament.getWeaponCurrentPtr();
     dynamiteHolder->placeDynamite(waitTime, body->GetWorldCenter(), directionLook, aWorld, typeFocus);
+    return true;
 }
 
 
@@ -444,4 +457,5 @@ bool Worm::isUnmoveAndNotExistsPojectiles() {
     // si esta cargando el arma tampoco debe acabar el turno asi que pedimos que sea de tipo de carga NONE_CHARGE.
     return ((unMovedOnABeam or unMovedOnAWorm ) and (not thereAreProjectiles()) and (this->typeCharge == NONE_CHARGE)  );
 }
+
 

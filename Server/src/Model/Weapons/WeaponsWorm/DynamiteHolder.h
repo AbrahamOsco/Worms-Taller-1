@@ -38,6 +38,9 @@ public:
 
     void passTime() override;
 
+    // para las armas que gastan municiones;
+    bool hasMunition() const override;
+
 };
 
 

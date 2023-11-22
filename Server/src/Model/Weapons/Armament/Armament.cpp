@@ -145,4 +145,8 @@ void Armament::updateTime(const bool &attacked) {
     }
 }
 
+bool Armament::hasMunition() {
+    return this->armament.at(currentWeapon).get()->hasMunition();
+}
+
 

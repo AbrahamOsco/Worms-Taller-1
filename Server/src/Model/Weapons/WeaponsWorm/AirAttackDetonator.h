@@ -37,6 +37,9 @@ public:
 
     void getProjectilesDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
 
+    // para las armas que gastan municiones;
+    bool hasMunition() const override;
+
 
 };
 

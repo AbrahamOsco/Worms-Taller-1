@@ -62,6 +62,8 @@ public:
     void giveExtraMunition(const size_t &extraMunition);
 
     void updateTime(const bool &attacked);
+
+    bool hasMunition();
 };
 
 

@@ -18,6 +18,7 @@ void DynamiteHolder::placeDynamite(const int &waitTime, const b2Vec2 &positionWo
     dynamite = std::make_unique<Dynamite>(waitTime, gameParameters, typeFocus);
     dynamite->addToTheWorld(world, positionDynamite);
     sendLastDTO = false;
+    this->munition--;
 }
 
 bool DynamiteHolder::hasAScope() {
@@ -60,6 +61,10 @@ void DynamiteHolder::passTime() {
     if(dynamite != nullptr){
         dynamite->passTime();
     }
+}
+
+bool DynamiteHolder::hasMunition() const {
+    return this->munition > 0;
 }
 
 

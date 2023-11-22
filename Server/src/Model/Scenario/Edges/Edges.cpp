@@ -14,13 +14,14 @@ Edges::Edges(b2World *world, const float &height, const float &width) : GameObje
     body = world->CreateBody(&bd);
     b2EdgeShape shape;
     float heightOffset = height + GameParameters::getOffsetEdgeTop();
-    shape.SetTwoSided(b2Vec2(0.0f, heightOffset), b2Vec2(width, heightOffset));
+    float widthOffset = width + 8.0f;
+    shape.SetTwoSided(b2Vec2(0.0f, heightOffset), b2Vec2(widthOffset, heightOffset));
     body->CreateFixture(&shape, 0.0f);
 
     shape.SetTwoSided(b2Vec2(0.0f, 0.0f), b2Vec2(0.0f, heightOffset));
     body->CreateFixture(&shape, 0.0f);
 
-    shape.SetTwoSided(b2Vec2(width, 0.0f), b2Vec2(width, heightOffset));
+    shape.SetTwoSided(b2Vec2(widthOffset, 0.0f), b2Vec2(widthOffset, heightOffset));
     body->CreateFixture(&shape, 0.0f);
 }
 

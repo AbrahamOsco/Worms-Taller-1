@@ -144,9 +144,9 @@ public:
 
     Direction getDirection();
 
-    void attackWithAirAttack(const int &posXAttack);
+    bool attackWithAirAttack(const int &posXAttack);
 
-    void attackWithDynamiteHolder();
+    bool attackWithDynamiteHolder();
 };
 
 
