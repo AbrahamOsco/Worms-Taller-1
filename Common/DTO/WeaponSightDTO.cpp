@@ -36,5 +36,10 @@ void WeaponSightDTO::setPositionYSight(const size_t &positionYSight) {
     this->positionYSight = positionYSight;
 }
 
-
+bool WeaponSightDTO::operator==(const WeaponSightDTO& other) const {
+    return  this->opType == other.opType &&
+            this->positionXSight == other.positionXSight &&
+            this->positionYSight == other.positionYSight &&
+            this->typeSight == other.typeSight;
+}
 

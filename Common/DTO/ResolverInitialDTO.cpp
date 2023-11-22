@@ -52,3 +52,10 @@ void ResolverInitialDTO::setVecMaxNumbersWorms(const std::vector<size_t> &vecMax
     this->vecMaxNumbersWorms = vecMaxNumbersWorms;
 }
 
+bool ResolverInitialDTO::operator==(const ResolverInitialDTO& other) const {
+    return  this->opType == other.opType &&
+            this->scenariosNames == other.scenariosNames &&
+            this->vecMaxNumbersWorms == other.vecMaxNumbersWorms &&
+            this->statusAnswer == other.statusAnswer &&
+            this->gameRooms == other.gameRooms;
+}

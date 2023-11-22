@@ -49,4 +49,11 @@ void ProjectileDTO::setTypeExplode(const TypeExplode &typeExplode) {
     this->typeExplode = typeExplode;
 }
 
-
+bool ProjectileDTO::operator==(const ProjectileDTO& other) const {
+    return  this->opType == other.opType &&
+            this->typeProjectil == other.typeProjectil &&
+            this->positionX == other.positionX &&
+            this->positionY == other.positionY &&
+            this->typeFocus == other.typeFocus &&
+            this->typeExplode == other.typeExplode;
+}

@@ -10,16 +10,18 @@
 #include "DTO.h"
 
 class ResponseInitialStateDTO : public DTO {
-private:
+ private:
     std::string gameName;
     std::string scenarioName;
     size_t playersRequired;
-public:
+
+ public:
     ResponseInitialStateDTO();
 
-    ResponseInitialStateDTO(const OperationType& aOperationType, const std::string& aGameName );
+    ResponseInitialStateDTO(const OperationType& aOperationType, const std::string& aGameName);
 
-    ResponseInitialStateDTO(const OperationType& aOperationType, const std::string& aGameName, const std::string& aScenarioName, const size_t& playersRequired);
+    ResponseInitialStateDTO(const OperationType& aOperationType, const std::string& aGameName,
+                            const std::string& aScenarioName, const size_t& playersRequired);
 
     void setGameName(const std::string& aGameName);
 
@@ -33,8 +35,8 @@ public:
 
     size_t getPlayerRequired() const;
 
-
+    bool operator==(const ResponseInitialStateDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_RESPONSEINITIALSTATEDTO_H
+#endif  // WORMS_TALLER_1_RESPONSEINITIALSTATEDTO_H

@@ -14,13 +14,15 @@ enum TypeShowProjectiles{
 };
 
 class ProjectilesDTO : public DTO {
-private:
+ private:
     TypeShowProjectiles typeShowProjectiles;
     std::vector<ProjectileDTO> projectilesDTO;
-public:
+
+ public:
     ProjectilesDTO();
 
-    explicit ProjectilesDTO(const TypeShowProjectiles& typeShowProjectiles, const std::vector<ProjectileDTO>& projectilesDTO);
+    explicit ProjectilesDTO(const TypeShowProjectiles& typeShowProjectiles,
+                            const std::vector<ProjectileDTO>& projectilesDTO);
 
     std::vector<ProjectileDTO> getProjectilesDto() const;
 
@@ -30,7 +32,8 @@ public:
 
     void setTypeShowProjectiles(const TypeShowProjectiles &typeShowProjectiles);
 
+    bool operator==(const ProjectilesDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_PROJECTILESDTO_H
+#endif  // WORMS_TALLER_1_PROJECTILESDTO_H

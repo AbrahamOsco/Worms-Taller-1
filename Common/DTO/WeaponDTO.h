@@ -28,11 +28,12 @@ enum TypeMunition{
 };
 
 class WeaponDTO : public DTO {
-private:
+ private:
     TypeWeapon typeWeapon;
     TypeMunition typeMunition;
     size_t munition;
-public:
+
+ public:
     WeaponDTO();
 
     WeaponDTO(const TypeWeapon &aTypeWeapon, const TypeMunition &aTypeMunition, const size_t &aMunition);
@@ -50,7 +51,9 @@ public:
     void setMunition(const size_t &munition);
 
     bool getIsSelected() const;
+
+    bool operator==(const WeaponDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_WEAPONDTO_H
+#endif  // WORMS_TALLER_1_WEAPONDTO_H

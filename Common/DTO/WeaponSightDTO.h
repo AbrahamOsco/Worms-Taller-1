@@ -15,11 +15,12 @@ enum TypeSight{
 };
 
 class WeaponSightDTO : public DTO {
-private:
+ private:
     TypeSight typeSight;
     size_t positionXSight;
     size_t positionYSight;
-public:
+
+ public:
     WeaponSightDTO();
 
     WeaponSightDTO(const TypeSight &typeSight, const size_t& positionXSight, const size_t positionYSight);
@@ -36,7 +37,8 @@ public:
 
     void setPositionYSight(const size_t &positionYSight);
 
+    bool operator==(const WeaponSightDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_WEAPONSIGHTDTO_H
+#endif  // WORMS_TALLER_1_WEAPONSIGHTDTO_H

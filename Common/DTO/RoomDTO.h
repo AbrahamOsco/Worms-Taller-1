@@ -10,15 +10,17 @@
 #include "DTO.h"
 
 class RoomDTO : public DTO {
-private:
+ private:
     std::string gameName;
     std::string scenarioName;
     size_t playersCurrent;
     size_t playersRequired;
-public:
+
+ public:
     RoomDTO();
 
-    RoomDTO(const std::string& aGameName, const std::string& aScenarioName, const size_t& aPlayerCurrent, const size_t& aPlayersRequired);
+    RoomDTO(const std::string& aGameName, const std::string& aScenarioName,
+            const size_t& aPlayerCurrent, const size_t& aPlayersRequired);
 
     void setGameName(const std::string& aGameName);
 
@@ -36,7 +38,8 @@ public:
 
     size_t getPlayerCurrent() const;
 
+    bool operator==(const RoomDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_ROOMDTO_H
+#endif  // WORMS_TALLER_1_ROOMDTO_H

@@ -47,3 +47,10 @@ size_t RoomDTO::getPlayerCurrent() const {
     return playersCurrent;
 }
 
+bool RoomDTO::operator==(const RoomDTO& other) const {
+    return  this->opType == other.opType &&
+            this->gameName == other.gameName &&
+            this->scenarioName == other.scenarioName &&
+            this->playersCurrent == other.playersCurrent &&
+            this->playersRequired == other.playersRequired;
+}

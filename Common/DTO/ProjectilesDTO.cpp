@@ -27,4 +27,8 @@ void ProjectilesDTO::setTypeShowProjectiles(const TypeShowProjectiles &typeShowP
     this->typeShowProjectiles = typeShowProjectiles;
 }
 
-
+bool ProjectilesDTO::operator==(const ProjectilesDTO& other) const {
+    return  this->opType == other.opType &&
+            this->typeShowProjectiles == other.typeShowProjectiles &&
+            this->projectilesDTO == other.projectilesDTO;
+}

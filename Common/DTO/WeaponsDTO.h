@@ -11,14 +11,15 @@
 #include "WeaponDTO.h"
 
 class WeaponsDTO : public DTO {
-private:
+ private:
     size_t idPlayer;
     std::vector<WeaponDTO> weapons;
     TypeWeapon weaponCurrent;
-public:
+
+ public:
     WeaponsDTO();
 
-    WeaponsDTO(const size_t &idPlayer, const std::vector<WeaponDTO> &aWeapons,const TypeWeapon& weaponCurrent );
+    WeaponsDTO(const size_t &idPlayer, const std::vector<WeaponDTO> &aWeapons, const TypeWeapon& weaponCurrent);
 
     std::vector<WeaponDTO> getWeapons() const;
 
@@ -32,7 +33,8 @@ public:
 
     void setWeaponCurrent(const TypeWeapon &weaponCurrent);
 
+    bool operator==(const WeaponsDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_WEAPONSDTO_H
+#endif  // WORMS_TALLER_1_WEAPONSDTO_H

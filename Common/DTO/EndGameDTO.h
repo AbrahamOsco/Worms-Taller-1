@@ -13,11 +13,11 @@ enum TypeResult{
 };
 
 class EndGameDTO : public DTO {
-private:
+ private:
     size_t idPlayer;
     TypeResult typeResult;
 
-public:
+ public:
     EndGameDTO();
 
     EndGameDTO(const size_t& idPlayer, const TypeResult& typeResult);
@@ -27,7 +27,9 @@ public:
     size_t getIdPlayer() const;
 
     void setTypeResult(TypeResult typeResult);
+
+    bool operator==(const EndGameDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_ENDGAMEDTO_H
+#endif  // WORMS_TALLER_1_ENDGAMEDTO_H

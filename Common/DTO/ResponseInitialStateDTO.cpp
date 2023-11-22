@@ -41,4 +41,9 @@ size_t ResponseInitialStateDTO::getPlayerRequired() const {
     return playersRequired;
 }
 
-
+bool ResponseInitialStateDTO::operator==(const ResponseInitialStateDTO& other) const {
+    return  this->opType == other.opType &&
+            this->gameName == other.gameName &&
+            this->scenarioName == other.scenarioName &&
+            this->playersRequired == other.playersRequired;
+}

@@ -22,16 +22,17 @@ enum TypeVisionProvision{
 */
 
 class ProvisionDTO : public DTO {
-private:
+ private:
     size_t positionX;
     size_t positionY;
     TypeEffect typeEffect;
     TypeContact typeContact;
-public:
 
+ public:
     ProvisionDTO();
 
-    ProvisionDTO(const size_t& positionX, const size_t& positionY, const TypeEffect& typeEffect, const TypeContact& typeContact);
+    ProvisionDTO(const size_t& positionX, const size_t& positionY, const TypeEffect& typeEffect,
+                const TypeContact& typeContact);
 
     size_t getPositionX() const;
 
@@ -42,7 +43,9 @@ public:
     TypeContact getTypeContact() const;
 
     void setTypeContact(const TypeContact &typeContact);
+
+    bool operator==(const ProvisionDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_PROVISIONDTO_H
+#endif  // WORMS_TALLER_1_PROVISIONDTO_H

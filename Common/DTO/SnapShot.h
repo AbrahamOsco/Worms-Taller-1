@@ -21,7 +21,7 @@ enum GameState{
 };
 
 class SnapShot : public DTO {
-private:
+ private:
     GameState typeSnapShot;
     std::vector<WormDTO> wormsDTO;
     PlayersDTO playersDTO;
@@ -31,12 +31,13 @@ private:
     TurnDTO turnDto;
     EndGameDTO endGameDTO;
     std::vector<ProvisionDTO> vecProvisionDTO;
-public:
 
+ public:
     explicit SnapShot(const EndGameDTO& endGameDTO);
 
     explicit SnapShot(const std::vector<WormDTO>& wormsDTO, const PlayersDTO &aPlayersDTO, const WeaponsDTO& weaponsDTO,
-                      const WeaponSightDTO &weaponSightDTO, const ProjectilesDTO &projectilesDTO, const TurnDTO& turnDto, const std::vector<ProvisionDTO> &vecProvisionDTO );
+                      const WeaponSightDTO &weaponSightDTO, const ProjectilesDTO &projectilesDTO,
+                      const TurnDTO& turnDto, const std::vector<ProvisionDTO> &vecProvisionDTO);
 
     void setWormsDTO(const std::vector<WormDTO>& wormsDTO);
 
@@ -68,7 +69,8 @@ public:
 
     std::vector<ProvisionDTO> getVecProvisionDto() const;
 
+    bool operator==(const SnapShot& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_SNAPSHOT_H
+#endif  // WORMS_TALLER_1_SNAPSHOT_H

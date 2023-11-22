@@ -7,7 +7,8 @@ EndGameDTO::EndGameDTO() : DTO(END_DTO) {
 }
 
 
-EndGameDTO::EndGameDTO(const size_t &idPlayer, const TypeResult &typeResult)  : DTO(END_DTO), idPlayer(idPlayer), typeResult(typeResult) {
+EndGameDTO::EndGameDTO(const size_t &idPlayer, const TypeResult &typeResult):
+                        DTO(END_DTO), idPlayer(idPlayer), typeResult(typeResult) {
 }
 
 TypeResult EndGameDTO::getTypeResult() const {
@@ -22,5 +23,9 @@ size_t EndGameDTO::getIdPlayer() const {
     return idPlayer;
 }
 
-
+bool EndGameDTO::operator==(const EndGameDTO& other) const {
+    return  this->opType == other.opType &&
+            this->idPlayer == other.idPlayer &&
+            this->typeResult == other.typeResult;
+}
 
