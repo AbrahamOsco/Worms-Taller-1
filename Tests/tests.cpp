@@ -610,6 +610,53 @@ TEST(PROTOCOL_SERVER_RECV, recvInitialStateDTO_SCENARIO_LIST_REQUEST) {
     InitialStateDTO dtoServer = server.recvInitialStateDTO();
     ASSERT_EQ(dtoClient, dtoServer);
 }
+TEST(PROTOCOL_SERVER_RECV, recvInitialStateDTO_ROOM_LIST_REQUEST) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    InitialStateDTO dtoClient(ROOM_LIST_REQUEST, "soy el jugador");
+    client.sendInitialStateDTO(dtoClient);
+    InitialStateDTO dtoServer = server.recvInitialStateDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_SERVER_RECV, recvReponseInitialStateDTO_FINAL_CREATE_GAME) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    ResponseInitialStateDTO dtoClient(FINAL_CREATE_GAME, "partida a muerte", "mapa 1v1", 2);
+    client.sendResponseInitialStateDTO(dtoClient);
+    ResponseInitialStateDTO dtoServer = server.recvReponseInitialStateDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_SERVER_RECV, recvReponseInitialStateDTO_FINAL_JOIN_GAME) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    ResponseInitialStateDTO dtoClient(FINAL_CREATE_GAME, "partida de chill");
+    client.sendResponseInitialStateDTO(dtoClient);
+    ResponseInitialStateDTO dtoServer = server.recvReponseInitialStateDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_SERVER_RECV, recvCommandDTO) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    CommandDTO dtoClient;
+    dtoClient.setTypeCommand(SELECT_BANANA);
+    dtoClient.setX(42);
+    dtoClient.setY(69);
+    client.sendCommandDTO(dtoClient);
+    CommandDTO dtoServer = server.recvCommandDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 
