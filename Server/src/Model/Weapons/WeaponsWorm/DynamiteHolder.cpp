@@ -17,6 +17,7 @@ void DynamiteHolder::placeDynamite(const int &waitTime, const b2Vec2 &positionWo
     b2Vec2 positionDynamite(positionWorm.x + offset, positionWorm.y);
     dynamite = std::make_unique<Dynamite>(waitTime, gameParameters, typeFocus);
     dynamite->addToTheWorld(world, positionDynamite);
+    sendLastDTO = false;
 }
 
 bool DynamiteHolder::hasAScope() {

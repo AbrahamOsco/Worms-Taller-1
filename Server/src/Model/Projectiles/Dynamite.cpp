@@ -30,8 +30,9 @@ void Dynamite::addToTheWorld(b2World* aWorld, b2Vec2 position){
 
 void Dynamite::passTime(){
     time = std::chrono::steady_clock::now();
-    if (time - startTime >= waitTime && !exploded)
+    if (time - startTime >= waitTime && !exploded){
         explode();
+    }
 }
 
 void Dynamite::explode(){
