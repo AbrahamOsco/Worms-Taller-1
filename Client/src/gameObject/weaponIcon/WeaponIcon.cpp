@@ -53,14 +53,15 @@ void WeaponIcon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager
     int padding = 6;
 
     if (m_isSelected) {
-        textureManager.setColorMod(m_textureID, 255, 255, 255, 100);
+        textColor = {0, 0, 255, 255};
     }
+    if (m_ammoCount == 0) {
+        textureManager.setColorMod(m_textureID, 255, 255, 255, 100);
 
+    }
     textureManager.draw(m_textureID, m_x, m_y, m_width, m_height, renderer, SDL_FLIP_NONE);
     textureManager.resetColorMod(m_textureID);
-    if (m_ammoCount == 0) {
-        textColor = {255, 0, 0, 255};
-    }
+
     textureManager.drawText("Ammo:", m_x + m_width + padding, m_y + 12, fontPath, fontSize, textColor, renderer);
     std::string text;
     if (m_typeMunition == TypeMunition::INFINITE) {
