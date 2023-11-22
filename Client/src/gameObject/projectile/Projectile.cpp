@@ -30,20 +30,18 @@ void Projectile::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager
     if (m_typeExplode == TypeExplode::NO_EXPLODE) {
         textureManager.draw(m_textureID, posX, posY, m_width, m_height, renderer, SDL_FLIP_NONE);
     } else if (m_typeExplode == TypeExplode::EXPLODE) {
-        m_animation.draw(posX, posY, 60, 60, renderer, textureManager);
+        textureManager.drawFrame("explosion", posX, posY, 60, 60, 0, 0,renderer,SDL_FLIP_NONE);
     }
 }
 
 void
 Projectile::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera, SoundManager &soundManager) {
-    m_animation.update();
-
     if (m_typeFocus == TypeFocus::FOCUS) {
         SDL2pp::Point point(m_x, m_y);
         camera.setTarget(point);
     }
 
-    if (m_typeExplode == TypeExplode::EXPLODE) {
+    if (m_typeProjectile == TypeProjectil::NONE_PROJECTILE) {
         //soundManager.playEffect("explosion");
     }
 }
