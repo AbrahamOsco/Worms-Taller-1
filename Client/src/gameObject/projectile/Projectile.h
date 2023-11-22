@@ -8,11 +8,13 @@
 
 #include "../GameObject.h"
 #include "../../soundManager/SoundManager.h"
+#include "../../animation/SpriteAnimation.h"
 
 class Projectile : public GameObject {
     TypeProjectil m_typeProjectile;
     TypeFocus m_typeFocus;
     TypeExplode m_typeExplode;
+    SpriteAnimation m_animation;
 
 public:
     Projectile(int x, int y, const TypeProjectil &typeProjectile, const TypeFocus &typeFocus, const TypeExplode &typeExplode);

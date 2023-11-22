@@ -15,6 +15,6 @@ void Provision::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager,
 void
 Provision::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera, SoundManager &soundManager) {
     if (m_typeEffect == TypeEffect::EXPLOSION) {
-        soundManager.playEffect("explosion");
+        //soundManager.playEffect("explosion");
     }
 }
