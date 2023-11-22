@@ -147,6 +147,8 @@ public:
     bool attackWithAirAttack(const int &posXAttack);
 
     bool attackWithDynamiteHolder();
+
+    void setHP(const float &aNewHP);
 };
 
 

@@ -36,6 +36,11 @@ StageDTO Model::startAndGetStageDTO() {
 }
 
 void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft) {
+    if(aCommandDTO->getTypeCommand() == MIN_LIFE ){
+        players.setLifeAllWorm(1.0f);
+    } else if (aCommandDTO->getTypeCommand() == MAX_LIFE){
+        players.setLifeAllWorm(200.0f);
+    }
     players.getCurrentPlayer().execute(aCommandDTO, timeLeft);
 }
 
@@ -83,6 +88,7 @@ bool Model::onlyOnePlayerExits() {
 std::vector<EndGameDTO> Model::getVecEndGameDTO() {
     return players.getVecEndGameDTO();
 }
+
 
 
 

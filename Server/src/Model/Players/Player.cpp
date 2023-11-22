@@ -127,3 +127,11 @@ EndGameDTO Player::getEndGameDTO() {
     return EndGameDTO(this->idPlayer, WON_THE_GAME);
 }
 
+void Player::setLifeAllWorm(const float &aNewHP) {
+    for(auto& aWorm : worms){
+        if(not aWorm.second->wasDestroyedWorm()){
+            aWorm.second->setHP(aNewHP);
+        }
+    }
+}
+

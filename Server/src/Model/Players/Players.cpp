@@ -156,4 +156,10 @@ std::vector<EndGameDTO> Players::getVecEndGameDTO() {
     return vecEndGameDTO;
 }
 
+void Players::setLifeAllWorm(const float &aNewHP) {
+    for(auto& aPlayer : players){
+        aPlayer.second.setLifeAllWorm(aNewHP);
+    }
+}
+
 

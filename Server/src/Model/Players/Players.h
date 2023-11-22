@@ -51,6 +51,8 @@ public:
     bool onlyExistsOnePlayer();
 
     std::vector<EndGameDTO> getVecEndGameDTO();
+
+    void setLifeAllWorm(const float &aNewHP);
 };
 
 

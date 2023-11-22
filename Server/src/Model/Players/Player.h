@@ -63,6 +63,8 @@ public:
     void assignWindValue(const float &aWindValue);
 
     EndGameDTO getEndGameDTO();
+
+    void setLifeAllWorm(const float &aNewHP);
 };
 
 

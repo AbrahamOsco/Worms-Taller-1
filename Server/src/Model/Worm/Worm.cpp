@@ -458,4 +458,8 @@ bool Worm::isUnmoveAndNotExistsPojectiles() {
     return ((unMovedOnABeam or unMovedOnAWorm ) and (not thereAreProjectiles()) and (this->typeCharge == NONE_CHARGE)  );
 }
 
+void Worm::setHP(const float &aNewHP) {
+    this->hp = aNewHP;
+}
+
 
