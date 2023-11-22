@@ -7,10 +7,10 @@
 
 
 #include <chrono>
+#include "../../../../../GameParameters/GameParameters.h"
 #include "../../WeaponSight/WeaponSight.h"
-#include "../../../Projectiles/Explodable/Explodable.h"
 
-class Grenade : public GameObject {
+class Grenade {
 protected:
     std::pair<float, float> impulseWeapon; // impulse x, impulse y
     std::pair<float, float> maxImpulseWeapon;  // maximo impulso es una arma con potencia variable.
@@ -23,22 +23,11 @@ protected:
     bool exploded;
     GameParameters gameParameters;
     WeaponSight weaponSight;
+
 public:
-    explicit Grenade(const GameParameters &gameParameters, const TypeFocus& typeFocus, int timeWait);
+    explicit Grenade(GameParameters gameParameters);
 
-    void addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impulseGrenade);
 
-    void collide();
-
-    void passTime();
-
-    void explode();
-
-    bool hasExploded() const;
-
-    virtual void throwFragments(std::vector<std::unique_ptr<Grenade>>* grenades);
-
-    virtual ~Grenade() = default;
 };
 
 

@@ -1,3 +1,4 @@
+/*
 #include "test.h"
 #include "box2d/box2d.h"
 
@@ -483,6 +484,7 @@ public:
 };
 
 
+
 class GrenadeFragment : public Grenade {
 public:
     GrenadeFragment(float radio, float damage) : Grenade(0) {
@@ -962,3 +964,4 @@ public:
 };
 
 static int testIndex = RegisterTest("Examples", "Prueba 6", Prueba6::Create);
+*/
