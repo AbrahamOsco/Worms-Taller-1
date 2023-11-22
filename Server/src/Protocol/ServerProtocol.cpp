@@ -179,6 +179,10 @@ void ServerProtocol::sendAProvisionDTO(const ProvisionDTO& provisionDto){
     sendNum2Bytes(provisionDto.getPositionX());
     sendNum2Bytes(provisionDto.getPositionY());
     sendANumberByte(provisionDto.getTypeEffect());
+    sendANumberByte(provisionDto.getTypeContact());
+    if(provisionDto.getTypeContact() == CONTACT){
+        std::cout << "Entro en contacto la provison\n";
+    }
 }
 
 void ServerProtocol::sendEndGameDTO(const EndGameDTO& endGameDto){

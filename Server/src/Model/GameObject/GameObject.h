@@ -34,7 +34,7 @@ public:
 
     void destroyBody();
 
-    bool isDestroyedBody();
+    bool isDestroyedBody() const;
 
     virtual ~GameObject() = default;
 

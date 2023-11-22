@@ -100,9 +100,7 @@ TurnDTO Turns::getTurnDTO() const {
 std::vector<ProvisionDTO> Turns::getVecProvisionDTO() {
     std::vector<ProvisionDTO> vecProvisions;
     for(auto& aProvision : provisionBoxes ){
-        if(not aProvision->isDestroyedBody()){
-            vecProvisions.push_back(aProvision->getProvisionDTO());
-        }
+        aProvision->getProvisionDTO(vecProvisions);
     }
     return vecProvisions;
 }

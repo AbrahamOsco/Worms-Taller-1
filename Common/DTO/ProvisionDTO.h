@@ -11,6 +11,9 @@
 enum TypeEffect{
     MUNITIONS, MEDICAL_KIT, EXPLOSION
 };
+enum TypeContact{
+    NO_CONTACT, CONTACT
+};
 
 /* //enum  probar primero sin el enum de visibilidad
 enum TypeVisionProvision{
@@ -23,18 +26,22 @@ private:
     size_t positionX;
     size_t positionY;
     TypeEffect typeEffect;
-
+    TypeContact typeContact;
 public:
 
     ProvisionDTO();
 
-    ProvisionDTO(const size_t& positionX, const size_t& positionY, const TypeEffect& typeEffect);
+    ProvisionDTO(const size_t& positionX, const size_t& positionY, const TypeEffect& typeEffect, const TypeContact& typeContact);
+
     size_t getPositionX() const;
 
     size_t getPositionY() const;
 
     TypeEffect getTypeEffect() const;
 
+    TypeContact getTypeContact() const;
+
+    void setTypeContact(const TypeContact &typeContact);
 };
 
 

@@ -16,7 +16,7 @@ void GameObject::destroyBody() {
     isDestroyed = true;
 }
 
-bool GameObject::isDestroyedBody() {
+bool GameObject::isDestroyedBody() const {
     return this->isDestroyed;
 }
 

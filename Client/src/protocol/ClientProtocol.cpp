@@ -205,7 +205,8 @@ ProvisionDTO ClientProtocol::recvAProvisionDTO(){
         size_t positionX = recvNum2Bytes();
         size_t positionY = recvNum2Bytes();
         TypeEffect typeEffect = static_cast<TypeEffect>(recvANumberByte());
-        return ProvisionDTO(positionX, positionY, typeEffect);
+        TypeContact typeContact = static_cast<TypeContact>(recvANumberByte());
+        return ProvisionDTO(positionX, positionY, typeEffect, typeContact);
     }
     return ProvisionDTO();
 }

@@ -55,7 +55,7 @@ public:
         isDestroyed = true;
     }
 
-    bool isDestroyedBody() {
+    bool isDestroyedBody() const {
         return this->isDestroyed;
     }
 

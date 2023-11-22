@@ -27,12 +27,21 @@ void Provision::addToTheWorld(b2World *world) {
     boxDefFixture.density = 1.0f;
     this->world = world;
     this->body->CreateFixture(&boxDefFixture);
+    inContact = false;
 }
 
-ProvisionDTO Provision::getProvisionDTO() const {
-    return ProvisionDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
-                        this->gameParameters.getMaxHeightPixel() - this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(),
-                        typeEffect);
+void Provision::getProvisionDTO(std::vector<ProvisionDTO> &vecProvisionDTO) {
+    ProvisionDTO aProvisionDTO = ProvisionDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
+                                              this->gameParameters.getMaxHeightPixel() - this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(),
+                                              typeEffect, NO_CONTACT);
+    if(this->isDestroyedBody() and inContact ) {
+        inContact = false;
+        aProvisionDTO.setTypeContact(CONTACT);
+        vecProvisionDTO.push_back(aProvisionDTO);
+    }
+    else if (not this->isDestroyedBody()){
+        vecProvisionDTO.push_back(aProvisionDTO);
+    }
 }
 
 void Provision::applyEffect(Worm *wormSelect) {
@@ -54,5 +63,6 @@ void Provision::applyEffect(Worm *wormSelect) {
     }
     // destroyed the provision
     this->destroyBody();
+    inContact = true;
 }
 

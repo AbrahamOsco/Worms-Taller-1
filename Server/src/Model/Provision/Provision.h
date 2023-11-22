@@ -20,12 +20,13 @@ private:
     TypeEffect typeEffect;
     GameParameters gameParameters;
     b2World* world;
+    bool inContact;
 public:
     Provision(const float &positionX, const float &positionY, const TypeEffect &typeEffect, const GameParameters& parameters);
 
     void addToTheWorld(b2World *world);
 
-    ProvisionDTO getProvisionDTO() const;
+    void getProvisionDTO(std::vector<ProvisionDTO> &vecProvisionDTO);
 
     void applyEffect(Worm *wormSelect);
 };
