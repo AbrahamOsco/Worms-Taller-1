@@ -37,6 +37,9 @@ void Provision::getProvisionDTO(std::vector<ProvisionDTO> &vecProvisionDTO) {
                                               typeEffect, NO_CONTACT);
     if(this->isDestroyedBody() and animationIterations > 0  ) {
         aProvisionDTO.setTypeContact(CONTACT);
+        if(animationIterations == 15 ){
+            aProvisionDTO.setTypeContact(CONTACT_SOUND);
+        }
         vecProvisionDTO.push_back(aProvisionDTO);
         animationIterations--;
     } else if (not this->isDestroyedBody()){

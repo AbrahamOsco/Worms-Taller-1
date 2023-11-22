@@ -34,6 +34,7 @@ public:
 
     void removeAIteration();
 
+    int getNumberIterations() const;
 };
 
 

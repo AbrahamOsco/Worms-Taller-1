@@ -51,6 +51,9 @@ void AirAttackMissile::removeAIteration() {
     explosionIterations--;
 }
 
+int AirAttackMissile::getNumberIterations() const {
+    return explosionIterations;
+}
 
 
 
