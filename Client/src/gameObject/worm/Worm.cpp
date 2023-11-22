@@ -12,6 +12,8 @@
 #include "../../command/JumpForwardCmd.h"
 #include "../../command/JumpBackwardCmd.h"
 #include "../../command/CountdownCmd.h"
+#include "../../command/SetMaxLifeCmd.h"
+#include "../../command/SetMinLifeCmd.h"
 
 Worm::Worm(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocus &focus,
            const MoveWorm &moveWorm, bool isMyTurn) : GameObject(LoaderParams(x, y, 60, 60, "player")), m_id(id), m_hpWorm(hpWorm),
@@ -103,6 +105,12 @@ void Worm::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &
             queue.move_push(std::move(command));
         } else if (input.getKeyDown(SDL_SCANCODE_5)) {
             std::unique_ptr<Command> command(new CountdownCmd(5));
+            queue.move_push(std::move(command));
+        } else if (input.getKeyDown(SDL_SCANCODE_F1)) {
+            std::unique_ptr<Command> command(new SetMaxLifeCmd());
+            queue.move_push(std::move(command));
+        } else if (input.getKeyDown(SDL_SCANCODE_F2)) {
+            std::unique_ptr<Command> command(new SetMinLifeCmd());
             queue.move_push(std::move(command));
         }
     }

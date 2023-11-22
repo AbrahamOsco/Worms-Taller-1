@@ -32,6 +32,8 @@ enum TypeCommand {
     AIR_ATTACK_POINT,
     CLOSE_GAME,
     COUNTDOWN,
+    MAX_LIFE,
+    MIN_LIFE,
     NONE
 };
 
