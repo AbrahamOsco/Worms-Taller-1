@@ -473,9 +473,9 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendProjectilesDTO) {
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
     std::vector<ProjectileDTO> projectiles;
-    projectiles.push_back(ProjectileDTO(BAZOOKA_PROJECTILE, 25, 33, NO_FOCUS));
-    projectiles.push_back(ProjectileDTO(NONE_PROJECTILE, 96, 123, FOCUS));
-    projectiles.push_back(ProjectileDTO(AIR_ATTACK_MISSILE, 6582, 8743, FOCUS));
+    projectiles.push_back(ProjectileDTO(BAZOOKA_PROJECTILE, 25, 33, NO_FOCUS, EXPLODE));
+    projectiles.push_back(ProjectileDTO(NONE_PROJECTILE, 96, 123, FOCUS, NO_EXPLODE));
+    projectiles.push_back(ProjectileDTO(AIR_ATTACK_MISSILE, 6582, 8743, FOCUS, EXPLODE));
     ProjectilesDTO dto(SHOW_PROJECTILES, projectiles);
     protocol.sendProjectilesDTO(dto);
     buffer = skt.getBuffer();
@@ -499,6 +499,8 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendProjectilesDTO) {
         ASSERT_EQ(projectiles[i].getPositionY(), word);
         offset = offset + 2;
         ASSERT_EQ(projectiles[i].getTypeFocus(), buffer[offset]);
+        offset++;
+        ASSERT_EQ(projectiles[i].getTypeExplode(), buffer[offset]);
         offset++;
     }
 }
@@ -534,7 +536,7 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendAProvisionDTO) {
     uint16_t word;
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
-    ProvisionDTO dto(23, 97, MEDICAL_KIT);
+    ProvisionDTO dto(23, 97, MEDICAL_KIT, CONTACT);
     protocol.sendAProvisionDTO(dto);
     buffer = skt.getBuffer();
     ASSERT_EQ(PROVISION_DTO, buffer[offset]);
@@ -548,6 +550,8 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendAProvisionDTO) {
     ASSERT_EQ(97, word);
     offset = offset + 2;
     ASSERT_EQ(MEDICAL_KIT, buffer[offset]);
+    offset++;
+    ASSERT_EQ(CONTACT, buffer[offset]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendEndGameDTO) {
     Socket skt;
@@ -580,11 +584,11 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendSnapShot_GAME_PROGRESS) {
     WeaponsDTO weapons(12, weapon, BANANA);
     WeaponSightDTO sight(NO_SHOW_SIGHT, 1, 0);
     std::vector<ProjectileDTO> projectile;
-    projectile.push_back(ProjectileDTO(BAZOOKA_PROJECTILE, 25, 33, NO_FOCUS));
+    projectile.push_back(ProjectileDTO(BAZOOKA_PROJECTILE, 25, 33, NO_FOCUS, NO_EXPLODE));
     ProjectilesDTO projectiles(SHOW_PROJECTILES, projectile);
     TurnDTO turn(120, "texto", 10, 5, WIND_RIGHT);
     std::vector<ProvisionDTO> provisions;
-    provisions.push_back(ProvisionDTO(23, 97, MEDICAL_KIT));
+    provisions.push_back(ProvisionDTO(23, 97, MEDICAL_KIT, NO_CONTACT));
     std::unique_ptr<SnapShot> dto = std::unique_ptr<SnapShot>
                 (new SnapShot(worms, players, weapons, sight, projectiles, turn, provisions));
     protocol.sendSnapShot(dto);
@@ -604,7 +608,7 @@ TEST(PROTOCOL_SERVER_RECV, recvInitialStateDTO_SCENARIO_LIST_REQUEST) {
     InitialStateDTO dtoClient(SCENARIO_LIST_REQUEST, "name");
     client.sendInitialStateDTO(dtoClient);
     InitialStateDTO dtoServer = server.recvInitialStateDTO();
-    ASSERT_TRUE(dtoClient == dtoServer);
+    ASSERT_EQ(dtoClient, dtoServer);
 }
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);

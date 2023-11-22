@@ -20,7 +20,7 @@ std::string InitialStateDTO::getPlayerName() const {
 }
 
 bool InitialStateDTO::operator==(const InitialStateDTO& other) const {
-    return *this == other &&
+    return  this->opType == other.opType &&
             this->playerName == other.playerName;
 }
 

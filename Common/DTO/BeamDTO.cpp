@@ -60,7 +60,7 @@ TypeBeam BeamDTO::getTypeBeam() const {
 }
 
 bool BeamDTO::operator==(const BeamDTO& other) const {
-    return *this == other &&
+    return  this->opType == other.opType &&
             this->typeBeam == other.typeBeam &&
             this->xCenter == other.xCenter &&
             this->yCenter == other.yCenter &&
