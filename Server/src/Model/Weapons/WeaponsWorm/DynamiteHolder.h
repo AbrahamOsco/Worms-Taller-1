@@ -12,6 +12,8 @@
 class DynamiteHolder : public Weapon {
 private:
     std::unique_ptr<Dynamite> dynamite;
+    ProjectileDTO lastProjectilDTO;
+    bool sendLastDTO;
 public:
     DynamiteHolder(const TypeWeapon &aTypeWeapon, const float &mainDamage,
                    const TypeMunition &aTypeMunition, const size_t &aMunition,

@@ -37,12 +37,19 @@ bool DynamiteHolder::thereAreProjectiles() {
 
 void DynamiteHolder::tryCleanProjectiles(b2World *aWorld) {
     if(dynamite != nullptr and dynamite->isDestroyedBody()){
+        lastProjectilDTO = dynamite->getProjectilDTO();
+        lastProjectilDTO.setTypeExplode(EXPLODE);
         aWorld->DestroyBody(dynamite->getBody());
         dynamite = nullptr;
     }
 }
 
 void DynamiteHolder::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
+    if(dynamite == nullptr and not sendLastDTO){
+        vecProjectileDTO.push_back(lastProjectilDTO);
+        sendLastDTO = true;
+        return;
+    }
     if(dynamite != nullptr){
         vecProjectileDTO.push_back(dynamite->getProjectilDTO());
     }

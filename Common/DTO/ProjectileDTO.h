@@ -16,17 +16,22 @@ enum TypeProjectil{
 
 };
 
+enum TypeExplode{
+    EXPLODE, NO_EXPLODE
+};
+
 class ProjectileDTO : public DTO {
 private:
     TypeProjectil typeProjectil;
     size_t positionX;
     size_t positionY;
     TypeFocus typeFocus;
+    TypeExplode typeExplode;
 public:
     ProjectileDTO();
 
     ProjectileDTO(const TypeProjectil &typeProjectil, const size_t &positionX, const size_t &positionY,
-                  const TypeFocus &typeFocus);
+                  const TypeFocus &typeFocus, const TypeExplode& typeExplode);
 
     TypeProjectil getTypeProjectil() const;
 
@@ -41,6 +46,11 @@ public:
     void setPositionY(const size_t &positionY);
 
     TypeFocus getTypeFocus() const;
+
+    TypeExplode getTypeExplode() const;
+
+    void setTypeExplode(const TypeExplode &typeExplode);
+
 };
 
 

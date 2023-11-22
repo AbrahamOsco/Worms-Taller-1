@@ -254,9 +254,10 @@ ProjectileDTO ClientProtocol::recvAProjectileDTO(){
         size_t positionX = recvNum2Bytes();
         size_t postionY = recvNum2Bytes();
         TypeFocus typeFocus = static_cast<TypeFocus>(recvANumberByte());
-        return ProjectileDTO(aTypeProj, positionX, postionY, typeFocus);
+        TypeExplode typeExplode = static_cast<TypeExplode>(recvANumberByte());
+        return ProjectileDTO(aTypeProj, positionX, postionY, typeFocus, typeExplode);
     }
-    return ProjectileDTO(NONE_PROJECTILE, 0, 0, NO_FOCUS);
+    return ProjectileDTO(NONE_PROJECTILE, 0, 0, NO_FOCUS, NO_EXPLODE);
 }
 
 WormDTO ClientProtocol::recvAWormDTO() {

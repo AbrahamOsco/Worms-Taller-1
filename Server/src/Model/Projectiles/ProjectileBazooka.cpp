@@ -40,7 +40,7 @@ void ProjectileBazooka::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const 
 
 ProjectileDTO ProjectileBazooka::getProjectilDTO(){
     return ProjectileDTO(BAZOOKA_PROJECTILE, this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
-                         gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()), this->typeFocus);
+                         gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()), this->typeFocus, NO_EXPLODE);
 }
 
 void ProjectileBazooka::searchWormAndCollide(const b2Vec2 &projectilePosition){

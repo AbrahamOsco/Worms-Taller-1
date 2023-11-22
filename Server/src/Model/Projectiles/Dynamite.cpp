@@ -51,6 +51,6 @@ void Dynamite::searchWormAndCollide(const b2Vec2 &projectilePosition) {
 
 ProjectileDTO Dynamite::getProjectilDTO() {
     return ProjectileDTO(DYNAMITE, this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
-                         gameParameters.getMaxHeightPixel() -this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(), this->typeFocus);
+                         gameParameters.getMaxHeightPixel() -this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(), this->typeFocus, NO_EXPLODE);
 }
 

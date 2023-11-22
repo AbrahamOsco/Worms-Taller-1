@@ -9,8 +9,8 @@ ProjectileDTO::ProjectileDTO() : DTO(PROJECTILE_DTO) {
 }
 
 ProjectileDTO::ProjectileDTO(const TypeProjectil &typeProjectil, const size_t &positionX, const size_t &positionY,
-                             const TypeFocus &typeFocus) :
-                DTO(PROJECTILE_DTO), typeProjectil(typeProjectil), positionX(positionX), positionY(positionY), typeFocus(typeFocus){
+                             const TypeFocus &typeFocus, const TypeExplode& typeExplode) :
+                DTO(PROJECTILE_DTO), typeProjectil(typeProjectil), positionX(positionX), positionY(positionY), typeFocus(typeFocus), typeExplode(typeExplode){
 }
 
 TypeProjectil ProjectileDTO::getTypeProjectil() const {
@@ -39,6 +39,14 @@ void ProjectileDTO::setPositionY(const size_t &positionY) {
 
 TypeFocus ProjectileDTO::getTypeFocus() const {
     return typeFocus;
+}
+
+TypeExplode ProjectileDTO::getTypeExplode() const {
+    return typeExplode;
+}
+
+void ProjectileDTO::setTypeExplode(const TypeExplode &typeExplode) {
+    this->typeExplode = typeExplode;
 }
 
 

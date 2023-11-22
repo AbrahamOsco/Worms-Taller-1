@@ -16,6 +16,8 @@ private:
     WeaponSight weaponSight;
     std::unique_ptr<ProjectileBazooka> projectil;
     std::pair<float, float> maxImpulseWeapon;
+    ProjectileDTO lastProjectilDTO;
+    bool sendLastDTO;
 public:
     explicit Bazooka(const TypeWeapon& aTypeWeapon, const float &damagePrincipal, const TypeMunition& aTypeMunition,
                     const size_t& aMunition, const GameParameters& gameParameters);

@@ -12,6 +12,7 @@ Bazooka::Bazooka(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, co
     impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
     maxImpulseWeapon = std::make_pair(gameParameters.getBazookaMaxImpulseX(), gameParameters.getBazookaMaxImpulseY());
     projectil = nullptr;
+    sendLastDTO = false;
 }
 
 void Bazooka::increaseAngle() {
@@ -47,6 +48,7 @@ void Bazooka::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const 
     std::cout << "Atacamos con la bazooka------------------------------------------------------\n";
     projectil = std::make_unique<ProjectileBazooka>(gameParameters, focus);
     projectil->addToTheWorld(world, p2, impulseMuniBazooka, windValue);
+    sendLastDTO = false;
 
     // reseeteamos los impulsos luego de atacar.
     impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
@@ -62,7 +64,11 @@ bool Bazooka::launchesProjectiles() {
 }
 
 void Bazooka::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
-    if(projectil == nullptr){
+    if(projectil == nullptr and not sendLastDTO){ // si entra aca es porque atacamos con la bazooka y este exploto solo entraremos 1 vez aca.
+        vecProjectileDTO.push_back(lastProjectilDTO);
+        sendLastDTO = true;
+        return;
+    } else if(projectil == nullptr){
         return;
     }
     vecProjectileDTO.push_back(projectil->getProjectilDTO());
@@ -74,6 +80,8 @@ WeaponSightDTO Bazooka::getWeaponSightDTO(const b2Vec2 &positionWorm, const Dire
 
 void Bazooka::tryCleanProjectiles(b2World *aWorld) {
     if(projectil!= nullptr and  projectil->isDestroyedBody()){
+        lastProjectilDTO = projectil->getProjectilDTO();
+        lastProjectilDTO.setTypeExplode(EXPLODE);
         aWorld->DestroyBody(projectil->getBody());
         projectil = nullptr;
     }

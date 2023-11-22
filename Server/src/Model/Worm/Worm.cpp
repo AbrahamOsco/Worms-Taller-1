@@ -249,10 +249,11 @@ ProjectilesDTO Worm::getProjectilesDTO() {
          std::vector<ProjectileDTO> vecProjectileDTO;
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
     }
-    if(armament.getProjectilesDTO(attacked).getProjectilesDto().empty() and waitingToGetFocus ){
+    ProjectilesDTO projectilesDto = armament.getProjectilesDTO(attacked);
+    if(projectilesDto.getProjectilesDto().empty() and waitingToGetFocus ){
         this->typeFocus = FOCUS;
     }
-    return armament.getProjectilesDTO(attacked);
+    return projectilesDto;
 }
 
 void Worm::activateFocus() {
@@ -322,13 +323,6 @@ void Worm::tryAttackVariablePower() {
     }
 }
 
-void Worm::attackWithBazooka() {
-    Bazooka *bazooka = (Bazooka *) armament.getWeaponCurrentPtr();
-    bazooka->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook, typeFocus);
-    this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
-    waitingToGetFocus = true;
-}
-
 void Worm::attack(std::unique_ptr<CommandDTO> &aCommand) {
     if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
         return;
@@ -354,18 +348,19 @@ void Worm::attackWithBat(){
     aBat->searchWormAndAttack(aWorld, this->body->GetWorldCenter(), directionLook);
 }
 
+void Worm::attackWithBazooka() {
+    Bazooka *bazooka = (Bazooka *) armament.getWeaponCurrentPtr();
+    bazooka->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook, typeFocus);
+    this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
+    waitingToGetFocus = true;
+}
+
 void Worm::teleportWorm(const int &posXTeleport, const int &posYTeleport){
-    if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
-        return;
-    }
     Teleport* teleport = (Teleport*) this->armament.getWeaponCurrentPtr();
     teleport->teleportIn(getBody(), posXTeleport, posYTeleport, aWorld);
 }
 
 void Worm::attackWithAirAttack(const int &posXAttack) {
-    if(this->armament.getWeaponCurrent() == NONE_WEAPON or attacked){
-        return;
-    }
     AirAttackDetonator* airAttackDetonator = (AirAttackDetonator*) this->armament.getWeaponCurrentPtr();
     airAttackDetonator->detonate(posXAttack, aWorld, this->typeFocus);
     this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.

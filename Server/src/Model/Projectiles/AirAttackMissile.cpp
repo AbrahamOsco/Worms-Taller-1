@@ -32,14 +32,12 @@ void AirAttackMissile::addToTheWorld(b2World *aWorld, const b2Vec2 &positionMiss
     this->aWorld = aWorld;
 }
 
-
 void AirAttackMissile::searchWormAndCollide(const b2Vec2 &projectilePosition){
     explodable.searchWormAndCollide(projectilePosition, aWorld);
     this->destroyBody();
 }
 
-
 ProjectileDTO AirAttackMissile::getProjectilDTO(){
     return ProjectileDTO(AIR_ATTACK_MISSILE, this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
-                         gameParameters.getMaxHeightPixel() -this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(), this->typeFocus);
+                         gameParameters.getMaxHeightPixel() -this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(), this->typeFocus, NO_EXPLODE);
 }
