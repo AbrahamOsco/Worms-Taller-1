@@ -270,6 +270,7 @@ void Worm::update() {
     }
     else if (this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and this->typeFocus == FOCUS and not wasDestroyed) {
         if (this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack > 0) {
+            std::cout << "Atacand con el bate\n";
             iterationsForBatAttack--;
         } else {
             this->typeMov = STANDING;

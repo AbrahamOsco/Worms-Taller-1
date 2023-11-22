@@ -18,6 +18,8 @@ private:
     std::pair<float, float> maxImpulseWeapon;
     ProjectileDTO lastProjectilDTO;
     bool sendLastDTO;
+    bool nowIsAExplosion;
+    int iteratorExplosion;
 public:
     explicit Bazooka(const TypeWeapon& aTypeWeapon, const float &damagePrincipal, const TypeMunition& aTypeMunition,
                     const size_t& aMunition, const GameParameters& gameParameters);

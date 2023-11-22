@@ -10,11 +10,10 @@
 #include "DTO.h"
 
 class InitialStateDTO : public DTO {
-private:
+ private:
     std::string playerName;
 
-public:
-
+ public:
     InitialStateDTO();
 
     InitialStateDTO(const OperationType &operationType, const std::string &aPlayerName);
@@ -22,7 +21,9 @@ public:
     void setPlayerName(const std::string& aPlayerName);
 
     std::string getPlayerName() const;
+
+    bool operator==(const InitialStateDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_INITIALSTATEDTO_H
+#endif  // WORMS_TALLER_1_INITIALSTATEDTO_H

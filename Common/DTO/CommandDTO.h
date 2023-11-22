@@ -27,7 +27,7 @@ enum TypeCommand {
     SELECT_AIR_ATTACK,
     SELECT_TELEPORT,
     CHARGE_CMD,
-    FIRE_CMD, // comando 17
+    FIRE_CMD,  // comando 17
     TELEPORT_MOVE,
     AIR_ATTACK_POINT,
     CLOSE_GAME,
@@ -38,11 +38,11 @@ enum TypeCommand {
 };
 
 class CommandDTO : public DTO {
-private:
+ private:
     TypeCommand m_typeCommand;
     int m_x;
     int m_y;
-public:
+ public:
     CommandDTO();
     void setTypeCommand(const TypeCommand& typeCommand);
     TypeCommand getTypeCommand() const;
@@ -50,7 +50,8 @@ public:
     int getY() const;
     void setX(int x);
     void setY(int y);
+    bool operator==(const CommandDTO& other) const;
 };
 
 
-#endif //WORMS_TALLER_1_COMMANDDTO_H
+#endif  // WORMS_TALLER_1_COMMANDDTO_H

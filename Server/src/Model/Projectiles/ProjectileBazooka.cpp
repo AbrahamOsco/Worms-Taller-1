@@ -8,7 +8,7 @@
 #include "../Worm/Worm.h"
 
 ProjectileBazooka::ProjectileBazooka(const GameParameters& gameParameters, const TypeFocus& typeFocus) : GameObject(ENTITY_BAZOOKA_PROJECTILE) , gameParameters(gameParameters),
-            explodable(gameParameters.getBazookaProjectileDamageMax(), gameParameters.getBazookProjectileRadio(), gameParameters.getBazookProjectileRadio() ){
+            explodable(gameParameters.getBazookaProjectileDamageMax(), gameParameters.getBazookProjectileRadio(), gameParameters.getBazookaProjectilMaxImpulseExplosion() ){
     this->typeFocus = typeFocus;
 }
 

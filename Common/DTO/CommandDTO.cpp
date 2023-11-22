@@ -30,7 +30,12 @@ void CommandDTO::setY(int y) {
     m_y = y;
 }
 
-
+bool CommandDTO::operator==(const CommandDTO& other) const {
+    return  this->opType == other.opType &&
+            this->m_typeCommand == other.m_typeCommand &&
+            this->m_x == other.m_x &&
+            this->m_y == other.m_y;
+}
 
 
 
