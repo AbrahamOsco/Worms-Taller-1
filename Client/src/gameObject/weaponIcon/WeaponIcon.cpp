@@ -15,9 +15,9 @@
 #include "../../command/SelectBananaCmd.h"
 #include "../../command/SelectDynamiteCmd.h"
 
-WeaponIcon::WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon, bool isMyTurn)
+WeaponIcon::WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeMunition &typeMunition,const TypeWeapon &currentWeapon, bool isMyTurn)
         : GameObject(LoaderParams(0, 0, 50, 55, " ")),
-          m_typeWeapon(typeWeapon), m_ammoCount(ammoCount), m_isSelected(false), m_isMyTurn(isMyTurn) {
+          m_typeWeapon(typeWeapon), m_ammoCount(ammoCount), m_isSelected(false), m_isMyTurn(isMyTurn), m_typeMunition(typeMunition) {
 
     if (m_typeWeapon == currentWeapon) {
         m_isSelected = true;
@@ -58,9 +58,12 @@ void WeaponIcon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager
 
     textureManager.draw(m_textureID, m_x, m_y, m_width, m_height, renderer, SDL_FLIP_NONE);
     textureManager.resetColorMod(m_textureID);
+    if (m_ammoCount == 0) {
+        textColor = {255, 0, 0, 255};
+    }
     textureManager.drawText("Ammo:", m_x + m_width + padding, m_y + 12, fontPath, fontSize, textColor, renderer);
     std::string text;
-    if (m_ammoCount == -1) {
+    if (m_typeMunition == TypeMunition::INFINITE) {
         text = "Inf";
     } else {
         text = std::to_string(m_ammoCount);
@@ -80,7 +83,7 @@ int WeaponIcon::getHeight() {
 
 void
 WeaponIcon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera, SoundManager &soundManager) {
-    if (input.isMouseLeftButtonDown() && m_isMyTurn && m_ammoCount != 0) {
+    if (input.isMouseLeftButtonDown() && m_isMyTurn && m_ammoCount > 0) {
         SDL2pp::Rect shape = SDL2pp::Rect(m_x, m_y, m_width, m_height);
         SDL2pp::Point point(input.getMouseX(), input.getMouseY());
         if (SDL_PointInRect(&point, &shape) && !m_isSelected) {

@@ -11,11 +11,12 @@
 class WeaponIcon : public GameObject {
 private:
     TypeWeapon m_typeWeapon;
+    TypeMunition m_typeMunition;
     int m_ammoCount;
     bool m_isSelected;
     bool m_isMyTurn;
 public:
-    WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeWeapon &currentWeapon, bool isMyTurn);
+    WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeMunition &typeMunition, const TypeWeapon &currentWeapon, bool isMyTurn);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 

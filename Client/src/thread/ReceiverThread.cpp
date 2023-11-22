@@ -154,11 +154,7 @@ void ReceiverThread::run() {
 
 
                 for (const WeaponDTO &weaponDto: weapons) {
-                    int ammoCount = -1;
-                    if (weaponDto.getTypeMunition() == TypeMunition::NO_INFINITE) {
-                        ammoCount = static_cast<int>(weaponDto.getMunition());
-                    }
-                    WeaponIcon weaponIcon(weaponDto.getTypeWeapon(), ammoCount, weaponsDto.getWeaponCurrent(), isMyTurn);
+                    WeaponIcon weaponIcon(weaponDto.getTypeWeapon(), static_cast<int>(weaponDto.getMunition()), weaponDto.getTypeMunition(), weaponsDto.getWeaponCurrent(), isMyTurn);
                     weaponInventory.addWeapon(weaponIcon);
                 }
 
