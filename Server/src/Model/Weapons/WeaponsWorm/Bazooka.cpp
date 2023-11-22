@@ -13,6 +13,7 @@ Bazooka::Bazooka(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, co
     maxImpulseWeapon = std::make_pair(gameParameters.getBazookaMaxImpulseX(), gameParameters.getBazookaMaxImpulseY());
     projectil = nullptr;
     sendLastDTO = false;
+    iteratorExplosion = 15;
 }
 
 void Bazooka::increaseAngle() {
@@ -48,8 +49,7 @@ void Bazooka::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const 
     std::cout << "Atacamos con la bazooka------------------------------------------------------\n";
     projectil = std::make_unique<ProjectileBazooka>(gameParameters, focus);
     projectil->addToTheWorld(world, p2, impulseMuniBazooka, windValue);
-    sendLastDTO = false;
-
+    nowIsAExplosion = false;
     // reseeteamos los impulsos luego de atacar.
     impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
 }
@@ -64,11 +64,11 @@ bool Bazooka::launchesProjectiles() {
 }
 
 void Bazooka::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
-    if(projectil == nullptr and not sendLastDTO){ // si entra aca es porque atacamos con la bazooka y este exploto solo entraremos 1 vez aca.
-        for(int i = 0; i < 15 ; i++){  // @todo loopeo 15 veces para enviar el projectil de la bazooka
-            vecProjectileDTO.push_back(lastProjectilDTO);
-        }
-        sendLastDTO = true;
+    if( projectil!= nullptr and  projectil->isDestroyedBody() and iteratorExplosion > 0  ){ // si entra aca es porque atacamos con la bazooka y este exploto solo entraremos 1 vez aca.
+        ProjectileDTO projectileDto = projectil->getProjectilDTO();
+        projectileDto.setTypeExplode(EXPLODE);
+        vecProjectileDTO.push_back(projectileDto);
+        iteratorExplosion--;
         return;
     } else if(projectil == nullptr){
         return;
@@ -81,11 +81,10 @@ WeaponSightDTO Bazooka::getWeaponSightDTO(const b2Vec2 &positionWorm, const Dire
 }
 
 void Bazooka::tryCleanProjectiles(b2World *aWorld) {
-    if(projectil!= nullptr and  projectil->isDestroyedBody()){
-        lastProjectilDTO = projectil->getProjectilDTO();
-        lastProjectilDTO.setTypeExplode(EXPLODE);
+    if(projectil!= nullptr and  projectil->isDestroyedBody() and iteratorExplosion <= 0 ){
         aWorld->DestroyBody(projectil->getBody());
         projectil = nullptr;
+        iteratorExplosion = 15;
     }
 }
 
