@@ -50,7 +50,7 @@ class CommandDTO : public DTO {
     int getY() const;
     void setX(int x);
     void setY(int y);
-    bool operator==(const BeamDTO& other) const;
+    bool operator==(const CommandDTO& other) const;
 };
 
 
