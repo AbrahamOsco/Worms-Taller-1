@@ -10,7 +10,7 @@
 #include "../../../../../GameParameters/GameParameters.h"
 #include "../../WeaponSight/WeaponSight.h"
 
-class Grenade {
+class Grenade : public GameObject {
 protected:
     std::pair<float, float> impulseWeapon; // impulse x, impulse y
     std::pair<float, float> maxImpulseWeapon;  // maximo impulso es una arma con potencia variable.
