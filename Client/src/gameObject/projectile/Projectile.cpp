@@ -20,7 +20,12 @@ Projectile::Projectile(int x, int y, const TypeProjectil &typeProjectile, const 
 void Projectile::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     int posX = m_x - m_width / 2 - camera.getPosition().GetX();
     int posY = m_y - m_height / 2 - camera.getPosition().GetY();
-    textureManager.draw(m_textureID, posX, posY, m_width, m_height, renderer, SDL_FLIP_NONE);
+    if (m_typeExplode == TypeExplode::NO_EXPLODE) {
+        textureManager.draw(m_textureID, posX, posY, m_width, m_height, renderer, SDL_FLIP_NONE);
+    } else if (m_typeExplode == TypeExplode::EXPLODE) {
+        textureManager.drawFrame("explosion", posX, posY, 60, 60, 0, 0,renderer,SDL_FLIP_NONE);
+    }
+
 }
 
 void

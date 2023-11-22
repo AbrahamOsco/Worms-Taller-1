@@ -157,3 +157,5 @@ textures:
     source: "../Client/resources/screens/defeat.png"
   - name: box
     source: "../Client/resources/assets/box/box.png"
+  - name: explosion
+    source: "../Client/resources/assets/animation/Explosion.png"
