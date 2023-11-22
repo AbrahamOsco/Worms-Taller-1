@@ -10,6 +10,8 @@
 #include <cstdlib>
 #include <linux/limits.h>
 #include "imgui/imgui.h"
+#include "../../../src/Model/Weapons/WeaponsWorm/Grenade/Grenade.h"
+
 
 #include <GL/gl.h> // Incluir la biblioteca principal de OpenGL
 //#include <GL/glu.h> // Incluir la biblioteca de utilidades de GLUT
@@ -387,10 +389,11 @@ public:
 
 class Grenade : public GameObject {
 protected:
-    float mainDamage;
-    float maxRadio;
     float restitution;
     bool fixedRotation;
+    // estos 3 ya estan
+    float mainDamage;
+    float maxRadio;
     float maxImpulseMagnitude = 2.0f;
 
     std::chrono::steady_clock::time_point startTime, time;
@@ -402,15 +405,7 @@ public:
     explicit Grenade(int wait) : GameObject(ENTITY_GRENADE), waitTime(wait),
                                     exploded(false), collided(false) {}
 
-    b2AABB getAreaForSearch(const b2Vec2& positionMunition) const {
-        b2AABB searchArea;
-        searchArea.lowerBound = positionMunition - b2Vec2(maxRadio, maxRadio);
-        searchArea.upperBound = positionMunition + b2Vec2(maxRadio, maxRadio);
-        return searchArea;
-    }
-
-    void addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impulseGrenade){
-
+     void addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impulseGrenade){
         b2BodyDef grenadeDef;
         grenadeDef.type = b2_dynamicBody;
         grenadeDef.fixedRotation = fixedRotation;
@@ -427,6 +422,13 @@ public:
         defFixGrenade.restitution = restitution;
         this->body->CreateFixture(&defFixGrenade);
         body->ApplyLinearImpulse( impulseGrenade, body->GetWorldCenter(), true);
+    }
+
+    b2AABB getAreaForSearch(const b2Vec2& positionMunition) const {
+        b2AABB searchArea;
+        searchArea.lowerBound = positionMunition - b2Vec2(maxRadio, maxRadio);
+        searchArea.upperBound = positionMunition + b2Vec2(maxRadio, maxRadio);
+        return searchArea;
     }
 
     b2Vec2 getImpulseForWorm(const b2Vec2 &positionWorm, const b2Vec2 &positionGrenade, float distanceWormToGrenade) {
@@ -479,6 +481,7 @@ public:
     virtual ~Grenade() = default;
 
 };
+
 
 class GrenadeFragment : public Grenade {
 public:

@@ -47,7 +47,7 @@ qt5_wrap_ui(UIS_HEADERS
 
 add_executable(worms-client ${UIS_HEADERS}  ${client_src} ${qt_src} ${common_src}
         Common/DTO/CommandDTO.cpp
-        Common/DTO/CommandDTO.h)
+        Common/DTO/CommandDTO.h Server/src/Model/Weapons/WeaponsWorm/Grenade/Grenade.cpp Server/src/Model/Weapons/WeaponsWorm/Grenade/Grenade.h)
 
 # Para el main mas externo: Server/main.cpp
 add_executable(Worms-Taller-1 Server/src/Control/ServerMain.cpp
