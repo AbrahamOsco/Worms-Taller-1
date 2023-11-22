@@ -4,16 +4,17 @@
 
 #include "ResolverInitialDTO.h"
 
-ResolverInitialDTO::ResolverInitialDTO() : DTO(INITIAL_STATE) {
+ResolverInitialDTO::ResolverInitialDTO() : DTO(INITIAL_STATE),  statusAnswer(0) {
 
 }
 
 ResolverInitialDTO::ResolverInitialDTO(const OperationType &operationType,
-                                       const std::vector<std::string> &aScenariosNames, const std::vector<size_t>& vecMaxNumbersWorms) : DTO(operationType),
-                                       scenariosNames(aScenariosNames), vecMaxNumbersWorms(vecMaxNumbersWorms) {
+                    const std::vector<std::string> &aScenariosNames, const std::vector<size_t>& vecMaxNumbersWorms) :
+                    DTO(operationType), scenariosNames(aScenariosNames), vecMaxNumbersWorms(vecMaxNumbersWorms),
+                    statusAnswer(0) {
 }
 
-ResolverInitialDTO::ResolverInitialDTO(const OperationType &operationType, const std::vector<RoomDTO> &aGameRooms) : DTO(operationType), gameRooms(aGameRooms) {
+ResolverInitialDTO::ResolverInitialDTO(const OperationType &operationType, const std::vector<RoomDTO> &aGameRooms) : DTO(operationType), gameRooms(aGameRooms), statusAnswer(0)  {
 
 }
 ResolverInitialDTO::ResolverInitialDTO(const OperationType &operationType, const size_t &aStatusAnswer) : DTO(operationType), statusAnswer(aStatusAnswer) {

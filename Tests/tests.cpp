@@ -657,6 +657,32 @@ TEST(PROTOCOL_SERVER_RECV, recvCommandDTO) {
     CommandDTO dtoServer = server.recvCommandDTO();
     ASSERT_EQ(dtoClient, dtoServer);
 }
+TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_INITIAL_CREATE_GAME) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    std::vector<std::string> scenarios;
+    std::vector<size_t> maxPlayers;
+    scenarios.push_back("Ruinas");
+    maxPlayers.push_back(3);
+    scenarios.push_back("Laboratorio");
+    maxPlayers.push_back(8);
+    scenarios.push_back("Cascadas");
+    maxPlayers.push_back(14);
+    scenarios.push_back("core");
+    maxPlayers.push_back(5);
+    ResolverInitialDTO dtoServer(RESPONSE_INITIAL_CREATE_GAME, scenarios, maxPlayers);
+    server.sendResolverInitialDTO(dtoServer);
+    ResolverInitialDTO dtoClient = client.recvResolverInitialDTO();
+    ASSERT_EQ(dtoClient.getOperationType(), dtoServer.getOperationType());
+    ASSERT_EQ(dtoClient.getScenariosNames(), dtoServer.getScenariosNames());
+    ASSERT_EQ(dtoClient.getVecMaxNumbersWorms(), dtoServer.getVecMaxNumbersWorms());
+    ASSERT_EQ(dtoClient.getStatusAnswer(), dtoServer.getStatusAnswer());
+    ASSERT_EQ(dtoClient.getGameRooms(), dtoServer.getGameRooms());
+    ASSERT_EQ(dtoClient, dtoServer);
+}
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 
