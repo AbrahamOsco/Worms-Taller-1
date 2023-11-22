@@ -17,7 +17,7 @@ enum OperationType {
     RESPONSE_INITIAL_JOIN_GAME = 26,
     FINAL_JOIN_GAME = 27,
     ROOM_GAME = 28,
-    WORM = 29, //Unidades, armas, etc.
+    WORM = 29,  // Unidades, armas, etc.
     BEAM = 30,
     PLAYERS_TOTAL = 31,
     PLAYER = 32,
@@ -37,18 +37,20 @@ enum TypeFocus{
     FOCUS = 1, NO_FOCUS = 2
 };
 class DTO {
-protected:
+ protected:
     OperationType opType;
-public:
+ public:
     explicit DTO(OperationType opType);
 
     OperationType getOperationType() const;
 
     void setOperationType(const OperationType& anOpType);
 
+    bool operator==(const DTO& other) const;
+
     virtual ~DTO() = default;
 };
 
 
 
-#endif //PROTOCOLO_COMMON_DTO_H
+#endif  // PROTOCOLO_COMMON_DTO_H

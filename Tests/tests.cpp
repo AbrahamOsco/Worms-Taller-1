@@ -595,6 +595,17 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendSnapShot_GAME_PROGRESS) {
     offset++;
     ASSERT_EQ(1, buffer[offset]);
 }
+TEST(PROTOCOL_SERVER_RECV, recvInitialStateDTO_SCENARIO_LIST_REQUEST) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    InitialStateDTO dtoClient(SCENARIO_LIST_REQUEST, "name");
+    client.sendInitialStateDTO(dtoClient);
+    InitialStateDTO dtoServer = server.recvInitialStateDTO();
+    ASSERT_TRUE(dtoClient == dtoServer);
+}
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 
