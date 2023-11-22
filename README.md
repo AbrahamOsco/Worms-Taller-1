@@ -1,6 +1,31 @@
 # Worms-Taller-1
 Juego worms
 
+## Compilar y Ejecutar:
+### Para compilar:
+	- En la carpeta del proyecto correr:
+		$ ./installer.sh -i
+	- Si faltan permisos antes correr:
+		$ chmod +x ./installer.sh
+
+### Para ejecutar:
+	En la carpeta del proyecto correr:
+	- Para el editor:
+		1.	$ cd build
+		2.	$ ./worms-editor
+
+	- Para el cliente:
+		1.	$ cd build
+		2.	$ ./worms-client
+
+	- Para el servidor:
+		1.	$ cd build
+		2.	$ ./Worms-Taller-1 <port>
+  
+		(<port> es el puerto en que se quiere abrir el servidor)
+
+## Dependencias
+
 ### Instalar QT: 
 	1. sudo chmod +x qt-unified-linux-x64-4.6.1-online.run
 	2. sudo ./qt-unified-linux-x64-4.6.1-online.run
@@ -23,6 +48,16 @@ Juego worms
     cmake ..
     make
     sudo make install
+
+## Documentacion
+
+[Manual del Usuario](https://docs.google.com/document/d/1qNLJt4Vw21V-vsftqIOjxGAC1GFHbc0bPbc_l7wFsbA/edit?usp=sharing)
+
+[Manual de Proyecto](https://docs.google.com/document/d/1Fn5WWIH9nLIdhKINjCd2wiMNzJ9vGTqKEwuRpVkI6A8/edit?usp=sharing)
+
+[Documentación Técnica](https://docs.google.com/document/d/1QK5Gf6h-XeVLJ5Tx_IiD5BWnNJ2tTKvkMGfzrdvhHRg/edit?usp=sharing)
+
+    
 
     
 
