@@ -36,8 +36,7 @@ void Dynamite::passTime(){
 
 void Dynamite::explode(){
     exploded = true;
-    body->ApplyLinearImpulse(b2Vec2(0.0f,0.03f),body->GetWorldCenter(),true); // para que se despegue y vuelva a chocar con la viga.
-
+    searchWormAndCollide(body->GetWorldCenter());
 }
 
 bool Dynamite::hasExploded() const{
