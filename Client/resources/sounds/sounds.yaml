@@ -28,3 +28,7 @@ sounds:
       source: "../Client/resources/sounds/worms/Victory.wav"
     - id: "select_weapon"
       source: "../Client/resources/sounds/misc/SelectWeapon.wav"
+    - id: "collect_weapon"
+      source: "../Client/resources/sounds/box/collect.wav"
+    - id: "collect_medicine"
+      source: "../Client/resources/sounds/box/ohdear.wav"

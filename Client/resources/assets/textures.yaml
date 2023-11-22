@@ -159,3 +159,7 @@ textures:
     source: "../Client/resources/assets/box/box.png"
   - name: explosion
     source: "../Client/resources/assets/animation/Explosion.png"
+  - name: medicine
+    source: "../Client/resources/assets/box/medicine.png"
+  - name: munition
+    source: "../Client/resources/assets/box/munition.png"
