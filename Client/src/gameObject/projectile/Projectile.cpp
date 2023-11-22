@@ -42,6 +42,6 @@ Projectile::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera 
     }
 
     if (m_typeProjectile == TypeProjectil::NONE_PROJECTILE) {
-        //soundManager.playEffect("explosion");
+        soundManager.playEffect("explosion");
     }
 }
