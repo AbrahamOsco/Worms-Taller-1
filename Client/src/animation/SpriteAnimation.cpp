@@ -12,6 +12,7 @@ void SpriteAnimation::update() {
 
 void SpriteAnimation::draw(int x, int y, int width, int height, SDL2pp::Renderer &renderer,
                            TextureManager &textureManager, SDL_RendererFlip flip, float xScale, float yScale) {
+    //std::cout << m_textureId << ',' << x << ',' << y << ',' << width << ',' << height << ',' << m_currentFrame << std::endl;
     textureManager.drawFrame(m_textureId, x, y, width, height, m_currentFrame, 0, renderer, flip);
 }
 
