@@ -17,7 +17,9 @@ enum TypeProjectil{
     PROJ_RED_GRENADE,
     PROJ_BANANA,
     PROJ_HOLY_GRENADE,
-    PROJ_MORTAR
+    PROJ_MORTAR,
+    PROJ_RED_GRENADE_FRAGMENT,
+    PROJ_MORTAR_FRAGMENT
 };
 
 enum TypeExplode{

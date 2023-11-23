@@ -31,4 +31,4 @@ sounds:
     - id: "collect_weapon"
       source: "../Client/resources/sounds/box/collect.wav"
     - id: "collect_medicine"
-      source: "../Client/resources/sounds/box/ohdear.wav"
+      source: "../Client/resources/sounds/box/curation.wav"
