@@ -4,7 +4,7 @@
 
 #include "Grenade.h"
 
-Grenade::Grenade(GameParameters gameParameters, const int &waitTime) : GameObject(ENTITY_GRENADE), gameParameters(gameParameters), weaponSight(3.0f, 2.0f, gameParameters) {
+Grenade::Grenade(GameParameters gameParameters, const int &waitTime) : GameObject(ENTITY_GRENADE), gameParameters(gameParameters), waitTime(waitTime){
     exploded = false;
     collided = false;
 }

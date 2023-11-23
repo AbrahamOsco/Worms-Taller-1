@@ -23,7 +23,6 @@ protected:
     bool collided;
     bool exploded;
     GameParameters gameParameters;
-    WeaponSight weaponSight;
     b2World *world;
 public:
     explicit Grenade(GameParameters gameParameters, const int& waitTime);
