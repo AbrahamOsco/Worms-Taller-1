@@ -5,7 +5,7 @@
 #include <iostream>
 #include "Banana.h"
 Banana::Banana(const GameParameters &gameParameters, const int& waitTime, const TypeFocus& typeFocus) :
-            Grenade(gameParameters, waitTime), explodable(70.0f, 4.0f, 1.0f){
+            Grenade(gameParameters, waitTime), typeFocus(typeFocus),  explodable(70.0f, 4.0f, 1.0f){
 
 }
 
