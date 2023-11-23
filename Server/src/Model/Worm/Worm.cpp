@@ -9,6 +9,7 @@
 #include "../Weapons/WeaponsWorm/AirAttackDetonator.h"
 #include "../Weapons/WeaponsWorm/DynamiteHolder.h"
 #include "../Weapons/WeaponsWorm/GrenadeHolder.h"
+#include "../Weapons/WeaponsWorm/Mortar.h"
 
 Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
            Armament& armament) : GameObject(ENTITY_WORM), idWorm(idWorm), idPlayer(idPlayer),
@@ -324,6 +325,11 @@ void Worm::tryAttackVariablePower() {
             armament.attackWithGrenade(this->getBody()->GetWorldCenter(), directionLook, typeFocus, waitTime, aWorld);
             this->typeFocus = NO_FOCUS;
             waitingToGetFocus = true;
+        } else if (armament.getWeaponCurrent() == MORTAR){
+            Mortar *mortar = (Mortar*) armament.getWeaponCurrentPtr();
+            mortar->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook, typeFocus);
+            this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
+            waitingToGetFocus = true;
         }
 
         // agregar aca los otros tipos de arma con potencia variable
@@ -410,6 +416,7 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     if(timeLeft <= 0 or this->idWorm != idCurrentWorm){ // no le pongo el and not wasDestroyed porque nunca sera el turno del worm destruido.
         return;
     }
+    std::cout << "Comando recibido :" << aCommandDTO->getTypeCommand() << "\n";
     // movs, up/down angles, jumps
     if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
         this->walkWorm(LEFT);

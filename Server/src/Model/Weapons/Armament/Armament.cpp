@@ -12,6 +12,7 @@
 #include "../WeaponsWorm/DynamiteHolder.h"
 #include "../WeaponsWorm/GrenadeHolder.h"
 #include "../../Projectiles/Grenades/RedGrenade/RedGrenade.h"
+#include "../WeaponsWorm/Mortar.h"
 
 
 Armament::Armament(const size_t &idPlayer, const GameParameters& gameParameters)
@@ -27,7 +28,7 @@ Armament::Armament(const size_t &idPlayer, const GameParameters& gameParameters)
     armament.emplace(BANANA, std::make_unique<GrenadeHolder>(BANANA, 70.0f, INFINITE, 100, gameParameters));
     armament.emplace(HOLY_GRENADE, std::make_unique<GrenadeHolder>(HOLY_GRENADE, 110, NO_INFINITE, 2, gameParameters));
     armament.emplace(RED_GRENADE, std::make_unique<GrenadeHolder>(RED_GRENADE, 30.0f, NO_INFINITE, 10, gameParameters));
-
+    armament.emplace(MORTAR,std::make_unique<Mortar>(MORTAR, 30.0f, NO_INFINITE, 10, gameParameters) );
 }
 
 bool Armament::isUnarmed() const{
