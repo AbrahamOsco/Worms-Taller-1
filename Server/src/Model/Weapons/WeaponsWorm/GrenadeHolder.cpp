@@ -57,7 +57,7 @@ bool GrenadeHolder::thereAreProjectiles() {
 
 void GrenadeHolder::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
     for(auto& aGrenade : grenades){
-        if(aGrenade != nullptr and not aGrenade->isDestroyedBody() and aGrenade->hasExplosionIterations()){
+        if(aGrenade != nullptr and aGrenade->isDestroyedBody() and aGrenade->hasExplosionIterations()){
             ProjectileDTO projectileDto = aGrenade->getProjectilDTO();
             projectileDto.setTypeExplode(EXPLODE);
             if(aGrenade->getNumberIterations() == 15.0f){

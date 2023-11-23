@@ -52,7 +52,7 @@ ProjectileDTO Grenade::getProjectilDTO() {
 }
 
 bool Grenade::hasExplosionIterations() const {
-    return false;
+    return explosionIterations > 0;
 }
 
 void Grenade::removeAIteration() {
