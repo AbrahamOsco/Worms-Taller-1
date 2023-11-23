@@ -37,7 +37,7 @@ public:
 
     WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent);
 
-    b2Vec2 getImpulseForProjectileBazooka(const Direction &directionCurrent, std::pair<float, float> impulse);
+    b2Vec2 getImpulseForProjectil(const Direction &directionCurrent, std::pair<float, float> impulse);
 };
 
 

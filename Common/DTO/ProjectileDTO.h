@@ -13,6 +13,11 @@ enum TypeProjectil{
     BAZOOKA_PROJECTILE,
     AIR_ATTACK_MISSILE,
     DYNAMITE,
+    PROJ_GREEN_GRENADE,
+    PROJ_RED_GRENADE,
+    PROJ_BANANA,
+    PROJ_HOLY_GRENADE,
+    PROJ_MORTAR
 };
 
 enum TypeExplode{

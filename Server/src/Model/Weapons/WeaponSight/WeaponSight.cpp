@@ -66,7 +66,7 @@ b2Vec2 WeaponSight::getPositionP2RayCast(const b2Vec2 &positionWorm, const Direc
 }
 
 
-b2Vec2 WeaponSight::getImpulseForProjectileBazooka(const Direction& directionCurrent, std::pair<float, float> impulse){
+b2Vec2 WeaponSight::getImpulseForProjectil(const Direction& directionCurrent, std::pair<float, float> impulse){
     int factor = 1, factorAngle = 1;
     this->direction = directionCurrent;
     if ( direction == LEFT){

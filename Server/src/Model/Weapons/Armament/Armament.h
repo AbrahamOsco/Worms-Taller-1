@@ -64,6 +64,8 @@ public:
     void updateTime(const bool &attacked);
 
     bool hasMunition();
+
+    void attackGrenade(const TypeWeapon &aWeapon);
 };
 
 

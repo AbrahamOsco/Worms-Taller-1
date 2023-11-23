@@ -10,6 +10,7 @@
 #include "../Provision/Provision.h"
 #include "../Projectiles/AirAttackMissile.h"
 #include "../Projectiles/Dynamite.h"
+#include "../Projectiles/Grenades/Grenade/Grenade.h"
 
 // Clase de colisiones el listener:
 void wormCollidesWithBeam(GameObject* worm, GameObject* beam, GameParameters *gameParameters){
@@ -312,6 +313,67 @@ void beamCollidesWithDynamite(GameObject* beam, GameObject* dynamite, GameParame
     dynamiteCollideWithBeam(dynamite, beam, gameParameters);
 }
 
+//--------------------- metodos grenade:
+
+void grenadeCollidesWithEdge(GameObject* grenade, GameObject* edge, GameParameters *gameParameters){
+    std::cout << "grenadeCollidesWithEdge\n";
+    Grenade* grenadeSelect = (Grenade*) grenade;
+    grenadeSelect->collide();
+}
+
+void edgeCollidesWithGrenade(GameObject* edge, GameObject* grenade, GameParameters *gameParameters){
+    std::cout << "beamCollidesWithDynamite\n";
+    grenadeCollidesWithEdge(grenade, edge, gameParameters);
+}
+
+
+void grenadeCollidesWithWater(GameObject* grenade, GameObject* water, GameParameters *gameParameters){
+    std::cout << "grenadeCollidesWithWater\n";
+    Grenade* grenadeSelect = (Grenade*) grenade;
+    grenadeSelect->collide();
+}
+
+void waterCollidesWithGrenade(GameObject* water, GameObject* grenade, GameParameters *gameParameters){
+    std::cout << "waterCollidesWithGrenade\n";
+    grenadeCollidesWithWater(grenade, water, gameParameters);
+}
+
+void grenadeCollidesWithProvision(GameObject* grenade, GameObject* provision, GameParameters *gameParameters){
+    std::cout << "grenadeCollidesWithProvision\n";
+    Grenade* grenadeSelect = (Grenade*) grenade;
+    grenadeSelect->collide();
+}
+
+void provisionCollideWithGrenade(GameObject* provision, GameObject* grenade, GameParameters *gameParameters){
+    std::cout << "provisionCollideWithGrenade\n";
+    grenadeCollidesWithProvision(grenade, provision, gameParameters);
+}
+
+
+void grenadeCollidesWithWorm(GameObject* grenade, GameObject* worm, GameParameters *gameParameters){
+    std::cout << "grenadeCollidesWithWorm\n";
+    Grenade* grenadeSelect = (Grenade*) grenade;
+    grenadeSelect->collide();
+}
+
+void wormCollidesWithGrenade(GameObject* worm, GameObject* grenade, GameParameters *gameParameters){
+    std::cout << "wormCollidesWithGrenade\n";
+    grenadeCollidesWithWorm(grenade, worm, gameParameters);
+}
+
+
+void grenadeCollideWithBeam(GameObject* grenade, GameObject* beam, GameParameters *gameParameters){
+    std::cout << "grenadeCollideWithBeam\n";
+    Grenade* grenadeSelect = (Grenade*) grenade;
+    grenadeSelect->collide();
+}
+
+void beamCollidesWithGrenade(GameObject* beam, GameObject* grenade, GameParameters *gameParameters){
+    std::cout << "beamCollidesWithDynamite\n";
+    grenadeCollideWithBeam(grenade, beam, gameParameters);
+}
+
+
 
 
 GameContactListener::GameContactListener(b2World *world, GameParameters *gameParameters) {
@@ -375,6 +437,25 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
 
     collisionsMap[std::make_pair(ENTITY_DYNAMITE, ENTITY_BEAM)] = &dynamiteCollideWithBeam;
     collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_DYNAMITE )] = &beamCollidesWithDynamite;
+
+    // Granada collisions creo que son genericos para cualquier tipo de granada.
+
+    collisionsMap[std::make_pair(ENTITY_GRENADE, ENTITY_EDGE)] = &grenadeCollidesWithEdge;
+    collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_GRENADE)] = &edgeCollidesWithGrenade;
+
+    collisionsMap[std::make_pair(ENTITY_GRENADE, ENTITY_WATER)] = &grenadeCollidesWithWater;
+    collisionsMap[std::make_pair(ENTITY_WATER, ENTITY_GRENADE )] = &waterCollidesWithGrenade;
+
+    collisionsMap[std::make_pair(ENTITY_GRENADE, ENTITY_PROVISION )] = &grenadeCollidesWithProvision;
+    collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_GRENADE)] = &provisionCollideWithGrenade;
+
+    collisionsMap[std::make_pair(ENTITY_GRENADE, ENTITY_WORM )] = &grenadeCollidesWithWorm;
+    collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_GRENADE)] = &wormCollidesWithGrenade;
+
+    collisionsMap[std::make_pair(ENTITY_GRENADE, ENTITY_BEAM)] = &grenadeCollideWithBeam;
+    collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_GRENADE )] = &beamCollidesWithGrenade;
+
+
 
     //Colisiones con las provisiones Worms:
     collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_WORM)] = &provisionCollidesWithWorm;

@@ -8,6 +8,7 @@
 #include "../../../GameParameters/GameParameters.h"
 #include "../Weapons/WeaponsWorm/AirAttackDetonator.h"
 #include "../Weapons/WeaponsWorm/DynamiteHolder.h"
+#include "../Weapons/WeaponsWorm/GrenadeHolder.h"
 
 Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
            Armament& armament) : GameObject(ENTITY_WORM), idWorm(idWorm), idPlayer(idPlayer),
@@ -317,7 +318,15 @@ void Worm::tryAttackVariablePower() {
     if(typeCharge == MANY_CHARGE){
         if(armament.getWeaponCurrent() == BAZOOKA){
             attackWithBazooka();
-        } // agregar aca los otros tipos de arma con potencia variable
+        } else if (armament.getWeaponCurrent() == GREEN_GRENADE){
+            GrenadeHolder* grenadeHolder =  (GrenadeHolder*) armament.getWeaponCurrentPtr();
+            grenadeHolder->attack(GREEN_GRENADE, this->getBody()->GetWorldCenter(), directionLook, typeFocus,
+                                  waitTime, aWorld);
+            this->typeFocus = NO_FOCUS;
+            waitingToGetFocus = true;
+        }
+
+        // agregar aca los otros tipos de arma con potencia variable
         // luego de atacar con la bazoka o cualquier weapo con variable power pasamos el arma a standB y nos desarmamos
         this->endAttack();
         this->typeCharge = NONE_CHARGE;
@@ -423,8 +432,10 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
         this->assignWeapon(BAZOOKA);
     }  else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_DYNAMITE){
         this->assignWeapon(DYNAMITE_HOLDER);
+    }  else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_GREEN_GRENADE){
+        this->assignWeapon(GREEN_GRENADE);
     }
-    // execute an attack of a weapon
+        // execute an attack of a weapon
     else if (aCommandDTO->getTypeCommand() == TypeCommand::FIRE_CMD){
         this->attack(aCommandDTO);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::TELEPORT_MOVE){

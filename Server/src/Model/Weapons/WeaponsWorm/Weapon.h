@@ -39,7 +39,7 @@ public:
 
     size_t getMunition() const;
 
-    virtual bool hasAScope() = 0;
+    virtual bool hasAScope() = 0;  // tiene una mira
 
     virtual bool hasVariablePower() = 0;
 

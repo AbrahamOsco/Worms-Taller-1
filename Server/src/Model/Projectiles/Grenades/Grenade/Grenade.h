@@ -5,10 +5,11 @@
 #ifndef WORMS_TALLER_1_GRENADE_H
 #define WORMS_TALLER_1_GRENADE_H
 
-
 #include <chrono>
+#include "../../../GameObject/GameObject.h"
 #include "../../../../../GameParameters/GameParameters.h"
-#include "../../WeaponSight/WeaponSight.h"
+#include "../../../Weapons/WeaponSight/WeaponSight.h"
+#include "../../../../../../Common/DTO/ProjectileDTO.h"
 
 class Grenade : public GameObject {
 protected:
@@ -23,10 +24,23 @@ protected:
     bool exploded;
     GameParameters gameParameters;
     WeaponSight weaponSight;
-
+    b2World *world;
 public:
-    explicit Grenade(GameParameters gameParameters);
+    explicit Grenade(GameParameters gameParameters, const int& waitTime);
 
+    void addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impulseGrenade);
+
+    void collide();
+
+    bool hasExploded() const;
+
+    virtual  void passTime() = 0;
+
+    virtual void throwFragments(std::vector<std::unique_ptr<Grenade>>* grenades);
+
+    virtual ProjectileDTO getProjectilDTO();
+
+    virtual ~Grenade() = default;
 
 };
 

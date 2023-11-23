@@ -1,25 +1,28 @@
 //
-// Created by abraham on 13/11/23.
+// Created by abraham on 22/11/23.
 //
 
-#ifndef WORMS_TALLER_1_BAZOOKA_H
-#define WORMS_TALLER_1_BAZOOKA_H
+#ifndef WORMS_TALLER_1_GRENADEHOLDER_H
+#define WORMS_TALLER_1_GRENADEHOLDER_H
 
 
 #include "Weapon.h"
 #include "../WeaponSight/WeaponSight.h"
-#include "../../Projectiles/ProjectileBazooka.h"
+#include "../../Projectiles/Grenades/Grenade/Grenade.h"
 
-class Bazooka : public Weapon {
+class GrenadeHolder : public Weapon {
 private:
     std::pair<float, float> impulseWeapon; // impulse x, impulse y
     WeaponSight weaponSight;
-    std::unique_ptr<ProjectileBazooka> projectil;
+    std::vector<std::unique_ptr<Grenade>> grenades;
     std::pair<float, float> maxImpulseWeapon;
     int explosionIterations;
+
 public:
-    explicit Bazooka(const TypeWeapon& aTypeWeapon, const float &damagePrincipal, const TypeMunition& aTypeMunition,
-                    const size_t& aMunition, const GameParameters& gameParameters);
+    explicit GrenadeHolder(const TypeWeapon& aTypeWeapon, const float &damagePrincipal, const TypeMunition& aTypeMunition,
+                     const size_t& aMunition, const GameParameters& gameParameters);
+
+    void passTime() override;
 
     void increaseAngle() override;
 
@@ -41,9 +44,12 @@ public:
 
     WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) override;
 
-    void shootProjectile(b2World *world, const b2Vec2 &positionWorm, const Direction &direction, const TypeFocus &focus);
+
+    void attack(const TypeWeapon &typeGrenade, const b2Vec2 &positionWorm, const Direction &direction,
+                const TypeFocus &typeFocus, const int &timeWait, b2World *world);
+
 
 };
 
 
-#endif //WORMS_TALLER_1_BAZOOKA_H
+#endif //WORMS_TALLER_1_GRENADEHOLDER_H

@@ -10,6 +10,7 @@
 #include "../WeaponsWorm/Bazooka.h"
 #include "../WeaponsWorm/AirAttackDetonator.h"
 #include "../WeaponsWorm/DynamiteHolder.h"
+#include "../WeaponsWorm/GrenadeHolder.h"
 
 
 Armament::Armament(const size_t &idPlayer, const GameParameters& gameParameters)
@@ -21,7 +22,7 @@ Armament::Armament(const size_t &idPlayer, const GameParameters& gameParameters)
     armament.emplace(AIR_ATTACK, std::make_unique<AirAttackDetonator>(AIR_ATTACK,gameParameters.airAttackMissileGetDamage(), NO_INFINITE,
                                                                       gameParameters.airAttackGetMunitionInitial(), gameParameters));
     armament.emplace(DYNAMITE_HOLDER,std::make_unique<DynamiteHolder>(DYNAMITE_HOLDER, 50.0f, NO_INFINITE, 5, gameParameters) );
-
+    armament.emplace(GREEN_GRENADE, std::make_unique<GrenadeHolder>(GREEN_GRENADE, 30.0f, INFINITE, 100, gameParameters));
 
 }
 
@@ -148,5 +149,7 @@ void Armament::updateTime(const bool &attacked) {
 bool Armament::hasMunition() {
     return this->armament.at(currentWeapon).get()->hasMunition();
 }
+
+
 
 

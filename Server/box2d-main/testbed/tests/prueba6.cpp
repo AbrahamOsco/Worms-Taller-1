@@ -1,4 +1,3 @@
-/*
 #include "test.h"
 #include "box2d/box2d.h"
 
@@ -11,7 +10,6 @@
 #include <cstdlib>
 #include <linux/limits.h>
 #include "imgui/imgui.h"
-#include "../../../src/Model/Weapons/WeaponsWorm/Grenade/Grenade.h"
 
 
 #include <GL/gl.h> // Incluir la biblioteca principal de OpenGL
@@ -793,7 +791,6 @@ void grenadeCollideWithBeam(GameObject* grenade, GameObject* beam){
     Beam *beamSelected = (Beam *) beam;
 
     Grenade* grenadeSelect = (Grenade*)  grenade;
-
     grenadeSelect->collide();
     if (grenadeSelect->hasExploded()) {
         std::cout << "boom\n";
@@ -964,4 +961,3 @@ public:
 };
 
 static int testIndex = RegisterTest("Examples", "Prueba 6", Prueba6::Create);
-*/
