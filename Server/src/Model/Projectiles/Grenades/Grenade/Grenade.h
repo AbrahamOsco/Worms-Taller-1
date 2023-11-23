@@ -24,6 +24,8 @@ protected:
     bool exploded;
     GameParameters gameParameters;
     b2World *world;
+    int explosionIterations;
+
 public:
     explicit Grenade(GameParameters gameParameters, const int& waitTime);
 
@@ -38,6 +40,12 @@ public:
     virtual void throwFragments(std::vector<std::unique_ptr<Grenade>>* grenades);
 
     virtual ProjectileDTO getProjectilDTO();
+
+    bool hasExplosionIterations() const;
+
+    void removeAIteration();
+
+    int getNumberIterations() const;
 
     virtual ~Grenade() = default;
 

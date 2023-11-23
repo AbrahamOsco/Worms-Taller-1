@@ -8,7 +8,7 @@
 
 GrenadeHolder::GrenadeHolder(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, const TypeMunition &aTypeMunition, const size_t &aMunition,
             const GameParameters &gameParameters) : Weapon(aTypeWeapon, damagePrincipal, aTypeMunition, aMunition, gameParameters),
-                                                    weaponSight(3.0f, 0.0f, gameParameters) {
+                                                    weaponSight(1.0f, 0.0f, gameParameters) {
     impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
     maxImpulseWeapon = std::make_pair(gameParameters.getBazookaMaxImpulseX(), gameParameters.getBazookaMaxImpulseY());
     explosionIterations = 15;
@@ -57,7 +57,15 @@ bool GrenadeHolder::thereAreProjectiles() {
 
 void GrenadeHolder::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
     for(auto& aGrenade : grenades){
-        if(aGrenade != nullptr and not aGrenade->isDestroyedBody()){
+        if(aGrenade != nullptr and not aGrenade->isDestroyedBody() and aGrenade->hasExplosionIterations()){
+            ProjectileDTO projectileDto = aGrenade->getProjectilDTO();
+            projectileDto.setTypeExplode(EXPLODE);
+            if(aGrenade->getNumberIterations() == 15.0f){
+                projectileDto.setTypeExplode(EXPLODE_SOUND);
+            }
+            vecProjectileDTO.push_back(projectileDto);
+            aGrenade->removeAIteration();
+        } else if (aGrenade != nullptr and not aGrenade->isDestroyedBody()){
             vecProjectileDTO.push_back(aGrenade->getProjectilDTO());
         }
     }
@@ -65,7 +73,7 @@ void GrenadeHolder::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileD
 
 void GrenadeHolder::tryCleanProjectiles(b2World *aWorld) {
     for(auto& aGrenade: grenades){
-        if(aGrenade!= nullptr and aGrenade->isDestroyedBody() ){
+        if(aGrenade!= nullptr and aGrenade->isDestroyedBody() and not aGrenade->hasExplosionIterations() ){
             aWorld->DestroyBody(aGrenade->getBody());
             aGrenade = nullptr;
         }
