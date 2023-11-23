@@ -91,6 +91,7 @@ void GrenadeHolder::attack(const TypeWeapon &typeGrenade, const b2Vec2 &position
     b2Vec2 impulseForGrenade = weaponSight.getImpulseForProjectil(direction, impulseWeapon);
     std::cout << "Atacamos con el grenadeHolder ------------------------------------------------------\n";
     if(typeGrenade == GREEN_GRENADE){
+        std::cout << "El timeWait pasado es " << timeWait;
         std::unique_ptr<Grenade> grenade{new GreenGrenade(gameParameters, timeWait, typeFocus)};
         grenade->addToTheWorld(world, p2, impulseForGrenade);
         grenades.push_back(std::move(grenade));

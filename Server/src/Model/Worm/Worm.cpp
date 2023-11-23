@@ -445,6 +445,7 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::AIR_ATTACK_POINT ){
         this->attack(aCommandDTO);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::COUNTDOWN){
+        std::cout << "Se recibe  CD:"  << aCommandDTO->getX() << "\n";
         this->waitTime = aCommandDTO->getX();
     }
 }
