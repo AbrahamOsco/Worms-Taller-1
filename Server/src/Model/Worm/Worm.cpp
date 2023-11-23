@@ -301,7 +301,9 @@ void Worm::endAttack(){
 
 void Worm::chargeWeaponWithVariablePower(){
     bool reachMaxImpulse = false;
-    if(typeCharge == NONE_CHARGE){ // cargo por primera vez.
+    if(not armament.hasMunition() ){
+        return;
+    } else if(typeCharge == NONE_CHARGE){ // cargo por primera vez.
         typeCharge = MANY_CHARGE;
         reachMaxImpulse = this->armament.getWeaponCurrentPtr()->increaseImpulse();
     } else if ( typeCharge == MANY_CHARGE) {
@@ -435,6 +437,14 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
         this->assignWeapon(GREEN_GRENADE);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BANANA){
         this->assignWeapon(BANANA);
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_HOLY_GRENADE){
+        this->assignWeapon(HOLY_GRENADE);
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_RED_GRENADE){
+        this->assignWeapon(RED_GRENADE);
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_MORTAR){
+        this->assignWeapon(MORTAR);
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_AIR_ATTACK ){
+        this->assignWeapon(AIR_ATTACK);
     }
 
         // execute an attack of a weapon
@@ -442,8 +452,6 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
         this->attack(aCommandDTO);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::TELEPORT_MOVE){
         this->attack(aCommandDTO);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_AIR_ATTACK ){
-        this->assignWeapon(AIR_ATTACK);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::AIR_ATTACK_POINT ){
         this->attack(aCommandDTO);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::COUNTDOWN){

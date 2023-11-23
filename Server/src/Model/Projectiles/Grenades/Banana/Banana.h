@@ -11,18 +11,11 @@
 
 class Banana : public Grenade {
 private:
-    TypeFocus typeFocus;
-    Explodable explodable;
 public:
 
     Banana(const GameParameters &gameParameters, const int& waitTime, const TypeFocus& typeFocus);
 
-    ProjectileDTO getProjectilDTO() override;
-
-    // para la dynamite
-    void passTime() override;
-
-    void explode();
+    void getProjectileDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
 
     ~Banana() = default;
 };

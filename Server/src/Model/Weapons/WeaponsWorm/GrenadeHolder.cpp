@@ -6,6 +6,8 @@
 #include "GrenadeHolder.h"
 #include "../../Projectiles/Grenades/GreenGrenade/GreenGrenade.h"
 #include "../../Projectiles/Grenades/Banana/Banana.h"
+#include "../../Projectiles/Grenades/HolyGrenade/HolyGrenade.h"
+#include "../../Projectiles/Grenades/RedGrenade/RedGrenade.h"
 
 GrenadeHolder::GrenadeHolder(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, const TypeMunition &aTypeMunition, const size_t &aMunition,
             const GameParameters &gameParameters) : Weapon(aTypeWeapon, damagePrincipal, aTypeMunition, aMunition, gameParameters),
@@ -32,11 +34,9 @@ bool GrenadeHolder::hasVariablePower() {
 }
 
 bool GrenadeHolder::increaseImpulse() {
-    std::cout << "Incremento la potencia del lanzador de la granada\n";
     impulseWeapon.first += gameParameters.getIncreaseImpulseForFPS();
     impulseWeapon.second += gameParameters.getIncreaseImpulseForFPS();
 
-    // para comprar floats necesitamos comprar las restas con un epsilon.
     float tolerance = 0.0001;
     bool isMaxImpulse = std::abs(impulseWeapon.first - maxImpulseWeapon.first) < tolerance and
                         std::abs(impulseWeapon.second - maxImpulseWeapon.second) < tolerance;
@@ -48,36 +48,47 @@ bool GrenadeHolder::launchesProjectiles() {
 }
 
 bool GrenadeHolder::thereAreProjectiles() {
-    for(auto& aGrenade: grenades){
-        if(aGrenade != nullptr ){
-            return true;
+    return (grenade != nullptr);
+}
+
+void GrenadeHolder::getProjectilesDTOPrimary(std::vector<ProjectileDTO> &vecProjectileDTO){
+    if (grenade != nullptr and grenade->isDestroyedBody() and grenade->hasExplosionIterations()) {
+        grenade->getProjectileDTO(vecProjectileDTO);
+        ProjectileDTO *projectileDto = &vecProjectileDTO.back(); // saco unar referencia del ultimo q pushee para setearle el typeEXplode
+        projectileDto->setTypeExplode(EXPLODE);
+        if (grenade->getNumberIterations() == 15.0f) {
+            projectileDto->setTypeExplode(EXPLODE_SOUND);
         }
+        grenade->removeAIteration();
+    } else if (grenade != nullptr and not grenade->isDestroyedBody()) {
+        grenade->getProjectileDTO(vecProjectileDTO);
     }
-    return false;
 }
 
 void GrenadeHolder::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
-    for(auto& aGrenade : grenades){
-        if(aGrenade != nullptr and aGrenade->isDestroyedBody() and aGrenade->hasExplosionIterations()){
-            ProjectileDTO projectileDto = aGrenade->getProjectilDTO();
-            projectileDto.setTypeExplode(EXPLODE);
-            if(aGrenade->getNumberIterations() == 15.0f){
-                projectileDto.setTypeExplode(EXPLODE_SOUND);
-            }
-            vecProjectileDTO.push_back(projectileDto);
-            aGrenade->removeAIteration();
-        } else if (aGrenade != nullptr and not aGrenade->isDestroyedBody()){
-            vecProjectileDTO.push_back(aGrenade->getProjectilDTO());
+    getProjectilesDTOPrimary(vecProjectileDTO);
+    if(typeWeapon == RED_GRENADE){
+        RedGrenade* redGrenade = (RedGrenade*) grenade.get();
+        if( redGrenade!= nullptr and  redGrenade->hasFragment()){
+            redGrenade->getFragmentProjectilDTO(vecProjectileDTO);
         }
     }
 }
 
 void GrenadeHolder::tryCleanProjectiles(b2World *aWorld) {
-    for(auto& aGrenade: grenades){
-        if(aGrenade!= nullptr and aGrenade->isDestroyedBody() and not aGrenade->hasExplosionIterations() ){
-            aWorld->DestroyBody(aGrenade->getBody());
-            aGrenade = nullptr;
+    if(typeWeapon != RED_GRENADE){
+        if (grenade != nullptr and grenade->isDestroyedBody() and not grenade->hasExplosionIterations()) {
+            aWorld->DestroyBody(grenade->getBody());
+            grenade = nullptr;
         }
+        return;
+    }
+    RedGrenade* redGrenade = (RedGrenade*) grenade.get(); //     // caso de redGrenade  tnego que chequear los fragmentos y limpiarlos primero y por ultimo elimino la red grenade
+    if( redGrenade!= nullptr and  redGrenade->hasFragment()){
+        redGrenade->tryCleanProjectiles();
+    } else if ( redGrenade!= nullptr and  not redGrenade->hasFragment() and grenade->isDestroyedBody() and not grenade->hasExplosionIterations()){
+        aWorld->DestroyBody(grenade->getBody());
+        grenade = nullptr;
     }
 }
 
@@ -90,25 +101,29 @@ void GrenadeHolder::attack(const TypeWeapon &typeGrenade, const b2Vec2 &position
                            const TypeFocus &typeFocus, const int &timeWait, b2World *world) {
     b2Vec2 p2 = weaponSight.getPositionP2RayCast(positionWorm, direction);
     b2Vec2 impulseForGrenade = weaponSight.getImpulseForProjectil(direction, impulseWeapon);
-    std::unique_ptr<Grenade> aGrenade;
     if(typeGrenade == GREEN_GRENADE){
-        aGrenade = std::make_unique<GreenGrenade>(gameParameters, timeWait, typeFocus);
+        grenade = std::make_unique<GreenGrenade>(gameParameters, timeWait, typeFocus);
     } else if (typeGrenade == BANANA){
-        aGrenade = std::make_unique<Banana>(gameParameters, timeWait, typeFocus);
+        grenade = std::make_unique<Banana>(gameParameters, timeWait, typeFocus);
+    } else if (typeGrenade == HOLY_GRENADE){
+        grenade = std::make_unique<HolyGrenade>(gameParameters, timeWait, typeFocus);
+        this->munition--;
+    } else if (typeGrenade == RED_GRENADE){
+        grenade = std::make_unique<RedGrenade>(gameParameters, timeWait, typeFocus);
+        this->munition--;
     }
-
-
-    grenades.push_back(std::move(aGrenade));
-    grenades.back()->addToTheWorld(world, p2, impulseForGrenade);
+    grenade->addToTheWorld(world, p2, impulseForGrenade);
     weaponSight.resetRayCast();
 }
 
 void GrenadeHolder::passTime() {
-    for(auto& aGrenade : grenades){
-        if(aGrenade != nullptr){
-            aGrenade->passTime();
-        }
+    if (grenade != nullptr) {
+        grenade->passTime();
     }
+}
+
+bool GrenadeHolder::hasMunition() const {
+    return (munition > 0 );
 }
 
 

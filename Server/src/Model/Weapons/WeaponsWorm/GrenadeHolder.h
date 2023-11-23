@@ -14,7 +14,7 @@ class GrenadeHolder : public Weapon {
 private:
     std::pair<float, float> impulseWeapon; // impulse x, impulse y
     WeaponSight weaponSight;
-    std::vector<std::unique_ptr<Grenade>> grenades;
+    std::unique_ptr<Grenade> grenade;
     std::pair<float, float> maxImpulseWeapon;
     int explosionIterations;
 
@@ -42,6 +42,8 @@ public:
 
     void tryCleanProjectiles(b2World* aWorld) override;
 
+    bool hasMunition() const override;
+
     WeaponSightDTO getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) override;
 
 
@@ -49,6 +51,7 @@ public:
                 const TypeFocus &typeFocus, const int &timeWait, b2World *world);
 
 
+    void getProjectilesDTOPrimary(std::vector<ProjectileDTO> &vecProjectileDTO);
 };
 
 

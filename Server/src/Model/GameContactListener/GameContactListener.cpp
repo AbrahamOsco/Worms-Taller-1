@@ -322,7 +322,7 @@ void grenadeCollidesWithEdge(GameObject* grenade, GameObject* edge, GameParamete
 }
 
 void edgeCollidesWithGrenade(GameObject* edge, GameObject* grenade, GameParameters *gameParameters){
-    std::cout << "beamCollidesWithDynamite\n";
+    std::cout << "edgeCollidesWithGrenade\n";
     grenadeCollidesWithEdge(grenade, edge, gameParameters);
 }
 
@@ -369,7 +369,7 @@ void grenadeCollideWithBeam(GameObject* grenade, GameObject* beam, GameParameter
 }
 
 void beamCollidesWithGrenade(GameObject* beam, GameObject* grenade, GameParameters *gameParameters){
-    std::cout << "beamCollidesWithDynamite\n";
+    std::cout << "beamCollidesWithGrenade\n";
     grenadeCollideWithBeam(grenade, beam, gameParameters);
 }
 

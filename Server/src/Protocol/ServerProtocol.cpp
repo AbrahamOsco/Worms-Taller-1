@@ -217,9 +217,6 @@ void ServerProtocol::sendAProjectileDTO(const ProjectileDTO& aProjectilDTO){
     sendNum2Bytes(aProjectilDTO.getPositionX());
     sendNum2Bytes(aProjectilDTO.getPositionY());
     sendANumberByte(aProjectilDTO.getTypeFocus());
-    if(aProjectilDTO.getTypeExplode() == EXPLODE){
-        std::cout << "Enviando el ultimo DTO con EXPLODE !!! \n";
-    }
     sendANumberByte(aProjectilDTO.getTypeExplode());
 
 }

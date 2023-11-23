@@ -35,7 +35,6 @@ void Turns::addProvisionToWorld(){
     }
     float posXRandom = (float)  ((rand() % 17) +8); // numero random entre  0 y 16 -> +8 -> 8 y 24m
     provisionBoxes.push_back(std::make_unique<Provision>(posXRandom, gameParameters.getPositionYForBoxes(), typeEffect, gameParameters));
-    std::cout << "Se lanza provision en: " << posXRandom << ", " << gameParameters.getPositionYForBoxes() << " ) \n";
     provisionBoxes.back()->addToTheWorld(world);
 }
 
@@ -47,9 +46,6 @@ void Turns::startATurn() {
     this->textTurn = players.getCurrentPlayer().getPlayerName();
     damageRecognized = false;
     attackRecognized = false;
-    std::cout << " [New Turn] Id Player actual:" << idPlayerCurrent << "\n";
-    std::cout << "Id Current worm: :" << idWormCurrent << "\n";
-    std::cout << "Value Wind " << valueWind/10.0f << " Direction: " << typeWind << "\n";
 }
 
 int Turns::getTimeLeft() const{

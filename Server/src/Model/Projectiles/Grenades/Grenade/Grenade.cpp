@@ -2,9 +2,11 @@
 // Created by abraham on 22/11/23.
 //
 
+#include <iostream>
 #include "Grenade.h"
 
-Grenade::Grenade(GameParameters gameParameters, const int &waitTime) : GameObject(ENTITY_GRENADE), gameParameters(gameParameters), waitTime(waitTime){
+Grenade::Grenade(GameParameters gameParameters, const int &waitTime, const TypeFocus& typeFocus) : GameObject(ENTITY_GRENADE), gameParameters(gameParameters), waitTime(waitTime),
+         typeFocus(typeFocus), explodable(0.0f, 0.0f, 0.0f){
     exploded = false;
     collided = false;
     explosionIterations = 15;
@@ -14,6 +16,7 @@ void Grenade::addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impul
     explosionIterations = 15;
     b2BodyDef grenadeDef;
     grenadeDef.type = b2_dynamicBody;
+    grenadeDef.bullet = true;
     grenadeDef.fixedRotation = this->fixedRotation;
     grenadeDef.position.Set(positionOrigen.x, positionOrigen.y );
     grenadeDef.userData.pointer = (uintptr_t) this;
@@ -38,18 +41,29 @@ void Grenade::collide(){
     }
 }
 
+void Grenade::passTime() {
+    if (collided) {
+        time = std::chrono::steady_clock::now();
+        if (time - startTime >= waitTime && !exploded){
+            explode();
+        }
+    }
+}
+
+void Grenade::explode() {
+    this->exploded = true;
+    explodable.searchWormAndCollide(body->GetWorldCenter(), world);
+    this->destroyBody();
+}
+
+
 bool Grenade::hasExploded() const {
     return exploded;
 }
 
-void Grenade::throwFragments(std::vector<std::unique_ptr<Grenade>>* grenades){
-
-
+void Grenade::throwFragments(){
 }
 
-ProjectileDTO Grenade::getProjectilDTO() {
-    return ProjectileDTO();
-}
 
 bool Grenade::hasExplosionIterations() const {
     return explosionIterations > 0;
@@ -61,6 +75,13 @@ void Grenade::removeAIteration() {
 
 int Grenade::getNumberIterations() const {
     return explosionIterations;
+}
+
+bool Grenade::hasFragment() const {
+    return false;
+}
+
+void Grenade::getProjectileDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
 }
 
 

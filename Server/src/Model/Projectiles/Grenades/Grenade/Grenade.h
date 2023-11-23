@@ -10,6 +10,7 @@
 #include "../../../../../GameParameters/GameParameters.h"
 #include "../../../Weapons/WeaponSight/WeaponSight.h"
 #include "../../../../../../Common/DTO/ProjectileDTO.h"
+#include "../../Explodable/Explodable.h"
 
 class Grenade : public GameObject {
 protected:
@@ -25,9 +26,10 @@ protected:
     GameParameters gameParameters;
     b2World *world;
     int explosionIterations;
-
+    TypeFocus typeFocus;
+    Explodable explodable;
 public:
-    explicit Grenade(GameParameters gameParameters, const int& waitTime);
+    explicit Grenade(GameParameters gameParameters, const int& waitTime, const TypeFocus& typeFocus);
 
     void addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impulseGrenade);
 
@@ -35,11 +37,15 @@ public:
 
     bool hasExploded() const;
 
-    virtual  void passTime() = 0;
+    virtual void passTime();
 
-    virtual void throwFragments(std::vector<std::unique_ptr<Grenade>>* grenades);
+    virtual bool hasFragment() const;
 
-    virtual ProjectileDTO getProjectilDTO();
+    virtual void explode();
+
+    virtual void throwFragments();
+
+    virtual void getProjectileDTO(std::vector<ProjectileDTO>& vecProjectileDTO);
 
     bool hasExplosionIterations() const;
 
