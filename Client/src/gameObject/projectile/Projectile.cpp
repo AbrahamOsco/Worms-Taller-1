@@ -16,6 +16,16 @@ Projectile::Projectile(int x, int y, const TypeProjectil &typeProjectile, const 
         m_textureID = "air_attack_projectile";
     } else if (m_typeProjectile == TypeProjectil::DYNAMITE) {
         m_textureID = "dynamite_projectile";
+    } else if (m_typeProjectile == TypeProjectil::PROJ_GREEN_GRENADE) {
+        m_textureID = "green_grenade_projectile";
+    } else if (m_typeProjectile == TypeProjectil::PROJ_RED_GRENADE) {
+        m_textureID = "red_grenade_projectile";
+    } else if (m_typeProjectile == TypeProjectil::PROJ_BANANA) {
+        m_textureID = "banana_projectile";
+    } else if (m_typeProjectile == TypeProjectil::PROJ_MORTAR) {
+        m_textureID = "mortar_projectile";
+    } else if (m_typeProjectile == TypeProjectil::PROJ_HOLY_GRENADE) {
+        m_textureID = "holy_grenade_projectile";
     } else if (m_typeExplode == TypeExplode::EXPLODE) {
         m_textureID = "explosion";
         m_width = 60;
