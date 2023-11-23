@@ -66,6 +66,13 @@ public:
     bool hasMunition();
 
     void attackGrenade(const TypeWeapon &aWeapon);
+
+    bool isAGrenade() const;
+
+    void
+    attackWithGrenade(const b2Vec2 &positionWorm, const Direction &direction, const TypeFocus &focus,
+                      const int &waitTime,
+                      b2World *aWorld);
 };
 
 

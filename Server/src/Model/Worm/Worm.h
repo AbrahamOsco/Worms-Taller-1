@@ -16,7 +16,6 @@
 #include "../Weapons/WeaponsWorm/Bazooka.h"
 #include "../../../../Common/DTO/CommandDTO.h"
 
-#define LIFE_BONUS 25
 enum TypeJump{
     JUMP_BACKWARDS, JUMP_FORWARDS
 };

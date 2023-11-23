@@ -4,12 +4,13 @@
 
 #include <iostream>
 #include "GreenGrenade.h"
-
+// Aca ponemos el danio main, radio y el impulso explosion.
 GreenGrenade::GreenGrenade(const GameParameters &gameParameters, const int& waitTime, const TypeFocus& typeFocus) : Grenade(gameParameters, waitTime),
-                                                                                                                    typeFocus(typeFocus), explodable(40.0f, 2.0f, 3.0f) {
+            typeFocus(typeFocus), explodable(40.0f, 2.0f, 3.0f) {
+    // para configurar el tipo de granada. obligatorio responde.
+    fixedRotation = true;
+    restitution = 0.0f;
 }
-
-
 
 ProjectileDTO GreenGrenade::getProjectilDTO() {
     return ProjectileDTO(PROJ_GREEN_GRENADE, this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),

@@ -318,10 +318,8 @@ void Worm::tryAttackVariablePower() {
     if(typeCharge == MANY_CHARGE){
         if(armament.getWeaponCurrent() == BAZOOKA){
             attackWithBazooka();
-        } else if (armament.getWeaponCurrent() == GREEN_GRENADE){
-            GrenadeHolder* grenadeHolder =  (GrenadeHolder*) armament.getWeaponCurrentPtr();
-            grenadeHolder->attack(GREEN_GRENADE, this->getBody()->GetWorldCenter(), directionLook, typeFocus,
-                                  waitTime, aWorld);
+        } else if (armament.isAGrenade()){
+            armament.attackWithGrenade(this->getBody()->GetWorldCenter(), directionLook, typeFocus, waitTime, aWorld);
             this->typeFocus = NO_FOCUS;
             waitingToGetFocus = true;
         }
@@ -435,7 +433,10 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
         this->assignWeapon(DYNAMITE_HOLDER);
     }  else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_GREEN_GRENADE){
         this->assignWeapon(GREEN_GRENADE);
+    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BANANA){
+        this->assignWeapon(BANANA);
     }
+
         // execute an attack of a weapon
     else if (aCommandDTO->getTypeCommand() == TypeCommand::FIRE_CMD){
         this->attack(aCommandDTO);

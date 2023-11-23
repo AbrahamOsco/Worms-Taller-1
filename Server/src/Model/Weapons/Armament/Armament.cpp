@@ -23,6 +23,8 @@ Armament::Armament(const size_t &idPlayer, const GameParameters& gameParameters)
                                                                       gameParameters.airAttackGetMunitionInitial(), gameParameters));
     armament.emplace(DYNAMITE_HOLDER,std::make_unique<DynamiteHolder>(DYNAMITE_HOLDER, 50.0f, NO_INFINITE, 5, gameParameters) );
     armament.emplace(GREEN_GRENADE, std::make_unique<GrenadeHolder>(GREEN_GRENADE, 30.0f, INFINITE, 100, gameParameters));
+    armament.emplace(BANANA, std::make_unique<GrenadeHolder>(BANANA, 70.0f, INFINITE, 100, gameParameters));
+
 
 }
 
@@ -150,6 +152,17 @@ bool Armament::hasMunition() {
     return this->armament.at(currentWeapon).get()->hasMunition();
 }
 
+bool Armament::isAGrenade() const{
+    return (this->currentWeapon == BANANA or this->currentWeapon == GREEN_GRENADE or this->currentWeapon == RED_GRENADE
+           or this->currentWeapon == HOLY_GRENADE);
+}
+
+void Armament::attackWithGrenade(const b2Vec2 &positionWorm, const Direction &direction, const TypeFocus &focus,
+                                 const int &waitTime, b2World *aWorld) {
+    GrenadeHolder* grenadeHolder =  (GrenadeHolder*) armament.at(currentWeapon).get();
+    grenadeHolder->attack(currentWeapon, positionWorm, direction, focus, waitTime, aWorld);
+
+}
 
 
 

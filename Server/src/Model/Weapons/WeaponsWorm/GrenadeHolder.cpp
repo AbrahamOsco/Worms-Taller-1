@@ -5,6 +5,7 @@
 #include <iostream>
 #include "GrenadeHolder.h"
 #include "../../Projectiles/Grenades/GreenGrenade/GreenGrenade.h"
+#include "../../Projectiles/Grenades/Banana/Banana.h"
 
 GrenadeHolder::GrenadeHolder(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, const TypeMunition &aTypeMunition, const size_t &aMunition,
             const GameParameters &gameParameters) : Weapon(aTypeWeapon, damagePrincipal, aTypeMunition, aMunition, gameParameters),
@@ -89,13 +90,16 @@ void GrenadeHolder::attack(const TypeWeapon &typeGrenade, const b2Vec2 &position
                            const TypeFocus &typeFocus, const int &timeWait, b2World *world) {
     b2Vec2 p2 = weaponSight.getPositionP2RayCast(positionWorm, direction);
     b2Vec2 impulseForGrenade = weaponSight.getImpulseForProjectil(direction, impulseWeapon);
-    std::cout << "Atacamos con el grenadeHolder ------------------------------------------------------\n";
+    std::unique_ptr<Grenade> aGrenade;
     if(typeGrenade == GREEN_GRENADE){
-        std::cout << "El timeWait pasado es " << timeWait;
-        std::unique_ptr<Grenade> grenade{new GreenGrenade(gameParameters, timeWait, typeFocus)};
-        grenade->addToTheWorld(world, p2, impulseForGrenade);
-        grenades.push_back(std::move(grenade));
+        aGrenade = std::make_unique<GreenGrenade>(gameParameters, timeWait, typeFocus);
+    } else if (typeGrenade == BANANA){
+        aGrenade = std::make_unique<Banana>(gameParameters, timeWait, typeFocus);
     }
+
+
+    grenades.push_back(std::move(aGrenade));
+    grenades.back()->addToTheWorld(world, p2, impulseForGrenade);
     weaponSight.resetRayCast();
 }
 

@@ -11,7 +11,6 @@
 #include <linux/limits.h>
 #include "imgui/imgui.h"
 
-
 #include <GL/gl.h> // Incluir la biblioteca principal de OpenGL
 //#include <GL/glu.h> // Incluir la biblioteca de utilidades de GLUT
 #include <GLFW/glfw3.h> // Opcional: Incluir la biblioteca GLFW si estás utilizando GLFW para gestionar la ventana
@@ -961,3 +960,4 @@ public:
 };
 
 static int testIndex = RegisterTest("Examples", "Prueba 6", Prueba6::Create);
+
