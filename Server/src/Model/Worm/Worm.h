@@ -149,6 +149,8 @@ public:
     bool attackWithDynamiteHolder();
 
     void setHP(const float &aNewHP);
+
+    void setWaitTime(const int &aWaitTIme);
 };
 
 

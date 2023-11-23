@@ -40,8 +40,9 @@ void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLef
         players.setLifeAllWorm(1.0f);
     } else if (aCommandDTO->getTypeCommand() == MAX_LIFE){
         players.setLifeAllWorm(200.0f);
+    }else{
+        players.getCurrentPlayer().execute(aCommandDTO, timeLeft);
     }
-    players.getCurrentPlayer().execute(aCommandDTO, timeLeft);
 }
 
 void Model::update() {

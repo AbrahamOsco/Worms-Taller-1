@@ -391,6 +391,7 @@ bool Worm::attackWithDynamiteHolder() {
         return false;
     }
     DynamiteHolder* dynamiteHolder = (DynamiteHolder*) armament.getWeaponCurrentPtr();
+    std::cout << "The wait time is " << waitTime << "\n";
     dynamiteHolder->placeDynamite(waitTime, body->GetWorldCenter(), directionLook, aWorld, typeFocus);
     return true;
 }
@@ -473,6 +474,10 @@ bool Worm::isUnmoveAndNotExistsPojectiles() {
 
 void Worm::setHP(const float &aNewHP) {
     this->hp = aNewHP;
+}
+
+void Worm::setWaitTime(const int &aWaitTIme) {
+    this->waitTime = aWaitTIme;
 }
 
 
