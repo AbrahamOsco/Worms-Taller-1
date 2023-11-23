@@ -320,6 +320,33 @@ TEST(TEST_PROTOCOL_SERVER_SEND, START_GAME) {
     buffer = skt.getBuffer();
     ASSERT_EQ(START_GAME, buffer[0]);
 }
+TEST(TEST_PROTOCOL_SERVER_SEND, sendBeamDTO) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    BeamDTO dto(SHORT_BEAM, 53, 69, 120, 78, 96);
+    protocol.sendBeam(dto);
+    buffer = skt.getBuffer();
+    ASSERT_EQ(dto.getOperationType(), buffer[offset]);
+    offset++;
+    ASSERT_EQ(dto.getTypeBeam(), buffer[offset]);
+    offset++;
+    memcpy(&word, buffer.data()+offset, 2);
+    word = ntohs(word);
+    ASSERT_EQ(dto.getXCenter(), word);
+    offset = offset + 2;
+    memcpy(&word, buffer.data()+offset, 2);
+    word = ntohs(word);
+    ASSERT_EQ(dto.getYCenter(), word);
+    offset = offset + 2;
+    ASSERT_EQ(dto.getAngle(), buffer[offset]);
+    offset++;
+    ASSERT_EQ(dto.getLenghth(), buffer[offset]);
+    offset++;
+    ASSERT_EQ(dto.getHeight(), buffer[offset]);
+}
 TEST(TEST_PROTOCOL_SERVER_SEND, sendStage) {
     Socket skt;
     size_t offset = 0;
@@ -327,32 +354,37 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendStage) {
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
     std::vector<BeamDTO> beams;
-    beams.push_back(BeamDTO(SHORT_BEAM, 23, 74, 29, 63, 70));
+    beams.push_back(BeamDTO(SHORT_BEAM, 53, 69, 120, 78, 96));
+    beams.push_back(BeamDTO(WATER_BEAM, 153, 169, 20, 39, 127));
+    beams.push_back(BeamDTO(LONG_BEAM, 0, 0, 127, 127, 127));
     StageDTO dto(beams);
     dto.setIdPlayer(15);
     protocol.sendStage(dto);
     buffer = skt.getBuffer();
     ASSERT_TRUE(STAGE == buffer[offset]);
     offset++;
-    ASSERT_EQ(1, buffer[offset]);
+    ASSERT_EQ(beams.size(), buffer[offset]);
     offset++;
-    ASSERT_EQ(BEAM, buffer[offset]);
-    offset++;
-    ASSERT_EQ(SHORT_BEAM, buffer[offset]);
-    offset++;
-    memcpy(&word, buffer.data()+offset, 2);
-    word = ntohs(word);
-    ASSERT_EQ(23, word);
-    offset = offset + 2;
-    memcpy(&word, buffer.data()+offset, 2);
-    word = ntohs(word);
-    ASSERT_EQ(74, word);
-    offset = offset + 2;
-    ASSERT_EQ(70, buffer[offset]);
-    offset++;
-    ASSERT_EQ(29, buffer[offset]);
-    offset++;
-    ASSERT_EQ(63, buffer[offset]);
+    for (size_t i = 0; i < beams.size(); i++) {
+        ASSERT_EQ(beams[i].getOperationType(), buffer[offset]);
+        offset++;
+        ASSERT_EQ(beams[i].getTypeBeam(), buffer[offset]);
+        offset++;
+        memcpy(&word, buffer.data()+offset, 2);
+        word = ntohs(word);
+        ASSERT_EQ(beams[i].getXCenter(), word);
+        offset = offset + 2;
+        memcpy(&word, buffer.data()+offset, 2);
+        word = ntohs(word);
+        ASSERT_EQ(beams[i].getYCenter(), word);
+        offset = offset + 2;
+        ASSERT_EQ(beams[i].getAngle(), buffer[offset]);
+        offset++;
+        ASSERT_EQ(beams[i].getLenghth(), buffer[offset]);
+        offset++;
+        ASSERT_EQ(beams[i].getHeight(), buffer[offset]);
+        offset++;
+    }
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendPlayersDTO) {
     Socket skt;
@@ -757,6 +789,37 @@ TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_START_GAME) {
     ResolverInitialDTO dtoServer;
     dtoServer.setOperationType(START_GAME);
     ResolverInitialDTO dtoClient = client.recvResolverInitialDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvBeamDTO) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    BeamDTO dtoServer(SHORT_BEAM, 53, 69, 120, 78, 96);
+    server.sendBeam(dtoServer);
+    BeamDTO dtoClient = client.recvBeamDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvStageDTO) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    std::vector<BeamDTO> beams;
+    beams.push_back(BeamDTO(SHORT_BEAM, 53, 69, 120, 78, 96));
+    beams.push_back(BeamDTO(WATER_BEAM, 153, 169, 20, 178, 196));
+    beams.push_back(BeamDTO(LONG_BEAM, 0, 0, 255, 255, 255));
+    StageDTO dtoServer;
+    dtoServer.setIdPlayer(2);
+    dtoServer.setBeams(beams);
+    server.sendStage(dtoServer);
+    StageDTO dtoClient = client.recvStageDTO();
+    ASSERT_EQ(dtoClient.getOperationType(), dtoServer.getOperationType());
+    ASSERT_EQ(dtoClient.getIdPlayer(), dtoServer.getIdPlayer());
+    ASSERT_EQ(dtoClient.getBeams(), dtoServer.getBeams());
     ASSERT_EQ(dtoClient, dtoServer);
 }
 int main(int argc, char* argv[]) {
