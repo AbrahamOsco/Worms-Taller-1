@@ -59,8 +59,7 @@ void AirAttackDetonator::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjec
             }
             vecProjectileDTO.push_back(aProjectilDto);
             aMissile->removeAIteration();
-        }
-        else if( aMissile != nullptr and not aMissile->isDestroyedBody() ){
+        } else if( aMissile != nullptr and not aMissile->isDestroyedBody() ){
             vecProjectileDTO.push_back(aMissile->getProjectilDTO());
         }
     }

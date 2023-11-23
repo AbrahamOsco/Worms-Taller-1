@@ -4,12 +4,14 @@
 
 #include "Grenade.h"
 
-Grenade::Grenade(GameParameters gameParameters, const int &waitTime) : GameObject(ENTITY_GRENADE), gameParameters(gameParameters), weaponSight(3.0f, 2.0f, gameParameters) {
+Grenade::Grenade(GameParameters gameParameters, const int &waitTime) : GameObject(ENTITY_GRENADE), gameParameters(gameParameters), waitTime(waitTime){
     exploded = false;
     collided = false;
+    explosionIterations = 15;
 }
 
 void Grenade::addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impulseGrenade){
+    explosionIterations = 15;
     b2BodyDef grenadeDef;
     grenadeDef.type = b2_dynamicBody;
     grenadeDef.fixedRotation = this->fixedRotation;
@@ -47,6 +49,18 @@ void Grenade::throwFragments(std::vector<std::unique_ptr<Grenade>>* grenades){
 
 ProjectileDTO Grenade::getProjectilDTO() {
     return ProjectileDTO();
+}
+
+bool Grenade::hasExplosionIterations() const {
+    return false;
+}
+
+void Grenade::removeAIteration() {
+    explosionIterations--;
+}
+
+int Grenade::getNumberIterations() const {
+    return explosionIterations;
 }
 
 
