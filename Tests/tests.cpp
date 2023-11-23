@@ -312,6 +312,14 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_FIN_JOIN_GAME) {
     ASSERT_TRUE(RESPONSE_FINAL_JOIN_GAME == buffer[0]);
     ASSERT_EQ(1, buffer[1]);
 }
+TEST(TEST_PROTOCOL_SERVER_SEND, START_GAME) {
+    Socket skt;
+    ServerProtocol protocol(skt);
+    std::vector<char> buffer;
+    protocol.sendANumberByte(START_GAME);
+    buffer = skt.getBuffer();
+    ASSERT_EQ(START_GAME, buffer[0]);
+}
 TEST(TEST_PROTOCOL_SERVER_SEND, sendStage) {
     Socket skt;
     size_t offset = 0;
@@ -676,11 +684,79 @@ TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_INITIAL_CREATE_GAME) 
     ResolverInitialDTO dtoServer(RESPONSE_INITIAL_CREATE_GAME, scenarios, maxPlayers);
     server.sendResolverInitialDTO(dtoServer);
     ResolverInitialDTO dtoClient = client.recvResolverInitialDTO();
-    ASSERT_EQ(dtoClient.getOperationType(), dtoServer.getOperationType());
-    ASSERT_EQ(dtoClient.getScenariosNames(), dtoServer.getScenariosNames());
-    ASSERT_EQ(dtoClient.getVecMaxNumbersWorms(), dtoServer.getVecMaxNumbersWorms());
-    ASSERT_EQ(dtoClient.getStatusAnswer(), dtoServer.getStatusAnswer());
-    ASSERT_EQ(dtoClient.getGameRooms(), dtoServer.getGameRooms());
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_FINAL_CREATE_GAME) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    ResolverInitialDTO dtoServer(RESPONSE_FINAL_CREATE_GAME, 1);
+    server.sendResolverInitialDTO(dtoServer);
+    ResolverInitialDTO dtoClient = client.recvResolverInitialDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvRoom) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    RoomDTO serverRoom("my partida", "super mapa divertido", 1, 4);
+    server.sendRoom(serverRoom);
+    RoomDTO clientRoom = client.recvRoom();
+    ASSERT_EQ(serverRoom, clientRoom);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_INITIAL_JOIN_GAME) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    ResolverInitialDTO dtoServer;
+    dtoServer.setOperationType(RESPONSE_INITIAL_JOIN_GAME);
+    std::vector<RoomDTO> games;
+    std::vector<std::string> names;
+    std::vector<std::string> scenarios;
+    std::vector<size_t> currentPlayers;
+    std::vector<size_t> maxPlayers;
+    names.push_back("mi partida");
+    names.push_back("partida adsgsdsd");
+    scenarios.push_back("mapa pequeño");
+    scenarios.push_back("mapa definitivo mortal xd");
+    currentPlayers.push_back(1);
+    currentPlayers.push_back(3);
+    maxPlayers.push_back(5);
+    maxPlayers.push_back(9);
+    games.push_back(RoomDTO(names[0], scenarios[0], currentPlayers[0], maxPlayers[0]));
+    games.push_back(RoomDTO(names[1], scenarios[1], currentPlayers[1], maxPlayers[1]));
+    dtoServer.setGameRooms(games);
+    server.sendResolverInitialDTO(dtoServer);
+    ResolverInitialDTO dtoClient = client.recvResolverInitialDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_FINAL_JOIN_GAME) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    ResolverInitialDTO dtoServer(RESPONSE_FINAL_JOIN_GAME, 1);
+    server.sendResolverInitialDTO(dtoServer);
+    ResolverInitialDTO dtoClient = client.recvResolverInitialDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_START_GAME) {
+    Socket skt;
+    size_t offset = 0;
+    uint16_t word;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    server.sendANumberByte(START_GAME);
+    ResolverInitialDTO dtoServer;
+    dtoServer.setOperationType(START_GAME);
+    ResolverInitialDTO dtoClient = client.recvResolverInitialDTO();
     ASSERT_EQ(dtoClient, dtoServer);
 }
 int main(int argc, char* argv[]) {
