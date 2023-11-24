@@ -32,5 +32,13 @@ void Camera::update() {
         m_viewBox.SetY(0);
     }
 
+    if (m_viewBox.GetX() + m_viewBox.GetW() > LEVEL_WIDTH) {
+        m_viewBox.SetX(LEVEL_WIDTH - m_viewBox.GetW());
+    }
+
+    if (m_viewBox.GetY() + m_viewBox.GetH() > LEVEL_HEIGHT) {
+        m_viewBox.SetY(LEVEL_HEIGHT - m_viewBox.GetH());
+    }
+
     m_position = SDL2pp::Point(m_viewBox.GetX(),m_viewBox.GetY());
 }

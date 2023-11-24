@@ -1,0 +1,18 @@
+name: test 2
+height: 18
+width: 32
+background: Forest
+worms:
+  - positionX: 28.941666666666666
+    positionY: 9.3083333333333336
+  - positionX: 30.375
+    positionY: 6.2916666666666661
+beams:
+  - x: 31.541666666666668
+    y: 5.6583333333333332
+    angle: 0
+    length: 6
+  - x: 28.941666666666666
+    y: 8.625
+    angle: 0
+    length: 6

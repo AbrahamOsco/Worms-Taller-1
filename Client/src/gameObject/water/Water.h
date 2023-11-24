@@ -15,7 +15,7 @@ private:
     int m_y;
 public:
     explicit Water(int y);
-    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager);
+    void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera);
 
     void setY(int y);
 };
