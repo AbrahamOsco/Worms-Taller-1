@@ -18,9 +18,9 @@ private:
     std::chrono::steady_clock::time_point startTime, time;
     std::chrono::duration<float> waitTime;
     bool exploded;
-    Explodable explodable;
     b2World *world;
     GameParameters gameParameters;
+    Explodable explodable;
     TypeFocus typeFocus;
 public:
     explicit Dynamite(const int &waitTime, const GameParameters &gameParameters, const TypeFocus& typeFocus);

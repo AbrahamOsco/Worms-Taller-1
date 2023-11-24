@@ -24,14 +24,14 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     onInclinedBeam = false;         // posiblemente cambiar por un size_t en un futuro pendiente @todo
     attacked = false;
     typeCharge = NONE_CHARGE;
-    iterationsForBatAttack = gameParameters.getBatIterations();
+    iterationsForBatAttack = gameParameters.getAnimationIterations();
     positionInAir= std::make_pair(0.0f, 0.0f);
     hpInitialTurn = hp;
     contatctsWithBeam = 0;
     contactsWithWorms = 0;
     wasDestroyed = false;
     waitingToGetFocus = false;
-    waitTime = 5;
+    waitTime = gameParameters.getWaitTimeWeaponDefault();
 }
 
 void Worm::savePositionInAir(const float &positionXAir, const float &positionYAir) {
@@ -198,7 +198,7 @@ void Worm::takeDamage(const float &aDamage){
 }
 
 void Worm::giveExtraHP(const float &extraHP) {
-    if( (this->hp + extraHP) <= 200){
+    if( (this->hp + extraHP) <= gameParameters.getMaxHPWorm()){
         this->hp +=extraHP;
     }
 }
@@ -252,7 +252,7 @@ ProjectilesDTO Worm::getProjectilesDTO() {
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
     }
     ProjectilesDTO projectilesDto = armament.getProjectilesDTO(attacked);
-    if(projectilesDto.getProjectilesDto().empty() and waitingToGetFocus ){
+    if(projectilesDto.getProjectilesDto().empty()){
         this->typeFocus = FOCUS;
     }
     return projectilesDto;
@@ -277,7 +277,7 @@ void Worm::update() {
         } else {
             this->typeMov = STANDING;
             if(iterationsForBatAttack == 0){
-                iterationsForBatAttack = gameParameters.getBatIterations();
+                iterationsForBatAttack = gameParameters.getAnimationIterations();
                 armament.putWeaponOnStandByAndUnarmed(); // ya paso el frame del ataque con bate asi q lo desarmamos.
             }
         }
@@ -323,13 +323,13 @@ void Worm::tryAttackVariablePower() {
             attackWithBazooka();
         } else if (armament.isAGrenade()){
             armament.attackWithGrenade(this->getBody()->GetWorldCenter(), directionLook, typeFocus, waitTime, aWorld);
-            this->typeFocus = NO_FOCUS;
-            waitingToGetFocus = true;
+            //this->typeFocus = NO_FOCUS;
+            //waitingToGetFocus = true;
         } else if (armament.getWeaponCurrent() == MORTAR){
             Mortar *mortar = (Mortar*) armament.getWeaponCurrentPtr();
             mortar->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook, typeFocus);
-            this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
-            waitingToGetFocus = true;
+            //this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
+            //waitingToGetFocus = true;
         }
 
         // agregar aca los otros tipos de arma con potencia variable
@@ -397,7 +397,7 @@ bool Worm::attackWithDynamiteHolder() {
         return false;
     }
     DynamiteHolder* dynamiteHolder = (DynamiteHolder*) armament.getWeaponCurrentPtr();
-    std::cout << "The wait time is " << waitTime << "\n";
+
     dynamiteHolder->placeDynamite(waitTime, body->GetWorldCenter(), directionLook, aWorld, typeFocus);
     return true;
 }
@@ -462,7 +462,6 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::AIR_ATTACK_POINT ){
         this->attack(aCommandDTO);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::COUNTDOWN){
-        std::cout << "Se recibe  CD:"  << aCommandDTO->getX() << "\n";
         this->waitTime = aCommandDTO->getX();
     }
 }

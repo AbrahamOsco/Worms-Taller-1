@@ -11,10 +11,10 @@
 
 GrenadeHolder::GrenadeHolder(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, const TypeMunition &aTypeMunition, const size_t &aMunition,
             const GameParameters &gameParameters) : Weapon(aTypeWeapon, damagePrincipal, aTypeMunition, aMunition, gameParameters),
-                                                    weaponSight(1.0f, 0.0f, gameParameters) {
-    impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
-    maxImpulseWeapon = std::make_pair(gameParameters.getBazookaMaxImpulseX(), gameParameters.getBazookaMaxImpulseY());
-    explosionIterations = 15;
+                                                    weaponSight(gameParameters.grenadeGetRayLength(), 0.0f, gameParameters) {
+    impulseWeapon = std::make_pair(gameParameters.grenadeGetImpulseXInitial(), gameParameters.grenadeGetImpulseYInitial());
+    maxImpulseWeapon = std::make_pair(gameParameters.grenadeGetMaxImpulseX(), gameParameters.grenadeGetMaxImpulseY());
+    explosionIterations = gameParameters.getAnimationIterations();
 }
 
 void GrenadeHolder::increaseAngle() {
@@ -56,7 +56,7 @@ void GrenadeHolder::getProjectilesDTOPrimary(std::vector<ProjectileDTO> &vecProj
         grenade->getProjectileDTO(vecProjectileDTO);
         ProjectileDTO *projectileDto = &vecProjectileDTO.back(); // saco unar referencia del ultimo q pushee para setearle el typeEXplode
         projectileDto->setTypeExplode(EXPLODE);
-        if (grenade->getNumberIterations() == 15.0f) {
+        if (grenade->getNumberIterations() == gameParameters.getAnimationIterations()) {
             projectileDto->setTypeExplode(EXPLODE_SOUND);
         }
         grenade->removeAIteration();

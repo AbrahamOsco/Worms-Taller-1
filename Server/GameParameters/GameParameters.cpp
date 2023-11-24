@@ -18,10 +18,14 @@ GameParameters::GameParameters() {
     parameters["VELOCITY_ITERATIONS"] = nodeInitial["VELOCITY_ITERATIONS"].as<float>();
     parameters["POSITION_ITERATIONS"] = nodeInitial["POSITION_ITERATIONS"].as<float>();
     parameters["GRAVITY"] = nodeInitial["GRAVITY"].as<float>();
+    parameters["ANIMATION_ITERATION"] = nodeInitial["ANIMATION_ITERATION"].as<float>();
     parameters["POSITION_ADJUSTMENT"] = nodeInitial["POSITION_ADJUSTMENT"].as<float>();
     parameters["WORM_DRAG_SPEED"] = nodeInitial["WORM_DRAG_SPEED"].as<float>();
     parameters["WORM_INITIAL_HP"] = nodeInitial["WORM_INITIAL_HP"].as<float>();
+    parameters["WORM_MAX_HP"] = nodeInitial["WORM_MAX_HP"].as<float>();
     parameters["WORM_BONUS_HP"] = nodeInitial["WORM_BONUS_HP"].as<float>();
+
+
 
     parameters["TIME_FOR_TURN"] = nodeInitial["TIME_FOR_TURN"].as<float>();
     parameters["TIME_EXTRA_AFTER_ATTACK"] = nodeInitial["TIME_EXTRA_AFTER_ATTACK"].as<float>();
@@ -55,7 +59,10 @@ GameParameters::GameParameters() {
     //WORM_RESISTANCE_TO_HEIGHT
 
     // armas:
+    parameters["WEAPON_MAX_MUNITION"] = nodeInitial["WEAPON_MAX_MUNITION"].as<float>();
+    parameters["WEAPON_TIME_WAIT_DEFAULT"] = nodeInitial["WEAPON_TIME_WAIT_DEFAULT"].as<float>();
     parameters["WEAPON_ANGLE_INITIAL"] = nodeInitial["WEAPON_ANGLE_INITIAL"].as<float>();
+
 
     parameters["BAT_DAMAGE"] = nodeInitial["BAT_DAMAGE"].as<float>();
     parameters["BAT_IMPULSE_X"] = nodeInitial["BAT_IMPULSE_X"].as<float>();
@@ -85,9 +92,112 @@ GameParameters::GameParameters() {
     parameters["AIR_ATTACK_MUNITION_INITIAL"] = nodeInitial["AIR_ATTACK_MUNITION_INITIAL"].as<float>();
     parameters["AIR_ATTACK_MISSILE_MAX_RADIO"] = nodeInitial["AIR_ATTACK_MISSILE_MAX_RADIO"].as<float>();
     parameters["AIR_ATTACK_MISSILE_IMPULSE_MAX"] = nodeInitial["AIR_ATTACK_MISSILE_IMPULSE_MAX"].as<float>();
-
     parameters["AIR_ATTACK_POSITION_Y_TO_INVOKE"] = nodeInitial["AIR_ATTACK_POSITION_Y_TO_INVOKE"].as<float>();
 
+
+    parameters["DYNAMITE_DAMAGE_MAIN"] = nodeInitial["DYNAMITE_DAMAGE_MAIN"].as<float>();
+    parameters["DYNAMITE_MUNITION_INITIAL"] = nodeInitial["DYNAMITE_MUNITION_INITIAL"].as<float>();
+    parameters["DYNAMITE_MAX_RADIO"] = nodeInitial["DYNAMITE_MAX_RADIO"].as<float>();
+    parameters["DYNAMITE_IMPULSE_MAX"] = nodeInitial["DYNAMITE_IMPULSE_MAX"].as<float>();
+    parameters["DYNAMITE_OFFSET_X_TO_INVOKE"] = nodeInitial["DYNAMITE_OFFSET_X_TO_INVOKE"].as<float>();
+    parameters["DYNAMITE_FRICTION"] = nodeInitial["DYNAMITE_FRICTION"].as<float>();
+
+    // GRENADES:
+
+    parameters["GRENADE_RAY_LENGTH"] = nodeInitial["GRENADE_RAY_LENGTH"].as<float>();
+    parameters["GRENADE_IMPULSE_X_INITIAL"] = nodeInitial["GRENADE_IMPULSE_X_INITIAL"].as<float>();
+    parameters["GRENADE_IMPULSE_Y_INITIAL"] = nodeInitial["GRENADE_IMPULSE_Y_INITIAL"].as<float>();
+    parameters["GRENADE_MAX_IMPULSE_X"] = nodeInitial["GRENADE_MAX_IMPULSE_X"].as<float>();
+    parameters["GRENADE_MAX_IMPULSE_Y"] = nodeInitial["GRENADE_MAX_IMPULSE_Y"].as<float>();
+
+
+    parameters["GREEN_GRENADE_DAMAGE_MAIN"] = nodeInitial["GREEN_GRENADE_DAMAGE_MAIN"].as<float>();
+    parameters["GREEN_GRENADE_MUNITION_INITIAL"] = nodeInitial["GREEN_GRENADE_MUNITION_INITIAL"].as<float>();
+    parameters["GREEN_GRENADE_MAX_RADIO"] = nodeInitial["GREEN_GRENADE_MAX_RADIO"].as<float>();
+    parameters["GREEN_GRENADE_MAX_IMPULSE"] = nodeInitial["GREEN_GRENADE_MAX_IMPULSE"].as<float>();
+
+
+
+}
+
+float GameParameters::grenadeGetRayLength() const{
+    return this->parameters.at("GRENADE_RAY_LENGTH");
+}
+
+float GameParameters::grenadeGetImpulseXInitial() const{
+    return this->parameters.at("GRENADE_IMPULSE_X_INITIAL");
+}
+
+float GameParameters::grenadeGetImpulseYInitial() const{
+    return this->parameters.at("GRENADE_IMPULSE_Y_INITIAL");
+}
+
+float GameParameters::grenadeGetMaxImpulseX() const{
+    return this->parameters.at("GRENADE_MAX_IMPULSE_X");
+}
+
+float GameParameters::grenadeGetMaxImpulseY() const{
+    return this->parameters.at("GRENADE_MAX_IMPULSE_Y");
+}
+
+float GameParameters::greenGrenadeMainDamage() const{
+    return this->parameters.at("GREEN_GRENADE_DAMAGE_MAIN");
+}
+
+float GameParameters::greenGrenadeMunitionInitial() const{
+    return this->parameters.at("GREEN_GRENADE_MUNITION_INITIAL");
+}
+
+float GameParameters::greenGrenadeMaxRadio() const{
+    return this->parameters.at("GREEN_GRENADE_MAX_RADIO");
+}
+
+float GameParameters::greenGrenadeMaxImpulse() const{
+    return this->parameters.at("GREEN_GRENADE_MAX_IMPULSE");
+}
+
+
+// ----------
+
+float GameParameters::dynamiteGetFriction() const{
+    return this->parameters.at("DYNAMITE_FRICTION");
+}
+
+float GameParameters::dynamiteGetMainDamage() const{
+    return this->parameters.at("DYNAMITE_DAMAGE_MAIN");
+}
+
+float GameParameters::dynamiteGetMunitionInitial() const{
+    return this->parameters.at("DYNAMITE_MUNITION_INITIAL");
+}
+
+float GameParameters::dynamiteGetMaxRadio() const{
+    return this->parameters.at("DYNAMITE_MAX_RADIO");
+}
+
+float GameParameters::dynamiteGetMaxImpulse() const{
+    return this->parameters.at("DYNAMITE_IMPULSE_MAX");
+}
+
+float GameParameters::dynamiteGetOffsetXToInvoke() const{
+    return this->parameters.at("DYNAMITE_OFFSET_X_TO_INVOKE");
+}
+
+
+float GameParameters::getWaitTimeWeaponDefault() const{
+    return this->parameters.at("WEAPON_TIME_WAIT_DEFAULT");
+}
+
+float GameParameters::getMaxMunitionWeapon() const{
+    return this->parameters.at("WEAPON_MAX_MUNITION");
+}
+
+float GameParameters::getMaxHPWorm() const{
+    return this->parameters.at("WORM_MAX_HP");
+}
+
+int GameParameters::getAnimationIterations() const{
+    return (int) this->parameters.at("ANIMATION_ITERATION");
 }
 
 float GameParameters::airAttackMissileGetDamage() const{
@@ -223,6 +333,12 @@ float GameParameters::getFPSStatic() {
     return aNode["FPS_GAME"].as<float>();
 }
 
+float GameParameters::getOffsetWater() {
+    YAML::Node aNode = getNodeInitial();
+    return aNode["OFFSET_WATER"].as<float>();
+}
+
+
 
 float GameParameters::getMaxHeightPixel() const {
     return parameters.at("MAX_HEIGHT_PIXEL");
@@ -317,7 +433,7 @@ float GameParameters::getTeleportMunition() const {
     return parameters.at("TELEPORT_MUNITION");
 }
 
-float GameParameters::getBazookaImpulseXInitial() const {
+float GameParameters::BazookaGetImpulseXInitial() const {
     return parameters.at("BAZOOKA_IMPULSE_X_INITIAL");
 }
 
@@ -364,6 +480,7 @@ float GameParameters::getWormImpulseFactoScalingDown() const {
 float GameParameters::getWormImpulseFactorClimbingUp() const {
     return parameters.at("WORM_FACTOR_IMPULSE_CLIMBING_UP");
 }
+
 
 
 
