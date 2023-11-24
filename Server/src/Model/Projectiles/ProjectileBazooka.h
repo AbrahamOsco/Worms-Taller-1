@@ -27,7 +27,7 @@ public:
 
     ProjectileDTO getProjectilDTO();
 
-    void searchWormAndCollide(const b2Vec2 &projectilePosition);
+    virtual void searchWormAndCollide(const b2Vec2 &projectilePosition);
 };
 
 

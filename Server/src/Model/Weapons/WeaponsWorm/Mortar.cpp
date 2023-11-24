@@ -8,7 +8,7 @@
 
 Mortar::Mortar(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, const TypeMunition &aTypeMunition,const size_t &aMunition,
                const GameParameters &gameParameters) : Weapon(aTypeWeapon, damagePrincipal, aTypeMunition, aMunition,gameParameters),
-                                                       weaponSight(1.0f, 0.0f, gameParameters) {
+                                                       weaponSight(2.0f, 0.0f, gameParameters) {
     impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
     maxImpulseWeapon = std::make_pair(gameParameters.getBazookaMaxImpulseX(), gameParameters.getBazookaMaxImpulseY());
     projectil = nullptr;
@@ -48,6 +48,10 @@ bool Mortar::launchesProjectiles() {
 }
 
 bool Mortar::thereAreProjectiles() {
+    if(projectil != nullptr){
+        float smallImpulse = 0.01f;
+        this->projectil->getBody()->ApplyLinearImpulse(b2Vec2(0.0f, smallImpulse), projectil->getBody()->GetWorldCenter(), true);
+    }
     return (projectil != nullptr);
 }
 
@@ -81,7 +85,7 @@ void Mortar::tryCleanProjectiles(b2World *aWorld) {
 }
 
 WeaponSightDTO Mortar::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) {
-    return Weapon::getWeaponSightDTO(positionWorm, directionCurrent);
+    return weaponSight.getWeaponSightDTO(positionWorm, directionCurrent);
 }
 
 void Mortar::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const Direction &direction,
@@ -90,7 +94,7 @@ void Mortar::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const D
     b2Vec2 impulseMuniBazooka = weaponSight.getImpulseForProjectil(direction, impulseWeapon);
 
     std::cout << "Atacamos con el mortero------------------------------------------------------\n";
-    projectil = std::make_unique<ProjectileMortar>(gameParameters, focus);
+    projectil = std::make_unique<MortarMainProjectile>(gameParameters, focus);
     projectil->addToTheWorld(world, p2, impulseMuniBazooka, windValue);
     impulseWeapon = std::make_pair(gameParameters.getBazookaImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
     explosionIterations = 15;

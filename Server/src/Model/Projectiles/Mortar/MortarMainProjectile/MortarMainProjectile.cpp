@@ -8,10 +8,17 @@
 
 MortarMainProjectile::MortarMainProjectile(const GameParameters &gameParameters, const TypeFocus &typeFocus)
         : ProjectileMortar(gameParameters, typeFocus) {
+    fragmentImpulses = {b2Vec2(-0.1f,0.1f), b2Vec2(-0.137f,0.027f), b2Vec2(0.137f,0.027f), b2Vec2(0.1f,0.1f), b2Vec2(0.027f,0.137f), b2Vec2(-0.027f,0.137f)};
     this->explodable = Explodable(50.0f, 2, 1.0f);
+    wasThrowFragments = false;
 }
 
 void MortarMainProjectile::getProjectileDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
+    if( this->isDestroyedBody() and not wasThrowFragments){
+        wasThrowFragments = true;
+        this->throwFragments();
+    }
+
     vecProjectileDTO.push_back(ProjectileDTO(PROJ_MORTAR, this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
                                              gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()),
                                              this->typeFocus, NO_EXPLODE) );
@@ -59,4 +66,8 @@ void MortarMainProjectile::getFragmentProjectilDTO(std::vector<ProjectileDTO> &v
         }
     }
 
+}
+
+void MortarMainProjectile::searchWormAndCollide(const b2Vec2 &projectilePosition) {
+    ProjectileMortar::searchWormAndCollide(projectilePosition);
 }

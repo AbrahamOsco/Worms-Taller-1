@@ -11,12 +11,15 @@ class MortarMainProjectile : public ProjectileMortar {
 private:
     std::vector<b2Vec2> fragmentImpulses;
     std::vector<std::unique_ptr<ProjectileMortar>> fragments;
+    bool wasThrowFragments;
 public:
     MortarMainProjectile(const GameParameters &gameParameters, const TypeFocus& typeFocus);
 
     void getProjectileDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
 
     void throwFragments() override;
+
+    void searchWormAndCollide(const b2Vec2 &projectilePosition) override;
 
     bool hasFragment() const;
 
