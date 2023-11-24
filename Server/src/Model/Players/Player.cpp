@@ -82,7 +82,9 @@ PlayerDTO Player::getPlayerDTO(const size_t &idCurrentPlayer) const {
     }
     size_t hpTotalWorms = 0;
     for(auto& mapWorm : worms ){
-        hpTotalWorms += mapWorm.second->getHP();
+        if(not mapWorm.second->wasDestroyedWorm()){
+            hpTotalWorms += mapWorm.second->getHP();
+        }
     }
     return PlayerDTO(idPlayer, playerName, aTurnType, hpTotalWorms);
 }

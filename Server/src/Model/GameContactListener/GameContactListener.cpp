@@ -11,6 +11,7 @@
 #include "../Projectiles/AirAttackMissile.h"
 #include "../Projectiles/Dynamite.h"
 #include "../Projectiles/Grenades/Grenade/Grenade.h"
+#include "../Projectiles/Mortar/ProjectileMortar.h"
 
 // Clase de colisiones el listener:
 void wormCollidesWithBeam(GameObject* worm, GameObject* beam, GameParameters *gameParameters){
@@ -373,8 +374,73 @@ void beamCollidesWithGrenade(GameObject* beam, GameObject* grenade, GameParamete
     grenadeCollideWithBeam(grenade, beam, gameParameters);
 }
 
+// mortar projectile ----------------
+
+void mortarProjCollidesWithEdge(GameObject* mortarProj, GameObject* edge, GameParameters *gameParameters){
+    std::cout << "mortarProjCollidesWithEdge\n";
+    ProjectileMortar* selectProjMortar = (ProjectileMortar*) mortarProj;
+    selectProjMortar->searchWormAndCollide(selectProjMortar->getBody()->GetWorldCenter());
+}
+
+void edgeCollidesWithMortarProj(GameObject* edge, GameObject* mortarProj, GameParameters *gameParameters){
+    std::cout << "edgeCollidesWithMortarProj\n";
+    mortarProjCollidesWithEdge(mortarProj, edge, gameParameters);
+}
 
 
+void mortarProjCollidesWithWater(GameObject* mortarProj, GameObject* water, GameParameters *gameParameters){
+    std::cout << "mortarProjCollidesWithWater\n";
+    ProjectileMortar* selectProjMortar = (ProjectileMortar*) mortarProj;
+    selectProjMortar->searchWormAndCollide(selectProjMortar->getBody()->GetWorldCenter());
+}
+
+void waterCollidesWithMortarProj(GameObject* water, GameObject* mortarProj, GameParameters *gameParameters){
+    std::cout << "waterCollidesWithMortarProj\n";
+    mortarProjCollidesWithWater(mortarProj, water, gameParameters);
+}
+
+void mortarProjCollidesWithProvision(GameObject* mortarProj, GameObject* provision, GameParameters *gameParameters){
+    std::cout << "mortarProjCollidesWithProvision\n";
+    ProjectileMortar* selectProjMortar = (ProjectileMortar*) mortarProj;
+    selectProjMortar->searchWormAndCollide(selectProjMortar->getBody()->GetWorldCenter());
+}
+
+void provisionCollideWithMortarProj(GameObject* provision, GameObject* mortarProj, GameParameters *gameParameters){
+    std::cout << "provisionCollideWithMortarProj\n";
+    mortarProjCollidesWithProvision(mortarProj, provision, gameParameters);
+}
+
+void mortarProjCollidesWithWorm(GameObject* mortarProj, GameObject* worm, GameParameters *gameParameters){
+    std::cout << "mortarProjCollidesWithWorm\n";
+    ProjectileMortar* selectProjMortar = (ProjectileMortar*) mortarProj;
+    selectProjMortar->searchWormAndCollide(selectProjMortar->getBody()->GetWorldCenter());
+}
+
+void wormCollidesWithMortarProj(GameObject* worm, GameObject* mortarProj, GameParameters *gameParameters){
+    std::cout << "wormCollidesWithMortarProj\n";
+    mortarProjCollidesWithWorm(mortarProj, worm, gameParameters);
+}
+
+void mortarProjCollideWithBeam(GameObject* mortarProj, GameObject* beam, GameParameters *gameParameters){
+    std::cout << "mortarProjCollideWithBeam\n";
+    ProjectileMortar* selectProjMortar = (ProjectileMortar*) mortarProj;
+    selectProjMortar->searchWormAndCollide(selectProjMortar->getBody()->GetWorldCenter());
+}
+
+void beamCollidesWithMortarProj(GameObject* beam, GameObject* mortarProj, GameParameters *gameParameters){
+    std::cout << "beamCollidesWithMortarProj\n";
+    mortarProjCollideWithBeam(mortarProj, beam, gameParameters);
+}
+
+void mortarProjCollideWithMortarProj(GameObject* mortarProj1, GameObject* mortarProj2, GameParameters *gameParameters){
+    std::cout << "beamCollidesWithMortarProj\n";
+    ProjectileMortar* selectProjMortar = (ProjectileMortar*) mortarProj1;
+    selectProjMortar->searchWormAndCollide(selectProjMortar->getBody()->GetWorldCenter());
+
+    ProjectileMortar* selectProjMortar2 = (ProjectileMortar*) mortarProj2;
+    selectProjMortar->searchWormAndCollide(selectProjMortar2->getBody()->GetWorldCenter());
+
+}
 
 GameContactListener::GameContactListener(b2World *world, GameParameters *gameParameters) {
     world->SetContactListener(this);
@@ -455,6 +521,24 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
     collisionsMap[std::make_pair(ENTITY_GRENADE, ENTITY_BEAM)] = &grenadeCollideWithBeam;
     collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_GRENADE )] = &beamCollidesWithGrenade;
 
+    // Mortar collisiones con el mortar clase madre.
+
+    collisionsMap[std::make_pair(ENTITY_MORTAR_PROJECTILE, ENTITY_EDGE)] = &mortarProjCollidesWithEdge;
+    collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_MORTAR_PROJECTILE)] = &edgeCollidesWithMortarProj;
+
+    collisionsMap[std::make_pair(ENTITY_MORTAR_PROJECTILE, ENTITY_WATER)] = &mortarProjCollidesWithWater;
+    collisionsMap[std::make_pair(ENTITY_WATER, ENTITY_MORTAR_PROJECTILE )] = &waterCollidesWithMortarProj;
+
+    collisionsMap[std::make_pair(ENTITY_MORTAR_PROJECTILE, ENTITY_PROVISION )] = &mortarProjCollidesWithProvision;
+    collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_MORTAR_PROJECTILE)] = &provisionCollideWithMortarProj;
+
+    collisionsMap[std::make_pair(ENTITY_MORTAR_PROJECTILE, ENTITY_WORM )] = &mortarProjCollidesWithWorm;
+    collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_MORTAR_PROJECTILE)] = &wormCollidesWithMortarProj;
+
+    collisionsMap[std::make_pair(ENTITY_MORTAR_PROJECTILE, ENTITY_BEAM)] = &mortarProjCollideWithBeam;
+    collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_MORTAR_PROJECTILE )] = &beamCollidesWithMortarProj;
+
+    // collisionsMap[std::make_pair(ENTITY_MORTAR_PROJECTILE, ENTITY_MORTAR_PROJECTILE)] = &mortarProjCollideWithMortarProj;
 
 
     //Colisiones con las provisiones Worms:

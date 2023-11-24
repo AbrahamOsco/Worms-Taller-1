@@ -28,7 +28,7 @@ public:
 
     virtual void getProjectileDTO(std::vector<ProjectileDTO>& vecProjectileDTO);
 
-    void searchWormAndCollide(const b2Vec2 &projectilePosition);
+    virtual void searchWormAndCollide(const b2Vec2 &projectilePosition);
 
     virtual void throwFragments();
 

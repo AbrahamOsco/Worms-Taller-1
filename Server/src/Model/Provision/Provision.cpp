@@ -24,7 +24,7 @@ void Provision::addToTheWorld(b2World *world) {
     boxShape.SetAsBox(gameParameters.getProvisionHalfHeight(), gameParameters.getProvisionHalfHeight());
     b2FixtureDef boxDefFixture;
     boxDefFixture.shape = &boxShape;
-    boxDefFixture.friction = 1.0f;
+    boxDefFixture.friction = 0.1f;
     boxDefFixture.density = 1.0f;
     this->world = world;
     this->body->CreateFixture(&boxDefFixture);
