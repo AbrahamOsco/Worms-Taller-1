@@ -21,12 +21,11 @@ public:
 
     void explode() override;
 
+    ~RedGrenade() = default;
+
     void passTime() override;
 
-
     bool hasFragment() const override;
-
-    ~RedGrenade() = default;
 
     void tryCleanProjectiles();
 

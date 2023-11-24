@@ -65,8 +65,6 @@ public:
 
     bool hasMunition();
 
-    void attackGrenade(const TypeWeapon &aWeapon);
-
     bool isAGrenade() const;
 
     void
