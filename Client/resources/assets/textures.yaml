@@ -163,3 +163,5 @@ textures:
     source: "../Client/resources/assets/box/medicine.png"
   - name: munition
     source: "../Client/resources/assets/box/munition.png"
+  - name: water
+    source: "../Client/resources/assets/water/water.png"

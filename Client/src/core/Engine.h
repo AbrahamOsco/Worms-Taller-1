@@ -16,6 +16,7 @@
 #include "../../../Common/Queue/Queue.h"
 #include "../inputs/Input.h"
 #include "../soundManager/SoundManager.h"
+#include "../gameObject/water/Water.h"
 
 class Engine {
 private:
@@ -28,6 +29,7 @@ private:
     Timer m_timer;
 
     std::vector<Beam> &m_beams;
+    Water m_water;
     std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 
     Camera m_camera;
@@ -36,7 +38,7 @@ private:
     Queue<std::vector<std::unique_ptr<GameObject>>> &m_nbQueue;
 
 public:
-    Engine(std::vector<Beam> &beams, Queue<std::unique_ptr<Command>> &bQueue,
+    Engine(std::vector<Beam> &beams, Water &water,Queue<std::unique_ptr<Command>> &bQueue,
            Queue<std::vector<std::unique_ptr<GameObject>>> &nbQueue, std::atomic<bool>& running);
 
     ~Engine() = default;

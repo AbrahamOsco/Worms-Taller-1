@@ -12,7 +12,7 @@
 #include "../thread/SenderThread.h"
 #include "../../../Common/rateController/RateController.h"
 
-Game::Game(Socket& skt) : m_protocol(skt), m_running(true) {}
+Game::Game(Socket& skt) : m_protocol(skt), m_running(true), m_water(0) {}
 
 void Game::loadMap() {
     StageDTO stageDto;
@@ -21,6 +21,7 @@ void Game::loadMap() {
     for (const BeamDTO& beamDto: beams) {
         m_beams.emplace_back(beamDto.getXCenter(), beamDto.getYCenter(), static_cast<Angle>(beamDto.getAngle()), beamDto.getTypeBeam());
     }
+    m_water.setY(700);
 }
 
 void Game::run() {
@@ -41,7 +42,7 @@ void Game::run() {
     }
 
     SDL2pp::SDLTTF ttf;
-    Engine engine(m_beams, bQueue, nbQueue, m_running);
+    Engine engine(m_beams, m_water, bQueue, nbQueue, m_running);
     engine.init();
 
     RateController frameRate(19);  // el start esta encapsulado en el constructor. OJO @ricardo

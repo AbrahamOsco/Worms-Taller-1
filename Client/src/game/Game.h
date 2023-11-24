@@ -9,11 +9,13 @@
 #include "../protocol/ClientProtocol.h"
 #include "../gameObject/GameObject.h"
 #include "../gameObject/beam/Beam.h"
+#include "../gameObject/water/Water.h"
 
 class Game {
 private:
     ClientProtocol m_protocol;
     std::vector<Beam> m_beams;
+    Water m_water;
     std::atomic<bool> m_running;
 public:
     Game(Socket& skt);
