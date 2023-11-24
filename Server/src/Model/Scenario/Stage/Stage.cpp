@@ -16,7 +16,7 @@ StageDTO Stage::getStageDTO() const {
     for(Beam aBeam : beams){
         beamsDTO.push_back(aBeam.getBeamDTO());
     }
-    float posYCenter = 3.30f +water->getBody()->GetWorldCenter().y;
+    float posYCenter = GameParameters::getOffsetWater() +water->getBody()->GetWorldCenter().y;
     size_t positionY = (GameParameters::getMaxHeightPixelStatic()  - (posYCenter * GameParameters::getPositionAdjustmentStatic()));
     StageDTO stageDto(beamsDTO, positionY, background);
     return stageDto;

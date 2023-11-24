@@ -76,7 +76,7 @@ void Weapon::assignWindValue(const float &aWindValue) {
 }
 
 void Weapon::giveExtraMunition(const size_t &extraMunition) {
-    if(munition + extraMunition <= 200){
+    if(munition + extraMunition <= gameParameters.getMaxMunitionWeapon()){
         munition +=extraMunition;
     }
 }

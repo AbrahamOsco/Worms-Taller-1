@@ -9,7 +9,7 @@
 GreenGrenade::GreenGrenade(const GameParameters &gameParameters, const int& waitTime, const TypeFocus& typeFocus) : Grenade(gameParameters, waitTime, typeFocus) {
     fixedRotation = true;
     restitution = 0.0f;
-    this->explodable = Explodable(40.0f, 2.0f, 3.0f);
+    this->explodable = Explodable(gameParameters.greenGrenadeMainDamage(), gameParameters.greenGrenadeMaxRadio(), gameParameters.greenGrenadeMaxImpulse());
 }
 
 void GreenGrenade::getProjectileDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {

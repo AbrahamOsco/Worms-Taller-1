@@ -7,18 +7,18 @@
 DynamiteHolder::DynamiteHolder(const TypeWeapon &aTypeWeapon, const float &mainDamage, const TypeMunition &aTypeMunition, const size_t &aMunition,
               const GameParameters &gameParameters) : Weapon(aTypeWeapon, mainDamage, aTypeMunition, aMunition, gameParameters),
               dynamite(nullptr) {
-    explosionIterations = 15;
+    explosionIterations = gameParameters.getAnimationIterations();
 }
 
 void DynamiteHolder::placeDynamite(const int &waitTime, const b2Vec2 &positionWorm, const Direction &aDirectionWorm,b2World *world,const TypeFocus &typeFocus) {
-    float offset = -0.5f;
+    float offset = -gameParameters.dynamiteGetOffsetXToInvoke();
     if (aDirectionWorm == RIGHT){
-        offset = 1.0;
+        offset = 2 * gameParameters.dynamiteGetOffsetXToInvoke();
     }
     b2Vec2 positionDynamite(positionWorm.x + offset, positionWorm.y);
     dynamite = std::make_unique<Dynamite>(waitTime, gameParameters, typeFocus);
     dynamite->addToTheWorld(world, positionDynamite);
-    explosionIterations = 15;
+    explosionIterations = gameParameters.getAnimationIterations();
     this->munition--;
 }
 
@@ -42,7 +42,7 @@ void DynamiteHolder::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectile
     if(dynamite != nullptr and dynamite->isDestroyedBody() and explosionIterations > 0 ){
         ProjectileDTO aProjectilDto = dynamite->getProjectilDTO();
         aProjectilDto.setTypeExplode(EXPLODE);
-        if(explosionIterations == 15 ){
+        if(explosionIterations == gameParameters.getAnimationIterations() ){
             aProjectilDto.setTypeExplode(EXPLODE_SOUND);
         }
         vecProjectileDTO.push_back(aProjectilDto);

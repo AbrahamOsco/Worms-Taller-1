@@ -38,6 +38,8 @@ public:
 
     static float getMaxHeightPixelStatic();
 
+    static float getOffsetWater();
+
     static float getBeamFrictionSlipperyStatic();
 
     static float getOffsetEdgeTop();
@@ -88,7 +90,7 @@ public:
 
     float getTeleportMunition() const;
 
-    float getBazookaImpulseXInitial() const;
+    float BazookaGetImpulseXInitial() const;
 
     float getBazookaImpulseYInitial() const;
 
@@ -146,6 +148,44 @@ public:
 
     float airAttackMissileImpulseMax() const;
 
+    int getAnimationIterations() const;
+
+    float getMaxHPWorm() const;
+
+    float getMaxMunitionWeapon() const;
+
+    float getWaitTimeWeaponDefault() const;
+
+    float dynamiteGetMainDamage() const;
+
+    float dynamiteGetMunitionInitial() const;
+
+    float dynamiteGetMaxRadio() const;
+
+    float dynamiteGetMaxImpulse() const;
+
+    float dynamiteGetOffsetXToInvoke() const;
+
+    float dynamiteGetFriction() const;
+
+    float grenadeGetRayLength() const;
+
+    float grenadeGetImpulseXInitial() const;
+
+    float grenadeGetImpulseYInitial() const;
+
+    float grenadeGetMaxImpulseX() const;
+
+    float grenadeGetMaxImpulseY() const;
+
+    float greenGrenadeMainDamage() const;
+
+
+    float greenGrenadeMunitionInitial() const;
+
+    float greenGrenadeMaxRadio() const;
+
+    float greenGrenadeMaxImpulse() const;
 };
 
 

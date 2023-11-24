@@ -5,7 +5,9 @@
 #include "Dynamite.h"
 
 Dynamite::Dynamite(const int &waitTime, const GameParameters &gameParameters, const TypeFocus &typeFocus) : GameObject(ENTITY_DYNAMITE),
-          waitTime(waitTime), exploded(false), explodable(50.0f, 4.0f, 2.0f), gameParameters(gameParameters), typeFocus(typeFocus) {
+         waitTime(waitTime), exploded(false), gameParameters(gameParameters),
+         explodable(gameParameters.dynamiteGetMainDamage(), gameParameters.dynamiteGetMaxRadio(), gameParameters.dynamiteGetMaxImpulse()), typeFocus(typeFocus) {
+
 }
 
 void Dynamite::addToTheWorld(b2World* aWorld, b2Vec2 position){
@@ -17,13 +19,13 @@ void Dynamite::addToTheWorld(b2World* aWorld, b2Vec2 position){
     dynamiteDef.userData.pointer = (uintptr_t) this;
     this->body = aWorld->CreateBody(&dynamiteDef);
     b2CircleShape dynamiteForm;
-    dynamiteForm.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
+    dynamiteForm.m_p.Set(0.0f, 0.0f);
     dynamiteForm.m_radius = 0.1f;
 
     b2FixtureDef defFixDynamite;
     defFixDynamite.shape = &dynamiteForm;
-    defFixDynamite.friction = 20.0f;
-    defFixDynamite.density = 1.0f; // ver el tema del aire luego.
+    defFixDynamite.friction = gameParameters.dynamiteGetFriction();
+    defFixDynamite.density = 1.0f;
     this->body->CreateFixture(&defFixDynamite);
     this->world = aWorld;
 }
