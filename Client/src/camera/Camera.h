@@ -7,7 +7,7 @@
 
 #include "SDL2pp/SDL2pp.hh"
 
-const int LEVEL_WIDTH = 1920;
+const int LEVEL_WIDTH = 2400;
 const int LEVEL_HEIGHT = 1080;
 
 
