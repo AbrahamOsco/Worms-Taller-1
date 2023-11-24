@@ -21,7 +21,8 @@ void Game::loadMap() {
     for (const BeamDTO& beamDto: beams) {
         m_beams.emplace_back(beamDto.getXCenter(), beamDto.getYCenter(), static_cast<Angle>(beamDto.getAngle()), beamDto.getTypeBeam());
     }
-    m_water.setY(700);
+    std::cout << static_cast<int>(stageDto.getPositionYWater()) << std::endl;
+    m_water.setY(static_cast<int>(stageDto.getPositionYWater()));
 }
 
 void Game::run() {
