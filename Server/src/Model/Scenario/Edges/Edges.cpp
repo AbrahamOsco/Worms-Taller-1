@@ -13,8 +13,8 @@ Edges::Edges(b2World *world, const float &height, const float &width) : GameObje
     bd.userData.pointer = (uintptr_t) this;
     body = world->CreateBody(&bd);
     b2EdgeShape shape;
-    float heightOffset = height; //+ GameParameters::getOffsetEdgeTop();
-    float widthOffset = width; //+ GameParameters::getOffsetWidth();
+    float heightOffset = height + GameParameters::getOffsetEdgeTop();
+    float widthOffset = width + GameParameters::getOffsetWidth();
     shape.SetTwoSided(b2Vec2(0.0f, heightOffset), b2Vec2(widthOffset, heightOffset));
     body->CreateFixture(&shape, 0.0f);
 

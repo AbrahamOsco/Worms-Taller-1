@@ -16,7 +16,7 @@ Water::Water(b2World *world, const float &height, const float &width) : GameObje
     body = world->CreateBody(&bd);
 
     b2EdgeShape shape;
-    float widthOffset = width; //+ GameParameters::getOffsetWidth();
+    float widthOffset = width + GameParameters::getOffsetWidth();
     shape.SetTwoSided(b2Vec2(0.0f, 0.0f), b2Vec2(widthOffset, 0.0f));
     body->CreateFixture(&shape, 0.0f);
 }
