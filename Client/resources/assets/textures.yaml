@@ -163,9 +163,11 @@ textures:
     source: "../Client/resources/assets/box/munition.png"
   - name: water
     source: "../Client/resources/assets/water/water.png"
+  - name: Dungeon
+    source: "../Client/resources/assets/background/Dungeon.png"
   - name: Forest
     source: "../Client/resources/assets/background/Forest.png"
-  - name: bg_1
-    source: "../Client/resources/assets/background/bg1.jpg"
-  - name: bg_2
-    source: "../Client/resources/assets/background/bg2.png"
+  - name: Hell
+    source: "../Client/resources/assets/background/Hell.png"
+  - name: Manhattan
+    source: "../Client/resources/assets/background/Manhattan.png"
