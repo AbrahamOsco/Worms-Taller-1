@@ -21,8 +21,9 @@ void Game::loadMap() {
     for (const BeamDTO& beamDto: beams) {
         m_beams.emplace_back(beamDto.getXCenter(), beamDto.getYCenter(), static_cast<Angle>(beamDto.getAngle()), beamDto.getTypeBeam());
     }
-    std::cout << static_cast<int>(stageDto.getPositionYWater()) << std::endl;
+    std::cout << stageDto.getBackground() << std::endl;
     m_water.setY(static_cast<int>(stageDto.getPositionYWater()));
+    m_background = stageDto.getBackground();
 }
 
 void Game::run() {
@@ -43,7 +44,7 @@ void Game::run() {
     }
 
     SDL2pp::SDLTTF ttf;
-    Engine engine(m_beams, m_water, bQueue, nbQueue, m_running);
+    Engine engine(m_beams, m_water, m_background,bQueue, nbQueue, m_running);
     engine.init();
 
     RateController frameRate(19);  // el start esta encapsulado en el constructor. OJO @ricardo

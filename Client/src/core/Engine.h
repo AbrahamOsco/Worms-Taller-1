@@ -30,6 +30,7 @@ private:
 
     std::vector<Beam> &m_beams;
     Water m_water;
+    std::string m_background;
     std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 
     Camera m_camera;
@@ -38,7 +39,7 @@ private:
     Queue<std::vector<std::unique_ptr<GameObject>>> &m_nbQueue;
 
 public:
-    Engine(std::vector<Beam> &beams, Water &water,Queue<std::unique_ptr<Command>> &bQueue,
+    Engine(std::vector<Beam> &beams, Water &water, const std::string &background, Queue<std::unique_ptr<Command>> &bQueue,
            Queue<std::vector<std::unique_ptr<GameObject>>> &nbQueue, std::atomic<bool>& running);
 
     ~Engine() = default;

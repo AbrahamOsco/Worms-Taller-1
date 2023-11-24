@@ -123,8 +123,6 @@ textures:
     source: "../Client/resources/assets/wind/arrow_right.png"
   - name: arrow_no
     source: "../Client/resources/assets/wind/arrow_no.png"
-  - name: bg
-    source: "../Client/resources/assets/background/bg.jpg"
   - name: crosshair
     source: "../Client/resources/assets/crosshair/crshairr.png"
   - name: bat_hit
@@ -165,3 +163,9 @@ textures:
     source: "../Client/resources/assets/box/munition.png"
   - name: water
     source: "../Client/resources/assets/water/water.png"
+  - name: Forest
+    source: "../Client/resources/assets/background/Forest.png"
+  - name: bg_1
+    source: "../Client/resources/assets/background/bg1.jpg"
+  - name: bg_2
+    source: "../Client/resources/assets/background/bg2.png"
