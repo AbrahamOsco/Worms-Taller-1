@@ -6,7 +6,8 @@
 
 StageDTO::StageDTO() : DTO(STAGE) {}
 
-StageDTO::StageDTO(const std::vector<BeamDTO> &beams) : DTO(STAGE), beams(beams) {}
+StageDTO::StageDTO(const std::vector<BeamDTO> &beams, const size_t& positionYWater, const std::string& background) : DTO(STAGE),
+            beams(beams), positionYWater(positionYWater), background(background) {}
 
 void StageDTO::setBeams(const std::vector<BeamDTO> &beams) {
     this->beams = beams;
@@ -28,5 +29,21 @@ bool StageDTO::operator==(const StageDTO& other) const {
     return  this->opType == other.opType  &&
             this->beams == other.beams  &&
             this->idPlayer == other.idPlayer;
+}
+
+size_t StageDTO::getPositionYWater() const {
+    return positionYWater;
+}
+
+std::string StageDTO::getBackground() const {
+    return background;
+}
+
+void StageDTO::setPositionYWater(const size_t &positionYWater) {
+    this->positionYWater = positionYWater;
+}
+
+void StageDTO::setBackground(const std::string &background) {
+    this->background = background;
 }
 

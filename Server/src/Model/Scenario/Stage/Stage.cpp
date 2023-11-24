@@ -5,9 +5,10 @@
 #include <iostream>
 #include "Stage.h"
 #include "../../YamlParser/YamlParser.h"
+#include "../../../../GameParameters/GameParameters.h"
 
 Stage::Stage(const std::string &name) {
-    YamlParser::loadDataStage(name, height, length, beams, idsAndPositionsWorms);
+    YamlParser::loadDataStage(name, height, length, beams, idsAndPositionsWorms, background);
 }
 
 StageDTO Stage::getStageDTO() const {
@@ -15,7 +16,9 @@ StageDTO Stage::getStageDTO() const {
     for(Beam aBeam : beams){
         beamsDTO.push_back(aBeam.getBeamDTO());
     }
-    StageDTO stageDto(beamsDTO);
+    float posYCenter = water->getBody()->GetWorldCenter().y;
+    size_t positionY = (GameParameters::getMaxHeightPixelStatic()  - (posYCenter * GameParameters::getPositionAdjustmentStatic()));
+    StageDTO stageDto(beamsDTO, positionY, background);
     return stageDto;
 }
 

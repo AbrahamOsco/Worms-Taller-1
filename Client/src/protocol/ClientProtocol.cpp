@@ -110,6 +110,8 @@ StageDTO ClientProtocol::recvStageDTO() {
         }
         stageDto.setBeams(beams);
         stageDto.setIdPlayer(recvANumberByte());
+        stageDto.setPositionYWater(recvNum2Bytes());
+        stageDto.setBackground(recvString());
     }
     // std::cout << "Se recibieron stage basuras\n";
     return stageDto;

@@ -24,6 +24,7 @@ private:
     std::map<size_t, std::pair<float, float>> idsAndPositionsWorms;
     std::unique_ptr<Edges> edges;
     std::unique_ptr<Water> water;
+    std::string background;
 public:
 
     Stage(const std::string& name);

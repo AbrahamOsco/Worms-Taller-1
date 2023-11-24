@@ -120,7 +120,7 @@ public:
     YamlParser(){}
 
     static void loadDataStage(const std::string &aStageName, float &height, float &length, std::vector<Beam> &aBeams,
-                              std::map<size_t, std::pair<float, float>> &idPosWorms) {
+                              std::map<size_t, std::pair<float, float>> &idPosWorms, std::string &background) {
         char startPathC[PATH_MAX];
         realpath("../../", startPathC);
         std::string startPath(startPathC);
@@ -246,7 +246,7 @@ public:
     }
 
     Stage(const std::string &name) {
-        YamlParser::loadDataStage(name, height, length, beams, idsAndPositionsWorms);
+        YamlParser::loadDataStage(name, height, length, beams, idsAndPositionsWorms, <#initializer#>);
     }
 
 

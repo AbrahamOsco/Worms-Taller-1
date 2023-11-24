@@ -21,7 +21,7 @@ public:
     YamlParser();
 
     static void loadDataStage(const std::string &aStageName, float &height, float &length, std::vector<Beam> &aBeams,
-                              std::map<size_t, std::pair<float, float>> &positionsWorms);
+                              std::map<size_t, std::pair<float, float>> &positionsWorms, std::string &background);
 
     static void getScenarioAndMaxWorms(std::vector<std::string>& vecScenarios, std::vector<size_t>& vecMaxNumberWorms);
 

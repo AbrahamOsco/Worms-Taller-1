@@ -7,6 +7,7 @@
 
 
 #include <vector>
+#include <string>
 #include "DTO.h"
 #include "BeamDTO.h"
 
@@ -14,11 +15,12 @@ class StageDTO : public DTO {
  private:
     std::vector<BeamDTO> beams;
     size_t idPlayer;
-
+    size_t positionYWater;
+    std::string background;
  public:
     StageDTO();
 
-    explicit StageDTO(const std::vector<BeamDTO>& beams);
+    explicit StageDTO(const std::vector<BeamDTO>& beams, const size_t& positionYWater, const std::string& background);
 
     void setBeams(const std::vector<BeamDTO>& beams);
 
@@ -27,6 +29,14 @@ class StageDTO : public DTO {
     size_t getIdPlayer() const;
 
     void setIdPlayer(const size_t &idPlayer);
+
+    size_t getPositionYWater() const;
+
+    void setPositionYWater(const size_t &positionYWater);
+
+    std::string getBackground() const;
+
+    void setBackground(const std::string &background);
 
     bool operator==(const StageDTO& other) const;
 };

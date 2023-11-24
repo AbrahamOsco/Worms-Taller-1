@@ -33,7 +33,7 @@ include_directories(${PROJECT_SOURCE_DIR}/Client/ui/include)
 file(GLOB_RECURSE client_src "Client/src/*.cpp" "Client/src/*.h" "Common/DTO/*.h" "Client/src/game/*.h"
         "Client/src/command/*.h" "Client/src/gameObject/*.h" "Client/src/gameObject/weapon/*.h")
 file(GLOB_RECURSE common_src "Common/*.cpp" "Common/*.h" "Common/DTO/*.cpp" "Client/src/game/*.cpp"
-        "Client/src/command/*.cpp" "Client/src/gameObject/*.cpp"  "Client/src/gameObject/weapon/*.cpp")
+        "Client/src/command/*.cpp" "Client/src/gameObject/*.cpp" "Client/src/gameObject/weapon/*.cpp")
 
 #File de girardi  @Girardi  # parte qt
 file(GLOB_RECURSE qt_src "Client/ui/*.cpp" "Client/ui/*.h")
