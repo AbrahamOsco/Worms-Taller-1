@@ -47,6 +47,9 @@ void MortarMainProjectile::tryCleanProjectiles() {
         if(aFragmentMortar!= nullptr and aFragmentMortar->isDestroyedBody() and not aFragmentMortar->hasExplosionIterations()){
             this->body->GetWorld()->DestroyBody(aFragmentMortar->getBody());
             aFragmentMortar = nullptr;
+        } else if ( aFragmentMortar != nullptr and not aFragmentMortar->isDestroyedBody() ){ // para q no se quede en el aire
+            float smallImpulse = 0.01f;  // Ajusta según sea necesario
+            this->body->ApplyLinearImpulse(b2Vec2(0.0f, -1*smallImpulse), body->GetWorldCenter(), true);
         }
     }
 }
@@ -62,10 +65,12 @@ void MortarMainProjectile::getFragmentProjectilDTO(std::vector<ProjectileDTO> &v
             }
             aFragment->removeAIteration();
         } else if (aFragment != nullptr and not aFragment->isDestroyedBody()){
+            this->body->SetAwake(true);
+            float smallImpulse = 0.001f;
+            this->body->ApplyLinearImpulse(b2Vec2(0.0f, -smallImpulse), body->GetWorldCenter(), true);
             aFragment->getProjectileDTO(vecProjectileDTO);
         }
     }
-
 }
 
 void MortarMainProjectile::searchWormAndCollide(const b2Vec2 &projectilePosition) {
