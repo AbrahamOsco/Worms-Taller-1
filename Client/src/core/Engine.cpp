@@ -15,7 +15,7 @@ Engine::Engine(std::vector<Beam> &beams, Water &water, const std::string &backgr
                                                                                     SDL_WINDOWPOS_UNDEFINED,
                                                                                     SDL_WINDOWPOS_UNDEFINED,
                                                                                     WINDOW_WIDTH, WINDOW_HEIGHT,
-                                                                                    SDL_WINDOW_RESIZABLE),
+                                                                                    0),
                                                                            m_renderer(m_window, -1,
                                                                                       SDL_RENDERER_ACCELERATED),
                                                                            m_beams(beams), m_water(water), m_background(background), m_bQueue(bQueue),
