@@ -34,6 +34,7 @@ enum TypeCommand {
     COUNTDOWN,
     MAX_LIFE,
     MIN_LIFE,
+    MOVE_CAM,
     NONE
 };
 
