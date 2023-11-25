@@ -348,9 +348,9 @@ void Worm::attack(std::unique_ptr<CommandDTO> &aCommand) {
     } else if( this->armament.getWeaponCurrent() == BASEBALL_BAT){ // armas abajo sin potencia variable.
         this->attackWithBat();
     } else if (this->armament.getWeaponCurrent() == TELEPORT){
-        this->typeFocus = FOCUS;
-        this->waitingToGetFocus = false;
         this->teleportWorm(aCommand->getX(), aCommand->getY());
+        this->waitingToGetFocus = false;
+        this->typeFocus = FOCUS;
     } else if ( this->armament.getWeaponCurrent() == AIR_ATTACK){
         couldAttack = this->attackWithAirAttack(aCommand->getX());
     } else if (this->armament.getWeaponCurrent() == DYNAMITE_HOLDER){
