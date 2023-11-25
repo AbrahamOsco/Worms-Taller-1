@@ -53,8 +53,6 @@ public:
 
     RoomDTO getRoomDTO() const;
 
-    void clearAll();
-
     void stepWorldAndExecuteCommand();
 
     void pushUpdatesAndUpdateModel(TimeTurn &timeTurn, RateController &frameRate);

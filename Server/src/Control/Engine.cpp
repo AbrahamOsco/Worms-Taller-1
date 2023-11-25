@@ -125,6 +125,3 @@ void Engine::stop() {
     keepTalking = false;
 }
 
-void Engine::clearAll() {
-    // Limpiaremos las queeus aca?
-}

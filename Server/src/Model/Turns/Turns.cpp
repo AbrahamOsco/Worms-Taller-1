@@ -73,8 +73,7 @@ void Turns::cleanProvisionsDestroyed(){
 
 void Turns::tryEndTurn(){
     this->cleanProvisionsDestroyed();
-    // Lo mas facil pasaron 60 segundos entonces.  pasa el turno del sgt jugador.
-    if (players.getCurrentPlayer().getCurrentWorm()->wasDamaged() and not damageRecognized) {
+    if ((players.getCurrentPlayer().getCurrentWorm()->wasDamaged() or players.getCurrentPlayer().getCurrentWorm()->wasDestroyedWorm()) and not damageRecognized) {
         timeLeft = 0;
         damageRecognized = true;
     } else if (players.getCurrentPlayer().getCurrentWorm()->alreadyAttack() and not attackRecognized) {

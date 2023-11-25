@@ -252,7 +252,8 @@ ProjectilesDTO Worm::getProjectilesDTO() {
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
     }
     ProjectilesDTO projectilesDto = armament.getProjectilesDTO(attacked);
-    if(projectilesDto.getProjectilesDto().empty()){
+    if(projectilesDto.getProjectilesDto().empty() and waitingToGetFocus){
+        waitingToGetFocus = false;
         this->typeFocus = FOCUS;
     }
     return projectilesDto;
@@ -322,17 +323,14 @@ void Worm::tryAttackVariablePower() {
             attackWithBazooka();
         } else if (armament.isAGrenade()){
             armament.attackWithGrenade(this->getBody()->GetWorldCenter(), directionLook, typeFocus, waitTime, aWorld);
-            //this->typeFocus = NO_FOCUS;
-            //waitingToGetFocus = true;
+            this->typeFocus = NO_FOCUS;
+            waitingToGetFocus = true;
         } else if (armament.getWeaponCurrent() == MORTAR){
             Mortar *mortar = (Mortar*) armament.getWeaponCurrentPtr();
             mortar->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook, typeFocus);
-            //this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
-            //waitingToGetFocus = true;
+            this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
+            waitingToGetFocus = true;
         }
-
-        // agregar aca los otros tipos de arma con potencia variable
-        // luego de atacar con la bazoka o cualquier weapo con variable power pasamos el arma a standB y nos desarmamos
         this->endAttack();
         this->typeCharge = NONE_CHARGE;
     }
@@ -371,8 +369,8 @@ void Worm::attackWithBat(){
 void Worm::attackWithBazooka() {
     Bazooka *bazooka = (Bazooka *) armament.getWeaponCurrentPtr();
     bazooka->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook, typeFocus);
-    //this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
-    //   waitingToGetFocus = true;
+    this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
+    waitingToGetFocus = true;
 }
 
 void Worm::teleportWorm(const int &posXTeleport, const int &posYTeleport){
@@ -396,7 +394,6 @@ bool Worm::attackWithDynamiteHolder() {
         return false;
     }
     DynamiteHolder* dynamiteHolder = (DynamiteHolder*) armament.getWeaponCurrentPtr();
-
     dynamiteHolder->placeDynamite(waitTime, body->GetWorldCenter(), directionLook, aWorld, typeFocus);
     return true;
 }
