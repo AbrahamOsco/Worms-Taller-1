@@ -144,7 +144,8 @@ add_executable(worms-editor
 
 
         )
-
+add_executable(camera-test Camera/camera.cpp)
 target_link_libraries(worms-editor Qt5::Widgets yaml-cpp)
 target_link_libraries(worms-client PUBLIC SDL2pp yaml-cpp Qt5::Widgets Qt5::Multimedia)
 target_link_libraries(Worms-Taller-1 box2d SDL2pp yaml-cpp)
+target_link_libraries(camera-test SDL2pp)
