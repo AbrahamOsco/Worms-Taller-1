@@ -82,6 +82,7 @@ void ReceiverThread::run() {
                                                                                                   weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
                     } else if (wormDto.getWeaponCurrent() == TypeWeapon::TELEPORT) {
+                        std::cout << "focus: " << wormDto.getTypeFocus() << std::endl;
                         std::unique_ptr<WormGuidedWeapon> worm = std::make_unique<WormGuidedWeapon>(static_cast<int>(wormDto.getIdPlayer()),
                                                                                                     static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
                                                                                                     wormDto.getHpWorm(),

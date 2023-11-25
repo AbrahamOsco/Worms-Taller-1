@@ -40,7 +40,7 @@ void Engine::update() {
 
 void Engine::render() {
     m_renderer.Clear();
-    m_textureManager.draw(m_background, - m_camera.getPosition().GetX(), - m_camera.getPosition().GetY(), 1920, 1080, m_renderer, SDL_FLIP_NONE);
+    m_textureManager.draw(m_background, 0, - m_camera.getPosition().GetY(), 1920, 1080, m_renderer, SDL_FLIP_NONE);
     //m_water.draw(m_renderer, m_textureManager, m_camera);
 
     for (Beam beams: m_beams) {

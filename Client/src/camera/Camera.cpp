@@ -24,7 +24,7 @@ void Camera::setTarget(SDL2pp::Point &target) {
 }
 
 void Camera::update(Input &input) {
-    if (input.getKeyDown(SDL_SCANCODE_D)) {
+    /*if (input.getKeyDown(SDL_SCANCODE_D)) {
         m_target.SetX(m_target.GetX() + 5);
     } else if (input.getKeyDown(SDL_SCANCODE_A)) {
         m_target.SetX(m_target.GetX() - 5);
@@ -32,7 +32,7 @@ void Camera::update(Input &input) {
         m_target.SetY(m_target.GetY() + 5);
     } else if (input.getKeyDown(SDL_SCANCODE_W)) {
         m_target.SetY(m_target.GetY() - 5);
-    }
+    }*/
 
     m_viewBox.SetX(m_target.GetX() - WINDOW_WIDTH / 2);
     m_viewBox.SetY(m_target.GetY() - WINDOW_HEIGHT / 2);
