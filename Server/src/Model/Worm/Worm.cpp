@@ -291,6 +291,8 @@ void Worm::update() {
 void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
     if( not attacked and this->typeFocus == FOCUS){ // SOLO asigno un arma si no ataque y si tengo el focus.
         armament.assignWeapon(aTypeWeapon, this->directionLook);
+        typeFocus= NO_FOCUS;
+        waitingToGetFocus = true;
     }
 }
 
@@ -346,6 +348,8 @@ void Worm::attack(std::unique_ptr<CommandDTO> &aCommand) {
     } else if( this->armament.getWeaponCurrent() == BASEBALL_BAT){ // armas abajo sin potencia variable.
         this->attackWithBat();
     } else if (this->armament.getWeaponCurrent() == TELEPORT){
+        this->typeFocus = FOCUS;
+        this->waitingToGetFocus = false;
         this->teleportWorm(aCommand->getX(), aCommand->getY());
     } else if ( this->armament.getWeaponCurrent() == AIR_ATTACK){
         couldAttack = this->attackWithAirAttack(aCommand->getX());
