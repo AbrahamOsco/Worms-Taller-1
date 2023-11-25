@@ -6,6 +6,9 @@
 #define WORMS_TALLER_1_CAMERA_H
 
 #include "SDL2pp/SDL2pp.hh"
+#include "../inputs/Input.h"
+#include "../../../Common/Queue/Queue.h"
+#include "../command/Command.h"
 
 const int LEVEL_WIDTH = 2400;
 const int LEVEL_HEIGHT = 1080;
@@ -19,7 +22,7 @@ private:
 
 public:
     Camera();
-    void update();
+    void update(Input &input, Queue <std::unique_ptr<Command>> &queue);
     SDL2pp::Rect getViewBox();
     SDL2pp::Point getPosition();
     void setTarget(SDL2pp::Point &target);

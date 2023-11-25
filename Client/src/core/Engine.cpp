@@ -35,12 +35,12 @@ void Engine::update() {
     for (const auto &m_gameObject: m_gameObjects) {
         m_gameObject->update(m_input, m_bQueue, m_camera, m_soundManager);
     }
-    m_camera.update();
+    m_camera.update(m_input, m_bQueue);
 }
 
 void Engine::render() {
     m_renderer.Clear();
-    m_textureManager.draw(m_background, - m_camera.getPosition().GetY(), - m_camera.getPosition().GetY(), 1920, 1080, m_renderer, SDL_FLIP_NONE);
+    m_textureManager.draw(m_background, - m_camera.getPosition().GetX(), - m_camera.getPosition().GetY(), 1920, 1080, m_renderer, SDL_FLIP_NONE);
     //m_water.draw(m_renderer, m_textureManager, m_camera);
 
     for (Beam beams: m_beams) {

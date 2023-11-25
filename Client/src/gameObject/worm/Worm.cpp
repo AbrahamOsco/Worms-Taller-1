@@ -113,9 +113,6 @@ void Worm::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &
         } else if (input.getKeyDown(SDL_SCANCODE_F2)) {
             std::unique_ptr<Command> command(new SetMinLifeCmd());
             queue.move_push(std::move(command));
-        } else if (input.getKeyDown(SDL_SCANCODE_C)) {
-            std::unique_ptr<Command> command(new MoveCamCmd());
-            queue.move_push(std::move(command));
         }
     }
 }
