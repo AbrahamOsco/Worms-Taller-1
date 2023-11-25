@@ -152,6 +152,10 @@ void ReceiverThread::run() {
 
                 }
 
+                std::vector<ProvisionDTO> provisions = snapShot.getVecProvisionDto();
+                for (const ProvisionDTO &provisionDto: provisions) {
+                    gameObjects.push_back(std::make_unique<Provision>(static_cast<int>(provisionDto.getPositionX()), static_cast<int>(provisionDto.getPositionY()), provisionDto.getTypeEffect(), provisionDto.getTypeContact()));
+                }
 
                 for (const WeaponDTO &weaponDto: weapons) {
                     WeaponIcon weaponIcon(weaponDto.getTypeWeapon(), static_cast<int>(weaponDto.getMunition()), weaponDto.getTypeMunition(), weaponsDto.getWeaponCurrent(), isMyTurn);
@@ -175,11 +179,6 @@ void ReceiverThread::run() {
                 gameObjects.push_back(
                         std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, gameState, typeResult,turnDto.getTextTurn(),
                                                    turnDto.getTimeLeft(), death));
-
-                std::vector<ProvisionDTO> provisions = snapShot.getVecProvisionDto();
-                for (const ProvisionDTO &provisionDto: provisions) {
-                    gameObjects.push_back(std::make_unique<Provision>(static_cast<int>(provisionDto.getPositionX()), static_cast<int>(provisionDto.getPositionY()), provisionDto.getTypeEffect(), provisionDto.getTypeContact()));
-                }
 
                 pastCountWorm = wormsDto.size();
 
