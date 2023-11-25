@@ -30,8 +30,6 @@ class WormDTO : public DTO {
             const Direction& aDirection, const TypeFocus& aTypeFocus, const MoveWorm& aMoveWorm,
             const TypeWeapon& weaponCurrent);
 
-    size_t getIdWorm() const;
-
     size_t getPositionX() const;
 
     size_t getPositionY() const;

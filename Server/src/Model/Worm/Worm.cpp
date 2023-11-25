@@ -11,6 +11,7 @@
 #include "../Weapons/WeaponsWorm/GrenadeHolder.h"
 #include "../Weapons/WeaponsWorm/Mortar.h"
 
+
 Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
            Armament& armament) : GameObject(ENTITY_WORM), idWorm(idWorm), idPlayer(idPlayer),
                                  positionInitialX(posIniX), positionInitialY(posIniY), gameParameters(gameParameter), aWorld(nullptr), armament(armament) {
@@ -32,6 +33,7 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     wasDestroyed = false;
     waitingToGetFocus = false;
     waitTime = gameParameters.getWaitTimeWeaponDefault();
+    idWormCurrentPlay = VALUE_INITIAL_ID;
 }
 
 void Worm::savePositionInAir(const float &positionXAir, const float &positionYAir) {
@@ -148,18 +150,6 @@ void Worm::walk(Direction aDirection) {
     }
 }
 
-// borrar esto @todo
-bool Worm::isInContactWithAnotherWorm(){
-    for(b2ContactEdge* ce = body->GetContactList(); ce; ce = ce->next){ // iterar sobre todos los contactos de un cuerpo:
-        GameObject* aGameObj = (GameObject*) ce->contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-        GameObject* aOtherGamObj = (GameObject*) ce->contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-        if ( aGameObj->getEntityType() == ENTITY_WORM and aOtherGamObj->getEntityType() == ENTITY_WORM ){
-            return true;
-        }
-    }
-    return false;
-}
-
 void Worm::walkWorm(const Direction& aDiretion){
     if( armament.isUnarmed() ){
         walk(aDiretion);
@@ -230,9 +220,9 @@ Direction Worm::getDirection() {
 
 // DTOS.
 WormDTO Worm::getWormDTO() const {
-    TypeWeapon typeWeapon = armament.getWeaponCurrent();
-    if(this->typeFocus == NO_FOCUS){
-        typeWeapon = NONE_WEAPON;
+    TypeWeapon typeWeapon = NONE_WEAPON;
+    if(idWormCurrentPlay == idWorm){
+        typeWeapon = armament.getWeaponCurrent();
     }
     return WormDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
                    gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()),
@@ -252,7 +242,7 @@ ProjectilesDTO Worm::getProjectilesDTO() {
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
     }
     ProjectilesDTO projectilesDto = armament.getProjectilesDTO(attacked);
-    if(projectilesDto.getProjectilesDto().empty() and waitingToGetFocus){
+    if(projectilesDto.getProjectilesDto().empty() and waitingToGetFocus and attacked){ // pregunto si ataco tambien para devolverme el focus.
         waitingToGetFocus = false;
         this->typeFocus = FOCUS;
     }
@@ -261,6 +251,7 @@ ProjectilesDTO Worm::getProjectilesDTO() {
 
 void Worm::activateFocus() {
     this->typeFocus = TypeFocus::FOCUS;
+    this->idWormCurrentPlay = this->idWorm;
 }
 
 void Worm::update() {
@@ -290,8 +281,6 @@ void Worm::update() {
 void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
     if( not attacked and this->typeFocus == FOCUS){ // SOLO asigno un arma si no ataque y si tengo el focus.
         armament.assignWeapon(aTypeWeapon, this->directionLook);
-        typeFocus = NO_FOCUS;
-        waitingToGetFocus = true;
     }
 }
 
@@ -412,9 +401,11 @@ void Worm::endTurn() {
     waitingToGetFocus = false;
     armament.endTurn();
     hpInitialTurn = hp;
+    idWormCurrentPlay = VALUE_INITIAL_ID;
 }
 
 void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft, size_t idCurrentWorm) {
+    this->idWormCurrentPlay = idCurrentWorm;
     if(timeLeft <= 0 or this->idWorm != idCurrentWorm){ // no le pongo el and not wasDestroyed porque nunca sera el turno del worm destruido.
         return;
     }
@@ -440,6 +431,8 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
         this->assignWeapon(BASEBALL_BAT); // BASEBALL_BAT
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_TELEPORT){
         this->assignWeapon(TELEPORT);
+        typeFocus = NO_FOCUS;
+        waitingToGetFocus = true;
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BAZOOKA){
         this->assignWeapon(BAZOOKA);
     }  else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_DYNAMITE){
@@ -498,6 +491,10 @@ void Worm::setHP(const float &aNewHP) {
 
 void Worm::setWaitTime(const int &aWaitTIme) {
     this->waitTime = aWaitTIme;
+}
+
+size_t Worm::getIdWorm() const {
+    return this->idWorm;
 }
 
 

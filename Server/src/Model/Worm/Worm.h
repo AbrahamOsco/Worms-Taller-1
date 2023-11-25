@@ -15,7 +15,7 @@
 #include "../Weapons/WeaponsWorm/Bat.h"
 #include "../Weapons/WeaponsWorm/Bazooka.h"
 #include "../../../../Common/DTO/CommandDTO.h"
-
+#define VALUE_INITIAL_ID 1000
 enum TypeJump{
     JUMP_BACKWARDS, JUMP_FORWARDS
 };
@@ -52,6 +52,7 @@ class Worm : public GameObject {
     bool wasDestroyed;
     bool waitingToGetFocus;
     int waitTime;
+    size_t idWormCurrentPlay;
 public:
 
     Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
@@ -80,8 +81,6 @@ public:
     void jump(const TypeJump &typeJump);
 
     void walk(Direction aDirection);
-
-    bool isInContactWithAnotherWorm();
 
     WeaponSightDTO getWeaponSightDTO();
 
@@ -155,6 +154,7 @@ public:
 
     void attackWithMortar();
 
+    size_t getIdWorm() const;
 
 };
 

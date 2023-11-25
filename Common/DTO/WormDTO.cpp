@@ -8,8 +8,6 @@ WormDTO::WormDTO(const size_t &positionX, const size_t &positionY, const size_t&
                                                                                                             idPlayer(idPlayer), hpWorm(hpWorm), directionLook(aDirection), moveWorm(aMoveWorm), typeFocus(aTypeFocus), weaponCurrent(weaponCurrent) {
 }
 
-
-
 size_t WormDTO::getPositionX() const {
     return positionX;
 }
