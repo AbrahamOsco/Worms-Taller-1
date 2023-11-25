@@ -22,7 +22,7 @@ Worm::Worm(const size_t &idWorm, const size_t &idPlayer,  const float &posIniX, 
     distancesJumpBack = std::make_pair(gameParameter.getDistXBackJump(), gameParameter.getDistYBackJump());
     typeFocus = NO_FOCUS;
     typeMov = STANDING;
-    onInclinedBeam = false;         // posiblemente cambiar por un size_t en un futuro pendiente @todo
+    onInclinedBeam = false;
     attacked = false;
     typeCharge = NONE_CHARGE;
     iterationsForBatAttack = gameParameters.getAnimationIterations();
@@ -207,7 +207,7 @@ bool Worm::wasDestroyedWorm() const{
 }
 
 bool Worm::wasDamaged() const{
-    return hpInitialTurn != hp;
+    return hpInitialTurn > hp;
 }
 
 bool Worm::alreadyAttack() const{
@@ -230,14 +230,14 @@ WormDTO Worm::getWormDTO() const {
 }
 
 WeaponSightDTO Worm::getWeaponSightDTO() {
-    if(typeFocus == NO_FOCUS){
+    if(idWormCurrentPlay != idWorm){
         return WeaponSightDTO(NO_SHOW_SIGHT, 0, 0);
     }
     return armament.getWeaponSightDTO(this->body->GetWorldCenter(), directionLook);
 }
 
 ProjectilesDTO Worm::getProjectilesDTO() {
-    if(typeMov == ATTACKING_WITH_BAT){
+    if(typeMov == ATTACKING_WITH_BAT or idWormCurrentPlay != idWorm){
          std::vector<ProjectileDTO> vecProjectileDTO;
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);
     }
@@ -255,9 +255,12 @@ void Worm::activateFocus() {
 }
 
 void Worm::update() {
+    if(idWorm != idWormCurrentPlay){
+        return;
+    }
     armament.tryCleanProjectiles(aWorld);
     armament.updateTime(attacked); // update para las armas en standby que esperan a exploar hacemos q pase el tiempo para ellas.
-    if (this->isDestroyedBody() and not wasDestroyed) {     // Si el gusano fue destrouido lo destruimos del mundoo. Ademas no lo actualizamos;
+    if (this->isDestroyedBody() and not wasDestroyed) {
         aWorld->DestroyBody(this->getBody());
         this->wasDestroyed = true;
         return;
@@ -279,7 +282,7 @@ void Worm::update() {
 // weapons.- Attacks
 
 void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
-    if( not attacked and this->typeFocus == FOCUS){ // SOLO asigno un arma si no ataque y si tengo el focus.
+    if( not attacked and idWorm == idWormCurrentPlay){ // SOLO asigno un arma si no ataque y si tengo el focus.
         armament.assignWeapon(aTypeWeapon, this->directionLook);
     }
 }
@@ -306,7 +309,6 @@ void Worm::chargeWeaponWithVariablePower(){
 }
 
 void Worm::tryAttackVariablePower() {
-    // si entra aca es porque dejo de presionar space_bar y ademas tengo un arma con disparo de potencia variable.
     if(typeCharge == MANY_CHARGE){
         if(armament.getWeaponCurrent() == BAZOOKA){
             attackWithBazooka();
@@ -338,16 +340,15 @@ void Worm::attack(std::unique_ptr<CommandDTO> &aCommand) {
     } else if ( this->armament.getWeaponCurrentPtr()->hasVariablePower()){ // en un futuro pregunta si tiene un arma con potencia variable.
         this->chargeWeaponWithVariablePower();
         return;
-    } else if( this->armament.getWeaponCurrent() == BASEBALL_BAT){ // armas abajo sin potencia variable.
+    } else if( this->armament.getWeaponCurrent() == BASEBALL_BAT){
         this->attackWithBat();
-    } else if (this->armament.getWeaponCurrent() == TELEPORT){
+    } else if (this->armament.getWeaponCurrent() == TELEPORT){      //Si hace un teleport y no tepea bien igual cuenta como si hubiera atacado.
         this->teleportWorm(aCommand->getX(), aCommand->getY());
     } else if ( this->armament.getWeaponCurrent() == AIR_ATTACK){
         couldAttack = this->attackWithAirAttack(aCommand->getX());
     } else if (this->armament.getWeaponCurrent() == DYNAMITE_HOLDER){
         couldAttack = this->attackWithDynamiteHolder();
     }
-
     if(couldAttack){
         this->endAttack();
     }
@@ -406,7 +407,7 @@ void Worm::endTurn() {
 
 void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft, size_t idCurrentWorm) {
     this->idWormCurrentPlay = idCurrentWorm;
-    if(timeLeft <= 0 or this->idWorm != idCurrentWorm){ // no le pongo el and not wasDestroyed porque nunca sera el turno del worm destruido.
+    if(timeLeft <= 0 or this->idWorm != idWormCurrentPlay){ // no le pongo el and not wasDestroyed porque nunca sera el turno del worm destruido.
         return;
     }
 
@@ -450,7 +451,6 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_AIR_ATTACK ){
         this->assignWeapon(AIR_ATTACK);
     }
-
     // execute an attack of a weapon
     else if (aCommandDTO->getTypeCommand() == TypeCommand::FIRE_CMD){
         this->attack(aCommandDTO);
@@ -458,15 +458,13 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
         this->attack(aCommandDTO);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::AIR_ATTACK_POINT ){
         this->attack(aCommandDTO);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::COUNTDOWN){
-        this->waitTime = aCommandDTO->getX();
     }
 
 }
 
 bool Worm::thereAreProjectiles(){
     if (attacked and armament.weaponStandByLaunchesProjectiles()) {
-        return armament.thereAreProjectiles(); // pregunto si la arma en standBy (con la q dispare tiene algun projectil todavia).
+        return armament.thereAreProjectiles();
     }
     return false;
 }

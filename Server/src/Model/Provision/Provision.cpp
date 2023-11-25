@@ -9,7 +9,7 @@
 Provision::Provision(const float &positionX, const float &positionY, const TypeEffect &typeEffect,
                      const GameParameters &parameters) : GameObject(ENTITY_PROVISION), typeEffect(typeEffect), gameParameters(parameters) {
     position = std::make_pair(positionX, positionY);
-    animationIterations = 15;
+    animationIterations = gameParameters.getAnimationIterations();
 }
 
 void Provision::addToTheWorld(b2World *world) {
@@ -28,7 +28,7 @@ void Provision::addToTheWorld(b2World *world) {
     boxDefFixture.density = 1.0f;
     this->world = world;
     this->body->CreateFixture(&boxDefFixture);
-    animationIterations = 15;
+    animationIterations = gameParameters.getAnimationIterations();
 }
 
 void Provision::getProvisionDTO(std::vector<ProvisionDTO> &vecProvisionDTO) {
@@ -37,7 +37,7 @@ void Provision::getProvisionDTO(std::vector<ProvisionDTO> &vecProvisionDTO) {
                                               typeEffect, NO_CONTACT);
     if(this->isDestroyedBody() and animationIterations > 0  ) {
         aProvisionDTO.setTypeContact(CONTACT);
-        if(animationIterations == 15 ){
+        if(animationIterations == gameParameters.getAnimationIterations() ){
             aProvisionDTO.setTypeContact(CONTACT_SOUND);
         }
         vecProvisionDTO.push_back(aProvisionDTO);
@@ -50,10 +50,8 @@ void Provision::getProvisionDTO(std::vector<ProvisionDTO> &vecProvisionDTO) {
 void Provision::applyEffect(Worm *wormSelect) {
     if(typeEffect == MEDICAL_KIT){
         wormSelect->giveExtraHP(gameParameters.getProvisionExtraHP());
-        std::cout << "Worm  with giveExtraHP\n";
     } else if (typeEffect == MUNITIONS){
         wormSelect->giveExtraMunition(gameParameters.getProvisionExtraMunition());
-        std::cout << "Worm  with giveExtraMunition\n";
     } else if ( typeEffect == EXPLOSION){
         b2Vec2 impulseExplosion(gameParameters.getProvisionImpulseExplosionX(), gameParameters.getProvisionImpulseExplosionY());
         if(wormSelect->getDirection() == RIGHT){
@@ -62,13 +60,11 @@ void Provision::applyEffect(Worm *wormSelect) {
         wormSelect->getBody()->ApplyLinearImpulse( impulseExplosion, wormSelect->getBody()->GetWorldCenter(), true);
         float damageExplosion = gameParameters.getProvisionDamageExplosion();
         wormSelect->takeDamage(damageExplosion);
-        std::cout << "Worm  with explosion\n";
     }
-    // destroyed the provision
     this->destroyBody();
-    animationIterations = 15;
+    animationIterations = gameParameters.getAnimationIterations();
 }
 
 bool Provision::hasIterations() const{
-    return (this->animationIterations >0);
+    return (this->animationIterations > 0);
 }

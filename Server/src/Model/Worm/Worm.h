@@ -16,6 +16,7 @@
 #include "../Weapons/WeaponsWorm/Bazooka.h"
 #include "../../../../Common/DTO/CommandDTO.h"
 #define VALUE_INITIAL_ID 1000
+
 enum TypeJump{
     JUMP_BACKWARDS, JUMP_FORWARDS
 };
@@ -46,7 +47,7 @@ class Worm : public GameObject {
     size_t contactsWithWorms;
     bool attacked;
     size_t iterationsForBatAttack;
-    std::pair<float, float> positionInAir; // para que el gusano sufra daño en caidas mayores a 2m.
+    std::pair<float, float> positionInAir;
     TypeCharge typeCharge;
     float hpInitialTurn;
     bool wasDestroyed;
