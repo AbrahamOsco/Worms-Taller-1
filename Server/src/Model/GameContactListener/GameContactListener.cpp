@@ -50,6 +50,7 @@ void wormCollidesWithWater(GameObject* worm, GameObject* water, GameParameters *
 void waterCollidesWithWorm(GameObject* water, GameObject* worm, GameParameters *gameParameters){
     wormCollidesWithWater(worm, water, gameParameters);
 }
+
 void wormCollidesWithEdege(GameObject* worm, GameObject* edge, GameParameters *gameParameters){
     std::cout << "Worm collisiona con el edge\n";
     Worm* wormSelect = (Worm*) worm;

@@ -102,7 +102,7 @@ ProjectilesDTO Armament::getProjectilesDTO(const bool &attackedWorm) {
     armament.at(weaponOnStandBy)->getProjectilesDTO(vecProjectileDTO);
     TypeShowProjectiles typeShowProj = NO_SHOW_PROJECTILES;
     if ( not vecProjectileDTO.empty()) {
-        std::cout << "Se Obtiene q existe almenos un projectil\n";
+                   std::cout << "Se Obtiene q existe almenos un projectil\n";
         typeShowProj = SHOW_PROJECTILES;
     }
     return ProjectilesDTO(typeShowProj, vecProjectileDTO);

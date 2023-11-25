@@ -49,8 +49,10 @@ bool Mortar::launchesProjectiles() {
 
 bool Mortar::thereAreProjectiles() {
     if(projectil != nullptr){
-        float smallImpulse = 0.01f;
-        this->projectil->getBody()->ApplyLinearImpulse(b2Vec2(0.0f, smallImpulse), projectil->getBody()->GetWorldCenter(), true);
+        MortarMainProjectile* mortarMain = (MortarMainProjectile*) projectil.get();
+        if(mortarMain->hasFragment()){
+            mortarMain->awakenFragments();
+        }
     }
     return (projectil != nullptr);
 }
@@ -98,4 +100,5 @@ void Mortar::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const D
     projectil->addToTheWorld(world, p2, impulseMuniBazooka, windValue);
     impulseWeapon = std::make_pair(gameParameters.BazookaGetImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
     explosionIterations = 15;
+    this->munition--;
 }

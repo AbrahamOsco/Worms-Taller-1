@@ -26,6 +26,8 @@ public:
     void tryCleanProjectiles();
 
     void getFragmentProjectilDTO(std::vector<ProjectileDTO> &vecProjectileDTO);
+
+    void awakenFragments();
 };
 
 

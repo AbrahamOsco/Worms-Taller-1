@@ -26,6 +26,7 @@ void ProjectileMortar::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const b
     projMortarShape.m_radius = 0.1f;
 
     b2FixtureDef defFixProjMortar;
+    defFixProjMortar.friction = 0.2f;
     defFixProjMortar.shape = &projMortarShape;
     defFixProjMortar.density = 1.0f; // ver el tema del aire luego.
     this->body->CreateFixture(&defFixProjMortar);

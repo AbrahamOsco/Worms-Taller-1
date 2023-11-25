@@ -269,8 +269,7 @@ void Worm::update() {
         aWorld->DestroyBody(this->getBody());
         this->wasDestroyed = true;
         return;
-    }
-    else if (this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and this->typeFocus == FOCUS and not wasDestroyed) {
+    } else if (this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and this->typeFocus == FOCUS and not wasDestroyed) {
         if (this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack > 0) {
             std::cout << "Atacand con el bate\n";
             iterationsForBatAttack--;
@@ -372,8 +371,8 @@ void Worm::attackWithBat(){
 void Worm::attackWithBazooka() {
     Bazooka *bazooka = (Bazooka *) armament.getWeaponCurrentPtr();
     bazooka->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook, typeFocus);
-    this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
-    waitingToGetFocus = true;
+    //this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
+    //   waitingToGetFocus = true;
 }
 
 void Worm::teleportWorm(const int &posXTeleport, const int &posYTeleport){

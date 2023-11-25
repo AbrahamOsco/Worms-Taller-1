@@ -76,3 +76,18 @@ void MortarMainProjectile::getFragmentProjectilDTO(std::vector<ProjectileDTO> &v
 void MortarMainProjectile::searchWormAndCollide(const b2Vec2 &projectilePosition) {
     ProjectileMortar::searchWormAndCollide(projectilePosition);
 }
+
+void MortarMainProjectile::awakenFragments() {
+    size_t fragmentsNull = 0;
+    for(auto& aFragment : fragments){
+        if(aFragment == NULL){
+            fragmentsNull++;
+        }
+    }
+    for(auto& aFragment : fragments){
+        if(aFragment != nullptr and fragmentsNull == 5){
+            float impulseToEndTurn = -1.0f;
+            aFragment->getBody()->ApplyLinearImpulse(b2Vec2(0.5, impulseToEndTurn), aFragment->getBody()->GetWorldCenter(), true);
+        }
+    }
+}
