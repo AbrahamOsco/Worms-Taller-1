@@ -281,6 +281,9 @@ void Worm::update() {
 // weapons.- Attacks
 
 void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
+    if(typeFocus == NO_FOCUS){
+        this->typeFocus = FOCUS;
+    }
     if( not attacked and idWorm == idWormCurrentPlay){
         armament.assignWeapon(aTypeWeapon, this->directionLook);
     }
