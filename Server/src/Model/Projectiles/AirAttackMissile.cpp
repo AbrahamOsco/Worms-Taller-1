@@ -9,7 +9,7 @@
 AirAttackMissile::AirAttackMissile(const GameParameters &gameParameters, const TypeFocus& typeFocus) : GameObject(ENTITY_AIR_ATTACK_MISSILE),
                     gameParameters(gameParameters), typeFocus(typeFocus),
                     explodable(gameParameters.airAttackMissileGetDamage(), gameParameters.airAttackMissleGetMaxRadio() , gameParameters.airAttackMissileImpulseMax() ){
-    explosionIterations = 15;
+    explosionIterations = gameParameters.getAnimationIterations();
 }
 
 void AirAttackMissile::addToTheWorld(b2World *aWorld, const b2Vec2 &positionMissile, const float &windValue) {
@@ -30,7 +30,7 @@ void AirAttackMissile::addToTheWorld(b2World *aWorld, const b2Vec2 &positionMiss
     b2Vec2 vectorWind(windValueSelect, 0.0f);
     this->body->ApplyForceToCenter(vectorWind, true); // Aplicamos el vector del viento en todo momento al projectil de la bazooka
     this->aWorld = aWorld;
-    explosionIterations = 15;
+    explosionIterations = gameParameters.getAnimationIterations();
 }
 
 void AirAttackMissile::searchWormAndCollide(const b2Vec2 &projectilePosition){

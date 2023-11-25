@@ -272,7 +272,6 @@ void Worm::update() {
         return;
     } else if (this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and this->typeFocus == FOCUS and not wasDestroyed) {
         if (this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack > 0) {
-            std::cout << "Atacand con el bate\n";
             iterationsForBatAttack--;
         } else {
             this->typeMov = STANDING;
@@ -291,7 +290,7 @@ void Worm::update() {
 void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
     if( not attacked and this->typeFocus == FOCUS){ // SOLO asigno un arma si no ataque y si tengo el focus.
         armament.assignWeapon(aTypeWeapon, this->directionLook);
-        typeFocus= NO_FOCUS;
+        typeFocus = NO_FOCUS;
         waitingToGetFocus = true;
     }
 }
@@ -313,7 +312,6 @@ void Worm::chargeWeaponWithVariablePower(){
         reachMaxImpulse = this->armament.getWeaponCurrentPtr()->increaseImpulse();
     }
     if(reachMaxImpulse){
-        std::cout << "Llege al maximo impulso \n";
         tryAttackVariablePower();
     }
 }
@@ -324,18 +322,24 @@ void Worm::tryAttackVariablePower() {
         if(armament.getWeaponCurrent() == BAZOOKA){
             attackWithBazooka();
         } else if (armament.isAGrenade()){
-            armament.attackWithGrenade(this->getBody()->GetWorldCenter(), directionLook, typeFocus, waitTime, aWorld);
-            this->typeFocus = NO_FOCUS;
-            waitingToGetFocus = true;
+            attackWithGrenade();
         } else if (armament.getWeaponCurrent() == MORTAR){
-            Mortar *mortar = (Mortar*) armament.getWeaponCurrentPtr();
-            mortar->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook, typeFocus);
-            this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
-            waitingToGetFocus = true;
+            attackWithMortar();
         }
         this->endAttack();
+        this->typeFocus = NO_FOCUS;
+        waitingToGetFocus = true;
         this->typeCharge = NONE_CHARGE;
     }
+}
+
+void Worm::attackWithGrenade(){
+    armament.attackWithGrenade(this->getBody()->GetWorldCenter(), directionLook, typeFocus, waitTime, aWorld);
+}
+
+void Worm::attackWithMortar(){
+    Mortar *mortar = (Mortar*) armament.getWeaponCurrentPtr();
+    mortar->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook, typeFocus);
 }
 
 void Worm::attack(std::unique_ptr<CommandDTO> &aCommand) {
@@ -349,8 +353,6 @@ void Worm::attack(std::unique_ptr<CommandDTO> &aCommand) {
         this->attackWithBat();
     } else if (this->armament.getWeaponCurrent() == TELEPORT){
         this->teleportWorm(aCommand->getX(), aCommand->getY());
-        this->waitingToGetFocus = false;
-        this->typeFocus = FOCUS;
     } else if ( this->armament.getWeaponCurrent() == AIR_ATTACK){
         couldAttack = this->attackWithAirAttack(aCommand->getX());
     } else if (this->armament.getWeaponCurrent() == DYNAMITE_HOLDER){
@@ -360,8 +362,8 @@ void Worm::attack(std::unique_ptr<CommandDTO> &aCommand) {
     if(couldAttack){
         this->endAttack();
     }
-
 }
+
 
 // WEAPONS without potencia variable
 void Worm::attackWithBat(){
@@ -373,13 +375,13 @@ void Worm::attackWithBat(){
 void Worm::attackWithBazooka() {
     Bazooka *bazooka = (Bazooka *) armament.getWeaponCurrentPtr();
     bazooka->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook, typeFocus);
-    this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
-    waitingToGetFocus = true;
 }
 
 void Worm::teleportWorm(const int &posXTeleport, const int &posYTeleport){
     Teleport* teleport = (Teleport*) this->armament.getWeaponCurrentPtr();
     teleport->teleportIn(getBody(), posXTeleport, posYTeleport, aWorld);
+    this->waitingToGetFocus = false;
+    this->typeFocus = FOCUS;
 }
 
 bool Worm::attackWithAirAttack(const int &posXAttack) {
@@ -416,6 +418,7 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     if(timeLeft <= 0 or this->idWorm != idCurrentWorm){ // no le pongo el and not wasDestroyed porque nunca sera el turno del worm destruido.
         return;
     }
+
     std::cout << "Comando recibido :" << aCommandDTO->getTypeCommand() << "\n";
     // movs, up/down angles, jumps
     if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
@@ -431,6 +434,7 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_FORWARD_CMD){
         this->jump(JUMP_FORWARDS);
     }
+
     // select weapons
     else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BAT){
         this->assignWeapon(BASEBALL_BAT); // BASEBALL_BAT
@@ -454,7 +458,7 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
         this->assignWeapon(AIR_ATTACK);
     }
 
-        // execute an attack of a weapon
+    // execute an attack of a weapon
     else if (aCommandDTO->getTypeCommand() == TypeCommand::FIRE_CMD){
         this->attack(aCommandDTO);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::TELEPORT_MOVE){
@@ -464,6 +468,7 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::COUNTDOWN){
         this->waitTime = aCommandDTO->getX();
     }
+
 }
 
 bool Worm::thereAreProjectiles(){

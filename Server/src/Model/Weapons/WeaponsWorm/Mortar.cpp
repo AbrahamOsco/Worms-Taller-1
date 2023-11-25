@@ -8,7 +8,7 @@
 
 Mortar::Mortar(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, const TypeMunition &aTypeMunition,const size_t &aMunition,
                const GameParameters &gameParameters) : Weapon(aTypeWeapon, damagePrincipal, aTypeMunition, aMunition,gameParameters),
-                                                       weaponSight(2.0f, 0.0f, gameParameters) {
+                                                       weaponSight(gameParameters.mortarGetRayLength(), gameParameters.getWeaponAngleInitial(), gameParameters) {
     impulseWeapon = std::make_pair(gameParameters.BazookaGetImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
     maxImpulseWeapon = std::make_pair(gameParameters.getBazookaMaxImpulseX(), gameParameters.getBazookaMaxImpulseY());
     projectil = nullptr;

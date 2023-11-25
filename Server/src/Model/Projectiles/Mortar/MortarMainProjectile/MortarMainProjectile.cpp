@@ -8,8 +8,14 @@
 
 MortarMainProjectile::MortarMainProjectile(const GameParameters &gameParameters, const TypeFocus &typeFocus)
         : ProjectileMortar(gameParameters, typeFocus) {
-    fragmentImpulses = {b2Vec2(-0.1f,0.1f), b2Vec2(-0.137f,0.027f), b2Vec2(0.137f,0.027f), b2Vec2(0.1f,0.1f), b2Vec2(0.027f,0.137f), b2Vec2(-0.027f,0.137f)};
-    this->explodable = Explodable(50.0f, 2, 1.0f);
+    fragmentImpulses = {b2Vec2(-gameParameters.fragmentGetMidDist(), gameParameters.fragmentGetMidDist()),
+                        b2Vec2(-gameParameters.fragmentGetLongDist(), gameParameters.fragmentGetShortDist()),
+                        b2Vec2(gameParameters.fragmentGetLongDist(), gameParameters.fragmentGetShortDist()),
+                        b2Vec2(gameParameters.fragmentGetMidDist(), gameParameters.fragmentGetMidDist()),
+                        b2Vec2(gameParameters.fragmentGetShortDist(), gameParameters.fragmentGetLongDist()),
+                        b2Vec2(-gameParameters.fragmentGetShortDist(), gameParameters.fragmentGetLongDist())};
+
+    this->explodable = Explodable(gameParameters.mortarGetMainDamage(), gameParameters.mortarGetMaxRadio(), gameParameters.mortarGetMaxImpulse());
     wasThrowFragments = false;
 }
 
@@ -60,14 +66,11 @@ void MortarMainProjectile::getFragmentProjectilDTO(std::vector<ProjectileDTO> &v
             aFragment->getProjectileDTO(vecProjectileDTO);
             ProjectileDTO* projectileDto = &vecProjectileDTO.back(); // saco unar referencia del ultimo q pushee para setearle el typeEXplode
             projectileDto->setTypeExplode(EXPLODE);
-            if(aFragment->getNumberIterations() == 15.0f){
+            if(aFragment->getNumberIterations() == gameParameters.getAnimationIterations()){
                 projectileDto->setTypeExplode(EXPLODE_SOUND);
             }
             aFragment->removeAIteration();
         } else if (aFragment != nullptr and not aFragment->isDestroyedBody()){
-            this->body->SetAwake(true);
-            float smallImpulse = 0.001f;
-            this->body->ApplyLinearImpulse(b2Vec2(0.0f, -smallImpulse), body->GetWorldCenter(), true);
             aFragment->getProjectileDTO(vecProjectileDTO);
         }
     }

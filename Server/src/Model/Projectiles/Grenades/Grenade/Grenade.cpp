@@ -9,11 +9,12 @@ Grenade::Grenade(GameParameters gameParameters, const int &waitTime, const TypeF
          typeFocus(typeFocus), explodable(0.0f, 0.0f, 0.0f){
     exploded = false;
     collided = false;
-    explosionIterations = 15;
+    explosionIterations = gameParameters.getAnimationIterations();
+    restitution = 0.0;
 }
 
 void Grenade::addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impulseGrenade){
-    explosionIterations = 15;
+    explosionIterations = gameParameters.getAnimationIterations();
     b2BodyDef grenadeDef;
     grenadeDef.type = b2_dynamicBody;
     grenadeDef.bullet = true;
@@ -22,12 +23,12 @@ void Grenade::addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impul
     grenadeDef.userData.pointer = (uintptr_t) this;
     this->body = aWorld->CreateBody(&grenadeDef);
     b2CircleShape grenadeForm;
-    grenadeForm.m_p.Set(0.0f, 0.0f); // offset de la posicion inicial va en (0,1) e 1 por q el radio de 1m empuja en 1 al origen de la circuferencia..
+    grenadeForm.m_p.Set(0.0f, 0.0f);
     grenadeForm.m_radius = 0.1f;
 
     b2FixtureDef defFixGrenade;
     defFixGrenade.shape = &grenadeForm;
-    defFixGrenade.density = 1.0f; // ver el tema del aire luego.
+    defFixGrenade.density = 1.0f;
     defFixGrenade.restitution = this->restitution;
     this->body->CreateFixture(&defFixGrenade);
     body->ApplyLinearImpulse( impulseGrenade, body->GetWorldCenter(), true);

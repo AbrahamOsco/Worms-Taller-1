@@ -9,12 +9,9 @@
 #include "../../../Common/DTO/SnapShot.h"
 #include "../../../Common/rateController/RateController.h"
 #include "../Model/TimeTurn/TimeTurn.h"
-
-#define VELOCITY_ITERATIONS 6
-#define POSITION_TIERATIONS 2
 #define SUCCESS 1
 #define ERROR 2
-#define GRAVEDAD -10.0f
+
 
 Engine::Engine(const ResponseInitialStateDTO &response) : nameGameRoom( response.getGameName()) , nameScenario(response.getScenarioName()),
                                                           numberPlayerReq(response.getPlayerRequired()), currentPlayers(0), world(b2Vec2(0.0f, gameParameters.getGravity())),

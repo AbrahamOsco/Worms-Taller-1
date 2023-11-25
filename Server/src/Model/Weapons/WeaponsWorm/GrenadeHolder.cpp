@@ -11,7 +11,7 @@
 
 GrenadeHolder::GrenadeHolder(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, const TypeMunition &aTypeMunition, const size_t &aMunition,
             const GameParameters &gameParameters) : Weapon(aTypeWeapon, damagePrincipal, aTypeMunition, aMunition, gameParameters),
-                                                    weaponSight(gameParameters.grenadeGetRayLength(), 0.0f, gameParameters) {
+                                                    weaponSight(gameParameters.grenadeGetRayLength(), gameParameters.getWeaponAngleInitial(), gameParameters) {
     impulseWeapon = std::make_pair(gameParameters.grenadeGetImpulseXInitial(), gameParameters.grenadeGetImpulseYInitial());
     maxImpulseWeapon = std::make_pair(gameParameters.grenadeGetMaxImpulseX(), gameParameters.grenadeGetMaxImpulseY());
     explosionIterations = gameParameters.getAnimationIterations();

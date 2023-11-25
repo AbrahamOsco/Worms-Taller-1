@@ -25,10 +25,12 @@ Armament::Armament(const size_t &idPlayer, const GameParameters& gameParameters)
                                                                       gameParameters.airAttackGetMunitionInitial(), gameParameters));
     armament.emplace(DYNAMITE_HOLDER,std::make_unique<DynamiteHolder>(DYNAMITE_HOLDER, gameParameters.dynamiteGetMainDamage(), NO_INFINITE, gameParameters.dynamiteGetMunitionInitial(), gameParameters) );
     armament.emplace(GREEN_GRENADE, std::make_unique<GrenadeHolder>(GREEN_GRENADE, gameParameters.greenGrenadeMainDamage(), INFINITE, gameParameters.greenGrenadeMunitionInitial(), gameParameters));
-    armament.emplace(BANANA, std::make_unique<GrenadeHolder>(BANANA, 70.0f, INFINITE, 100, gameParameters));
+    armament.emplace(BANANA, std::make_unique<GrenadeHolder>(BANANA, gameParameters.bananaGetMainDamage(), INFINITE, gameParameters.bananaGetMunitionInitial(), gameParameters));
     armament.emplace(HOLY_GRENADE, std::make_unique<GrenadeHolder>(HOLY_GRENADE, gameParameters.holyGrenadeGetMainDamage(), NO_INFINITE, gameParameters.holyGrenadeGetMunitionInitial(), gameParameters));
-    armament.emplace(RED_GRENADE, std::make_unique<GrenadeHolder>(RED_GRENADE, 30.0f, NO_INFINITE, 10, gameParameters));
-    armament.emplace(MORTAR,std::make_unique<Mortar>(MORTAR, 30.0f, NO_INFINITE, 10, gameParameters) );
+    armament.emplace(RED_GRENADE, std::make_unique<GrenadeHolder>(RED_GRENADE, gameParameters.redGrenadeGetMainDamage(), NO_INFINITE,
+                                                                  gameParameters.redGrenadeGetMunitionInitial(), gameParameters));
+    armament.emplace(MORTAR,std::make_unique<Mortar>(MORTAR, gameParameters.mortarGetMainDamage(), NO_INFINITE,
+                                                     gameParameters.mortartGetMunitionInitial(), gameParameters) );
 }
 
 bool Armament::isUnarmed() const{

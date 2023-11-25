@@ -8,7 +8,6 @@
 
 GreenGrenade::GreenGrenade(const GameParameters &gameParameters, const int& waitTime, const TypeFocus& typeFocus) : Grenade(gameParameters, waitTime, typeFocus) {
     fixedRotation = true;
-    restitution = 0.0f;
     this->explodable = Explodable(gameParameters.greenGrenadeMainDamage(), gameParameters.greenGrenadeMaxRadio(), gameParameters.greenGrenadeMaxImpulse());
 }
 

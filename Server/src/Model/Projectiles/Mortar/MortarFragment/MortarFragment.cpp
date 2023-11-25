@@ -6,7 +6,7 @@
 
 MortarFragment::MortarFragment(const GameParameters &gameParameters, const TypeFocus &typeFocus) : ProjectileMortar(
         gameParameters, typeFocus){
-    this->explodable = Explodable(10.0f, 2.0f, 1.0f);
+    this->explodable = Explodable(gameParameters.mortarFragmentGetMainDamage(), gameParameters.mortarFragmentGetMaxRadio(), gameParameters.mortarFragmentGetMaxImpulse());
 }
 
 void MortarFragment::getProjectileDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {

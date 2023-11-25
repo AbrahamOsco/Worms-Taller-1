@@ -8,17 +8,23 @@
 
 RedGrenade::RedGrenade(const GameParameters &gameParameters, const int& waitTime, const TypeFocus& typeFocus)
         : Grenade(gameParameters, waitTime, typeFocus){
-    fragmentImpulses = {b2Vec2(-0.1f,0.1f), b2Vec2(-0.137f,0.027f), b2Vec2(0.137f,0.027f), b2Vec2(0.1f,0.1f), b2Vec2(0.027f,0.137f), b2Vec2(-0.027f,0.137f)};
+    fragmentImpulses = {b2Vec2(-gameParameters.fragmentGetMidDist(), gameParameters.fragmentGetMidDist()),
+                        b2Vec2(-gameParameters.fragmentGetLongDist(), gameParameters.fragmentGetShortDist()),
+                        b2Vec2(gameParameters.fragmentGetLongDist(), gameParameters.fragmentGetShortDist()),
+                        b2Vec2(gameParameters.fragmentGetMidDist(), gameParameters.fragmentGetMidDist()),
+                        b2Vec2(gameParameters.fragmentGetShortDist(), gameParameters.fragmentGetLongDist()),
+                        b2Vec2(-gameParameters.fragmentGetShortDist(), gameParameters.fragmentGetLongDist())};
+
     fixedRotation = true;
-    restitution = 0.0f;
-    this->explodable = Explodable(30.0f, 2.0f, 1.0f);
+    this->explodable = Explodable(gameParameters.redGrenadeGetMainDamage(), gameParameters.redGrenadeGetMaxRadio(), gameParameters.redGrenadeGetMaxImpulse());
 }
+
+
 
 void RedGrenade::throwFragments(){
     for (auto & impulse : fragmentImpulses) {
         std::unique_ptr<Grenade> grenade{new FragmentGrenade(gameParameters, 0, typeFocus)};
         grenade->addToTheWorld(body->GetWorld(), body->GetWorldCenter() + impulse, impulse);
-        std::cout << "Lanzando grenade fragment en x: " << (body->GetWorldCenter().x + impulse.x)  << "  y  :" << (body->GetWorldCenter().y + impulse.y) << "\n";
         fragmentGrenades.push_back(std::move(grenade));
     }
 }
@@ -52,7 +58,7 @@ void RedGrenade::getFragmentProjectilDTO(std::vector<ProjectileDTO> &vecProjecti
             aFragment->getProjectileDTO(vecProjectileDTO);
             ProjectileDTO* projectileDto = &vecProjectileDTO.back(); // saco unar referencia del ultimo q pushee para setearle el typeEXplode
             projectileDto->setTypeExplode(EXPLODE);
-            if(aFragment->getNumberIterations() == 15.0f){
+            if(aFragment->getNumberIterations() == gameParameters.getAnimationIterations()){
                 projectileDto->setTypeExplode(EXPLODE_SOUND);
             }
             aFragment->removeAIteration();

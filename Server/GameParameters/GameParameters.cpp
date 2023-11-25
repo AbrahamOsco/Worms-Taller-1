@@ -121,7 +121,147 @@ GameParameters::GameParameters() {
     parameters["HOLY_GRENADE_MAX_RADIO"] = nodeInitial["HOLY_GRENADE_MAX_RADIO"].as<float>();
     parameters["HOLY_GRENADE_MAX_IMPULSE"] = nodeInitial["HOLY_GRENADE_MAX_IMPULSE"].as<float>();
 
+
+    parameters["BANANA_GRENADE_DAMAGE_MAIN"] = nodeInitial["BANANA_GRENADE_DAMAGE_MAIN"].as<float>();
+    parameters["BANANA_GRENADE_MUNITION_INITIAL"] = nodeInitial["BANANA_GRENADE_MUNITION_INITIAL"].as<float>();
+    parameters["BANANA_GRENADE_MAX_RADIO"] = nodeInitial["BANANA_GRENADE_MAX_RADIO"].as<float>();
+    parameters["BANANA_GRENADE_MAX_IMPULSE"] = nodeInitial["BANANA_GRENADE_MAX_IMPULSE"].as<float>();
+    parameters["BANANA_RESTITUION"] = nodeInitial["BANANA_RESTITUION"].as<float>();
+
+
+    parameters["RED_GRENADE_DAMAGE_MAIN"] = nodeInitial["RED_GRENADE_DAMAGE_MAIN"].as<float>();
+    parameters["RED_GRENADE_MUNITION_INITIAL"] = nodeInitial["RED_GRENADE_MUNITION_INITIAL"].as<float>();
+    parameters["RED_GRENADE_MAX_RADIO"] = nodeInitial["RED_GRENADE_MAX_RADIO"].as<float>();
+    parameters["RED_GRENADE_MAX_IMPULSE"] = nodeInitial["RED_GRENADE_MAX_IMPULSE"].as<float>();
+
+    parameters["RED_GRENADE_FRAGMENT_DAMAGE_MAIN"] = nodeInitial["RED_GRENADE_FRAGMENT_DAMAGE_MAIN"].as<float>();
+    parameters["RED_GRENADE_FRAGMENT_MAX_RADIO"] = nodeInitial["RED_GRENADE_FRAGMENT_MAX_RADIO"].as<float>();
+    parameters["RED_GRENADE_FRAGMENT_MAX_IMPULSE"] = nodeInitial["RED_GRENADE_FRAGMENT_MAX_IMPULSE"].as<float>();
+
+
+
+    parameters["MORTAR_DAMAGE_MAIN"] = nodeInitial["MORTAR_DAMAGE_MAIN"].as<float>();
+    parameters["MORTAR_MUNITION_INITIAL"] = nodeInitial["MORTAR_MUNITION_INITIAL"].as<float>();
+    parameters["MORTAR_MAX_RADIO"] = nodeInitial["MORTAR_MAX_RADIO"].as<float>();
+    parameters["MORTAR_MAX_IMPULSE"] = nodeInitial["MORTAR_MAX_IMPULSE"].as<float>();
+    parameters["MORTAR_RAY_LENGTH"] = nodeInitial["MORTAR_RAY_LENGTH"].as<float>();
+
+
+    parameters["MORTAR_FRAGMENT_DAMAGE_MAIN"] = nodeInitial["MORTAR_FRAGMENT_DAMAGE_MAIN"].as<float>();
+    parameters["MORTAR_FRAGMENT_MAX_RADIO"] = nodeInitial["MORTAR_FRAGMENT_MAX_RADIO"].as<float>();
+    parameters["MORTAR_FRAGMENT_MAX_IMPULSE"] = nodeInitial["MORTAR_FRAGMENT_MAX_IMPULSE"].as<float>();
+
+
+    parameters["FRAGMENT_LONG_DISTANCE"] = nodeInitial["FRAGMENT_LONG_DISTANCE"].as<float>();
+    parameters["FRAGMENT_MIDDLE_DISTANCE"] = nodeInitial["FRAGMENT_MIDDLE_DISTANCE"].as<float>();
+    parameters["FRAGMENT_SHORT_DISTANCE"] = nodeInitial["FRAGMENT_SHORT_DISTANCE"].as<float>();
+
 }
+
+float GameParameters::fragmentGetLongDist() const{
+    return this->parameters.at("FRAGMENT_LONG_DISTANCE");
+}
+
+float GameParameters::fragmentGetMidDist() const{
+    return this->parameters.at("FRAGMENT_MIDDLE_DISTANCE");
+}
+
+float GameParameters::fragmentGetShortDist() const{
+    return this->parameters.at("FRAGMENT_SHORT_DISTANCE");
+}
+
+
+// --------------
+
+
+float GameParameters::mortarGetMainDamage() const{
+    return this->parameters.at("MORTAR_DAMAGE_MAIN");
+}
+
+float GameParameters::mortartGetMunitionInitial() const{
+    return this->parameters.at("MORTAR_MUNITION_INITIAL");
+}
+
+float GameParameters::mortarGetMaxRadio() const{
+    return this->parameters.at("MORTAR_MAX_RADIO");
+}
+
+float GameParameters::mortarGetMaxImpulse() const{
+    return this->parameters.at("MORTAR_MAX_IMPULSE");
+}
+
+float GameParameters::mortarGetRayLength() const{
+    return this->parameters.at("MORTAR_RAY_LENGTH");
+}
+
+float GameParameters::mortarFragmentGetMainDamage() const{
+    return this->parameters.at("MORTAR_FRAGMENT_DAMAGE_MAIN");
+}
+
+float GameParameters::mortarFragmentGetMaxRadio() const{
+    return this->parameters.at("MORTAR_FRAGMENT_MAX_RADIO");
+}
+
+float GameParameters::mortarFragmentGetMaxImpulse() const{
+    return this->parameters.at("MORTAR_FRAGMENT_MAX_IMPULSE");
+}
+
+
+// -------------------
+
+float GameParameters::redGrenadeGetMainDamage() const{
+    return this->parameters.at("RED_GRENADE_DAMAGE_MAIN");
+}
+
+float GameParameters::redGrenadeGetMunitionInitial() const{
+    return this->parameters.at("RED_GRENADE_MUNITION_INITIAL");
+}
+
+float GameParameters::redGrenadeGetMaxRadio() const{
+    return this->parameters.at("RED_GRENADE_MAX_RADIO");
+}
+
+float GameParameters::redGrenadeGetMaxImpulse() const{
+    return this->parameters.at("RED_GRENADE_MAX_IMPULSE");
+}
+
+
+float GameParameters::redGrenadeFragmentGetMainDamage() const{
+    return this->parameters.at("RED_GRENADE_FRAGMENT_DAMAGE_MAIN");
+}
+
+float GameParameters::redGrenadeFragmentGetMaxRadio() const{
+    return this->parameters.at("RED_GRENADE_FRAGMENT_MAX_RADIO");
+}
+
+float GameParameters::redGrenadeFragmentGetMaxImpulse() const{
+    return this->parameters.at("RED_GRENADE_FRAGMENT_MAX_IMPULSE");
+}
+
+
+
+// -------------------
+float GameParameters::bananaGetMainDamage() const{
+    return this->parameters.at("BANANA_GRENADE_DAMAGE_MAIN");
+}
+
+float GameParameters::bananaGetMunitionInitial() const{
+    return this->parameters.at("BANANA_GRENADE_MUNITION_INITIAL");
+}
+
+float GameParameters::bananaGetMaxRadio() const{
+    return this->parameters.at("BANANA_GRENADE_MAX_RADIO");
+}
+
+float GameParameters::bananaGetMaxImpulse() const{
+    return this->parameters.at("BANANA_GRENADE_MAX_IMPULSE");
+}
+
+float GameParameters::bananaGetRestitution() const{
+    return this->parameters.at("BANANA_RESTITUION");
+}
+
+// ----------
 
 float GameParameters::holyGrenadeGetMainDamage() const{
     return this->parameters.at("HOLY_GRENADE_DAMAGE_MAIN");

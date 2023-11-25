@@ -150,6 +150,12 @@ public:
     void setHP(const float &aNewHP);
 
     void setWaitTime(const int &aWaitTIme);
+
+    void attackWithGrenade();
+
+    void attackWithMortar();
+
+
 };
 
 

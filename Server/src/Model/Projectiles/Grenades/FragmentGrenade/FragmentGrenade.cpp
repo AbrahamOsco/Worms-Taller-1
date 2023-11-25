@@ -7,8 +7,9 @@
 FragmentGrenade::FragmentGrenade(const GameParameters &gameParameters, const int &waitTime,
                                  const TypeFocus &typeFocus) : Grenade(gameParameters, waitTime, typeFocus) {
     fixedRotation = true;
-    restitution = 0.0f;
-    this->explodable = Explodable(10.0f, 3.0f, 0.5f);
+    this->explodable = Explodable(gameParameters.redGrenadeFragmentGetMainDamage(),
+                                  gameParameters.redGrenadeFragmentGetMaxRadio(),
+                                  gameParameters.redGrenadeFragmentGetMaxImpulse());
 }
 
 

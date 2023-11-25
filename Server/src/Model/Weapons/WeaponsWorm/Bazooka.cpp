@@ -12,7 +12,7 @@ Bazooka::Bazooka(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, co
     impulseWeapon = std::make_pair(gameParameters.BazookaGetImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
     maxImpulseWeapon = std::make_pair(gameParameters.getBazookaMaxImpulseX(), gameParameters.getBazookaMaxImpulseY());
     projectil = nullptr;
-    explosionIterations = 15;
+    explosionIterations = gameParameters.getAnimationIterations();
 }
 
 void Bazooka::increaseAngle() {
@@ -50,7 +50,7 @@ void Bazooka::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const 
     projectil->addToTheWorld(world, p2, impulseMuniBazooka, windValue);
     // reseeteamos los impulsos luego de atacar.
     impulseWeapon = std::make_pair(gameParameters.BazookaGetImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
-    explosionIterations = 15;
+    explosionIterations = gameParameters.getAnimationIterations();
 }
 
 
@@ -62,7 +62,7 @@ void Bazooka::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
     if( projectil!= nullptr and projectil->isDestroyedBody() and explosionIterations > 0){ // si entra aca es porque atacamos con la bazooka y este exploto solo entraremos 1 vez aca.
         ProjectileDTO projectileDto = projectil->getProjectilDTO();
         projectileDto.setTypeExplode(EXPLODE);
-        if (explosionIterations == 15) {
+        if (explosionIterations == gameParameters.getAnimationIterations()) {
             projectileDto.setTypeExplode(EXPLODE_SOUND);
         }
         vecProjectileDTO.push_back(projectileDto);

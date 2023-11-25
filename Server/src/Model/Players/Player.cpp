@@ -31,7 +31,6 @@ std::vector<WormDTO> Player::getWormsDTO() const {
 }
 
 void Player::assignWorm(const int &idWorm, const std::pair<float, float> &positionInitialWorm) {
-    // agregamos al diccionario la calve el id de worm y el valor el worm con su position inicial en x,y.
     worms.emplace(idWorm, std::make_unique<Worm>(idWorm, idPlayer, positionInitialWorm.first, positionInitialWorm.second, gameParameters, armament)) ;
 }
 
@@ -74,7 +73,6 @@ void Player::update() {
     }
 }
 
-// lo enviamos no importa si el player perdio o no,  tiene info que se debe mostrar hasta el final..
 PlayerDTO Player::getPlayerDTO(const size_t &idCurrentPlayer) const {
     TurnType aTurnType = TurnType::NOT_IS_MY_TURN;
     if(this->idPlayer == idCurrentPlayer ){

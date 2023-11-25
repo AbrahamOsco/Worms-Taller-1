@@ -8,8 +8,7 @@
 HolyGrenade::HolyGrenade(const GameParameters &gameParameters, const int &waitTime, const TypeFocus &typeFocus)
             : Grenade(gameParameters, waitTime, typeFocus){
     fixedRotation = true;
-    restitution = 0.0f;
-    this->explodable = Explodable(110.0f, 8.0f, 1.5f);
+    this->explodable = Explodable(gameParameters.holyGrenadeGetMainDamage(), gameParameters.holyGrenadeGetMaxRadio(), gameParameters.holyGrenadeGetMaxImpulse());
 }
 
 void HolyGrenade::getProjectileDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {

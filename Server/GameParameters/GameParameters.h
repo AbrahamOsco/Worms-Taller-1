@@ -191,10 +191,56 @@ public:
 
     float holyGrenadeGetMunitionInitial() const;
 
-
     float holyGrenadeGetMaxRadio() const;
 
     float holyGrenadeGetMaxImpulse() const;
+
+    float bananaGetMainDamage() const;
+
+    float bananaGetMunitionInitial() const;
+
+    float bananaGetMaxRadio() const;
+
+    float bananaGetMaxImpulse() const;
+
+    float redGrenadeGetMainDamage() const;
+
+    float redGrenadeGetMunitionInitial() const;
+
+    float redGrenadeGetMaxRadio() const;
+
+    float redGrenadeGetMaxImpulse() const;
+
+    float redGrenadeFragmentGetMainDamage() const;
+
+    float redGrenadeFragmentGetMaxRadio() const;
+
+    float redGrenadeFragmentGetMaxImpulse() const;
+
+    float mortarGetMainDamage() const;
+
+    float mortartGetMunitionInitial() const;
+
+    float mortarGetMaxRadio() const;
+
+    float mortarGetMaxImpulse() const;
+
+    float mortarGetRayLength() const;
+
+    float mortarFragmentGetMainDamage() const;
+
+    float mortarFragmentGetMaxRadio() const;
+
+    float mortarFragmentGetMaxImpulse() const;
+
+
+    float bananaGetRestitution() const;
+
+    float fragmentGetLongDist() const;
+
+    float fragmentGetMidDist() const;
+
+    float fragmentGetShortDist() const;
 };
 
 
