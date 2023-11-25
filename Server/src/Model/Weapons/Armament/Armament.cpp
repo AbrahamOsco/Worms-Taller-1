@@ -26,7 +26,7 @@ Armament::Armament(const size_t &idPlayer, const GameParameters& gameParameters)
     armament.emplace(DYNAMITE_HOLDER,std::make_unique<DynamiteHolder>(DYNAMITE_HOLDER, gameParameters.dynamiteGetMainDamage(), NO_INFINITE, gameParameters.dynamiteGetMunitionInitial(), gameParameters) );
     armament.emplace(GREEN_GRENADE, std::make_unique<GrenadeHolder>(GREEN_GRENADE, gameParameters.greenGrenadeMainDamage(), INFINITE, gameParameters.greenGrenadeMunitionInitial(), gameParameters));
     armament.emplace(BANANA, std::make_unique<GrenadeHolder>(BANANA, 70.0f, INFINITE, 100, gameParameters));
-    armament.emplace(HOLY_GRENADE, std::make_unique<GrenadeHolder>(HOLY_GRENADE, 110, NO_INFINITE, 2, gameParameters));
+    armament.emplace(HOLY_GRENADE, std::make_unique<GrenadeHolder>(HOLY_GRENADE, gameParameters.holyGrenadeGetMainDamage(), NO_INFINITE, gameParameters.holyGrenadeGetMunitionInitial(), gameParameters));
     armament.emplace(RED_GRENADE, std::make_unique<GrenadeHolder>(RED_GRENADE, 30.0f, NO_INFINITE, 10, gameParameters));
     armament.emplace(MORTAR,std::make_unique<Mortar>(MORTAR, 30.0f, NO_INFINITE, 10, gameParameters) );
 }

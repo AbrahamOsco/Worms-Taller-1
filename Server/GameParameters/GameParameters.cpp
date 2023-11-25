@@ -116,9 +116,29 @@ GameParameters::GameParameters() {
     parameters["GREEN_GRENADE_MAX_RADIO"] = nodeInitial["GREEN_GRENADE_MAX_RADIO"].as<float>();
     parameters["GREEN_GRENADE_MAX_IMPULSE"] = nodeInitial["GREEN_GRENADE_MAX_IMPULSE"].as<float>();
 
-
+    parameters["HOLY_GRENADE_DAMAGE_MAIN"] = nodeInitial["HOLY_GRENADE_DAMAGE_MAIN"].as<float>();
+    parameters["HOLY_GRENADE_MUNITION_INITIAL"] = nodeInitial["HOLY_GRENADE_MUNITION_INITIAL"].as<float>();
+    parameters["HOLY_GRENADE_MAX_RADIO"] = nodeInitial["HOLY_GRENADE_MAX_RADIO"].as<float>();
+    parameters["HOLY_GRENADE_MAX_IMPULSE"] = nodeInitial["HOLY_GRENADE_MAX_IMPULSE"].as<float>();
 
 }
+
+float GameParameters::holyGrenadeGetMainDamage() const{
+    return this->parameters.at("HOLY_GRENADE_DAMAGE_MAIN");
+}
+
+float GameParameters::holyGrenadeGetMunitionInitial() const{
+    return this->parameters.at("HOLY_GRENADE_MUNITION_INITIAL");
+}
+
+float GameParameters::holyGrenadeGetMaxRadio() const{
+    return this->parameters.at("HOLY_GRENADE_MAX_RADIO");
+}
+
+float GameParameters::holyGrenadeGetMaxImpulse() const{
+    return this->parameters.at("HOLY_GRENADE_MAX_IMPULSE");
+}
+
 
 float GameParameters::grenadeGetRayLength() const{
     return this->parameters.at("GRENADE_RAY_LENGTH");

@@ -186,6 +186,15 @@ public:
     float greenGrenadeMaxRadio() const;
 
     float greenGrenadeMaxImpulse() const;
+
+    float holyGrenadeGetMainDamage() const;
+
+    float holyGrenadeGetMunitionInitial() const;
+
+
+    float holyGrenadeGetMaxRadio() const;
+
+    float holyGrenadeGetMaxImpulse() const;
 };
 
 
