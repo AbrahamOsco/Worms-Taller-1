@@ -7,7 +7,8 @@
 #include "../../../../Common/DTO/TurnDTO.h"
 
 Turns::Turns(Players &players, const GameParameters &parameters, b2World *world)
-        : gameParameters(parameters), players(players), timeLeft(parameters.getTimeForTurn()), damageRecognized(false), attackRecognized(false), valueWind(0.0f), world(world) {
+        : gameParameters(parameters), players(players), timeLeft(parameters.getTimeForTurn()), damageRecognized(false), attackRecognized(false), valueWind(0.0f), world(world),
+          focusController(players) {
 }
 
 float Turns::getWindValueForPhysics(){
@@ -43,9 +44,14 @@ void Turns::startATurn() {
     this->idPlayerCurrent = players.startAPlayerTurn();
     players.getCurrentPlayer().assignWindValue(getWindValueForPhysics());
     this->idWormCurrent = players.getCurrentPlayer().startAWormTurn();
+    focusController.assignPlayerAndWormCurrent(idPlayerCurrent, idWormCurrent);
     this->textTurn = players.getCurrentPlayer().getPlayerName();
     damageRecognized = false;
     attackRecognized = false;
+}
+
+void Turns::tryToChangeFocus(){
+    focusController.tryToChangeFocus();
 }
 
 int Turns::getTimeLeft() const{
@@ -78,13 +84,14 @@ void Turns::tryEndTurn(){
         damageRecognized = true;
     } else if (players.getCurrentPlayer().getCurrentWorm()->alreadyAttack() and not attackRecognized) {
         if (timeLeft > gameParameters.getTimeExtraAfterAttack()) {
-            timeLeft = gameParameters.getTimeExtraAfterAttack();
+            timeLeft = 10; //gameParameters.getTimeExtraAfterAttack();
         }
         attackRecognized = true;
     } else if (timeLeft <= 0 and players.allWormsAreUnmoveAndNotExistsProjectiles()) { // solo acabara el turno cuando todos los worms estan quietos y no existan projectiles
         timeLeft = gameParameters.getTimeForTurn();
         players.getCurrentPlayer().endTurn();
         if(not players.onlyExistsOnePlayer()) {
+            players.disableAllFocus();
             startATurn();
         }
     }

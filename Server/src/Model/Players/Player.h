@@ -65,6 +65,12 @@ public:
     EndGameDTO getEndGameDTO();
 
     void setLifeAllWorm(const float &aNewHP);
+
+    void getMovingWorms(std::vector<std::pair<size_t, size_t>> &idPlayerAndWorm);
+
+    std::unique_ptr<Worm> * getWorm(const size_t &idWorm);
+
+    void disableAllFocus();
 };
 
 

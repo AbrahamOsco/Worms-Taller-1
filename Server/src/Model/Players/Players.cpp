@@ -69,6 +69,7 @@ std::vector<WormDTO> Players::getWormsDTO() const{
     }
     return wormsDTOCompl;
 }
+
 bool Players::onlyExistsOnePlayer(){
     size_t playerLoser = 0;
     for(auto& element: players){
@@ -162,4 +163,19 @@ void Players::setLifeAllWorm(const float &aNewHP) {
     }
 }
 
+void Players::getMovingWorms(std::vector<std::pair<size_t, size_t>>& idPlayerAndWorm){
+    for(auto& aPlayer : players){
+        aPlayer.second.getMovingWorms(idPlayerAndWorm);
+    }
+}
+
+void Players::assignTypeFocus(const TypeFocus &focus, const size_t &playerID, const size_t &wormID) {
+    players.at(playerID).getWorm(wormID)->get()->assignTypeFocus(focus);
+}
+
+void Players::disableAllFocus() {
+    for(auto& aPlayer: players){
+        aPlayer.second.disableAllFocus();
+    }
+}
 

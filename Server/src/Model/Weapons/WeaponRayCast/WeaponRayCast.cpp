@@ -9,7 +9,6 @@
 WeaponRayCast::WeaponRayCast() : body(nullptr), point(b2Vec2(0.0f, 0.0f)), normal(b2Vec2(0.0f, 0.0f)), fraction(0.0f){}
 
 float WeaponRayCast::ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float fraction) {
-    std::cout << "[WeaponRayCast] Colisiono a  un" << fraction*100 << " % de la trayectura total \n";
     GameObject* gameObject = (GameObject*) fixture->GetBody()->GetUserData().pointer;
     this->body = fixture->GetBody();
     this->point = point;

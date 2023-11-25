@@ -68,6 +68,8 @@ public:
     std::vector<EndGameDTO> getVecEndGameDTO();
 
     std::vector<ProvisionDTO> getVecProvisionDTO();
+
+    void tryToChangeFocus();
 };
 
 

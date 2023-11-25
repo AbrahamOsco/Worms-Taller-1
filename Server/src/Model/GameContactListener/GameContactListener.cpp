@@ -15,7 +15,7 @@
 
 // Clase de colisiones el listener:
 void wormCollidesWithBeam(GameObject* worm, GameObject* beam, GameParameters *gameParameters){
-    std::cout << "Worm colisionar con el BEAM\n";
+    //std::cout << "Worm colisionar con el BEAM\n";
     Worm* unWorm = (Worm*) (worm);
     unWorm->assigOnABeam();
     Beam* unaBeam = (Beam*) (beam);
@@ -57,7 +57,7 @@ void wormCollidesWithEdege(GameObject* worm, GameObject* edge, GameParameters *g
     wormSelect->aContactWithEdge();
 }
 void edgeCollidesWithWorm(GameObject* edge, GameObject* worm, GameParameters *gameParameters){
-    std::cout << "Edge collisiona con el worm\n";
+    //std::cout << "Edge collisiona con el worm\n";
     wormCollidesWithEdege(worm, edge, gameParameters);
 }
 
@@ -106,7 +106,7 @@ void beamCollidesWithProjectileBazooka(GameObject* beam, GameObject* munitionBaz
 }
 
 void beamEndContactWithWorm(GameObject* beam, GameObject* worm, GameParameters *gameParameters){
-    std::cout << "beamEndContactWithWorm\n";
+    //std::cout << "beamEndContactWithWorm\n";
     Worm* unWorm = (Worm*) (worm);
     unWorm->unAssingOnABeam();
     Beam* unaBeam = (Beam*) (beam);
@@ -149,7 +149,7 @@ void waterCollidesWithProjectileBazooka(GameObject* water, GameObject* projectil
 }
 
 void wormCollidesWithProvision(GameObject* worm, GameObject* provision, GameParameters* gameParameters){
-    std::cout << "wormCollidesWithProvision\n";
+    //std::cout << "wormCollidesWithProvision\n";
     Provision* provisionSelect = (Provision*) provision;
     Worm* wormSelect = (Worm*) worm;
     provisionSelect->applyEffect(wormSelect);

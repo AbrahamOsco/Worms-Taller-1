@@ -53,6 +53,12 @@ public:
     std::vector<EndGameDTO> getVecEndGameDTO();
 
     void setLifeAllWorm(const float &aNewHP);
+
+    void getMovingWorms(std::vector<std::pair<size_t, size_t>> &idPlayerAndWorm);
+
+    void assignTypeFocus(const TypeFocus &focus, const size_t &playerID, const size_t &wormID);
+
+    void disableAllFocus();
 };
 
 

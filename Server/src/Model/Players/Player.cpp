@@ -142,3 +142,23 @@ void Player::setLifeAllWorm(const float &aNewHP) {
     }
 }
 
+void Player::getMovingWorms(std::vector<std::pair<size_t, size_t>>& idPlayerAndWorm){
+    for(auto& aWorm : worms){
+        if( not aWorm.second->wasDestroyedWorm() and  not aWorm.second->isStopTheWorm()){
+            idPlayerAndWorm.emplace_back(this->idPlayer, aWorm.first);
+        }
+    }
+
+}
+
+std::unique_ptr<Worm> * Player::getWorm(const size_t &idWorm) {
+    return &worms.at(idWorm);
+}
+
+void Player::disableAllFocus() {
+    for(auto& aWorm: worms){
+        if(not aWorm.second->wasDestroyedWorm()){
+            aWorm.second->assignTypeFocus(NO_FOCUS);
+        }
+    }
+}

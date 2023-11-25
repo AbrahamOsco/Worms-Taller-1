@@ -86,13 +86,14 @@ void Engine::stepWorldAndExecuteCommand() {
     } else {
         this->model.tryAttackVariablePower();
     }
+
 }
 
 void Engine::pushUpdatesAndUpdateModel(TimeTurn& timeTurn, RateController& frameRate){
-    connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
-                             model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO(),
+    connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(), model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO(),
                              model.getVecProvisionDTO());
     if (timeTurn.hasItBeenASecond()) {
+        model.tryToChangeFocus();
         model.subtractTime();
         timeTurn.updateTime();
     }

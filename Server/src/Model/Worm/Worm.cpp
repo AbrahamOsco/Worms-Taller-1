@@ -175,7 +175,6 @@ void Worm::changeAngle(const Direction& direction){
 }
 
 void Worm::takeDamage(const float &aDamage){
-    std::cout << "PlayerID: :" << idPlayer << "Con WormID: " << idWorm << " recibe daño de " <<  aDamage << "\n";
     if( aDamage >= this->hp){
         this->hp = 0.0;
         this->destroyBody();                // destruimos el body del gusano aca todo
@@ -408,9 +407,7 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
     if(timeLeft <= 0 or this->idWorm != idWormCurrentPlay){ // no le pongo el and not wasDestroyed porque nunca sera el turno del worm destruido.
         return;
     }
-
-    std::cout << "Comando recibido :" << aCommandDTO->getTypeCommand() << "\n";
-    // movs, up/down angles, jumps
+    std::cout << "Se recibe el comando " << aCommandDTO->getTypeCommand() << "\n";
     if(aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD ){
         this->walkWorm(LEFT);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD ){
@@ -493,8 +490,13 @@ void Worm::setWaitTime(const int &aWaitTIme) {
     this->waitTime = aWaitTIme;
 }
 
-size_t Worm::getIdWorm() const {
-    return this->idWorm;
+
+void Worm::assignTypeFocus(const TypeFocus &focus) {
+    this->typeFocus = focus;
+}
+
+bool Worm::hasTheTeleport() const {
+    return armament.getWeaponCurrent() == TELEPORT;
 }
 
 

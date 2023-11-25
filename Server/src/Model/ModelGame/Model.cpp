@@ -54,6 +54,11 @@ void Model::subtractTime(){
     turns.subtractTime();
 }
 
+void Model::tryToChangeFocus(){
+    turns.tryToChangeFocus();
+}
+
+
 TurnDTO Model::getTurnDTO() const {
     return turns.getTurnDTO();
 }

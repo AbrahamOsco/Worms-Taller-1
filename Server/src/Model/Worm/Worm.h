@@ -155,9 +155,11 @@ public:
 
     void attackWithMortar();
 
-    size_t getIdWorm() const;
-
     bool isStopTheWorm() const;
+
+    void assignTypeFocus(const TypeFocus &focus);
+
+    bool hasTheTeleport() const;
 };
 
 

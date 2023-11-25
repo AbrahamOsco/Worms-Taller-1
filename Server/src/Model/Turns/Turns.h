@@ -9,6 +9,7 @@
 #include "../Players/Players.h"
 #include "../../../../Common/DTO/TurnDTO.h"
 #include "../Provision/Provision.h"
+#include "../FocusController/FocusController.h"
 
 class Turns {
 private:
@@ -24,6 +25,8 @@ private:
     TypeWind typeWind;
     b2World* world;
     std::vector<std::unique_ptr<Provision>> provisionBoxes;
+    FocusController focusController;
+
 public:
 
     explicit Turns(Players &players, const GameParameters &parameters, b2World *world);
@@ -47,6 +50,7 @@ public:
 
     std::vector<ProvisionDTO> getVecProvisionDTO();
 
+    void tryToChangeFocus();
 };
 
 
