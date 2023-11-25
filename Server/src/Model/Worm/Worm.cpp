@@ -182,7 +182,7 @@ void Worm::takeDamage(const float &aDamage){
     } else if (aDamage < this->hp){
         this->hp -=aDamage;
     }
-    if(this->typeFocus == NO_FOCUS){
+    if(this->idWormCurrentPlay != idWorm){
         this->hpInitialTurn = hp;
     }
 }
@@ -250,21 +250,21 @@ ProjectilesDTO Worm::getProjectilesDTO() {
 }
 
 void Worm::activateFocus() {
-    this->typeFocus = TypeFocus::FOCUS;
+    this->typeFocus = FOCUS;
     this->idWormCurrentPlay = this->idWorm;
 }
 
 void Worm::update() {
-    if(idWorm != idWormCurrentPlay){
-        return;
-    }
-    armament.tryCleanProjectiles(aWorld);
-    armament.updateTime(attacked); // update para las armas en standby que esperan a exploar hacemos q pase el tiempo para ellas.
     if (this->isDestroyedBody() and not wasDestroyed) {
         aWorld->DestroyBody(this->getBody());
         this->wasDestroyed = true;
         return;
-    } else if (this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and this->typeFocus == FOCUS and not wasDestroyed) {
+    } else if (idWorm != idWormCurrentPlay){
+        return;
+    }
+    armament.tryCleanProjectiles(aWorld);
+    armament.updateTime(attacked); // update para las armas en standby que esperan a exploar hacemos q pase el tiempo para ellas.
+    if (this->body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) ) { // and not wasDestroyed ??
         if (this->typeMov == ATTACKING_WITH_BAT and iterationsForBatAttack > 0) {
             iterationsForBatAttack--;
         } else {
@@ -282,7 +282,7 @@ void Worm::update() {
 // weapons.- Attacks
 
 void Worm::assignWeapon(const TypeWeapon& aTypeWeapon){
-    if( not attacked and idWorm == idWormCurrentPlay){ // SOLO asigno un arma si no ataque y si tengo el focus.
+    if( not attacked and idWorm == idWormCurrentPlay){
         armament.assignWeapon(aTypeWeapon, this->directionLook);
     }
 }
@@ -302,8 +302,7 @@ void Worm::chargeWeaponWithVariablePower(){
         reachMaxImpulse = this->armament.getWeaponCurrentPtr()->increaseImpulse();
     } else if ( typeCharge == MANY_CHARGE) {
         reachMaxImpulse = this->armament.getWeaponCurrentPtr()->increaseImpulse();
-    }
-    if(reachMaxImpulse){
+    } if(reachMaxImpulse){
         tryAttackVariablePower();
     }
 }
@@ -394,7 +393,6 @@ bool Worm::attackWithDynamiteHolder() {
     return true;
 }
 
-
 void Worm::endTurn() {
     typeFocus = NO_FOCUS;
     typeMov = STANDING;
@@ -469,18 +467,22 @@ bool Worm::thereAreProjectiles(){
     return false;
 }
 
-bool Worm::isUnmoveAndNotExistsPojectiles() {
-    if(this->wasDestroyedWorm()){ // si el gusano fue destruido no existe movimiento ni proyectiles q pueda lanzar.
-        return true;
-    }
+bool Worm::isStopTheWorm() const {
     bool unMovedOnABeam = body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and (contatctsWithBeam > 0);
     //bool unMovedOnEdge = body->GetLinearVelocity() == b2Vec2(0.0f, 0.0f) and (contactsWithEdge > 0);
     bool unMovedOnAWorm = false;
     if(contatctsWithBeam == 0 and (contactsWithWorms > 0) ){ // si no esta sobre una viga pero esta sobre un gusano entonces esta inmobil.
         unMovedOnAWorm =  true;
     }
+    return (unMovedOnAWorm or unMovedOnABeam);
+}
+
+bool Worm::isUnmoveAndNotExistsPojectiles() {
+    if(this->wasDestroyedWorm()){ // si el gusano fue destruido no existe movimiento ni proyectiles q pueda lanzar.
+        return true;
+    }
     // si esta cargando el arma tampoco debe acabar el turno asi que pedimos que sea de tipo de carga NONE_CHARGE.
-    return ((unMovedOnABeam or unMovedOnAWorm ) and (not thereAreProjectiles()) and (this->typeCharge == NONE_CHARGE)  );
+    return ( isStopTheWorm() and (not thereAreProjectiles()) and (this->typeCharge == NONE_CHARGE)  );
 }
 
 void Worm::setHP(const float &aNewHP) {

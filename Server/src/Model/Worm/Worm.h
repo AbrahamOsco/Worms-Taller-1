@@ -157,6 +157,7 @@ public:
 
     size_t getIdWorm() const;
 
+    bool isStopTheWorm() const;
 };
 
 
