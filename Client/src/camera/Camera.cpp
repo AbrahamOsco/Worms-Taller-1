@@ -23,23 +23,15 @@ void Camera::setTarget(SDL2pp::Point &target) {
     m_target.SetY(target.GetY());
 }
 
-void Camera::update(Input &input, Queue<std::unique_ptr<Command>> &queue) {
+void Camera::update(Input &input) {
     if (input.getKeyDown(SDL_SCANCODE_D)) {
         m_target.SetX(m_target.GetX() + 5);
-        std::unique_ptr<Command> command(new MoveCamCmd());
-        queue.move_push(std::move(command));
     } else if (input.getKeyDown(SDL_SCANCODE_A)) {
         m_target.SetX(m_target.GetX() - 5);
-        std::unique_ptr<Command> command(new MoveCamCmd());
-        queue.move_push(std::move(command));
     } else if (input.getKeyDown(SDL_SCANCODE_S)) {
         m_target.SetY(m_target.GetY() + 5);
-        std::unique_ptr<Command> command(new MoveCamCmd());
-        queue.move_push(std::move(command));
     } else if (input.getKeyDown(SDL_SCANCODE_W)) {
         m_target.SetY(m_target.GetY() - 5);
-        std::unique_ptr<Command> command(new MoveCamCmd());
-        queue.move_push(std::move(command));
     }
 
     m_viewBox.SetX(m_target.GetX() - WINDOW_WIDTH / 2);

@@ -22,7 +22,7 @@ private:
 
 public:
     Camera();
-    void update(Input &input, Queue <std::unique_ptr<Command>> &queue);
+    void update(Input &input);
     SDL2pp::Rect getViewBox();
     SDL2pp::Point getPosition();
     void setTarget(SDL2pp::Point &target);
