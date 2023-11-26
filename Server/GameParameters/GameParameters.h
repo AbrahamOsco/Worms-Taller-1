@@ -7,15 +7,16 @@
 
 #include <yaml-cpp/yaml.h>
 #include <cstdlib>
+#include <map>
+#include <string>
 #include <linux/limits.h>
 
 class GameParameters {
-private:
+ private:
     std::map<std::string, float> parameters;
     YAML::Node nodeInitial;
 
-public:
-
+ public:
     GameParameters();
 
     float getFPS() const;
@@ -248,4 +249,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_GAMEPARAMETERS_H
+#endif  // WORMS_TALLER_1_GAMEPARAMETERS_H
