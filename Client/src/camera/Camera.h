@@ -15,12 +15,12 @@ const int LEVEL_HEIGHT = 1080;
 
 
 class Camera {
-private:
+ private:
     SDL2pp::Point m_target;
     SDL2pp::Point m_position;
     SDL2pp::Rect  m_viewBox;
 
-public:
+ public:
     Camera();
     void update(Input &input);
     SDL2pp::Rect getViewBox();
@@ -29,4 +29,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_CAMERA_H
+#endif  // WORMS_TALLER_1_CAMERA_H

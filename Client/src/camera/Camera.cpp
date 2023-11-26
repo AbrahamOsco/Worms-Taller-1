@@ -8,7 +8,7 @@
 #include "../../../Common/Queue/Queue.h"
 #include "../command/MoveCamCmd.h"
 
-Camera::Camera() : m_viewBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), m_target(0,0){}
+Camera::Camera() : m_viewBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), m_target(0, 0) {}
 
 SDL2pp::Rect Camera::getViewBox() {
     return m_viewBox;
@@ -71,5 +71,5 @@ void Camera::update(Input &input) {
         m_viewBox.SetY(LEVEL_HEIGHT - m_viewBox.GetH());
     }
 
-    m_position = SDL2pp::Point(m_viewBox.GetX(),m_viewBox.GetY());
+    m_position = SDL2pp::Point(m_viewBox.GetX(), m_viewBox.GetY());
 }
