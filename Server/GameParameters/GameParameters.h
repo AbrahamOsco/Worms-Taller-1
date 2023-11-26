@@ -32,6 +32,8 @@ public:
 
     static float getPositionAdjustmentStatic();
 
+    static float getOffsetLateral();
+
     static float getBeamMinimumScalableAngle();
 
     static float getBeamMaximumUnscalableAngle();
@@ -241,6 +243,8 @@ public:
     float fragmentGetMidDist() const;
 
     float fragmentGetShortDist() const;
+
+    static float getOffsetSecondBarrier();
 };
 
 

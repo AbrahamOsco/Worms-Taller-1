@@ -483,6 +483,16 @@ float GameParameters::getBeamFrictionSlipperyStatic(){
     return aNode["BEAM_SLIPPERY_FRICTION"].as<float>();
 }
 
+float GameParameters::getOffsetLateral() {
+    YAML::Node aNode = getNodeInitial();
+    return aNode["OFFSET_LATERAL"].as<float>();
+}
+
+float GameParameters::getOffsetSecondBarrier() {
+    YAML::Node aNode = getNodeInitial();
+    return aNode["OFFSET_Y_SECOND_BARRIER"].as<float>();
+}
+
 float GameParameters::getMaxHeightPixelStatic() {
     YAML::Node aNode = getNodeInitial();
     return aNode["MAX_HEIGHT_PIXEL"].as<float>();
@@ -640,6 +650,7 @@ float GameParameters::getWormImpulseFactoScalingDown() const {
 float GameParameters::getWormImpulseFactorClimbingUp() const {
     return parameters.at("WORM_FACTOR_IMPULSE_CLIMBING_UP");
 }
+
 
 
 
