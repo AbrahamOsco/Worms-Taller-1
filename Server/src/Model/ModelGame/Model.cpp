@@ -4,11 +4,14 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 #include "Model.h"
 #include "../../../../Common/DTO/PlayersDTO.h"
 
 Model::Model(const std::string &scenarioName, b2World &aWorld, GameParameters& parameters)
-        : stage(scenarioName), players(stage.getIdsAndPositionsWorms(), parameters), world(aWorld), gameContactListener(&aWorld, &parameters), turns(players, parameters, &world){
+        : stage(scenarioName), players(stage.getIdsAndPositionsWorms(), parameters), numberPlayerReq(0),
+        world(aWorld), gameContactListener(&aWorld, &parameters), turns(players, parameters, &world),
+        currentPlayers(0), finishedGame(true) {
 }
 
 void Model::addPlayer(const std::string &playerName, const size_t &idPlayer) {
@@ -36,11 +39,11 @@ StageDTO Model::startAndGetStageDTO() {
 }
 
 void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft) {
-    if(aCommandDTO->getTypeCommand() == MIN_LIFE ){
+    if ( aCommandDTO->getTypeCommand() == MIN_LIFE ) {
         players.setLifeAllWorm(1.0f);
-    } else if (aCommandDTO->getTypeCommand() == MAX_LIFE){
+    } else if (aCommandDTO->getTypeCommand() == MAX_LIFE) {
         players.setLifeAllWorm(200.0f);
-    }else{
+    } else {
         players.getCurrentPlayer().execute(aCommandDTO, timeLeft);
     }
 }
@@ -50,11 +53,11 @@ void Model::update() {
     turns.tryEndTurn();
 }
 
-void Model::subtractTime(){
+void Model::subtractTime() {
     turns.subtractTime();
 }
 
-void Model::tryToChangeFocus(){
+void Model::tryToChangeFocus() {
     turns.tryToChangeFocus();
 }
 
@@ -70,11 +73,11 @@ std::vector<WeaponsDTO> Model::getVecWeaponsDTO() const {
 WeaponSightDTO Model::getWeaponSightDTO() {
     return players.getCurrentWorm()->getWeaponSightDTO();
 }
-ProjectilesDTO Model::getProjectilesDTO(){
+ProjectilesDTO Model::getProjectilesDTO() {
     return players.getCurrentWorm()->getProjectilesDTO();
 }
 
-std::vector<ProvisionDTO> Model::getVecProvisionDTO(){
+std::vector<ProvisionDTO> Model::getVecProvisionDTO() {
     return this->turns.getVecProvisionDTO();
 }
 

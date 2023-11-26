@@ -3,27 +3,29 @@
 //
 
 #include <iostream>
+#include <utility>
 #include "Player.h"
 #include "../../../GameParameters/GameParameters.h"
 
 
-Player::Player(const std::string &playerName, const size_t &idPlayer, const GameParameters& gameParameters) : playerName(playerName),
-                idPlayer(idPlayer), idCurrentWorm(VALUE_INITIAL), gameParameters(gameParameters), armament(idPlayer, gameParameters){
+Player::Player(const std::string &playerName, const size_t &idPlayer, const GameParameters& gameParameters) :
+            playerName(playerName), idPlayer(idPlayer), idCurrentWorm(VALUE_INITIAL),
+            gameParameters(gameParameters), armament(idPlayer, gameParameters) {
 }
-bool Player::lostAllWorms(){
+bool Player::lostAllWorms() {
     size_t lostWorms = 0;
-    for(auto& aElement: worms){
-        if(aElement.second->wasDestroyedWorm()){
+    for (auto& aElement : worms) {
+        if (aElement.second->wasDestroyedWorm()) {
             lostWorms++;
         }
     }
-   return (lostWorms == this->worms.size());
+    return (lostWorms == this->worms.size());
 }
 
 std::vector<WormDTO> Player::getWormsDTO() const {
     std::vector<WormDTO> vecWormsDTO;
-    for(auto& aWormElem: worms){
-        if(not aWormElem.second->wasDestroyedWorm()){       //  Pusheamos los worms que NO fueron destruidos.
+    for (auto& aWormElem : worms) {
+        if (!aWormElem.second->wasDestroyedWorm()) {       //  Pusheamos los worms que NO fueron destruidos.
             vecWormsDTO.push_back(aWormElem.second->getWormDTO());
         }
     }
@@ -31,34 +33,35 @@ std::vector<WormDTO> Player::getWormsDTO() const {
 }
 
 void Player::assignWorm(const int &idWorm, const std::pair<float, float> &positionInitialWorm) {
-    worms.emplace(idWorm, std::make_unique<Worm>(idWorm, idPlayer, positionInitialWorm.first, positionInitialWorm.second, gameParameters, armament)) ;
+    worms.emplace(idWorm, std::make_unique<Worm>(
+        idWorm, idPlayer, positionInitialWorm.first, positionInitialWorm.second, gameParameters, armament));
 }
 
 void Player::assignBonusLife() {
-    for(auto& pair : worms){
+    for (auto& pair : worms) {
         pair.second->assignBonusLife();
     }
 }
 
 void Player::addToTheWorld(b2World *world) {
-    for(auto& aWorm : worms){
+    for (auto& aWorm : worms) {
         aWorm.second->addToTheWorld(world);
     }
 }
 
 size_t Player::startAWormTurn() {
-    if( idCurrentWorm == VALUE_INITIAL){
+    if ( idCurrentWorm == VALUE_INITIAL ) {
         wormIterator = worms.begin();
         this->idCurrentWorm = wormIterator->first;
         worms[idCurrentWorm]->activateFocus();
         return idCurrentWorm;
     }
-    while( wormIterator != worms.end() ){
+    while ( wormIterator != worms.end() ) {
         wormIterator++;
-        if(wormIterator == worms.end()){
+        if (wormIterator == worms.end()) {
             wormIterator = worms.begin();
         }
-        if( not worms.at(wormIterator->first)->wasDestroyedWorm() ){
+        if ( !worms.at(wormIterator->first)->wasDestroyedWorm() ) {
             break;
         }
     }
@@ -68,19 +71,19 @@ size_t Player::startAWormTurn() {
 }
 
 void Player::update() {
-    for(auto& pair : worms){
+    for (auto& pair : worms) {
         pair.second->update();
     }
 }
 
 PlayerDTO Player::getPlayerDTO(const size_t &idCurrentPlayer) const {
     TurnType aTurnType = TurnType::NOT_IS_MY_TURN;
-    if(this->idPlayer == idCurrentPlayer ){
+    if ( this->idPlayer == idCurrentPlayer ) {
         aTurnType = TurnType::MY_TURN;
     }
     size_t hpTotalWorms = 0;
-    for(auto& mapWorm : worms ){
-        if(not mapWorm.second->wasDestroyedWorm()){
+    for ( auto& mapWorm : worms ) {
+        if (!mapWorm.second->wasDestroyedWorm()) {
             hpTotalWorms += mapWorm.second->getHP();
         }
     }
@@ -104,8 +107,8 @@ void Player::endTurn() {
 }
 
 bool Player::allWormsAreUnmoveAndNotExistsProjectiles() {
-    for (auto &aWorm: worms) {
-        if (not aWorm.second->isUnmoveAndNotExistsPojectiles()) {
+    for (auto &aWorm : worms) {
+        if (!aWorm.second->isUnmoveAndNotExistsPojectiles()) {
             return false;
         }
     }
@@ -113,14 +116,13 @@ bool Player::allWormsAreUnmoveAndNotExistsProjectiles() {
 }
 
 void Player::execute(std::unique_ptr<CommandDTO> &uniquePtr, const int &timeLeft) {
-    if(uniquePtr->getTypeCommand() == COUNTDOWN){
-        for(auto &aWorms : worms){
+    if (uniquePtr->getTypeCommand() == COUNTDOWN) {
+        for (auto &aWorms : worms) {
             aWorms.second->setWaitTime(uniquePtr->getX());
         }
         return;
     }
     this->worms.at(idCurrentWorm)->execute(uniquePtr, timeLeft, idCurrentWorm);
-
 }
 
 void Player::assignWindValue(const float &aWindValue) {
@@ -128,27 +130,26 @@ void Player::assignWindValue(const float &aWindValue) {
 }
 
 EndGameDTO Player::getEndGameDTO() {
-    if(this->lostAllWorms()){
+    if (this->lostAllWorms()) {
         return EndGameDTO(this->idPlayer, LOST_THE_GAME);
     }
     return EndGameDTO(this->idPlayer, WON_THE_GAME);
 }
 
 void Player::setLifeAllWorm(const float &aNewHP) {
-    for(auto& aWorm : worms){
-        if(not aWorm.second->wasDestroyedWorm()){
+    for (auto& aWorm : worms) {
+        if (!aWorm.second->wasDestroyedWorm()) {
             aWorm.second->setHP(aNewHP);
         }
     }
 }
 
-void Player::getMovingWorms(std::vector<std::pair<size_t, size_t>>& idPlayerAndWorm){
-    for(auto& aWorm : worms){
-        if( not aWorm.second->wasDestroyedWorm() and  not aWorm.second->isStopTheWorm()){
+void Player::getMovingWorms(std::vector<std::pair<size_t, size_t>>& idPlayerAndWorm) {
+    for (auto& aWorm : worms) {
+        if ( !aWorm.second->wasDestroyedWorm() &&  !!aWorm.second->isStopTheWorm() ) {
             idPlayerAndWorm.emplace_back(this->idPlayer, aWorm.first);
         }
     }
-
 }
 
 std::unique_ptr<Worm> * Player::getWorm(const size_t &idWorm) {
@@ -156,8 +157,8 @@ std::unique_ptr<Worm> * Player::getWorm(const size_t &idWorm) {
 }
 
 void Player::disableAllFocus() {
-    for(auto& aWorm: worms){
-        if(not aWorm.second->wasDestroyedWorm()){
+    for (auto& aWorm : worms) {
+        if ( !aWorm.second->wasDestroyedWorm() ) {
             aWorm.second->assignTypeFocus(NO_FOCUS);
         }
     }
