@@ -5,17 +5,18 @@
 #include <iostream>
 #include "SaveWormsInAreaQuery.h"
 
-SaveWormsInAreaQuery::SaveWormsInAreaQuery(const b2Vec2 &munitionPosition){
+SaveWormsInAreaQuery::SaveWormsInAreaQuery(const b2Vec2 &munitionPosition) {
     this->munitionPosition = munitionPosition;
 }
 
-bool SaveWormsInAreaQuery::ReportFixture(b2Fixture* fixture){
+bool SaveWormsInAreaQuery::ReportFixture(b2Fixture* fixture) {
     GameObject* obj = (GameObject*) (fixture->GetBody()->GetUserData().pointer);
     if (obj && obj->getEntityType() == ENTITY_WORM) {
-        float distanceSquared = b2DistanceSquared(munitionPosition, fixture->GetBody()->GetWorldCenter()); // sacamos la distancia al cuadrado
+        float distanceSquared = b2DistanceSquared(munitionPosition, fixture->GetBody()->GetWorldCenter());
+        // sacamos la distancia al cuadrado
         wormAndDistanceSquar[obj] = distanceSquared;
     }
-    return true; // Continuar con la búsqueda
+    return true;  // Continuar con la búsqueda
 }
 
 std::map<GameObject *, float> SaveWormsInAreaQuery::getWormsAndDistSquared() const {

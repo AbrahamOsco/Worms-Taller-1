@@ -7,7 +7,6 @@
 #include "../../../../GameParameters/GameParameters.h"
 
 Water::Water() : GameObject(ENTITY_WATER) {
-
 }
 
 Water::Water(b2World *world, const float &height, const float &width) : GameObject(ENTITY_WATER)  {

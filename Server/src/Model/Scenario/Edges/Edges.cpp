@@ -24,18 +24,21 @@ Edges::Edges(b2World *world, const float &height, const float &width) : GameObje
     body->CreateFixture(&shape, 0.0f);
 
     // creamos ahora 2 capas externas laterales
-    shape.SetTwoSided(b2Vec2(-GameParameters::getOffsetLateral(), GameParameters::getOffsetSecondBarrier() ), b2Vec2(GameParameters::getOffsetLateral(), heightOffset));
+    shape.SetTwoSided(b2Vec2(-GameParameters::getOffsetLateral(), GameParameters::getOffsetSecondBarrier() ),
+        b2Vec2(GameParameters::getOffsetLateral(), heightOffset));
     body->CreateFixture(&shape, 0.0f);
 
-    shape.SetTwoSided(b2Vec2(widthOffset +GameParameters::getOffsetLateral(), GameParameters::getOffsetSecondBarrier() ), b2Vec2(widthOffset+GameParameters::getOffsetLateral(), heightOffset));
+    shape.SetTwoSided(b2Vec2(widthOffset +GameParameters::getOffsetLateral(),
+        GameParameters::getOffsetSecondBarrier() ), b2Vec2(widthOffset+GameParameters::getOffsetLateral(),
+        heightOffset));
     body->CreateFixture(&shape, 0.0f);
 
     // creo el suelo debajo del water.  de esta manera ninguna proyectil se qeudara cayendo en el infinito.
-    shape.SetTwoSided(b2Vec2(-GameParameters::getOffsetLateral(), GameParameters::getOffsetSecondBarrier()), b2Vec2(widthOffset + GameParameters::getOffsetLateral(), GameParameters::getOffsetSecondBarrier()));
+    shape.SetTwoSided(b2Vec2(-GameParameters::getOffsetLateral(), GameParameters::getOffsetSecondBarrier()),
+        b2Vec2(widthOffset + GameParameters::getOffsetLateral(), GameParameters::getOffsetSecondBarrier()));
     body->CreateFixture(&shape, 0.0f);
 }
 
 
 Edges::Edges() : GameObject(ENTITY_EDGE) {
-
 }

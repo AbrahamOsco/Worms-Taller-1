@@ -9,13 +9,11 @@
 #include "../../GameObject/GameObject.h"
 
 class Edges : GameObject {
-private:
-
-public:
+ public:
     Edges();
 
     Edges(b2World* world, const float& height, const float& width);
 };
 
 
-#endif //WORMS_TALLER_1_EDGES_H
+#endif  // WORMS_TALLER_1_EDGES_H

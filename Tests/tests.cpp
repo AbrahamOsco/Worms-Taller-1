@@ -357,8 +357,8 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendStage) {
     beams.push_back(BeamDTO(SHORT_BEAM, 53, 69, 120, 78, 96));
     beams.push_back(BeamDTO(WATER_BEAM, 153, 169, 20, 39, 127));
     beams.push_back(BeamDTO(LONG_BEAM, 0, 0, 127, 127, 127));
-    StageDTO dto(beams);
-    dto.setIdPlayer(15);
+    StageDTO dto(beams, 1, "background");
+    dto.setIdPlayer(127);
     protocol.sendStage(dto);
     buffer = skt.getBuffer();
     ASSERT_TRUE(STAGE == buffer[offset]);
@@ -385,6 +385,18 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendStage) {
         ASSERT_EQ(beams[i].getHeight(), buffer[offset]);
         offset++;
     }
+    ASSERT_EQ(dto.getIdPlayer(), buffer[offset]);
+    offset++;
+    memcpy(&word, buffer.data()+offset, 2);
+    word = ntohs(word);
+    ASSERT_EQ(dto.getPositionYWater(), word);
+    offset = offset + 2;
+    memcpy(&word, buffer.data()+offset, 2);
+    word = ntohs(word);
+    ASSERT_EQ(dto.getBackground().size(), word);
+    offset = offset + 2;
+    std::string aux(buffer.data()+offset, word);
+    ASSERT_EQ(dto.getBackground(), aux);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendPlayersDTO) {
     Socket skt;

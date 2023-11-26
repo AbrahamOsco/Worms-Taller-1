@@ -10,17 +10,17 @@
 #include "../GameObject/GameObject.h"
 
 class SaveWormsInAreaQuery : public b2QueryCallback {
-private:
+ private:
     std::map<GameObject*, float> wormAndDistanceSquar;
     b2Vec2 munitionPosition;
-public:
+
+ public:
     explicit SaveWormsInAreaQuery(const b2Vec2 &munitionPosition);
 
     bool ReportFixture(b2Fixture* fixture) override;
 
     std::map<GameObject*, float>  getWormsAndDistSquared() const;
-
 };
 
 
-#endif //WORMS_TALLER_1_SAVEWORMSINAREAQUERY_H
+#endif  // WORMS_TALLER_1_SAVEWORMSINAREAQUERY_H

@@ -7,6 +7,7 @@
 
 
 #include <utility>
+#include <vector>
 #include "box2d/box2d.h"
 #include <box2d/b2_world.h>
 #include "../../../../Common/DTO/ProvisionDTO.h"
@@ -15,15 +16,16 @@
 #include "../Worm/Worm.h"
 
 class Provision : public GameObject {
-private:
+ private:
     std::pair<float, float> position;
     TypeEffect typeEffect;
     GameParameters gameParameters;
     b2World* world;
     int animationIterations;
 
-public:
-    Provision(const float &positionX, const float &positionY, const TypeEffect &typeEffect, const GameParameters& parameters);
+ public:
+    Provision(const float &positionX, const float &positionY, const TypeEffect &typeEffect,
+            const GameParameters& parameters);
 
     void addToTheWorld(b2World *world);
 
@@ -35,4 +37,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_PROVISION_H
+#endif  // WORMS_TALLER_1_PROVISION_H
