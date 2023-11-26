@@ -9,9 +9,9 @@
 #include "Command.h"
 
 class SelectBatCmd : public Command {
-public:
+ public:
     void execute(ClientProtocol &protocol) override;
 };
 
 
-#endif //WORMS_TALLER_1_SELECTBATCMD_H
+#endif  // WORMS_TALLER_1_SELECTBATCMD_H

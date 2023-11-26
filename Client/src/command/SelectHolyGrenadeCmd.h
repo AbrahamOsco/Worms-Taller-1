@@ -9,9 +9,9 @@
 #include "Command.h"
 
 class SelectHolyGrenadeCmd : public Command {
-public:
+ public:
     void execute(ClientProtocol &protocol) override;
 };
 
 
-#endif //WORMS_TALLER_1_SELECTHOLYGRENADECMD_H
+#endif  // WORMS_TALLER_1_SELECTHOLYGRENADECMD_H

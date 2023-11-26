@@ -9,9 +9,9 @@
 #include "Command.h"
 
 class SelectBananaCmd : public Command {
-public:
+ public:
     void execute(ClientProtocol &protocol) override;
 };
 
 
-#endif //WORMS_TALLER_1_SELECTBANANACMD_H
+#endif  // WORMS_TALLER_1_SELECTBANANACMD_H
