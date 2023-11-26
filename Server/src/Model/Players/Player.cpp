@@ -61,7 +61,7 @@ size_t Player::startAWormTurn() {
         if (wormIterator == worms.end()) {
             wormIterator = worms.begin();
         }
-        if ( !worms.at(wormIterator->first)->wasDestroyedWorm() ) {
+        if ( wormIterator != worms.end() && !worms.at(wormIterator->first)->wasDestroyedWorm() ) {
             break;
         }
     }
