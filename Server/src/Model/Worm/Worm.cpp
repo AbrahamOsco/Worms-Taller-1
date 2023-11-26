@@ -448,6 +448,8 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
         this->assignWeapon(MORTAR);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_AIR_ATTACK ){
         this->assignWeapon(AIR_ATTACK);
+        typeFocus = NO_FOCUS;
+        waitingToGetFocus = true;
     }
     // execute an attack of a weapon
     else if (aCommandDTO->getTypeCommand() == TypeCommand::FIRE_CMD){
