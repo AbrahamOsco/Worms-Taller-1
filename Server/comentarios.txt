@@ -7,7 +7,7 @@
 #include "math.h"
 #include <iostream>
 #define TAMANIO_GUSANO 1
-
+esto tampoco se porque esta aca, fuera
 class MyContactListener : public b2ContactListener{
 public:
 

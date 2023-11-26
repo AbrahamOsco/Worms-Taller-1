@@ -7,7 +7,7 @@
 #include <iomanip>
 #include <algorithm>
 
-
+// saquen el tuto de aca
 // GUIA DE BOX2D .
 class MyActor{
 private:

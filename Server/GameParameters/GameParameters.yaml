@@ -12,6 +12,7 @@ OFFSET_EDGE_WIDTH: 8.0
 TIME_FOR_TURN: 10.0
 TIME_EXTRA_AFTER_ATTACK: 3.0
 MAX_VALUE_WIND: 5.0
+# agregaria un comentario por aca que modificar estas cosas pueden romper todo, haria una diferencia entre los parametros de configuracion y los parametros de juego, que son los que queremos modificar realmente
 
 #Provision
 PROVISION_POSITION_Y_TO_INVOKE: 20.0

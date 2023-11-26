@@ -45,6 +45,8 @@ int GamesProtected::addPlayer(const ResponseInitialStateDTO &response, Socket &s
 
 void GamesProtected::printRooms() {
     std::unique_lock<std::mutex> lck(mtx);
+    // detalle, aca podes devolver una lista para que se imprima fuera del Games asi no bloqueas todo. Y cuidado con imprimir por cout, aunque este protegido por este mutex, no se usa en algun otro hilo en algun lugar?
+    // como es para debuging no deberia ser un problema igual, pero para tener en cuenta
     std::map<std::string, std::unique_ptr<Engine>>::iterator it;
     for (it = games.begin(); it != games.end(); ++it){
         std::cout << "Room : " << it->first << " |";

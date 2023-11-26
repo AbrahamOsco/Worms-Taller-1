@@ -56,7 +56,9 @@ void ReceiverThread::run() {
 
                 WeaponInventory weaponInventory;
                 std::vector<WeaponDTO> weapons = weaponsDto.getWeapons();
-
+// esto no puede estar asi, hay que modularizar un par de cosas aca para que se entienda que esta pasando, un par de funciones auxiliares con nombres copados para ver a simple vista que se hace aca
+// este for podria ser una funcion que te devuelva una lista de unique_ptr de gusanos, y despues pusheas toda la lista junta 
+// les tiene que hacer ruido funciones asi, miren la diferencia con el senderThread. posiblemente se podria aplicar un patron similar al command.
                 for (const WormDTO &wormDto: wormsDto) {
 
                     if (wormDto.getWeaponCurrent() == TypeWeapon::NONE_WEAPON) {
@@ -152,7 +154,7 @@ void ReceiverThread::run() {
 
                 }
 
-
+// y todas estas cosas tambien se podrian agrupar en metodos auxiliares para saber que hace cada una. 
                 for (const WeaponDTO &weaponDto: weapons) {
                     WeaponIcon weaponIcon(weaponDto.getTypeWeapon(), static_cast<int>(weaponDto.getMunition()), weaponDto.getTypeMunition(), weaponsDto.getWeaponCurrent(), isMyTurn);
                     weaponInventory.addWeapon(weaponIcon);

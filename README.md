@@ -59,5 +59,7 @@ Juego worms
 
     
 
-    
+# comentarios generales
+
+ - intenten usar un unico idioma, no esta bueno tener objetos en ingles y en español. tenemos un waiter, mainmenu y crearPartida y buscarPartida en la misma carpeta. 
 

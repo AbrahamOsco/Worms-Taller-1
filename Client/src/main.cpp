@@ -18,5 +18,6 @@ int main (int argc, char *argv[]) {
     game.loadMap();
     game.run();
     */
+//    no dejen codigo comentado pls
     return 0;
 }
