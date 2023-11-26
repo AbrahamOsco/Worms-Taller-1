@@ -23,7 +23,30 @@ void Camera::setTarget(SDL2pp::Point &target) {
     m_target.SetY(target.GetY());
 }
 
-void Camera::update(Input &input) {
+void Camera::update() {
+    m_viewBox.SetX(m_target.GetX() - WINDOW_WIDTH / 2);
+    m_viewBox.SetY(m_target.GetY() - WINDOW_HEIGHT / 2);
+
+    if (m_viewBox.GetX() < 0) {
+        m_viewBox.SetX(0);
+    }
+
+    if (m_viewBox.GetY() < 0) {
+        m_viewBox.SetY(0);
+    }
+
+    if (m_viewBox.GetX() + m_viewBox.GetW() > LEVEL_WIDTH) {
+        m_viewBox.SetX(LEVEL_WIDTH - m_viewBox.GetW());
+    }
+
+    if (m_viewBox.GetY() + m_viewBox.GetH() > LEVEL_HEIGHT) {
+        m_viewBox.SetY(LEVEL_HEIGHT - m_viewBox.GetH());
+    }
+
+    m_position = SDL2pp::Point(m_viewBox.GetX(),m_viewBox.GetY());
+}
+
+void Camera::handleMouseMovement(Input &input) {
     int mouseX = input.getMouseX();
     int mouseY = input.getMouseY();
 
@@ -51,25 +74,4 @@ void Camera::update(Input &input) {
         }
         m_target.SetY(m_target.GetY() - scrollSpeed);
     }
-
-    m_viewBox.SetX(m_target.GetX() - WINDOW_WIDTH / 2);
-    m_viewBox.SetY(m_target.GetY() - WINDOW_HEIGHT / 2);
-
-    if (m_viewBox.GetX() < 0) {
-        m_viewBox.SetX(0);
-    }
-
-    if (m_viewBox.GetY() < 0) {
-        m_viewBox.SetY(0);
-    }
-
-    if (m_viewBox.GetX() + m_viewBox.GetW() > LEVEL_WIDTH) {
-        m_viewBox.SetX(LEVEL_WIDTH - m_viewBox.GetW());
-    }
-
-    if (m_viewBox.GetY() + m_viewBox.GetH() > LEVEL_HEIGHT) {
-        m_viewBox.SetY(LEVEL_HEIGHT - m_viewBox.GetH());
-    }
-
-    m_position = SDL2pp::Point(m_viewBox.GetX(),m_viewBox.GetY());
 }

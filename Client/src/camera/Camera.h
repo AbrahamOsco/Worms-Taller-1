@@ -22,10 +22,11 @@ private:
 
 public:
     Camera();
-    void update(Input &input);
+    void update();
     SDL2pp::Rect getViewBox();
     SDL2pp::Point getPosition();
     void setTarget(SDL2pp::Point &target);
+    void handleMouseMovement(Input & input);
 };
 
 

@@ -36,6 +36,7 @@ void WormGuidedWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureM
 void WormGuidedWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera,
                               SoundManager &soundManager) {
     Worm::update(input, queue, camera, soundManager);
+    camera.handleMouseMovement(input);
     if (input.isMouseRightButtonDown() && m_isMyTurn) {
         m_isMyTurn = false;
         SDL2pp::Point point(input.getMouseX(), input.getMouseY());
