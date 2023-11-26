@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <memory>
+#include <utility>
 #include "Engine.h"
 #include "../Protocol/ServerProtocol.h"
 #include "../../../Common/DTO/SnapShot.h"
@@ -13,10 +14,12 @@
 #define ERROR 2
 
 
-Engine::Engine(const ResponseInitialStateDTO &response) : nameGameRoom( response.getGameName()) , nameScenario(response.getScenarioName()),
-                                                          numberPlayerReq(response.getPlayerRequired()), currentPlayers(0), world(b2Vec2(0.0f, gameParameters.getGravity())),
-                                                          model(response.getScenarioName(), world, gameParameters), keepTalking(true), commandsQueueNB(UINT_MAX - 1),
-                                                          connections(commandsQueueNB){
+Engine::Engine(const ResponseInitialStateDTO &response) :
+        nameGameRoom(response.getGameName()), nameScenario(response.getScenarioName()),
+        numberPlayerReq(response.getPlayerRequired()), currentPlayers(0),
+        world(b2Vec2(0.0f, gameParameters.getGravity())), model(response.getScenarioName(),
+        world, gameParameters), keepTalking(true), commandsQueueNB(UINT_MAX - 1),
+        connections(commandsQueueNB) {
 }
 
 // Retorna 1 si agrego con exito al jugador o retorna 2 Si hubo un ERROR.
@@ -28,12 +31,12 @@ void Engine::sendStatusAnswer(Socket& sktPeer, const OperationType& operationTyp
 
 int Engine::addClient(Socket &socket, const std::string &playerName, const OperationType &aOperation) {
     int answer = ERROR;
-    if( this->currentPlayers < numberPlayerReq ){
+    if ( this->currentPlayers < numberPlayerReq ) {
         model.addPlayer(playerName, currentPlayers);
         sendStatusAnswer(socket, aOperation);
         connections.addConnection(currentPlayers, std::move(socket));
         currentPlayers++;
-        if (currentPlayers == numberPlayerReq){
+        if (currentPlayers == numberPlayerReq) {
             this->start();
         }
         answer = SUCCESS;
@@ -42,14 +45,16 @@ int Engine::addClient(Socket &socket, const std::string &playerName, const Opera
 }
 
 void Engine::run() {
-    try{
-        std::cout  << "[Engine]: La partida  " + this->nameGameRoom + " En el scenario: " + this->nameScenario + " Con : " +  std::to_string(currentPlayers) + "/" + std::to_string(numberPlayerReq) + " Ha comenzado\n";
+    try {
+        std::cout  << "[Engine]: La partida  " + this->nameGameRoom + " En el scenario: " +
+        this->nameScenario + " Con : " +  std::to_string(currentPlayers) +
+        "/" + std::to_string(numberPlayerReq) + " Ha comenzado\n";
         StageDTO stageDto = model.startAndGetStageDTO();
         connections.start(stageDto);
-        RateController frameRate(20);// el start esta encapsulado en el constructor. OJO @
+        RateController frameRate(20);  // el start esta encapsulado en el constructor. OJO @
         TimeTurn timeTurn;  // en el constructor ya arranca el turn.
         while (keepTalking) {
-            if(model.onlyOnePlayerExits()){
+            if (model.onlyOnePlayerExits()) {
                 break;
             }
             stepWorldAndExecuteCommand();
@@ -63,13 +68,14 @@ void Engine::run() {
     executeLastCommand();
 }
 
-void Engine::executeLastCommand(){
-    RateController frameRate(20);// el start esta encapsulado en el constructor. OJO @
-    connections.pushVecEndGame(model.getVecEndGameDTO()); // en un futuro cambiarle el nombre si no se pushea mas a lastPusshSnaShop
-    while(keepTalking){
+void Engine::executeLastCommand() {
+    RateController frameRate(20);  // el start esta encapsulado en el constructor. OJO @
+    connections.pushVecEndGame(model.getVecEndGameDTO());
+    // en un futuro cambiarle el nombre si no se pushea mas a lastPusshSnaShop
+    while (keepTalking) {
         std::unique_ptr<CommandDTO> aCommanDTO;
-        if(commandsQueueNB.move_try_pop(aCommanDTO)){
-            if(aCommanDTO->getTypeCommand() == CLOSE_GAME){
+        if (commandsQueueNB.move_try_pop(aCommanDTO)) {
+            if (aCommanDTO->getTypeCommand() == CLOSE_GAME) {
                 this->connections.stop();
                 keepTalking = false;
                 std::cerr<< "Felicidades Se cerro el game de forma exitosa !!! \n";
@@ -80,18 +86,18 @@ void Engine::executeLastCommand(){
 
 void Engine::stepWorldAndExecuteCommand() {
     std::unique_ptr<CommandDTO> aCommanDTO;
-    this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(), gameParameters.getPositionIterations()); // Hacemos un step en el world.
+    this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(),
+    gameParameters.getPositionIterations());  // Hacemos un step en el world.
     if (commandsQueueNB.move_try_pop(aCommanDTO)) {
         this->model.execute(aCommanDTO, model.getTimeLeft());
     } else {
         this->model.tryAttackVariablePower();
     }
-
 }
 
-void Engine::pushUpdatesAndUpdateModel(TimeTurn& timeTurn, RateController& frameRate){
-    connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(), model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO(),
-                             model.getVecProvisionDTO());
+void Engine::pushUpdatesAndUpdateModel(TimeTurn& timeTurn, RateController& frameRate) {
+    connections.pushSnapShot(model.getWormsDTO(), model.getPlayersDTO(), model.getVecWeaponsDTO(),
+    model.getWeaponSightDTO(), model.getProjectilesDTO(), model.getTurnDTO(), model.getVecProvisionDTO());
     if (timeTurn.hasItBeenASecond()) {
         model.tryToChangeFocus();
         model.subtractTime();
