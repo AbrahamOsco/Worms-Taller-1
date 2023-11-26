@@ -2,6 +2,8 @@
 // Created by riclui on 31/10/23.
 //
 
+#include <vector>
+#include <memory>
 #include <SDL_mixer.h>
 #include <SDL2pp/Chunk.hh>
 #include "Game.h"
@@ -18,8 +20,9 @@ void Game::loadMap() {
     StageDTO stageDto;
     stageDto = m_protocol.recvStageDTO();
     std::vector<BeamDTO> beams = stageDto.getBeams();
-    for (const BeamDTO& beamDto: beams) {
-        m_beams.emplace_back(beamDto.getXCenter(), beamDto.getYCenter(), static_cast<Angle>(beamDto.getAngle()), beamDto.getTypeBeam());
+    for (const BeamDTO& beamDto : beams) {
+        m_beams.emplace_back(beamDto.getXCenter(), beamDto.getYCenter(),
+                            static_cast<Angle>(beamDto.getAngle()), beamDto.getTypeBeam());
     }
     m_water.setY(static_cast<int>(stageDto.getPositionYWater()));
     m_background = stageDto.getBackground();
@@ -43,7 +46,7 @@ void Game::run() {
     }
 
     SDL2pp::SDLTTF ttf;
-    Engine engine(m_beams, m_water, m_background,bQueue, nbQueue, m_running);
+    Engine engine(m_beams, m_water, m_background, bQueue, nbQueue, m_running);
     engine.init();
 
     RateController frameRate(19);  // el start esta encapsulado en el constructor. OJO @ricardo
