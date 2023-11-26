@@ -8,7 +8,7 @@
 #include "SDL2pp/SDL2pp.hh"
 
 class Input {
-private:
+ private:
     const Uint8* m_keyStates;
     bool m_quit;
     bool m_prevSpaceState;
@@ -25,7 +25,7 @@ private:
     void mouseButtonUp(SDL_Event& event);
     void mouseMotion(SDL_Event& event);
 
-public:
+ public:
     Input();
     void listen();
     bool getKeyDown(SDL_Scancode key) const;
@@ -41,4 +41,4 @@ public:
     bool getPrevSpaceState();
 };
 
-#endif //WORMS_TALLER_1_INPUT_H
+#endif  // WORMS_TALLER_1_INPUT_H

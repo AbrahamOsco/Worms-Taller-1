@@ -5,18 +5,19 @@
 #ifndef WORMS_TALLER_1_TEXTUREMANAGER_H
 #define WORMS_TALLER_1_TEXTUREMANAGER_H
 
-#include "SDL2pp/SDL2pp.hh"
-#include "../camera/Camera.h"
 #include <yaml-cpp/yaml.h>
-
 #include <map>
 #include <string>
 #include <memory>
+#include "SDL2pp/SDL2pp.hh"
+#include "../camera/Camera.h"
+
 
 class TextureManager {
-private:
+ private:
     std::map<std::string, std::unique_ptr<SDL2pp::Texture>> m_textureMap;
-public:
+
+ public:
     void parseTexture(const std::string &yamlFileName, SDL2pp::Renderer &renderer);
 
     void load(const std::string &fileName, std::string &id, SDL2pp::Renderer &renderer);
@@ -41,4 +42,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_TEXTUREMANAGER_H
+#endif  // WORMS_TALLER_1_TEXTUREMANAGER_H

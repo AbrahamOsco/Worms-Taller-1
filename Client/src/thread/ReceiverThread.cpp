@@ -2,6 +2,7 @@
 // Created by riclui on 31/10/23.
 //
 
+#include <utility>
 #include "ReceiverThread.h"
 #include "../gameObject/worm/Worm.h"
 #include "../gameObject/gameInfo/GameInfo.h"
@@ -46,10 +47,12 @@ void ReceiverThread::run() {
                 }
 
                 std::vector<ProjectileDTO> projectiles = projectilesDto.getProjectilesDto();
-                for (const ProjectileDTO &projectileDto: projectiles) {
+                for (const ProjectileDTO &projectileDto : projectiles) {
                     std::unique_ptr<Projectile> projectile = std::make_unique<Projectile>(projectileDto.getPositionX(),
-                                                                                          projectileDto.getPositionY(),
-                                                                                          projectileDto.getTypeProjectil(), projectileDto.getTypeFocus(), projectileDto.getTypeExplode());
+                                                            projectileDto.getPositionY(),
+                                                            projectileDto.getTypeProjectil(),
+                                                            projectileDto.getTypeFocus(),
+                                                            projectileDto.getTypeExplode());
                     gameObjects.push_back(std::move(projectile));
                 }
 
@@ -57,44 +60,41 @@ void ReceiverThread::run() {
                 WeaponInventory weaponInventory;
                 std::vector<WeaponDTO> weapons = weaponsDto.getWeapons();
 
-                for (const WormDTO &wormDto: wormsDto) {
-
+                for (const WormDTO &wormDto : wormsDto) {
                     if (wormDto.getWeaponCurrent() == TypeWeapon::NONE_WEAPON) {
-                        std::unique_ptr<WormNoWeapon> worm = std::make_unique<WormNoWeapon>(static_cast<int>(wormDto.getIdPlayer()),
-                                                                                            static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
-                                                                                            wormDto.getHpWorm(),
-                                                                                            wormDto.getDirectionLook(), wormDto.getTypeFocus(), wormDto.getMoveWorm(), isMyTurn);
+                        std::unique_ptr<WormNoWeapon> worm = std::make_unique<WormNoWeapon>
+                        (static_cast<int>(wormDto.getIdPlayer()), static_cast<int>(wormDto.getPositionX()),
+                        static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(), wormDto.getDirectionLook(),
+                        wormDto.getTypeFocus(), wormDto.getMoveWorm(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
                     } else if (wormDto.getWeaponCurrent() == TypeWeapon::BAZOOKA) {
-                        std::unique_ptr<WormRangedWeapon> worm = std::make_unique<WormRangedWeapon>(static_cast<int>(wormDto.getIdPlayer()),
-                                                                                                    static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
-                                                                                                    wormDto.getHpWorm(),
-                                                                                                    wormDto.getDirectionLook(), wormDto.getTypeFocus(),
-                                                                                                    wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), weaponSightDto.getPositionXSight(),
-                                                                                                    weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight(), isMyTurn);
+                        std::unique_ptr<WormRangedWeapon> worm = std::make_unique<WormRangedWeapon>
+                        (static_cast<int>(wormDto.getIdPlayer()), static_cast<int>(wormDto.getPositionX()),
+                        static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(), wormDto.getDirectionLook(),
+                        wormDto.getTypeFocus(), wormDto.getMoveWorm(), wormDto.getWeaponCurrent(),
+                        weaponSightDto.getPositionXSight(), weaponSightDto.getPositionYSight(),
+                        weaponSightDto.getTypeSight(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
                     } else if (wormDto.getWeaponCurrent() == TypeWeapon::BASEBALL_BAT) {
-                        std::unique_ptr<WormMeleeWeapon> worm = std::make_unique<WormMeleeWeapon>(static_cast<int>(wormDto.getIdPlayer()),
-                                                                                                  static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
-                                                                                                  wormDto.getHpWorm(),
-                                                                                                  wormDto.getDirectionLook(), wormDto.getTypeFocus(),
-                                                                                                  wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), weaponSightDto.getPositionXSight(),
-                                                                                                  weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight(), isMyTurn);
+                        std::unique_ptr<WormMeleeWeapon> worm = std::make_unique<WormMeleeWeapon>
+                        (static_cast<int>(wormDto.getIdPlayer()), static_cast<int>(wormDto.getPositionX()),
+                        static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(), wormDto.getDirectionLook(),
+                        wormDto.getTypeFocus(), wormDto.getMoveWorm(), wormDto.getWeaponCurrent(),
+                        weaponSightDto.getPositionXSight(), weaponSightDto.getPositionYSight(),
+                        weaponSightDto.getTypeSight(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
                     } else if (wormDto.getWeaponCurrent() == TypeWeapon::TELEPORT) {
                         std::cout << "focus: " << wormDto.getTypeFocus() << std::endl;
-                        std::unique_ptr<WormGuidedWeapon> worm = std::make_unique<WormGuidedWeapon>(static_cast<int>(wormDto.getIdPlayer()),
-                                                                                                    static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
-                                                                                                    wormDto.getHpWorm(),
-                                                                                                    wormDto.getDirectionLook(), wormDto.getTypeFocus(),
-                                                                                                    wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), isMyTurn);
+                        std::unique_ptr<WormGuidedWeapon> worm = std::make_unique<WormGuidedWeapon>
+                        (static_cast<int>(wormDto.getIdPlayer()), static_cast<int>(wormDto.getPositionX()),
+                        static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(), wormDto.getDirectionLook(),
+                        wormDto.getTypeFocus(), wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
                     } else if (wormDto.getWeaponCurrent() == TypeWeapon::AIR_ATTACK) {
-                        std::unique_ptr<WormGuidedWeapon> worm = std::make_unique<WormGuidedWeapon>(static_cast<int>(wormDto.getIdPlayer()),
-                                                                                                    static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
-                                                                                                    wormDto.getHpWorm(),
-                                                                                                    wormDto.getDirectionLook(), wormDto.getTypeFocus(),
-                                                                                                    wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), isMyTurn);
+                        std::unique_ptr<WormGuidedWeapon> worm = std::make_unique<WormGuidedWeapon>
+                        (static_cast<int>(wormDto.getIdPlayer()), static_cast<int>(wormDto.getPositionX()),
+                        static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(), wormDto.getDirectionLook(),
+                        wormDto.getTypeFocus(), wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
                     } else if (wormDto.getWeaponCurrent() == TypeWeapon::MORTAR) {
                         std::unique_ptr<WormRangedWeapon> worm = std::make_unique<WormRangedWeapon>(
@@ -142,31 +142,34 @@ void ReceiverThread::run() {
                                 weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
                     } else if (wormDto.getWeaponCurrent() == TypeWeapon::DYNAMITE_HOLDER) {
-                        std::unique_ptr<WormMeleeWeapon> worm = std::make_unique<WormMeleeWeapon>(static_cast<int>(wormDto.getIdPlayer()),
-                                                                                                  static_cast<int>(wormDto.getPositionX()), static_cast<int>(wormDto.getPositionY()),
-                                                                                                  wormDto.getHpWorm(),
-                                                                                                  wormDto.getDirectionLook(), wormDto.getTypeFocus(),
-                                                                                                  wormDto.getMoveWorm(), wormDto.getWeaponCurrent(), weaponSightDto.getPositionXSight(),
-                                                                                                  weaponSightDto.getPositionYSight(), weaponSightDto.getTypeSight(), isMyTurn);
+                        std::unique_ptr<WormMeleeWeapon> worm = std::make_unique<WormMeleeWeapon>
+                        (static_cast<int>(wormDto.getIdPlayer()), static_cast<int>(wormDto.getPositionX()),
+                        static_cast<int>(wormDto.getPositionY()), wormDto.getHpWorm(), wormDto.getDirectionLook(),
+                        wormDto.getTypeFocus(), wormDto.getMoveWorm(), wormDto.getWeaponCurrent(),
+                        weaponSightDto.getPositionXSight(), weaponSightDto.getPositionYSight(),
+                        weaponSightDto.getTypeSight(), isMyTurn);
                         gameObjects.push_back(std::move(worm));
                     }
-
                 }
 
                 std::vector<ProvisionDTO> provisions = snapShot.getVecProvisionDto();
-                for (const ProvisionDTO &provisionDto: provisions) {
-                    gameObjects.push_back(std::make_unique<Provision>(static_cast<int>(provisionDto.getPositionX()), static_cast<int>(provisionDto.getPositionY()), provisionDto.getTypeEffect(), provisionDto.getTypeContact()));
+                for (const ProvisionDTO &provisionDto : provisions) {
+                    gameObjects.push_back(std::make_unique<Provision>
+                    (static_cast<int>(provisionDto.getPositionX()),
+                    static_cast<int>(provisionDto.getPositionY()), provisionDto.getTypeEffect(),
+                    provisionDto.getTypeContact()));
                 }
 
-                for (const WeaponDTO &weaponDto: weapons) {
-                    WeaponIcon weaponIcon(weaponDto.getTypeWeapon(), static_cast<int>(weaponDto.getMunition()), weaponDto.getTypeMunition(), weaponsDto.getWeaponCurrent(), isMyTurn);
+                for (const WeaponDTO &weaponDto : weapons) {
+                    WeaponIcon weaponIcon(weaponDto.getTypeWeapon(), static_cast<int>(weaponDto.getMunition()),
+                    weaponDto.getTypeMunition(), weaponsDto.getWeaponCurrent(), isMyTurn);
                     weaponInventory.addWeapon(weaponIcon);
                 }
 
                 PlayersInfo playersInfo;
                 PlayersDTO playersDto = snapShot.getPlayersDto();
                 std::vector<PlayerDTO> players = playersDto.getPlayersDTO();
-                for (const PlayerDTO &playerDto: players) {
+                for (const PlayerDTO &playerDto : players) {
                     PlayerInfo playerInfo(static_cast<int>(playerDto.getIdPlayer()), playerDto.getNamePlayer(),
                                           static_cast<int>(playerDto.getTotalHpWorms()));
                     playersInfo.addPlayer(playerInfo);
@@ -175,11 +178,12 @@ void ReceiverThread::run() {
                 GameState gameState = snapShot.getTypeSnapShot();
                 TypeResult typeResult = snapShot.getEndGameDto().getTypeResult();
 
-                WindInfo wind(static_cast<int>(snapShot.getTurnDto().getValueWind()), snapShot.getTurnDto().getTypeWind());
+                WindInfo wind(static_cast<int>(snapShot.getTurnDto().getValueWind()),
+                snapShot.getTurnDto().getTypeWind());
 
                 gameObjects.push_back(
-                        std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, gameState, typeResult,turnDto.getTextTurn(),
-                                                   turnDto.getTimeLeft(), death));
+                        std::make_unique<GameInfo>(playersInfo, weaponInventory, wind,
+                        gameState, typeResult, turnDto.getTextTurn(), turnDto.getTimeLeft(), death));
 
                 pastCountWorm = wormsDto.size();
 
@@ -198,5 +202,5 @@ void ReceiverThread::run() {
 
 void ReceiverThread::stop() {
     m_running = false;
-    //m_protocol.stop();
+    // m_protocol.stop();
 }

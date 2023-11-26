@@ -4,7 +4,8 @@
 
 #include "SenderThread.h"
 
-SenderThread::SenderThread(ClientProtocol &protocol, Queue<std::unique_ptr<Command>> &queue, std::atomic<bool>& running) : m_protocol(protocol), m_queue(queue), m_running(running){}
+SenderThread::SenderThread(ClientProtocol &protocol, Queue<std::unique_ptr<Command>> &queue,
+                    std::atomic<bool>& running) : m_protocol(protocol), m_queue(queue), m_running(running) {}
 
 void SenderThread::run() {
     while (m_running) {
