@@ -4,8 +4,9 @@
 
 #include "WormNoWeapon.h"
 
-WormNoWeapon::WormNoWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocus &focus,
-                           const MoveWorm &moveWorm, bool isMyTurn) : Worm(id, x, y, hpWorm, direction, focus, moveWorm, isMyTurn) {}
+WormNoWeapon::WormNoWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction,
+                        const TypeFocus &focus, const MoveWorm &moveWorm, bool isMyTurn) :
+                        Worm(id, x, y, hpWorm, direction, focus, moveWorm, isMyTurn) {}
 
 void WormNoWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     Worm::draw(renderer, textureManager, camera);

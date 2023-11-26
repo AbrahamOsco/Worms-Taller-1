@@ -5,6 +5,7 @@
 #ifndef WORMS_TALLER_1_WORMRANGEDWEAPON_H
 #define WORMS_TALLER_1_WORMRANGEDWEAPON_H
 
+#include <memory>
 #include "Worm.h"
 #include "../crosshair/Crosshair.h"
 
@@ -13,7 +14,7 @@ class WormRangedWeapon : public Worm {
     Crosshair m_crossHair;
     int m_xCrossHair;
     int m_yCrossHair;
-public:
+ public:
     WormRangedWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocus &focus,
                      const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, int xCrossHair, int yCrossHair,
                      const TypeSight &typeSight, bool isMyTurn);
@@ -27,4 +28,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_WORMRANGEDWEAPON_H
+#endif  // WORMS_TALLER_1_WORMRANGEDWEAPON_H
