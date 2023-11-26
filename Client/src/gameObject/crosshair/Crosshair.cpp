@@ -2,14 +2,16 @@
 // Created by riclui on 13/11/23.
 //
 
+#include <utility>
 #include "Crosshair.h"
 #include "../../command/ChargeCmd.h"
 #include "../../command/FireCmd.h"
 #include "../../command/UpCmd.h"
 #include "../../command/DownCmd.h"
 
-Crosshair::Crosshair(int x, int y, const TypeSight &typeSight) : GameObject(LoaderParams(x, y, 60, 60, "crosshair")), m_typeSight(typeSight),
-                                                                 m_animation(true) {
+Crosshair::Crosshair(int x, int y, const TypeSight &typeSight) :
+                    GameObject(LoaderParams(x, y, 60, 60, "crosshair")), m_typeSight(typeSight),
+                    m_animation(true) {
     m_animation.setProps(m_textureID, 32, 60);
 }
 
@@ -36,7 +38,7 @@ Crosshair::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &
         }
 
         if (input.getKeyDown(SDL_SCANCODE_SPACE)) {
-            //std::cout << "disparo" << std::endl;
+            // std::cout << "disparo" << std::endl;
             std::unique_ptr<Command> command(new FireCmd());
             queue.move_push(std::move(command));
         }

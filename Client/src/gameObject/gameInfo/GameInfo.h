@@ -5,7 +5,8 @@
 #ifndef WORMS_TALLER_1_GAMEINFO_H
 #define WORMS_TALLER_1_GAMEINFO_H
 
-
+#include <string>
+#include <memory>
 #include "../GameObject.h"
 #include "PlayerInfo.h"
 #include "WeaponInventory.h"
@@ -14,7 +15,7 @@
 #include "../../soundManager/SoundManager.h"
 
 class GameInfo : public GameObject {
-private:
+ private:
     PlayersInfo m_players;
     WeaponInventory m_weaponInventory;
     WindInfo m_wind;
@@ -25,9 +26,10 @@ private:
     TypeResult m_typeResult;
     bool m_deathWorm;
 
-public:
-    GameInfo(PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind, GameState &gameState, TypeResult &typeResult,
-             const std::string &currentTurn, int time, bool deathWorm);
+ public:
+    GameInfo(PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind,
+            GameState &gameState, TypeResult &typeResult,
+            const std::string &currentTurn, int time, bool deathWorm);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 
@@ -36,4 +38,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_GAMEINFO_H
+#endif  // WORMS_TALLER_1_GAMEINFO_H
