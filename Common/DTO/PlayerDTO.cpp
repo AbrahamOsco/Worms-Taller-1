@@ -4,13 +4,12 @@
 
 #include "PlayerDTO.h"
 
-PlayerDTO::PlayerDTO() : DTO(PLAYER) {
-
+PlayerDTO::PlayerDTO() : DTO(PLAYER), idPlayer(0), turnType(NOT_IS_MY_TURN), totalHPWorms(0) {
 }
 
 PlayerDTO::PlayerDTO(const size_t &idPlayer, const std::string &aNamePlayer, const TurnType &aTurnType,
-                     const size_t &aTotalHPWorms) : DTO(PLAYER), idPlayer(idPlayer), namePlayer(aNamePlayer), turnType(aTurnType), totalHPWorms(aTotalHPWorms)  {
-
+                     const size_t &aTotalHPWorms) : DTO(PLAYER), idPlayer(idPlayer), namePlayer(aNamePlayer),
+                     turnType(aTurnType), totalHPWorms(aTotalHPWorms)  {
 }
 
 

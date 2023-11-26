@@ -3,11 +3,11 @@
 //
 
 #include "TurnDTO.h"
-TurnDTO::TurnDTO() : DTO(OperationType::TURN_DTO){}
+TurnDTO::TurnDTO() : DTO(OperationType::TURN_DTO), idPlayerCurrent(0), timeLeft(0), valueWind(0), typeWind(WIND_LEFT) {}
 
-TurnDTO::TurnDTO(const size_t &idPlayerCurrent, const std::string &textTurn, const size_t &timeLeft, const size_t &valueWind,
-                 const TypeWind &typeWind) : DTO(TURN_DTO), idPlayerCurrent(idPlayerCurrent),
-                 textTurn(textTurn), timeLeft(timeLeft), valueWind(valueWind), typeWind(typeWind) {
+TurnDTO::TurnDTO(const size_t &idPlayerCurrent, const std::string &textTurn, const size_t &timeLeft,
+                const size_t &valueWind, const TypeWind &typeWind) : DTO(TURN_DTO), idPlayerCurrent(idPlayerCurrent),
+                textTurn(textTurn), timeLeft(timeLeft), valueWind(valueWind), typeWind(typeWind) {
 }
 
 size_t TurnDTO::getIdPlayerCurrent() const {

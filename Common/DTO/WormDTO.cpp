@@ -1,11 +1,14 @@
 #include "WormDTO.h"
-WormDTO::WormDTO() : DTO(WORM) {
+WormDTO::WormDTO() : DTO(WORM), positionX(0), positionY(0), idPlayer(0), hpWorm(0), directionLook(LEFT),
+            moveWorm(STANDING), typeFocus(NO_FOCUS), weaponCurrent(BANANA) {
 }
 
 
-WormDTO::WormDTO(const size_t &positionX, const size_t &positionY, const size_t& idPlayer, const size_t &hpWorm, const Direction &aDirection,
-                 const TypeFocus &aTypeFocus, const MoveWorm &aMoveWorm, const TypeWeapon& weaponCurrent) : DTO(WORM), positionX(positionX), positionY(positionY),
-                                                                                                            idPlayer(idPlayer), hpWorm(hpWorm), directionLook(aDirection), moveWorm(aMoveWorm), typeFocus(aTypeFocus), weaponCurrent(weaponCurrent) {
+WormDTO::WormDTO(const size_t &positionX, const size_t &positionY, const size_t& idPlayer,
+                const size_t &hpWorm, const Direction &aDirection, const TypeFocus &aTypeFocus,
+                const MoveWorm &aMoveWorm, const TypeWeapon& weaponCurrent) : DTO(WORM), positionX(positionX),
+                positionY(positionY), idPlayer(idPlayer), hpWorm(hpWorm), directionLook(aDirection),
+                moveWorm(aMoveWorm), typeFocus(aTypeFocus), weaponCurrent(weaponCurrent) {
 }
 
 size_t WormDTO::getPositionX() const {

@@ -3,7 +3,7 @@
 //
 
 #include "BeamDTO.h"
-BeamDTO::BeamDTO() : DTO(BEAM), xCenter(0), yCenter(0) {
+BeamDTO::BeamDTO() : DTO(BEAM), xCenter(0), yCenter(0), typeBeam(SHORT_BEAM), length(0), height(0), angle(0) {
 }
 
 BeamDTO::BeamDTO(const TypeBeam &aTypeBeam, const size_t &aXcenter, const size_t &aYCenter, const size_t &aLength,

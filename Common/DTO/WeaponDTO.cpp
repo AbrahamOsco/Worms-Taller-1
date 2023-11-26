@@ -3,7 +3,7 @@
 //
 
 #include "WeaponDTO.h"
-WeaponDTO::WeaponDTO() : DTO(WEAPON), typeWeapon(NONE_WEAPON) {
+WeaponDTO::WeaponDTO() : DTO(WEAPON), typeWeapon(NONE_WEAPON), typeMunition(INFINITE), munition(0) {
 }
 
 WeaponDTO::WeaponDTO(const TypeWeapon &aTypeWeapon, const TypeMunition &aTypeMunition, const size_t &aMunition)

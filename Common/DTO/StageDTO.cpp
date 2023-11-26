@@ -4,9 +4,10 @@
 
 #include "StageDTO.h"
 
-StageDTO::StageDTO() : DTO(STAGE) {}
+StageDTO::StageDTO() : DTO(STAGE), idPlayer(0), positionYWater(0) {}
 
-StageDTO::StageDTO(const std::vector<BeamDTO> &beams, const size_t& positionYWater, const std::string& background) : DTO(STAGE),
+StageDTO::StageDTO(const std::vector<BeamDTO> &beams, const size_t& positionYWater,
+            const std::string& background) : DTO(STAGE), idPlayer(0),
             beams(beams), positionYWater(positionYWater), background(background) {}
 
 void StageDTO::setBeams(const std::vector<BeamDTO> &beams) {

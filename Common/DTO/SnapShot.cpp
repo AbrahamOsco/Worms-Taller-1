@@ -5,14 +5,16 @@
 #include "SnapShot.h"
 
 SnapShot::SnapShot(const EndGameDTO &aEndGameDTO) : DTO(SNAP_SHOT) , typeSnapShot(GAME_END), endGameDTO(aEndGameDTO) {
-
 }
 
 
-SnapShot::SnapShot(const std::vector<WormDTO> &wormsDTO, const PlayersDTO &aPlayersDTO, const WeaponsDTO& weaponsDTO, const WeaponSightDTO &weaponSightDTO,
-                   const ProjectilesDTO &projectilesDTO, const TurnDTO& turnDto, const std::vector<ProvisionDTO> &vecProvisionDTO) : DTO(SNAP_SHOT),
+SnapShot::SnapShot(const std::vector<WormDTO> &wormsDTO, const PlayersDTO &aPlayersDTO,
+                const WeaponsDTO& weaponsDTO, const WeaponSightDTO &weaponSightDTO,
+                const ProjectilesDTO &projectilesDTO, const TurnDTO& turnDto,
+                const std::vector<ProvisionDTO> &vecProvisionDTO) : DTO(SNAP_SHOT),
             typeSnapShot(GAME_PROGRESS), wormsDTO(wormsDTO), playersDTO(aPlayersDTO), weaponsDTO(weaponsDTO),
-            weaponSightDTO(weaponSightDTO), projectilesDTO(projectilesDTO),turnDto(turnDto), vecProvisionDTO(vecProvisionDTO) {
+            weaponSightDTO(weaponSightDTO), projectilesDTO(projectilesDTO), turnDto(turnDto),
+            vecProvisionDTO(vecProvisionDTO) {
 }
 
 

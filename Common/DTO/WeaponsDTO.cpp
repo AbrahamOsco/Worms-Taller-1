@@ -4,7 +4,7 @@
 
 #include "WeaponsDTO.h"
 
-WeaponsDTO::WeaponsDTO() : DTO(WEAPONS_TOTAL) {
+WeaponsDTO::WeaponsDTO() : DTO(WEAPONS_TOTAL), idPlayer(0), weaponCurrent(BANANA) {
 }
 
 WeaponsDTO::WeaponsDTO(const size_t &idPlayer, const std::vector<WeaponDTO> &aWeapons, const TypeWeapon& weaponCurrent)

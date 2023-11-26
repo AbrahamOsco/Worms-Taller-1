@@ -4,10 +4,11 @@
 
 #include "ProjectilesDTO.h"
 
-ProjectilesDTO::ProjectilesDTO() : DTO(PROJECTILES_DTO) {}
+ProjectilesDTO::ProjectilesDTO() : DTO(PROJECTILES_DTO), typeShowProjectiles(NO_SHOW_PROJECTILES) {}
 
-ProjectilesDTO::ProjectilesDTO(const TypeShowProjectiles &typeShowProjectiles, const std::vector<ProjectileDTO> &projectilesDTO) :
-            DTO(PROJECTILES_DTO), typeShowProjectiles(typeShowProjectiles), projectilesDTO(projectilesDTO){
+ProjectilesDTO::ProjectilesDTO(const TypeShowProjectiles &typeShowProjectiles,
+                const std::vector<ProjectileDTO> &projectilesDTO) :
+                DTO(PROJECTILES_DTO), typeShowProjectiles(typeShowProjectiles), projectilesDTO(projectilesDTO) {
 }
 
 
