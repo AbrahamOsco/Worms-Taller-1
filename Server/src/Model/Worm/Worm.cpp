@@ -380,7 +380,7 @@ bool Worm::attackWithAirAttack(const int &posXAttack) {
         return false;
     }
     AirAttackDetonator* airAttackDetonator = (AirAttackDetonator*) this->armament.getWeaponCurrentPtr();
-    airAttackDetonator->detonate(posXAttack, aWorld, this->typeFocus);
+    airAttackDetonator->detonate(posXAttack, aWorld, FOCUS);
     this->typeFocus = NO_FOCUS; // nos sacamos el focus y disparamos el misil. hasta q explote.
     waitingToGetFocus = true;
     return true;
