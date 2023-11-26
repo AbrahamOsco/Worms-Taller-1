@@ -2,6 +2,7 @@
 #define CHOOSEMAPTOEDIT_H
 
 #include <QDialog>
+#include <memory>
 #include "editingWindow.h"
 #include "ui_chooseMapToEdit.h"
 

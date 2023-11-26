@@ -2,6 +2,7 @@
 #define NAMENEWMAP_H
 
 #include <QWidget>
+#include <memory>
 #include "editingWindow.h"
 #include "ui_nameNewMap.h"
 
