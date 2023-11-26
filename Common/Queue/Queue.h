@@ -8,6 +8,7 @@
 #include <queue>
 #include <exception>
 #include <stdexcept>
+#include <utility>
 
 struct ClosedQueue: public std::runtime_error {
     ClosedQueue(): std::runtime_error("The Queue is closed") {}
@@ -27,7 +28,7 @@ struct ClosedQueue: public std::runtime_error {
  * */
 template <typename T, class C = std::deque<T> >
 class Queue {
-private:
+ private:
     std::queue<T, C> q;                    // cppcheck-suppress unusedStructMember
     const unsigned int max_size;           // cppcheck-suppress unusedStructMember
     bool closed;                           // cppcheck-suppress unusedStructMember
@@ -35,7 +36,7 @@ private:
     std::condition_variable is_not_full;   // cppcheck-suppress unusedStructMember
     std::condition_variable is_not_empty;  // cppcheck-suppress unusedStructMember
 
-public:
+ public:
     Queue(): max_size(UINT_MAX - 1), closed(false) {}
     explicit Queue(const unsigned int max_size): max_size(max_size), closed(false) {}
 
@@ -125,7 +126,7 @@ public:
         }
 
         if (q.size() == this->max_size) {
-            return false; // No se pudo insertar, la cola está llena
+            return false;  // No se pudo insertar, la cola está llena
         }
 
         if (q.empty()) {
@@ -133,7 +134,7 @@ public:
         }
 
         q.push(std::move(val));
-        return true; // Inserción exitosa
+        return true;  // Inserción exitosa
     }
 
     bool move_try_pop(T& val) {
@@ -143,7 +144,7 @@ public:
             if (closed) {
                 throw ClosedQueue();
             }
-            return false; // No hay elementos para extraer
+            return false;  // No hay elementos para extraer
         }
 
         if (q.size() == this->max_size) {
@@ -152,7 +153,7 @@ public:
 
         val = std::move(q.front());
         q.pop();
-        return true; // Extracción exitosa
+        return true;  // Extracción exitosa
     }
 
     void move_push(T&& val) {
@@ -204,14 +205,14 @@ public:
         is_not_empty.notify_all();
     }
 
-private:
+ private:
     Queue(const Queue&) = delete;
     Queue& operator=(const Queue&) = delete;
 };
 
 template <>
 class Queue<void*> {
-private:
+ private:
     std::queue<void*> q;
     const unsigned int max_size;
 
@@ -221,7 +222,7 @@ private:
     std::condition_variable is_not_full;
     std::condition_variable is_not_empty;
 
-public:
+ public:
     // Constructor
     explicit Queue(const unsigned int max_size): max_size(max_size), closed(false) {}
 
@@ -326,7 +327,7 @@ public:
         is_not_empty.notify_all();
     }
 
-private:
+ private:
     Queue(const Queue&) = delete;
     Queue& operator=(const Queue&) = delete;
 };
@@ -334,7 +335,7 @@ private:
 
 template <typename T>
 class Queue<T*>: private Queue<void*> {
-public:
+ public:
     explicit Queue(const unsigned int max_size): Queue<void*>(max_size) {}
 
     bool try_push(T* const& val) { return Queue<void*>::try_push(val); }
@@ -350,7 +351,7 @@ public:
 
     void close() { return Queue<void*>::close(); }  // cppcheck-suppress duplInheritedMember
 
-private:
+ private:
     Queue(const Queue&) = delete;
     Queue& operator=(const Queue&) = delete;
 };

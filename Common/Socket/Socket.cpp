@@ -231,7 +231,7 @@ Socket& Socket::operator=(Socket&& other) {
      * y debemos desinicializarlo primero antes de pisarle
      * el recurso con el que le robaremos al otro socket (`other`)
      * */
-    if (not this->closed) {
+    if (!this->closed) {
         ::shutdown(this->skt, 2);
         ::close(this->skt);
     }
@@ -417,7 +417,7 @@ void Socket::shutdown(int how) {
         throw LibError(errno, "socket shutdown failed");
     }
 }
-bool Socket::isClosed() const{
+bool Socket::isClosed() const {
     return this->closed;
 }
 
@@ -429,14 +429,14 @@ int Socket::close() {
 
 void Socket::totalClosure() {
     chk_skt_or_fail();
-    if (not this->closed) {
+    if (!this->closed) {
         ::shutdown(this->skt, SHUT_RDWR);
         ::close(this->skt);
     }
 }
 
 Socket::~Socket() {
-    if (not this->closed) {
+    if (!this->closed) {
         ::shutdown(this->skt, 2);
         ::close(this->skt);
     }

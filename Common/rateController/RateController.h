@@ -10,15 +10,15 @@
 #include <chrono>
 
 class RateController {
-private:
+ private:
     int rate;
     std::chrono::duration<float, std::milli> diff;
-    int rest,lost,behind,it;
+    int rest, lost, behind, it;
 
-    std::chrono::steady_clock::time_point t1,t2;
+    std::chrono::steady_clock::time_point t1, t2;
 
-public:
-    RateController(int rate);
+ public:
+    explicit RateController(int rate);
 
     void start();
     void stop();
@@ -30,4 +30,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_RATECONTROLLER_H
+#endif  // WORMS_TALLER_1_RATECONTROLLER_H

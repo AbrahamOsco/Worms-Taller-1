@@ -12,7 +12,7 @@
  * en direcciones IPv4 para TCP.
  * */
 class Resolver {
-private:
+ private:
     struct addrinfo* result;  // cppcheck-suppress unusedStructMember
     struct addrinfo* _next;   // cppcheck-suppress unusedStructMember
 
@@ -31,7 +31,7 @@ private:
      * */
     void chk_addr_or_fail() const;
 
-public:
+ public:
     /* Crea el objeto y resuelve el dado nombre del host y servicio.
      *
      * Si `is_passive` es `true` y `hostname` es `nullptr`,

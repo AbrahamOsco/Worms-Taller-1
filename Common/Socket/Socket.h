@@ -9,7 +9,7 @@
 #include <string>
 
 class Socket {
-private:
+ private:
     int skt;      // cppcheck-suppress unusedStructMember
     bool closed;  // cppcheck-suppress unusedStructMember
 
@@ -43,7 +43,7 @@ private:
      * */
     void chk_skt_or_fail() const;
 
-public:
+ public:
     /*
      * Constructores para `Socket` tanto para conectarse a un servidor
      * (`Socket::Socket(const char*, const char*)`) como para ser usado

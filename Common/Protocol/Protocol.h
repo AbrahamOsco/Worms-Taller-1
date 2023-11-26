@@ -7,15 +7,16 @@
 #include "../Socket/Socket.h"
 #endif
 
-#include "../DTO/WormDTO.h"
-#include <vector>
-#include <stdexcept>
 #include <netdb.h>
+#include <vector>
+#include <string>
+#include <stdexcept>
+#include "../DTO/WormDTO.h"
+
 #define CLOSED_CONNECTION 0
 
 class Protocol {
-
-protected:
+ protected:
     Socket& skt;
     bool wasClosed;
 
@@ -23,7 +24,7 @@ protected:
 
     std::string recvString();
 
-public:
+ public:
     explicit Protocol(Socket& skt);
 
     void sendANumberByte(const unsigned int& aNumber);
@@ -40,4 +41,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_PROTOCOL_H
+#endif  // WORMS_TALLER_1_PROTOCOL_H
