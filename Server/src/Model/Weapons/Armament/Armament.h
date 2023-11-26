@@ -16,13 +16,14 @@
 #include "../../../../../Common/DTO/ProjectilesDTO.h"
 
 class Armament {
-private:
+ private:
     size_t idPlayer;
-    std::map<TypeWeapon, std::unique_ptr<Weapon> > armament; // si no funcionan usaremos unique_ptr en weapon
+    std::map<TypeWeapon, std::unique_ptr<Weapon> > armament;  // si no funcionan usaremos unique_ptr en weapon
     TypeWeapon currentWeapon;
     TypeWeapon weaponOnStandBy;
     const GameParameters& gameParameters;
-public:
+
+ public:
     Armament(const size_t &idPlayer, const GameParameters &gameParameters);
 
     bool hasAWeapon();
@@ -35,7 +36,7 @@ public:
 
     bool hasAScoped();
 
-    //void changeDirection(const Direction &direction);
+    // void changeDirection(const Direction &direction);
 
     void putWeaponOnStandByAndUnarmed();
 
@@ -74,4 +75,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_ARMAMENT_H
+#endif  // WORMS_TALLER_1_ARMAMENT_H

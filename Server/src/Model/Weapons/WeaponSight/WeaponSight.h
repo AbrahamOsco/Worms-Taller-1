@@ -5,7 +5,7 @@
 #ifndef WORMS_TALLER_1_WEAPONSIGHT_H
 #define WORMS_TALLER_1_WEAPONSIGHT_H
 
-
+#include <utility>
 #include "../WeaponRayCast/WeaponRayCast.h"
 #include "../../../../../Common/DTO/WormDTO.h"
 #include "../../../../../Common/DTO/WeaponSightDTO.h"
@@ -16,13 +16,15 @@
 #define RADIANSTODEGREE (180/b2_pi)
 
 class WeaponSight {
-private:
+ private:
     WeaponRayCast weaponRayCast;
     float rayLength;
-    float rayAngle; // esta en grados.
-    Direction direction; //posiblemnte elminarla ya que lo usamos dentro de un metodo y como que no mas por ej ataques
+    float rayAngle;  // esta en grados.
+    Direction direction;
+    // posiblemnte elminarla ya que lo usamos dentro de un metodo y como que no mas por ej ataques
     const GameParameters& gameParameters;
-public:
+
+ public:
     WeaponSight(const float &rayLength, const float &rayAngle, const GameParameters& parameters);
 
     void resetRayCast();
@@ -31,7 +33,8 @@ public:
 
     void decreaseAngle();
 
-    GameObject *getBodyCollidesWithRayCast(b2World *world, const b2Vec2 &positionWorm, const Direction &directionCurrent);
+    GameObject *getBodyCollidesWithRayCast(b2World *world, const b2Vec2 &positionWorm,
+                const Direction &directionCurrent);
 
     b2Vec2 getPositionP2RayCast(const b2Vec2 &positionWorm, const Direction &directionCurrent);
 
@@ -41,4 +44,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_WEAPONSIGHT_H
+#endif  // WORMS_TALLER_1_WEAPONSIGHT_H

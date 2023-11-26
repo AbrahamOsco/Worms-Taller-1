@@ -6,7 +6,7 @@
 #include "WeaponRayCast.h"
 #include "../../GameObject/GameObject.h"
 
-WeaponRayCast::WeaponRayCast() : body(nullptr), point(b2Vec2(0.0f, 0.0f)), normal(b2Vec2(0.0f, 0.0f)), fraction(0.0f){}
+WeaponRayCast::WeaponRayCast() : body(nullptr), point(b2Vec2(0.0f, 0.0f)), normal(b2Vec2(0.0f, 0.0f)), fraction(0.0f) {}
 
 float WeaponRayCast::ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float fraction) {
     GameObject* gameObject = (GameObject*) fixture->GetBody()->GetUserData().pointer;
@@ -17,7 +17,7 @@ float WeaponRayCast::ReportFixture(b2Fixture *fixture, const b2Vec2 &point, cons
     return fraction;
 }
 
-b2Body *WeaponRayCast::getBody() const{
+b2Body *WeaponRayCast::getBody() const {
     return this->body;
 }
 
