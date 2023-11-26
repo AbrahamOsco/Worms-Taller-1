@@ -5,7 +5,8 @@
 #include "ProjectileMortar.h"
 
 ProjectileMortar::ProjectileMortar(const GameParameters &gameParameters, const TypeFocus &typeFocus)
-        : GameObject(ENTITY_MORTAR_PROJECTILE), gameParameters(gameParameters), typeFocus(typeFocus), explodable(0.0f, 0.0f, 0.0f)  {
+        : GameObject(ENTITY_MORTAR_PROJECTILE), gameParameters(gameParameters),
+        typeFocus(typeFocus), explodable(0.0f, 0.0f, 0.0f), aWorld(nullptr)  {
     explosionIterations = gameParameters.getAnimationIterations();
     this->windValue = 0.0f;
 }
@@ -18,7 +19,7 @@ void ProjectileMortar::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const b
     projMortarDef.type = b2_dynamicBody;
     projMortarDef.fixedRotation = true;
     projMortarDef.bullet = true;
-    projMortarDef.position.Set(positionP2.x, positionP2.y );
+    projMortarDef.position.Set(positionP2.x, positionP2.y);
     projMortarDef.userData.pointer = (uintptr_t) this;
     this->body = aWorld->CreateBody(&projMortarDef);
     b2CircleShape projMortarShape;
@@ -35,7 +36,7 @@ void ProjectileMortar::addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const b
     b2Vec2 vectorWind(windValueSelect, 0.0f);
     this->body->ApplyForceToCenter(vectorWind, true);
 
-    body->ApplyLinearImpulse( impulseProjectile, body->GetWorldCenter(), true);
+    body->ApplyLinearImpulse(impulseProjectile, body->GetWorldCenter(), true);
     this->aWorld = aWorld;
 }
 
@@ -45,7 +46,6 @@ void ProjectileMortar::searchWormAndCollide(const b2Vec2 &projectilePosition) {
 }
 
 void ProjectileMortar::throwFragments() {
-
 }
 
 void ProjectileMortar::getProjectileDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {

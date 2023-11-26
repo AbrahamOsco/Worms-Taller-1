@@ -5,13 +5,11 @@
 #ifndef WORMS_TALLER_1_FRAGMENTGRENADE_H
 #define WORMS_TALLER_1_FRAGMENTGRENADE_H
 
-
+#include <vector>
 #include "../Grenade/Grenade.h"
 
 class FragmentGrenade : public Grenade {
-private:
-
-public:
+ public:
     FragmentGrenade(const GameParameters &gameParameters, const int& waitTime, const TypeFocus& typeFocus);
 
     void getProjectileDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
@@ -20,4 +18,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_FRAGMENTGRENADE_H
+#endif  // WORMS_TALLER_1_FRAGMENTGRENADE_H

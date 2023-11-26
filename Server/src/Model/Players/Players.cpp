@@ -109,7 +109,7 @@ size_t Players::startAPlayerTurn() {
         if (playerIterator == players.end()) {
             playerIterator = players.begin();
         }
-        if ( !players.at(playerIterator->first).lostAllWorms() ) {
+        if ( playerIterator != players.end() && !players.at(playerIterator->first).lostAllWorms() ) {
             break;
         }
     }

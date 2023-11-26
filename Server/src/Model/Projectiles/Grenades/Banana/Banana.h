@@ -5,14 +5,12 @@
 #ifndef WORMS_TALLER_1_BANANA_H
 #define WORMS_TALLER_1_BANANA_H
 
-
+#include <vector>
 #include "../Grenade/Grenade.h"
 #include "../../Explodable/Explodable.h"
 
 class Banana : public Grenade {
-private:
-public:
-
+ public:
     Banana(const GameParameters &gameParameters, const int& waitTime, const TypeFocus& typeFocus);
 
     void getProjectileDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
@@ -21,4 +19,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_BANANA_H
+#endif  // WORMS_TALLER_1_BANANA_H

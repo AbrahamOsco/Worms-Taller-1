@@ -5,12 +5,12 @@
 #ifndef WORMS_TALLER_1_GREENGRENADE_H
 #define WORMS_TALLER_1_GREENGRENADE_H
 
-
+#include <vector>
 #include "../Grenade/Grenade.h"
 #include "../../Explodable/Explodable.h"
 
 class GreenGrenade : public Grenade {
-public:
+ public:
     GreenGrenade(const GameParameters &gameParameters, const int& waitTime, const TypeFocus& typeFocus);
 
     void getProjectileDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
@@ -19,4 +19,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_GREENGRENADE_H
+#endif  // WORMS_TALLER_1_GREENGRENADE_H
