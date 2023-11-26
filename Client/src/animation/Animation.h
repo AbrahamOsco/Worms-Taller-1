@@ -7,16 +7,16 @@
 
 
 class Animation {
-protected:
+ protected:
     bool m_repeat;
     bool m_isEnded;
     int m_currentFrame;
 
-public:
+ public:
     explicit Animation(bool repeat = true);
     virtual void update() = 0;
     bool isEnded() const;
 };
 
 
-#endif //WORMS_TALLER_1_ANIMATION_H
+#endif  // WORMS_TALLER_1_ANIMATION_H
