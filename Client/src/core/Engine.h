@@ -5,7 +5,8 @@
 #ifndef WORMS_TALLER_1_ENGINE_H
 #define WORMS_TALLER_1_ENGINE_H
 
-
+#include <string>
+#include <vector>
 #include <memory>
 #include "../graphics/TextureManager.h"
 #include "../timer/Timer.h"
@@ -19,7 +20,7 @@
 #include "../gameObject/water/Water.h"
 
 class Engine {
-private:
+ private:
     TextureManager m_textureManager;
     SoundManager m_soundManager;
     std::atomic<bool>& m_running;
@@ -38,9 +39,10 @@ private:
     Queue<std::unique_ptr<Command>> &m_bQueue;
     Queue<std::vector<std::unique_ptr<GameObject>>> &m_nbQueue;
 
-public:
-    Engine(std::vector<Beam> &beams, Water &water, const std::string &background, Queue<std::unique_ptr<Command>> &bQueue,
-           Queue<std::vector<std::unique_ptr<GameObject>>> &nbQueue, std::atomic<bool>& running);
+ public:
+    Engine(std::vector<Beam> &beams, Water &water, const std::string &background,
+            Queue<std::unique_ptr<Command>> &bQueue,
+            Queue<std::vector<std::unique_ptr<GameObject>>> &nbQueue, std::atomic<bool>& running);
 
     ~Engine() = default;
 
@@ -58,4 +60,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_ENGINE_H
+#endif  // WORMS_TALLER_1_ENGINE_H
