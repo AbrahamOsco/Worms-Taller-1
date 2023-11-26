@@ -21,6 +21,13 @@ public:
     ReceiverThread(ClientProtocol &protocol, Queue<std::vector<std::unique_ptr<GameObject>>> &queue, std::atomic<bool>& running);
     void run() override;
     void stop() override;
+
+    void
+    processGameProgressSnapshot(const SnapShot &snapShot, std::vector<std::unique_ptr<GameObject>> &gameObjects, size_t pastCountWorm,
+                                size_t currentCountWorm) const;
+
+    void processNonGameProgressSnapshot(const SnapShot &snapShot,
+                                        std::vector<std::unique_ptr<GameObject>> &gameObjects) const;
 };
 
 
