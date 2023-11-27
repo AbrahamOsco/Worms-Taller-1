@@ -149,7 +149,7 @@ void Worm::walk(Direction aDirection) {
             if (directionLook == Direction::RIGHT) {
                 impulseX *= gameParameters.getWormImpulseFactorClimbingUp();  // WORM_FACTOR_IMPULSE_CLIMBING_UP
                 impulseY = impulseX;
-            } else{
+            } else {
                 impulseY = impulseX*-1;
             }
         }
@@ -231,7 +231,7 @@ Direction Worm::getDirection() {
 // DTOS.
 WormDTO Worm::getWormDTO() const {
     TypeWeapon typeWeapon = NONE_WEAPON;
-    if(idWormCurrentPlay == idWorm){
+    if (idWormCurrentPlay == idWorm) {
         typeWeapon = armament.getWeaponCurrent();
     }
     return WormDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),

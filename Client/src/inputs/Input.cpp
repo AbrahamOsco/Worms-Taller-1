@@ -5,7 +5,7 @@
 #include "Input.h"
 
 Input::Input() : m_quit(false), m_mouseLeftButtonDown(false), m_mouseRightButtonDown(false),
-    m_mouseX(0), m_mouseY(0) {
+    m_mouseX(0), m_mouseY(0), m_press(false) {
     m_keyStates = SDL_GetKeyboardState(nullptr);
 }
 
