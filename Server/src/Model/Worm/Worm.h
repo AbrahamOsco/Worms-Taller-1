@@ -160,6 +160,8 @@ public:
     void assignTypeFocus(const TypeFocus &focus);
 
     bool hasTheTeleport() const;
+
+    bool hasTheAirAttack() const;
 };
 
 

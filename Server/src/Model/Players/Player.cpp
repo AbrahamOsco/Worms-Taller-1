@@ -146,7 +146,7 @@ void Player::setLifeAllWorm(const float &aNewHP) {
 
 void Player::getMovingWorms(std::vector<std::pair<size_t, size_t>>& idPlayerAndWorm) {
     for (auto& aWorm : worms) {
-        if ( !aWorm.second->wasDestroyedWorm() &&  !!aWorm.second->isStopTheWorm() ) {
+        if ( !aWorm.second->wasDestroyedWorm() &&  ! aWorm.second->isStopTheWorm() ) {
             idPlayerAndWorm.emplace_back(this->idPlayer, aWorm.first);
         }
     }

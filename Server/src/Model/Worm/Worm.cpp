@@ -505,4 +505,7 @@ bool Worm::hasTheTeleport() const {
     return armament.getWeaponCurrent() == TELEPORT;
 }
 
+bool Worm::hasTheAirAttack() const {
+    return armament.getWeaponCurrent() == AIR_ATTACK;
+}
 
