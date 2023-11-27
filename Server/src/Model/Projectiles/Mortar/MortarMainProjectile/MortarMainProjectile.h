@@ -5,13 +5,9 @@
 #ifndef WORMS_TALLER_1_MORTARMAINPROJECTILE_H
 #define WORMS_TALLER_1_MORTARMAINPROJECTILE_H
 
-<<<<<<< HEAD
 #include <memory>
 #include <vector>
-#include "../ProjectileMortar.h"
-=======
 #include "../ProjectilMortar/ProjectileMortar.h"
->>>>>>> ddca367 (Refactor del server se hacen las correciones)
 
 class MortarMainProjectile : public ProjectileMortar {
  private:

@@ -39,12 +39,9 @@ class ProjectileMortar : public GameObject {
     void removeAIteration();
 
     int getNumberIterations() const;
-<<<<<<< HEAD:Server/src/Model/Projectiles/Mortar/ProjectileMortar.h
-=======
 
     virtual ~ ProjectileMortar() = default;
 
->>>>>>> ddca367 (Refactor del server se hacen las correciones):Server/src/Model/Projectiles/Mortar/ProjectilMortar/ProjectileMortar.h
 };
 
 
