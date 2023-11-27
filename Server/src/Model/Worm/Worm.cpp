@@ -145,6 +145,8 @@ void Worm::walk(Direction aDirection) {
                 impulseY = impulseX;
             }
         }
+
+
         b2Vec2 impulseSpeed(impulseX, impulseY); //  por la gravedad
         body->ApplyLinearImpulse(impulseSpeed, body->GetWorldCenter(), true);
     }
