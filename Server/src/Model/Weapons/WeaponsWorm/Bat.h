@@ -5,18 +5,19 @@
 #ifndef WORMS_TALLER_1_BAT_H
 #define WORMS_TALLER_1_BAT_H
 
-
+#include <utility>
 #include "Weapon.h"
 #include "../WeaponRayCast/WeaponRayCast.h"
 #include "../WeaponSight/WeaponSight.h"
 
 
-// agregar weponaSight t toda la gracia. 
+// agregar weponaSight t toda la gracia.
 class Bat : public Weapon{
-private:
+ private:
     std::pair<float, float> impulseWeapon;
     WeaponSight weaponSight;
-public:
+
+ public:
     Bat(const TypeWeapon &aTypeWeapon, const float &mainDamage, const TypeMunition &aTypeMunition,
         const size_t &aMunition, const GameParameters& gameParameters);
 
@@ -32,9 +33,9 @@ public:
 
     bool launchesProjectiles() override;
 
-    //virtual void prepareWeapon(const Direction &aDirection) override;
+    // virtual void prepareWeapon(const Direction &aDirection) override;
     void searchWormAndAttack(b2World *world, const b2Vec2 &positionWorm, const Direction &directionCurrent);
 };
 
 
-#endif //WORMS_TALLER_1_BAT_H
+#endif  // WORMS_TALLER_1_BAT_H

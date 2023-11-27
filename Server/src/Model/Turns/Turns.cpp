@@ -8,14 +8,15 @@
 
 #define MAX_VALUE_WIND 5
 Turns::Turns(Players &players, const GameParameters &parameters, b2World *world)
-        : gameParameters(parameters), players(players), timeLeft(parameters.getTimeForTurn()), damageRecognized(false), attackRecognized(false), valueWind(0.0f), world(world),
-          focusController(players) {
+        : gameParameters(parameters), players(players), timeLeft(parameters.getTimeForTurn()),
+            damageRecognized(false), attackRecognized(false), valueWind(0.0f), world(world),
+          focusController(players), idPlayerCurrent(0), idWormCurrent(0), typeWind(WIND_LEFT) {
 }
 
-float Turns::getWindValueForPhysics(){
+float Turns::getWindValueForPhysics() {
     valueWind = (rand() % (MAX_VALUE_WIND -1) ) + 2;
     int randomNumber = rand() % MAX_VALUE_WIND;
-    if(randomNumber % 2 == 0 ){
+    if (randomNumber % 2 == 0) {
         typeWind = WIND_RIGHT;
     } else {
         typeWind = WIND_LEFT;

@@ -38,7 +38,6 @@ Edges::Edges(b2World *world, const float &height, const float &width) : GameObje
     shape.SetTwoSided(b2Vec2(-GameParameters::getOffsetLateral(), GameParameters::getOffsetSecondBarrier()),
         b2Vec2(widthOffset + GameParameters::getOffsetLateral(), GameParameters::getOffsetSecondBarrier()));
     body->CreateFixture(&shape, 0.0f);
-
 }
 
 

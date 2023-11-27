@@ -5,14 +5,15 @@
 #ifndef WORMS_TALLER_1_REDGRENADE_H
 #define WORMS_TALLER_1_REDGRENADE_H
 
-
+#include <memory>
+#include <vector>
 #include "../Grenade/Grenade.h"
 
 class RedGrenade : public Grenade {
-private:
+ private:
     std::vector<b2Vec2> fragmentImpulses;
     std::vector<std::unique_ptr<Grenade>> fragmentGrenades;
-public:
+ public:
     RedGrenade(const GameParameters &gameParameters, const int& waitTime, const TypeFocus& typeFocus);
 
     void getProjectileDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
@@ -33,4 +34,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_REDGRENADE_H
+#endif  // WORMS_TALLER_1_REDGRENADE_H

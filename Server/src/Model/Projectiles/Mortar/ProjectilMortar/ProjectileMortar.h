@@ -6,7 +6,7 @@
 #define WORMS_TALLER_1_PROJECTILEMORTAR_H
 
 
-
+#include <vector>
 #include "../../../GameObject/GameObject.h"
 #include "../../../../../GameParameters/GameParameters.h"
 #include "../../../../../../Common/DTO/DTO.h"
@@ -40,8 +40,7 @@ class ProjectileMortar : public GameObject {
 
     int getNumberIterations() const;
 
-    virtual ~ ProjectileMortar() = default;
-
+    virtual ~ProjectileMortar() = default;
 };
 
 
