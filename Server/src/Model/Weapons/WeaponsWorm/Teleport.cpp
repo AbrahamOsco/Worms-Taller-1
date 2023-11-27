@@ -8,8 +8,8 @@
 
 Teleport::Teleport(const TypeWeapon &aTypeWeapon, const float &mainDamage, const TypeMunition &aTypeMunition,
                    const size_t &aMunition, const GameParameters& gameParameters) : Weapon(aTypeWeapon, mainDamage, aTypeMunition, aMunition, gameParameters) {
-
 }
+
 bool Teleport::isPositionFree(const b2Vec2& positionToTeleport, b2World* aWorld){
     PositionInAreaisFreeQuery positionInAreaisFreeQuery;
     b2AABB aabb;
@@ -25,6 +25,9 @@ bool Teleport::isPositionFree(const b2Vec2& positionToTeleport, b2World* aWorld)
 void Teleport::teleportIn(b2Body *bodyWorm, const int &posXPix, const int &posYPix, b2World *aWorld) {
     float posXInMeters =  (float) posXPix / gameParameters.getPositionAdjustment();
     float posYInMeters = ((gameParameters.getMaxHeightPixel() - ((float) posYPix)) / gameParameters.getPositionAdjustment());
+    if(posYInMeters >= 17.5){
+        return;
+    }
     // Si hay un objeto donde nos queremos teletransportar NO lo hacemos entonces.
     b2Vec2 positionToTp(posXInMeters, posYInMeters);
     std::cout << "Posición en píxeles: " << posXPix << ", " << posYPix << std::endl;
