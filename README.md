@@ -31,6 +31,13 @@ Juego worms
 	2. sudo ./qt-unified-linux-x64-4.6.1-online.run
     3. sudo apt-get install qtmultimedia5-dev
 
+	Si el paso 1 falla, probar
+	1- sudo apt install qtcreator
+	2- sudo apt-get install qtmultimedia5-dev
+
+### Instalar yamlcpp
+	1- sudo apt-get install libyaml-cpp-dev
+
 ### Instalar box2D: 
     1. sudo apt-get install libbox2d-dev
     2. En el cmake agregar las lineas: 
