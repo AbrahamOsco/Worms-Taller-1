@@ -6,17 +6,16 @@
 #include "Turns.h"
 #include "../../../../Common/DTO/TurnDTO.h"
 
-Turns::Turns(Players &players, const GameParameters &parameters, b2World *world):
-        gameParameters(parameters), players(players), timeLeft(parameters.getTimeForTurn()),
-        damageRecognized(false), attackRecognized(false), valueWind(0.0f), world(world),
-          focusController(players), idPlayerCurrent(0), idWormCurrent(0), typeWind(WIND_LEFT) {
+#define MAX_VALUE_WIND 5
+Turns::Turns(Players &players, const GameParameters &parameters, b2World *world)
+        : gameParameters(parameters), players(players), timeLeft(parameters.getTimeForTurn()), damageRecognized(false), attackRecognized(false), valueWind(0.0f), world(world),
+          focusController(players) {
 }
 
-float Turns::getWindValueForPhysics() {
-    valueWind = (rand()  % (gameParameters.getMaxValueWind() -1) ) + 2;
-    // genero numeros aleatorios del 2 hasta el 100 .  rand %99 me genera numeros entre 0 y el 98 y le sumo 2 -> 2 y 100
-    int randomNumber = rand() % gameParameters.getMaxValueWind();
-    if (randomNumber % 2 == 0) {
+float Turns::getWindValueForPhysics(){
+    valueWind = (rand() % (MAX_VALUE_WIND -1) ) + 2;
+    int randomNumber = rand() % MAX_VALUE_WIND;
+    if(randomNumber % 2 == 0 ){
         typeWind = WIND_RIGHT;
     } else {
         typeWind = WIND_LEFT;

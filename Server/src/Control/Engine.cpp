@@ -108,10 +108,6 @@ void Engine::pushUpdatesAndUpdateModel(TimeTurn& timeTurn, RateController& frame
 }
 
 
-void Engine::print() {
-    std::cout << "Scenario: " << nameScenario << "|" << currentPlayers << "/" << numberPlayerReq << "\n";
-}
-
 bool Engine::isAvailable() const {
     return (currentPlayers < numberPlayerReq);
 }

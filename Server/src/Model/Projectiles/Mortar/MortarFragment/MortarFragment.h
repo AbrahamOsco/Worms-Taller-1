@@ -6,7 +6,7 @@
 #define WORMS_TALLER_1_MORTARFRAGMENT_H
 
 #include <vector>
-#include "../ProjectileMortar.h"
+#include "../ProjectilMortar/ProjectileMortar.h"
 
 class MortarFragment : public ProjectileMortar {
  public:

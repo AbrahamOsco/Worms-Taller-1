@@ -31,9 +31,6 @@ class GamesProtected {
 
     int addPlayer(const ResponseInitialStateDTO &response, Socket &sktPeer, const std::string &playerName);
 
-
-    void printRooms();
-
     std::vector<std::string> getScenarios();
 
     std::vector<std::size_t> getMaxNumbersWorms();

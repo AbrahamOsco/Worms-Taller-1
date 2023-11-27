@@ -13,7 +13,7 @@
 #include "../Projectiles/AirAttackMissile.h"
 #include "../Projectiles/Dynamite.h"
 #include "../Projectiles/Grenades/Grenade/Grenade.h"
-#include "../Projectiles/Mortar/ProjectileMortar.h"
+#include "../Projectiles/Mortar/ProjectilMortar/ProjectileMortar.h"
 
 // Clase de colisiones el listener:
 void wormCollidesWithBeam(GameObject* worm, GameObject* beam, GameParameters *gameParameters) {

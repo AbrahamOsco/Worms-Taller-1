@@ -139,8 +139,6 @@ class GameParameters {
 
     float getProvisionImpulseExplosionY() const;
 
-    int getMaxValueWind() const;
-
     float airAttackGetPositionY() const;
 
     float airAttackMissileGetDamage() const;

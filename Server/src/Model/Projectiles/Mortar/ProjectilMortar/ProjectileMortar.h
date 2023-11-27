@@ -5,12 +5,13 @@
 #ifndef WORMS_TALLER_1_PROJECTILEMORTAR_H
 #define WORMS_TALLER_1_PROJECTILEMORTAR_H
 
-#include <vector>
-#include "../../GameObject/GameObject.h"
-#include "../../../../GameParameters/GameParameters.h"
-#include "../../../../../Common/DTO/DTO.h"
-#include "../Explodable/Explodable.h"
-#include "../../../../../Common/DTO/ProjectileDTO.h"
+
+
+#include "../../../GameObject/GameObject.h"
+#include "../../../../../GameParameters/GameParameters.h"
+#include "../../../../../../Common/DTO/DTO.h"
+#include "../../Explodable/Explodable.h"
+#include "../../../../../../Common/DTO/ProjectileDTO.h"
 #include "box2d/box2d.h"
 
 class ProjectileMortar : public GameObject {
@@ -38,6 +39,12 @@ class ProjectileMortar : public GameObject {
     void removeAIteration();
 
     int getNumberIterations() const;
+<<<<<<< HEAD:Server/src/Model/Projectiles/Mortar/ProjectileMortar.h
+=======
+
+    virtual ~ ProjectileMortar() = default;
+
+>>>>>>> ddca367 (Refactor del server se hacen las correciones):Server/src/Model/Projectiles/Mortar/ProjectilMortar/ProjectileMortar.h
 };
 
 

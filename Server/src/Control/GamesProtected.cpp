@@ -27,7 +27,8 @@ int GamesProtected::createGameAndAddPlayer(const ResponseInitialStateDTO &respon
         std::cerr << "[GamesProtected] Error No se creo la partida porque ya existe un nombre de esa partida\n";
         return answer;
     }
-    games[response.getGameName()] = std::make_unique<Engine>(response);
+    games.emplace(response.getGameName(), std::make_unique<Engine>(response));
+    //games[response.getGameName()] = std::make_unique<Engine>(response);
     // Analogo a hacer std::unique_ptr<Engine>{new Engine(response)}.
     answer = games[response.getGameName()]->addClient(sktPeer, playerName, RESPONSE_FINAL_CREATE_GAME);
     std::cerr << "[GamesProtected]: Se unio: " + playerName + " con exito a la partida : " +
@@ -46,15 +47,6 @@ int GamesProtected::addPlayer(const ResponseInitialStateDTO &response, Socket &s
         playerName + " a la partida : " + response.getGameName() + "\n";
     }
     return answer;
-}
-
-void GamesProtected::printRooms() {
-    std::unique_lock<std::mutex> lck(mtx);
-    std::map<std::string, std::unique_ptr<Engine>>::iterator it;
-    for (it = games.begin(); it != games.end(); ++it) {
-        std::cout << "Room : " << it->first << " |";
-        it->second->print();
-    }
 }
 
 std::vector<std::string> GamesProtected::getScenarios() {

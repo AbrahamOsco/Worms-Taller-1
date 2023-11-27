@@ -30,9 +30,6 @@ GameParameters::GameParameters() {
 
     parameters["TIME_FOR_TURN"] = nodeInitial["TIME_FOR_TURN"].as<float>();
     parameters["TIME_EXTRA_AFTER_ATTACK"] = nodeInitial["TIME_EXTRA_AFTER_ATTACK"].as<float>();
-    parameters["MAX_VALUE_WIND"] = nodeInitial["MAX_VALUE_WIND"].as<float>();
-
-
 
     parameters["PROVISION_POSITION_Y_TO_INVOKE"] = nodeInitial["PROVISION_POSITION_Y_TO_INVOKE"].as<float>();
     parameters["PROVISION_HALF_HEIGHT"] = nodeInitial["PROVISION_HALF_HEIGHT"].as<float>();
@@ -380,12 +377,6 @@ float GameParameters::airAttackMissileImpulseMax() const {
 float GameParameters::airAttackGetPositionY() const {
     return this->parameters.at("AIR_ATTACK_POSITION_Y_TO_INVOKE");
 }
-
-
-int GameParameters::getMaxValueWind() const {
-    return static_cast<int>(this->parameters.at("MAX_VALUE_WIND"));
-}
-
 
 float GameParameters::getProvisionHalfHeight() const {
     return this->parameters.at("PROVISION_HALF_HEIGHT");

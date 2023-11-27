@@ -23,7 +23,7 @@ void ClientLogin::run() {
             serverProtocol.sendResolverInitialDTO(resolverInitialDto);
             std::cerr <<
             "[ClientLogin]:run Se recibio una peticion de crear  una partida -> Se envian los escenarios\n";
-        } else if ( operationType == ROOM_LIST_REQUEST ) {
+            } else if ( operationType == ROOM_LIST_REQUEST ) {
             ResolverInitialDTO resolverInitialDto(RESPONSE_INITIAL_JOIN_GAME, games.getAvailableRooms());
             serverProtocol.sendResolverInitialDTO(resolverInitialDto);
             std::cerr <<

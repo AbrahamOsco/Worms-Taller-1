@@ -8,7 +8,7 @@
 
 #include "Weapon.h"
 #include "../WeaponSight/WeaponSight.h"
-#include "../../Projectiles/Mortar/ProjectileMortar.h"
+#include "../../Projectiles/Mortar/ProjectilMortar/ProjectileMortar.h"
 
 class Mortar : public Weapon {
 private:

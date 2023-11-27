@@ -52,8 +52,6 @@ class Engine : public Thread {
 
     void stop();
 
-    void print();
-
     RoomDTO getRoomDTO() const;
 
     void stepWorldAndExecuteCommand();
