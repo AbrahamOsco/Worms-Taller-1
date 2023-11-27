@@ -4,7 +4,6 @@
 
 #include <utility>
 #include "Crosshair.h"
-#include "../../command/ChargeCmd.h"
 #include "../../command/FireCmd.h"
 #include "../../command/UpCmd.h"
 #include "../../command/DownCmd.h"
@@ -38,16 +37,9 @@ Crosshair::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &
         }
 
         if (input.getKeyDown(SDL_SCANCODE_SPACE)) {
-            // std::cout << "disparo" << std::endl;
             std::unique_ptr<Command> command(new FireCmd());
             queue.move_push(std::move(command));
         }
-
-        /*if (input.getKeyUp(SDL_SCANCODE_SPACE) && input.getPrevSpaceState()) {
-            std::cout << "disparo" << std::endl;
-            std::unique_ptr<Command> command(new FireCmd());
-            queue.move_push(std::move(command));
-        }*/
     }
 }
 

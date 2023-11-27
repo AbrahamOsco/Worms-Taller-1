@@ -5,7 +5,7 @@
 #include "Input.h"
 
 Input::Input() : m_quit(false), m_mouseLeftButtonDown(false), m_mouseRightButtonDown(false),
-    m_mouseX(0), m_mouseY(0), m_prevSpaceState(false) {
+    m_mouseX(0), m_mouseY(0) {
     m_keyStates = SDL_GetKeyboardState(nullptr);
 }
 
@@ -34,7 +34,6 @@ void Input::listen() {
                 // Puedes agregar más casos según sea necesario
         }
     }
-    m_prevSpaceState = (m_keyStates[SDL_SCANCODE_SPACE] == 1);
 }
 
 void Input::keyUp() {
@@ -94,10 +93,14 @@ bool Input::closed() const {
     return m_quit;
 }
 
-bool Input::getPrevSpaceState() {
-    return m_prevSpaceState;
-}
-
 bool Input::getKeyUp(SDL_Scancode key) {
     return (m_keyStates[key] == 0);
+}
+
+void Input::setPress(bool pressed) {
+    m_press = pressed;
+}
+
+bool Input::getPress() const {
+    return m_press;
 }
