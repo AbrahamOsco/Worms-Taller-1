@@ -10,6 +10,7 @@
 #include "../gameObject/GameObject.h"
 #include "../protocol/ClientProtocol.h"
 #include "../../../Common/Queue/Queue.h"
+#include "../gameObject/worm/Worm.h"
 
 class ReceiverThread : public Thread {
 private:
@@ -24,10 +25,18 @@ public:
 
     void
     processGameProgressSnapshot(const SnapShot &snapShot, std::vector<std::unique_ptr<GameObject>> &gameObjects, size_t pastCountWorm,
-                                size_t currentCountWorm) const;
+                                size_t currentCountWorm);
 
     void processNonGameProgressSnapshot(const SnapShot &snapShot,
                                         std::vector<std::unique_ptr<GameObject>> &gameObjects) const;
+
+    void processWorms(std::vector<WormDTO> &wormsDto, const WeaponSightDTO &weaponSightDto, bool isMyTurn,
+                      std::vector<std::unique_ptr<GameObject>> &gameObjects);
+
+    std::unique_ptr<Worm> createWormObject(const WormDTO &wormDto, const WeaponSightDTO &weaponSightDto, bool isMyTurn);
+
+    void
+    processProjectiles(const ProjectilesDTO &projectilesDto, std::vector<std::unique_ptr<GameObject>> &gameObjects);
 };
 
 
