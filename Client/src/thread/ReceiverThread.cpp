@@ -54,7 +54,6 @@ void ReceiverThread::processGameProgressSnapshot(const SnapShot &snapShot, std::
                                                  size_t pastCountWorm, size_t currentCountWorm) {
     std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
     WeaponSightDTO weaponSightDto = snapShot.getWeaponSightDto();
-    ProjectilesDTO projectilesDto = snapShot.getProjectilesDto();
     WeaponsDTO weaponsDto = snapShot.getWeaponsDto();
     TurnDTO turnDto = snapShot.getTurnDto();
 
@@ -73,11 +72,8 @@ void ReceiverThread::processGameProgressSnapshot(const SnapShot &snapShot, std::
 
     processWorms(wormsDto, weaponSightDto, snapShot.getTurnDto().getTextTurn() == "Es tu turno", gameObjects);
     processProjectiles(snapShot.getProjectilesDto(), gameObjects);
+    processProvisions(snapShot.getVecProvisionDto(), gameObjects);
 
-    std::vector<ProvisionDTO> provisions = snapShot.getVecProvisionDto();
-    for (const ProvisionDTO &provisionDto: provisions) {
-        gameObjects.push_back(std::make_unique<Provision>(static_cast<int>(provisionDto.getPositionX()), static_cast<int>(provisionDto.getPositionY()), provisionDto.getTypeEffect(), provisionDto.getTypeContact()));
-    }
 
     for (const WeaponDTO &weaponDto: weapons) {
         WeaponIcon weaponIcon(weaponDto.getTypeWeapon(), static_cast<int>(weaponDto.getMunition()), weaponDto.getTypeMunition(), weaponsDto.getWeaponCurrent(), isMyTurn);
@@ -163,5 +159,12 @@ void ReceiverThread::processProjectiles(const ProjectilesDTO &projectilesDto,
                                                                               projectileDto.getPositionY(),
                                                                               projectileDto.getTypeProjectil(), projectileDto.getTypeFocus(), projectileDto.getTypeExplode());
         gameObjects.push_back(std::move(projectile));
+    }
+}
+
+void ReceiverThread::processProvisions(const std::vector<ProvisionDTO> &provisions,
+                                       std::vector<std::unique_ptr<GameObject>> &gameObjects) {
+    for (const ProvisionDTO &provisionDto: provisions) {
+        gameObjects.push_back(std::make_unique<Provision>(static_cast<int>(provisionDto.getPositionX()), static_cast<int>(provisionDto.getPositionY()), provisionDto.getTypeEffect(), provisionDto.getTypeContact()));
     }
 }

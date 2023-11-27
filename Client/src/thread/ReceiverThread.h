@@ -37,6 +37,10 @@ public:
 
     void
     processProjectiles(const ProjectilesDTO &projectilesDto, std::vector<std::unique_ptr<GameObject>> &gameObjects);
+
+    void
+    processProvisions(const std::vector<ProvisionDTO> &provisions,
+                      std::vector<std::unique_ptr<GameObject>> &gameObjects);
 };
 
 
