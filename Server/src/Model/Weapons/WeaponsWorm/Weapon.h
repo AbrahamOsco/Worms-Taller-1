@@ -5,7 +5,7 @@
 #ifndef WORMS_TALLER_1_WEAPON_H
 #define WORMS_TALLER_1_WEAPON_H
 
-
+#include <vector>
 #include "../../../../../Common/DTO/WeaponDTO.h"
 #include "../../../../../Common/DTO/WormDTO.h"
 #include "../../../../GameParameters/GameParameters.h"
@@ -18,14 +18,15 @@
 #define RADIANSTODEGREE (180/b2_pi)
 
 class Weapon {
-public:
+ protected:
     TypeWeapon typeWeapon;
     float mainDamage;
     TypeMunition typeMunition;
     size_t munition;
     const GameParameters& gameParameters;
     float windValue;
-public:
+
+ public:
     explicit Weapon(const TypeWeapon& aTypeWeapon, const float &mainDamage, const TypeMunition& aTypeMunition,
                     const size_t& aMunition, const GameParameters& gameParameters);
 
@@ -83,4 +84,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_WEAPON_H
+#endif  // WORMS_TALLER_1_WEAPON_H

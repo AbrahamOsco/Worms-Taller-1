@@ -6,10 +6,12 @@
 #include "Mortar.h"
 #include "../../Projectiles/Mortar/MortarMainProjectile/MortarMainProjectile.h"
 
-Mortar::Mortar(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, const TypeMunition &aTypeMunition,const size_t &aMunition,
-               const GameParameters &gameParameters) : Weapon(aTypeWeapon, damagePrincipal, aTypeMunition, aMunition,gameParameters),
-                                                       weaponSight(gameParameters.mortarGetRayLength(), gameParameters.getWeaponAngleInitial(), gameParameters) {
-    impulseWeapon = std::make_pair(gameParameters.BazookaGetImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
+Mortar::Mortar(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, const TypeMunition &aTypeMunition,
+            const size_t &aMunition, const GameParameters &gameParameters) : Weapon(aTypeWeapon,
+            damagePrincipal, aTypeMunition, aMunition, gameParameters),
+            weaponSight(gameParameters.mortarGetRayLength(), gameParameters.getWeaponAngleInitial(), gameParameters) {
+    impulseWeapon = std::make_pair(gameParameters.BazookaGetImpulseXInitial(),
+            gameParameters.getBazookaImpulseYInitial());
     maxImpulseWeapon = std::make_pair(gameParameters.getBazookaMaxImpulseX(), gameParameters.getBazookaMaxImpulseY());
     projectil = nullptr;
     explosionIterations = 15;
@@ -38,7 +40,7 @@ bool Mortar::increaseImpulse() {
 
     // para comprar floats necesitamos comprar las restas con un epsilon.
     float tolerance = 0.0001;
-    bool isMaxImpulse = std::abs(impulseWeapon.first - maxImpulseWeapon.first) < tolerance and
+    bool isMaxImpulse = std::abs(impulseWeapon.first - maxImpulseWeapon.first) < tolerance &&
                         std::abs(impulseWeapon.second - maxImpulseWeapon.second) < tolerance;
     return isMaxImpulse;
 }
@@ -48,9 +50,9 @@ bool Mortar::launchesProjectiles() {
 }
 
 bool Mortar::thereAreProjectiles() {
-    if(projectil != nullptr){
+    if (projectil != nullptr) {
         MortarMainProjectile* mortarMain = (MortarMainProjectile*) projectil.get();
-        if(mortarMain->hasFragment()){
+        if (mortarMain->hasFragment()) {
             mortarMain->awakenFragments();
         }
     }
@@ -58,29 +60,31 @@ bool Mortar::thereAreProjectiles() {
 }
 
 void Mortar::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
-    if (projectil != nullptr and projectil->isDestroyedBody() and projectil->hasExplosionIterations()) {
+    if (projectil != nullptr && projectil->isDestroyedBody() && projectil->hasExplosionIterations()) {
         projectil->getProjectileDTO(vecProjectileDTO);
-        ProjectileDTO *projectileDto = &vecProjectileDTO.back(); // saco unar referencia del ultimo q pushee para setearle el typeEXplode
+        ProjectileDTO *projectileDto = &vecProjectileDTO.back();
+        // saco unar referencia del ultimo q pushee para setearle el typeEXplode
         projectileDto->setTypeExplode(EXPLODE);
         if (projectil->getNumberIterations() == 15.0f) {
             projectileDto->setTypeExplode(EXPLODE_SOUND);
         }
         projectil->removeAIteration();
-    } else if (projectil != nullptr and not projectil->isDestroyedBody()) {
+    } else if (projectil != nullptr && !projectil->isDestroyedBody()) {
         projectil->getProjectileDTO(vecProjectileDTO);
     }
 
     MortarMainProjectile* mortarMain = (MortarMainProjectile*) projectil.get();
-    if( mortarMain!= nullptr and  mortarMain->hasFragment()){
+    if (mortarMain!= nullptr &&  mortarMain->hasFragment()) {
         mortarMain->getFragmentProjectilDTO(vecProjectileDTO);
     }
 }
 
 void Mortar::tryCleanProjectiles(b2World *aWorld) {
     MortarMainProjectile* mortarMain = (MortarMainProjectile*) projectil.get();
-    if( mortarMain!= nullptr and  mortarMain->hasFragment()){
+    if (mortarMain!= nullptr &&  mortarMain->hasFragment()) {
         mortarMain->tryCleanProjectiles();
-    } else if ( mortarMain!= nullptr and  not mortarMain->hasFragment() and mortarMain->isDestroyedBody() and not mortarMain->hasExplosionIterations()){
+    } else if (mortarMain!= nullptr &&  !mortarMain->hasFragment() &&
+            mortarMain->isDestroyedBody() && !mortarMain->hasExplosionIterations()) {
         aWorld->DestroyBody(mortarMain->getBody());
         projectil = nullptr;
     }
@@ -98,7 +102,8 @@ void Mortar::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const D
     std::cout << "Atacamos con el mortero------------------------------------------------------\n";
     projectil = std::make_unique<MortarMainProjectile>(gameParameters, focus);
     projectil->addToTheWorld(world, p2, impulseMuniBazooka, windValue);
-    impulseWeapon = std::make_pair(gameParameters.BazookaGetImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
+    impulseWeapon = std::make_pair(gameParameters.BazookaGetImpulseXInitial(),
+        gameParameters.getBazookaImpulseYInitial());
     explosionIterations = 15;
     this->munition--;
 }

@@ -5,6 +5,8 @@
 #ifndef WORMS_TALLER_1_WORM_H
 #define WORMS_TALLER_1_WORM_H
 
+#include <memory>
+#include <utility>
 #include "box2d/box2d.h"
 #include "../GameObject/GameObject.h"
 #include "../../../../Common/DTO/WormDTO.h"
@@ -36,7 +38,7 @@ class Worm : public GameObject {
     std::pair<float, float> distancesJumpForward;
     std::pair<float, float> distancesJumpBack;
     size_t numberContacts;
-    TypeFocus typeFocus; // 1 Si esta siendo focus , 2 sino.
+    TypeFocus typeFocus;  // 1 Si esta siendo focus , 2 sino.
     MoveWorm typeMov;
     const GameParameters& gameParameters;
     b2World* aWorld;
@@ -54,10 +56,10 @@ class Worm : public GameObject {
     bool waitingToGetFocus;
     int waitTime;
     size_t idWormCurrentPlay;
-public:
 
-    Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY, const GameParameters &gameParameter,
-         Armament& armament);
+ public:
+    Worm(const size_t &idWorm, const size_t &idPlayer, const float &posIniX, const float &posIniY,
+            const GameParameters &gameParameter, Armament& armament);
 
     float getHP() const;
 
@@ -165,4 +167,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_WORM_H
+#endif  // WORMS_TALLER_1_WORM_H
