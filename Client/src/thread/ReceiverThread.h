@@ -26,8 +26,8 @@ class ReceiverThread : public Thread {
     void stop() override;
 
     void
-    processGameProgressSnapshot(const SnapShot &snapShot, std::vector<std::unique_ptr<GameObject>> &gameObjects, size_t pastCountWorm,
-                                size_t currentCountWorm);
+    processGameProgressSnapshot(const SnapShot &snapShot,
+            std::vector<std::unique_ptr<GameObject>> &gameObjects, size_t pastCountWorm, size_t currentCountWorm);
 
     void processNonGameProgressSnapshot(const SnapShot &snapShot,
                                         std::vector<std::unique_ptr<GameObject>> &gameObjects) const;
