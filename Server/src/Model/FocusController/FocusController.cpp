@@ -21,7 +21,7 @@ void FocusController::tryToChangeFocus() {
     std::vector<std::pair<size_t, size_t>> movingWorms;
     players.getMovingWorms(movingWorms);
     if (movingWorms.empty() || currenWorm->thereAreProjectiles() || currenWorm->hasTheTeleport()) {
-        // si hay proyectiles o estamos usando el teleport -> No cambiamos el focus
+        std::cout << "Salgo \n";
         return;
     } else if (movingWorms.size() == 1 && (movingWorms.back().second == idWormCurrent)) {
         currenWorm->assignTypeFocus(FOCUS);
