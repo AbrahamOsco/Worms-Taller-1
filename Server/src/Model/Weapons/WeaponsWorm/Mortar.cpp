@@ -14,7 +14,6 @@ Mortar::Mortar(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, cons
             gameParameters.getBazookaImpulseYInitial());
     maxImpulseWeapon = std::make_pair(gameParameters.getBazookaMaxImpulseX(), gameParameters.getBazookaMaxImpulseY());
     projectil = nullptr;
-    explosionIterations = 15;
 }
 
 void Mortar::increaseAngle() {
@@ -102,8 +101,6 @@ void Mortar::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const D
     std::cout << "Atacamos con el mortero------------------------------------------------------\n";
     projectil = std::make_unique<MortarMainProjectile>(gameParameters, focus);
     projectil->addToTheWorld(world, p2, impulseMuniBazooka, windValue);
-    impulseWeapon = std::make_pair(gameParameters.BazookaGetImpulseXInitial(),
-        gameParameters.getBazookaImpulseYInitial());
-    explosionIterations = 15;
+    impulseWeapon = std::make_pair(gameParameters.BazookaGetImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
     this->munition--;
 }

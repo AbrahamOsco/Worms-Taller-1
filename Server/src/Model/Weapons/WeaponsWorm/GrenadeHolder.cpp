@@ -17,7 +17,6 @@ GrenadeHolder::GrenadeHolder(const TypeWeapon &aTypeWeapon, const float &damageP
     impulseWeapon = std::make_pair(gameParameters.grenadeGetImpulseXInitial(),
         gameParameters.grenadeGetImpulseYInitial());
     maxImpulseWeapon = std::make_pair(gameParameters.grenadeGetMaxImpulseX(), gameParameters.grenadeGetMaxImpulseY());
-    explosionIterations = gameParameters.getAnimationIterations();
 }
 
 void GrenadeHolder::increaseAngle() {
@@ -82,8 +81,7 @@ void GrenadeHolder::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileD
 void GrenadeHolder::tryCleanProjectiles(b2World *aWorld) {
     if (typeWeapon != RED_GRENADE) {
         if (grenade != nullptr && grenade->isDestroyedBody() && !grenade->hasExplosionIterations()) {
-            aWorld->DestroyBody(grenade->getBody());
-            grenade = nullptr;
+            resetGrenade(aWorld);
         }
         return;
     }
@@ -93,9 +91,15 @@ void GrenadeHolder::tryCleanProjectiles(b2World *aWorld) {
         redGrenade->tryCleanProjectiles();
     } else if ( redGrenade!= nullptr &&  !redGrenade->hasFragment() && grenade->isDestroyedBody() &&
             !grenade->hasExplosionIterations()) {
-        aWorld->DestroyBody(grenade->getBody());
-        grenade = nullptr;
+        resetGrenade(aWorld);
     }
+}
+
+void GrenadeHolder::resetGrenade(b2World *aWorld){
+    aWorld->DestroyBody(grenade->getBody());
+    grenade = nullptr;
+    impulseWeapon = std::make_pair(gameParameters.grenadeGetImpulseXInitial(),
+                                   gameParameters.grenadeGetImpulseYInitial());
 }
 
 WeaponSightDTO GrenadeHolder::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) {
