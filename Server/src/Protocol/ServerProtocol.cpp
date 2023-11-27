@@ -1,23 +1,24 @@
 #include <iostream>
+#include <string>
 #include "ServerProtocol.h"
 #include "../../../Common/DTO/InitialStateDTO.h"
 #include "../../../Common/DTO/PlayerDTO.h"
 #include "../../../Common/DTO/EndGameDTO.h"
 
 ServerProtocol::ServerProtocol(Socket& skt) :
-        Protocol(skt){}
+        Protocol(skt) {}
 
 InitialStateDTO ServerProtocol::recvInitialStateDTO() {
     InitialStateDTO initialStateDto;
     int operationType =  recvANumberByte();
-    if (operationType == BYTE_DISCONNECT){
+    if (operationType == BYTE_DISCONNECT) {
         return initialStateDto;
     }
     std::string playerName =  recvString();
-    //Primero vemos el caso de creacion de un room.
-    if(operationType == SCENARIO_LIST_REQUEST){
+    // Primero vemos el caso de creacion de un room.
+    if (operationType == SCENARIO_LIST_REQUEST) {
         initialStateDto.setOperationType(SCENARIO_LIST_REQUEST);
-    } else if (operationType == ROOM_LIST_REQUEST){
+    } else if (operationType == ROOM_LIST_REQUEST) {
         initialStateDto.setOperationType(ROOM_LIST_REQUEST);
     }
     initialStateDto.setPlayerName(playerName);
@@ -27,31 +28,35 @@ InitialStateDTO ServerProtocol::recvInitialStateDTO() {
 void ServerProtocol::sendResolverInitialDTO(const ResolverInitialDTO &resolverInitial) {
     int operationType =  resolverInitial.getOperationType();
 
-    if( operationType == RESPONSE_INITIAL_CREATE_GAME ){     // Envio tipo de operacion, cantida de escenarios y el nombre de cada escenario.
+    if ( operationType == RESPONSE_INITIAL_CREATE_GAME ) {
+        // Envio tipo de operacion, cantida de escenarios y el nombre de cada escenario.
         sendANumberByte(RESPONSE_INITIAL_CREATE_GAME);
         sendANumberByte(resolverInitial.getScenariosNames().size());
-        for (const auto& aNameScenario : resolverInitial.getScenariosNames() ) {
+        for (const auto& aNameScenario : resolverInitial.getScenariosNames()) {
             sendString(aNameScenario);
         }
         sendANumberByte(resolverInitial.getVecMaxNumbersWorms().size());
-        for (const auto& aMaxNumberWorm : resolverInitial.getVecMaxNumbersWorms() ){
+        for (const auto& aMaxNumberWorm : resolverInitial.getVecMaxNumbersWorms()) {
             sendANumberByte(aMaxNumberWorm);
         }
-    } else if ( operationType == RESPONSE_FINAL_CREATE_GAME ){    // Enviamos el tipo de operacion y el estado de la  respuesta.
+    } else if ( operationType == RESPONSE_FINAL_CREATE_GAME ) {
+        // Enviamos el tipo de operacion y el estado de la  respuesta.
         sendANumberByte(RESPONSE_FINAL_CREATE_GAME);
         sendANumberByte(resolverInitial.getStatusAnswer());
-    } else if ( operationType == RESPONSE_INITIAL_JOIN_GAME ){  //  Enviamso el tipo de operacion, cantida de rooms y data de cada room.
+    } else if ( operationType == RESPONSE_INITIAL_JOIN_GAME ) {
+        //  Enviamso el tipo de operacion, cantida de rooms y data de cada room.
         sendANumberByte(RESPONSE_INITIAL_JOIN_GAME);
         sendANumberByte(resolverInitial.getGameRooms().size());
-        for (const auto& aRoomGame : resolverInitial.getGameRooms() ) {
+        for (const auto& aRoomGame : resolverInitial.getGameRooms()) {
             sendRoom(aRoomGame);
         }
-    } else if ( operationType == RESPONSE_FINAL_JOIN_GAME ){
+    } else if ( operationType == RESPONSE_FINAL_JOIN_GAME ) {
         sendANumberByte(RESPONSE_FINAL_JOIN_GAME);
         sendANumberByte(resolverInitial.getStatusAnswer());
-        if ( resolverInitial.getStatusAnswer() == STATUS_ERROR ){ // Si es error el tipo de status mandamos todos los rooms disponibles
+        if ( resolverInitial.getStatusAnswer() == STATUS_ERROR ) {
+            // Si es error el tipo de status mandamos todos los rooms disponibles
             sendANumberByte(resolverInitial.getGameRooms().size());
-            for (const auto& aRoomGame : resolverInitial.getGameRooms() ) {
+            for (const auto& aRoomGame : resolverInitial.getGameRooms()) {
                 sendRoom(aRoomGame);
             }
         }
@@ -70,7 +75,7 @@ void ServerProtocol::sendRoom(const RoomDTO &aRoomDTO) {
 ResponseInitialStateDTO ServerProtocol::recvReponseInitialStateDTO() {
     ResponseInitialStateDTO responseInitialStateDto;
     int operationType = recvANumberByte();
-    if (operationType == FINAL_CREATE_GAME){
+    if (operationType == FINAL_CREATE_GAME) {
         responseInitialStateDto.setOperationType(FINAL_CREATE_GAME);
         responseInitialStateDto.setGameName(recvString());
         responseInitialStateDto.setScenarioName(recvString());
@@ -85,7 +90,7 @@ ResponseInitialStateDTO ServerProtocol::recvReponseInitialStateDTO() {
 void ServerProtocol::sendStage(const StageDTO &stageDTO) {
     sendANumberByte(stageDTO.getOperationType());
     sendANumberByte(stageDTO.getBeams().size());
-    for(BeamDTO aBeamDTO : stageDTO.getBeams()){
+    for (BeamDTO aBeamDTO : stageDTO.getBeams()) {
         sendBeam(aBeamDTO);
     }
     sendANumberByte(stageDTO.getIdPlayer());
@@ -106,7 +111,7 @@ void ServerProtocol::sendBeam(const BeamDTO &beamDTO) {
 void ServerProtocol::sendPlayersDTO(const PlayersDTO &aPlayersDTO) {
     sendANumberByte(aPlayersDTO.getOperationType());
     sendANumberByte(aPlayersDTO.getPlayersDTO().size());
-    for(const auto& aPlayer : aPlayersDTO.getPlayersDTO()){
+    for (const auto& aPlayer : aPlayersDTO.getPlayersDTO()) {
         sendAPlayerDTO(aPlayer);
     }
 }
@@ -132,7 +137,7 @@ CommandDTO ServerProtocol::recvCommandDTO() {
     CommandDTO commandDto;
     int operationType = recvANumberByte();
     if (operationType == COMMAND) {
-        TypeCommand commandType = static_cast<TypeCommand>( recvANumberByte()); // probar esto
+        TypeCommand commandType = static_cast<TypeCommand>(recvANumberByte());  // probar esto
         commandDto.setTypeCommand(commandType);
         int x = recvNum2Bytes();
         int y = recvNum2Bytes();
@@ -145,15 +150,15 @@ CommandDTO ServerProtocol::recvCommandDTO() {
 void ServerProtocol::sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot) {
     sendANumberByte(aSnapShot->getOperationType());
     sendANumberByte(aSnapShot->getTypeSnapShot());
-    if(aSnapShot->getTypeSnapShot() == GAME_PROGRESS){
-        sendANumberByte(aSnapShot->getWormsDto().size()); // enviamos la cantida de gusanos
-        for(const auto& aWormDTO : aSnapShot->getWormsDto()){
+    if (aSnapShot->getTypeSnapShot() == GAME_PROGRESS) {
+        sendANumberByte(aSnapShot->getWormsDto().size());  // enviamos la cantida de gusanos
+        for (const auto& aWormDTO : aSnapShot->getWormsDto()) {
             sendAWormDTO(aWormDTO);
         }
         // Ahora enviamos a los playersDTO 1 sola linea.
         sendPlayersDTO(aSnapShot->getPlayersDto());
 
-        //ahora enviamos a WeaponsDTO.
+        // ahora enviamos a WeaponsDTO.
         sendWeaponsDTO(aSnapShot->getWeaponsDto());
 
         // enviamos la mira
@@ -162,38 +167,37 @@ void ServerProtocol::sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot) {
         // enviamos el projectil
         sendProjectilesDTO(aSnapShot->getProjectilesDto());
 
-        //enviamos el turnoDTO
+        // enviamos el turnoDTO
         sendTurnDTO(aSnapShot->getTurnDto());
 
         // enviamos las provisiones
         sendANumberByte(aSnapShot->getVecProvisionDto().size());
-        for(auto& aProvision : aSnapShot->getVecProvisionDto()){
+        for (auto& aProvision : aSnapShot->getVecProvisionDto()) {
             sendAProvisionDTO(aProvision);
         }
-    }
-    else if (aSnapShot->getTypeSnapShot() == GAME_END){
+    } else if (aSnapShot->getTypeSnapShot() == GAME_END) {
         sendEndGameDTO(aSnapShot->getEndGameDto());
     }
 }
 
-void ServerProtocol::sendAProvisionDTO(const ProvisionDTO& provisionDto){
+void ServerProtocol::sendAProvisionDTO(const ProvisionDTO& provisionDto) {
     sendANumberByte(provisionDto.getOperationType());
     sendNum2Bytes(provisionDto.getPositionX());
     sendNum2Bytes(provisionDto.getPositionY());
     sendANumberByte(provisionDto.getTypeEffect());
     sendANumberByte(provisionDto.getTypeContact());
-    if(provisionDto.getTypeContact() == CONTACT){
+    if (provisionDto.getTypeContact() == CONTACT) {
         std::cout << "Entro en contacto la provison\n";
     }
 }
 
-void ServerProtocol::sendEndGameDTO(const EndGameDTO& endGameDto){
+void ServerProtocol::sendEndGameDTO(const EndGameDTO& endGameDto) {
     sendANumberByte(endGameDto.getOperationType());
     sendANumberByte(endGameDto.getIdPlayer());
     sendANumberByte(endGameDto.getTypeResult());
 }
 
-void ServerProtocol::sendTurnDTO(const TurnDTO& aTurnDTO){
+void ServerProtocol::sendTurnDTO(const TurnDTO& aTurnDTO) {
     sendANumberByte(aTurnDTO.getOperationType());
     sendANumberByte(aTurnDTO.getIdPlayerCurrent());
     sendString(aTurnDTO.getTextTurn());
@@ -203,24 +207,23 @@ void ServerProtocol::sendTurnDTO(const TurnDTO& aTurnDTO){
 }
 
 
-void ServerProtocol::sendProjectilesDTO(const ProjectilesDTO& projectilesDto){
+void ServerProtocol::sendProjectilesDTO(const ProjectilesDTO& projectilesDto) {
     sendANumberByte(projectilesDto.getOperationType());
     sendANumberByte(projectilesDto.getTypeShowProjectiles());
     // enviamso la cantida de projectielsdto q existen.
     sendANumberByte(projectilesDto.getProjectilesDto().size());
-    for(auto& aProjectil : projectilesDto.getProjectilesDto()){
+    for (auto& aProjectil : projectilesDto.getProjectilesDto()) {
         sendAProjectileDTO(aProjectil);
     }
 }
 
-void ServerProtocol::sendAProjectileDTO(const ProjectileDTO& aProjectilDTO){
+void ServerProtocol::sendAProjectileDTO(const ProjectileDTO& aProjectilDTO) {
     sendANumberByte(aProjectilDTO.getOperationType());
     sendANumberByte(aProjectilDTO.getTypeProjectil());
     sendNum2Bytes(aProjectilDTO.getPositionX());
     sendNum2Bytes(aProjectilDTO.getPositionY());
     sendANumberByte(aProjectilDTO.getTypeFocus());
     sendANumberByte(aProjectilDTO.getTypeExplode());
-
 }
 
 void ServerProtocol::sendAWormDTO(const WormDTO &aWormDTO) {
@@ -239,8 +242,8 @@ void ServerProtocol::sendWeaponsDTO(const WeaponsDTO &weapons) {
     sendANumberByte(weapons.getOperationType());
     sendANumberByte(weapons.getIdPlayer());
     sendANumberByte(weapons.getWeaponCurrent());
-    sendANumberByte(weapons.getWeapons().size()); // mandamos la cantida de armas y luego mandamos cada arma.
-    for(auto& aWeapon : weapons.getWeapons()){
+    sendANumberByte(weapons.getWeapons().size());  // mandamos la cantida de armas y luego mandamos cada arma.
+    for (auto& aWeapon : weapons.getWeapons()) {
         sendAWeaponDTO(aWeapon);
     }
 }

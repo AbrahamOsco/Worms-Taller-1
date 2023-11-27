@@ -19,8 +19,7 @@
 #define STATUS_ERROR 2
 
 class ServerProtocol : public Protocol {
-
-public:
+ public:
     explicit ServerProtocol(Socket& skt);
 
     InitialStateDTO recvInitialStateDTO();
@@ -44,7 +43,7 @@ public:
 
     void sendAPlayerDTO(const PlayerDTO &playerDTO);
 
-    //void sendAWormIniDTO(const WormDTO &aWormDTO);
+    // void sendAWormIniDTO(const WormDTO &aWormDTO);
 
     void sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot);
 
@@ -68,4 +67,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_SERVERPROTOCOL_H
+#endif  // WORMS_TALLER_1_SERVERPROTOCOL_H
