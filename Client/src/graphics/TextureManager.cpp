@@ -2,6 +2,7 @@
 // Created by riclui on 25/10/23.
 //
 
+#include <utility>
 #include "TextureManager.h"
 
 void TextureManager::load(const std::string &fileName, std::string &id, SDL2pp::Renderer &renderer) {
@@ -43,7 +44,7 @@ TextureManager::drawFrame(const std::string &id, int x, int y, int width, int he
     // Buscar la textura por su ID
     auto it = m_textureMap.find(id);
     if (it != m_textureMap.end()) {
-        SDL2pp::Texture *texture = it->second.get(); // Obtener el puntero de la textura
+        SDL2pp::Texture *texture = it->second.get();  // Obtener el puntero de la textura
         if (texture) {
             // Calcular la posición y tamaño del clip (recorte) en el sprite sheet
             SDL2pp::Rect srcRect(currentCol * width, currentRow * height, width, height);
@@ -66,7 +67,7 @@ void TextureManager::parseTexture(const std::string &yamlFileName, SDL2pp::Rende
         const YAML::Node &textures = config["textures"];
 
         // Iterar sobre las texturas y cargarlas
-        for (const YAML::Node &texture: textures) {
+        for (const YAML::Node &texture : textures) {
             std::string name = texture["name"].as<std::string>();
             std::string source = texture["source"].as<std::string>();
 

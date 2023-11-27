@@ -2,6 +2,8 @@
 // Created by riclui on 09/11/23.
 //
 
+#include <string>
+#include <utility>
 #include "WeaponIcon.h"
 #include "../../command/SelectTeleportCmd.h"
 #include "../../command/SelectBatCmd.h"
@@ -15,10 +17,10 @@
 #include "../../command/SelectBananaCmd.h"
 #include "../../command/SelectDynamiteCmd.h"
 
-WeaponIcon::WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeMunition &typeMunition,const TypeWeapon &currentWeapon, bool isMyTurn)
-        : GameObject(LoaderParams(0, 0, 50, 55, " ")),
-          m_typeWeapon(typeWeapon), m_ammoCount(ammoCount), m_isSelected(false), m_isMyTurn(isMyTurn), m_typeMunition(typeMunition) {
-
+WeaponIcon::WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeMunition &typeMunition,
+                        const TypeWeapon &currentWeapon, bool isMyTurn): GameObject(LoaderParams(0, 0, 50, 55, " ")),
+                        m_typeWeapon(typeWeapon), m_ammoCount(ammoCount), m_isSelected(false),
+                        m_isMyTurn(isMyTurn), m_typeMunition(typeMunition) {
     if (m_typeWeapon == currentWeapon) {
         m_isSelected = true;
     }
@@ -57,7 +59,6 @@ void WeaponIcon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager
     }
     if (m_ammoCount == 0) {
         textureManager.setColorMod(m_textureID, 255, 255, 255, 100);
-
     }
     textureManager.draw(m_textureID, m_x, m_y, m_width, m_height, renderer, SDL_FLIP_NONE);
     textureManager.resetColorMod(m_textureID);

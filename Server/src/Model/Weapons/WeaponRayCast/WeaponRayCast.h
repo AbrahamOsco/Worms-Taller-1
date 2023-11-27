@@ -9,12 +9,12 @@
 #include "box2d/box2d.h"
 
 class WeaponRayCast : public b2RayCastCallback{
-private:
+ private:
     b2Body* body;
     b2Vec2 point;
     b2Vec2 normal;
     float fraction;
-public:
+ public:
     WeaponRayCast();
 
     float ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float fraction) override;
@@ -29,4 +29,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_WEAPONRAYCAST_H
+#endif  // WORMS_TALLER_1_WEAPONRAYCAST_H

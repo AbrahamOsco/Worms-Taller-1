@@ -11,7 +11,7 @@
 #include "../../GameObject/GameObject.h"
 
 class Beam : public GameObject {
-private:
+ private:
     TypeBeam typeBeam;
     float xCenter;
     float yCenter;
@@ -19,7 +19,8 @@ private:
     float height;
     float angle;
     b2World* aWorld;
-public:
+
+ public:
     Beam();
 
     Beam(const TypeBeam &aTypeBeam, const float &aXcenter, const float &aYCenter, const float &aLength,
@@ -32,8 +33,7 @@ public:
     void addToWorld(b2World *world);
 
     b2World *getWorld() const;
-
 };
 
 
-#endif //WORMS_TALLER_1_BEAM_H
+#endif  // WORMS_TALLER_1_BEAM_H

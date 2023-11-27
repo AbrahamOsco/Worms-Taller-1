@@ -7,15 +7,16 @@
 
 #include <yaml-cpp/yaml.h>
 #include <cstdlib>
+#include <map>
+#include <string>
 #include <linux/limits.h>
 
 class GameParameters {
-private:
+ private:
     std::map<std::string, float> parameters;
     YAML::Node nodeInitial;
 
-public:
-
+ public:
     GameParameters();
 
     float getFPS() const;
@@ -31,6 +32,8 @@ public:
     static YAML::Node getNodeInitial();
 
     static float getPositionAdjustmentStatic();
+
+    static float getOffsetLateral();
 
     static float getBeamMinimumScalableAngle();
 
@@ -136,8 +139,6 @@ public:
 
     float getProvisionImpulseExplosionY() const;
 
-    int getMaxValueWind() const;
-
     float airAttackGetPositionY() const;
 
     float airAttackMissileGetDamage() const;
@@ -241,7 +242,9 @@ public:
     float fragmentGetMidDist() const;
 
     float fragmentGetShortDist() const;
+
+    static float getOffsetSecondBarrier();
 };
 
 
-#endif //WORMS_TALLER_1_GAMEPARAMETERS_H
+#endif  // WORMS_TALLER_1_GAMEPARAMETERS_H

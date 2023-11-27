@@ -14,8 +14,7 @@
 #include "../../../Common/DTO/WeaponSightDTO.h"
 
 class ClientProtocol : public Protocol {
-
-public:
+ public:
     explicit ClientProtocol(Socket& skt);
 
     void sendInitialStateDTO(const InitialStateDTO& initialStateDto);
@@ -60,4 +59,4 @@ public:
 };
 
 
-#endif //PROTOCOLO_CLIENT_PROTOCOL_H
+#endif  // PROTOCOLO_CLIENT_PROTOCOL_H

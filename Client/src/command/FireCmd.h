@@ -9,9 +9,9 @@
 #include "Command.h"
 
 class FireCmd  : public Command {
-public:
+ public:
     void execute(ClientProtocol &protocol) override;
 };
 
 
-#endif //WORMS_TALLER_1_FIRECMD_H
+#endif  // WORMS_TALLER_1_FIRECMD_H

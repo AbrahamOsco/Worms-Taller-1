@@ -5,11 +5,12 @@
 #ifndef WORMS_TALLER_1_LOADERPARAMS_H
 #define WORMS_TALLER_1_LOADERPARAMS_H
 
-#include "SDL2pp/SDL2pp.hh"
 #include <string>
+#include "SDL2pp/SDL2pp.hh"
+
 
 class LoaderParams {
-private:
+ private:
     int m_x;
     int m_y;
     int m_width;
@@ -17,10 +18,11 @@ private:
     std::string m_textureID;
     SDL_RendererFlip m_flip;
 
-public:
+ public:
     LoaderParams();
 
-    LoaderParams(int x, int y, int width, int height, const std::string &textureID, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    LoaderParams(int x, int y, int width, int height, const std::string &textureID,
+                SDL_RendererFlip flip = SDL_FLIP_NONE);
 
     int getX() const;
 
@@ -36,4 +38,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_LOADERPARAMS_H
+#endif  // WORMS_TALLER_1_LOADERPARAMS_H

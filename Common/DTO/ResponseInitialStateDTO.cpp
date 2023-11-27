@@ -4,16 +4,17 @@
 
 #include "ResponseInitialStateDTO.h"
 
-ResponseInitialStateDTO::ResponseInitialStateDTO() :DTO(INITIAL_STATE) {
+ResponseInitialStateDTO::ResponseInitialStateDTO() :DTO(INITIAL_STATE), playersRequired(0) {
 }
 
-ResponseInitialStateDTO::ResponseInitialStateDTO(const OperationType &aOperationType, const std::string &aGameName) : DTO(aOperationType), gameName(aGameName)  {
+ResponseInitialStateDTO::ResponseInitialStateDTO(const OperationType &aOperationType,
+                        const std::string &aGameName) : DTO(aOperationType), gameName(aGameName), playersRequired(0)  {
 }
 
 ResponseInitialStateDTO::ResponseInitialStateDTO(const OperationType &aOperationType, const std::string &aGameName,
-                                                 const std::string &aScenarioName, const size_t &playersRequired)
-                                                : DTO(aOperationType), gameName(aGameName), scenarioName(aScenarioName), playersRequired(playersRequired)  {
-
+                                                const std::string &aScenarioName, const size_t &playersRequired)
+                                                : DTO(aOperationType), gameName(aGameName), scenarioName(aScenarioName),
+                                                playersRequired(playersRequired)  {
 }
 
 

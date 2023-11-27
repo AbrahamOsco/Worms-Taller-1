@@ -4,7 +4,8 @@
 
 #include "PlayerState.h"
 
-PlayerState::PlayerState(const GameState &gameState, const TypeResult &typeResult) : m_gameState(gameState), m_typeResult(typeResult) {}
+PlayerState::PlayerState(const GameState &gameState, const TypeResult &typeResult) :
+                        m_gameState(gameState), m_typeResult(typeResult) {}
 
 void PlayerState::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     if (m_gameState == GameState::GAME_END) {

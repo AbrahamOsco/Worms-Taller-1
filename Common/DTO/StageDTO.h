@@ -17,6 +17,7 @@ class StageDTO : public DTO {
     size_t idPlayer;
     size_t positionYWater;
     std::string background;
+
  public:
     StageDTO();
 

@@ -5,15 +5,16 @@
 #ifndef WORMS_TALLER_1_WATER_H
 #define WORMS_TALLER_1_WATER_H
 
+#include <string>
 #include "SDL2pp/SDL2pp.hh"
 #include "../../graphics/TextureManager.h"
 
 class Water {
-private:
+ private:
     std::string m_textureID;
     int m_width, m_height;
     int m_y;
-public:
+ public:
     explicit Water(int y);
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera);
 
@@ -21,4 +22,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_WATER_H
+#endif  // WORMS_TALLER_1_WATER_H

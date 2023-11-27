@@ -5,14 +5,15 @@
 #ifndef WORMS_TALLER_1_WEAPONINVENTORY_H
 #define WORMS_TALLER_1_WEAPONINVENTORY_H
 
-
+#include <memory>
+#include <vector>
 #include "../GameObject.h"
 #include "../weaponIcon/WeaponIcon.h"
 
 class WeaponInventory : GameObject {
-private:
+ private:
     std::vector<WeaponIcon> m_weapons;
-public:
+ public:
     WeaponInventory();
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
@@ -23,8 +24,7 @@ public:
     void addWeapon(WeaponIcon &weapon);
 
     void verticalAligned(int verticalSpacing);
-
 };
 
 
-#endif //WORMS_TALLER_1_WEAPONINVENTORY_H
+#endif  // WORMS_TALLER_1_WEAPONINVENTORY_H

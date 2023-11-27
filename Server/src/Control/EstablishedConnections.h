@@ -8,6 +8,8 @@
 
 #include <cstddef>
 #include <map>
+#include <memory>
+#include <vector>
 #include "../../../Common/Socket/Socket.h"
 #include "ClientConnection.h"
 #include "../../../Common/Queue/Queue.h"
@@ -22,12 +24,12 @@
 #include "../../../Common/DTO/ProvisionDTO.h"
 
 class EstablishedConnections {
-private:
+ private:
     std::map<size_t, ClientConnection> clientConnections;
     Queue<std::unique_ptr<CommandDTO>> &commandQueueNB;
-public:
 
-    EstablishedConnections(Queue<std::unique_ptr<CommandDTO>>& aCommandQueueNB);
+ public:
+    explicit EstablishedConnections(Queue<std::unique_ptr<CommandDTO>>& aCommandQueueNB);
 
     void addConnection(const size_t &idPlayer, Socket sktPeer);
 
@@ -37,11 +39,12 @@ public:
 
     void pushSnapShot(const std::vector<WormDTO> &vectorWormsDTO, const PlayersDTO &playersDTO,
                       const std::vector<WeaponsDTO> &vecWeaponsDTO, const WeaponSightDTO &weaponSightDTO,
-                      const ProjectilesDTO &projectilesDTO, TurnDTO turnDTO, const std::vector<ProvisionDTO> &vecProvisionDTO);
+                      const ProjectilesDTO &projectilesDTO, TurnDTO turnDTO,
+                      const std::vector<ProvisionDTO> &vecProvisionDTO);
 
 
     void pushVecEndGame(const std::vector<EndGameDTO> &vecEndGameDTO);
 };
 
 
-#endif //WORMS_TALLER_1_ESTABLISHEDCONNECTIONS_H
+#endif  // WORMS_TALLER_1_ESTABLISHEDCONNECTIONS_H

@@ -5,14 +5,16 @@
 #ifndef WORMS_TALLER_1_MORTARMAINPROJECTILE_H
 #define WORMS_TALLER_1_MORTARMAINPROJECTILE_H
 
-#include "../ProjectileMortar.h"
+#include <memory>
+#include <vector>
+#include "../ProjectilMortar/ProjectileMortar.h"
 
 class MortarMainProjectile : public ProjectileMortar {
-private:
+ private:
     std::vector<b2Vec2> fragmentImpulses;
     std::vector<std::unique_ptr<ProjectileMortar>> fragments;
     bool wasThrowFragments;
-public:
+ public:
     MortarMainProjectile(const GameParameters &gameParameters, const TypeFocus& typeFocus);
 
     void getProjectileDTO(std::vector<ProjectileDTO>& vecProjectileDTO) override;
@@ -31,4 +33,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_MORTARMAINPROJECTILE_H
+#endif  // WORMS_TALLER_1_MORTARMAINPROJECTILE_H

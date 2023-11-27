@@ -5,6 +5,8 @@
 #ifndef WORMS_TALLER_1_GAME_H
 #define WORMS_TALLER_1_GAME_H
 
+#include <vector>
+#include <string>
 #include "../../../Common/Socket/Socket.h"
 #include "../protocol/ClientProtocol.h"
 #include "../gameObject/GameObject.h"
@@ -12,17 +14,17 @@
 #include "../gameObject/water/Water.h"
 
 class Game {
-private:
+ private:
     ClientProtocol m_protocol;
     std::vector<Beam> m_beams;
     Water m_water;
     std::string m_background;
     std::atomic<bool> m_running;
-public:
-    Game(Socket& skt);
+ public:
+    explicit Game(Socket& skt);
     void loadMap();
     void run();
 };
 
 
-#endif //WORMS_TALLER_1_GAME_H
+#endif  // WORMS_TALLER_1_GAME_H

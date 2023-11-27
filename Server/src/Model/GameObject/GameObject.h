@@ -21,12 +21,12 @@ enum Entity{
 
 
 class GameObject {
-protected:
+ protected:
     Entity typeEntity;
     b2Body* body;
     bool isDestroyed;
 
-public:
+ public:
     explicit GameObject(const Entity &aEntity);
 
     b2Body* getBody();
@@ -38,8 +38,7 @@ public:
     bool isDestroyedBody() const;
 
     virtual ~GameObject() = default;
-
 };
 
 
-#endif //WORMS_TALLER_1_GAMEOBJECT_H
+#endif  // WORMS_TALLER_1_GAMEOBJECT_H

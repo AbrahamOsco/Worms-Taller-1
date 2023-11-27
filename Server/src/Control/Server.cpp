@@ -2,6 +2,7 @@
 // Created by abraham on 19/10/23.
 //
 #include <iostream>
+#include <string>
 #include "Server.h"
 #include "../Protocol/ServerProtocol.h"
 
@@ -15,12 +16,9 @@ Server::Server(const char *serviceName) : sktAcceptor(Socket(serviceName)) {}
 int Server::run() {
     AcceptorThread acceptorThread(sktAcceptor, games);
     acceptorThread.start();
-    std::string input ;
-    while ( input != EXIT_KEY) {
+    std::string input;
+    while ( input != EXIT_KEY ) {
         std::cin >> input;
-        if( input == "p"){
-            games.printRooms();
-        }
     }
     games.stop();
     acceptorThread.stop();

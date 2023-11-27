@@ -11,13 +11,13 @@ const int TARGET_FPS = 60;
 const float TARGET_DELTATIME = 1.5f;
 
 class Timer {
-private:
+ private:
     float m_deltaTime;
     float m_lastTime;
-public:
+ public:
     float getDeltaTime();
     void tick();
 };
 
 
-#endif //WORMS_TALLER_1_TIMER_H
+#endif  // WORMS_TALLER_1_TIMER_H

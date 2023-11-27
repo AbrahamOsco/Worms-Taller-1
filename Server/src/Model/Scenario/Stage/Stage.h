@@ -8,7 +8,9 @@
 
 #include <string>
 #include <map>
+#include <vector>
 #include <memory>
+#include <utility>
 #include "../../../../../Common/DTO/StageDTO.h"
 #include "../Beam/Beam.h"
 #include "box2d/b2_world.h"
@@ -16,7 +18,7 @@
 #include "../Water/Water.h"
 
 class Stage {
-private:
+ private:
     std::string name;
     float height;
     float length;
@@ -25,9 +27,9 @@ private:
     std::unique_ptr<Edges> edges;
     std::unique_ptr<Water> water;
     std::string background;
-public:
 
-    Stage(const std::string& name);
+ public:
+    explicit Stage(const std::string& name);
 
     std::map<size_t, std::pair<float, float>> getIdsAndPositionsWorms() const;
 
@@ -38,4 +40,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_STAGE_H
+#endif  // WORMS_TALLER_1_STAGE_H

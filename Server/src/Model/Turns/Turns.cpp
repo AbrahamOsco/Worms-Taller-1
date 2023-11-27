@@ -6,36 +6,39 @@
 #include "Turns.h"
 #include "../../../../Common/DTO/TurnDTO.h"
 
+#define MAX_VALUE_WIND 5
 Turns::Turns(Players &players, const GameParameters &parameters, b2World *world)
         : gameParameters(parameters), players(players), timeLeft(parameters.getTimeForTurn()), damageRecognized(false), attackRecognized(false), valueWind(0.0f), world(world),
           focusController(players) {
 }
 
 float Turns::getWindValueForPhysics(){
-    valueWind = (rand() % (gameParameters.getMaxValueWind() -1) ) + 2;  // genero numeros aleatorios del 2 hasta el 100 .  rand %99 me genera numeros entre 0 y el 98 y le sumo 2 -> 2 y 100
-    int randomNumber = rand() % gameParameters.getMaxValueWind();
+    valueWind = (rand() % (MAX_VALUE_WIND -1) ) + 2;
+    int randomNumber = rand() % MAX_VALUE_WIND;
     if(randomNumber % 2 == 0 ){
         typeWind = WIND_RIGHT;
     } else {
         typeWind = WIND_LEFT;
     }
     float aWindValue = static_cast<float>(valueWind) / 10.0f;
-    if(typeWind == WIND_LEFT){
+    if (typeWind == WIND_LEFT) {
         aWindValue *=-1;
     }
     return aWindValue;
 }
 
-void Turns::addProvisionToWorld(){
-    int randomNumber = rand() % 3; // obtengo numeros random entre 0 y el 2.
+void Turns::addProvisionToWorld() {
+    int randomNumber = rand()  % 3;  // obtengo numeros random entre 0 y el 2.
     TypeEffect typeEffect = MUNITIONS;
-    if(randomNumber == 1){
+    if (randomNumber == 1) {
         typeEffect = MEDICAL_KIT;
-    } else if (randomNumber == 2 ){
+    } else if ( randomNumber == 2 ) {
         typeEffect = EXPLOSION;
     }
-    float posXRandom = (float)  ((rand() % 17) +8); // numero random entre  0 y 16 -> +8 -> 8 y 24m
-    provisionBoxes.push_back(std::make_unique<Provision>(posXRandom, gameParameters.getPositionYForBoxes(), typeEffect, gameParameters));
+    float posXRandom = (float)  ((rand() % 17) +8);
+    // numero random entre  0 y 16 -> +8 -> 8 y 24m
+    provisionBoxes.push_back(std::make_unique<Provision>(posXRandom, gameParameters.getPositionYForBoxes(),
+        typeEffect, gameParameters));
     provisionBoxes.back()->addToTheWorld(world);
 }
 
@@ -50,47 +53,48 @@ void Turns::startATurn() {
     attackRecognized = false;
 }
 
-void Turns::tryToChangeFocus(){
+void Turns::tryToChangeFocus() {
     focusController.tryToChangeFocus();
 }
 
-int Turns::getTimeLeft() const{
+int Turns::getTimeLeft() const {
     return this->timeLeft;
 }
 
 void Turns::subtractTime() {
-    if( timeLeft >= 1){
-        timeLeft -=1;
+    if ( timeLeft >= 1 ) {
+        timeLeft -= 1;
     }
 }
 
-void Turns::cleanProvisionsDestroyed(){
+void Turns::cleanProvisionsDestroyed() {
     provisionBoxes.erase(std::remove_if(provisionBoxes.begin(), provisionBoxes.end(),
-        [this]( std::unique_ptr<Provision>& aProvison) {
-        if(aProvison->isDestroyedBody() and not aProvison->hasIterations() ){
+        [this](std::unique_ptr<Provision>& aProvison) {
+        if ( aProvison->isDestroyedBody() && !aProvison->hasIterations() ) {
             world->DestroyBody(aProvison->getBody());
             return true;
         }
         return false;
-    }) ,provisionBoxes.end());
-
+    }) , provisionBoxes.end());
 }
 
 
-void Turns::tryEndTurn(){
+void Turns::tryEndTurn() {
     this->cleanProvisionsDestroyed();
-    if ((players.getCurrentPlayer().getCurrentWorm()->wasDamaged() or players.getCurrentPlayer().getCurrentWorm()->wasDestroyedWorm()) and not damageRecognized) {
+    if ((players.getCurrentPlayer().getCurrentWorm()->wasDamaged() ||
+        players.getCurrentPlayer().getCurrentWorm()->wasDestroyedWorm()) && !damageRecognized) {
         timeLeft = 0;
         damageRecognized = true;
-    } else if (players.getCurrentPlayer().getCurrentWorm()->alreadyAttack() and not attackRecognized) {
+    } else if (players.getCurrentPlayer().getCurrentWorm()->alreadyAttack() && !attackRecognized) {
         if (timeLeft > gameParameters.getTimeExtraAfterAttack()) {
             timeLeft = gameParameters.getTimeExtraAfterAttack();
         }
         attackRecognized = true;
-    } else if (timeLeft <= 0 and players.allWormsAreUnmoveAndNotExistsProjectiles()) { // solo acabara el turno cuando todos los worms estan quietos y no existan projectiles
+    } else if (timeLeft <= 0 && players.allWormsAreUnmoveAndNotExistsProjectiles()) {
+        // solo acabara el turno cuando todos los worms estan quietos y no existan projectiles
         timeLeft = gameParameters.getTimeForTurn();
         players.getCurrentPlayer().endTurn();
-        if(not players.onlyExistsOnePlayer()) {
+        if (!players.onlyExistsOnePlayer()) {
             players.disableAllFocus();
             startATurn();
         }
@@ -103,7 +107,7 @@ TurnDTO Turns::getTurnDTO() const {
 
 std::vector<ProvisionDTO> Turns::getVecProvisionDTO() {
     std::vector<ProvisionDTO> vecProvisions;
-    for(auto& aProvision : provisionBoxes ){
+    for ( auto& aProvision : provisionBoxes ) {
         aProvision->getProvisionDTO(vecProvisions);
     }
     return vecProvisions;

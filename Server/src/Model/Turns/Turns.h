@@ -5,14 +5,16 @@
 #ifndef WORMS_TALLER_1_TURNS_H
 #define WORMS_TALLER_1_TURNS_H
 
-
+#include <string>
+#include <memory>
+#include <vector>
 #include "../Players/Players.h"
 #include "../../../../Common/DTO/TurnDTO.h"
 #include "../Provision/Provision.h"
 #include "../FocusController/FocusController.h"
 
 class Turns {
-private:
+ private:
     GameParameters gameParameters;
     Players& players;
     size_t idPlayerCurrent;
@@ -21,14 +23,13 @@ private:
     size_t idWormCurrent;
     bool damageRecognized;
     bool attackRecognized;
-    int valueWind; // valor del viento multiplicado por 10  ej si valueWind= 100-> valorVientoReal = 10.
+    int valueWind;  // valor del viento multiplicado por 10  ej si valueWind= 100-> valorVientoReal = 10.
     TypeWind typeWind;
     b2World* world;
     std::vector<std::unique_ptr<Provision>> provisionBoxes;
     FocusController focusController;
 
-public:
-
+ public:
     explicit Turns(Players &players, const GameParameters &parameters, b2World *world);
 
     void startATurn();
@@ -54,4 +55,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_TURNS_H
+#endif  // WORMS_TALLER_1_TURNS_H

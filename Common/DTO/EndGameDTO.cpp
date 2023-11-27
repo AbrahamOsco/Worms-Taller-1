@@ -3,7 +3,7 @@
 //
 
 #include "EndGameDTO.h"
-EndGameDTO::EndGameDTO() : DTO(END_DTO) {
+EndGameDTO::EndGameDTO() : DTO(END_DTO), idPlayer(0), typeResult(WON_THE_GAME) {
 }
 
 

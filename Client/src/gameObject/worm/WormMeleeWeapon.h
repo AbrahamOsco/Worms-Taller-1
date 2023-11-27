@@ -5,17 +5,19 @@
 #ifndef WORMS_TALLER_1_WORMMELEEWEAPON_H
 #define WORMS_TALLER_1_WORMMELEEWEAPON_H
 
-
+#include <memory>
 #include "Worm.h"
 #include "../crosshair/Crosshair.h"
 
 class WormMeleeWeapon : public Worm {
-private:
+ private:
     TypeWeapon m_weaponCurrent;
     Crosshair m_crossHair;
 
-public:
-    WormMeleeWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocus &focus, const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, int xCrossHair, int yCrossHair, const TypeSight &typeSight, bool isMyTurn);
+ public:
+    WormMeleeWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction,
+                    const TypeFocus &focus, const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent,
+                    int xCrossHair, int yCrossHair, const TypeSight &typeSight, bool isMyTurn);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 
@@ -24,4 +26,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_WORMMELEEWEAPON_H
+#endif  // WORMS_TALLER_1_WORMMELEEWEAPON_H

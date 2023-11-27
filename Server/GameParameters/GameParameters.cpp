@@ -8,8 +8,9 @@ GameParameters::GameParameters() {
     char startPathC[PATH_MAX];
     realpath("../../", startPathC);
     std::string startPath(startPathC);
-    std::string fullPath(startPath + "/Worms-Taller-1/Server/GameParameters/" + "GameParameters.yaml" );
-    this->nodeInitial = YAML::LoadFile(fullPath); //basicamente el nodo inicial es como un diccionario le pasamos una clave y nos escupe un valor.
+    std::string fullPath(startPath + "/Worms-Taller-1/Server/GameParameters/" + "GameParameters.yaml");
+    this->nodeInitial = YAML::LoadFile(fullPath);
+    // basicamente el nodo inicial es como un diccionario le pasamos una clave y nos escupe un valor.
     parameters["FPS_GAME"] = 1/nodeInitial["FPS_GAME"].as<float>();
 
     parameters["MAX_WIDTH_PIXEL"] = nodeInitial["MAX_WIDTH_PIXEL"].as<float>();
@@ -29,9 +30,6 @@ GameParameters::GameParameters() {
 
     parameters["TIME_FOR_TURN"] = nodeInitial["TIME_FOR_TURN"].as<float>();
     parameters["TIME_EXTRA_AFTER_ATTACK"] = nodeInitial["TIME_EXTRA_AFTER_ATTACK"].as<float>();
-    parameters["MAX_VALUE_WIND"] = nodeInitial["MAX_VALUE_WIND"].as<float>();
-
-
 
     parameters["PROVISION_POSITION_Y_TO_INVOKE"] = nodeInitial["PROVISION_POSITION_Y_TO_INVOKE"].as<float>();
     parameters["PROVISION_HALF_HEIGHT"] = nodeInitial["PROVISION_HALF_HEIGHT"].as<float>();
@@ -56,7 +54,7 @@ GameParameters::GameParameters() {
     parameters["WORM_MAX_FALL_DAMAGE"] = nodeInitial["WORM_MAX_FALL_DAMAGE"].as<float>();
     parameters["WORM_RESISTANCE_TO_HEIGHT"] = nodeInitial["WORM_RESISTANCE_TO_HEIGHT"].as<float>();
 
-    //WORM_RESISTANCE_TO_HEIGHT
+    // WORM_RESISTANCE_TO_HEIGHT
 
     // armas:
     parameters["WEAPON_MAX_MUNITION"] = nodeInitial["WEAPON_MAX_MUNITION"].as<float>();
@@ -84,7 +82,8 @@ GameParameters::GameParameters() {
 
 
     parameters["BAZOOKA_PROJECTILE_RADIO"] = nodeInitial["BAZOOKA_PROJECTILE_RADIO"].as<float>();
-    parameters["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"] = nodeInitial["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"].as<float>();
+    parameters["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"] =
+        nodeInitial["BAZOOKA_PROJECTILE_MAX_IMPULSE_EXPLOSION"].as<float>();
     parameters["BAZOOKA_MUNITION"] = nodeInitial["BAZOOKA_MUNITION"].as<float>();
     parameters["BAZOOKA_RAY_LENGTH"] = nodeInitial["BAZOOKA_RAY_LENGTH"].as<float>();
 
@@ -155,18 +154,17 @@ GameParameters::GameParameters() {
     parameters["FRAGMENT_LONG_DISTANCE"] = nodeInitial["FRAGMENT_LONG_DISTANCE"].as<float>();
     parameters["FRAGMENT_MIDDLE_DISTANCE"] = nodeInitial["FRAGMENT_MIDDLE_DISTANCE"].as<float>();
     parameters["FRAGMENT_SHORT_DISTANCE"] = nodeInitial["FRAGMENT_SHORT_DISTANCE"].as<float>();
-
 }
 
-float GameParameters::fragmentGetLongDist() const{
+float GameParameters::fragmentGetLongDist() const {
     return this->parameters.at("FRAGMENT_LONG_DISTANCE");
 }
 
-float GameParameters::fragmentGetMidDist() const{
+float GameParameters::fragmentGetMidDist() const {
     return this->parameters.at("FRAGMENT_MIDDLE_DISTANCE");
 }
 
-float GameParameters::fragmentGetShortDist() const{
+float GameParameters::fragmentGetShortDist() const {
     return this->parameters.at("FRAGMENT_SHORT_DISTANCE");
 }
 
@@ -174,270 +172,264 @@ float GameParameters::fragmentGetShortDist() const{
 // --------------
 
 
-float GameParameters::mortarGetMainDamage() const{
+float GameParameters::mortarGetMainDamage() const {
     return this->parameters.at("MORTAR_DAMAGE_MAIN");
 }
 
-float GameParameters::mortartGetMunitionInitial() const{
+float GameParameters::mortartGetMunitionInitial() const {
     return this->parameters.at("MORTAR_MUNITION_INITIAL");
 }
 
-float GameParameters::mortarGetMaxRadio() const{
+float GameParameters::mortarGetMaxRadio() const {
     return this->parameters.at("MORTAR_MAX_RADIO");
 }
 
-float GameParameters::mortarGetMaxImpulse() const{
+float GameParameters::mortarGetMaxImpulse() const {
     return this->parameters.at("MORTAR_MAX_IMPULSE");
 }
 
-float GameParameters::mortarGetRayLength() const{
+float GameParameters::mortarGetRayLength() const {
     return this->parameters.at("MORTAR_RAY_LENGTH");
 }
 
-float GameParameters::mortarFragmentGetMainDamage() const{
+float GameParameters::mortarFragmentGetMainDamage() const {
     return this->parameters.at("MORTAR_FRAGMENT_DAMAGE_MAIN");
 }
 
-float GameParameters::mortarFragmentGetMaxRadio() const{
+float GameParameters::mortarFragmentGetMaxRadio() const {
     return this->parameters.at("MORTAR_FRAGMENT_MAX_RADIO");
 }
 
-float GameParameters::mortarFragmentGetMaxImpulse() const{
+float GameParameters::mortarFragmentGetMaxImpulse() const {
     return this->parameters.at("MORTAR_FRAGMENT_MAX_IMPULSE");
 }
 
 
 // -------------------
 
-float GameParameters::redGrenadeGetMainDamage() const{
+float GameParameters::redGrenadeGetMainDamage() const {
     return this->parameters.at("RED_GRENADE_DAMAGE_MAIN");
 }
 
-float GameParameters::redGrenadeGetMunitionInitial() const{
+float GameParameters::redGrenadeGetMunitionInitial() const {
     return this->parameters.at("RED_GRENADE_MUNITION_INITIAL");
 }
 
-float GameParameters::redGrenadeGetMaxRadio() const{
+float GameParameters::redGrenadeGetMaxRadio() const {
     return this->parameters.at("RED_GRENADE_MAX_RADIO");
 }
 
-float GameParameters::redGrenadeGetMaxImpulse() const{
+float GameParameters::redGrenadeGetMaxImpulse() const {
     return this->parameters.at("RED_GRENADE_MAX_IMPULSE");
 }
 
 
-float GameParameters::redGrenadeFragmentGetMainDamage() const{
+float GameParameters::redGrenadeFragmentGetMainDamage() const {
     return this->parameters.at("RED_GRENADE_FRAGMENT_DAMAGE_MAIN");
 }
 
-float GameParameters::redGrenadeFragmentGetMaxRadio() const{
+float GameParameters::redGrenadeFragmentGetMaxRadio() const {
     return this->parameters.at("RED_GRENADE_FRAGMENT_MAX_RADIO");
 }
 
-float GameParameters::redGrenadeFragmentGetMaxImpulse() const{
+float GameParameters::redGrenadeFragmentGetMaxImpulse() const {
     return this->parameters.at("RED_GRENADE_FRAGMENT_MAX_IMPULSE");
 }
 
 
 
 // -------------------
-float GameParameters::bananaGetMainDamage() const{
+float GameParameters::bananaGetMainDamage() const {
     return this->parameters.at("BANANA_GRENADE_DAMAGE_MAIN");
 }
 
-float GameParameters::bananaGetMunitionInitial() const{
+float GameParameters::bananaGetMunitionInitial() const {
     return this->parameters.at("BANANA_GRENADE_MUNITION_INITIAL");
 }
 
-float GameParameters::bananaGetMaxRadio() const{
+float GameParameters::bananaGetMaxRadio() const {
     return this->parameters.at("BANANA_GRENADE_MAX_RADIO");
 }
 
-float GameParameters::bananaGetMaxImpulse() const{
+float GameParameters::bananaGetMaxImpulse() const {
     return this->parameters.at("BANANA_GRENADE_MAX_IMPULSE");
 }
 
-float GameParameters::bananaGetRestitution() const{
+float GameParameters::bananaGetRestitution() const {
     return this->parameters.at("BANANA_RESTITUION");
 }
 
 // ----------
 
-float GameParameters::holyGrenadeGetMainDamage() const{
+float GameParameters::holyGrenadeGetMainDamage() const {
     return this->parameters.at("HOLY_GRENADE_DAMAGE_MAIN");
 }
 
-float GameParameters::holyGrenadeGetMunitionInitial() const{
+float GameParameters::holyGrenadeGetMunitionInitial() const {
     return this->parameters.at("HOLY_GRENADE_MUNITION_INITIAL");
 }
 
-float GameParameters::holyGrenadeGetMaxRadio() const{
+float GameParameters::holyGrenadeGetMaxRadio() const {
     return this->parameters.at("HOLY_GRENADE_MAX_RADIO");
 }
 
-float GameParameters::holyGrenadeGetMaxImpulse() const{
+float GameParameters::holyGrenadeGetMaxImpulse() const {
     return this->parameters.at("HOLY_GRENADE_MAX_IMPULSE");
 }
 
 
-float GameParameters::grenadeGetRayLength() const{
+float GameParameters::grenadeGetRayLength() const {
     return this->parameters.at("GRENADE_RAY_LENGTH");
 }
 
-float GameParameters::grenadeGetImpulseXInitial() const{
+float GameParameters::grenadeGetImpulseXInitial() const {
     return this->parameters.at("GRENADE_IMPULSE_X_INITIAL");
 }
 
-float GameParameters::grenadeGetImpulseYInitial() const{
+float GameParameters::grenadeGetImpulseYInitial() const {
     return this->parameters.at("GRENADE_IMPULSE_Y_INITIAL");
 }
 
-float GameParameters::grenadeGetMaxImpulseX() const{
+float GameParameters::grenadeGetMaxImpulseX() const {
     return this->parameters.at("GRENADE_MAX_IMPULSE_X");
 }
 
-float GameParameters::grenadeGetMaxImpulseY() const{
+float GameParameters::grenadeGetMaxImpulseY() const {
     return this->parameters.at("GRENADE_MAX_IMPULSE_Y");
 }
 
-float GameParameters::greenGrenadeMainDamage() const{
+float GameParameters::greenGrenadeMainDamage() const {
     return this->parameters.at("GREEN_GRENADE_DAMAGE_MAIN");
 }
 
-float GameParameters::greenGrenadeMunitionInitial() const{
+float GameParameters::greenGrenadeMunitionInitial() const {
     return this->parameters.at("GREEN_GRENADE_MUNITION_INITIAL");
 }
 
-float GameParameters::greenGrenadeMaxRadio() const{
+float GameParameters::greenGrenadeMaxRadio() const {
     return this->parameters.at("GREEN_GRENADE_MAX_RADIO");
 }
 
-float GameParameters::greenGrenadeMaxImpulse() const{
+float GameParameters::greenGrenadeMaxImpulse() const {
     return this->parameters.at("GREEN_GRENADE_MAX_IMPULSE");
 }
 
 
 // ----------
 
-float GameParameters::dynamiteGetFriction() const{
+float GameParameters::dynamiteGetFriction() const {
     return this->parameters.at("DYNAMITE_FRICTION");
 }
 
-float GameParameters::dynamiteGetMainDamage() const{
+float GameParameters::dynamiteGetMainDamage() const {
     return this->parameters.at("DYNAMITE_DAMAGE_MAIN");
 }
 
-float GameParameters::dynamiteGetMunitionInitial() const{
+float GameParameters::dynamiteGetMunitionInitial() const {
     return this->parameters.at("DYNAMITE_MUNITION_INITIAL");
 }
 
-float GameParameters::dynamiteGetMaxRadio() const{
+float GameParameters::dynamiteGetMaxRadio() const {
     return this->parameters.at("DYNAMITE_MAX_RADIO");
 }
 
-float GameParameters::dynamiteGetMaxImpulse() const{
+float GameParameters::dynamiteGetMaxImpulse() const {
     return this->parameters.at("DYNAMITE_IMPULSE_MAX");
 }
 
-float GameParameters::dynamiteGetOffsetXToInvoke() const{
+float GameParameters::dynamiteGetOffsetXToInvoke() const {
     return this->parameters.at("DYNAMITE_OFFSET_X_TO_INVOKE");
 }
 
 
-float GameParameters::getWaitTimeWeaponDefault() const{
+float GameParameters::getWaitTimeWeaponDefault() const {
     return this->parameters.at("WEAPON_TIME_WAIT_DEFAULT");
 }
 
-float GameParameters::getMaxMunitionWeapon() const{
+float GameParameters::getMaxMunitionWeapon() const {
     return this->parameters.at("WEAPON_MAX_MUNITION");
 }
 
-float GameParameters::getMaxHPWorm() const{
+float GameParameters::getMaxHPWorm() const {
     return this->parameters.at("WORM_MAX_HP");
 }
 
-int GameParameters::getAnimationIterations() const{
+int GameParameters::getAnimationIterations() const {
     return (int) this->parameters.at("ANIMATION_ITERATION");
 }
 
-float GameParameters::airAttackMissileGetDamage() const{
+float GameParameters::airAttackMissileGetDamage() const {
     return this->parameters.at("AIR_ATTACK_DAMAGE_MAIN_MISSILE");
 }
 
-float GameParameters::airAttackGetMunitionInitial() const{
+float GameParameters::airAttackGetMunitionInitial() const {
     return this->parameters.at("AIR_ATTACK_MUNITION_INITIAL");
 }
 
-float GameParameters::airAttackMissleGetMaxRadio() const{
+float GameParameters::airAttackMissleGetMaxRadio() const {
     return this->parameters.at("AIR_ATTACK_MISSILE_MAX_RADIO");
 }
 
-float GameParameters::airAttackMissileImpulseMax() const{
+float GameParameters::airAttackMissileImpulseMax() const {
     return this->parameters.at("AIR_ATTACK_MISSILE_IMPULSE_MAX");
 }
 
-float GameParameters::airAttackGetPositionY() const{
+float GameParameters::airAttackGetPositionY() const {
     return this->parameters.at("AIR_ATTACK_POSITION_Y_TO_INVOKE");
 }
 
-
-int GameParameters::getMaxValueWind() const{
-    return static_cast<int>(this->parameters.at("MAX_VALUE_WIND"));
-}
-
-
-float GameParameters::getProvisionHalfHeight() const{
+float GameParameters::getProvisionHalfHeight() const {
     return this->parameters.at("PROVISION_HALF_HEIGHT");
 }
 
-float GameParameters::getProvisionExtraHP() const{
+float GameParameters::getProvisionExtraHP() const {
     return this->parameters.at("PROVISION_EXTRA_HP");
 }
 
-float GameParameters::getProvisionExtraMunition() const{
+float GameParameters::getProvisionExtraMunition() const {
     return this->parameters.at("PROVISION_EXTRA_MUNITION");
 }
 
-float GameParameters::getProvisionDamageExplosion() const{
+float GameParameters::getProvisionDamageExplosion() const {
     return this->parameters.at("PROVISION_DAMAGE_EXPLOSION");
 }
 
-float GameParameters::getProvisionImpulseExplosionX() const{
+float GameParameters::getProvisionImpulseExplosionX() const {
     return this->parameters.at("PROVISION_IMPULSE_EXPLOSION_X");
 }
 
-float GameParameters::getProvisionImpulseExplosionY() const{
+float GameParameters::getProvisionImpulseExplosionY() const {
     return this->parameters.at("PROVISION_IMPULSE_EXPLOSION_Y");
 }
 
 
-float GameParameters::getPositionYForBoxes() const{
+float GameParameters::getPositionYForBoxes() const {
     return this->parameters.at("PROVISION_POSITION_Y_TO_INVOKE");
 }
 
-//WORM_RESISTANCE_TO_HEIGHT
-float GameParameters::getWormMaxResistanceToHeight() const{
+// WORM_RESISTANCE_TO_HEIGHT
+float GameParameters::getWormMaxResistanceToHeight() const {
     return this->parameters.at("WORM_RESISTANCE_TO_HEIGHT");
 }
 
 
-float GameParameters::getMaxFallDamage() const{
+float GameParameters::getMaxFallDamage() const {
     return this->parameters.at("WORM_MAX_FALL_DAMAGE");
 }
 
-float GameParameters::getBatIterations() const{
+float GameParameters::getBatIterations() const {
     return this->parameters.at("BAT_ITERATIONS");
 }
 
-float GameParameters::getFPS() const{
+float GameParameters::getFPS() const {
     return this->parameters.at("FPS_GAME");
 }
 
-int GameParameters::getTimeForTurn() const{
+int GameParameters::getTimeForTurn() const {
     return this->parameters.at("TIME_FOR_TURN");
 }
 
-int GameParameters::getTimeExtraAfterAttack() const{
+int GameParameters::getTimeExtraAfterAttack() const {
     return this->parameters.at("TIME_EXTRA_AFTER_ATTACK");
 }
 
@@ -457,7 +449,7 @@ YAML::Node GameParameters::getNodeInitial() {
     char startPathC[PATH_MAX];
     realpath("../../", startPathC);
     std::string startPath(startPathC);
-    std::string fullPath(startPath + "/Worms-Taller-1/Server/GameParameters/" + "GameParameters.yaml" );
+    std::string fullPath(startPath + "/Worms-Taller-1/Server/GameParameters/" + "GameParameters.yaml");
     YAML::Node nodeInitial = YAML::LoadFile(fullPath);
     return nodeInitial;
 }
@@ -478,9 +470,19 @@ float GameParameters::getOffsetWidth() {
 }
 
 
-float GameParameters::getBeamFrictionSlipperyStatic(){
+float GameParameters::getBeamFrictionSlipperyStatic() {
     YAML::Node aNode = getNodeInitial();
     return aNode["BEAM_SLIPPERY_FRICTION"].as<float>();
+}
+
+float GameParameters::getOffsetLateral() {
+    YAML::Node aNode = getNodeInitial();
+    return aNode["OFFSET_LATERAL"].as<float>();
+}
+
+float GameParameters::getOffsetSecondBarrier() {
+    YAML::Node aNode = getNodeInitial();
+    return aNode["OFFSET_Y_SECOND_BARRIER"].as<float>();
 }
 
 float GameParameters::getMaxHeightPixelStatic() {
@@ -601,15 +603,15 @@ float GameParameters::getBazookaImpulseYInitial() const {
     return parameters.at("BAZOOKA_IMPULSE_Y_INITIAL");
 }
 
-float GameParameters::getBazookaMaxImpulseX() const{
+float GameParameters::getBazookaMaxImpulseX() const {
     return parameters.at("BAZOOKA_MAX_IMPULSE_X");
 }
 
-float GameParameters::getBazookaMaxImpulseY() const{
+float GameParameters::getBazookaMaxImpulseY() const {
     return parameters.at("BAZOOKA_MAX_IMPULSE_Y");
 }
 
-float GameParameters::getIncreaseImpulseForFPS() const{
+float GameParameters::getIncreaseImpulseForFPS() const {
     return parameters.at("INCREASE_IMPULSE_FOR_FPS");
 }
 
@@ -640,6 +642,7 @@ float GameParameters::getWormImpulseFactoScalingDown() const {
 float GameParameters::getWormImpulseFactorClimbingUp() const {
     return parameters.at("WORM_FACTOR_IMPULSE_CLIMBING_UP");
 }
+
 
 
 

@@ -12,4 +12,4 @@ struct ClosedServer : public std::runtime_error {
 };
 
 
-#endif //WORMS_TALLER_1_CLOSEDSERVER_H
+#endif  // WORMS_TALLER_1_CLOSEDSERVER_H

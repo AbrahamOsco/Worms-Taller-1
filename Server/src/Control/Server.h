@@ -10,15 +10,14 @@
 #include "GamesProtected.h"
 
 class Server {
-private:
+ private:
     Socket sktAcceptor;
     GamesProtected games;
-public:
-    Server(const char *serviceName);
+ public:
+    explicit Server(const char *serviceName);
 
     int run();
-
 };
 
 
-#endif //WORMS_TALLER_1_SERVER_H
+#endif  // WORMS_TALLER_1_SERVER_H

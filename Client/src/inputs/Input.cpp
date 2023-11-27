@@ -4,7 +4,8 @@
 
 #include "Input.h"
 
-Input::Input() : m_quit(false), m_mouseLeftButtonDown(false), m_mouseRightButtonDown(false), m_mouseX(0), m_mouseY(0), m_prevSpaceState(false) {
+Input::Input() : m_quit(false), m_mouseLeftButtonDown(false), m_mouseRightButtonDown(false),
+    m_mouseX(0), m_mouseY(0), m_prevSpaceState(false) {
     m_keyStates = SDL_GetKeyboardState(nullptr);
 }
 
@@ -69,7 +70,7 @@ void Input::mouseMotion(SDL_Event& event) {
     m_mouseY = event.motion.y;
 }
 
-bool Input::getKeyDown(SDL_Scancode key) const{
+bool Input::getKeyDown(SDL_Scancode key) const {
     return (m_keyStates[key] == 1);
 }
 

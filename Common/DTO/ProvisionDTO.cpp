@@ -4,11 +4,13 @@
 
 #include "ProvisionDTO.h"
 
-ProvisionDTO::ProvisionDTO() : DTO(PROVISION_DTO) {
+ProvisionDTO::ProvisionDTO() : DTO(PROVISION_DTO), positionX(0), positionY(0),
+                                typeEffect(MEDICAL_KIT), typeContact(NO_CONTACT) {
 }
 
-ProvisionDTO::ProvisionDTO(const size_t &positionX, const size_t &positionY, const TypeEffect &typeEffect,  const TypeContact& typeContact) : DTO(PROVISION_DTO),
-    positionX(positionX), positionY(positionY), typeEffect(typeEffect), typeContact(typeContact) {
+ProvisionDTO::ProvisionDTO(const size_t &positionX, const size_t &positionY, const TypeEffect &typeEffect,
+                            const TypeContact& typeContact) : DTO(PROVISION_DTO), positionX(positionX),
+                            positionY(positionY), typeEffect(typeEffect), typeContact(typeContact) {
 }
 
 size_t ProvisionDTO::getPositionX() const {

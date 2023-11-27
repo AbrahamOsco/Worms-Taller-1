@@ -9,9 +9,9 @@
 #include "Command.h"
 
 class SetMaxLifeCmd : public Command {
-public:
+ public:
     void execute(ClientProtocol &protocol) override;
 };
 
 
-#endif //WORMS_TALLER_1_SETMAXLIFECMD_H
+#endif  // WORMS_TALLER_1_SETMAXLIFECMD_H

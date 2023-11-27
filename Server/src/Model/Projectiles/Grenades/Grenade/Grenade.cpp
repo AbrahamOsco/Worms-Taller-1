@@ -3,23 +3,25 @@
 //
 
 #include <iostream>
+#include <vector>
 #include "Grenade.h"
 
-Grenade::Grenade(GameParameters gameParameters, const int &waitTime, const TypeFocus& typeFocus) : GameObject(ENTITY_GRENADE), gameParameters(gameParameters), waitTime(waitTime),
-         typeFocus(typeFocus), explodable(0.0f, 0.0f, 0.0f){
+Grenade::Grenade(GameParameters gameParameters, const int &waitTime, const TypeFocus& typeFocus) :
+        GameObject(ENTITY_GRENADE), gameParameters(gameParameters), waitTime(waitTime),
+         typeFocus(typeFocus), explodable(0.0f, 0.0f, 0.0f), fixedRotation(true), world(nullptr) {
     exploded = false;
     collided = false;
     explosionIterations = gameParameters.getAnimationIterations();
     restitution = 0.0;
 }
 
-void Grenade::addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impulseGrenade){
+void Grenade::addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impulseGrenade) {
     explosionIterations = gameParameters.getAnimationIterations();
     b2BodyDef grenadeDef;
     grenadeDef.type = b2_dynamicBody;
     grenadeDef.bullet = true;
     grenadeDef.fixedRotation = this->fixedRotation;
-    grenadeDef.position.Set(positionOrigen.x, positionOrigen.y );
+    grenadeDef.position.Set(positionOrigen.x, positionOrigen.y);
     grenadeDef.userData.pointer = (uintptr_t) this;
     this->body = aWorld->CreateBody(&grenadeDef);
     b2CircleShape grenadeForm;
@@ -31,11 +33,11 @@ void Grenade::addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impul
     defFixGrenade.density = 1.0f;
     defFixGrenade.restitution = this->restitution;
     this->body->CreateFixture(&defFixGrenade);
-    body->ApplyLinearImpulse( impulseGrenade, body->GetWorldCenter(), true);
+    body->ApplyLinearImpulse(impulseGrenade, body->GetWorldCenter(), true);
     this->world = aWorld;
 }
 
-void Grenade::collide(){
+void Grenade::collide() {
     if (!collided) {
         collided = true;
         startTime = std::chrono::steady_clock::now();
@@ -45,7 +47,7 @@ void Grenade::collide(){
 void Grenade::passTime() {
     if (collided) {
         time = std::chrono::steady_clock::now();
-        if (time - startTime >= waitTime && !exploded){
+        if (time - startTime >= waitTime && !exploded) {
             explode();
         }
     }
@@ -62,7 +64,7 @@ bool Grenade::hasExploded() const {
     return exploded;
 }
 
-void Grenade::throwFragments(){
+void Grenade::throwFragments() {
 }
 
 

@@ -3,6 +3,9 @@
 //
 
 #include <iostream>
+#include <memory>
+#include <vector>
+#include <utility>
 #include "MortarMainProjectile.h"
 #include "../MortarFragment/MortarFragment.h"
 
@@ -15,33 +18,36 @@ MortarMainProjectile::MortarMainProjectile(const GameParameters &gameParameters,
                         b2Vec2(gameParameters.fragmentGetShortDist(), gameParameters.fragmentGetLongDist()),
                         b2Vec2(-gameParameters.fragmentGetShortDist(), gameParameters.fragmentGetLongDist())};
 
-    this->explodable = Explodable(gameParameters.mortarGetMainDamage(), gameParameters.mortarGetMaxRadio(), gameParameters.mortarGetMaxImpulse());
+    this->explodable = Explodable(gameParameters.mortarGetMainDamage(),
+        gameParameters.mortarGetMaxRadio(), gameParameters.mortarGetMaxImpulse());
     wasThrowFragments = false;
 }
 
 void MortarMainProjectile::getProjectileDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
-    if( this->isDestroyedBody() and not wasThrowFragments){
+    if ( this->isDestroyedBody() && !wasThrowFragments ) {
         wasThrowFragments = true;
         this->throwFragments();
     }
 
-    vecProjectileDTO.push_back(ProjectileDTO(PROJ_MORTAR, this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
-                                             gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()),
+    vecProjectileDTO.push_back(ProjectileDTO(PROJ_MORTAR,
+    this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
+    gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()),
                                              this->typeFocus, NO_EXPLODE) );
 }
 
 void MortarMainProjectile::throwFragments() {
     for (auto & impulse : fragmentImpulses) {
         std::unique_ptr<ProjectileMortar> projectileMortar{new MortarFragment(gameParameters, typeFocus)};
-        projectileMortar->addToTheWorld(body->GetWorld(), body->GetWorldCenter() + impulse, impulse, windValue );
-        std::cout << "Lanzando mortar fragment en x: " << (body->GetWorldCenter().x + impulse.x)  << "  y  :" << (body->GetWorldCenter().y + impulse.y) << "\n";
+        projectileMortar->addToTheWorld(body->GetWorld(), body->GetWorldCenter() + impulse, impulse, windValue);
+        std::cout << "Lanzando mortar fragment en x: " << (body->GetWorldCenter().x + impulse.x)  <<
+            "  y  :" << (body->GetWorldCenter().y + impulse.y) << "\n";
         fragments.push_back(std::move(projectileMortar));
     }
 }
 
 bool MortarMainProjectile::hasFragment() const {
-    for(auto& aFragment : fragments){
-        if(aFragment != nullptr){
+    for (auto& aFragment : fragments) {
+        if (aFragment != nullptr) {
             return true;
         }
     }
@@ -49,11 +55,13 @@ bool MortarMainProjectile::hasFragment() const {
 }
 
 void MortarMainProjectile::tryCleanProjectiles() {
-    for(auto& aFragmentMortar :fragments ){
-        if(aFragmentMortar!= nullptr and aFragmentMortar->isDestroyedBody() and not aFragmentMortar->hasExplosionIterations()){
+    for ( auto& aFragmentMortar : fragments ) {
+        if (aFragmentMortar!= nullptr && aFragmentMortar->isDestroyedBody() &&
+                !aFragmentMortar->hasExplosionIterations()) {
             this->body->GetWorld()->DestroyBody(aFragmentMortar->getBody());
             aFragmentMortar = nullptr;
-        } else if ( aFragmentMortar != nullptr and not aFragmentMortar->isDestroyedBody() ){ // para q no se quede en el aire
+        } else if ( aFragmentMortar != nullptr && !aFragmentMortar->isDestroyedBody() ) {
+            // para q no se quede en el aire
             float smallImpulse = 0.01f;  // Ajusta según sea necesario
             this->body->ApplyLinearImpulse(b2Vec2(0.0f, -1*smallImpulse), body->GetWorldCenter(), true);
         }
@@ -61,16 +69,17 @@ void MortarMainProjectile::tryCleanProjectiles() {
 }
 
 void MortarMainProjectile::getFragmentProjectilDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
-    for(auto& aFragment :fragments ){
-        if(aFragment != nullptr and aFragment->isDestroyedBody() and aFragment->hasExplosionIterations() ){
+    for ( auto& aFragment : fragments ) {
+        if ( aFragment != nullptr && aFragment->isDestroyedBody() && aFragment->hasExplosionIterations() ) {
             aFragment->getProjectileDTO(vecProjectileDTO);
-            ProjectileDTO* projectileDto = &vecProjectileDTO.back(); // saco unar referencia del ultimo q pushee para setearle el typeEXplode
+            ProjectileDTO* projectileDto = &vecProjectileDTO.back();
+            // saco unar referencia del ultimo q pushee para setearle el typeEXplode
             projectileDto->setTypeExplode(EXPLODE);
-            if(aFragment->getNumberIterations() == gameParameters.getAnimationIterations()){
+            if (aFragment->getNumberIterations() == gameParameters.getAnimationIterations()) {
                 projectileDto->setTypeExplode(EXPLODE_SOUND);
             }
             aFragment->removeAIteration();
-        } else if (aFragment != nullptr and not aFragment->isDestroyedBody()){
+        } else if (aFragment != nullptr && !aFragment->isDestroyedBody()) {
             aFragment->getProjectileDTO(vecProjectileDTO);
         }
     }
@@ -82,15 +91,16 @@ void MortarMainProjectile::searchWormAndCollide(const b2Vec2 &projectilePosition
 
 void MortarMainProjectile::awakenFragments() {
     size_t fragmentsNull = 0;
-    for(auto& aFragment : fragments){
-        if(aFragment == NULL){
+    for (auto& aFragment : fragments) {
+        if (aFragment == NULL) {
             fragmentsNull++;
         }
     }
-    for(auto& aFragment : fragments){
-        if(aFragment != nullptr and fragmentsNull == 5){
+    for (auto& aFragment : fragments) {
+        if (aFragment != nullptr && fragmentsNull == 5) {
             float impulseToEndTurn = -1.0f;
-            aFragment->getBody()->ApplyLinearImpulse(b2Vec2(0.5, impulseToEndTurn), aFragment->getBody()->GetWorldCenter(), true);
+            aFragment->getBody()->ApplyLinearImpulse(b2Vec2(0.5, impulseToEndTurn),
+                aFragment->getBody()->GetWorldCenter(), true);
         }
     }
 }

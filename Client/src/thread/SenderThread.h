@@ -14,16 +14,16 @@
 #include "../../../Common/Thread/Thread.h"
 
 class SenderThread : public Thread {
-private:
+ private:
     ClientProtocol& m_protocol;
     Queue<std::unique_ptr<Command>>& m_queue;
     std::atomic<bool>& m_running;
 
-public:
+ public:
     SenderThread(ClientProtocol& protocol, Queue<std::unique_ptr<Command>>& queue, std::atomic<bool>& running);
     void run() override;
     void stop();
 };
 
 
-#endif //WORMS_TALLER_1_SENDERTHREAD_H
+#endif  // WORMS_TALLER_1_SENDERTHREAD_H

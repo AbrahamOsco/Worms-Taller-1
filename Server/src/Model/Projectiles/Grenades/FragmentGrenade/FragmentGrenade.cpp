@@ -2,6 +2,7 @@
 // Created by abraham on 23/11/23.
 //
 
+#include <vector>
 #include "FragmentGrenade.h"
 
 FragmentGrenade::FragmentGrenade(const GameParameters &gameParameters, const int &waitTime,
@@ -14,7 +15,9 @@ FragmentGrenade::FragmentGrenade(const GameParameters &gameParameters, const int
 
 
 void FragmentGrenade::getProjectileDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
-    ProjectileDTO aProjectilDTO = ProjectileDTO(PROJ_RED_GRENADE_FRAGMENT, this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
-                                                gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()), this->typeFocus, NO_EXPLODE);
+    ProjectileDTO aProjectilDTO = ProjectileDTO(PROJ_RED_GRENADE_FRAGMENT,
+    this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
+    gameParameters.getMaxHeightPixel() - (this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment()),
+    this->typeFocus, NO_EXPLODE);
     vecProjectileDTO.push_back(aProjectilDTO);
 }

@@ -9,18 +9,19 @@
 #include "../../../../GameParameters/GameParameters.h"
 
 
-Beam::Beam() : GameObject(ENTITY_BEAM){
+Beam::Beam() : GameObject(ENTITY_BEAM), typeBeam(SHORT_BEAM), xCenter(0), yCenter(0), length(0),
+                height(0), angle(0), aWorld(nullptr) {
 }
 
 Beam::Beam(const TypeBeam &aTypeBeam, const float &aXcenter, const float &aYCenter, const float &aLength,
-           const float &aHeight, const float &aAngle)
-    : GameObject(ENTITY_BEAM) , typeBeam(aTypeBeam), xCenter(aXcenter), yCenter(aYCenter), length(aLength), height(aHeight), angle(aAngle) {
-
+           const float &aHeight, const float &aAngle) : GameObject(ENTITY_BEAM) , typeBeam(aTypeBeam),
+           xCenter(aXcenter), yCenter(aYCenter), length(aLength), height(aHeight), angle(aAngle), aWorld(nullptr) {
 }
 // aca Falta hacer GameParameters::getMaxHeightPixelStatic() - (yCenter * GameParameters::getPositionAdjustmentStatic())
 BeamDTO Beam::getBeamDTO() {
     BeamDTO beamDto(typeBeam, xCenter * GameParameters::getPositionAdjustmentStatic(),
-    GameParameters::getMaxHeightPixelStatic()  - (yCenter * GameParameters::getPositionAdjustmentStatic()), length, height, angle);  // AJUSTAR TAMBIEN LAS VIGAS @RICARDO
+    GameParameters::getMaxHeightPixelStatic()  - (yCenter * GameParameters::getPositionAdjustmentStatic()),
+            length, height, angle);  // AJUSTAR TAMBIEN LAS VIGAS @RICARDO
     return beamDto;
 }
 
@@ -33,12 +34,13 @@ void Beam::addToWorld(b2World *world) {
 
     float angleRandians = this->angle/180.0f * b2_pi;
     b2PolygonShape shapeBeam;
-    shapeBeam.SetAsBox(length/2.0f, height/2.0f, b2Vec2(0.0f, 0.0f), angleRandians );
+    shapeBeam.SetAsBox(length/2.0f, height/2.0f, b2Vec2(0.0f, 0.0f), angleRandians);
 
     b2FixtureDef defFixtureBeam;
     defFixtureBeam.shape = &shapeBeam;
-    float beamFriction = GameParameters::getBeamFriction(); // antes era 1.5f
-    if(angle > GameParameters::getBeamMinimumScalableAngle() && angle <= GameParameters::getBeamMaximumUnscalableAngle()){
+    float beamFriction = GameParameters::getBeamFriction();  // antes era 1.5f
+    if (angle > GameParameters::getBeamMinimumScalableAngle() &&
+            angle <= GameParameters::getBeamMaximumUnscalableAngle()) {
         beamFriction = GameParameters::getBeamFrictionSlipperyStatic();
     }
     defFixtureBeam.friction = beamFriction;

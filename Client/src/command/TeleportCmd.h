@@ -9,13 +9,13 @@
 #include "Command.h"
 
 class TeleportCmd : public Command {
-private:
+ private:
     int m_x;
     int m_y;
-public:
+ public:
     TeleportCmd(int x, int y);
     void execute(ClientProtocol &protocol) override;
 };
 
 
-#endif //WORMS_TALLER_1_TELEPORTCMD_H
+#endif  // WORMS_TALLER_1_TELEPORTCMD_H

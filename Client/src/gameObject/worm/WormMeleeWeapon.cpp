@@ -2,25 +2,15 @@
 // Created by riclui on 19/11/23.
 //
 
+#include <utility>
 #include "WormMeleeWeapon.h"
 #include "../../command/FireCmd.h"
 
 WormMeleeWeapon::WormMeleeWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction,
                                  const TypeFocus &focus, const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent,
-                                 int xCrossHair, int yCrossHair, const TypeSight &typeSight, bool isMyTurn) : Worm(id,
-                                                                                                                   x, y,
-                                                                                                                   hpWorm,
-                                                                                                                   direction,
-                                                                                                                   focus,
-                                                                                                                   moveWorm,
-                                                                                                                   isMyTurn),
-                                                                                                              m_weaponCurrent(
-                                                                                                                      weaponCurrent),
-                                                                                                              m_crossHair(
-                                                                                                                      xCrossHair,
-                                                                                                                      yCrossHair,
-                                                                                                                      typeSight) {
-
+                                 int xCrossHair, int yCrossHair, const TypeSight &typeSight, bool isMyTurn) :
+                                 Worm(id, x, y, hpWorm, direction, focus, moveWorm, isMyTurn),
+                                 m_weaponCurrent(weaponCurrent), m_crossHair(xCrossHair, yCrossHair, typeSight) {
     if (m_weaponCurrent == TypeWeapon::BASEBALL_BAT) {
         m_width = 40;
         m_height = 30;
@@ -34,7 +24,6 @@ WormMeleeWeapon::WormMeleeWeapon(int id, int x, int y, const size_t &hpWorm, con
     } else {
         std::cerr << "weapon not found" << std::endl;
     }
-
 }
 
 void WormMeleeWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {

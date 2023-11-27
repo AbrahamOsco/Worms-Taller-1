@@ -5,6 +5,8 @@
 #ifndef WORMS_TALLER_1_GAMEOBJECT_H
 #define WORMS_TALLER_1_GAMEOBJECT_H
 
+#include <string>
+#include <memory>
 #include "IObject.h"
 #include "SDL2pp/SDL2pp.hh"
 #include "../loaderParams/LoaderParams.h"
@@ -13,13 +15,13 @@
 #include "../soundManager/SoundManager.h"
 
 class GameObject : public IObject {
-protected:
+ protected:
     int m_x, m_y;
     int m_width, m_height;
     std::string m_textureID;
     SDL_RendererFlip m_flip;
 
-public:
+ public:
     GameObject();
 
     explicit GameObject(const LoaderParams &params);
@@ -27,8 +29,9 @@ public:
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override = 0;
 
     void
-    update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera, SoundManager &soundManager) override = 0;
+    update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera,
+        SoundManager &soundManager) override = 0;
 };
 
 
-#endif //WORMS_TALLER_1_GAMEOBJECT_H
+#endif  // WORMS_TALLER_1_GAMEOBJECT_H

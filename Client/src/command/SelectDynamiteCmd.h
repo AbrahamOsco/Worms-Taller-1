@@ -9,9 +9,9 @@
 #include "Command.h"
 
 class SelectDynamiteCmd : public Command {
-public:
+ public:
     void execute(ClientProtocol &protocol) override;
 };
 
 
-#endif //WORMS_TALLER_1_SELECTDYNAMITECMD_H
+#endif  // WORMS_TALLER_1_SELECTDYNAMITECMD_H

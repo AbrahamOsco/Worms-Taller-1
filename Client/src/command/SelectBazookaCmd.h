@@ -9,9 +9,9 @@
 #include "Command.h"
 
 class SelectBazookaCmd : public Command {
-public:
+ public:
     void execute(ClientProtocol &protocol) override;
 };
 
 
-#endif //WORMS_TALLER_1_SELECTBAZOOKACMD_H
+#endif  // WORMS_TALLER_1_SELECTBAZOOKACMD_H

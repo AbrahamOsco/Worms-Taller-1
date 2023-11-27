@@ -8,6 +8,7 @@
 #include <string>
 #include <map>
 #include <atomic>
+#include <memory>
 #include "../../../Common/DTO/ResponseInitialStateDTO.h"
 #include "../../../Common/Socket/Socket.h"
 #include "../Model/ModelGame/Model.h"
@@ -25,7 +26,7 @@ Entidad que sera el motor del juego en el server tendra el loop del box2d para i
 */
 
 class Engine : public Thread {
-private:
+ private:
     GameParameters gameParameters;
     std::string nameGameRoom;
     std::string nameScenario;
@@ -34,12 +35,14 @@ private:
     b2World world;
     Model model;
     std::atomic<bool> keepTalking;
-    Queue<std::unique_ptr<CommandDTO>> commandsQueueNB;  // La queue para popear los comandos recibido por el cliente. Solo tenemos una queue para popear comandos. y N queures para enviar.
+    Queue<std::unique_ptr<CommandDTO>> commandsQueueNB;
+    // La queue para popear los comandos recibido por el cliente.
+    // Solo tenemos una queue para popear comandos. y N queures para enviar.
     EstablishedConnections connections;
     void sendStatusAnswer(Socket &sktPeer, const OperationType &operationType);
-public:
 
-    Engine(const ResponseInitialStateDTO &response);
+ public:
+    explicit Engine(const ResponseInitialStateDTO &response);
 
     int addClient(Socket &socket, const std::string &playerName, const OperationType &aOperation);
 
@@ -48,8 +51,6 @@ public:
     void run() override;
 
     void stop();
-
-    void print();
 
     RoomDTO getRoomDTO() const;
 
@@ -61,4 +62,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_ENGINE_H
+#endif  // WORMS_TALLER_1_ENGINE_H

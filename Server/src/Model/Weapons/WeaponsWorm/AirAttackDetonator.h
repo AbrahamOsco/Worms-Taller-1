@@ -5,17 +5,19 @@
 #ifndef WORMS_TALLER_1_AIRATTACKDETONATOR_H
 #define WORMS_TALLER_1_AIRATTACKDETONATOR_H
 
-
+#include <memory>
+#include <vector>
 #include "Weapon.h"
 #include "../../Projectiles/AirAttackMissile.h"
 
 class AirAttackDetonator : public Weapon {
-private:
+ private:
     std::vector<std::unique_ptr<AirAttackMissile>> missiles;
     std::vector<float> offsets;
     b2World* world;
     TypeFocus typeFocus;
-public:
+
+ public:
     AirAttackDetonator(const TypeWeapon &aTypeWeapon, const float &mainDamage, const TypeMunition &aTypeMunition,
                        const size_t &aMunition, const GameParameters &gameParameters);
 
@@ -38,9 +40,7 @@ public:
 
     // para las armas que gastan municiones;
     bool hasMunition() const override;
-
-
 };
 
 
-#endif //WORMS_TALLER_1_AIRATTACKDETONATOR_H
+#endif  // WORMS_TALLER_1_AIRATTACKDETONATOR_H

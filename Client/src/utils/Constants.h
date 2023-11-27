@@ -8,4 +8,4 @@
 const int WINDOW_WIDTH = 1024;
 const int WINDOW_HEIGHT = 768;
 
-#endif //WORMS_TALLER_1_CONSTANTS_H
+#endif  // WORMS_TALLER_1_CONSTANTS_H

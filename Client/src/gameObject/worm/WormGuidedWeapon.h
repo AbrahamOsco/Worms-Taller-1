@@ -5,14 +5,14 @@
 #ifndef WORMS_TALLER_1_WORMGUIDEDWEAPON_H
 #define WORMS_TALLER_1_WORMGUIDEDWEAPON_H
 
-
+#include <memory>
 #include "Worm.h"
 
 class WormGuidedWeapon : public Worm {
-private:
+ private:
     TypeWeapon m_weaponCurrent;
 
-public:
+ public:
     WormGuidedWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocus &focus,
                      const MoveWorm &moveWorm, const TypeWeapon &weaponCurrent, bool isMyTurn);
 
@@ -23,4 +23,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_WORMGUIDEDWEAPON_H
+#endif  // WORMS_TALLER_1_WORMGUIDEDWEAPON_H

@@ -5,7 +5,6 @@
 #include "ResolverInitialDTO.h"
 
 ResolverInitialDTO::ResolverInitialDTO() : DTO(INITIAL_STATE),  statusAnswer(0) {
-
 }
 
 ResolverInitialDTO::ResolverInitialDTO(const OperationType &operationType,
@@ -14,11 +13,11 @@ ResolverInitialDTO::ResolverInitialDTO(const OperationType &operationType,
                     statusAnswer(0) {
 }
 
-ResolverInitialDTO::ResolverInitialDTO(const OperationType &operationType, const std::vector<RoomDTO> &aGameRooms) : DTO(operationType), gameRooms(aGameRooms), statusAnswer(0)  {
-
+ResolverInitialDTO::ResolverInitialDTO(const OperationType &operationType,
+const std::vector<RoomDTO> &aGameRooms) : DTO(operationType), gameRooms(aGameRooms), statusAnswer(0)  {
 }
-ResolverInitialDTO::ResolverInitialDTO(const OperationType &operationType, const size_t &aStatusAnswer) : DTO(operationType), statusAnswer(aStatusAnswer) {
-
+ResolverInitialDTO::ResolverInitialDTO(const OperationType &operationType, const size_t &aStatusAnswer) :
+DTO(operationType), statusAnswer(aStatusAnswer) {
 }
 
 void ResolverInitialDTO::setScenarioNames(const std::vector<std::string> &aScenariosNames) {

@@ -5,15 +5,16 @@
 #ifndef WORMS_TALLER_1_WORM_H
 #define WORMS_TALLER_1_WORM_H
 
-
+#include <cmath>
+#include <memory>
 #include "../GameObject.h"
 #include "../../loaderParams/LoaderParams.h"
 #include "../../animation/SpriteAnimation.h"
 #include "../../soundManager/SoundManager.h"
-#include <cmath>
+
 
 class Worm : public GameObject {
-protected:
+ protected:
     int m_id;
     size_t m_hpWorm;
     Direction m_directionLook;
@@ -22,9 +23,9 @@ protected:
     SpriteAnimation m_animation;
     bool m_isMyTurn;
 
-public:
-
-    explicit Worm(int id, int x, int y, const size_t &hpWorm, const Direction &direction, const TypeFocus &focus, const MoveWorm &moveWorm, bool isMyTurn);
+ public:
+    explicit Worm(int id, int x, int y, const size_t &hpWorm, const Direction &direction,
+                const TypeFocus &focus, const MoveWorm &moveWorm, bool isMyTurn);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
 
@@ -32,8 +33,7 @@ public:
     update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera, SoundManager &soundManager) override;
 
     void animationState();
-
 };
 
 
-#endif //WORMS_TALLER_1_WORM_H
+#endif  // WORMS_TALLER_1_WORM_H

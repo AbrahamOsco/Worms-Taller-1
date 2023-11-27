@@ -5,15 +5,15 @@
 #ifndef WORMS_TALLER_1_WINDINFO_H
 #define WORMS_TALLER_1_WINDINFO_H
 
-
+#include <memory>
 #include "../../../../Common/DTO/WormDTO.h"
 #include "../GameObject.h"
 
 class WindInfo : public GameObject {
-private:
+ private:
     int m_velocity;
     TypeWind m_direction;
-public:
+ public:
     WindInfo(int velocity, TypeWind direction);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
@@ -23,4 +23,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_WINDINFO_H
+#endif  // WORMS_TALLER_1_WINDINFO_H

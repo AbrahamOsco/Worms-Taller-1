@@ -2,18 +2,22 @@
 // Created by abraham on 20/11/23.
 //
 
+#include <utility>
 #include "AirAttackDetonator.h"
 // @ todo eliminar numeros magicos
-AirAttackDetonator::AirAttackDetonator(const TypeWeapon &aTypeWeapon, const float &mainDamage, const TypeMunition &aTypeMunition,
-                  const size_t &aMunition, const GameParameters &gameParameters) : Weapon(aTypeWeapon, mainDamage, aTypeMunition, aMunition,gameParameters) {
-    offsets = {-0.5f,0.5f,-1.5f,1.5f,-2.5f,2.5f};
+AirAttackDetonator::AirAttackDetonator(const TypeWeapon &aTypeWeapon, const float &mainDamage,
+                const TypeMunition &aTypeMunition, const size_t &aMunition, const GameParameters &gameParameters) :
+                    Weapon(aTypeWeapon, mainDamage, aTypeMunition, aMunition, gameParameters),
+                    world(nullptr), typeFocus(NO_FOCUS) {
+    offsets = {-0.5f, 0.5f, -1.5f, 1.5f, -2.5f, 2.5f};
 }
 
 void AirAttackDetonator::detonate(const int &posXAttack, b2World *world, const TypeFocus &typeFocus) {
     float posXInMeters =  (float) posXAttack / gameParameters.getPositionAdjustment();
     for (auto & offset : offsets) {
         std::unique_ptr<AirAttackMissile> missile{new AirAttackMissile(gameParameters, typeFocus)};
-        missile.get()->addToTheWorld(world, b2Vec2(posXInMeters + offset, gameParameters.airAttackGetPositionY()), windValue );
+        missile.get()->addToTheWorld(world, b2Vec2(posXInMeters + offset,
+        gameParameters.airAttackGetPositionY()), windValue);
         missiles.push_back(std::move(missile));
     }
     this->munition--;
@@ -32,8 +36,8 @@ bool AirAttackDetonator::launchesProjectiles() {
 }
 
 bool AirAttackDetonator::thereAreProjectiles() {
-    for(auto& aMissile: missiles){
-        if(aMissile != nullptr ){
+    for (auto& aMissile : missiles) {
+        if ( aMissile != nullptr ) {
             return true;
         }
     }
@@ -41,8 +45,8 @@ bool AirAttackDetonator::thereAreProjectiles() {
 }
 
 void AirAttackDetonator::tryCleanProjectiles(b2World *aWorld) {
-    for(auto& aMissile: missiles){
-        if(aMissile!= nullptr and aMissile->isDestroyedBody() and not aMissile->hasExplosionIterations() ){
+    for (auto& aMissile : missiles) {
+        if ( aMissile!= nullptr && aMissile->isDestroyedBody() && !aMissile->hasExplosionIterations() ) {
             aWorld->DestroyBody(aMissile->getBody());
             aMissile = nullptr;
         }
@@ -50,16 +54,16 @@ void AirAttackDetonator::tryCleanProjectiles(b2World *aWorld) {
 }
 
 void AirAttackDetonator::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
-    for(auto& aMissile : missiles){
-        if(aMissile != nullptr and aMissile->isDestroyedBody() and aMissile->hasExplosionIterations()){
+    for (auto& aMissile : missiles) {
+        if (aMissile != nullptr && aMissile->isDestroyedBody() && aMissile->hasExplosionIterations()) {
             ProjectileDTO aProjectilDto = aMissile->getProjectilDTO();
             aProjectilDto.setTypeExplode(EXPLODE);
-            if(aMissile->getNumberIterations() == 15){
+            if (aMissile->getNumberIterations() == 15) {
                 aProjectilDto.setTypeExplode(EXPLODE_SOUND);
             }
             vecProjectileDTO.push_back(aProjectilDto);
             aMissile->removeAIteration();
-        } else if( aMissile != nullptr and not aMissile->isDestroyedBody() ){
+        } else if ( aMissile != nullptr && !aMissile->isDestroyedBody() ) {
             vecProjectileDTO.push_back(aMissile->getProjectilDTO());
         }
     }

@@ -7,19 +7,19 @@
 
 
 #include <atomic>
+#include <string>
 #include "../../../Common/Socket/Socket.h"
 #include "../../../Common/Thread/Thread.h"
 #include "GamesProtected.h"
 #include "../Protocol/ServerProtocol.h"
 
 class ClientLogin : public Thread{
-private:
+ private:
     Socket sktPeer;
     GamesProtected& games;
     std::atomic<bool> isRunning;
     ServerProtocol serverProtocol;
-public:
-    
+ public:
     ClientLogin(Socket socket, GamesProtected& aGames);
 
     void run() override;
@@ -34,4 +34,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_CLIENTLOGIN_H
+#endif  // WORMS_TALLER_1_CLIENTLOGIN_H

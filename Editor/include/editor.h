@@ -2,6 +2,7 @@
 #define EDITOR_H
 
 #include <QWidget>
+#include <memory>
 #include "chooseMapToEdit.h"
 #include "nameNewMap.h"
 #include "ui_editor.h"

@@ -5,7 +5,8 @@
 #include "SeqAnimation.h"
 
 SeqAnimation::SeqAnimation(bool repeat) : Animation(repeat) {
-
+    m_speed = 0;
+    m_frameCount = 0;
 }
 
 void SeqAnimation::update() {

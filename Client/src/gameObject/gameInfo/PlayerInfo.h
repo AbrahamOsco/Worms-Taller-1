@@ -5,16 +5,16 @@
 #ifndef WORMS_TALLER_1_PLAYERINFO_H
 #define WORMS_TALLER_1_PLAYERINFO_H
 
-
+#include <memory>
 #include <string>
 #include "../GameObject.h"
 
 class PlayerInfo : public GameObject {
-private:
+ private:
     int m_id;
     std::string m_name;
     int m_totalLife;
-public:
+ public:
     PlayerInfo(int id, const std::string &name, int totalLife);
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
@@ -28,4 +28,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_PLAYERINFO_H
+#endif  // WORMS_TALLER_1_PLAYERINFO_H

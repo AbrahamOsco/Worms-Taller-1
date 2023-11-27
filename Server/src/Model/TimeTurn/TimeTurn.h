@@ -9,10 +9,10 @@
 #include <chrono>
 
 class TimeTurn {
-private:
+ private:
     std::chrono::steady_clock::time_point lastTime;
     std::chrono::steady_clock::time_point currentTime;
-public:
+ public:
     TimeTurn();
 
     void startTurn();
@@ -23,4 +23,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_TIMETURN_H
+#endif  // WORMS_TALLER_1_TIMETURN_H

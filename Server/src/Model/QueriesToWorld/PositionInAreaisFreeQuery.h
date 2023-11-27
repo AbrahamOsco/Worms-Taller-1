@@ -7,16 +7,16 @@
 #include "box2d/box2d.h"
 
 class PositionInAreaisFreeQuery : public b2QueryCallback {
-private:
+ private:
     bool positionIsFree;
-public:
+
+ public:
     PositionInAreaisFreeQuery();
 
     bool ReportFixture(b2Fixture* fixture);
 
     bool getPositionIsFree() const;
-
 };
 
 
-#endif //WORMS_TALLER_1_POSITIONINAREAISFREEQUERY_H
+#endif  // WORMS_TALLER_1_POSITIONINAREAISFREEQUERY_H

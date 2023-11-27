@@ -15,7 +15,7 @@
 #include <memory>
 
 class AcceptorThread : public Thread {
-private:
+ private:
     Socket& sktAccept;                                          // cppcheck-suppress unusedStructMember
     std::list<std::unique_ptr<ClientLogin>> clientsLogin;      // cppcheck-suppress unusedStructMember
     std::atomic<bool> keepAcepting;
@@ -34,7 +34,7 @@ private:
     //  Post: Agrega un nuevo cliente y le asigna su respectivo idCliente.
     void addNewClient();
 
-public:
+ public:
     //  Constructor
     //  Recibe el socket por referencia y el gameProtected
     explicit AcceptorThread(Socket &sktAccept, GamesProtected &aGames);
@@ -49,8 +49,7 @@ public:
     ~AcceptorThread();
 
     void stop();
-
 };
 
 
-#endif //WORMS_TALLER_1_ACCEPTORTHREAD_H
+#endif  // WORMS_TALLER_1_ACCEPTORTHREAD_H

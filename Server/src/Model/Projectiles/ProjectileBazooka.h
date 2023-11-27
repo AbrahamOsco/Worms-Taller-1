@@ -14,13 +14,13 @@
 #include "Explodable/Explodable.h"
 
 class ProjectileBazooka : public GameObject {
-private:
+ private:
     const GameParameters& gameParameters;
     b2World* aWorld;
     TypeFocus typeFocus;
     Explodable explodable;
-public:
 
+ public:
     explicit ProjectileBazooka(const GameParameters &gameParameters, const TypeFocus& typeFocus);
 
     void addToTheWorld(b2World *aWorld, b2Vec2 positionP2, const b2Vec2 &impulseProjectile, const float &windValue);
@@ -31,4 +31,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_PROJECTILEBAZOOKA_H
+#endif  // WORMS_TALLER_1_PROJECTILEBAZOOKA_H

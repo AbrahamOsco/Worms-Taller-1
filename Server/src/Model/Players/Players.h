@@ -8,6 +8,8 @@
 
 #include <map>
 #include <vector>
+#include <string>
+#include <utility>
 #include "box2d/b2_world.h"
 #include "Player.h"
 #include "../../../../Common/DTO/PlayerDTO.h"
@@ -16,15 +18,16 @@
 #include "../../../../Common/DTO/EndGameDTO.h"
 
 class Players {
-private:
+ private:
     std::map<size_t, std::pair<float, float>> idsAndPositionsWorms;
     std::map<size_t, Player> players;
     size_t idCurrenPlayer;
     std::map<size_t, Player>::iterator playerIterator;
     const GameParameters& gameParameters;
 
-public:
-    explicit Players(const std::map<size_t, std::pair<float, float>> &idsAndPositionsWorms, const GameParameters& parameters);
+ public:
+    explicit Players(const std::map<size_t, std::pair<float, float>> &idsAndPositionsWorms,
+            const GameParameters& parameters);
 
     void addPlayer(const std::string &playerName, const size_t &idPlayer);
 
@@ -62,4 +65,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_PLAYERS_H
+#endif  // WORMS_TALLER_1_PLAYERS_H

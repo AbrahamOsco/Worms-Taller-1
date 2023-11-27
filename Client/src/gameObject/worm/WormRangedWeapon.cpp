@@ -2,12 +2,14 @@
 // Created by riclui on 18/11/23.
 //
 
+#include <algorithm>
 #include "WormRangedWeapon.h"
 
 WormRangedWeapon::WormRangedWeapon(int id, int x, int y, const size_t &hpWorm, const Direction &direction,
                                    const TypeFocus &focus, const MoveWorm &moveWorm,
                                    const TypeWeapon &weaponCurrent, int xCrossHair, int yCrossHair,
-                                   const TypeSight &typeSight, bool isMyTurn) : Worm(id, x, y, hpWorm, direction, focus, moveWorm, isMyTurn),
+                                   const TypeSight &typeSight, bool isMyTurn) : Worm(id, x, y, hpWorm,
+                                   direction, focus, moveWorm, isMyTurn),
                                                                  m_weaponCurrent(weaponCurrent),
                                                                  m_xCrossHair(xCrossHair), m_yCrossHair(yCrossHair),
                                                                  m_crossHair(xCrossHair, yCrossHair, typeSight) {
@@ -60,7 +62,7 @@ void WormRangedWeapon::draw(SDL2pp::Renderer &renderer, TextureManager &textureM
 void WormRangedWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera &camera,
                               SoundManager &soundManager) {
     Worm::update(input, queue, camera, soundManager);
-    m_crossHair.update(input, queue, camera,soundManager);
+    m_crossHair.update(input, queue, camera, soundManager);
 }
 
 int WormRangedWeapon::calculateAngle(int x, int y, Direction direction) const {

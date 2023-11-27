@@ -9,11 +9,14 @@
 #include "../../command/JumpBackwardCmd.h"
 #include "../../utils/Constants.h"
 
-GameInfo::GameInfo(PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind, GameState &gameState, TypeResult &typeResult,
-                   const std::string &currentTurn, int time, bool deathWorm) : GameObject(LoaderParams(0, 10, 0, 0, "arrow_no")), m_players(players),
-                                    m_weaponInventory(weaponInventory),
-                                    m_wind(wind), m_currentTurn(currentTurn), m_time(time), m_isMyTurn(false), m_gameState(gameState), m_typeResult(typeResult), m_deathWorm(deathWorm) {
-    if(m_currentTurn == "Es tu turno") {
+GameInfo::GameInfo(PlayersInfo &players, WeaponInventory &weaponInventory, WindInfo &wind,
+                    GameState &gameState, TypeResult &typeResult,
+                    const std::string &currentTurn, int time, bool deathWorm) :
+                    GameObject(LoaderParams(0, 10, 0, 0, "arrow_no")), m_players(players),
+                    m_weaponInventory(weaponInventory), m_wind(wind), m_currentTurn(currentTurn),
+                    m_time(time), m_isMyTurn(false), m_gameState(gameState), m_typeResult(typeResult),
+                    m_deathWorm(deathWorm) {
+    if (m_currentTurn == "Es tu turno") {
         m_isMyTurn = true;
     }
 }

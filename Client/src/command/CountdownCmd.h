@@ -9,13 +9,13 @@
 #include "Command.h"
 
 class CountdownCmd : public Command {
-private:
+ private:
     int m_count;
 
-public:
-    CountdownCmd(int count);
+ public:
+    explicit CountdownCmd(int count);
     void execute(ClientProtocol &protocol) override;
 };
 
 
-#endif //WORMS_TALLER_1_COUNTDOWNCMD_H
+#endif  // WORMS_TALLER_1_COUNTDOWNCMD_H

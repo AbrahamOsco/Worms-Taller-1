@@ -4,18 +4,18 @@
 
 #include "Dynamite.h"
 
-Dynamite::Dynamite(const int &waitTime, const GameParameters &gameParameters, const TypeFocus &typeFocus) : GameObject(ENTITY_DYNAMITE),
-         waitTime(waitTime), exploded(false), gameParameters(gameParameters),
-         explodable(gameParameters.dynamiteGetMainDamage(), gameParameters.dynamiteGetMaxRadio(), gameParameters.dynamiteGetMaxImpulse()), typeFocus(typeFocus) {
-
+Dynamite::Dynamite(const int &waitTime, const GameParameters &gameParameters, const TypeFocus &typeFocus) :
+        GameObject(ENTITY_DYNAMITE), waitTime(waitTime), exploded(false), gameParameters(gameParameters),
+        explodable(gameParameters.dynamiteGetMainDamage(), gameParameters.dynamiteGetMaxRadio(),
+        gameParameters.dynamiteGetMaxImpulse()), typeFocus(typeFocus), world(nullptr) {
 }
 
-void Dynamite::addToTheWorld(b2World* aWorld, b2Vec2 position){
+void Dynamite::addToTheWorld(b2World* aWorld, b2Vec2 position) {
     startTime = std::chrono::steady_clock::now();
     b2BodyDef dynamiteDef;
     dynamiteDef.type = b2_dynamicBody;
     dynamiteDef.fixedRotation = true;
-    dynamiteDef.position.Set(position.x, position.y );
+    dynamiteDef.position.Set(position.x, position.y);
     dynamiteDef.userData.pointer = (uintptr_t) this;
     this->body = aWorld->CreateBody(&dynamiteDef);
     b2CircleShape dynamiteForm;
@@ -30,19 +30,19 @@ void Dynamite::addToTheWorld(b2World* aWorld, b2Vec2 position){
     this->world = aWorld;
 }
 
-void Dynamite::passTime(){
+void Dynamite::passTime() {
     time = std::chrono::steady_clock::now();
-    if (time - startTime >= waitTime && !exploded){
+    if (time - startTime >= waitTime && !exploded) {
         explode();
     }
 }
 
-void Dynamite::explode(){
+void Dynamite::explode() {
     exploded = true;
     searchWormAndCollide(body->GetWorldCenter());
 }
 
-bool Dynamite::hasExploded() const{
+bool Dynamite::hasExploded() const {
     return exploded;
 }
 
@@ -53,6 +53,7 @@ void Dynamite::searchWormAndCollide(const b2Vec2 &projectilePosition) {
 
 ProjectileDTO Dynamite::getProjectilDTO() {
     return ProjectileDTO(DYNAMITE, this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
-                         gameParameters.getMaxHeightPixel() -this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(), this->typeFocus, NO_EXPLODE);
+        gameParameters.getMaxHeightPixel() -this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(),
+        this->typeFocus, NO_EXPLODE);
 }
 

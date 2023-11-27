@@ -5,14 +5,13 @@
 #ifndef WORMS_TALLER_1_THREAD_H
 #define WORMS_TALLER_1_THREAD_H
 
-#include <thread>
 
 #include <thread>
 #include <iostream>
 #include <atomic>
 
 class Runnable {
-    public:
+ public:
         virtual void start() = 0;
         virtual void join() = 0;
         virtual void stop() = 0;
@@ -22,23 +21,23 @@ class Runnable {
 };
 
 class Thread : public Runnable {
-    private:
+ private:
         std::thread thread;
 
-    protected:
+ protected:
         // Subclasses that inherit from Thread will have access to these
         // flags, mostly to control how Thread::run() will behave
         std::atomic<bool> _keep_running;
         std::atomic<bool> _is_alive;
 
-    public:
+ public:
         Thread() : _keep_running(true), _is_alive(false) {}
 
-        void start() override; 
+        void start() override;
 
         void join() override;
 
-        void main(); 
+        void main();
 
         // Note: it is up to the subclass to make something meaningful to
         // really stop the thread. The Thread::run() may be blocked and/or
@@ -61,4 +60,4 @@ class Thread : public Runnable {
         Thread& operator=(Thread&& other) = delete;
 };
 
-#endif //WORMS_TALLER_1_THREAD_H
+#endif  // WORMS_TALLER_1_THREAD_H

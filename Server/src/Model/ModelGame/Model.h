@@ -19,9 +19,10 @@
 #include "../GameContactListener/GameContactListener.h"
 #include "../Turns/Turns.h"
 #include <memory>
+#include <vector>
 
 class Model {
-private:
+ private:
     size_t numberPlayerReq;
     size_t currentPlayers;
     bool finishedGame;
@@ -31,8 +32,7 @@ private:
     GameContactListener gameContactListener;
     Turns turns;
 
-public:
-
+ public:
     Model(const std::string &scenarioName, b2World &aWorld, GameParameters& parameters);
 
     void addPlayer(const std::string &playerName, const size_t &idPlayer);
@@ -73,4 +73,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_MODEL_H
+#endif  // WORMS_TALLER_1_MODEL_H

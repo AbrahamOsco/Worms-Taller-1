@@ -14,14 +14,13 @@
 #include "Explodable/Explodable.h"
 
 class AirAttackMissile : public GameObject {
-private:
+ private:
     const GameParameters& gameParameters;
     b2World* aWorld;
     TypeFocus typeFocus;
     Explodable explodable;
     int explosionIterations;
-public:
-
+ public:
     AirAttackMissile(const GameParameters &gameParameters, const TypeFocus& typeFocus);
 
     void addToTheWorld(b2World *aWorld, const b2Vec2 &positionMissile, const float &windValue);
@@ -38,4 +37,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_AIRATTACKMISSILE_H
+#endif  // WORMS_TALLER_1_AIRATTACKMISSILE_H

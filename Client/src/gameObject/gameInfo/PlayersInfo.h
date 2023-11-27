@@ -5,14 +5,15 @@
 #ifndef WORMS_TALLER_1_PLAYERSINFO_H
 #define WORMS_TALLER_1_PLAYERSINFO_H
 
-
+#include <vector>
+#include <memory>
 #include "PlayerInfo.h"
 #include "../../soundManager/SoundManager.h"
 
 class PlayersInfo : public GameObject {
-private:
+ private:
     std::vector<PlayerInfo> m_players;
-public:
+ public:
     PlayersInfo();
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
@@ -26,4 +27,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_PLAYERSINFO_H
+#endif  // WORMS_TALLER_1_PLAYERSINFO_H

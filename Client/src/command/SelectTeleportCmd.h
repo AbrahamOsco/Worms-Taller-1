@@ -9,9 +9,9 @@
 #include "Command.h"
 
 class SelectTeleportCmd : public Command {
-public:
+ public:
     void execute(ClientProtocol &protocol) override;
 };
 
 
-#endif //WORMS_TALLER_1_SELECTTELEPORTCMD_H
+#endif  // WORMS_TALLER_1_SELECTTELEPORTCMD_H

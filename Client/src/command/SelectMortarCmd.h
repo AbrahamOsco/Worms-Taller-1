@@ -9,9 +9,9 @@
 #include "Command.h"
 
 class SelectMortarCmd : public Command {
-public:
+ public:
     void execute(ClientProtocol &protocol) override;
 };
 
 
-#endif //WORMS_TALLER_1_SELECTMORTARCMD_H
+#endif  // WORMS_TALLER_1_SELECTMORTARCMD_H

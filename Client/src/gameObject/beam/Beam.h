@@ -5,6 +5,7 @@
 #ifndef WORMS_TALLER_1_BEAM_H
 #define WORMS_TALLER_1_BEAM_H
 
+#include <string>
 #include "../GameObject.h"
 #include "../../../../Common/DTO/BeamDTO.h"
 
@@ -30,16 +31,16 @@ enum Angle : size_t {
 };
 
 class Beam {
-private:
+ private:
     std::string m_textureID;
     int m_width, m_height;
     int m_x, m_y;
     TypeBeam m_type;
     Angle m_angle;
-public:
+ public:
     Beam(int posCenterX, int posCenterY, Angle angle, TypeBeam type);
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera);
 };
 
 
-#endif //WORMS_TALLER_1_BEAM_H
+#endif  // WORMS_TALLER_1_BEAM_H

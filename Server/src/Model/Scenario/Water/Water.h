@@ -9,14 +9,11 @@
 #include "../../GameObject/GameObject.h"
 
 class Water : public GameObject{
-private:
-
-public:
+ public:
     Water();
 
     Water(b2World* world, const float& height, const float& width);
-
 };
 
 
-#endif //WORMS_TALLER_1_WATER_H
+#endif  // WORMS_TALLER_1_WATER_H

@@ -7,7 +7,8 @@
 #include "../Worm/Worm.h"
 
 Provision::Provision(const float &positionX, const float &positionY, const TypeEffect &typeEffect,
-                     const GameParameters &parameters) : GameObject(ENTITY_PROVISION), typeEffect(typeEffect), gameParameters(parameters) {
+                    const GameParameters &parameters) : GameObject(ENTITY_PROVISION), typeEffect(typeEffect),
+                    gameParameters(parameters), world(nullptr) {
     position = std::make_pair(positionX, positionY);
     animationIterations = gameParameters.getAnimationIterations();
 }
@@ -33,31 +34,33 @@ void Provision::addToTheWorld(b2World *world) {
 
 void Provision::getProvisionDTO(std::vector<ProvisionDTO> &vecProvisionDTO) {
     ProvisionDTO aProvisionDTO = ProvisionDTO(this->body->GetWorldCenter().x * gameParameters.getPositionAdjustment(),
-                                              this->gameParameters.getMaxHeightPixel() - this->body->GetWorldCenter().y * gameParameters.getPositionAdjustment(),
+        this->gameParameters.getMaxHeightPixel() - this->body->GetWorldCenter().y
+        *gameParameters.getPositionAdjustment(),
                                               typeEffect, NO_CONTACT);
-    if(this->isDestroyedBody() and animationIterations > 0  ) {
+    if (this->isDestroyedBody() && animationIterations > 0) {
         aProvisionDTO.setTypeContact(CONTACT);
-        if(animationIterations == gameParameters.getAnimationIterations() ){
+        if ( animationIterations == gameParameters.getAnimationIterations() ) {
             aProvisionDTO.setTypeContact(CONTACT_SOUND);
         }
         vecProvisionDTO.push_back(aProvisionDTO);
         animationIterations--;
-    } else if (not this->isDestroyedBody()){
+    } else if (!this->isDestroyedBody()) {
         vecProvisionDTO.push_back(aProvisionDTO);
     }
 }
 
 void Provision::applyEffect(Worm *wormSelect) {
-    if(typeEffect == MEDICAL_KIT){
+    if (typeEffect == MEDICAL_KIT) {
         wormSelect->giveExtraHP(gameParameters.getProvisionExtraHP());
-    } else if (typeEffect == MUNITIONS){
+    } else if (typeEffect == MUNITIONS) {
         wormSelect->giveExtraMunition(gameParameters.getProvisionExtraMunition());
-    } else if ( typeEffect == EXPLOSION){
-        b2Vec2 impulseExplosion(gameParameters.getProvisionImpulseExplosionX(), gameParameters.getProvisionImpulseExplosionY());
-        if(wormSelect->getDirection() == RIGHT){
+    } else if (typeEffect == EXPLOSION) {
+        b2Vec2 impulseExplosion(gameParameters.getProvisionImpulseExplosionX(),
+            gameParameters.getProvisionImpulseExplosionY());
+        if (wormSelect->getDirection() == RIGHT) {
             impulseExplosion.x *=(-1);
         }
-        wormSelect->getBody()->ApplyLinearImpulse( impulseExplosion, wormSelect->getBody()->GetWorldCenter(), true);
+        wormSelect->getBody()->ApplyLinearImpulse(impulseExplosion, wormSelect->getBody()->GetWorldCenter(), true);
         float damageExplosion = gameParameters.getProvisionDamageExplosion();
         wormSelect->takeDamage(damageExplosion);
     }
@@ -65,6 +68,6 @@ void Provision::applyEffect(Worm *wormSelect) {
     animationIterations = gameParameters.getAnimationIterations();
 }
 
-bool Provision::hasIterations() const{
+bool Provision::hasIterations() const {
     return (this->animationIterations > 0);
 }

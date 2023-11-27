@@ -4,11 +4,12 @@
 
 #include "WeaponSightDTO.h"
 
-WeaponSightDTO::WeaponSightDTO() : DTO(WEAPON_SIGHT) {
+WeaponSightDTO::WeaponSightDTO() : DTO(WEAPON_SIGHT), typeSight(NO_SHOW_SIGHT), positionXSight(0), positionYSight(0) {
 }
 
-WeaponSightDTO::WeaponSightDTO(const TypeSight &typeSight, const size_t &positionXSight, const size_t positionYSight) : DTO(WEAPON_SIGHT), typeSight(typeSight),
-                positionXSight(positionXSight), positionYSight(positionYSight){
+WeaponSightDTO::WeaponSightDTO(const TypeSight &typeSight, const size_t &positionXSight,
+                const size_t positionYSight) : DTO(WEAPON_SIGHT), typeSight(typeSight),
+                positionXSight(positionXSight), positionYSight(positionYSight) {
 }
 
 

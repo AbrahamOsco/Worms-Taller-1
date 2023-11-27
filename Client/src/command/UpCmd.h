@@ -9,9 +9,9 @@
 #include "Command.h"
 
 class UpCmd : public Command {
-public:
+ public:
     void execute(ClientProtocol &protocol) override;
 };
 
 
-#endif //WORMS_TALLER_1_UPCMD_H
+#endif  // WORMS_TALLER_1_UPCMD_H

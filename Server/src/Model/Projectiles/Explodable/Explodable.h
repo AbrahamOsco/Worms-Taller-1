@@ -10,13 +10,12 @@
 #include <box2d/b2_world.h>
 
 class Explodable {
-private:
+ private:
     float mainDamage;
     float maxRadio;
     float maxImpulseMagnitude;
 
-public:
-
+ public:
     Explodable(const float& mainDamage, const float& maxRadio, const float& maxImpulseMagnitude);
 
 
@@ -32,4 +31,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_EXPLODABLE_H
+#endif  // WORMS_TALLER_1_EXPLODABLE_H

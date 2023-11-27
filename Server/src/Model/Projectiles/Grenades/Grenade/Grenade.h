@@ -6,6 +6,8 @@
 #define WORMS_TALLER_1_GRENADE_H
 
 #include <chrono>
+#include <utility>
+#include <vector>
 #include "../../../GameObject/GameObject.h"
 #include "../../../../../GameParameters/GameParameters.h"
 #include "../../../Weapons/WeaponSight/WeaponSight.h"
@@ -13,8 +15,8 @@
 #include "../../Explodable/Explodable.h"
 
 class Grenade : public GameObject {
-protected:
-    std::pair<float, float> impulseWeapon; // impulse x, impulse y
+ protected:
+    std::pair<float, float> impulseWeapon;  // impulse x, impulse y
     std::pair<float, float> maxImpulseWeapon;  // maximo impulso es una arma con potencia variable.
     float restitution;
     bool fixedRotation;
@@ -28,7 +30,8 @@ protected:
     int explosionIterations;
     TypeFocus typeFocus;
     Explodable explodable;
-public:
+
+ public:
     explicit Grenade(GameParameters gameParameters, const int& waitTime, const TypeFocus& typeFocus);
 
     void addToTheWorld(b2World* aWorld, b2Vec2 positionOrigen, b2Vec2 impulseGrenade);
@@ -54,8 +57,7 @@ public:
     int getNumberIterations() const;
 
     virtual ~Grenade() = default;
-
 };
 
 
-#endif //WORMS_TALLER_1_GRENADE_H
+#endif  // WORMS_TALLER_1_GRENADE_H

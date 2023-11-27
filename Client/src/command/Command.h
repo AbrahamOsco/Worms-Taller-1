@@ -9,10 +9,10 @@
 #include "../protocol/ClientProtocol.h"
 
 class Command {
-public:
+ public:
     virtual void execute(ClientProtocol &protocol) = 0;
     virtual ~Command() = default;
 };
 
 
-#endif //WORMS_TALLER_1_COMMAND_H
+#endif  // WORMS_TALLER_1_COMMAND_H

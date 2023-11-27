@@ -3,11 +3,13 @@
 //
 
 #include <iostream>
+#include <utility>
 #include "AcceptorThread.h"
 #include "ClientLogin.h"
 
 
-AcceptorThread::AcceptorThread(Socket &sktAccept, GamesProtected &aGames) : sktAccept(sktAccept), keepAcepting(true), games(aGames)  {}
+AcceptorThread::AcceptorThread(Socket &sktAccept, GamesProtected &aGames) : sktAccept(sktAccept),
+                keepAcepting(true), games(aGames)  {}
 
 
 void AcceptorThread::run() {
@@ -26,7 +28,8 @@ void AcceptorThread::run() {
 void AcceptorThread::addNewClient() {
     Socket sktPeer = sktAccept.accept();
     std::cout << "[AcceptorThread] : Se conecto un nuevo cliente\n";
-    std::unique_ptr<ClientLogin> unCliente{new ClientLogin(std::move(sktPeer), games)};  // No tener news si no con unique_ptr
+    std::unique_ptr<ClientLogin> unCliente{new ClientLogin(std::move(sktPeer), games)};
+    // No tener news si no con unique_ptr
     unCliente->start();
     clientsLogin.push_back(std::move(unCliente));
 }
@@ -42,7 +45,7 @@ void AcceptorThread::cleanDeadClients() {
 }
 
 void AcceptorThread::killAllClients() {
-    for (auto& unCliente: clientsLogin) {
+    for (auto& unCliente : clientsLogin) {
         unCliente->stop();
         unCliente->join();
     }

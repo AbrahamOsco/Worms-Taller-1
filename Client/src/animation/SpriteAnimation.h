@@ -5,18 +5,19 @@
 #ifndef WORMS_TALLER_1_SPRITEANIMATION_H
 #define WORMS_TALLER_1_SPRITEANIMATION_H
 
+#include <string>
 #include "SDL2pp/SDL2pp.hh"
 #include "../graphics/TextureManager.h"
 #include "Animation.h"
-#include <string>
+
 
 class SpriteAnimation : public Animation {
-private:
+ private:
     int m_speed;
     int m_frameCount;
     std::string m_textureId;
 
-public:
+ public:
     explicit SpriteAnimation(bool repeat = true);
 
     void update() override;
@@ -29,4 +30,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_SPRITEANIMATION_H
+#endif  // WORMS_TALLER_1_SPRITEANIMATION_H

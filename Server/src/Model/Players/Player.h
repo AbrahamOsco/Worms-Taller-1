@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 #include <map>
 #include "box2d/b2_world.h"
 #include <memory>
@@ -20,7 +21,7 @@
 #define VALUE_INITIAL 1000
 
 class Player {
-private:
+ private:
     std::string playerName;
     size_t idPlayer;
     std::map<size_t, std::unique_ptr<Worm>> worms;
@@ -28,8 +29,8 @@ private:
     size_t idCurrentWorm;
     const GameParameters& gameParameters;
     Armament armament;
-public:
 
+ public:
     Player(const std::string& playerName, const size_t& idPlayer, const GameParameters& gameParameters);
 
     std::vector<WormDTO> getWormsDTO() const;
@@ -74,4 +75,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_PLAYER_H
+#endif  // WORMS_TALLER_1_PLAYER_H

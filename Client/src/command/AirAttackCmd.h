@@ -9,13 +9,13 @@
 #include "Command.h"
 
 class AirAttackCmd : public Command{
-private:
+ private:
     int m_x;
     int m_y;
-public:
+ public:
     AirAttackCmd(int x, int y);
     void execute(ClientProtocol &protocol) override;
 };
 
 
-#endif //WORMS_TALLER_1_AIRATTACKCMD_H
+#endif  // WORMS_TALLER_1_AIRATTACKCMD_H

@@ -2,6 +2,7 @@
 // Created by riclui on 09/11/23.
 //
 
+#include <string>
 #include "WindInfo.h"
 
 WindInfo::WindInfo(int velocity, TypeWind direction) : GameObject(LoaderParams(10, 40, 34, 18, "arrow_no")),
