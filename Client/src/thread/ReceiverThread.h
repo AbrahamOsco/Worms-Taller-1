@@ -30,7 +30,7 @@ public:
     void processNonGameProgressSnapshot(const SnapShot &snapShot,
                                         std::vector<std::unique_ptr<GameObject>> &gameObjects) const;
 
-    void processWorms(std::vector<WormDTO> &wormsDto, const WeaponSightDTO &weaponSightDto, bool isMyTurn,
+    void processWorms(const SnapShot &snapShot, bool isMyTurn,
                       std::vector<std::unique_ptr<GameObject>> &gameObjects);
 
     std::unique_ptr<Worm> createWormObject(const WormDTO &wormDto, const WeaponSightDTO &weaponSightDto, bool isMyTurn);
@@ -41,6 +41,9 @@ public:
     void
     processProvisions(const std::vector<ProvisionDTO> &provisions,
                       std::vector<std::unique_ptr<GameObject>> &gameObjects);
+
+    void processGameInfo(const SnapShot &snapShot, std::vector<std::unique_ptr<GameObject>> &gameObjects,
+                         bool deathWorm);
 };
 
 

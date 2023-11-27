@@ -52,55 +52,17 @@ void ReceiverThread::processNonGameProgressSnapshot(const SnapShot &snapShot,
 
 void ReceiverThread::processGameProgressSnapshot(const SnapShot &snapShot, std::vector<std::unique_ptr<GameObject>> &gameObjects,
                                                  size_t pastCountWorm, size_t currentCountWorm) {
-    std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
-    WeaponSightDTO weaponSightDto = snapShot.getWeaponSightDto();
-    WeaponsDTO weaponsDto = snapShot.getWeaponsDto();
-    TurnDTO turnDto = snapShot.getTurnDto();
-
-    bool isMyTurn = false;
-    if (turnDto.getTextTurn() == "Es tu turno") {
-        isMyTurn = true;
-    }
-
-    bool death = false;
-    if (currentCountWorm != pastCountWorm && pastCountWorm != 0) {
-        death = true;
-    }
-
-    WeaponInventory weaponInventory;
-    std::vector<WeaponDTO> weapons = weaponsDto.getWeapons();
-
-    processWorms(wormsDto, weaponSightDto, snapShot.getTurnDto().getTextTurn() == "Es tu turno", gameObjects);
+    processWorms(snapShot, snapShot.getTurnDto().getTextTurn() == "Es tu turno", gameObjects);
     processProjectiles(snapShot.getProjectilesDto(), gameObjects);
     processProvisions(snapShot.getVecProvisionDto(), gameObjects);
-
-
-    for (const WeaponDTO &weaponDto: weapons) {
-        WeaponIcon weaponIcon(weaponDto.getTypeWeapon(), static_cast<int>(weaponDto.getMunition()), weaponDto.getTypeMunition(), weaponsDto.getWeaponCurrent(), isMyTurn);
-        weaponInventory.addWeapon(weaponIcon);
-    }
-
-    PlayersInfo playersInfo;
-    PlayersDTO playersDto = snapShot.getPlayersDto();
-    std::vector<PlayerDTO> players = playersDto.getPlayersDTO();
-    for (const PlayerDTO &playerDto: players) {
-        PlayerInfo playerInfo(static_cast<int>(playerDto.getIdPlayer()), playerDto.getNamePlayer(),
-                              static_cast<int>(playerDto.getTotalHpWorms()));
-        playersInfo.addPlayer(playerInfo);
-    }
-
-    GameState gameState = snapShot.getTypeSnapShot();
-    TypeResult typeResult = snapShot.getEndGameDto().getTypeResult();
-
-    WindInfo wind(static_cast<int>(snapShot.getTurnDto().getValueWind()), snapShot.getTurnDto().getTypeWind());
-
-    gameObjects.push_back(
-            std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, gameState, typeResult,turnDto.getTextTurn(),
-                                       turnDto.getTimeLeft(), death));
+    bool death = currentCountWorm != pastCountWorm && pastCountWorm != 0;
+    processGameInfo(snapShot, gameObjects, death);
 }
 
-void ReceiverThread::processWorms(std::vector<WormDTO> &wormsDto, const WeaponSightDTO &weaponSightDto, bool isMyTurn,
+void ReceiverThread::processWorms(const SnapShot &snapShot, bool isMyTurn,
                                   std::vector<std::unique_ptr<GameObject>> &gameObjects) {
+    std::vector<WormDTO> wormsDto = snapShot.getWormsDto();
+    WeaponSightDTO weaponSightDto = snapShot.getWeaponSightDto();
     for (const WormDTO& wormDto : wormsDto) {
         std::unique_ptr<Worm> worm = createWormObject(wormDto, weaponSightDto, isMyTurn);
         gameObjects.push_back(std::move(worm));
@@ -146,11 +108,6 @@ ReceiverThread::createWormObject(const WormDTO &wormDto, const WeaponSightDTO &w
     return nullptr;
 }
 
-void ReceiverThread::stop() {
-    m_running = false;
-    //m_protocol.stop();
-}
-
 void ReceiverThread::processProjectiles(const ProjectilesDTO &projectilesDto,
                                         std::vector<std::unique_ptr<GameObject>> &gameObjects) {
     std::vector<ProjectileDTO> projectiles = projectilesDto.getProjectilesDto();
@@ -167,4 +124,35 @@ void ReceiverThread::processProvisions(const std::vector<ProvisionDTO> &provisio
     for (const ProvisionDTO &provisionDto: provisions) {
         gameObjects.push_back(std::make_unique<Provision>(static_cast<int>(provisionDto.getPositionX()), static_cast<int>(provisionDto.getPositionY()), provisionDto.getTypeEffect(), provisionDto.getTypeContact()));
     }
+}
+
+void ReceiverThread::processGameInfo(const SnapShot &snapShot, std::vector<std::unique_ptr<GameObject>> &gameObjects,
+                                     bool deathWorm) {
+    WeaponInventory weaponInventory;
+    std::vector<WeaponDTO> weapons = snapShot.getWeaponsDto().getWeapons();
+    for (const WeaponDTO &weaponDto: weapons) {
+        WeaponIcon weaponIcon(weaponDto.getTypeWeapon(), static_cast<int>(weaponDto.getMunition()), weaponDto.getTypeMunition(), snapShot.getWeaponsDto().getWeaponCurrent(), snapShot.getTurnDto().getTextTurn() == "Es tu turno");
+        weaponInventory.addWeapon(weaponIcon);
+    }
+
+    PlayersInfo playersInfo;
+    std::vector<PlayerDTO> players = snapShot.getPlayersDto().getPlayersDTO();
+    for (const PlayerDTO &playerDto: players) {
+        PlayerInfo playerInfo(static_cast<int>(playerDto.getIdPlayer()), playerDto.getNamePlayer(),
+                              static_cast<int>(playerDto.getTotalHpWorms()));
+        playersInfo.addPlayer(playerInfo);
+    }
+
+    GameState gameState = snapShot.getTypeSnapShot();
+    TypeResult typeResult = snapShot.getEndGameDto().getTypeResult();
+
+    WindInfo wind(static_cast<int>(snapShot.getTurnDto().getValueWind()), snapShot.getTurnDto().getTypeWind());
+
+    gameObjects.push_back(
+            std::make_unique<GameInfo>(playersInfo, weaponInventory, wind, gameState, typeResult,snapShot.getTurnDto().getTextTurn(),
+                                       snapShot.getTurnDto().getTimeLeft(), deathWorm));
+}
+
+void ReceiverThread::stop() {
+    m_running = false;
 }
