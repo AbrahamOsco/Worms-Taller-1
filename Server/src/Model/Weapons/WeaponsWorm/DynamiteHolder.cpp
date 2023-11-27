@@ -4,15 +4,18 @@
 
 #include "DynamiteHolder.h"
 
-DynamiteHolder::DynamiteHolder(const TypeWeapon &aTypeWeapon, const float &mainDamage, const TypeMunition &aTypeMunition, const size_t &aMunition,
-              const GameParameters &gameParameters) : Weapon(aTypeWeapon, mainDamage, aTypeMunition, aMunition, gameParameters),
+DynamiteHolder::DynamiteHolder(const TypeWeapon &aTypeWeapon, const float &mainDamage,
+            const TypeMunition &aTypeMunition, const size_t &aMunition,
+              const GameParameters &gameParameters) : Weapon(aTypeWeapon, mainDamage, aTypeMunition,
+                aMunition, gameParameters),
               dynamite(nullptr) {
     explosionIterations = gameParameters.getAnimationIterations();
 }
 
-void DynamiteHolder::placeDynamite(const int &waitTime, const b2Vec2 &positionWorm, const Direction &aDirectionWorm,b2World *world,const TypeFocus &typeFocus) {
+void DynamiteHolder::placeDynamite(const int &waitTime, const b2Vec2 &positionWorm,
+    const Direction &aDirectionWorm, b2World *world, const TypeFocus &typeFocus) {
     float offset = -gameParameters.dynamiteGetOffsetXToInvoke();
-    if (aDirectionWorm == RIGHT){
+    if (aDirectionWorm == RIGHT) {
         offset = 2 * gameParameters.dynamiteGetOffsetXToInvoke();
     }
     b2Vec2 positionDynamite(positionWorm.x + offset, positionWorm.y);
@@ -39,29 +42,28 @@ bool DynamiteHolder::thereAreProjectiles() {
 }
 
 void DynamiteHolder::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
-    if(dynamite != nullptr and dynamite->isDestroyedBody() and explosionIterations > 0 ){
+    if (dynamite != nullptr && dynamite->isDestroyedBody() && explosionIterations > 0) {
         ProjectileDTO aProjectilDto = dynamite->getProjectilDTO();
         aProjectilDto.setTypeExplode(EXPLODE);
-        if(explosionIterations == gameParameters.getAnimationIterations() ){
+        if (explosionIterations == gameParameters.getAnimationIterations()) {
             aProjectilDto.setTypeExplode(EXPLODE_SOUND);
         }
         vecProjectileDTO.push_back(aProjectilDto);
         explosionIterations--;
-    }
-    else if(dynamite != nullptr and not dynamite->isDestroyedBody() ){
+    } else if (dynamite != nullptr && !dynamite->isDestroyedBody()) {
         vecProjectileDTO.push_back(dynamite->getProjectilDTO());
     }
 }
 
 void DynamiteHolder::tryCleanProjectiles(b2World *aWorld) {
-    if(dynamite != nullptr and dynamite->isDestroyedBody() and explosionIterations <= 0){
+    if (dynamite != nullptr && dynamite->isDestroyedBody() && explosionIterations <= 0) {
         aWorld->DestroyBody(dynamite->getBody());
         dynamite = nullptr;
     }
 }
 
 void DynamiteHolder::passTime() {
-    if(dynamite != nullptr){
+    if (dynamite != nullptr) {
         dynamite->passTime();
     }
 }

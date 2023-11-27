@@ -5,15 +5,17 @@
 #ifndef WORMS_TALLER_1_DYNAMITEHOLDER_H
 #define WORMS_TALLER_1_DYNAMITEHOLDER_H
 
-
+#include <memory>
+#include <vector>
 #include "Weapon.h"
 #include "../../Projectiles/Dynamite.h"
 
 class DynamiteHolder : public Weapon {
-private:
+ private:
     std::unique_ptr<Dynamite> dynamite;
     int explosionIterations;
-public:
+
+ public:
     DynamiteHolder(const TypeWeapon &aTypeWeapon, const float &mainDamage,
                    const TypeMunition &aTypeMunition, const size_t &aMunition,
                    const GameParameters &gameParameters);
@@ -39,8 +41,7 @@ public:
 
     // para las armas que gastan municiones;
     bool hasMunition() const override;
-
 };
 
 
-#endif //WORMS_TALLER_1_DYNAMITEHOLDER_H
+#endif  // WORMS_TALLER_1_DYNAMITEHOLDER_H
