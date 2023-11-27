@@ -54,7 +54,8 @@ void WormMeleeWeapon::update(Input &input, Queue<std::unique_ptr<Command>> &queu
             input.setPress(false);
         }
 
-        if (input.getKeyDown(SDL_SCANCODE_SPACE) && m_weaponCurrent == TypeWeapon::DYNAMITE_HOLDER && !input.getPress()) {
+        if (input.getKeyDown(SDL_SCANCODE_SPACE) && m_weaponCurrent == TypeWeapon::DYNAMITE_HOLDER &&
+            !input.getPress()) {
             input.setPress(true);
             soundManager.playEffect("run_away");
             std::unique_ptr<Command> command(new FireCmd());

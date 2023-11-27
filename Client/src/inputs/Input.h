@@ -8,7 +8,7 @@
 #include "SDL2pp/SDL2pp.hh"
 
 class Input {
-private:
+ private:
     const Uint8 *m_keyStates;
     bool m_quit;
     bool m_press;
@@ -29,7 +29,7 @@ private:
 
     void mouseMotion(SDL_Event &event);
 
-public:
+ public:
     Input();
 
     void listen();

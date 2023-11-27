@@ -11,6 +11,7 @@ class Socket{
     unsigned int recv;
 
  public:
+    // cppcheck-suppress uninitMemberVar
     Socket() {
         send = 0;
         recv = 0;
@@ -19,10 +20,12 @@ class Socket{
         send = 0;
         recv = 0;
     }
+    // cppcheck-suppress uninitMemberVar
     Socket(const char* hostname, const char* servname) {
         send = 0;
         recv = 0;
     }
+    // cppcheck-suppress uninitMemberVar
     explicit Socket(const char* servname) {
         send = 0;
         recv = 0;
