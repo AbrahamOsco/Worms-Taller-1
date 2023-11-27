@@ -27,7 +27,7 @@ class Lobby : public QWidget {
     explicit Lobby(QWidget *parent = 0, Socket* socket = 0);
     void start();
  private:
-    void empezar();
+    void commence();
     void update();
     void play();
     void stop();

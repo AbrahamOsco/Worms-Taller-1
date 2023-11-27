@@ -29,7 +29,7 @@ Lobby::Lobby(QWidget *parent, Socket* socket) : QWidget(parent),
     timer.start(500);
     connectEvents();
 }
-void Lobby::empezar() {
+void Lobby::commence() {
     song.stop();
     this->hide();
     Game game(*skt);
@@ -43,7 +43,7 @@ void Lobby::update() {
     if (result) {
         if (val.getOperationType() == START_GAME) {
             waiter.join();
-            this->empezar();
+            this->commence();
         }
     }
 }

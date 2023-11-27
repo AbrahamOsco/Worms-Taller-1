@@ -41,8 +41,8 @@ include_directories(${PROJECT_BINARY_DIR})
 qt5_wrap_ui(UIS_HEADERS
         Client/ui/ui/login.ui
         Client/ui/ui/mainmenu.ui
-        Client/ui/ui/crearpartida.ui
-        Client/ui/ui/buscarpartida.ui
+        Client/ui/ui/creategame.ui
+        Client/ui/ui/searchgame.ui
         Client/ui/ui/lobby.ui)
 
 add_executable(worms-client ${UIS_HEADERS}  ${client_src} ${qt_src} ${common_src}

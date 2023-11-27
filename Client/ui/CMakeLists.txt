@@ -18,8 +18,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 qt5_wrap_ui(UIS_HEADERS
         ui/login.ui
         ui/mainmenu.ui
-        ui/crearpartida.ui
-        ui/buscarpartida.ui
+        ui/creategame.ui
+        ui/searchgame.ui
         ui/lobby.ui
 )
 
@@ -32,8 +32,8 @@ message("Headers generados: ${UIS_HEADERS}")
 add_executable(test
   src/login.cpp
         src/mainmenu.cpp
-  src/crearpartida.cpp
-  src/buscarpartida.cpp
+  src/creategame.cpp
+  src/searchgame.cpp
         src/lobby.cpp
   src/waiter.cpp
   ${UIS_HEADERS})

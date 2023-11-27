@@ -11,14 +11,14 @@ MainMenu::MainMenu(QWidget *parent, char* server, char* port, char* name) :
         QWidget(parent),
         socket(server, port),
         playerName(name),
-        crear(nullptr, &socket),
-        buscar(nullptr, &socket) {
+        create(nullptr, &socket),
+        search(nullptr, &socket) {
     Ui::MainMenu mainMenu;
     mainMenu.setupUi(this);
     connectEvents();
 }
 
-void MainMenu::crearPartida() {
+void MainMenu::createGame() {
     ClientProtocol clientProtocol(socket);
     InitialStateDTO initialState(SCENARIO_LIST_REQUEST, playerName);
     clientProtocol.sendInitialStateDTO(initialState);
@@ -29,23 +29,23 @@ void MainMenu::crearPartida() {
         mapStageMaxWorm[ resolvIniCreate.getScenariosNames()[i] ] = resolvIniCreate.getVecMaxNumbersWorms()[i];
     }
     // guardar ese mapa como atributo y usarlo @GIRARDI
-    crear.buscar(resolvIniCreate.getScenariosNames(), mapStageMaxWorm);
+    create.search(resolvIniCreate.getScenariosNames(), mapStageMaxWorm);
     this->hide();
-    crear.show();
+    create.show();
 }
 
-void MainMenu::salir() {
+void MainMenu::exit() {
     this->close();
 }
 
-void MainMenu::buscarPartida() {
+void MainMenu::searchGame() {
     ClientProtocol clientProtocol(socket);
     InitialStateDTO initialState(ROOM_LIST_REQUEST, playerName);
     clientProtocol.sendInitialStateDTO(initialState);
     ResolverInitialDTO resolvIniJoin = clientProtocol.recvResolverInitialDTO();
-    buscar.buscar(resolvIniJoin.getGameRooms());
+    search.search(resolvIniJoin.getGameRooms());
     this->hide();
-    buscar.show();
+    search.show();
 }
 void MainMenu::resizeEvent(QResizeEvent* event) {
     QPixmap pixmap("../Client/ui/resources/login.png");
@@ -57,13 +57,13 @@ void MainMenu::resizeEvent(QResizeEvent* event) {
 void MainMenu::connectEvents() {
     QPushButton* buttonSalir = findChild<QPushButton*>("buttonSalir");
     QObject::connect(buttonSalir, &QPushButton::clicked,
-                     this, &MainMenu::salir);
+                     this, &MainMenu::exit);
     QPushButton* buttonCrear = findChild<QPushButton*>("buttonCrear");
     QObject::connect(buttonCrear, &QPushButton::clicked,
-                     this, &MainMenu::crearPartida);
+                     this, &MainMenu::createGame);
     QPushButton* buttonBuscar = findChild<QPushButton*>("buttonBuscar");
     QObject::connect(buttonBuscar, &QPushButton::clicked,
-                     this, &MainMenu::buscarPartida);
+                     this, &MainMenu::searchGame);
     QRect screenGeometry = QApplication::desktop()->availableGeometry(this);
     int x = (screenGeometry.width() - this->width()) / 2;
     int y = (screenGeometry.height() - this->height()) / 2;
