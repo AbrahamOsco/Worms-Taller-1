@@ -2,7 +2,7 @@ textures:
   - name: player
     source: "../Client/resources/assets/worms/wglnce1.png"
   - name: walk
-    source: "../Client/resources/assets/worms/walk.png"
+    source: "../Client/resources/assets/worms/walk1.png"
   - name: air
     source: "../Client/resources/assets/worms/waccuseu.png"
   - name: air_attack

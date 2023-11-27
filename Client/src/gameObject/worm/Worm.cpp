@@ -27,9 +27,9 @@ Worm::Worm(int id, int x, int y, const size_t &hpWorm, const Direction &directio
     m_animation.setProps(m_textureID, 14, 140);
 
     if (m_moveWorm == MoveWorm::WALKING) {
-        m_width = 30;
-        m_height = 30;
-        m_animation.setProps("walk", 14, 54);
+        m_width = 60;
+        m_height = 60;
+        m_animation.setProps("walk", 15, 54);
     }
     if (m_moveWorm == MoveWorm::JUMPING) {
         m_width = 60;
