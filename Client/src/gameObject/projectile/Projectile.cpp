@@ -61,6 +61,5 @@ Projectile::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera 
         } else {
             soundManager.playEffect("explosion");
         }
-
     }
 }

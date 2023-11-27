@@ -5,8 +5,9 @@
 #include "Weapon.h"
 
 Weapon::Weapon(const TypeWeapon &aTypeWeapon, const float &mainDamage, const TypeMunition &aTypeMunition,
-               const size_t &aMunition, const GameParameters &gameParameters) : typeWeapon(aTypeWeapon), mainDamage(mainDamage),
-                                                                                typeMunition(aTypeMunition), munition(aMunition), gameParameters(gameParameters) {
+               const size_t &aMunition, const GameParameters &gameParameters) : typeWeapon(aTypeWeapon),
+               mainDamage(mainDamage), typeMunition(aTypeMunition), munition(aMunition),
+               gameParameters(gameParameters), windValue(0) {
 }
 
 TypeWeapon Weapon::getTypeWeapon() const {
@@ -51,7 +52,8 @@ WeaponSightDTO Weapon::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direc
 
 // devuelve true si llega al maximo falso si no.
 bool Weapon::increaseImpulse() {
-    return false; // devuelvo false nunca llega al maximo porque no tiene /  no hago nada para algunas armas y las armas sin mira.
+    return false;
+    // devuelvo false nunca llega al maximo porque no tiene /  no hago nada para algunas armas y las armas sin mira.
 }
 
 bool Weapon::hasMaxImpulse() {
@@ -63,7 +65,7 @@ void Weapon::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
 }
 
 void Weapon::tryCleanProjectiles(b2World *aWorld) {
- //no hago nada para las armas que ni lanzan projectiles ni las armas sin mira
+    // no hago nada para las armas que ni lanzan projectiles ni las armas sin mira
 }
 
 // no respondo nada util segun el arma en standabye que tengo respondo
@@ -76,7 +78,7 @@ void Weapon::assignWindValue(const float &aWindValue) {
 }
 
 void Weapon::giveExtraMunition(const size_t &extraMunition) {
-    if(munition + extraMunition <= gameParameters.getMaxMunitionWeapon()){
+    if (munition + extraMunition <= gameParameters.getMaxMunitionWeapon()) {
         munition +=extraMunition;
     }
 }
