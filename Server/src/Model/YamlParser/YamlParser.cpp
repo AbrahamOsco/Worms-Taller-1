@@ -43,11 +43,11 @@ std::vector<Beam> YamlParser::getBeams(const YAML::Node &beamsNode) {
         float yCenter = beamNode["y"].as<float>();
         float height = 0.4;
         TypeBeam typeBeam;
-        if(length == 3.0){
+        if (length == 3.0) {
             typeBeam = TypeBeam::SHORT_BEAM;
-        } else if ( length == 6.0){
+        } else if (length == 6.0) {
             typeBeam = TypeBeam::LONG_BEAM;
-        } else if (length == 1500.0){
+        } else if (length == 1500.0) {
             typeBeam = TypeBeam::WATER_BEAM;
         }
         Beam beam(typeBeam, xCenter, yCenter, length, height, angle);
@@ -73,7 +73,8 @@ size_t YamlParser::getNumberWorms(const std::string &aStageName) {
 }
 
 
-void YamlParser::getScenarioAndMaxWorms(std::vector<std::string>& vecScenarios, std::vector<size_t>& vecMaxNumberWorms) {
+void YamlParser::getScenarioAndMaxWorms(std::vector<std::string>& vecScenarios,
+        std::vector<size_t>& vecMaxNumberWorms) {
     std::vector<std::string> scenarioNames;
 
     char startPathC[PATH_MAX];
@@ -81,7 +82,7 @@ void YamlParser::getScenarioAndMaxWorms(std::vector<std::string>& vecScenarios, 
     std::string startPath(startPathC);
     std::string fullPath(startPath + "/Worms-Taller-1" + "/Stages/"+ "StageNames" + ".yaml");
     std::vector<size_t> maxNumberWorms;
-    try{
+    try {
         YAML::Node config = YAML::LoadFile(fullPath);
         for (const auto& scenario : config["namesScenarios"]) {
             auto name = scenario["name"].as<std::string>();

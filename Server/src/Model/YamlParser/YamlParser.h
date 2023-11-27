@@ -7,17 +7,20 @@
 
 #include <yaml-cpp/yaml.h>
 #include <cstdlib>
+#include <utility>
+#include <map>
+#include <vector>
+#include <string>
 #include <linux/limits.h>
 #include "../Scenario/Stage/Stage.h"
 #include "../Scenario/Beam/Beam.h"
 
 
 class YamlParser{
-private:
+ private:
     static std::vector<Beam> getBeams(const YAML::Node& beamsNode);
 
-public:
-
+ public:
     YamlParser();
 
     static void loadDataStage(const std::string &aStageName, float &height, float &length, std::vector<Beam> &aBeams,
@@ -29,4 +32,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_YAMLPARSER_H
+#endif  // WORMS_TALLER_1_YAMLPARSER_H
