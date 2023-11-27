@@ -9,10 +9,13 @@
 #include "../../Projectiles/Grenades/HolyGrenade/HolyGrenade.h"
 #include "../../Projectiles/Grenades/RedGrenade/RedGrenade.h"
 
-GrenadeHolder::GrenadeHolder(const TypeWeapon &aTypeWeapon, const float &damagePrincipal, const TypeMunition &aTypeMunition, const size_t &aMunition,
-            const GameParameters &gameParameters) : Weapon(aTypeWeapon, damagePrincipal, aTypeMunition, aMunition, gameParameters),
-                                                    weaponSight(gameParameters.grenadeGetRayLength(), gameParameters.getWeaponAngleInitial(), gameParameters) {
-    impulseWeapon = std::make_pair(gameParameters.grenadeGetImpulseXInitial(), gameParameters.grenadeGetImpulseYInitial());
+GrenadeHolder::GrenadeHolder(const TypeWeapon &aTypeWeapon, const float &damagePrincipal,
+            const TypeMunition &aTypeMunition, const size_t &aMunition,
+            const GameParameters &gameParameters) : Weapon(aTypeWeapon, damagePrincipal, aTypeMunition,
+            aMunition, gameParameters), weaponSight(gameParameters.grenadeGetRayLength(),
+            gameParameters.getWeaponAngleInitial(), gameParameters) {
+    impulseWeapon = std::make_pair(gameParameters.grenadeGetImpulseXInitial(),
+        gameParameters.grenadeGetImpulseYInitial());
     maxImpulseWeapon = std::make_pair(gameParameters.grenadeGetMaxImpulseX(), gameParameters.grenadeGetMaxImpulseY());
     explosionIterations = gameParameters.getAnimationIterations();
 }
@@ -38,7 +41,7 @@ bool GrenadeHolder::increaseImpulse() {
     impulseWeapon.second += gameParameters.getIncreaseImpulseForFPS();
 
     float tolerance = 0.0001;
-    bool isMaxImpulse = std::abs(impulseWeapon.first - maxImpulseWeapon.first) < tolerance and
+    bool isMaxImpulse = std::abs(impulseWeapon.first - maxImpulseWeapon.first) < tolerance &&
                         std::abs(impulseWeapon.second - maxImpulseWeapon.second) < tolerance;
     return isMaxImpulse;
 }
@@ -51,42 +54,45 @@ bool GrenadeHolder::thereAreProjectiles() {
     return (grenade != nullptr);
 }
 
-void GrenadeHolder::getProjectilesDTOPrimary(std::vector<ProjectileDTO> &vecProjectileDTO){
-    if (grenade != nullptr and grenade->isDestroyedBody() and grenade->hasExplosionIterations()) {
+void GrenadeHolder::getProjectilesDTOPrimary(std::vector<ProjectileDTO> &vecProjectileDTO) {
+    if (grenade != nullptr && grenade->isDestroyedBody() && grenade->hasExplosionIterations()) {
         grenade->getProjectileDTO(vecProjectileDTO);
-        ProjectileDTO *projectileDto = &vecProjectileDTO.back(); // saco unar referencia del ultimo q pushee para setearle el typeEXplode
+        ProjectileDTO *projectileDto = &vecProjectileDTO.back();
+        // saco unar referencia del ultimo q pushee para setearle el typeEXplode
         projectileDto->setTypeExplode(EXPLODE);
         if (grenade->getNumberIterations() == gameParameters.getAnimationIterations()) {
             projectileDto->setTypeExplode(EXPLODE_SOUND);
         }
         grenade->removeAIteration();
-    } else if (grenade != nullptr and not grenade->isDestroyedBody()) {
+    } else if (grenade != nullptr && !grenade->isDestroyedBody()) {
         grenade->getProjectileDTO(vecProjectileDTO);
     }
 }
 
 void GrenadeHolder::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
     getProjectilesDTOPrimary(vecProjectileDTO);
-    if(typeWeapon == RED_GRENADE){
+    if (typeWeapon == RED_GRENADE) {
         RedGrenade* redGrenade = (RedGrenade*) grenade.get();
-        if( redGrenade!= nullptr and  redGrenade->hasFragment()){
+        if (redGrenade!= nullptr &&  redGrenade->hasFragment()) {
             redGrenade->getFragmentProjectilDTO(vecProjectileDTO);
         }
     }
 }
 
 void GrenadeHolder::tryCleanProjectiles(b2World *aWorld) {
-    if(typeWeapon != RED_GRENADE){
-        if (grenade != nullptr and grenade->isDestroyedBody() and not grenade->hasExplosionIterations()) {
+    if (typeWeapon != RED_GRENADE) {
+        if (grenade != nullptr && grenade->isDestroyedBody() && !grenade->hasExplosionIterations()) {
             aWorld->DestroyBody(grenade->getBody());
             grenade = nullptr;
         }
         return;
     }
-    RedGrenade* redGrenade = (RedGrenade*) grenade.get(); //     // caso de redGrenade  tnego que chequear los fragmentos y limpiarlos primero y por ultimo elimino la red grenade
-    if( redGrenade!= nullptr and  redGrenade->hasFragment()){
+    RedGrenade* redGrenade = (RedGrenade*) grenade.get();
+    // caso de redGrenade  tnego que chequear los fragmentos y limpiarlos primero y por ultimo elimino la red grenade
+    if (redGrenade!= nullptr &&  redGrenade->hasFragment()) {
         redGrenade->tryCleanProjectiles();
-    } else if ( redGrenade!= nullptr and  not redGrenade->hasFragment() and grenade->isDestroyedBody() and not grenade->hasExplosionIterations()){
+    } else if ( redGrenade!= nullptr &&  !redGrenade->hasFragment() && grenade->isDestroyedBody() &&
+            !grenade->hasExplosionIterations()) {
         aWorld->DestroyBody(grenade->getBody());
         grenade = nullptr;
     }
@@ -101,14 +107,14 @@ void GrenadeHolder::attack(const TypeWeapon &typeGrenade, const b2Vec2 &position
                            const TypeFocus &typeFocus, const int &timeWait, b2World *world) {
     b2Vec2 p2 = weaponSight.getPositionP2RayCast(positionWorm, direction);
     b2Vec2 impulseForGrenade = weaponSight.getImpulseForProjectil(direction, impulseWeapon);
-    if(typeGrenade == GREEN_GRENADE){
+    if (typeGrenade == GREEN_GRENADE) {
         grenade = std::make_unique<GreenGrenade>(gameParameters, timeWait, typeFocus);
-    } else if (typeGrenade == BANANA){
+    } else if (typeGrenade == BANANA) {
         grenade = std::make_unique<Banana>(gameParameters, timeWait, typeFocus);
-    } else if (typeGrenade == HOLY_GRENADE){
+    } else if (typeGrenade == HOLY_GRENADE) {
         grenade = std::make_unique<HolyGrenade>(gameParameters, timeWait, typeFocus);
         this->munition--;
-    } else if (typeGrenade == RED_GRENADE){
+    } else if (typeGrenade == RED_GRENADE) {
         grenade = std::make_unique<RedGrenade>(gameParameters, timeWait, typeFocus);
         this->munition--;
     }

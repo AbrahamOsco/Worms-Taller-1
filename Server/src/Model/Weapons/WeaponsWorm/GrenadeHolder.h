@@ -5,21 +5,24 @@
 #ifndef WORMS_TALLER_1_GRENADEHOLDER_H
 #define WORMS_TALLER_1_GRENADEHOLDER_H
 
-
+#include <memory>
+#include <utility>
+#include <vector>
 #include "Weapon.h"
 #include "../WeaponSight/WeaponSight.h"
 #include "../../Projectiles/Grenades/Grenade/Grenade.h"
 
 class GrenadeHolder : public Weapon {
-private:
-    std::pair<float, float> impulseWeapon; // impulse x, impulse y
+ private:
+    std::pair<float, float> impulseWeapon;  // impulse x, impulse y
     WeaponSight weaponSight;
     std::unique_ptr<Grenade> grenade;
     std::pair<float, float> maxImpulseWeapon;
     int explosionIterations;
 
-public:
-    explicit GrenadeHolder(const TypeWeapon& aTypeWeapon, const float &damagePrincipal, const TypeMunition& aTypeMunition,
+ public:
+    explicit GrenadeHolder(const TypeWeapon& aTypeWeapon, const float &damagePrincipal,
+                    const TypeMunition& aTypeMunition,
                      const size_t& aMunition, const GameParameters& gameParameters);
 
     void passTime() override;
@@ -55,4 +58,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_GRENADEHOLDER_H
+#endif  // WORMS_TALLER_1_GRENADEHOLDER_H

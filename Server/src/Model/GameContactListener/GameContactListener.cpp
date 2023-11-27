@@ -21,7 +21,8 @@ void wormCollidesWithBeam(GameObject* worm, GameObject* beam, GameParameters *ga
     Worm* unWorm = (Worm*) (worm);
     unWorm->assigOnABeam();
     Beam* unaBeam = (Beam*) (beam);
-    if ( (unaBeam->getAngle() > 0.0f && unaBeam->getAngle() <= GameParameters::getBeamMinimumScalableAngle()) || (unaBeam->getAngle() >= 135 && unaBeam->getAngle() <= 180 ) ) {
+    if ((unaBeam->getAngle() > 0.0f && unaBeam->getAngle() <=GameParameters::getBeamMinimumScalableAngle()) ||
+        (unaBeam->getAngle() >= 135 && unaBeam->getAngle() <= 180)) {
         unWorm->activaeInclinedBeam();
     } else if ( unaBeam->getAngle() == 0 ) {
         unWorm->disableInclinedBeam();
