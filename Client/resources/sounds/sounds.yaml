@@ -12,7 +12,7 @@ sounds:
       source: "../Client/resources/sounds/weapons/BaseballSound.wav"
     - id: "explosion"
       source: "../Client/resources/sounds/weapons/Explosion.wav"
-    - id: "holy-grenade"
+    - id: "holy_grenade"
       source: "../Client/resources/sounds/weapons/HolyGrenade.wav"
     - id: "shoot-weapon"
       source: "../Client/resources/sounds/weapons/ShootWeapon.wav"

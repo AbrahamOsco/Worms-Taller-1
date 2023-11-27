@@ -56,6 +56,11 @@ Projectile::update(Input &input, Queue<std::unique_ptr<Command>> &queue, Camera 
     }
 
     if (m_typeExplode == TypeExplode::EXPLODE_SOUND) {
-        soundManager.playEffect("explosion");
+        if (m_typeProjectile == TypeProjectil::PROJ_HOLY_GRENADE) {
+            soundManager.playEffect("holy_grenade");
+        } else {
+            soundManager.playEffect("explosion");
+        }
+
     }
 }
