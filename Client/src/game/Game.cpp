@@ -40,7 +40,12 @@ void Game::run() {
 
     SDL2pp::SDL sdl(SDL_INIT_VIDEO);
 
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+    const int audioFrequency = 44100;
+    const Uint16 audioFormat = MIX_DEFAULT_FORMAT;
+    const int audioChannels = 2;
+    const int audioChunkSize = 2048;
+
+    if (Mix_OpenAudio(audioFrequency, audioFormat, audioChannels, audioChunkSize) < 0) {
         std::cerr << "Error al inicializar SDL_mixer: " << Mix_GetError() << std::endl;
         return;
     }
