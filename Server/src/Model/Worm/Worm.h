@@ -164,6 +164,8 @@ class Worm : public GameObject {
     bool hasTheTeleport() const;
 
     bool hasTheAirAttack() const;
+
+    TypeFocus getTypeFocus() const;
 };
 
 

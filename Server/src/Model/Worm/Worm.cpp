@@ -199,7 +199,10 @@ void Worm::takeDamage(const float &aDamage) {
 
 void Worm::giveExtraHP(const float &extraHP) {
     if ((this->hp + extraHP) <= gameParameters.getMaxHPWorm()) {
-        this->hp +=extraHP;
+        if(this->hp == hpInitialTurn){
+            this->hp +=extraHP;
+            hpInitialTurn = this->hp;
+        }
     }
 }
 
@@ -522,3 +525,6 @@ bool Worm::hasTheAirAttack() const {
     return armament.getWeaponCurrent() == AIR_ATTACK;
 }
 
+TypeFocus Worm::getTypeFocus() const {
+    return this->typeFocus;
+}
