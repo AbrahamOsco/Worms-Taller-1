@@ -1,5 +1,6 @@
 sudo apt update
 sudo apt install g++
+sudo apt-get install git
 sudo apt-get install libsdl2-dev
 sudo apt-get install libjpeg-dev libpng-dev libfreetype-dev libopusfile-dev libflac-dev libxmp-dev libfluidsynth-dev libwavpack-dev cmake libmodplug-dev libsdl2-dev
 mkdir dependencies
