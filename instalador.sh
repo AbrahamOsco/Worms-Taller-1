@@ -61,7 +61,4 @@ mkdir build
 cd build
 cmake ..
 make
-ln -s ./build/Worms-Taller-1 Servidor
-ln -s ./build/worms-client Cliente
-ln -s ./build/worms-editor editor
-ln -s ./Tests/build/test_results.txtt Test_Results
+cd ..
