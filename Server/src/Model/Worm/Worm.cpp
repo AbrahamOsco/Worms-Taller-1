@@ -199,7 +199,7 @@ void Worm::takeDamage(const float &aDamage) {
 
 void Worm::giveExtraHP(const float &extraHP) {
     if ((this->hp + extraHP) <= gameParameters.getMaxHPWorm()) {
-        if(this->hp == hpInitialTurn){
+        if (this->hp == hpInitialTurn) {
             this->hp +=extraHP;
             hpInitialTurn = this->hp;
         }

@@ -5,13 +5,14 @@
 #ifndef WORMS_TALLER_1_VOLUME_H
 #define WORMS_TALLER_1_VOLUME_H
 
-
+#include <memory>
 #include "../GameObject.h"
 
 class Volume : public GameObject {
-private:
+ private:
     bool m_activate;
-public:
+
+ public:
     Volume();
 
     void draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) override;
@@ -21,4 +22,4 @@ public:
 };
 
 
-#endif //WORMS_TALLER_1_VOLUME_H
+#endif  // WORMS_TALLER_1_VOLUME_H

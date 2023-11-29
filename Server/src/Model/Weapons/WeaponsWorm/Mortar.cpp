@@ -101,6 +101,7 @@ void Mortar::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const D
     std::cout << "Atacamos con el mortero------------------------------------------------------\n";
     projectil = std::make_unique<MortarMainProjectile>(gameParameters, focus);
     projectil->addToTheWorld(world, p2, impulseMuniBazooka, windValue);
-    impulseWeapon = std::make_pair(gameParameters.BazookaGetImpulseXInitial(), gameParameters.getBazookaImpulseYInitial());
+    impulseWeapon = std::make_pair(gameParameters.BazookaGetImpulseXInitial(),
+            gameParameters.getBazookaImpulseYInitial());
     this->munition--;
 }

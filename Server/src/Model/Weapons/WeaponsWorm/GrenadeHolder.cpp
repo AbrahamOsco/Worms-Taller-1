@@ -95,7 +95,7 @@ void GrenadeHolder::tryCleanProjectiles(b2World *aWorld) {
     }
 }
 
-void GrenadeHolder::resetGrenade(b2World *aWorld){
+void GrenadeHolder::resetGrenade(b2World *aWorld) {
     aWorld->DestroyBody(grenade->getBody());
     grenade = nullptr;
     impulseWeapon = std::make_pair(gameParameters.grenadeGetImpulseXInitial(),

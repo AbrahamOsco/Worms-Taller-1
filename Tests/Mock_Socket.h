@@ -16,6 +16,7 @@ class Socket{
         send = 0;
         recv = 0;
     }
+    // cppcheck-suppress uninitMemberVar
     explicit Socket(int skt) {
         send = 0;
         recv = 0;
