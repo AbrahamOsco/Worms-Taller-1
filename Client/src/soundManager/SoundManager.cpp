@@ -48,3 +48,7 @@ void SoundManager::playEffect(const std::string &id) {
 void SoundManager::loadEffect(const std::string &id, const std::string &source) {
     m_effectMap[id] = std::make_unique<SDL2pp::Chunk>(source);
 }
+
+void SoundManager::stopMusic() {
+    Mix_HaltMusic();
+}

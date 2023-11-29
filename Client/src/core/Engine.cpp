@@ -34,6 +34,7 @@ void Engine::update() {
     for (const auto &m_gameObject : m_gameObjects) {
         m_gameObject->update(m_input, m_bQueue, m_camera, m_soundManager);
     }
+    m_volume.update(m_input, m_bQueue, m_camera, m_soundManager);
     m_camera.update();
 }
 
@@ -49,7 +50,7 @@ void Engine::render() {
     for (const auto &m_gameObject : m_gameObjects) {
         m_gameObject->draw(m_renderer, m_textureManager, m_camera);
     }
-
+    m_volume.draw(m_renderer, m_textureManager, m_camera);
     m_renderer.Present();
 }
 

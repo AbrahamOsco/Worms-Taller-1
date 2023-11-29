@@ -18,6 +18,7 @@
 #include "../inputs/Input.h"
 #include "../soundManager/SoundManager.h"
 #include "../gameObject/water/Water.h"
+#include "../gameObject/menu/Volume.h"
 
 class Engine {
  private:
@@ -30,6 +31,8 @@ class Engine {
     Timer m_timer;
 
     std::vector<Beam> &m_beams;
+
+    Volume m_volume;
     Water m_water;
     std::string m_background;
     std::vector<std::unique_ptr<GameObject>> m_gameObjects;

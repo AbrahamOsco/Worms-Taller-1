@@ -26,6 +26,8 @@ class SoundManager {
 
     void playEffect(const std::string &id);
     void loadEffect(const std::string &id, const std::string &source);
+
+    void stopMusic();
 };
 
 

@@ -171,3 +171,7 @@ textures:
     source: "../Client/resources/assets/background/Hell.png"
   - name: Manhattan
     source: "../Client/resources/assets/background/Manhattan.png"
+  - name: volume_on
+    source: "../Client/resources/assets/menu/volume_on.png"
+  - name: volume_off
+    source: "../Client/resources/assets/menu/volume_off.png"
