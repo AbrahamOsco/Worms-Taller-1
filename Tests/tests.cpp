@@ -608,7 +608,6 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendAProvisionDTO) {
 TEST(TEST_PROTOCOL_SERVER_SEND, sendEndGameDTO) {
     Socket skt;
     size_t offset = 0;
-    uint16_t word;
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
     EndGameDTO dto(113, WON_THE_GAME);
@@ -623,7 +622,6 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendEndGameDTO) {
 TEST(TEST_PROTOCOL_SERVER_SEND, sendSnapShot_GAME_PROGRESS) {
     Socket skt;
     size_t offset = 0;
-    uint16_t word;
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
     std::vector<WormDTO> worms;
@@ -653,8 +651,6 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendSnapShot_GAME_PROGRESS) {
 }
 TEST(PROTOCOL_SERVER_RECV, recvInitialStateDTO_SCENARIO_LIST_REQUEST) {
     Socket skt;
-    size_t offset = 0;
-    uint16_t word;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     InitialStateDTO dtoClient(SCENARIO_LIST_REQUEST, "name");
@@ -664,8 +660,6 @@ TEST(PROTOCOL_SERVER_RECV, recvInitialStateDTO_SCENARIO_LIST_REQUEST) {
 }
 TEST(PROTOCOL_SERVER_RECV, recvInitialStateDTO_ROOM_LIST_REQUEST) {
     Socket skt;
-    size_t offset = 0;
-    uint16_t word;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     InitialStateDTO dtoClient(ROOM_LIST_REQUEST, "soy el jugador");
@@ -675,8 +669,6 @@ TEST(PROTOCOL_SERVER_RECV, recvInitialStateDTO_ROOM_LIST_REQUEST) {
 }
 TEST(PROTOCOL_SERVER_RECV, recvReponseInitialStateDTO_FINAL_CREATE_GAME) {
     Socket skt;
-    size_t offset = 0;
-    uint16_t word;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     ResponseInitialStateDTO dtoClient(FINAL_CREATE_GAME, "partida a muerte", "mapa 1v1", 2);
@@ -686,8 +678,6 @@ TEST(PROTOCOL_SERVER_RECV, recvReponseInitialStateDTO_FINAL_CREATE_GAME) {
 }
 TEST(PROTOCOL_SERVER_RECV, recvReponseInitialStateDTO_FINAL_JOIN_GAME) {
     Socket skt;
-    size_t offset = 0;
-    uint16_t word;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     ResponseInitialStateDTO dtoClient(FINAL_CREATE_GAME, "partida de chill");
@@ -697,8 +687,6 @@ TEST(PROTOCOL_SERVER_RECV, recvReponseInitialStateDTO_FINAL_JOIN_GAME) {
 }
 TEST(PROTOCOL_SERVER_RECV, recvCommandDTO) {
     Socket skt;
-    size_t offset = 0;
-    uint16_t word;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     CommandDTO dtoClient;
@@ -711,8 +699,6 @@ TEST(PROTOCOL_SERVER_RECV, recvCommandDTO) {
 }
 TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_INITIAL_CREATE_GAME) {
     Socket skt;
-    size_t offset = 0;
-    uint16_t word;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     std::vector<std::string> scenarios;
@@ -732,8 +718,6 @@ TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_INITIAL_CREATE_GAME) 
 }
 TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_FINAL_CREATE_GAME) {
     Socket skt;
-    size_t offset = 0;
-    uint16_t word;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     ResolverInitialDTO dtoServer(RESPONSE_FINAL_CREATE_GAME, 1);
@@ -743,8 +727,6 @@ TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_FINAL_CREATE_GAME) {
 }
 TEST(PROTOCOL_CLIENT_RECV, recvRoom) {
     Socket skt;
-    size_t offset = 0;
-    uint16_t word;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     RoomDTO serverRoom("my partida", "super mapa divertido", 1, 4);
@@ -754,8 +736,6 @@ TEST(PROTOCOL_CLIENT_RECV, recvRoom) {
 }
 TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_INITIAL_JOIN_GAME) {
     Socket skt;
-    size_t offset = 0;
-    uint16_t word;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     ResolverInitialDTO dtoServer;
@@ -782,8 +762,6 @@ TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_INITIAL_JOIN_GAME) {
 }
 TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_FINAL_JOIN_GAME) {
     Socket skt;
-    size_t offset = 0;
-    uint16_t word;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     ResolverInitialDTO dtoServer(RESPONSE_FINAL_JOIN_GAME, 1);
@@ -793,8 +771,6 @@ TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_FINAL_JOIN_GAME) {
 }
 TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_START_GAME) {
     Socket skt;
-    size_t offset = 0;
-    uint16_t word;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     server.sendANumberByte(START_GAME);
@@ -805,8 +781,6 @@ TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_START_GAME) {
 }
 TEST(PROTOCOL_CLIENT_RECV, recvBeamDTO) {
     Socket skt;
-    size_t offset = 0;
-    uint16_t word;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     BeamDTO dtoServer(SHORT_BEAM, 53, 69, 120, 78, 96);
@@ -816,8 +790,6 @@ TEST(PROTOCOL_CLIENT_RECV, recvBeamDTO) {
 }
 TEST(PROTOCOL_CLIENT_RECV, recvStageDTO) {
     Socket skt;
-    size_t offset = 0;
-    uint16_t word;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     std::vector<BeamDTO> beams;
@@ -829,10 +801,141 @@ TEST(PROTOCOL_CLIENT_RECV, recvStageDTO) {
     dtoServer.setBeams(beams);
     server.sendStage(dtoServer);
     StageDTO dtoClient = client.recvStageDTO();
-    ASSERT_EQ(dtoClient.getOperationType(), dtoServer.getOperationType());
-    ASSERT_EQ(dtoClient.getIdPlayer(), dtoServer.getIdPlayer());
-    ASSERT_EQ(dtoClient.getBeams(), dtoServer.getBeams());
     ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvAPlayerDTO) {
+    Socket skt;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    PlayerDTO dtoServer(27, "Sergio", MY_TURN, 125);
+    server.sendAPlayerDTO(dtoServer);
+    PlayerDTO dtoClient = client.recvAPlayerDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvPlayersDTO) {
+    Socket skt;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    std::vector<PlayerDTO> players;
+    players.push_back(PlayerDTO(15, "fede", MY_TURN, 100));
+    players.push_back(PlayerDTO(42, "pepe", NOT_IS_MY_TURN, 125));
+    PlayersDTO dtoServer(players);
+    server.sendPlayersDTO(dtoServer);
+    PlayersDTO dtoClient = client.recvPlayersDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvAWormDTO) {
+    Socket skt;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    WormDTO dtoServer(50, 75, 69, 125, LEFT, NO_FOCUS, WALKING, RED_GRENADE);
+    server.sendAWormDTO(dtoServer);
+    WormDTO dtoClient = client.recvAWormDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvAWeaponDTO) {
+    Socket skt;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    WeaponDTO dtoServer(BANANA, NO_INFINITE, 100);
+    server.sendAWeaponDTO(dtoServer);
+    WeaponDTO dtoClient = client.recvAWeaponDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvWeaponsDTO) {
+    Socket skt;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    std::vector<WeaponDTO> weapons;
+    weapons.push_back(WeaponDTO(BANANA, NO_INFINITE, 100));
+    weapons.push_back(WeaponDTO(HOLY_GRENADE, NO_INFINITE, 5));
+    weapons.push_back(WeaponDTO(MORTAR, NO_INFINITE, 1));
+    WeaponsDTO dtoServer(25, weapons, BANANA);
+    server.sendWeaponsDTO(dtoServer);
+    WeaponsDTO dtoClient = client.recvWeaponsDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvWeaponSightDTO) {
+    Socket skt;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    WeaponSightDTO dtoServer(NO_SHOW_SIGHT, 1, 0);
+    server.sendWeaponSightDTO(dtoServer);
+    WeaponSightDTO dtoClient = client.recvWeaponSightDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvAProjectileDTO) {
+    Socket skt;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    ProjectileDTO dtoServer(BAZOOKA_PROJECTILE, 25, 33, NO_FOCUS, EXPLODE);
+    server.sendAProjectileDTO(dtoServer);
+    ProjectileDTO dtoClient = client.recvAProjectileDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvProjectilesDTO) {
+    Socket skt;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    std::vector<ProjectileDTO> projectiles;
+    projectiles.push_back(ProjectileDTO(BAZOOKA_PROJECTILE, 25, 33, NO_FOCUS, EXPLODE));
+    projectiles.push_back(ProjectileDTO(NONE_PROJECTILE, 96, 123, FOCUS, NO_EXPLODE));
+    projectiles.push_back(ProjectileDTO(AIR_ATTACK_MISSILE, 6582, 8743, FOCUS, EXPLODE));
+    ProjectilesDTO dtoServer(SHOW_PROJECTILES, projectiles);
+    server.sendProjectilesDTO(dtoServer);
+    ProjectilesDTO dtoClient = client.recvProjectilesDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvEndGameDTO) {
+    Socket skt;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    EndGameDTO dtoServer(113, WON_THE_GAME);
+    server.sendEndGameDTO(dtoServer);
+    EndGameDTO dtoClient = client.recvEndGameDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvAProvisionDTO) {
+    Socket skt;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    ProvisionDTO dtoServer(23, 97, MEDICAL_KIT, CONTACT);
+    server.sendAProvisionDTO(dtoServer);
+    ProvisionDTO dtoClient = client.recvAProvisionDTO();
+    ASSERT_EQ(dtoClient, dtoServer);
+}
+TEST(PROTOCOL_CLIENT_RECV, recvSnapShot) {
+    Socket skt;
+    ClientProtocol client(skt);
+    ServerProtocol server(skt);
+    std::vector<WormDTO> worms;
+    worms.push_back(WormDTO(50, 75, 69, 125, LEFT, NO_FOCUS, WALKING, RED_GRENADE));
+    worms.push_back(WormDTO(125, 69, 75, 50, RIGHT, FOCUS, STANDING, AIR_ATTACK));
+    std::vector<PlayerDTO> player;
+    player.push_back(PlayerDTO(15, "fede", NOT_IS_MY_TURN, 100));
+    player.push_back(PlayerDTO(51, "rodolfo", MY_TURN, 125));
+    PlayersDTO players(player);
+    std::vector<WeaponDTO> weapon;
+    weapon.push_back(WeaponDTO(BANANA, NO_INFINITE, 100));
+    weapon.push_back(WeaponDTO(BAZOOKA, NO_INFINITE, 100));
+    weapon.push_back(WeaponDTO(BASEBALL_BAT, NO_INFINITE, 100));
+    WeaponsDTO weapons(12, weapon, BANANA);
+    WeaponSightDTO sight(NO_SHOW_SIGHT, 1, 0);
+    std::vector<ProjectileDTO> projectile;
+    projectile.push_back(ProjectileDTO(BAZOOKA_PROJECTILE, 25, 33, NO_FOCUS, NO_EXPLODE));
+    projectile.push_back(ProjectileDTO(PROJ_BANANA, 33, 25, FOCUS, NO_EXPLODE));
+    projectile.push_back(ProjectileDTO(PROJ_MORTAR, 100, 100, NO_FOCUS, NO_EXPLODE));
+    ProjectilesDTO projectiles(SHOW_PROJECTILES, projectile);
+    TurnDTO turn(120, "texto", 10, 5, WIND_RIGHT);
+    std::vector<ProvisionDTO> provisions;
+    provisions.push_back(ProvisionDTO(23, 97, MEDICAL_KIT, NO_CONTACT));
+    provisions.push_back(ProvisionDTO(15, 96, MEDICAL_KIT, NO_CONTACT));
+    provisions.push_back(ProvisionDTO(97, 23, MEDICAL_KIT, NO_CONTACT));
+    std::unique_ptr<SnapShot> dtoServer = std::unique_ptr<SnapShot>
+                (new SnapShot(worms, players, weapons, sight, projectiles, turn, provisions));
+    server.sendSnapShot(dtoServer);
+    SnapShot dtoClient = client.recvSnapShot();
+    ASSERT_EQ(dtoClient, *dtoServer);
 }
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
