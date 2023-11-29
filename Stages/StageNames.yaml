@@ -1,4 +1,5 @@
 namesScenarios:
+  - name: explosions
   - name: FinalStage
   - name: Jaula Maldita
   - name: test 2

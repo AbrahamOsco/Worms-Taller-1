@@ -431,7 +431,6 @@ void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft
         // no le pongo el and not wasDestroyed porque nunca sera el turno del worm destruido.
         return;
     }
-    std::cout << "Se recibe el comando " << aCommandDTO->getTypeCommand() << "\n";
     if (aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD) {
         this->walkWorm(LEFT);
     } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD) {

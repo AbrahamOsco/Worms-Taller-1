@@ -113,7 +113,6 @@ StageDTO ClientProtocol::recvStageDTO() {
         stageDto.setPositionYWater(recvNum2Bytes());
         stageDto.setBackground(recvString());
     }
-    // std::cout << "Se recibieron stage basuras\n";
     return stageDto;
 }
 
