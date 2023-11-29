@@ -20,13 +20,15 @@ void FocusController::assignPlayerAndWormCurrent(const size_t& idPlayerCurrent, 
 void FocusController::tryToChangeFocus() {
     std::vector<std::pair<size_t, size_t>> movingWorms;
     players.getMovingWorms(movingWorms);
-    if (movingWorms.empty() || currenWorm->thereAreProjectiles() || currenWorm->hasTheTeleport() ||
-            currenWorm->hasTheAirAttack()) {
-        return;
-    } else if (movingWorms.size() == 1 && (movingWorms.back().second == idWormCurrent)) {
+    if (movingWorms.size() == 1 && (movingWorms.back().second == idWormCurrent) && currenWorm->getTypeFocus() == NO_FOCUS ) {
+        std::cout << "Se asigna el focus al worm actual\n";
         currenWorm->assignTypeFocus(FOCUS);
         return;
+    } else if (currenWorm->thereAreProjectiles() || currenWorm->hasTheTeleport() || currenWorm->hasTheAirAttack()) {
+        players.disableAllFocus(); // le saco el focus a todos los worms.
+        return;
     }
+
     for (auto &pairIDPlayWorm : movingWorms) {
             if (pairIDPlayWorm.second != idWormCurrent) {
                 players.assignTypeFocus(FOCUS, pairIDPlayWorm.first, pairIDPlayWorm.second);

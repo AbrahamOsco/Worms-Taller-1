@@ -18,8 +18,6 @@ class GrenadeHolder : public Weapon {
     WeaponSight weaponSight;
     std::unique_ptr<Grenade> grenade;
     std::pair<float, float> maxImpulseWeapon;
-    int explosionIterations;
-
  public:
     explicit GrenadeHolder(const TypeWeapon& aTypeWeapon, const float &damagePrincipal,
                     const TypeMunition& aTypeMunition,
@@ -55,6 +53,8 @@ class GrenadeHolder : public Weapon {
 
 
     void getProjectilesDTOPrimary(std::vector<ProjectileDTO> &vecProjectileDTO);
+
+    void resetGrenade(b2World *aWorld);
 };
 
 

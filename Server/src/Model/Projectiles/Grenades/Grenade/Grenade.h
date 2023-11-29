@@ -16,8 +16,6 @@
 
 class Grenade : public GameObject {
  protected:
-    std::pair<float, float> impulseWeapon;  // impulse x, impulse y
-    std::pair<float, float> maxImpulseWeapon;  // maximo impulso es una arma con potencia variable.
     float restitution;
     bool fixedRotation;
     std::chrono::steady_clock::time_point startTime, time;
