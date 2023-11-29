@@ -4,25 +4,22 @@ Juego worms
 ## Compilar y Ejecutar:
 ### Para compilar:
 	- En la carpeta del proyecto correr:
-		$ ./installer.sh -i
+		$ ./instalador.sh
 	- Si faltan permisos antes correr:
-		$ chmod +x ./installer.sh
+		$ chmod +x ./instalador.sh
+  Esto instala todas las dependencias, todas las aplicaciones y corre los Tests.
 
 ### Para ejecutar:
-	En la carpeta del proyecto correr:
+	En cualquier lado correr:
 	- Para el editor:
-		1.	$ cd build
-		2.	$ ./worms-editor
+		$ ./Worms_Editor
 
 	- Para el cliente:
-		1.	$ cd build
-		2.	$ ./worms-client
+		$ ./Worms_Client
 
 	- Para el servidor:
-		1.	$ cd build
-		2.	$ ./Worms-Taller-1 <port>
-  
-		(<port> es el puerto en que se quiere abrir el servidor)
+		$ ./Worms_Server   
+		Luego, cuando lo pida, ingrese el puerto en el cual se quiere abrir el servidor.
 
 ## Dependencias
 
