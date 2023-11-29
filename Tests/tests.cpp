@@ -29,86 +29,93 @@
 #include "../Common/DTO/WormDTO.h"
 
 TEST(TEST_MOCK_SOCKET, SEND_SOME) {
+    // Arrenge
     Socket skt;
     std::vector<char> data;
     bool closed;
     std::vector<char> buff;
-
+    // Act
     for (int i = 0; i < 10; i++) {
         data.push_back((char) i+60);
     }
     skt.sendall(data.data(), 5, &closed);
     skt.sendall(data.data()+5, 5, &closed);
     buff = skt.getBuffer();
-
+    // Assert
     for (int i = 0; i < 10; i++)
         ASSERT_TRUE(data[i] == buff[i]);
 }
 TEST(TEST_MOCK_SOCKET, RECV_SOME) {
+    // Arrenge
     Socket skt;
     std::vector<char> data;
     bool closed;
     std::vector<char> read(10);
-
+    // Act
     for (int i = 0; i < 10; i++) {
         data.push_back((char) i);
     }
     skt.setBuffer(data);
     skt.recvall(read.data(), 4, &closed);
     skt.recvall(read.data()+4, 6, &closed);
-
+    // Assert
     for (int i = 0; i < 10; i++)
         ASSERT_TRUE(data[i] == read[i]);
 }
 TEST(TEST_PROTOCOL_COMMON_SEND, sendANumberByte) {
+    // Arrenge
     Socket skt;
     Protocol protocol(skt);
     uint8_t byte = 54;
     std::vector<char> buff;
-
+    // Act
     protocol.sendANumberByte(byte);
     buff = skt.getBuffer();
-
+    // Assert
     ASSERT_TRUE(byte == buff[0]);
 }
 TEST(TEST_PROTOCOL_COMMON_SEND, sendNum2Bytes) {
+    // Arrenge
     Socket skt;
     Protocol protocol(skt);
     uint16_t word = 2000;
     uint16_t sent;
     std::vector<char> buff;
-
+    // Act
     protocol.sendNum2Bytes(word);
     buff = skt.getBuffer();
     memcpy(&sent, buff.data(), 2);
     sent = ntohs(sent);
-
+    // Assert
     ASSERT_TRUE(sent == word);
 }
 TEST(TEST_PROTOCOL_COMMON_RECV, recvANumberByte) {
+    // Arrenge
     Socket skt;
     Protocol protocol(skt);
     uint8_t byte = 25;
     uint8_t read;
-
+    // Act
     protocol.sendANumberByte(byte);
     read = protocol.recvANumberByte();
-
+    // Assert
     ASSERT_TRUE(read == byte);
 }
 TEST(TEST_PROTOCOL_COMMON_RECV, recvNum2Bytes) {
+    // Arrenge
     Socket skt;
     Protocol protocol(skt);
     std::vector<char> data;
     uint16_t word = 0x12AC;
     uint16_t read;
-
+    // Act
     protocol.sendNum2Bytes(word);
     read = protocol.recvNum2Bytes();
-
+    // Assert
     ASSERT_TRUE(word == read);
 }
 TEST(TEST_PROTOCOL_CLIENT_SEND, sendInitialStateDTO) {
+    // Arrenge
     Socket skt;
     uint16_t size;
     size_t offset = 0;
@@ -116,7 +123,9 @@ TEST(TEST_PROTOCOL_CLIENT_SEND, sendInitialStateDTO) {
     ClientProtocol protocol(skt);
     std::string name("Pedro");
     InitialStateDTO dto(SCENARIO_LIST_REQUEST, name);
+    // Act
     protocol.sendInitialStateDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_TRUE(SCENARIO_LIST_REQUEST == buffer[offset]);
     offset++;
@@ -128,6 +137,7 @@ TEST(TEST_PROTOCOL_CLIENT_SEND, sendInitialStateDTO) {
     ASSERT_TRUE(name == aux);
 }
 TEST(TEST_PROTOCOL_CLIENT_SEND, sendResponseInitialStateDTO_Create_Game) {
+    // Arrenge
     Socket skt;
     uint16_t size;
     ClientProtocol protocol(skt);
@@ -137,7 +147,9 @@ TEST(TEST_PROTOCOL_CLIENT_SEND, sendResponseInitialStateDTO_Create_Game) {
     std::string scenarioName("Ruinas");
     size_t playersNumber = 5;
     ResponseInitialStateDTO dto(FINAL_CREATE_GAME, gameName, scenarioName, playersNumber);
+    // Act
     protocol.sendResponseInitialStateDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_TRUE(FINAL_CREATE_GAME == buffer[0]);
     offset++;
@@ -158,14 +170,17 @@ TEST(TEST_PROTOCOL_CLIENT_SEND, sendResponseInitialStateDTO_Create_Game) {
     ASSERT_TRUE(playersNumber == buffer[offset]);
 }
 TEST(TEST_PROTOCOL_CLIENT_SEND, sendResponseInitialStateDTO_Join_Game) {
+    // Arrenge
     Socket skt;
     uint16_t size;
     ClientProtocol protocol(skt);
     std::vector<char> buffer;
-    std::string gameName("Mostaza");
     size_t offset = 0;
+    std::string gameName("Mostaza");
     ResponseInitialStateDTO dto(FINAL_JOIN_GAME, gameName);
+    // Act
     protocol.sendResponseInitialStateDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_TRUE(FINAL_JOIN_GAME == buffer[0]);
     offset++;
@@ -177,6 +192,7 @@ TEST(TEST_PROTOCOL_CLIENT_SEND, sendResponseInitialStateDTO_Join_Game) {
     ASSERT_TRUE(gameName == aux);
 }
 TEST(TEST_PROTOCOL_CLIENT_SEND, sendCommandDTO) {
+    // Arrenge
     Socket skt;
     int x, y;
     uint16_t word;
@@ -189,7 +205,9 @@ TEST(TEST_PROTOCOL_CLIENT_SEND, sendCommandDTO) {
     y = 9671;
     dto.setX(x);
     dto.setY(y);
+    // Act
     protocol.sendCommandDTO(dto);
+    // Assert
     buff = skt.getBuffer();
     ASSERT_TRUE(COMMAND == buff[offset]);
     offset++;
@@ -204,6 +222,7 @@ TEST(TEST_PROTOCOL_CLIENT_SEND, sendCommandDTO) {
     ASSERT_TRUE(y == word);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_INI_CREATE_GAME) {
+    // Arrenge
     Socket skt;
     ServerProtocol protocol(skt);
     std::vector<std::string> scenarios;
@@ -212,7 +231,6 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_INI_CREATE_GAME) {
     size_t offset = 0;
     uint8_t amount = 0;
     uint16_t word;
-    std::string aux;
     scenarios.push_back("Ruinas");
     maxPlayers.push_back(3);
     amount++;
@@ -223,7 +241,9 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_INI_CREATE_GAME) {
     maxPlayers.push_back(14);
     amount++;
     ResolverInitialDTO dto(RESPONSE_INITIAL_CREATE_GAME, scenarios, maxPlayers);
+    // Act
     protocol.sendResolverInitialDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_TRUE(RESPONSE_INITIAL_CREATE_GAME == buffer[offset]);
     offset++;
@@ -240,16 +260,20 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_INI_CREATE_GAME) {
     }
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_FIN_CREATE_GAME) {
+    // Arrenge
     Socket skt;
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
     ResolverInitialDTO dto(RESPONSE_FINAL_CREATE_GAME, 1);
+    // Act
     protocol.sendResolverInitialDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_TRUE(RESPONSE_FINAL_CREATE_GAME == buffer[0]);
     ASSERT_EQ(1, buffer[1]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_INI_JOIN_GAME) {
+    // Arrenge
     Socket skt;
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
@@ -273,7 +297,9 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_INI_JOIN_GAME) {
     games.push_back(RoomDTO(names[0], scenarios[0], currentPlayers[0], maxPlayers[0]));
     games.push_back(RoomDTO(names[1], scenarios[1], currentPlayers[1], maxPlayers[1]));
     dto.setGameRooms(games);
+    // Act
     protocol.sendResolverInitialDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_TRUE(RESPONSE_INITIAL_JOIN_GAME == buffer[offset]);
     offset++;
@@ -303,31 +329,40 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_INI_JOIN_GAME) {
     }
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendResolverInitialDTO_RES_FIN_JOIN_GAME) {
+    // Arrenge
     Socket skt;
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
     ResolverInitialDTO dto(RESPONSE_FINAL_JOIN_GAME, 1);
+    // Act
     protocol.sendResolverInitialDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_TRUE(RESPONSE_FINAL_JOIN_GAME == buffer[0]);
     ASSERT_EQ(1, buffer[1]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, START_GAME) {
+    // Arrenge
     Socket skt;
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
+    // Act
     protocol.sendANumberByte(START_GAME);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_EQ(START_GAME, buffer[0]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendBeamDTO) {
+    // Arrenge
     Socket skt;
     size_t offset = 0;
     uint16_t word;
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
     BeamDTO dto(SHORT_BEAM, 53, 69, 120, 78, 96);
+    // Act
     protocol.sendBeam(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_EQ(dto.getOperationType(), buffer[offset]);
     offset++;
@@ -348,6 +383,7 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendBeamDTO) {
     ASSERT_EQ(dto.getHeight(), buffer[offset]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendStage) {
+    // Arrenge
     Socket skt;
     size_t offset = 0;
     uint16_t word;
@@ -359,7 +395,9 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendStage) {
     beams.push_back(BeamDTO(LONG_BEAM, 0, 0, 127, 127, 127));
     StageDTO dto(beams, 1, "background");
     dto.setIdPlayer(127);
+    // Act
     protocol.sendStage(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_TRUE(STAGE == buffer[offset]);
     offset++;
@@ -399,6 +437,7 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendStage) {
     ASSERT_EQ(dto.getBackground(), aux);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendPlayersDTO) {
+    // Arrenge
     Socket skt;
     size_t offset = 0;
     uint16_t word;
@@ -408,7 +447,9 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendPlayersDTO) {
     players.push_back(PlayerDTO(15, "fede", MY_TURN, 100));
     players.push_back(PlayerDTO(42, "pepe", NOT_IS_MY_TURN, 125));
     PlayersDTO dto(players);
+    // Act
     protocol.sendPlayersDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_TRUE(PLAYERS_TOTAL == buffer[offset]);
     offset++;
@@ -435,13 +476,16 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendPlayersDTO) {
     }
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendAWormDTO) {
+    // Arrenge
     Socket skt;
     size_t offset = 0;
     uint16_t word;
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
     WormDTO dto(50, 75, 69, 125, LEFT, NO_FOCUS, WALKING, RED_GRENADE);
+    // Act
     protocol.sendAWormDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_EQ(dto.getOperationType(), buffer[offset]);
     offset++;
@@ -466,6 +510,7 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendAWormDTO) {
     ASSERT_EQ(dto.getWeaponCurrent(), buffer[offset]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendWeaponsDTO) {
+    // Arrenge
     Socket skt;
     size_t offset = 0;
     uint16_t word;
@@ -476,7 +521,9 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendWeaponsDTO) {
     weapons.push_back(WeaponDTO(HOLY_GRENADE, NO_INFINITE, 5));
     weapons.push_back(WeaponDTO(MORTAR, NO_INFINITE, 1));
     WeaponsDTO dto(25, weapons, BANANA);
+    // Act
     protocol.sendWeaponsDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_EQ(dto.getOperationType(), buffer[offset]);
     offset++;
@@ -498,13 +545,16 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendWeaponsDTO) {
     }
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendWeaponSightDTO) {
+    // Arrenge
     Socket skt;
     size_t offset = 0;
     uint16_t word;
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
     WeaponSightDTO dto(NO_SHOW_SIGHT, 1, 0);
+    // Act
     protocol.sendWeaponSightDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_EQ(WEAPON_SIGHT, buffer[offset]);
     offset++;
@@ -519,6 +569,7 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendWeaponSightDTO) {
     ASSERT_EQ(0, word);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendProjectilesDTO) {
+    // Arrenge
     Socket skt;
     size_t offset = 0;
     uint16_t word;
@@ -529,7 +580,9 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendProjectilesDTO) {
     projectiles.push_back(ProjectileDTO(NONE_PROJECTILE, 96, 123, FOCUS, NO_EXPLODE));
     projectiles.push_back(ProjectileDTO(AIR_ATTACK_MISSILE, 6582, 8743, FOCUS, EXPLODE));
     ProjectilesDTO dto(SHOW_PROJECTILES, projectiles);
+    // Act
     protocol.sendProjectilesDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_EQ(dto.getOperationType(), buffer[offset]);
     offset++;
@@ -557,13 +610,16 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendProjectilesDTO) {
     }
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendTurnDTO) {
+    // Arrenge
     Socket skt;
     size_t offset = 0;
     uint16_t word;
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
     TurnDTO dto(120, "texto", 10, 5, WIND_RIGHT);
+    // Act
     protocol.sendTurnDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_EQ(dto.getOperationType(), buffer[offset]);
     offset++;
@@ -583,13 +639,16 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendTurnDTO) {
     ASSERT_EQ(dto.getTypeWind(), buffer[offset]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendAProvisionDTO) {
+    // Arrenge
     Socket skt;
     size_t offset = 0;
     uint16_t word;
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
     ProvisionDTO dto(23, 97, MEDICAL_KIT, CONTACT);
+    // Act
     protocol.sendAProvisionDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_EQ(PROVISION_DTO, buffer[offset]);
     offset++;
@@ -606,12 +665,15 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendAProvisionDTO) {
     ASSERT_EQ(CONTACT, buffer[offset]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendEndGameDTO) {
+    // Arrenge
     Socket skt;
     size_t offset = 0;
     ServerProtocol protocol(skt);
     std::vector<char> buffer;
     EndGameDTO dto(113, WON_THE_GAME);
+    // Act
     protocol.sendEndGameDTO(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_EQ(END_DTO, buffer[offset]);
     offset++;
@@ -620,6 +682,7 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendEndGameDTO) {
     ASSERT_EQ(WON_THE_GAME, buffer[offset]);
 }
 TEST(TEST_PROTOCOL_SERVER_SEND, sendSnapShot_GAME_PROGRESS) {
+    // Arrenge
     Socket skt;
     size_t offset = 0;
     ServerProtocol protocol(skt);
@@ -641,7 +704,9 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendSnapShot_GAME_PROGRESS) {
     provisions.push_back(ProvisionDTO(23, 97, MEDICAL_KIT, NO_CONTACT));
     std::unique_ptr<SnapShot> dto = std::unique_ptr<SnapShot>
                 (new SnapShot(worms, players, weapons, sight, projectiles, turn, provisions));
+    // Act
     protocol.sendSnapShot(dto);
+    // Assert
     buffer = skt.getBuffer();
     ASSERT_EQ(SNAP_SHOT, buffer[offset]);
     offset++;
@@ -650,42 +715,55 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendSnapShot_GAME_PROGRESS) {
     ASSERT_EQ(1, buffer[offset]);
 }
 TEST(PROTOCOL_SERVER_RECV, recvInitialStateDTO_SCENARIO_LIST_REQUEST) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     InitialStateDTO dtoClient(SCENARIO_LIST_REQUEST, "name");
+    // Act
     client.sendInitialStateDTO(dtoClient);
     InitialStateDTO dtoServer = server.recvInitialStateDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_SERVER_RECV, recvInitialStateDTO_ROOM_LIST_REQUEST) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     InitialStateDTO dtoClient(ROOM_LIST_REQUEST, "soy el jugador");
+    // Act
     client.sendInitialStateDTO(dtoClient);
     InitialStateDTO dtoServer = server.recvInitialStateDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_SERVER_RECV, recvReponseInitialStateDTO_FINAL_CREATE_GAME) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     ResponseInitialStateDTO dtoClient(FINAL_CREATE_GAME, "partida a muerte", "mapa 1v1", 2);
+    // Act
     client.sendResponseInitialStateDTO(dtoClient);
     ResponseInitialStateDTO dtoServer = server.recvReponseInitialStateDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_SERVER_RECV, recvReponseInitialStateDTO_FINAL_JOIN_GAME) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     ResponseInitialStateDTO dtoClient(FINAL_CREATE_GAME, "partida de chill");
+    // Act
     client.sendResponseInitialStateDTO(dtoClient);
     ResponseInitialStateDTO dtoServer = server.recvReponseInitialStateDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_SERVER_RECV, recvCommandDTO) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
@@ -693,11 +771,14 @@ TEST(PROTOCOL_SERVER_RECV, recvCommandDTO) {
     dtoClient.setTypeCommand(SELECT_BANANA);
     dtoClient.setX(42);
     dtoClient.setY(69);
+    // Act
     client.sendCommandDTO(dtoClient);
     CommandDTO dtoServer = server.recvCommandDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_INITIAL_CREATE_GAME) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
@@ -712,29 +793,38 @@ TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_INITIAL_CREATE_GAME) 
     scenarios.push_back("core");
     maxPlayers.push_back(5);
     ResolverInitialDTO dtoServer(RESPONSE_INITIAL_CREATE_GAME, scenarios, maxPlayers);
+    // Act
     server.sendResolverInitialDTO(dtoServer);
     ResolverInitialDTO dtoClient = client.recvResolverInitialDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_FINAL_CREATE_GAME) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     ResolverInitialDTO dtoServer(RESPONSE_FINAL_CREATE_GAME, 1);
+    // Act
     server.sendResolverInitialDTO(dtoServer);
     ResolverInitialDTO dtoClient = client.recvResolverInitialDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvRoom) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     RoomDTO serverRoom("my partida", "super mapa divertido", 1, 4);
+    // Act
     server.sendRoom(serverRoom);
     RoomDTO clientRoom = client.recvRoom();
+    // Assert
     ASSERT_EQ(serverRoom, clientRoom);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_INITIAL_JOIN_GAME) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
@@ -756,39 +846,51 @@ TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_INITIAL_JOIN_GAME) {
     games.push_back(RoomDTO(names[0], scenarios[0], currentPlayers[0], maxPlayers[0]));
     games.push_back(RoomDTO(names[1], scenarios[1], currentPlayers[1], maxPlayers[1]));
     dtoServer.setGameRooms(games);
+    // Act
     server.sendResolverInitialDTO(dtoServer);
     ResolverInitialDTO dtoClient = client.recvResolverInitialDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_RESPONSE_FINAL_JOIN_GAME) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     ResolverInitialDTO dtoServer(RESPONSE_FINAL_JOIN_GAME, 1);
+    // Act
     server.sendResolverInitialDTO(dtoServer);
     ResolverInitialDTO dtoClient = client.recvResolverInitialDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvResolverInitialDTO_START_GAME) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
+    // Act
     server.sendANumberByte(START_GAME);
     ResolverInitialDTO dtoServer;
     dtoServer.setOperationType(START_GAME);
     ResolverInitialDTO dtoClient = client.recvResolverInitialDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvBeamDTO) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     BeamDTO dtoServer(SHORT_BEAM, 53, 69, 120, 78, 96);
+    // Act
     server.sendBeam(dtoServer);
     BeamDTO dtoClient = client.recvBeamDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvStageDTO) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
@@ -799,20 +901,26 @@ TEST(PROTOCOL_CLIENT_RECV, recvStageDTO) {
     StageDTO dtoServer;
     dtoServer.setIdPlayer(2);
     dtoServer.setBeams(beams);
+    // Act
     server.sendStage(dtoServer);
     StageDTO dtoClient = client.recvStageDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvAPlayerDTO) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     PlayerDTO dtoServer(27, "Sergio", MY_TURN, 125);
+    // Act
     server.sendAPlayerDTO(dtoServer);
     PlayerDTO dtoClient = client.recvAPlayerDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvPlayersDTO) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
@@ -820,29 +928,38 @@ TEST(PROTOCOL_CLIENT_RECV, recvPlayersDTO) {
     players.push_back(PlayerDTO(15, "fede", MY_TURN, 100));
     players.push_back(PlayerDTO(42, "pepe", NOT_IS_MY_TURN, 125));
     PlayersDTO dtoServer(players);
+    // Act
     server.sendPlayersDTO(dtoServer);
     PlayersDTO dtoClient = client.recvPlayersDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvAWormDTO) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     WormDTO dtoServer(50, 75, 69, 125, LEFT, NO_FOCUS, WALKING, RED_GRENADE);
+    // Act
     server.sendAWormDTO(dtoServer);
     WormDTO dtoClient = client.recvAWormDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvAWeaponDTO) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     WeaponDTO dtoServer(BANANA, NO_INFINITE, 100);
+    // Act
     server.sendAWeaponDTO(dtoServer);
     WeaponDTO dtoClient = client.recvAWeaponDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvWeaponsDTO) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
@@ -851,29 +968,38 @@ TEST(PROTOCOL_CLIENT_RECV, recvWeaponsDTO) {
     weapons.push_back(WeaponDTO(HOLY_GRENADE, NO_INFINITE, 5));
     weapons.push_back(WeaponDTO(MORTAR, NO_INFINITE, 1));
     WeaponsDTO dtoServer(25, weapons, BANANA);
+    // Act
     server.sendWeaponsDTO(dtoServer);
     WeaponsDTO dtoClient = client.recvWeaponsDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvWeaponSightDTO) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     WeaponSightDTO dtoServer(NO_SHOW_SIGHT, 1, 0);
+    // Act
     server.sendWeaponSightDTO(dtoServer);
     WeaponSightDTO dtoClient = client.recvWeaponSightDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvAProjectileDTO) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     ProjectileDTO dtoServer(BAZOOKA_PROJECTILE, 25, 33, NO_FOCUS, EXPLODE);
+    // Act
     server.sendAProjectileDTO(dtoServer);
     ProjectileDTO dtoClient = client.recvAProjectileDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvProjectilesDTO) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
@@ -881,30 +1007,39 @@ TEST(PROTOCOL_CLIENT_RECV, recvProjectilesDTO) {
     projectiles.push_back(ProjectileDTO(BAZOOKA_PROJECTILE, 25, 33, NO_FOCUS, EXPLODE));
     projectiles.push_back(ProjectileDTO(NONE_PROJECTILE, 96, 123, FOCUS, NO_EXPLODE));
     projectiles.push_back(ProjectileDTO(AIR_ATTACK_MISSILE, 6582, 8743, FOCUS, EXPLODE));
+    // Act
     ProjectilesDTO dtoServer(SHOW_PROJECTILES, projectiles);
     server.sendProjectilesDTO(dtoServer);
     ProjectilesDTO dtoClient = client.recvProjectilesDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvEndGameDTO) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     EndGameDTO dtoServer(113, WON_THE_GAME);
+    // Act
     server.sendEndGameDTO(dtoServer);
     EndGameDTO dtoClient = client.recvEndGameDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvAProvisionDTO) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
     ProvisionDTO dtoServer(23, 97, MEDICAL_KIT, CONTACT);
+    // Act
     server.sendAProvisionDTO(dtoServer);
     ProvisionDTO dtoClient = client.recvAProvisionDTO();
+    // Assert
     ASSERT_EQ(dtoClient, dtoServer);
 }
 TEST(PROTOCOL_CLIENT_RECV, recvSnapShot) {
+    // Arrenge
     Socket skt;
     ClientProtocol client(skt);
     ServerProtocol server(skt);
@@ -933,8 +1068,10 @@ TEST(PROTOCOL_CLIENT_RECV, recvSnapShot) {
     provisions.push_back(ProvisionDTO(97, 23, MEDICAL_KIT, NO_CONTACT));
     std::unique_ptr<SnapShot> dtoServer = std::unique_ptr<SnapShot>
                 (new SnapShot(worms, players, weapons, sight, projectiles, turn, provisions));
+    // Act
     server.sendSnapShot(dtoServer);
     SnapShot dtoClient = client.recvSnapShot();
+    // Assert
     ASSERT_EQ(dtoClient, *dtoServer);
 }
 int main(int argc, char* argv[]) {
