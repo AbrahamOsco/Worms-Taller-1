@@ -50,7 +50,8 @@ WeaponIcon::WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeMunition 
 
 void WeaponIcon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
-    SDL_Color textColor = {180, 180, 180, 255};
+    SDL_Color boxColor = {255, 255, 255, 80};
+    SDL_Color textColor = {0, 0, 0, 255};
     int fontSize = 16;
     int padding = 6;
 
@@ -63,14 +64,14 @@ void WeaponIcon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager
     textureManager.draw(m_textureID, m_x, m_y, m_width, m_height, renderer, SDL_FLIP_NONE);
     textureManager.resetColorMod(m_textureID);
 
-    textureManager.drawText("Ammo:", m_x + m_width + padding, m_y + 12, fontPath, fontSize, textColor, renderer);
+    textureManager.drawTextBox("Ammo:", m_x + m_width + padding, m_y + 12, fontPath, fontSize, textColor, boxColor,renderer);
     std::string text;
     if (m_typeMunition == TypeMunition::INFINITE) {
         text = "Inf";
     } else {
         text = std::to_string(m_ammoCount);
     }
-    textureManager.drawText(text, m_x + m_width + 20, m_y + 32, fontPath, fontSize, textColor,
+    textureManager.drawTextBox(text, m_x + m_width + 20, m_y + 34, fontPath, fontSize, textColor, boxColor,
                             renderer);
 }
 

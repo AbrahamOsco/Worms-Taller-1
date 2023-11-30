@@ -46,7 +46,7 @@ Worm::Worm(int id, int x, int y, const size_t &hpWorm, const Direction &directio
 
 void Worm::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     SDL_Color textColor = colorMap[static_cast<ColorID>(m_id)];
-    SDL_Color boxColor = {0, 0, 0, 255};
+    SDL_Color boxColor = {255, 255, 255, 80};
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
 
     int xCorrection;

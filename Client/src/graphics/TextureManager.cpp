@@ -98,6 +98,7 @@ void TextureManager::drawTextBox(const std::string &text, int x, int y, const st
 
     // Ajustar la posición de la caja si es necesario
     // ... (puedes ajustar la posición o las dimensiones de la caja según lo desees)
+    renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND);
 
     // Renderizar la caja del texto
     SDL_SetRenderDrawColor(renderer.Get(), boxColor.r, boxColor.g, boxColor.b, boxColor.a);
