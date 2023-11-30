@@ -50,7 +50,7 @@ WeaponIcon::WeaponIcon(TypeWeapon typeWeapon, int ammoCount, const TypeMunition 
 
 void WeaponIcon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, Camera &camera) {
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
-    SDL_Color textColor = {0, 0, 0, 255};
+    SDL_Color textColor = {180, 180, 180, 255};
     int fontSize = 16;
     int padding = 6;
 

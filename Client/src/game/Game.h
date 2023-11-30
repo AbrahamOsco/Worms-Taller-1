@@ -17,7 +17,6 @@ class Game {
  private:
     ClientProtocol m_protocol;
     std::vector<Beam> m_beams;
-    Water m_water;
     std::string m_background;
     std::atomic<bool> m_running;
  public:

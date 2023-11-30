@@ -11,13 +11,13 @@
 #include "../command/LeftCmd.h"
 #include "../command/CloseCmd.h"
 
-Engine::Engine(std::vector<Beam> &beams, Water &water, const std::string &background,
+Engine::Engine(std::vector<Beam> &beams, const std::string &background,
                 Queue<std::unique_ptr<Command>> &bQueue,
                 Queue<std::vector<std::unique_ptr<GameObject>>> &nbQueue, std::atomic<bool>& running) :
                 m_window("SDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                 WINDOW_WIDTH, WINDOW_HEIGHT, 0),
                 m_renderer(m_window, -1, SDL_RENDERER_ACCELERATED),
-                m_beams(beams), m_water(water), m_background(background), m_bQueue(bQueue),
+                m_beams(beams), m_background(background), m_bQueue(bQueue),
                 m_nbQueue(nbQueue), m_running(running), m_timer() {}
 
 void Engine::events() {
@@ -41,7 +41,6 @@ void Engine::update() {
 void Engine::render() {
     m_renderer.Clear();
     m_textureManager.draw(m_background, 0, - m_camera.getPosition().GetY(), 1920, 1080, m_renderer, SDL_FLIP_NONE);
-    // m_water.draw(m_renderer, m_textureManager, m_camera);
 
     for (Beam beams : m_beams) {
         beams.draw(m_renderer, m_textureManager, m_camera);

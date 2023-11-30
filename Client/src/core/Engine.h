@@ -33,7 +33,6 @@ class Engine {
     std::vector<Beam> &m_beams;
 
     Volume m_volume;
-    Water m_water;
     std::string m_background;
     std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 
@@ -43,7 +42,7 @@ class Engine {
     Queue<std::vector<std::unique_ptr<GameObject>>> &m_nbQueue;
 
  public:
-    Engine(std::vector<Beam> &beams, Water &water, const std::string &background,
+    Engine(std::vector<Beam> &beams, const std::string &background,
             Queue<std::unique_ptr<Command>> &bQueue,
             Queue<std::vector<std::unique_ptr<GameObject>>> &nbQueue, std::atomic<bool>& running);
 
