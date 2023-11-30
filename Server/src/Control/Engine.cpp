@@ -18,7 +18,7 @@ Engine::Engine(const ResponseInitialStateDTO &response) :
         nameGameRoom(response.getGameName()), nameScenario(response.getScenarioName()),
         numberPlayerReq(response.getPlayerRequired()), currentPlayers(0),
         world(b2Vec2(0.0f, gameParameters.getGravity())), model(response.getScenarioName(),
-        world, gameParameters), keepTalking(true), commandsQueueNB(UINT_MAX - 1),
+        world, gameParameters), keepTalking(false), startedGame(false), commandsQueueNB(UINT_MAX - 1),
         connections(commandsQueueNB) {
 }
 
@@ -37,12 +37,16 @@ int Engine::addClient(Socket &socket, const std::string &playerName, const Opera
         connections.addConnection(currentPlayers, std::move(socket));
         currentPlayers++;
         if (currentPlayers == numberPlayerReq) {
+            keepTalking = true;
+            startedGame = true;
             this->start();
         }
         answer = SUCCESS;
     }
     return answer;
 }
+
+
 
 void Engine::run() {
     try {
@@ -127,3 +131,7 @@ void Engine::stop() {
     keepTalking = false;
 }
 
+
+bool Engine::isGameStarted() const{
+    return startedGame;
+}

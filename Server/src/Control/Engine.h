@@ -35,6 +35,7 @@ class Engine : public Thread {
     b2World world;
     Model model;
     std::atomic<bool> keepTalking;
+    bool startedGame;
     Queue<std::unique_ptr<CommandDTO>> commandsQueueNB;
     // La queue para popear los comandos recibido por el cliente.
     // Solo tenemos una queue para popear comandos. y N queures para enviar.
@@ -59,6 +60,8 @@ class Engine : public Thread {
     void pushUpdatesAndUpdateModel(TimeTurn &timeTurn, RateController &frameRate);
 
     void executeLastCommand();
+
+    bool isGameStarted() const;
 };
 
 

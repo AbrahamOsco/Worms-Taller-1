@@ -24,16 +24,22 @@ void ClientConnection::start(StageDTO &stageDTO) {  // Lanzo los threads sender 
     serverProtocol.sendANumberByte(START_GAME);
     stageDTO.setIdPlayer(this->idPlayer);
     serverProtocol.sendStage(stageDTO);
+
     receiver = std::thread(&ClientConnection::runReceiver, this);
     sender = std::thread(&ClientConnection::runSender, this);
 }
 
 void ClientConnection::join() {
     std::cerr << " [Thread Client]: Se entra a joinear los threads sender y receiver de : " << idPlayer << "\n";
-    sender.join();
-    std::cerr << " [Thread Client]: Join thread Sender "<< idPlayer << "\n";
-    receiver.join();
-    std::cerr << " [Thread Client]: Join thread Receiver" << idPlayer << "\n";
+    if(sender.joinable()){
+        sender.join();
+        std::cerr << " [Thread Client]: Join thread Sender "<< idPlayer << "\n";
+    }
+
+    if(receiver.joinable()){
+        receiver.join();
+        std::cerr << " [Thread Client]: Join thread Receiver" << idPlayer << "\n";
+    }
 }
 
 // enviamos snapShots al cliente (actualizaciones del mundo)
@@ -73,16 +79,12 @@ void ClientConnection::runReceiver() {
 
 void ClientConnection::stop() {
     std::cout << " [Thread cliente]  " << idPlayer << " STOP";
-    if (sktPeer.isClosed()) {
-        std::cout <<
-        "[Thread cliente] el socket esta cerrado procedo a cerrar el snapShotQueue y hacerle un totalClouse al skt\n";
-        snapShotQueueB->close();
-        sktPeer.totalClosure();
-    } else {
-        // Solo tenemos una queue para popear comandos cierro la queue que envia snapshots
-        snapShotQueueB->close();
-        sktPeer.totalClosure();
+    std::cout <<"[Thread cliente] el socket esta cerrado procedo a cerrar el snapShotQueue y hacerle un totalClouse al skt\n";
+    snapShotQueueB->close();
+    if( not commandQueueNB.isClosed()){
+        commandQueueNB.close();
     }
+    sktPeer.totalClosure();
 }
 
 void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, const PlayersDTO &playersDTO,

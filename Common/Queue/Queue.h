@@ -204,6 +204,9 @@ class Queue {
         closed = true;
         is_not_empty.notify_all();
     }
+    bool isClosed() const{
+        return closed;
+    }
 
  private:
     Queue(const Queue&) = delete;

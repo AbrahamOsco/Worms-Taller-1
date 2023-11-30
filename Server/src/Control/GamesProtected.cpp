@@ -70,7 +70,9 @@ std::vector<RoomDTO> GamesProtected::getAvailableRooms() {
 void GamesProtected::stop() {
     for (auto& Agames : games) {
         Agames.second->stop();
-        Agames.second->join();
+        if(Agames.second->isGameStarted()){
+            Agames.second->join();
+        }
     }
 }
 
