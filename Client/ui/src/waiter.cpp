@@ -13,9 +13,17 @@ Waiter::Waiter(Socket* socket, Queue<ResolverInitialDTO>* queue) {
 
 void Waiter::run() {
     ClientProtocol protocol(*skt);
+    bool closed = false;
+    uint8_t read = 0;
     ResolverInitialDTO respuesta;
-    while (respuesta.getOperationType() != START_GAME) {
-        respuesta = protocol.recvResolverInitialDTO();
+    while (read != 1 && !closed) {
+        skt->recvall(&read, 1, &closed);
+    }
+    if (read == START_GAME) {
+        respuesta.setOperationType(START_GAME);
+    }
+    if (closed) {
+        respuesta.setOperationType(END_DTO);
     }
     my_queue->push(respuesta);
 }

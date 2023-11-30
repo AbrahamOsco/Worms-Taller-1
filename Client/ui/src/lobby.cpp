@@ -45,6 +45,10 @@ void Lobby::update() {
             waiter.join();
             this->commence();
         }
+        if (val.getOperationType() == END_DTO) {
+            waiter.join();
+            this->close();
+        }
     }
 }
 void Lobby::start() {
