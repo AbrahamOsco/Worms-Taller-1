@@ -115,14 +115,14 @@ bool Player::allWormsAreUnmoveAndNotExistsProjectiles() {
     return true;
 }
 
-void Player::execute(std::unique_ptr<CommandDTO> &uniquePtr, const int &timeLeft) {
-    if (uniquePtr->getTypeCommand() == COUNTDOWN) {
+void Player::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft) {
+    if (aCommandDTO->getTypeCommand() == COUNTDOWN) {
         for (auto &aWorms : worms) {
-            aWorms.second->setWaitTime(uniquePtr->getX());
+            aWorms.second->setWaitTime(aCommandDTO->getX());
         }
         return;
     }
-    this->worms.at(idCurrentWorm)->execute(uniquePtr, timeLeft, idCurrentWorm);
+    this->worms.at(idCurrentWorm)->execute(aCommandDTO, timeLeft, idCurrentWorm);
 }
 
 void Player::assignWindValue(const float &aWindValue) {

@@ -23,9 +23,6 @@
 
 class Model {
  private:
-    size_t numberPlayerReq;
-    size_t currentPlayers;
-    bool finishedGame;
     Stage stage;
     Players players;
     b2World& world;
@@ -70,6 +67,8 @@ class Model {
     std::vector<ProvisionDTO> getVecProvisionDTO();
 
     void tryToChangeFocus();
+
+    void destroyAllBodys();
 };
 
 

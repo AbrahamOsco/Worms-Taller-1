@@ -32,7 +32,7 @@ class ServerProtocol : public Protocol {
 
     void sendStage(const StageDTO& stageDTO);
 
-    void sendBeam(const BeamDTO& beamDTO);
+    void sendBeamDTO(const BeamDTO& beamDTO);
 
     ~ServerProtocol() = default;
 

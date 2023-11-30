@@ -63,6 +63,7 @@ void Engine::run() {
     } catch (std::exception &e) {
         std::cerr << "[Engine] Excpecion  :"  <<e.what() << "\n";
         this->connections.stop();
+        this->model.destroyAllBodys();
         return;
     }
     executeLastCommand();
@@ -77,6 +78,7 @@ void Engine::executeLastCommand() {
         if (commandsQueueNB.move_try_pop(aCommanDTO)) {
             if (aCommanDTO->getTypeCommand() == CLOSE_GAME) {
                 this->connections.stop();
+                this->model.destroyAllBodys();
                 keepTalking = false;
                 std::cerr<< "Felicidades Se cerro el game de forma exitosa !!! \n";
             }

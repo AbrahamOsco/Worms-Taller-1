@@ -91,14 +91,14 @@ void ServerProtocol::sendStage(const StageDTO &stageDTO) {
     sendANumberByte(stageDTO.getOperationType());
     sendANumberByte(stageDTO.getBeams().size());
     for (BeamDTO aBeamDTO : stageDTO.getBeams()) {
-        sendBeam(aBeamDTO);
+        sendBeamDTO(aBeamDTO);
     }
     sendANumberByte(stageDTO.getIdPlayer());
     sendNum2Bytes(stageDTO.getPositionYWater());
     sendString(stageDTO.getBackground());
 }
 
-void ServerProtocol::sendBeam(const BeamDTO &beamDTO) {
+void ServerProtocol::sendBeamDTO(const BeamDTO &beamDTO) {
     sendANumberByte(beamDTO.getOperationType());
     sendANumberByte(beamDTO.getTypeBeam());
     sendNum2Bytes(beamDTO.getXCenter());

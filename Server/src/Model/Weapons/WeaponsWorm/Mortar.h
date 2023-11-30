@@ -45,6 +45,8 @@ class Mortar : public Weapon {
 
     void shootProjectile(b2World *world, const b2Vec2 &positionWorm, const Direction &direction,
             const TypeFocus &focus);
+
+    bool hasMunition() const;
 };
 
 

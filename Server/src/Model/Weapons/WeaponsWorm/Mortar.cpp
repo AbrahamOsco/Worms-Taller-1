@@ -105,3 +105,7 @@ void Mortar::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const D
             gameParameters.getBazookaImpulseYInitial());
     this->munition--;
 }
+
+bool Mortar::hasMunition() const {
+    return (this->munition > 0);
+}

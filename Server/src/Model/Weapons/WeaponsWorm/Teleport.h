@@ -22,10 +22,6 @@ class Teleport : public Weapon {
 
     bool launchesProjectiles() override;
 
-    bool isAObjectInPosition();
-
-    bool isAObjectInPosition(const b2Vec2 &positionToTeleport);
-
     bool isPositionFree(const b2Vec2 &positionToTeleport, b2World *aWorld);
 };
 

@@ -9,9 +9,8 @@
 #include "../../../../Common/DTO/PlayersDTO.h"
 
 Model::Model(const std::string &scenarioName, b2World &aWorld, GameParameters& parameters)
-        : stage(scenarioName), players(stage.getIdsAndPositionsWorms(), parameters), numberPlayerReq(0),
-        world(aWorld), gameContactListener(&aWorld, &parameters), turns(players, parameters, &world),
-        currentPlayers(0), finishedGame(true) {
+        : stage(scenarioName), players(stage.getIdsAndPositionsWorms(), parameters),
+        world(aWorld), gameContactListener(&aWorld, &parameters), turns(players, parameters, &world){
 }
 
 void Model::addPlayer(const std::string &playerName, const size_t &idPlayer) {
@@ -98,7 +97,15 @@ std::vector<EndGameDTO> Model::getVecEndGameDTO() {
     return players.getVecEndGameDTO();
 }
 
-
+void Model::destroyAllBodys() {
+    world.ClearForces();
+    b2Body* listBodys = world.GetBodyList();
+    while(listBodys){
+        b2Body* bodyAct = listBodys;
+        listBodys = bodyAct->GetNext();
+        world.DestroyBody(bodyAct);
+    }
+}
 
 
 

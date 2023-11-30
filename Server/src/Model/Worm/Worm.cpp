@@ -321,7 +321,7 @@ void Worm::chargeWeaponWithVariablePower() {
         reachMaxImpulse = this->armament.getWeaponCurrentPtr()->increaseImpulse();
     } else if (typeCharge == MANY_CHARGE) {
         reachMaxImpulse = this->armament.getWeaponCurrentPtr()->increaseImpulse();
-    } else if (reachMaxImpulse) {
+    } if (reachMaxImpulse) {
         tryAttackVariablePower();
     }
 }
