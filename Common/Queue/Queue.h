@@ -204,7 +204,7 @@ class Queue {
         closed = true;
         is_not_empty.notify_all();
     }
-    bool isClosed() const{
+    bool isClosed() const {
         return closed;
     }
 

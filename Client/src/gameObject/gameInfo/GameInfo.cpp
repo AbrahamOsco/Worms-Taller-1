@@ -30,8 +30,9 @@ void GameInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, 
     SDL_Color boxColor = {255, 255, 255, 80};
     SDL_Color textColor = {0, 0, 0, 255};
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
-    textureManager.drawTextBox(m_currentTurn, 200, m_y, fontPath, fontSize, textColor, boxColor,renderer);
-    textureManager.drawTextBox("Time: " + std::to_string(m_time), 750, m_y, fontPath, fontSize, textColor, boxColor,renderer);
+    textureManager.drawTextBox(m_currentTurn, 200, m_y, fontPath, fontSize, textColor, boxColor, renderer);
+    textureManager.drawTextBox("Time: " + std::to_string(m_time), 750, m_y, fontPath, fontSize, textColor,
+            boxColor, renderer);
 }
 
 void

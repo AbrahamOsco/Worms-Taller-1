@@ -31,12 +31,12 @@ void ClientConnection::start(StageDTO &stageDTO) {  // Lanzo los threads sender 
 
 void ClientConnection::join() {
     std::cerr << " [Thread Client]: Se entra a joinear los threads sender y receiver de : " << idPlayer << "\n";
-    if(sender.joinable()){
+    if (sender.joinable()) {
         sender.join();
         std::cerr << " [Thread Client]: Join thread Sender "<< idPlayer << "\n";
     }
 
-    if(receiver.joinable()){
+    if (receiver.joinable()) {
         receiver.join();
         std::cerr << " [Thread Client]: Join thread Receiver" << idPlayer << "\n";
     }
@@ -79,9 +79,10 @@ void ClientConnection::runReceiver() {
 
 void ClientConnection::stop() {
     std::cout << " [Thread cliente]  " << idPlayer << " STOP";
-    std::cout <<"[Thread cliente] el socket esta cerrado procedo a cerrar el snapShotQueue y hacerle un totalClouse al skt\n";
+    std::cout <<
+    "[Thread cliente] el socket esta cerrado procedo a cerrar el snapShotQueue yhacerle un totalClouse al skt\n";
     snapShotQueueB->close();
-    if( not commandQueueNB.isClosed()){
+    if (!commandQueueNB.isClosed()) {
         commandQueueNB.close();
     }
     sktPeer.totalClosure();

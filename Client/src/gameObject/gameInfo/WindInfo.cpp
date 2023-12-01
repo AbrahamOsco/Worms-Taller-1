@@ -23,7 +23,8 @@ void WindInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager, 
     SDL_Color boxColor = {255, 255, 255, 80};
     SDL_Color textColor = {0, 0, 0, 255};
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
-    textureManager.drawTextBox("Wind", m_x, m_y, fontPath, fontSize, textColor, boxColor,renderer);
-    textureManager.drawTextBox(std::to_string(m_velocity), m_x, m_y + 22, fontPath, fontSize, textColor, boxColor,renderer);
+    textureManager.drawTextBox("Wind", m_x, m_y, fontPath, fontSize, textColor, boxColor, renderer);
+    textureManager.drawTextBox(std::to_string(m_velocity), m_x, m_y + 22, fontPath,
+            fontSize, textColor, boxColor, renderer);
     textureManager.draw(m_textureID, m_x, m_y + 40, m_width, m_height, renderer, SDL_FLIP_NONE);
 }

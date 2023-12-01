@@ -20,7 +20,7 @@ void PlayerInfo::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager
     std::string fontPath = "../Client/resources/fonts/GROBOLD.ttf";
     textureManager.drawTextBox(std::to_string(m_id), m_x, m_y, fontPath, fontSize, textBoxColor, boxColor, renderer);
     std::string text = m_name + ": " + std::to_string(m_totalLife);
-    textureManager.drawTextBox(text, m_x + padding, m_y, fontPath, fontSize, textColor, boxColorInfo,renderer);
+    textureManager.drawTextBox(text, m_x + padding, m_y, fontPath, fontSize, textColor, boxColorInfo, renderer);
 }
 
 void PlayerInfo::setParams(int x, int y) {

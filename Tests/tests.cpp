@@ -361,7 +361,7 @@ TEST(TEST_PROTOCOL_SERVER_SEND, sendBeamDTO) {
     std::vector<char> buffer;
     BeamDTO dto(SHORT_BEAM, 53, 69, 120, 78, 96);
     // Act
-    protocol.sendBeam(dto);
+    protocol.sendBeamDTO(dto);
     // Assert
     buffer = skt.getBuffer();
     ASSERT_EQ(dto.getOperationType(), buffer[offset]);
@@ -884,7 +884,7 @@ TEST(PROTOCOL_CLIENT_RECV, recvBeamDTO) {
     ServerProtocol server(skt);
     BeamDTO dtoServer(SHORT_BEAM, 53, 69, 120, 78, 96);
     // Act
-    server.sendBeam(dtoServer);
+    server.sendBeamDTO(dtoServer);
     BeamDTO dtoClient = client.recvBeamDTO();
     // Assert
     ASSERT_EQ(dtoClient, dtoServer);

@@ -133,7 +133,7 @@ void GrenadeHolder::passTime() {
 }
 
 bool GrenadeHolder::hasMunition() const {
-    if(this->typeMunition == INFINITE) {
+    if (this->typeMunition == INFINITE) {
         return true;
     }
     return (munition > 0 );

@@ -64,7 +64,8 @@ void WeaponIcon::draw(SDL2pp::Renderer &renderer, TextureManager &textureManager
     textureManager.draw(m_textureID, m_x, m_y, m_width, m_height, renderer, SDL_FLIP_NONE);
     textureManager.resetColorMod(m_textureID);
 
-    textureManager.drawTextBox("Ammo:", m_x + m_width + padding, m_y + 12, fontPath, fontSize, textColor, boxColor,renderer);
+    textureManager.drawTextBox("Ammo:", m_x + m_width + padding, m_y + 12, fontPath, fontSize,
+        textColor, boxColor,    renderer);
     std::string text;
     if (m_typeMunition == TypeMunition::INFINITE) {
         text = "Inf";

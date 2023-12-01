@@ -10,7 +10,7 @@
 
 Model::Model(const std::string &scenarioName, b2World &aWorld, GameParameters& parameters)
         : stage(scenarioName), players(stage.getIdsAndPositionsWorms(), parameters),
-        world(aWorld), gameContactListener(&aWorld, &parameters), turns(players, parameters, &world){
+        world(aWorld), gameContactListener(&aWorld, &parameters), turns(players, parameters, &world) {
 }
 
 void Model::addPlayer(const std::string &playerName, const size_t &idPlayer) {
@@ -100,7 +100,7 @@ std::vector<EndGameDTO> Model::getVecEndGameDTO() {
 void Model::destroyAllBodys() {
     world.ClearForces();
     b2Body* listBodys = world.GetBodyList();
-    while(listBodys){
+    while (listBodys) {
         b2Body* bodyAct = listBodys;
         listBodys = bodyAct->GetNext();
         world.DestroyBody(bodyAct);

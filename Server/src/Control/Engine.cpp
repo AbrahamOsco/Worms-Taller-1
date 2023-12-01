@@ -132,6 +132,6 @@ void Engine::stop() {
 }
 
 
-bool Engine::isGameStarted() const{
+bool Engine::isGameStarted() const {
     return startedGame;
 }
