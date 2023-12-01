@@ -36,7 +36,11 @@ Juego worms
 	Si por algún motivo se quisiera mover la carpeta del proyecto, se puede ejecutar el script
 	New_Launchers.sh para generar estos 3 archivos otra vez en base a la nueva ubicación de los archivos.
 
-	La carpeta donde todo está alojado debe llamarse Worms-Taller-1. 
+	- Para crear los nuevos scripts, en el directorio principal del proyecto:
+		$ ./New_Launchers.sh
+
+
+	El directorio donde todo está alojado debe llamarse Worms-Taller-1.
 
 ## Dependencias
 	Si se utilizó el script instalador.sh, todas las dependencias ya fueron instaladas.
