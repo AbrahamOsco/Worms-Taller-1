@@ -33,10 +33,8 @@ void SearchGame::join() {
         lobby.show();
     } else if (answerServer.getStatusAnswer() == ERROR_STATUS) {
         std::cout << "Se recibio un ERROR  el ERROR_STATUS \n";
-        // limpiamos los rooms q tenemos (Desactualizado) y ademas del error obtenemos los nuevos rooms disponibles.
         gameRooms.clear();
         this-> gameRooms = answerServer.getGameRooms();
-        // volver a mostrar este stage con estos nuevos Rooms @Girardi.
         QLabel* labelResultado = findChild<QLabel*>("labelResult");
         QString update = QString("No se pudo unir a la partida, vuelva a intentar");
         labelResultado->setText(update);

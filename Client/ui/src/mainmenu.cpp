@@ -28,7 +28,6 @@ void MainMenu::createGame() {
     for (size_t i = 0 ; i < resolvIniCreate.getVecMaxNumbersWorms().size(); i++) {
         mapStageMaxWorm[ resolvIniCreate.getScenariosNames()[i] ] = resolvIniCreate.getVecMaxNumbersWorms()[i];
     }
-    // guardar ese mapa como atributo y usarlo @GIRARDI
     create.search(resolvIniCreate.getScenariosNames(), mapStageMaxWorm);
     this->hide();
     create.show();
