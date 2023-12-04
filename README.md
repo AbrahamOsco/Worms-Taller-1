@@ -118,6 +118,12 @@ Para finalizar, les dejamos algunas screenshots del juego
 ## Partidas
 ![img](/Screenshots/partida1.png "img")
 ![img](/Screenshots/partida2.png "img")
+![img](/Screenshots/partida3.png "img")
+![img](/Screenshots/partida4.png "img")
+![img](/Screenshots/partida5.png "img")
+![img](/Screenshots/partida6.png "img")
+![img](/Screenshots/partida7.png "img")
+![img](/Screenshots/partida8.png "img")
 ## Victoria
 ![img](/Screenshots/victoria.png "img")
 ## Derrota
