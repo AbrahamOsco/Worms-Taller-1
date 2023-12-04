@@ -97,6 +97,29 @@ Juego worms
 [Documentación Técnica](https://docs.google.com/document/d/1QK5Gf6h-XeVLJ5Tx_IiD5BWnNJ2tTKvkMGfzrdvhHRg/edit?usp=sharing)
 
     
+## Logs Valgrind
 
-    
+En la carpeta Logs tenemos 2 archivos con el output de valgrind tanto para un uso normal del servidor y cliente (donde se juega un juego).
+
+En el log del server no se detectan leaks. En el log del cliente se detectan posibles leaks pero en una segunda inspección vemos que son falsos positivos de QT5 y SDL2pp.
+
+Para finalizar, les dejamos algunas screenshots del juego
+
+## Login
+![img](/Screenshots/login.png "img")
+## Main Menu
+![img](/Screenshots/mainmenu.png "img")
+## Crear Partida
+![img](/Screenshots/crearpartida.png "img")
+## Buscar Partida
+![img](/Screenshots/buscarpartida.png "img")
+## Lobby de una partida
+![img](/Screenshots/lobby.png "img")
+## Partidas
+![img](/Screenshots/partida1.png "img")
+![img](/Screenshots/partida2.png "img")
+## Victoria
+![img](/Screenshots/victoria.png "img")
+## Derrota
+![img](/Screenshots/derrota.png "img")
 
