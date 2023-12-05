@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Obtén la lista de archivos en el directorio actual
-archivos=$(ls | grep -v "buscar.sh")
+archivos=$(find . -type f -not -name "buscar.sh")
 
 # Itera sobre cada archivo y realiza cat, leyendo línea por línea
 for archivo in $archivos; do
