@@ -56,13 +56,9 @@ void EditingWindow::loadMapToEdit() {
     for (YAML::const_iterator it = beamsNode.begin();
                         it != beamsNode.end(); ++it) {
         const YAML::Node& beamNode = *it;
+
         auto length = beamNode["length"].as<double>();
         auto angle = static_cast<int>(beamNode["angle"].as<float>());
-
-        /* si box2d trabajamos con y negativas:
-        auto posX = beamNode["x"].as<float>() * PIX_PER_M;
-        auto posY = - (beamNode["y"].as<float>() * PIX_PER_M);
-        */
 
         auto posX = beamNode["x"].as<double>() * PIX_PER_M;
         auto posY = (height - (beamNode["y"].as<double>())) * PIX_PER_M;
@@ -88,11 +84,6 @@ void EditingWindow::loadMapToEdit() {
     for (YAML::const_iterator it = wormsNode.begin();
                         it != wormsNode.end(); ++it) {
         const YAML::Node& wormNode = *it;
-
-        /* si box2d trabajamos con y negativas:
-        auto posX = wormNode["positionX"].as<float>() * PIX_PER_M;
-        auto posY = - (wormNode["positionY"].as<float>() * PIX_PER_M);
-        */
 
         auto posX = wormNode["positionX"].as<double>() * PIX_PER_M;
         auto posY = (height - (wormNode["positionY"].as<double>())) * PIX_PER_M;
