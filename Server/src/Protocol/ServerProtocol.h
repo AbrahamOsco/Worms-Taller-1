@@ -43,8 +43,6 @@ class ServerProtocol : public Protocol {
 
     void sendAPlayerDTO(const PlayerDTO &playerDTO);
 
-    // void sendAWormIniDTO(const WormDTO &aWormDTO);
-
     void sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot);
 
     void sendAWormDTO(const WormDTO &aWormDTO);

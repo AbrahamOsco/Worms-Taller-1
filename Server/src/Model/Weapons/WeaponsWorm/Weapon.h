@@ -30,17 +30,9 @@ class Weapon {
     explicit Weapon(const TypeWeapon& aTypeWeapon, const float &mainDamage, const TypeMunition& aTypeMunition,
                     const size_t& aMunition, const GameParameters& gameParameters);
 
-    TypeWeapon getTypeWeapon() const;
-
     WeaponDTO getWeaponDTO() const;
 
     float getMainDamage() const;
-
-    TypeMunition getTypeMunition() const;
-
-    size_t getMunition() const;
-
-    virtual bool hasAScope() = 0;  // tiene una mira
 
     virtual bool hasVariablePower() = 0;
 
@@ -59,9 +51,7 @@ class Weapon {
 
     virtual bool increaseImpulse();
 
-    virtual bool hasMaxImpulse();
-
-
+    virtual bool hasAScope();
 
     // metodods para la mira estos 3
     virtual void increaseAngle();

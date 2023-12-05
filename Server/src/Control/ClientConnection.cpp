@@ -71,7 +71,6 @@ void ClientConnection::runReceiver() {
         // snapShotQueueB->close();
         std::cerr << "[Thread Receiver] "<< idPlayer << "   Termino thread receiver \n";
     }catch(const std::exception& e ) {
-        // Si entro aca es porque otro cliente se desconecto y necesitamos cerrar todos los clientes
         std::cerr << "[Thread Receiver] Se cerro la queue de un cliente que estaba dispuesto a recibir mensajes" <<
         idPlayer << " Pero otro cliente se desconecto\n";
     }
@@ -92,7 +91,6 @@ void ClientConnection::pushSnapShot(const std::vector<WormDTO> &vecWormsDTO, con
                                     const std::vector<WeaponsDTO> &vecWeaponsDTO, const WeaponSightDTO &weaponSightDTO,
                                     const ProjectilesDTO &projectilesDTO, TurnDTO turnDTO,
                                     const std::vector<ProvisionDTO> &vecProvisionDTO) {
-    // aca en cada client connectio nago el unicast.
     WeaponsDTO selectWeaponsDTO;
     for (auto& aWeaponsDTO : vecWeaponsDTO) {
         if (aWeaponsDTO.getIdPlayer() == this->idPlayer) {

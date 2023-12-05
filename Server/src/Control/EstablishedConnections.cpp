@@ -16,8 +16,6 @@ void EstablishedConnections::addConnection(const size_t &idPlayer, Socket sktPee
     if (clientConnections.count(idPlayer) > 0) {
         throw std::runtime_error(" [EstablishedConnections]: El id del cliente ya ha sido agregado \n");
     }
-    // uso emplace para no realize copias sino lo cree ahi mismo.
-    // clientConnections[idPlayer] = std::make_unique<ClientConnection>(idPlayer, std::move(sktPeer), commandQueueNB) ;
     clientConnections.emplace(idPlayer, ClientConnection(idPlayer, std::move(sktPeer), commandQueueNB) );
 }
 

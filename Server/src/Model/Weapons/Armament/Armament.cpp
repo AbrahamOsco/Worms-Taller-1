@@ -63,13 +63,6 @@ Weapon * Armament::getWeaponCurrentPtr() {
     return armament.at(currentWeapon).get();
 }
 
-bool Armament::hasAScoped() {
-    if (this->currentWeapon == NONE_WEAPON) {
-        std::cerr << "Error: [hasAScoped] estas intentado acceder a un arma pero la arma actual es NONE_WEAPN \n";
-    }
-    return this->armament.at(currentWeapon)->hasAScope();
-}
-
 void Armament::putWeaponOnStandByAndUnarmed() {
     if (currentWeapon != NONE_WEAPON) {
         this->weaponOnStandBy = currentWeapon;
@@ -110,8 +103,6 @@ WeaponSightDTO Armament::getWeaponSightDTO(const b2Vec2 &positionWorm, const Dir
 
 ProjectilesDTO Armament::getProjectilesDTO(const bool &attackedWorm) {
     std::vector<ProjectileDTO> vecProjectileDTO;
-//  si ataco (entonces el currenWeapon sera none) y la arma con la q ataco pasa a standBy si esta no
-//  lanza projectiles no  muestro nada
     if ( (currentWeapon == NONE_WEAPON && weaponOnStandBy == NONE_WEAPON)  || (!attackedWorm) ||
         (attackedWorm && !weaponStandByLaunchesProjectiles()) ) {
         return ProjectilesDTO(NO_SHOW_PROJECTILES, vecProjectileDTO);

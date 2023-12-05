@@ -22,7 +22,6 @@ Engine::Engine(const ResponseInitialStateDTO &response) :
         connections(commandsQueueNB) {
 }
 
-// Retorna 1 si agrego con exito al jugador o retorna 2 Si hubo un ERROR.
 void Engine::sendStatusAnswer(Socket& sktPeer, const OperationType& operationType) {
     ResolverInitialDTO aNewResolverInitial(operationType, SUCCESS);
     ServerProtocol serverProtocol(sktPeer);
@@ -55,8 +54,8 @@ void Engine::run() {
         "/" + std::to_string(numberPlayerReq) + " Ha comenzado\n";
         StageDTO stageDto = model.startAndGetStageDTO();
         connections.start(stageDto);
-        RateController frameRate(20);  // el start esta encapsulado en el constructor. OJO @
-        TimeTurn timeTurn;  // en el constructor ya arranca el turn.
+        RateController frameRate(20);
+        TimeTurn timeTurn;
         while (keepTalking) {
             if (model.onlyOnePlayerExits()) {
                 break;
@@ -65,7 +64,7 @@ void Engine::run() {
             pushUpdatesAndUpdateModel(timeTurn, frameRate);
         }
     } catch (std::exception &e) {
-        std::cerr << "[Engine] Excpecion  :"  <<e.what() << "\n";
+        std::cerr << "[Engine] Excepcion  :"  <<e.what() << "\n";
         this->connections.stop();
         this->model.destroyAllBodys();
         return;
@@ -74,9 +73,8 @@ void Engine::run() {
 }
 
 void Engine::executeLastCommand() {
-    RateController frameRate(20);  // el start esta encapsulado en el constructor. OJO @
+    RateController frameRate(20);
     connections.pushVecEndGame(model.getVecEndGameDTO());
-    // en un futuro cambiarle el nombre si no se pushea mas a lastPusshSnaShop
     while (keepTalking) {
         std::unique_ptr<CommandDTO> aCommanDTO;
         if (commandsQueueNB.move_try_pop(aCommanDTO)) {
@@ -84,7 +82,6 @@ void Engine::executeLastCommand() {
                 this->connections.stop();
                 this->model.destroyAllBodys();
                 keepTalking = false;
-                std::cerr<< "Felicidades Se cerro el game de forma exitosa !!! \n";
             }
         }
     }
@@ -93,7 +90,7 @@ void Engine::executeLastCommand() {
 void Engine::stepWorldAndExecuteCommand() {
     std::unique_ptr<CommandDTO> aCommanDTO;
     this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(),
-    gameParameters.getPositionIterations());  // Hacemos un step en el world.
+    gameParameters.getPositionIterations());
     if (commandsQueueNB.move_try_pop(aCommanDTO)) {
         this->model.execute(aCommanDTO, model.getTimeLeft());
     } else {

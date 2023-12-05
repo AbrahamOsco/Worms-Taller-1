@@ -10,20 +10,9 @@ Weapon::Weapon(const TypeWeapon &aTypeWeapon, const float &mainDamage, const Typ
                gameParameters(gameParameters), windValue(0) {
 }
 
-TypeWeapon Weapon::getTypeWeapon() const {
-    return typeWeapon;
-}
 
 float Weapon::getMainDamage() const {
     return mainDamage;
-}
-
-TypeMunition Weapon::getTypeMunition() const {
-    return typeMunition;
-}
-
-size_t Weapon::getMunition() const {
-    return munition;
 }
 
 
@@ -35,13 +24,6 @@ void Weapon::decreaseAngle() {
     // no hago nada caso de dinamita- teleport y air attack
 }
 
-/*
-void Weapons::prepareWeapon(const Direction &aDirection) {
-    // no hago nada caso de dinamita -telepor y air attack.
-}
-*/
-
-
 WeaponDTO Weapon::getWeaponDTO() const {
     return WeaponDTO(typeWeapon, typeMunition, munition);
 }
@@ -50,14 +32,9 @@ WeaponSightDTO Weapon::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direc
     return WeaponSightDTO(NO_SHOW_SIGHT, 0, 0);
 }
 
-// devuelve true si llega al maximo falso si no.
 bool Weapon::increaseImpulse() {
     return false;
     // devuelvo false nunca llega al maximo porque no tiene /  no hago nada para algunas armas y las armas sin mira.
-}
-
-bool Weapon::hasMaxImpulse() {
-    return false;
 }
 
 void Weapon::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
@@ -84,10 +61,13 @@ void Weapon::giveExtraMunition(const size_t &extraMunition) {
 }
 
 void Weapon::passTime() {
-    // NO hago nada para las armas que no tienen uan cuenta regresiva.
 }
 
 
 bool Weapon::hasMunition() const {
     return true;
+}
+
+bool Weapon::hasAScope() {
+    return false;
 }

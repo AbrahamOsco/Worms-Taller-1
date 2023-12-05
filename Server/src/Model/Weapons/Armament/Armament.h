@@ -26,17 +26,11 @@ class Armament {
  public:
     Armament(const size_t &idPlayer, const GameParameters &gameParameters);
 
-    bool hasAWeapon();
-
     Weapon *getWeaponCurrentPtr();
 
     TypeWeapon getWeaponCurrent() const;
 
     bool isUnarmed() const;
-
-    bool hasAScoped();
-
-    // void changeDirection(const Direction &direction);
 
     void putWeaponOnStandByAndUnarmed();
 

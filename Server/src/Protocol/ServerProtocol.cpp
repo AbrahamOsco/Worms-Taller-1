@@ -124,20 +124,11 @@ void ServerProtocol::sendAPlayerDTO(const PlayerDTO &playerDTO) {
     sendNum2Bytes(playerDTO.getTotalHpWorms());
 }
 
-/*
-void ServerProtocol::sendAWormIniDTO(const WormDTO &aWormDTO) {
-    sendANumberByte(aWormDTO.getOperationType());
-    sendANumberByte(aWormDTO.getIdWorm());
-    sendNum2Bytes(aWormDTO.getPositionX());
-    sendNum2Bytes(aWormDTO.getPositionY());
-}
-*/
-
 CommandDTO ServerProtocol::recvCommandDTO() {
     CommandDTO commandDto;
     int operationType = recvANumberByte();
     if (operationType == COMMAND) {
-        TypeCommand commandType = static_cast<TypeCommand>(recvANumberByte());  // probar esto
+        TypeCommand commandType = static_cast<TypeCommand>(recvANumberByte());
         commandDto.setTypeCommand(commandType);
         int x = recvNum2Bytes();
         int y = recvNum2Bytes();
@@ -151,26 +142,20 @@ void ServerProtocol::sendSnapShot(const std::unique_ptr<SnapShot> &aSnapShot) {
     sendANumberByte(aSnapShot->getOperationType());
     sendANumberByte(aSnapShot->getTypeSnapShot());
     if (aSnapShot->getTypeSnapShot() == GAME_PROGRESS) {
-        sendANumberByte(aSnapShot->getWormsDto().size());  // enviamos la cantida de gusanos
+        sendANumberByte(aSnapShot->getWormsDto().size());
         for (const auto& aWormDTO : aSnapShot->getWormsDto()) {
             sendAWormDTO(aWormDTO);
         }
-        // Ahora enviamos a los playersDTO 1 sola linea.
         sendPlayersDTO(aSnapShot->getPlayersDto());
 
-        // ahora enviamos a WeaponsDTO.
         sendWeaponsDTO(aSnapShot->getWeaponsDto());
 
-        // enviamos la mira
         sendWeaponSightDTO(aSnapShot->getWeaponSightDto());
 
-        // enviamos el projectil
         sendProjectilesDTO(aSnapShot->getProjectilesDto());
 
-        // enviamos el turnoDTO
         sendTurnDTO(aSnapShot->getTurnDto());
 
-        // enviamos las provisiones
         sendANumberByte(aSnapShot->getVecProvisionDto().size());
         for (auto& aProvision : aSnapShot->getVecProvisionDto()) {
             sendAProvisionDTO(aProvision);
@@ -207,7 +192,6 @@ void ServerProtocol::sendTurnDTO(const TurnDTO& aTurnDTO) {
 void ServerProtocol::sendProjectilesDTO(const ProjectilesDTO& projectilesDto) {
     sendANumberByte(projectilesDto.getOperationType());
     sendANumberByte(projectilesDto.getTypeShowProjectiles());
-    // enviamso la cantida de projectielsdto q existen.
     sendANumberByte(projectilesDto.getProjectilesDto().size());
     for (auto& aProjectil : projectilesDto.getProjectilesDto()) {
         sendAProjectileDTO(aProjectil);
@@ -239,7 +223,7 @@ void ServerProtocol::sendWeaponsDTO(const WeaponsDTO &weapons) {
     sendANumberByte(weapons.getOperationType());
     sendANumberByte(weapons.getIdPlayer());
     sendANumberByte(weapons.getWeaponCurrent());
-    sendANumberByte(weapons.getWeapons().size());  // mandamos la cantida de armas y luego mandamos cada arma.
+    sendANumberByte(weapons.getWeapons().size());
     for (auto& aWeapon : weapons.getWeapons()) {
         sendAWeaponDTO(aWeapon);
     }
