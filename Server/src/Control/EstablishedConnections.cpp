@@ -8,7 +8,7 @@
 #include "../../../Common/DTO/TurnDTO.h"
 
 
-EstablishedConnections::EstablishedConnections(Queue<std::unique_ptr<CommandDTO>> &aCommandQueueNB)
+EstablishedConnections::EstablishedConnections(Queue<CommandDTO> &aCommandQueueNB)
         : commandQueueNB(aCommandQueueNB) {
 }
 

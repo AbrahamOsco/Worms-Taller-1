@@ -9,7 +9,7 @@
 
 
 ClientConnection::ClientConnection(const size_t &idPlayer, Socket aSktPeer,
-        Queue<std::unique_ptr<CommandDTO>> &aCommandQueueNB) :
+                                   Queue<CommandDTO> &aCommandQueueNB) :
         idPlayer(idPlayer), sktPeer(std::move(aSktPeer)), commandQueueNB(aCommandQueueNB),
         snapShotQueueB(std::make_unique<Queue<std::unique_ptr<SnapShot>>>(UINT_MAX -1)) {
 }
@@ -59,13 +59,12 @@ void ClientConnection::runReceiver() {
     try {
         ServerProtocol serverProtocol(sktPeer);
         while (serverProtocol.isAvailable()) {
-            std::unique_ptr<CommandDTO> aCommandDTO = std::make_unique<CommandDTO>(serverProtocol.recvCommandDTO());
-            commandQueueNB.move_try_push(std::move(aCommandDTO));  // usamos una cola no bloqueante es -> try_push
+            CommandDTO aCommandDTO =serverProtocol.recvCommandDTO();
+            commandQueueNB.try_push(aCommandDTO);  // usamos una cola no bloqueante es -> try_push
         }
         std::cerr<< "[Thread Receiver]  id: "<< idPlayer <<
         "  Detecto cierre del socket asi que se hace el close de CommandQueue\n";
         commandQueueNB.close();
-        // snapShotQueueB->close();
         std::cerr << "[Thread Receiver] "<< idPlayer << "   Termino thread receiver \n";
     }catch(const std::exception& e ) {
         std::cerr << "[Thread Receiver] Se cerro la queue de un cliente que estaba dispuesto a recibir mensajes" <<

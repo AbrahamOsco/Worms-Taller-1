@@ -30,10 +30,10 @@ class ClientConnection {
     Socket sktPeer;
     std::thread sender;
     std::thread receiver;
-    Queue<std::unique_ptr<CommandDTO>> &commandQueueNB;
-    std::unique_ptr<Queue<std::unique_ptr<SnapShot>>> snapShotQueueB;
+    Queue<CommandDTO> &commandQueueNB;
+    std::unique_ptr<Queue<std::unique_ptr<SnapShot>>> snapShotQueueB;  // Debido a que uso un emplaceBac en EstablishedConnections no me permite hacer una Queue a secas.
  public:
-    ClientConnection(const size_t &idPlayer, Socket  aSktPeer, Queue<std::unique_ptr<CommandDTO>>& aCommandQueueNB);
+    ClientConnection(const size_t &idPlayer, Socket  aSktPeer, Queue<CommandDTO> &aCommandQueueNB);
 
     void runSender();
 

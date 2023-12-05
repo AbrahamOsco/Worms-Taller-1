@@ -73,9 +73,9 @@ void Engine::executeLastCommand() {
     RateController frameRate(20);
     connections.pushVecEndGame(model.getVecEndGameDTO());
     while (keepTalking) {
-        std::unique_ptr<CommandDTO> aCommanDTO;
-        if (commandsQueueNB.move_try_pop(aCommanDTO)) {
-            if (aCommanDTO->getTypeCommand() == CLOSE_GAME) {
+        CommandDTO aCommanDTO;
+        if (commandsQueueNB.try_pop(aCommanDTO)) {
+            if (aCommanDTO.getTypeCommand() == CLOSE_GAME) {
                 this->connections.stop();
                 this->model.destroyAllBodys();
                 keepTalking = false;
@@ -85,10 +85,10 @@ void Engine::executeLastCommand() {
 }
 
 void Engine::stepWorldAndExecuteCommand() {
-    std::unique_ptr<CommandDTO> aCommanDTO;
+    CommandDTO aCommanDTO;
     this->world.Step(gameParameters.getFPS(), gameParameters.getVelocityIterations(),
     gameParameters.getPositionIterations());
-    if (commandsQueueNB.move_try_pop(aCommanDTO)) {
+    if (commandsQueueNB.try_pop(aCommanDTO)) {
         this->model.execute(aCommanDTO, model.getTimeLeft());
     } else {
         this->model.tryAttackVariablePower();

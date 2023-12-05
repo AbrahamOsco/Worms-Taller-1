@@ -36,7 +36,7 @@ class Engine : public Thread {
     Model model;
     std::atomic<bool> keepTalking;
     bool startedGame;
-    Queue<std::unique_ptr<CommandDTO>> commandsQueueNB;
+    Queue<CommandDTO> commandsQueueNB;
     // La queue para popear los comandos recibido por el cliente.
     // Solo tenemos una queue para popear comandos. y N queures para enviar.
     EstablishedConnections connections;

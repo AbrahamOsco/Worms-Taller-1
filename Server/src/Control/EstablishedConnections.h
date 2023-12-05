@@ -26,10 +26,10 @@
 class EstablishedConnections {
  private:
     std::map<size_t, ClientConnection> clientConnections;
-    Queue<std::unique_ptr<CommandDTO>> &commandQueueNB;
+    Queue<CommandDTO> &commandQueueNB;
 
  public:
-    explicit EstablishedConnections(Queue<std::unique_ptr<CommandDTO>>& aCommandQueueNB);
+    explicit EstablishedConnections(Queue<CommandDTO> &aCommandQueueNB);
 
     void addConnection(const size_t &idPlayer, Socket sktPeer);
 

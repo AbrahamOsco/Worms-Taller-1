@@ -57,7 +57,7 @@ class Player {
 
     void endTurn();
 
-    void execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft);
+    void execute(const CommandDTO &aCommandDTO, const int &timeLeft);
 
     bool lostAllWorms();
 

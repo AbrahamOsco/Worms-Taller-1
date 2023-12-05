@@ -115,10 +115,10 @@ bool Player::allWormsAreUnmoveAndNotExistsProjectiles() {
     return true;
 }
 
-void Player::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft) {
-    if (aCommandDTO->getTypeCommand() == COUNTDOWN) {
+void Player::execute(const CommandDTO &aCommandDTO, const int &timeLeft) {
+    if (aCommandDTO.getTypeCommand() == COUNTDOWN) {
         for (auto &aWorms : worms) {
-            aWorms.second->setWaitTime(aCommandDTO->getX());
+            aWorms.second->setWaitTime(aCommandDTO.getX());
         }
         return;
     }

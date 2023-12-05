@@ -44,7 +44,7 @@ class Model {
 
     StageDTO startAndGetStageDTO();
 
-    void execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft);
+    void execute(const CommandDTO &aCommandDTO, const int &timeLeft);
 
     void update();
 

@@ -341,7 +341,7 @@ void Worm::attackWithMortar() {
     mortar->shootProjectile(aWorld, this->getBody()->GetWorldCenter(), directionLook, typeFocus);
 }
 
-void Worm::attack(std::unique_ptr<CommandDTO> &aCommand) {
+void Worm::attack(const CommandDTO &aCommand) {
     bool couldAttack = true;
     if (this->armament.getWeaponCurrent() == NONE_WEAPON || attacked) {
         return;
@@ -353,9 +353,9 @@ void Worm::attack(std::unique_ptr<CommandDTO> &aCommand) {
         this->attackWithBat();
     } else if (this->armament.getWeaponCurrent() == TELEPORT) {
         // Si hace un teleport y no tepea bien igual cuenta como si hubiera atacado.
-        this->teleportWorm(aCommand->getX(), aCommand->getY());
+        this->teleportWorm(aCommand.getX(), aCommand.getY());
     } else if (this->armament.getWeaponCurrent() == AIR_ATTACK) {
-        couldAttack = this->attackWithAirAttack(aCommand->getX());
+        couldAttack = this->attackWithAirAttack(aCommand.getX());
     } else if (this->armament.getWeaponCurrent() == DYNAMITE_HOLDER) {
         couldAttack = this->attackWithDynamiteHolder();
     }
@@ -414,52 +414,52 @@ void Worm::endTurn() {
     idWormCurrentPlay = VALUE_INITIAL_ID;
 }
 
-void Worm::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft, size_t idCurrentWorm) {
+void Worm::execute(const CommandDTO &aCommandDTO, const int &timeLeft, const size_t &idCurrentWorm) {
     this->idWormCurrentPlay = idCurrentWorm;
     if (timeLeft <= 0 || this->idWorm != idWormCurrentPlay) {
         return;
     }
-    if (aCommandDTO->getTypeCommand() == TypeCommand::LEFT_CMD) {
+    if (aCommandDTO.getTypeCommand() == TypeCommand::LEFT_CMD) {
         this->walkWorm(LEFT);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::RIGHT_CMD) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::RIGHT_CMD) {
         this->walkWorm(RIGHT);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::UP_CMD) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::UP_CMD) {
         this->changeAngle(UP);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::DOWN_CMD) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::DOWN_CMD) {
         this->changeAngle(DOWN);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_BACK_CMD) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::JUMP_BACK_CMD) {
         this->jump(JUMP_BACKWARDS);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::JUMP_FORWARD_CMD) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::JUMP_FORWARD_CMD) {
         this->jump(JUMP_FORWARDS);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BAT) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::SELECT_BAT) {
         this->assignWeapon(BASEBALL_BAT);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_TELEPORT) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::SELECT_TELEPORT) {
         this->assignWeapon(TELEPORT);
         typeFocus = NO_FOCUS;
         waitingToGetFocus = true;
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BAZOOKA) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::SELECT_BAZOOKA) {
         this->assignWeapon(BAZOOKA);
-    }  else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_DYNAMITE) {
+    }  else if (aCommandDTO.getTypeCommand() == TypeCommand::SELECT_DYNAMITE) {
         this->assignWeapon(DYNAMITE_HOLDER);
-    }  else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_GREEN_GRENADE) {
+    }  else if (aCommandDTO.getTypeCommand() == TypeCommand::SELECT_GREEN_GRENADE) {
         this->assignWeapon(GREEN_GRENADE);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_BANANA) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::SELECT_BANANA) {
         this->assignWeapon(BANANA);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_HOLY_GRENADE) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::SELECT_HOLY_GRENADE) {
         this->assignWeapon(HOLY_GRENADE);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_RED_GRENADE) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::SELECT_RED_GRENADE) {
         this->assignWeapon(RED_GRENADE);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_MORTAR) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::SELECT_MORTAR) {
         this->assignWeapon(MORTAR);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::SELECT_AIR_ATTACK) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::SELECT_AIR_ATTACK) {
         this->assignWeapon(AIR_ATTACK);
         typeFocus = NO_FOCUS;
         waitingToGetFocus = true;
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::FIRE_CMD) {  // execute an attack of a weapon
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::FIRE_CMD) {  // execute an attack of a weapon
         this->attack(aCommandDTO);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::TELEPORT_MOVE) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::TELEPORT_MOVE) {
         this->attack(aCommandDTO);
-    } else if (aCommandDTO->getTypeCommand() == TypeCommand::AIR_ATTACK_POINT) {
+    } else if (aCommandDTO.getTypeCommand() == TypeCommand::AIR_ATTACK_POINT) {
         this->attack(aCommandDTO);
     }
 }

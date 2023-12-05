@@ -99,7 +99,7 @@ class Worm : public GameObject {
 
     void teleportWorm(const int &posXTeleport, const int &posYTeleport);
 
-    void attack(std::unique_ptr<CommandDTO> &aCommand);
+    void attack(const CommandDTO &aCommand);
 
     ProjectilesDTO getProjectilesDTO();
 
@@ -111,7 +111,7 @@ class Worm : public GameObject {
 
     void endTurn();
 
-    void execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft, size_t idCurrentWorm);
+    void execute(const CommandDTO &aCommandDTO, const int &timeLeft, const size_t &idCurrentWorm);
 
     void tryAttackVariablePower();
 

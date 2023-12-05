@@ -37,10 +37,10 @@ StageDTO Model::startAndGetStageDTO() {
     return this->getStageDTO();
 }
 
-void Model::execute(std::unique_ptr<CommandDTO> &aCommandDTO, const int &timeLeft) {
-    if ( aCommandDTO->getTypeCommand() == MIN_LIFE ) {
+void Model::execute(const CommandDTO &aCommandDTO, const int &timeLeft) {
+    if ( aCommandDTO.getTypeCommand() == MIN_LIFE ) {
         players.setLifeAllWorm(1.0f);
-    } else if (aCommandDTO->getTypeCommand() == MAX_LIFE) {
+    } else if (aCommandDTO.getTypeCommand() == MAX_LIFE) {
         players.setLifeAllWorm(200.0f);
     } else {
         players.getCurrentPlayer().execute(aCommandDTO, timeLeft);
