@@ -25,7 +25,7 @@ void Teleport::teleportIn(b2Body *bodyWorm, const int &posXPix, const int &posYP
     float posXInMeters =  (float) posXPix / gameParameters.getPositionAdjustment();
     float posYInMeters = ((gameParameters.getMaxHeightPixel() - ((float) posYPix)) /
         gameParameters.getPositionAdjustment());
-    if (posYInMeters >= 17.5) {
+    if (posYInMeters >= LIMIT_Y_TELEPORT) {
         return;
     }
     b2Vec2 positionToTp(posXInMeters, posYInMeters);

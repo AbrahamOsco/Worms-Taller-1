@@ -15,12 +15,6 @@ enum TypeContact{
     NO_CONTACT, CONTACT, CONTACT_SOUND
 };
 
-/* //enum  probar primero sin el enum de visibilidad
-enum TypeVisionProvision{
-    SHOW_PROVISION, NO_SHOW_PROVISION
-};
-*/
-
 class ProvisionDTO : public DTO {
  private:
     size_t positionX;

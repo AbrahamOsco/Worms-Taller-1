@@ -8,6 +8,8 @@
 
 #include "box2d/box2d.h"
 #include "Weapon.h"
+#define LIMIT_Y_TELEPORT 17.5
+
 
 class Teleport : public Weapon {
  public:

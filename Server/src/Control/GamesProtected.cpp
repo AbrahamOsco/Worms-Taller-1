@@ -28,8 +28,6 @@ int GamesProtected::createGameAndAddPlayer(const ResponseInitialStateDTO &respon
         return answer;
     }
     games.emplace(response.getGameName(), std::make_unique<Engine>(response));
-    // games[response.getGameName()] = std::make_unique<Engine>(response);
-    // Analogo a hacer std::unique_ptr<Engine>{new Engine(response)}.
     answer = games[response.getGameName()]->addClient(sktPeer, playerName, RESPONSE_FINAL_CREATE_GAME);
     std::cerr << "[GamesProtected]: Se unio: " + playerName + " con exito a la partida : " +
     response.getGameName() + "\n";

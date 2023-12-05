@@ -17,7 +17,6 @@
 
 // Clase de colisiones el listener:
 void wormCollidesWithBeam(GameObject* worm, GameObject* beam, GameParameters *gameParameters) {
-    // std::cout << "Worm colisionar con el BEAM\n";
     Worm* unWorm = (Worm*) (worm);
     unWorm->assigOnABeam();
     Beam* unaBeam = (Beam*) (beam);
@@ -60,7 +59,6 @@ void wormCollidesWithEdege(GameObject* worm, GameObject* edge, GameParameters *g
     wormSelect->aContactWithEdge();
 }
 void edgeCollidesWithWorm(GameObject* edge, GameObject* worm, GameParameters *gameParameters) {
-    // std::cout << "Edge collisiona con el worm\n";
     wormCollidesWithEdege(worm, edge, gameParameters);
 }
 
@@ -110,10 +108,8 @@ void beamCollidesWithProjectileBazooka(GameObject* beam, GameObject* munitionBaz
 }
 
 void beamEndContactWithWorm(GameObject* beam, GameObject* worm, GameParameters *gameParameters) {
-    // std::cout << "beamEndContactWithWorm\n";
     Worm* unWorm = (Worm*) (worm);
     unWorm->unAssingOnABeam();
-    Beam* unaBeam = (Beam*) (beam);
     b2Vec2 positonWormInAir = worm->getBody()->GetWorldCenter();
     unWorm->savePositionInAir(positonWormInAir.x, positonWormInAir.y);
 }
@@ -157,7 +153,6 @@ void waterCollidesWithProjectileBazooka(GameObject* water,
 }
 
 void wormCollidesWithProvision(GameObject* worm, GameObject* provision, GameParameters* gameParameters) {
-    // std::cout << "wormCollidesWithProvision\n";
     Provision* provisionSelect = (Provision*) provision;
     Worm* wormSelect = (Worm*) worm;
     provisionSelect->applyEffect(wormSelect);
@@ -203,7 +198,6 @@ void edgeEndContactWithWorm(GameObject* edge, GameObject* worm, GameParameters *
 void airAttackMissileCollidesWithEdge(GameObject* airAttackMissile,
     GameObject* edge, GameParameters *gameParameters) {
     std::cout << "airAttackMissileCollidesWithEdge\n";
-    // wormEndContactWithEdge(worm, edge, gameParameters);
     AirAttackMissile* missileSelect = (AirAttackMissile*) airAttackMissile;
     b2Vec2 missilePosition = missileSelect->getBody()->GetWorldCenter();
     missileSelect->searchWormAndCollide(missilePosition);
@@ -218,7 +212,6 @@ void edgeCollidesWithAirAttackMissile(GameObject* edge,
 void airAttackMissileCollidesWithWater(GameObject* airAttackMissile,
  GameObject* water, GameParameters *gameParameters) {
     std::cout << "airAttackMissileCollidesWithWater\n";
-    // wormEndContactWithEdge(worm, edge, gameParameters);
     AirAttackMissile* missileSelect = (AirAttackMissile*) airAttackMissile;
     b2Vec2 missilePosition = missileSelect->getBody()->GetWorldCenter();
     missileSelect->searchWormAndCollide(missilePosition);
@@ -480,8 +473,6 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
     collisionsMap[std::make_pair(ENTITY_WORM, ENTITY_WORM)] = &wormCollidesWithWorm;
 
 
-    // ProjectileBazooka Estos 10 obligatorio crear para todo tipo de proyectiles
-    // @todo bordes/water/provisiones worm/beam
     collisionsMap[std::make_pair(ENTITY_BAZOOKA_PROJECTILE, ENTITY_EDGE)] = &projectileBazookaCollidesWithEdge;
     collisionsMap[std::make_pair(ENTITY_EDGE, ENTITY_BAZOOKA_PROJECTILE)] = &edgeCollidesWithProjectileBazooka;
 
@@ -567,9 +558,6 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
     collisionsMap[std::make_pair(ENTITY_MORTAR_PROJECTILE, ENTITY_BEAM)] = &mortarProjCollideWithBeam;
     collisionsMap[std::make_pair(ENTITY_BEAM, ENTITY_MORTAR_PROJECTILE)] = &beamCollidesWithMortarProj;
 
-    // collisionsMap[std::make_pair(ENTITY_MORTAR_PROJECTILE, ENTITY_MORTAR_PROJECTILE)] =
-    // &mortarProjCollideWithMortarProj;
-
 
     // Colisiones con las provisiones Worms:
     collisionsMap[std::make_pair(ENTITY_PROVISION, ENTITY_WORM)] = &provisionCollidesWithWorm;
@@ -586,13 +574,10 @@ GameContactListener::GameContactListener(b2World *world, GameParameters *gamePar
 
 void GameContactListener::BeginContact(b2Contact *contact) {
     GameObject* gameObject = (GameObject*) contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-    // me devuelve un uintptr_t lo casteo a gameObject.
     GameObject* otroGameObject = (GameObject*) contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-    // me devuelve un uintptr_t lo casteo a gameObject.
     if (gameObject == nullptr || otroGameObject == nullptr) return;
     auto iteratorElement =  collisionsMap.find(std::make_pair(gameObject->getEntityType(),
                 otroGameObject->getEntityType()));
-    // nos retorna un iterador
     if ( iteratorElement != collisionsMap.end() ) {
         auto hitFunction = iteratorElement->second;
         if (hitFunction) {
@@ -603,12 +588,10 @@ void GameContactListener::BeginContact(b2Contact *contact) {
 
 void GameContactListener::EndContact(b2Contact *contact) {
     GameObject* gameObject = (GameObject*) contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-    // me devuelve un uintptr_t lo casteo a gameObject.
     GameObject* otroGameObject = (GameObject*) contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-    // me devuelve un uintptr_t lo casteo a gameObject.
     if (gameObject == nullptr || otroGameObject == nullptr) return;
     auto iteratorElement =  endContactMap.find(std::make_pair(gameObject->getEntityType(),
-    otroGameObject->getEntityType()));  // nos retorna un iterador
+    otroGameObject->getEntityType()));
     if ( iteratorElement != endContactMap.end() ) {
         auto hitFunction = iteratorElement->second;
         if (hitFunction) {

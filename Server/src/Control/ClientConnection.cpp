@@ -6,11 +6,8 @@
 #include <utility>
 #include "ClientConnection.h"
 #include "../Protocol/ServerProtocol.h"
-#include "../../../Common/DTO/PlayersDTO.h"
-#include "../../../Common/DTO/ProjectilesDTO.h"
-#include "../../../Common/DTO/TurnDTO.h"
 
-// commandsQueueNB(UINT_MAX - 1)
+
 ClientConnection::ClientConnection(const size_t &idPlayer, Socket aSktPeer,
         Queue<std::unique_ptr<CommandDTO>> &aCommandQueueNB) :
         idPlayer(idPlayer), sktPeer(std::move(aSktPeer)), commandQueueNB(aCommandQueueNB),
