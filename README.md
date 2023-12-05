@@ -64,7 +64,7 @@ Juego worms
 ### Instalar box2D: 
     1. sudo apt-get install libbox2d-dev
 
-### Instalar SDL del ruso: 
+### Instalar SDL2 y SDL2pp (wrapper de SDL2): 
     sudo apt-get install libjpeg-dev libpng-dev libfreetype-dev libopusfile-dev libflac-dev libxmp-dev libfluidsynth-dev libwavpack-dev cmake libmodplug-dev libsdl2-dev
 
 	git clone https://github.com/libsdl-org/SDL_image.git -b release-2.6.3
@@ -125,3 +125,12 @@ Para finalizar, les dejamos algunas screenshots del juego
 ## Derrota
 ![img](/Screenshots/derrota.png "img")
 
+Repositorios de 3ros usados en este proyecto:
+## Como wrapper de  Socket
+https://github.com/eldipa/sockets-en-cpp
+
+## Como wrapper de Thread
+https://github.com/eldipa/hands-on-threads
+
+## Como wrapper de SDL2
+https://github.com/libSDL2pp/libSDL2pp
