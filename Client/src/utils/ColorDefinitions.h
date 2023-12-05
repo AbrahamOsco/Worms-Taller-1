@@ -13,7 +13,7 @@ enum ColorID {
     COLOR_RED = 0,
     COLOR_GREEN = 1,
     COLOR_BLUE = 2,
-    COLOR_CUSTOM = 100  // Ejemplo de un color personalizado con un ID específico
+    COLOR_CUSTOM = 100
 };
 
 extern std::map<ColorID, SDL_Color> colorMap;

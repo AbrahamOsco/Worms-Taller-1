@@ -8,14 +8,12 @@ void SoundManager::parseSounds(const std::string &source) {
     try {
         YAML::Node config = YAML::LoadFile(source);
 
-        // Cargar música desde el YAML
         for (const auto &music : config["sounds"]["music"]) {
             std::string id = music["id"].as<std::string>();
             std::string sourceMusic = music["source"].as<std::string>();
             loadMusic(id, sourceMusic);
         }
 
-        // Cargar efectos de sonido desde el YAML
         for (const auto &effect : config["sounds"]["effects"]) {
             std::string id = effect["id"].as<std::string>();
             std::string sourceEffect = effect["source"].as<std::string>();
@@ -23,7 +21,6 @@ void SoundManager::parseSounds(const std::string &source) {
         }
     } catch (const YAML::Exception &e) {
         std::cerr << "Error al analizar el archivo YAML: " << e.what() << std::endl;
-        // Manejar el error como sea necesario
     }
 }
 

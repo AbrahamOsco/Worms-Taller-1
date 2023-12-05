@@ -21,7 +21,7 @@ void PlayersInfo::verticalAligned(int verticalSpacing) {
     int yPos = m_y;  // Comenzar desde la posición y inicial
 
     for (PlayerInfo& player : m_players) {
-        player.setParams(m_x, yPos);  // Establecer las coordenadas del jugador
-        yPos += player.getHeight() + verticalSpacing;  // Actualizar la posición y
+        player.setParams(m_x, yPos);
+        yPos += player.getHeight() + verticalSpacing;
     }
 }

@@ -13,9 +13,6 @@ ClientProtocol::ClientProtocol(Socket& skt) :
         Protocol(skt) {}
 
 
-
-// ---------------Comunicacion inicial metodos
-
 void ClientProtocol::sendInitialStateDTO(const InitialStateDTO &initialStateDto) {
     uint8_t typeOperation = initialStateDto.getOperationType();
     std::string playerName = initialStateDto.getPlayerName();
@@ -59,7 +56,6 @@ ResolverInitialDTO ClientProtocol::recvResolverInitialDTO() {
         resolverInitialDto.setOperationType(RESPONSE_FINAL_JOIN_GAME);
         resolverInitialDto.setStatusAnswer(recvANumberByte());
         if (resolverInitialDto.getStatusAnswer() == ERROR) {
-            // si es error recibimos los nuevos rooms disponibles.
             size_t numberRooms = recvANumberByte();
             std::vector<RoomDTO> gameRooms;
             for (size_t i = 0; i < numberRooms; i++) {
