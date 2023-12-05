@@ -53,7 +53,7 @@ void Game::run() {
     Engine engine(m_beams, m_background, bQueue, nbQueue, m_running);
     engine.init();
 
-    RateController frameRate(19);  // el start esta encapsulado en el constructor. OJO @ricardo
+    RateController frameRate(19);
     while (engine.running()) {
         engine.events();
         engine.update();
