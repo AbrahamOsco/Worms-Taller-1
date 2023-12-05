@@ -8,7 +8,7 @@
 
 #include "../../GameObject/GameObject.h"
 
-class Edges : GameObject {
+class Edges : public  GameObject {
  public:
     Edges();
 

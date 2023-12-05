@@ -25,7 +25,7 @@ bool Player::lostAllWorms() {
 std::vector<WormDTO> Player::getWormsDTO() const {
     std::vector<WormDTO> vecWormsDTO;
     for (auto& aWormElem : worms) {
-        if (!aWormElem.second->wasDestroyedWorm()) {       //  Pusheamos los worms que NO fueron destruidos.
+        if (!aWormElem.second->wasDestroyedWorm()) {
             vecWormsDTO.push_back(aWormElem.second->getWormDTO());
         }
     }

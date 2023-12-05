@@ -4,7 +4,6 @@
 
 #include <utility>
 #include "AirAttackDetonator.h"
-// @ todo eliminar numeros magicos
 AirAttackDetonator::AirAttackDetonator(const TypeWeapon &aTypeWeapon, const float &mainDamage,
                 const TypeMunition &aTypeMunition, const size_t &aMunition, const GameParameters &gameParameters) :
                     Weapon(aTypeWeapon, mainDamage, aTypeMunition, aMunition, gameParameters),

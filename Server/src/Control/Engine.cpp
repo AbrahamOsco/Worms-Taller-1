@@ -7,9 +7,6 @@
 #include <utility>
 #include "Engine.h"
 #include "../Protocol/ServerProtocol.h"
-#include "../../../Common/DTO/SnapShot.h"
-#include "../../../Common/rateController/RateController.h"
-#include "../Model/TimeTurn/TimeTurn.h"
 #define SUCCESS 1
 #define ERROR 2
 

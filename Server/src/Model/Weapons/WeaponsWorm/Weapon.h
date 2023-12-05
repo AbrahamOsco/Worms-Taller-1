@@ -15,7 +15,6 @@
 #include "box2d/b2_world.h"
 
 #define DEGRATORADIANS (b2_pi/180.0f)
-#define RADIANSTODEGREE (180/b2_pi)
 
 class Weapon {
  protected:

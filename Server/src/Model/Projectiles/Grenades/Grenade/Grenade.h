@@ -36,8 +36,6 @@ class Grenade : public GameObject {
 
     void collide();
 
-    bool hasExploded() const;
-
     virtual void passTime();
 
     virtual bool hasFragment() const;

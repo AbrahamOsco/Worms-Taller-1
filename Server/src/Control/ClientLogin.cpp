@@ -11,7 +11,6 @@
 ClientLogin::ClientLogin(Socket socket, GamesProtected &aGames) : sktPeer(std::move(socket)) ,
                 games(aGames), isRunning(true), serverProtocol(sktPeer) {
 }
-// Arrancamos el protocolo inicial los primeros bytes del juego :
 void ClientLogin::run() {
     try {
         InitialStateDTO initialState = serverProtocol.recvInitialStateDTO();

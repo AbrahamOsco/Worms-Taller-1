@@ -29,7 +29,6 @@ void AcceptorThread::addNewClient() {
     Socket sktPeer = sktAccept.accept();
     std::cout << "[AcceptorThread] : Se conecto un nuevo cliente\n";
     std::unique_ptr<ClientLogin> unCliente{new ClientLogin(std::move(sktPeer), games)};
-    // No tener news si no con unique_ptr
     unCliente->start();
     clientsLogin.push_back(std::move(unCliente));
 }

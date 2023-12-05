@@ -32,12 +32,8 @@ class ClientConnection {
     std::thread receiver;
     Queue<std::unique_ptr<CommandDTO>> &commandQueueNB;
     std::unique_ptr<Queue<std::unique_ptr<SnapShot>>> snapShotQueueB;
-    // La queue para pushear los update del mundo, cada cliente tiene una propio queue
-     // En este caso es un puntero por problemas en el emplace_back de established connections.
  public:
     ClientConnection(const size_t &idPlayer, Socket  aSktPeer, Queue<std::unique_ptr<CommandDTO>>& aCommandQueueNB);
-
-    // ClientConnection(const size_t &idPlayer, Socket& aSktPeer, Queue<Command *> &aCommandQueueNB);
 
     void runSender();
 

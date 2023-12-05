@@ -22,18 +22,14 @@ void AirAttackMissile::addToTheWorld(b2World *aWorld, const b2Vec2 &positionMiss
     this->body = aWorld->CreateBody(&airAttackMissileDef);
     b2CircleShape airAttackMissileForm;
     airAttackMissileForm.m_p.Set(0.0f, 0.0f);
-    // offset de la posicion inicial va en (0,1) e 1 por q el maxRadio de 1m empuja en 1 al origen de la circuferencia..
     airAttackMissileForm.m_radius = 0.1f;
     b2FixtureDef defFixAirAttackMis;
     defFixAirAttackMis.shape = &airAttackMissileForm;
     defFixAirAttackMis.density = 1.0f;
     this->body->CreateFixture(&defFixAirAttackMis);
-    // Inmediatamente luego de ajustar los fixture crearlo en el cuerpo sino no tendra masa hasta
-    // ahora el cuerpo MUY Impotante.
     float windValueSelect = (windValue/ this->body->GetMass());
     b2Vec2 vectorWind(windValueSelect, 0.0f);
     this->body->ApplyForceToCenter(vectorWind, true);
-    // Aplicamos el vector del viento en todo momento al projectil de la bazooka
     this->aWorld = aWorld;
     explosionIterations = gameParameters.getAnimationIterations();
 }

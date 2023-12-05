@@ -14,7 +14,7 @@
 
 class Bazooka : public Weapon {
  private:
-    std::pair<float, float> impulseWeapon;  // impulse x, impulse y
+    std::pair<float, float> impulseWeapon;
     WeaponSight weaponSight;
     std::unique_ptr<ProjectileBazooka> projectil;
     std::pair<float, float> maxImpulseWeapon;

@@ -57,7 +57,6 @@ void GrenadeHolder::getProjectilesDTOPrimary(std::vector<ProjectileDTO> &vecProj
     if (grenade != nullptr && grenade->isDestroyedBody() && grenade->hasExplosionIterations()) {
         grenade->getProjectileDTO(vecProjectileDTO);
         ProjectileDTO *projectileDto = &vecProjectileDTO.back();
-        // saco unar referencia del ultimo q pushee para setearle el typeEXplode
         projectileDto->setTypeExplode(EXPLODE);
         if (grenade->getNumberIterations() == gameParameters.getAnimationIterations()) {
             projectileDto->setTypeExplode(EXPLODE_SOUND);
@@ -86,7 +85,6 @@ void GrenadeHolder::tryCleanProjectiles(b2World *aWorld) {
         return;
     }
     RedGrenade* redGrenade = (RedGrenade*) grenade.get();
-    // caso de redGrenade  tnego que chequear los fragmentos y limpiarlos primero y por ultimo elimino la red grenade
     if (redGrenade!= nullptr &&  redGrenade->hasFragment()) {
         redGrenade->tryCleanProjectiles();
     } else if ( redGrenade!= nullptr &&  !redGrenade->hasFragment() && grenade->isDestroyedBody() &&
@@ -105,7 +103,6 @@ void GrenadeHolder::resetGrenade(b2World *aWorld) {
 WeaponSightDTO GrenadeHolder::getWeaponSightDTO(const b2Vec2 &positionWorm, const Direction &directionCurrent) {
     return weaponSight.getWeaponSightDTO(positionWorm, directionCurrent);
 }
-
 
 void GrenadeHolder::attack(const TypeWeapon &typeGrenade, const b2Vec2 &positionWorm, const Direction &direction,
                            const TypeFocus &typeFocus, const int &timeWait, b2World *world) {

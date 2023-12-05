@@ -27,7 +27,6 @@ std::map<size_t, std::pair<float, float>> Stage::getIdsAndPositionsWorms() const
     return this->idsAndPositionsWorms;
 }
 
-// por cada beam creamos su body y lo agregamos al mundo.
 void Stage::addToTheWorld(b2World *world) {
     this->edges = std::make_unique<Edges>(world, height, length);
     this->water = std::make_unique<Water>(world, height, length);

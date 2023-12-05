@@ -39,8 +39,6 @@ void MortarMainProjectile::throwFragments() {
     for (auto & impulse : fragmentImpulses) {
         std::unique_ptr<ProjectileMortar> projectileMortar{new MortarFragment(gameParameters, typeFocus)};
         projectileMortar->addToTheWorld(body->GetWorld(), body->GetWorldCenter() + impulse, impulse, windValue);
-        std::cout << "Lanzando mortar fragment en x: " << (body->GetWorldCenter().x + impulse.x)  <<
-            "  y  :" << (body->GetWorldCenter().y + impulse.y) << "\n";
         fragments.push_back(std::move(projectileMortar));
     }
 }
@@ -73,7 +71,6 @@ void MortarMainProjectile::getFragmentProjectilDTO(std::vector<ProjectileDTO> &v
         if ( aFragment != nullptr && aFragment->isDestroyedBody() && aFragment->hasExplosionIterations() ) {
             aFragment->getProjectileDTO(vecProjectileDTO);
             ProjectileDTO* projectileDto = &vecProjectileDTO.back();
-            // saco unar referencia del ultimo q pushee para setearle el typeEXplode
             projectileDto->setTypeExplode(EXPLODE);
             if (aFragment->getNumberIterations() == gameParameters.getAnimationIterations()) {
                 projectileDto->setTypeExplode(EXPLODE_SOUND);

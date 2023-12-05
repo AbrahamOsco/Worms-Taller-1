@@ -23,7 +23,7 @@ class Turns {
     size_t idWormCurrent;
     bool damageRecognized;
     bool attackRecognized;
-    int valueWind;  // valor del viento multiplicado por 10  ej si valueWind= 100-> valorVientoReal = 10.
+    int valueWind;
     TypeWind typeWind;
     b2World* world;
     std::vector<std::unique_ptr<Provision>> provisionBoxes;

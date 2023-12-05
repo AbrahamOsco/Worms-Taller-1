@@ -62,7 +62,6 @@ void RedGrenade::getFragmentProjectilDTO(std::vector<ProjectileDTO> &vecProjecti
         if ( aFragment != nullptr && aFragment->isDestroyedBody() && aFragment->hasExplosionIterations() ) {
             aFragment->getProjectileDTO(vecProjectileDTO);
             ProjectileDTO* projectileDto = &vecProjectileDTO.back();
-            // saco unar referencia del ultimo q pushee para setearle el typeEXplode
             projectileDto->setTypeExplode(EXPLODE);
             if (aFragment->getNumberIterations() == gameParameters.getAnimationIterations()) {
                 projectileDto->setTypeExplode(EXPLODE_SOUND);

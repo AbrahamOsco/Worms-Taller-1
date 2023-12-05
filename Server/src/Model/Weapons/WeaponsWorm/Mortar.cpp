@@ -33,11 +33,8 @@ bool Mortar::hasVariablePower() {
 }
 
 bool Mortar::increaseImpulse() {
-    std::cout << "Incremento la potencia bazzoka\n";
     impulseWeapon.first += gameParameters.getIncreaseImpulseForFPS();
     impulseWeapon.second += gameParameters.getIncreaseImpulseForFPS();
-
-    // para comprar floats necesitamos comprar las restas con un epsilon.
     float tolerance = 0.0001;
     bool isMaxImpulse = std::abs(impulseWeapon.first - maxImpulseWeapon.first) < tolerance &&
                         std::abs(impulseWeapon.second - maxImpulseWeapon.second) < tolerance;
@@ -62,7 +59,6 @@ void Mortar::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
     if (projectil != nullptr && projectil->isDestroyedBody() && projectil->hasExplosionIterations()) {
         projectil->getProjectileDTO(vecProjectileDTO);
         ProjectileDTO *projectileDto = &vecProjectileDTO.back();
-        // saco unar referencia del ultimo q pushee para setearle el typeEXplode
         projectileDto->setTypeExplode(EXPLODE);
         if (projectil->getNumberIterations() == 15.0f) {
             projectileDto->setTypeExplode(EXPLODE_SOUND);
@@ -97,8 +93,6 @@ void Mortar::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const D
                              const TypeFocus &focus) {
     b2Vec2 p2 = weaponSight.getPositionP2RayCast(positionWorm, direction);
     b2Vec2 impulseMuniBazooka = weaponSight.getImpulseForProjectil(direction, impulseWeapon);
-
-    std::cout << "Atacamos con el mortero------------------------------------------------------\n";
     projectil = std::make_unique<MortarMainProjectile>(gameParameters, focus);
     projectil->addToTheWorld(world, p2, impulseMuniBazooka, windValue);
     impulseWeapon = std::make_pair(gameParameters.BazookaGetImpulseXInitial(),

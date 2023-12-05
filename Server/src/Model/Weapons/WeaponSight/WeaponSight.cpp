@@ -20,7 +20,6 @@ void WeaponSight::increaseAngle() {
     if (rayAngle > MAX_ANGLE) {
         rayAngle -= 1.0f;
     }
-    // std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
 }
 
 void WeaponSight::decreaseAngle() {
@@ -28,7 +27,6 @@ void WeaponSight::decreaseAngle() {
     if (rayAngle < -MAX_ANGLE) {
         rayAngle += 1.0f;
     }
-    // std::cout << "Angle current Degree / Rad: : " << rayAngle << " / " <<  rayAngle * DEGRATORADIANS << " \n";
 }
 
 GameObject* WeaponSight::getBodyCollidesWithRayCast(b2World *world, const b2Vec2& positionWorm,

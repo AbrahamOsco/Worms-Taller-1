@@ -29,11 +29,8 @@ bool Bazooka::hasAScope() {
 }
 
 bool Bazooka::increaseImpulse() {
-    std::cout << "Incremento la potencia bazzoka\n";
     impulseWeapon.first += gameParameters.getIncreaseImpulseForFPS();
     impulseWeapon.second += gameParameters.getIncreaseImpulseForFPS();
-
-    // para comprar floats necesitamos comprar las restas con un epsilon.
     float tolerance = 0.0001;
     bool isMaxImpulse = std::abs(impulseWeapon.first - maxImpulseWeapon.first) < tolerance &&
                         std::abs(impulseWeapon.second - maxImpulseWeapon.second) < tolerance;
@@ -45,12 +42,8 @@ void Bazooka::shootProjectile(b2World *world, const b2Vec2 &positionWorm, const 
             const TypeFocus &focus) {
     b2Vec2 p2 = weaponSight.getPositionP2RayCast(positionWorm, direction);
     b2Vec2 impulseMuniBazooka = weaponSight.getImpulseForProjectil(direction, impulseWeapon);
-    // std::unique_ptr<ClientLogin> unCliente{new ClientLogin(std::move(sktPeer), games)}
-    // creamos la munition de la bazooka
-    std::cout << "Atacamos con la bazooka------------------------------------------------------\n";
     projectil = std::make_unique<ProjectileBazooka>(gameParameters, focus);
     projectil->addToTheWorld(world, p2, impulseMuniBazooka, windValue);
-    // reseeteamos los impulsos luego de atacar.
     explosionIterations = gameParameters.getAnimationIterations();
 }
 
@@ -61,7 +54,6 @@ bool Bazooka::launchesProjectiles() {
 
 void Bazooka::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
     if (projectil!= nullptr && projectil->isDestroyedBody() && explosionIterations > 0) {
-        // si entra aca es porque atacamos con la bazooka y este exploto solo entraremos 1 vez aca.
         ProjectileDTO projectileDto = projectil->getProjectilDTO();
         projectileDto.setTypeExplode(EXPLODE);
         if (explosionIterations == gameParameters.getAnimationIterations()) {
@@ -70,7 +62,6 @@ void Bazooka::getProjectilesDTO(std::vector<ProjectileDTO> &vecProjectileDTO) {
         vecProjectileDTO.push_back(projectileDto);
         explosionIterations--;
     } else if (projectil != nullptr && !projectil->isDestroyedBody()) {
-        // si el projectil esta en vuelo.
         vecProjectileDTO.push_back(projectil->getProjectilDTO());
     }
 }

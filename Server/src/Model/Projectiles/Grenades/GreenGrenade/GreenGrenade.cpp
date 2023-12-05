@@ -2,10 +2,8 @@
 // Created by abraham on 22/11/23.
 //
 
-#include <iostream>
 #include <vector>
 #include "GreenGrenade.h"
-// Aca ponemos el danio main, radio y el impulso explosion.
 
 GreenGrenade::GreenGrenade(const GameParameters &gameParameters, const int& waitTime,
                 const TypeFocus& typeFocus) : Grenade(gameParameters, waitTime, typeFocus) {

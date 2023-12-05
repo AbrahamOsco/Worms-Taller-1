@@ -32,10 +32,7 @@ void Players::assignWormsToPlayers() {
     }
     std::random_shuffle(idWormsOrig.begin(), idWormsOrig.end());
     std::random_shuffle(idPlayersOrig.begin(), idPlayersOrig.end());
-    // tenemos las copias y las originales, (asignamos la copia a la original nuevamente cuando la copia esta vacia).
     size_t i = 0;
-    // tenemos 2 gusano  y 1 jugador. -> 1 jugador con los 2 gusanos.
-    // tenemos 4 gusanos y 2 jugadores -> J:0 -> id = 1. J:1 -> id = 2 ,  J:0 -> id = 0  J:1 ->  id = 3.
     idPlayersCopy = idPlayersOrig;
     idWormsCopy = idWormsOrig;
     while ( i < iterations ) {
@@ -47,8 +44,6 @@ void Players::assignWormsToPlayers() {
         }
         i++;
     }
-    // si la division entre el numero de gusanos y los jugadores no es exacta entonces
-    // falta gusanos para repartir que quedaron  OJO.
     if ( (numberWorms % numberPlayers) != 0 ) {
         idPlayersCopy = idPlayersOrig;
         while ( !idWormsCopy.empty() ) {
@@ -56,8 +51,6 @@ void Players::assignWormsToPlayers() {
             idWormsCopy.pop_back();
             idPlayersCopy.pop_back();
         }
-        // Si ya no hay gusanos y hay jugadores que tienen menos gusanos (por q les falto
-        // repartir en esta vuelta) les damos la bonificacion de puntos.
         while ( !idPlayersCopy.empty() ) {
             players.at(idPlayersCopy.back()).assignBonusLife();
             idPlayersCopy.pop_back();

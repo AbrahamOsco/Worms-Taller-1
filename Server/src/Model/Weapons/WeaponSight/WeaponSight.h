@@ -13,15 +13,13 @@
 #include "../../GameObject/GameObject.h"
 
 #define DEGRATORADIANS (b2_pi/180.0f)
-#define RADIANSTODEGREE (180/b2_pi)
 
 class WeaponSight {
  private:
     WeaponRayCast weaponRayCast;
     float rayLength;
-    float rayAngle;  // esta en grados.
+    float rayAngle;
     Direction direction;
-    // posiblemnte elminarla ya que lo usamos dentro de un metodo y como que no mas por ej ataques
     const GameParameters& gameParameters;
 
  public:

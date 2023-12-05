@@ -29,7 +29,7 @@ float Turns::getWindValueForPhysics() {
 }
 
 void Turns::addProvisionToWorld() {
-    int randomNumber = rand()  % 3;  // obtengo numeros random entre 0 y el 2.
+    int randomNumber = rand()  % 3;
     TypeEffect typeEffect = MUNITIONS;
     if (randomNumber == 1) {
         typeEffect = MEDICAL_KIT;
@@ -37,7 +37,6 @@ void Turns::addProvisionToWorld() {
         typeEffect = EXPLOSION;
     }
     float posXRandom = (float)  ((rand() % 17) +8);
-    // numero random entre  0 y 16 -> +8 -> 8 y 24m
     provisionBoxes.push_back(std::make_unique<Provision>(posXRandom, gameParameters.getPositionYForBoxes(),
         typeEffect, gameParameters));
     provisionBoxes.back()->addToTheWorld(world);
@@ -92,7 +91,6 @@ void Turns::tryEndTurn() {
         }
         attackRecognized = true;
     } else if (timeLeft <= 0 && players.allWormsAreUnmoveAndNotExistsProjectiles()) {
-        // solo acabara el turno cuando todos los worms estan quietos y no existan projectiles
         timeLeft = gameParameters.getTimeForTurn();
         players.getCurrentPlayer().endTurn();
         if (!players.onlyExistsOnePlayer()) {

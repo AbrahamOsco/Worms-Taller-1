@@ -60,10 +60,6 @@ void Grenade::explode() {
 }
 
 
-bool Grenade::hasExploded() const {
-    return exploded;
-}
-
 void Grenade::throwFragments() {
 }
 

@@ -29,8 +29,6 @@ class DynamiteHolder : public Weapon {
 
     bool launchesProjectiles() override;
 
-    // Estos 3 para toda arma que lanza proyectiles.
-
     bool thereAreProjectiles() override;
 
     void tryCleanProjectiles(b2World* aWorld) override;
@@ -39,7 +37,6 @@ class DynamiteHolder : public Weapon {
 
     void passTime() override;
 
-    // para las armas que gastan municiones;
     bool hasMunition() const override;
 };
 

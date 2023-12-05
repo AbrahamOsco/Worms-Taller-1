@@ -10,18 +10,17 @@
 
 
 Beam::Beam() : GameObject(ENTITY_BEAM), typeBeam(SHORT_BEAM), xCenter(0), yCenter(0), length(0),
-                height(0), angle(0), aWorld(nullptr) {
+                height(0), angle(0) {
 }
 
 Beam::Beam(const TypeBeam &aTypeBeam, const float &aXcenter, const float &aYCenter, const float &aLength,
            const float &aHeight, const float &aAngle) : GameObject(ENTITY_BEAM) , typeBeam(aTypeBeam),
-           xCenter(aXcenter), yCenter(aYCenter), length(aLength), height(aHeight), angle(aAngle), aWorld(nullptr) {
+           xCenter(aXcenter), yCenter(aYCenter), length(aLength), height(aHeight), angle(aAngle) {
 }
-// aca Falta hacer GameParameters::getMaxHeightPixelStatic() - (yCenter * GameParameters::getPositionAdjustmentStatic())
 BeamDTO Beam::getBeamDTO() {
     BeamDTO beamDto(typeBeam, xCenter * GameParameters::getPositionAdjustmentStatic(),
     GameParameters::getMaxHeightPixelStatic()  - (yCenter * GameParameters::getPositionAdjustmentStatic()),
-            length, height, angle);  // AJUSTAR TAMBIEN LAS VIGAS @RICARDO
+            length, height, angle);
     return beamDto;
 }
 
@@ -38,18 +37,13 @@ void Beam::addToWorld(b2World *world) {
 
     b2FixtureDef defFixtureBeam;
     defFixtureBeam.shape = &shapeBeam;
-    float beamFriction = GameParameters::getBeamFriction();  // antes era 1.5f
+    float beamFriction = GameParameters::getBeamFriction();
     if ( (angle > GameParameters::getBeamMinimumScalableAngle() && angle <
             GameParameters::getBeamMaximumUnscalableAngle() ) ) {
         beamFriction = GameParameters::getBeamFrictionSlipperyStatic();
     }
     defFixtureBeam.friction = beamFriction;
     this->body->CreateFixture(&defFixtureBeam);
-    this->aWorld = world;
-}
-
-b2World *Beam::getWorld() const {
-    return aWorld;
 }
 
 float Beam::getAngle() const {

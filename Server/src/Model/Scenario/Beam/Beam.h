@@ -18,8 +18,6 @@ class Beam : public GameObject {
     float length;
     float height;
     float angle;
-    b2World* aWorld;
-
  public:
     Beam();
 
@@ -32,7 +30,6 @@ class Beam : public GameObject {
 
     void addToWorld(b2World *world);
 
-    b2World *getWorld() const;
 };
 
 
