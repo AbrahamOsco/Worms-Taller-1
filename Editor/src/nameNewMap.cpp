@@ -12,7 +12,6 @@ NameNewMap::NameNewMap(QWidget *parent) :
 NameNewMap::~NameNewMap() = default;
 
 void NameNewMap::onConfirmBtnClicked() {
-    // check if name is available
     std::string newName = ui.mapNameInput->text().toStdString();
     std::string newNameNoSpaces(newName);
     newNameNoSpaces.erase(std::remove(newNameNoSpaces.begin(),
